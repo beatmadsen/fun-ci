@@ -30,6 +30,7 @@ class TestTriggerCliDatabaseIntegration < Minitest::Test
     runs = @client.pipeline_runs_for(commit_hash: "abc1234")
     jobs = @client.stage_jobs_for(pipeline_run_id: runs.first[:id])
     stages = jobs.map { |j| j[:stage] }
+    assert_includes stages, "lint", "Should record a stage_job for lint"
     assert_includes stages, "build", "Should record a stage_job for build"
     assert_includes stages, "fast", "Should record a stage_job for fast"
     assert_includes stages, "slow", "Should record a stage_job for slow"
@@ -39,8 +40,10 @@ class TestTriggerCliDatabaseIntegration < Minitest::Test
     @client.trigger(commit_hash: "abc1234", branch: "main")
     runs = @client.pipeline_runs_for(commit_hash: "abc1234")
     jobs = @client.stage_jobs_for(pipeline_run_id: runs.first[:id])
+    lint_job = jobs.find { |j| j[:stage] == "lint" }
     build_job = jobs.find { |j| j[:stage] == "build" }
     fast_job = jobs.find { |j| j[:stage] == "fast" }
+    assert_equal "completed", lint_job[:status], "Lint stage should be marked completed"
     assert_equal "completed", build_job[:status], "Build stage should be marked completed"
     assert_equal "completed", fast_job[:status], "Fast stage should be marked completed"
   end
@@ -52,6 +55,22 @@ class TestTriggerCliDatabaseIntegration < Minitest::Test
     jobs = @client.stage_jobs_for(pipeline_run_id: runs.first[:id])
     build_job = jobs.find { |j| j[:stage] == "build" }
     assert_equal "failed", build_job[:status], "Build stage should be marked failed"
+  end
+
+  def test_should_mark_lint_stage_as_failed_when_lint_script_fails
+    @client.trigger(commit_hash: "abc1234", branch: "main",
+      scripts: { "lint.sh" => "exit 1" })
+    runs = @client.pipeline_runs_for(commit_hash: "abc1234")
+    jobs = @client.stage_jobs_for(pipeline_run_id: runs.first[:id])
+    lint_job = jobs.find { |j| j[:stage] == "lint" }
+    assert_equal "failed", lint_job[:status], "Lint stage should be marked failed"
+  end
+
+  def test_should_mark_pipeline_run_as_failed_when_lint_fails
+    @client.trigger(commit_hash: "abc1234", branch: "main",
+      scripts: { "lint.sh" => "exit 1" })
+    runs = @client.pipeline_runs_for(commit_hash: "abc1234")
+    assert_equal "failed", runs.first[:status], "Pipeline should be marked failed when lint fails"
   end
 
   def test_should_not_mark_pipeline_run_as_completed_before_slow_suite_finishes

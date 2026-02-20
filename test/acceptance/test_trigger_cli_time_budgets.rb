@@ -4,8 +4,8 @@ require_relative "trigger_cli_shared"
 
 # Acceptance tests for stage time budget enforcement.
 #
-# Covers: fast suite 10s budget, slow suite 5min budget,
-# build stage 30s budget. All timeouts are simulated
+# Covers: lint stage 30s budget, build stage 30s budget,
+# fast suite 10s budget, slow suite 5min budget. All timeouts are simulated
 # via command_runner DI -- no real time elapses.
 
 class TestTriggerCliTimeBudgets < Minitest::Test
@@ -53,6 +53,24 @@ class TestTriggerCliTimeBudgets < Minitest::Test
     slow_job = jobs.find { |j| j[:stage] == "slow" }
     assert_equal "timed_out", slow_job[:status],
       "Slow stage should be marked timed_out when budget exceeded"
+  ensure
+    client&.close
+  end
+
+  def test_should_kill_lint_stage_when_it_exceeds_30_second_budget
+    # Given a command runner that simulates a timeout on the lint stage
+    runner = ->(cmd) {
+      raise Timeout::Error, "budget exceeded" if cmd.include?("lint.sh")
+      ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    # When the trigger CLI is invoked
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    # Then exit code should be non-zero
+    refute_equal 0, client.exit_code, "Should fail when lint exceeds budget"
+    # And stdout should mention the lint time budget was exceeded
+    assert_match(/time budget/i, client.stdout, "Should mention time budget")
+    assert_match(/Lint killed/i, client.stdout, "Should mention lint was killed")
   ensure
     client&.close
   end

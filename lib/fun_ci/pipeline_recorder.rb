@@ -39,7 +39,7 @@ module FunCi
 
     def start_stage(stage)
       return nil unless @pipeline_run_id
-      PipelineRun.update_status(@db, @pipeline_run_id, "running")
+      ensure_running
       job_id = StageJob.create(@db, pipeline_run_id: @pipeline_run_id, stage: stage)
       StageJob.update_status(@db, job_id, "running")
       job_id
@@ -58,6 +58,14 @@ module FunCi
     def fail_run
       return unless @pipeline_run_id
       PipelineRun.update_status(@db, @pipeline_run_id, "failed")
+    end
+
+    private
+
+    def ensure_running
+      run = PipelineRun.find(@db, @pipeline_run_id)
+      return unless run && run[:status] == "scheduled"
+      PipelineRun.update_status(@db, @pipeline_run_id, "running")
     end
   end
 end

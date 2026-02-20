@@ -24,7 +24,7 @@ class TestTriggerCliProjectConfiguration < Minitest::Test
     @client.trigger_without_fun_ci_folder(commit_hash: "abc1234", branch: "main")
     assert_equal 0, @client.exit_code, "Should exit 0 when no .fun-ci/ folder found"
     assert_match(/No \.fun-ci\/ folder found/i, @client.stdout, "Should mention missing folder")
-    assert_match(/build\.sh.*fast\.sh.*slow\.sh/m, @client.stdout, "Should suggest creating scripts")
+    assert_match(/lint\.sh.*build\.sh.*fast\.sh.*slow\.sh/m, @client.stdout, "Should suggest creating scripts")
   end
 
   # --- Missing individual hook scripts ---
@@ -39,6 +39,12 @@ class TestTriggerCliProjectConfiguration < Minitest::Test
     @client.trigger_with_missing_script(commit_hash: "abc1234", branch: "main", missing_script: "fast.sh")
     assert_equal 0, @client.exit_code, "Should exit 0 when fast.sh is missing"
     assert_match(/\.fun-ci\/fast\.sh is not/, @client.stdout, "Should mention missing fast.sh")
+  end
+
+  def test_should_exit_gracefully_when_lint_script_is_missing
+    @client.trigger_with_missing_script(commit_hash: "abc1234", branch: "main", missing_script: "lint.sh")
+    assert_equal 0, @client.exit_code, "Should exit 0 when lint.sh is missing"
+    assert_match(/\.fun-ci\/lint\.sh is not/, @client.stdout, "Should mention missing lint.sh")
   end
 
   def test_should_exit_gracefully_when_slow_script_is_missing
@@ -63,6 +69,13 @@ class TestTriggerCliHookScriptInvocation < Minitest::Test
 
   def teardown
     @client.close
+  end
+
+  def test_should_invoke_lint_script_with_commit_hash_as_first_argument
+    @client.trigger(commit_hash: "abc1234", branch: "main")
+    args = @client.script_arguments_for("lint.sh")
+    refute_nil args, "lint.sh should have been invoked"
+    assert_equal "abc1234", args.first, "lint.sh should receive commit hash as $1"
   end
 
   def test_should_invoke_build_script_with_commit_hash_as_first_argument

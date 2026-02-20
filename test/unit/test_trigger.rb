@@ -96,8 +96,8 @@ class TestTriggerScriptExecution < Minitest::Test
     end
   end
 
-  def test_should_not_invoke_slow_suite_when_fast_fails
-    # Given a project where fast.sh fails
+  def test_should_invoke_slow_suite_even_when_fast_fails
+    # Given a project where fast.sh fails (slow starts before fast in Phase 2)
     Dir.mktmpdir("fun-ci-test") do |dir|
       make_project_with_scripts(dir)
       invocations = []
@@ -112,9 +112,148 @@ class TestTriggerScriptExecution < Minitest::Test
       trigger, = make_trigger(dir, commit_hash: "abc1234", command_runner: fake_runner)
       # When the trigger is run
       trigger.run
-      # Then slow.sh should NOT have been invoked
+      # Then slow.sh should have been invoked (parallel Phase 2)
       slow_cmd = invocations.find { |cmd| cmd.include?("slow.sh") }
-      assert_nil slow_cmd, "Should not invoke slow.sh when fast fails"
+      refute_nil slow_cmd, "Slow should run even when fast fails (parallel Phase 2)"
+    end
+  end
+end
+
+class TestTriggerLintStage < Minitest::Test
+  include FunCiTestProject
+
+  def make_trigger(dir, commit_hash: "abc1234", command_runner: nil, time_budgets: {})
+    stdout = StringIO.new
+    stderr = StringIO.new
+    launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
+      FunCi::BackgroundWrapper.new(
+        recorder: FakeRecorder.new, job_id: job_id, executor: executor
+      ).run
+    }
+    trigger = FunCi::Trigger.new(
+      project_root: dir,
+      commit_hash: commit_hash,
+      branch: "main",
+      stdout: stdout,
+      stderr: stderr,
+      command_runner: command_runner,
+      commit_validator: ->(_h) { true },
+      background_launcher: launcher,
+      time_budgets: time_budgets
+    )
+    [trigger, stdout, stderr]
+  end
+
+  def test_should_invoke_lint_script_with_commit_hash
+    # Given a project with valid scripts and a fake command runner
+    Dir.mktmpdir("fun-ci-test") do |dir|
+      make_project_with_scripts(dir)
+      invocations = []
+      fake_runner = ->(cmd) {
+        invocations << cmd
+        ["", FakeStatus.new(true, 0)]
+      }
+      trigger, = make_trigger(dir, commit_hash: "abc1234", command_runner: fake_runner)
+      # When the trigger is run
+      trigger.run
+      # Then lint.sh should have been invoked with the commit hash
+      lint_cmd = invocations.find { |cmd| cmd.include?("lint.sh") }
+      refute_nil lint_cmd, "Should invoke lint.sh"
+      assert_match(/abc1234/, lint_cmd, "Should pass commit hash to lint.sh")
+    end
+  end
+
+  def test_should_invoke_both_lint_and_build_in_phase_one
+    # Given a project with valid scripts and a runner that records invocations
+    Dir.mktmpdir("fun-ci-test") do |dir|
+      make_project_with_scripts(dir)
+      invocations = []
+      fake_runner = ->(cmd) {
+        invocations << cmd
+        ["", FakeStatus.new(true, 0)]
+      }
+      trigger, = make_trigger(dir, commit_hash: "abc1234", command_runner: fake_runner)
+      # When the trigger is run
+      trigger.run
+      # Then both lint.sh and build.sh should have been invoked
+      lint_cmd = invocations.find { |cmd| cmd.include?("lint.sh") }
+      build_cmd = invocations.find { |cmd| cmd.include?("build.sh") }
+      refute_nil lint_cmd, "Should invoke lint.sh"
+      refute_nil build_cmd, "Should invoke build.sh"
+    end
+  end
+
+  def test_should_still_run_build_when_lint_fails
+    # Given a project where lint.sh fails (lint + build run in parallel)
+    Dir.mktmpdir("fun-ci-test") do |dir|
+      make_project_with_scripts(dir)
+      invocations = []
+      fake_runner = ->(cmd) {
+        invocations << cmd
+        if cmd.include?("lint.sh")
+          ["lint errors found", FakeStatus.new(false, 1)]
+        else
+          ["", FakeStatus.new(true, 0)]
+        end
+      }
+      trigger, stdout, = make_trigger(dir, commit_hash: "abc1234", command_runner: fake_runner)
+      # When the trigger is run
+      exit_code = trigger.run
+      # Then build.sh should still have been invoked (parallel Phase 1)
+      build_cmd = invocations.find { |cmd| cmd.include?("build.sh") }
+      refute_nil build_cmd, "Build should still run when lint fails (parallel)"
+      # And exit code should be non-zero
+      refute_equal 0, exit_code, "Should fail when lint fails"
+      # And stdout should mention lint failure
+      assert_match(/Lint failed/i, stdout.string, "Should mention lint failure")
+    end
+  end
+
+  def test_should_fail_when_lint_exceeds_time_budget
+    # Given a project with a lint stage that times out
+    Dir.mktmpdir("fun-ci-test") do |dir|
+      make_project_with_scripts(dir)
+      fake_runner = ->(cmd) {
+        raise Timeout::Error, "simulated timeout" if cmd.include?("lint.sh")
+        ["", FakeStatus.new(true, 0)]
+      }
+      trigger, stdout, = make_trigger(dir, commit_hash: "abc1234",
+        command_runner: fake_runner, time_budgets: { "lint" => 1 })
+      # When the trigger is run
+      exit_code = trigger.run
+      # Then exit code should be non-zero
+      refute_equal 0, exit_code, "Should fail when lint exceeds budget"
+      # And stdout should mention the time budget
+      assert_match(/time budget/i, stdout.string, "Should mention time budget exceeded")
+    end
+  end
+
+  def test_should_record_lint_stage_via_recorder
+    # Given a project with all scripts passing and a fake recorder
+    Dir.mktmpdir("fun-ci-test") do |dir|
+      make_project_with_scripts(dir)
+      recorder = FakeRecorder.new
+      fake_runner = ->(cmd) { ["", FakeStatus.new(true, 0)] }
+      launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
+        FunCi::BackgroundWrapper.new(
+          recorder: recorder, job_id: job_id, executor: executor
+        ).run
+      }
+      trigger = FunCi::Trigger.new(
+        project_root: dir,
+        commit_hash: "abc1234",
+        branch: "main",
+        stdout: StringIO.new,
+        command_runner: fake_runner,
+        commit_validator: ->(_h) { true },
+        recorder: recorder,
+        background_launcher: launcher
+      )
+      # When the trigger is run
+      trigger.run
+      # Then recorder should have recorded a lint stage
+      lint_start = recorder.calls.find { |c| c[0] == :start_stage && c[1] == "lint" }
+      refute_nil lint_start, "Should record lint stage start"
     end
   end
 end
@@ -158,6 +297,7 @@ class TestTriggerTimeBudgets < Minitest::Test
         ["", FakeStatus.new(true, 0)]
       }
       stdout = StringIO.new
+      noop_launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {}
       trigger = FunCi::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
@@ -165,7 +305,8 @@ class TestTriggerTimeBudgets < Minitest::Test
         stdout: stdout,
         time_budgets: { "build" => 5, "fast" => 1 },
         commit_validator: ->(_h) { true },
-        command_runner: fake_runner
+        command_runner: fake_runner,
+        background_launcher: noop_launcher
       )
       # When the trigger is run
       exit_code = trigger.run
@@ -405,8 +546,8 @@ class TestTriggerMissingFunCiFolder < Minitest::Test
       # When the trigger is run
       trigger.run
       # Then stdout should suggest creating the three scripts
-      assert_match(/build\.sh.*fast\.sh.*slow\.sh/m, stdout.string,
-        "Should suggest creating the three hook scripts")
+      assert_match(/lint\.sh.*build\.sh.*fast\.sh.*slow\.sh/m, stdout.string,
+        "Should suggest creating the four hook scripts")
     end
   end
 end

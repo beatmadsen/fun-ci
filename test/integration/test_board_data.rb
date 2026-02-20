@@ -37,7 +37,7 @@ class TestBoardData < Minitest::Test
     # Then the run should have stages attached
     assert_equal 1, result.length
     assert_equal "abc1234", result[0][:commit_hash]
-    assert_equal 3, result[0][:stages].length, "Should have 3 stages"
+    assert_equal 4, result[0][:stages].length, "Should have 4 stages"
   end
 
   def test_should_calculate_stage_durations

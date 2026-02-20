@@ -50,7 +50,7 @@ class TriggerCliClient
     # Clear previous run's arg capture files
     Dir.children(args_dir).each { |f| File.delete(File.join(args_dir, f)) }
 
-    %w[build.sh fast.sh slow.sh].each do |script|
+    %w[lint.sh build.sh fast.sh slow.sh].each do |script|
       args_file = File.join(args_dir, script)
       body = scripts.fetch(script, "exit 0")
       path = File.join(fun_ci_dir, script)
@@ -88,7 +88,7 @@ class TriggerCliClient
       fun_ci_dir = File.join(dir, ".fun-ci")
       Dir.mkdir(fun_ci_dir)
       # Create all scripts EXCEPT the missing one
-      %w[build.sh fast.sh slow.sh].each do |script|
+      %w[lint.sh build.sh fast.sh slow.sh].each do |script|
         next if script == missing_script
         path = File.join(fun_ci_dir, script)
         File.write(path, "#!/bin/sh\nexit 0\n")
@@ -104,7 +104,7 @@ class TriggerCliClient
     Dir.mktmpdir("fun-ci-test") do |dir|
       fun_ci_dir = File.join(dir, ".fun-ci")
       Dir.mkdir(fun_ci_dir)
-      %w[build.sh fast.sh slow.sh].each do |s|
+      %w[lint.sh build.sh fast.sh slow.sh].each do |s|
         path = File.join(fun_ci_dir, s)
         File.write(path, "#!/bin/sh\nexit 0\n")
         if s == script

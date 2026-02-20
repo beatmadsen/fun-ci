@@ -29,11 +29,11 @@ end
 
 class TestProjectConfigValidation < Minitest::Test
   def test_should_validate_when_all_scripts_exist_and_are_executable
-    # Given a .fun-ci folder with all three executable scripts
+    # Given a .fun-ci folder with all four executable scripts
     Dir.mktmpdir do |dir|
       fun_ci_dir = File.join(dir, ".fun-ci")
       FileUtils.mkdir_p(fun_ci_dir)
-      %w[build.sh fast.sh slow.sh].each do |script|
+      %w[lint.sh build.sh fast.sh slow.sh].each do |script|
         path = File.join(fun_ci_dir, script)
         File.write(path, "#!/bin/sh\nexit 0\n")
         File.chmod(0o755, path)
@@ -68,7 +68,7 @@ class TestProjectConfigValidation < Minitest::Test
     Dir.mktmpdir do |dir|
       fun_ci_dir = File.join(dir, ".fun-ci")
       FileUtils.mkdir_p(fun_ci_dir)
-      %w[build.sh fast.sh slow.sh].each do |script|
+      %w[lint.sh build.sh fast.sh slow.sh].each do |script|
         path = File.join(fun_ci_dir, script)
         File.write(path, "#!/bin/sh\nexit 0\n")
         File.chmod(0o755, path)

@@ -2,7 +2,7 @@
 
 module FunCi
   class ProjectConfig
-    REQUIRED_SCRIPTS = %w[build.sh fast.sh slow.sh].freeze
+    REQUIRED_SCRIPTS = %w[lint.sh build.sh fast.sh slow.sh].freeze
 
     def initialize(project_root)
       @project_root = project_root

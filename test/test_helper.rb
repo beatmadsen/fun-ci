@@ -41,7 +41,7 @@ module FunCiTestProject
   def make_project_with_scripts(dir)
     fun_ci_dir = File.join(dir, ".fun-ci")
     Dir.mkdir(fun_ci_dir)
-    %w[build.sh fast.sh slow.sh].each do |script|
+    %w[lint.sh build.sh fast.sh slow.sh].each do |script|
       path = File.join(fun_ci_dir, script)
       File.write(path, "#!/bin/sh\nexit 0\n")
       File.chmod(0o755, path)
@@ -68,7 +68,7 @@ module PipelineTestHelpers
     run_id = FunCi::PipelineRun.create(@db, commit_hash: commit, branch: branch)
     FunCi::PipelineRun.update_status(@db, run_id, "running")
     FunCi::PipelineRun.update_status(@db, run_id, "completed")
-    %w[build fast slow].each do |stage|
+    %w[lint build fast slow].each do |stage|
       job_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: stage)
       FunCi::StageJob.update_status(@db, job_id, "running")
       FunCi::StageJob.update_status(@db, job_id, "completed")
@@ -80,6 +80,9 @@ module PipelineTestHelpers
     run_id = FunCi::PipelineRun.create(@db, commit_hash: commit, branch: branch)
     FunCi::PipelineRun.update_status(@db, run_id, "running")
     FunCi::PipelineRun.update_status(@db, run_id, "failed")
+    lint_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: "lint")
+    FunCi::StageJob.update_status(@db, lint_id, "running")
+    FunCi::StageJob.update_status(@db, lint_id, "completed")
     build_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: "build")
     FunCi::StageJob.update_status(@db, build_id, "running")
     FunCi::StageJob.update_status(@db, build_id, "completed")

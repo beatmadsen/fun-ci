@@ -16,6 +16,31 @@ class TestTriggerCliPipelineStages < Minitest::Test
     @client.close
   end
 
+  def test_should_run_both_lint_and_build_in_phase_one
+    # Given a project with lint and build configured
+    # When the trigger CLI is invoked
+    @client.trigger(commit_hash: "abc1234", branch: "main")
+    # Then both lint and build should run (parallel Phase 1)
+    lint_args = @client.script_arguments_for("lint.sh")
+    build_args = @client.script_arguments_for("build.sh")
+    refute_nil lint_args, "lint.sh should run in Phase 1"
+    refute_nil build_args, "build.sh should run in Phase 1"
+  end
+
+  def test_should_still_run_build_when_lint_fails
+    # Given a project with a lint that fails (lint + build are parallel)
+    # When the trigger CLI is invoked
+    @client.trigger(commit_hash: "abc1234", branch: "main",
+      scripts: { "lint.sh" => "exit 1" })
+    # Then build should still have run (parallel Phase 1)
+    build_args = @client.script_arguments_for("build.sh")
+    refute_nil build_args, "build.sh should still run when lint fails (parallel)"
+    # And exit code should be non-zero
+    refute_equal 0, @client.exit_code, "Should fail when lint fails"
+    # And stdout should contain "Lint failed"
+    assert_match(/Lint failed/i, @client.stdout, "Should mention lint failure")
+  end
+
   def test_should_run_build_stage_before_fast_suite
     # Given a project with build and fast suite configured
     # When the trigger CLI is invoked
@@ -41,14 +66,24 @@ class TestTriggerCliPipelineStages < Minitest::Test
     assert_match(/Build failed/i, @client.stdout, "Should mention build failure")
   end
 
-  def test_should_not_run_slow_suite_when_fast_suite_fails
+  def test_should_still_launch_slow_suite_when_fast_suite_fails
     # Given a project with a fast suite that fails
+    # and a sync launcher so we can check if slow was actually invoked
+    slow_invoked = false
+    client = TriggerCliClient.new(
+      background_launcher: ->(db_path:, pipeline_run_id:, job_id:, executor:) {
+        slow_invoked = true
+      }
+    )
     # When the trigger CLI is invoked
-    @client.trigger(commit_hash: "abc1234", branch: "main",
+    client.trigger(commit_hash: "abc1234", branch: "main",
       scripts: { "fast.sh" => "exit 1" })
-    # Then the slow suite should not run
-    slow_args = @client.script_arguments_for("slow.sh")
-    assert_nil slow_args, "slow.sh should not run when fast suite fails"
+    # Then the slow suite should have been launched (parallel Phase 2)
+    assert slow_invoked, "Slow suite should be launched even when fast fails"
+    # And exit code should be non-zero (fast failure blocks the commit)
+    refute_equal 0, client.exit_code, "Should fail when fast suite fails"
+  ensure
+    client&.close
   end
 
   def test_should_run_slow_suite_in_background_after_fast_suite_passes
