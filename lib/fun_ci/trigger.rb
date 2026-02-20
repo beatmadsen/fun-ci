@@ -136,7 +136,7 @@ module FunCi
         recorder.close
       end
       Process.detach(pid)
-      canceller.write_pid_file(pid)
+      canceller.write_pid_file(pid, db_path: db_path, pipeline_run_id: pipeline_run_id)
     end
 
     def default_commit_validator(commit_hash)
