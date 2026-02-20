@@ -8,6 +8,24 @@ module FunCi
         "build.sh" => "#!/bin/sh\nbundle install --quiet\n",
         "fast.sh" => "#!/bin/sh\nbundle exec rake test \"$1\"\n",
         "slow.sh" => "#!/bin/sh\nbundle exec rake test:slow \"$1\"\n"
+      },
+      jvm_gradle_kotlin: {
+        "lint.sh" => "#!/bin/sh\n./gradlew check -x test \"$1\"\n",
+        "build.sh" => "#!/bin/sh\n./gradlew assemble\n",
+        "fast.sh" => "#!/bin/sh\n./gradlew test \"$1\"\n",
+        "slow.sh" => "#!/bin/sh\n./gradlew integrationTest \"$1\"\n"
+      },
+      jvm_gradle_groovy: {
+        "lint.sh" => "#!/bin/sh\n./gradlew check -x test \"$1\"\n",
+        "build.sh" => "#!/bin/sh\n./gradlew assemble\n",
+        "fast.sh" => "#!/bin/sh\n./gradlew test \"$1\"\n",
+        "slow.sh" => "#!/bin/sh\n./gradlew integrationTest \"$1\"\n"
+      },
+      jvm_maven: {
+        "lint.sh" => "#!/bin/sh\nmvn verify -DskipTests \"$1\"\n",
+        "build.sh" => "#!/bin/sh\nmvn compile\n",
+        "fast.sh" => "#!/bin/sh\nmvn test \"$1\"\n",
+        "slow.sh" => "#!/bin/sh\nmvn verify \"$1\"\n"
       }
     }.freeze
 

@@ -72,4 +72,36 @@ class TestTemplateWriter < Minitest::Test
       assert_match(/\$1/, slow_content, "slow.sh should reference commit hash argument")
     end
   end
+
+  def test_should_write_jvm_gradle_kotlin_template_with_gradlew_commands
+    # Given a target directory
+    Dir.mktmpdir("fun-ci-writer-test") do |dir|
+      writer = FunCi::TemplateWriter.new(:jvm_gradle_kotlin, dir)
+
+      # When we write the template
+      writer.write
+
+      # Then scripts should have shebang and use gradlew
+      fast_content = File.read(File.join(dir, ".fun-ci", "fast.sh"))
+      assert fast_content.start_with?("#!/bin/sh"), "fast.sh should have shebang"
+      assert_match(/gradlew/, fast_content, "fast.sh should use gradlew")
+      assert_match(/\$1/, fast_content, "fast.sh should reference commit hash argument")
+    end
+  end
+
+  def test_should_write_jvm_maven_template_with_mvn_commands
+    # Given a target directory
+    Dir.mktmpdir("fun-ci-writer-test") do |dir|
+      writer = FunCi::TemplateWriter.new(:jvm_maven, dir)
+
+      # When we write the template
+      writer.write
+
+      # Then scripts should have shebang and use mvn
+      fast_content = File.read(File.join(dir, ".fun-ci", "fast.sh"))
+      assert fast_content.start_with?("#!/bin/sh"), "fast.sh should have shebang"
+      assert_match(/mvn/, fast_content, "fast.sh should use mvn")
+      assert_match(/\$1/, fast_content, "fast.sh should reference commit hash argument")
+    end
+  end
 end

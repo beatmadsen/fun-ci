@@ -23,6 +23,11 @@ module FunCi
       filenames = Dir.children(@project_root)
       detected = ProjectDetector.new(filenames).detect
 
+      if detected == :unknown
+        @stdout.puts "Could not detect project type. Create .fun-ci/ manually."
+        return 1
+      end
+
       @stdout.puts "Detected: #{detected.to_s.tr("_", " ")}"
 
       TemplateWriter.new(detected, @project_root).write

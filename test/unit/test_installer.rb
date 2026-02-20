@@ -35,6 +35,23 @@ class TestInstallerHappyPath < Minitest::Test
   end
 end
 
+class TestInstallerUnknownProject < Minitest::Test
+  def test_should_refuse_when_project_type_is_unknown
+    # Given a project directory with no recognized marker files
+    Dir.mktmpdir("fun-ci-installer-test") do |dir|
+      File.write(File.join(dir, "README.md"), "# Hello\n")
+      stdout = StringIO.new
+
+      # When we run the installer
+      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+
+      # Then it should refuse
+      assert_equal 1, exit_code, "Should return 1 for unknown project type"
+      assert_match(/could not detect|unknown/i, stdout.string, "Should explain the failure")
+    end
+  end
+end
+
 class TestInstallerAlreadyExists < Minitest::Test
   def test_should_refuse_when_fun_ci_directory_already_exists
     # Given a project directory that already has .fun-ci/
