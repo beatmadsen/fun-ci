@@ -63,9 +63,10 @@ It's not every second a developer commits new code to a project.
 ### Sqlite with WAL is good enough for our needs.
 
 
-### Trigger inovocation orchestrates the jobs for the associated commit. 
+### Trigger inovocation orchestrates the jobs for the associated commit.
 - Trigger CLI is invoked with the commit hash and branch name.
 - It will spawn off a background process with a strict deadline to drive and complete the pipeline or fail. This code must be deeply resillient and not cause orphaned processes or memory leaks.
+- The foreground and background processes must not share complex objects or resources (DB connections, recorders, etc.). Only simple data (strings, paths, IDs) crosses the fork boundary. The background process is responsible for setting up its own state.
 - It will wait in the foreground until the fast suite is complete and return the result of that suite; return code 0 for success, non-zero for failure.
 
 

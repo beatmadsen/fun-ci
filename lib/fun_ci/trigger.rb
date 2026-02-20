@@ -64,12 +64,7 @@ module FunCi
       )
       canceller.cancel
       @recorder.create_run(commit_hash: @commit_hash, branch: @branch)
-
-      stage_runner = StageRunner.new(
-        commit_hash: @commit_hash, stdout: @stdout,
-        command_runner: @command_runner,
-        time_budgets: @time_budgets, recorder: @recorder
-      )
+      stage_runner = make_stage_runner
       progress = ProgressReporter.new(stdout: @stdout)
 
       # Phase 1: lint + build in parallel
@@ -80,15 +75,15 @@ module FunCi
         return 1
       end
       # Phase 2: slow (background) + fast (blocking)
-      spawn_slow_suite(config, canceller)
+      spawn_slow_suite(config)
       progress.slow_launched
-      fast_passed = stage_runner.run_stage(config, "fast")
+      fast_runner = make_stage_runner
+      fast_passed = fast_runner.run_stage(config, "fast")
       progress.fast_result(fast_passed)
       unless fast_passed
         @recorder.fail_run
         return 1
       end
-
       0
     end
 
@@ -112,7 +107,7 @@ module FunCi
       results
     end
 
-    def spawn_slow_suite(config, canceller)
+    def spawn_slow_suite(config)
       cmd = "#{config.script_path("slow")} #{@commit_hash}"
       job_id = @recorder.start_stage("slow")
       runner = @command_runner || ->(c) { Open3.capture2e(c) }
@@ -124,19 +119,27 @@ module FunCi
       )
     end
 
+    def make_stage_runner
+      StageRunner.new(
+        commit_hash: @commit_hash, stdout: @stdout,
+        command_runner: @command_runner,
+        time_budgets: @time_budgets, recorder: @recorder
+      )
+    end
+
     def default_background_launcher(db_path:, pipeline_run_id:, job_id:, executor:)
       @recorder.close
-      canceller = StalePipelineCanceller.new(
-        project_root: @project_root, branch: @branch,
-        commit_hash: @commit_hash, stdout: @stdout
-      )
       pid = fork do
         recorder = DbRecorder.for_background(db_path, pipeline_run_id)
         BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
         recorder.close
       end
+      @recorder = DbRecorder.for_background(db_path, pipeline_run_id)
       Process.detach(pid)
-      canceller.write_pid_file(pid, db_path: db_path, pipeline_run_id: pipeline_run_id)
+      StalePipelineCanceller.new(
+        project_root: @project_root, branch: @branch,
+        commit_hash: @commit_hash, stdout: @stdout
+      ).write_pid_file(pid, db_path: db_path, pipeline_run_id: pipeline_run_id)
     end
 
     def default_commit_validator(commit_hash)

@@ -6,6 +6,7 @@ module FunCi
   module Database
     def self.connection(db_path)
       db = SQLite3::Database.new(db_path)
+      db.busy_timeout = 5000
       db.execute("PRAGMA journal_mode=WAL")
       db.execute("PRAGMA foreign_keys=ON")
       db
