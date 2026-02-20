@@ -2,21 +2,7 @@
 
 Does not include completed work.
 
-## Linter stage before build stage
-
-## Running some stages in parallel
-
-The tests will depend on the build stage.
-
-So we can run linter and build in parallel first, and then run the test suites in parallel after the build stage completes successfully. This will speed up feedback and make better use of our time budgets.
-
-## Trigger invocation gives some feedack
-
-When you trigger a run, you should poll on the outcomes all the way up the end of the fast suite. 
-
-It will not wait for the slow suite. The idea is to give a git hook some preliminary, timely gate to prevent bad code from being merged, but the slow suite is more of a safety net and can be allowed to run in the background after the fact.
-
-## Smart installer
+## Smart installer
 
 A command that sets up fun-ci for a project, including creating the `.fun-ci/` folder and populating it with template scripts suitable for the project's language and build system.
 
@@ -26,3 +12,15 @@ Things I know I will need at this pont:
 - ruby bundle, have a look at my projects in ~/Developer/hobby/ruby and ~/Developer/hobby/rails for examples
 - jvm gradle: kotlin and groovy flavours
 - jvm maven, typically using surefire for unit/fast tests and failsafe for integration/slow tests
+
+### `fun-ci init`
+
+Creates `.fun-ci/`, generates real working template scripts (not stubs) with comments, and makes them executable. One command, done. Templates should contain actual commands for the detected language/build system.
+
+### `fun-ci install-hook [pre-commit|pre-push]`
+
+Wires up the git hook. The TUI empty state already mentions this command, so it's a promise the UI is already making.
+
+### `fun-ci check`
+
+Validates the current setup without running anything. Confirms `.fun-ci/` exists, scripts are present and executable, hook is installed. Gives people a way to verify their setup after manual edits.
