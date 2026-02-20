@@ -40,7 +40,7 @@ module FunCi
         rows = runs.map { |run| format_run(run) }
         @screen.render_board(rows, cursor_index: @cursor_index)
         @screen.println
-        @screen.render_footer(empty: false)
+        @screen.render_footer(empty: false, confirming: confirming?)
       end
 
       @screen.clear_below

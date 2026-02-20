@@ -30,8 +30,10 @@ module FunCi
       println Ansi.bg_charcoal(Ansi.white(line))
     end
 
-    def render_footer(empty: false)
-      if empty
+    def render_footer(empty: false, confirming: false)
+      if confirming
+        println Ansi.dim("  Cancel running pipeline? y/n")
+      elsif empty
         println Ansi.dim("  q quit")
       else
         println Ansi.dim("  j/k move   c cancel   q quit")

@@ -59,6 +59,21 @@ class TestScreenFooter < Minitest::Test
     screen.render_footer(empty: false)
     assert_match(/\e\[2m/, output.string, "Footer should be dim")
   end
+
+  def test_should_show_confirmation_prompt_when_confirming
+    # Given a screen renderer
+    output = StringIO.new
+    screen = FunCi::Screen.new(output: output, width: 60)
+    # When we render the footer in confirmation mode
+    screen.render_footer(confirming: true)
+    plain = FunCi::Ansi.strip(output.string)
+    # Then it should show the confirmation prompt with y/n options
+    assert_match(/cancel.*\?.*y\/n/i, plain,
+      "Footer should show confirmation prompt with y/n when confirming")
+    # And it should NOT show the normal key bindings
+    refute_match(/j\/k move/, plain,
+      "Normal key bindings should be hidden during confirmation")
+  end
 end
 
 class TestScreenEmptyState < Minitest::Test
