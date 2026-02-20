@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/fun_ci"
+require_relative "../lib/fun_ci/trigger"
+require_relative "../lib/fun_ci/pipeline_recorder"
+
+require "tmpdir"
+
+db_dir = File.join(Dir.tmpdir, "fun-ci")
+Dir.mkdir(db_dir) unless Dir.exist?(db_dir)
+db_path = File.join(db_dir, "db.sqlite3")
+
+db = FunCi::Database.connection(db_path)
+FunCi::Database.migrate!(db)
+
+recorder = FunCi::DbRecorder.new(db)
+
+exit FunCi::Trigger.run_from_args(ARGV, recorder: recorder)

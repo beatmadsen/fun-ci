@@ -1,0 +1,18 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/fun_ci"
+require_relative "../lib/fun_ci/admin_tui"
+
+require "tmpdir"
+require "io/console"
+
+db_dir = File.join(Dir.tmpdir, "fun-ci")
+Dir.mkdir(db_dir) unless Dir.exist?(db_dir)
+db_path = File.join(db_dir, "db.sqlite3")
+
+db = FunCi::Database.connection(db_path)
+FunCi::Database.migrate!(db)
+
+tui = FunCi::AdminTui.new(db: db, width_provider: -> { IO.console&.winsize&.dig(1) || 80 })
+tui.run
