@@ -60,7 +60,7 @@ module FunCi
 
     def run_init(args)
       require_relative "installer"
-      code = Installer.run(project_root: Dir.pwd, stdout: @stdout, stderr: @stderr)
+      code = Installer.run(project_root: Dir.pwd, stdout: @stdout)
       return code if code != 0 || !args.include?("--everything")
       code = run_install_hooks([])
       return code unless code == 0

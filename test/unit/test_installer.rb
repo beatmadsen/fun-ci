@@ -69,3 +69,48 @@ class TestInstallerAlreadyExists < Minitest::Test
     end
   end
 end
+
+class TestInstallerMavenNoLinter < Minitest::Test
+  def test_should_use_default_lint_command_when_no_linter_plugin_found
+    # Given a Maven project whose pom.xml has no recognized linter plugin
+    Dir.mktmpdir("fun-ci-installer-no-linter") do |dir|
+      File.write(File.join(dir, "pom.xml"), "<project></project>\n")
+      stdout = StringIO.new
+      pom_without_linter = "<project><artifactId>my-app</artifactId></project>"
+      fake_pom_reader = ->(_path) { pom_without_linter }
+
+      # When we run the installer with the pom_reader DI seam
+      FunCi::Installer.run(project_root: dir, stdout: stdout, pom_reader: fake_pom_reader)
+
+      # Then lint.sh should contain the default mvn verify command
+      lint_content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
+      assert_match(/mvn verify -DskipTests/, lint_content, "Should use default lint command when no linter found")
+    end
+  end
+end
+
+class TestInstallerMavenLinterDetection < Minitest::Test
+  def test_should_use_detected_linter_command_in_lint_script
+    # Given a Maven project whose pom.xml contains detekt
+    Dir.mktmpdir("fun-ci-installer-linter") do |dir|
+      File.write(File.join(dir, "pom.xml"), "<project></project>\n")
+      stdout = StringIO.new
+      pom_with_detekt = <<~XML
+        <project>
+          <build><plugins>
+            <plugin><artifactId>detekt-maven-plugin</artifactId></plugin>
+          </plugins></build>
+        </project>
+      XML
+      fake_pom_reader = ->(_path) { pom_with_detekt }
+
+      # When we run the installer with the pom_reader DI seam
+      FunCi::Installer.run(project_root: dir, stdout: stdout, pom_reader: fake_pom_reader)
+
+      # Then lint.sh should contain the detected linter command
+      lint_content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
+      assert_match(/mvn detekt:check/, lint_content, "Should use detected linter command")
+      refute_match(/verify/, lint_content, "Should not contain the default mvn verify")
+    end
+  end
+end

@@ -105,4 +105,27 @@ class TestInitTemplateContentMaven < Minitest::Test
       refute_match(/\$1/, content, "Should not pass $1 to mvn compile")
     end
   end
+
+  def test_should_use_detected_linter_when_pom_contains_linter_plugin
+    # Given a Maven project with detekt in pom.xml
+    Dir.mktmpdir("fun-ci-maven-linter-acc") do |dir|
+      pom_content = <<~XML
+        <project>
+          <build><plugins>
+            <plugin><artifactId>detekt-maven-plugin</artifactId></plugin>
+          </plugins></build>
+        </project>
+      XML
+      File.write(File.join(dir, "pom.xml"), pom_content)
+      stdout = StringIO.new
+
+      # When we run init (no DI — reads real pom.xml)
+      FunCi::Installer.run(project_root: dir, stdout: stdout)
+
+      # Then lint.sh should use the detected linter, not the default
+      lint_content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
+      assert_match(/mvn detekt:check/, lint_content, "Should use detected detekt command")
+      refute_match(/verify/, lint_content, "Should not contain default mvn verify")
+    end
+  end
 end

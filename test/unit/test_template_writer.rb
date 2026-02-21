@@ -99,4 +99,34 @@ class TestTemplateWriter < Minitest::Test
     end
   end
 
+  def test_lint_override_replaces_default_lint_command
+    # Given a Maven template with a lint override
+    Dir.mktmpdir("fun-ci-lint-override") do |dir|
+      writer = FunCi::TemplateWriter.new(:jvm_maven, dir, lint_override: "mvn detekt:check")
+
+      # When we write the template
+      writer.write
+
+      # Then lint.sh should use the override command and preserve shebang
+      lint_content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
+      assert lint_content.start_with?("#!/bin/sh"), "lint.sh should still start with shebang"
+      assert_match(/mvn detekt:check/, lint_content, "lint.sh should use the override")
+      refute_match(/verify/, lint_content, "lint.sh should not contain the default")
+    end
+  end
+
+  def test_lint_override_does_not_affect_other_scripts
+    # Given a Maven template with a lint override
+    Dir.mktmpdir("fun-ci-lint-override-other") do |dir|
+      writer = FunCi::TemplateWriter.new(:jvm_maven, dir, lint_override: "mvn detekt:check")
+
+      # When we write the template
+      writer.write
+
+      # Then other scripts should be unchanged
+      build_content = File.read(File.join(dir, ".fun-ci", "build.sh"))
+      assert_match(/mvn compile/, build_content, "build.sh should still use default")
+    end
+  end
+
 end
