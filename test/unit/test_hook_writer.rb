@@ -131,7 +131,7 @@ class TestHookWriterGuards < Minitest::Test
       # Then it should succeed and overwrite
       assert_equal 0, exit_code, "Should overwrite our own hook"
       content = File.read(hook_path)
-      assert_match(/fun-ci-trigger/, content, "Should have updated content")
+      assert_match(/fun-ci trigger/, content, "Should have updated content")
     end
   end
 

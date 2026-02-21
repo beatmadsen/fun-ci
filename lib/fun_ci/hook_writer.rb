@@ -7,12 +7,17 @@ module FunCi
     ALLOWED_HOOKS = %w[pre-commit pre-push].freeze
     MARKER = "# fun-ci-managed-hook"
 
+    HOOK_COMMANDS = {
+      "pre-commit" => "fun-ci trigger --no-validate",
+      "pre-push" => "fun-ci trigger"
+    }.freeze
+
     HOOK_TEMPLATE = <<~SH
       #!/bin/sh
       #{MARKER}
       COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "0000000000000000000000000000000000000000")
       BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
-      fun-ci-trigger "$COMMIT" "$BRANCH"
+      %<command>s "$COMMIT" "$BRANCH"
     SH
 
     def self.run(project_root:, hook_type:, stdout: $stdout)
@@ -51,7 +56,7 @@ module FunCi
 
     def write_hook
       FileUtils.mkdir_p(File.join(@project_root, ".git", "hooks"))
-      File.write(hook_path, HOOK_TEMPLATE)
+      File.write(hook_path, format(HOOK_TEMPLATE, command: HOOK_COMMANDS[@hook_type]))
       File.chmod(0o755, hook_path)
     end
 

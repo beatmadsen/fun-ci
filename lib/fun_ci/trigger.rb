@@ -8,6 +8,7 @@ require_relative "background_wrapper"
 require_relative "stage_runner"
 require_relative "stale_pipeline_canceller"
 require_relative "progress_reporter"
+require_relative "pipeline_forker"
 
 module FunCi
   class Trigger
@@ -18,22 +19,23 @@ module FunCi
       "slow" => 300
     }.freeze
 
-    def self.run_from_args(args, stdout: $stdout, stderr: $stderr, recorder: NullRecorder.new)
-      if args.length < 2
+    def self.run_from_args(args, stdout: $stdout, stderr: $stderr, recorder: NullRecorder.new, pipeline_forker: nil)
+      positional = args.reject { |a| a.start_with?("--") }
+      if positional.length < 2
         stderr.puts "fun-ci: commit hash and branch name are required."
         stderr.puts "Usage: fun-ci trigger <commit-hash> <branch>"
         return 1
       end
-
-      commit_hash, branch = args
-      new(
-        project_root: Dir.pwd,
-        commit_hash: commit_hash,
-        branch: branch,
-        stdout: stdout,
-        stderr: stderr,
-        recorder: recorder
-      ).run
+      commit_hash, branch = positional
+      if args.include?("--no-validate")
+        (pipeline_forker || PipelineForker.method(:fork_pipeline)).call(
+          commit_hash: commit_hash, branch: branch, db_path: recorder.db_path
+        )
+        recorder.close
+        return 0
+      end
+      new(project_root: Dir.pwd, commit_hash: commit_hash, branch: branch,
+          stdout: stdout, stderr: stderr, recorder: recorder).run
     end
 
     attr_writer :command_runner
@@ -62,14 +64,12 @@ module FunCi
       @recorder.create_run(commit_hash: @commit_hash, branch: @branch)
       stage_runner = make_stage_runner
       progress = ProgressReporter.new(stdout: @stdout)
-      # Phase 1: lint + build in parallel
       results = run_phase_one(stage_runner, config)
       progress.phase_one_result(results)
       unless results.values.all?
         @recorder.fail_run
         return 1
       end
-      # Phase 2: slow (background) + fast (blocking)
       spawn_slow_suite(config)
       progress.slow_launched
       fast_runner = make_stage_runner

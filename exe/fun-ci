@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative "../lib/fun_ci"
+require_relative "../lib/fun_ci/cli"
+
+exit FunCi::Cli.run(ARGV)

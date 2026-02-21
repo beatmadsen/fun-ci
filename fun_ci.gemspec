@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["lib/**/*.rb", "exe/*"]
   spec.bindir = "exe"
-  spec.executables = ["fun-ci-trigger", "fun-ci-tui"]
+  spec.executables = ["fun-ci", "fun-ci-trigger", "fun-ci-tui"]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "sqlite3"
