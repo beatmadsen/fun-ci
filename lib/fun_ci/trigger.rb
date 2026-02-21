@@ -28,10 +28,11 @@ module FunCi
       end
       commit_hash, branch = positional
       if args.include?("--no-validate")
-        (pipeline_forker || PipelineForker.method(:fork_pipeline)).call(
-          commit_hash: commit_hash, branch: branch, db_path: recorder.db_path
-        )
+        db_path = recorder.db_path
         recorder.close
+        (pipeline_forker || PipelineForker.method(:fork_pipeline)).call(
+          commit_hash: commit_hash, branch: branch, db_path: db_path
+        )
         return 0
       end
       new(project_root: Dir.pwd, commit_hash: commit_hash, branch: branch,

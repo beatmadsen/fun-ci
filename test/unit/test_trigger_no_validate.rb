@@ -77,6 +77,27 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
     assert_nil forker_calls.first[:db_path]
   end
 
+  def test_should_close_recorder_before_calling_forker
+    close_called_before_fork = nil
+    closed = false
+
+    recorder = FakeRecorder.new
+    recorder.define_singleton_method(:close) { closed = true }
+
+    forker = ->(commit_hash:, branch:, db_path:) {
+      close_called_before_fork = closed
+    }
+
+    FunCi::Trigger.run_from_args(
+      ["--no-validate", "abc1234", "main"],
+      recorder: recorder,
+      pipeline_forker: forker
+    )
+
+    assert close_called_before_fork,
+      "Recorder should be closed before the forker is called"
+  end
+
   def test_should_not_invoke_forker_without_no_validate_flag
     forker_calls = []
     fake_forker = ->(commit_hash:, branch:, db_path:) {
