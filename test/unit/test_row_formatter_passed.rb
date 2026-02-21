@@ -15,6 +15,17 @@ class TestRowFormatterPassedRun < Minitest::Test
     assert_match(/main/, result, "Should show branch name")
   end
 
+  def test_should_truncate_commit_hash_to_7_characters
+    # Given a run with a full 40-character commit hash
+    run_data = make_passed_run
+    run_data[:commit_hash] = "a3f7c01deadbeef1234567890abcdef1234567890"
+    # When we format it
+    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    # Then it should show only the first 7 characters
+    assert_match(/a3f7c01/, result, "Should show short hash")
+    refute_match(/deadbeef/, result, "Should not show full hash beyond 7 chars")
+  end
+
   def test_should_show_stage_times
     # Given a passed pipeline run
     run_data = make_passed_run

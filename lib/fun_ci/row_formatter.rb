@@ -11,9 +11,10 @@ module FunCi
       "completed" => "PASSED", "failed" => "FAILED", "timed_out" => "TIMED OUT",
       "running" => "RUNNING", "scheduled" => "Scheduled...", "cancelled" => "CANCELLED"
     }.freeze
+    PROJECT_COLORS = %w[31 32 33 34 35 36 91 92 93 94].freeze
 
     def self.format(run, now: Time.now, spinner_frame: nil, elapsed_seconds: nil)
-      commit = run[:commit_hash]
+      commit = run[:commit_hash][0, 7]
       branch = run[:branch]
       status = run[:status]
       project = format_project(run[:project_path])
@@ -33,7 +34,9 @@ module FunCi
 
     def self.format_project(project_path)
       return "" unless project_path
-      "  #{Ansi.dim(File.basename(project_path))}"
+      name = File.basename(project_path)
+      code = PROJECT_COLORS[name.hash.abs % PROJECT_COLORS.size]
+      "  \e[#{code}m#{name}#{Ansi::RESET}"
     end
     private_class_method :format_project
 

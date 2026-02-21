@@ -27,13 +27,27 @@ class TestRowFormatterProjectName < Minitest::Test
     assert_match(/main/, result, "Should show branch name")
   end
 
-  def test_should_dim_project_name
+  def test_should_color_project_name_not_dim
     # Given a completed run with a project_path
     run_data = make_run_with_project("/home/user/alpha-app")
     # When we format it with color
     result = FunCi::RowFormatter.format(run_data)
-    # Then the project name should be dim
-    assert_match(/\e\[2m.*alpha-app/, result, "Project name should be dim")
+    # Then the project name should use a color, not dim
+    refute_match(/\e\[2m.*alpha-app/, result, "Project name should not be dim")
+    assert_match(/\e\[\d+m.*alpha-app/, result, "Project name should have a color code")
+  end
+
+  def test_should_assign_same_color_to_same_project_name
+    # Given two runs with the same project path
+    run_a = make_run_with_project("/home/user/alpha-app")
+    run_b = make_run_with_project("/other/path/alpha-app")
+    # When we format both
+    result_a = FunCi::RowFormatter.format(run_a)
+    result_b = FunCi::RowFormatter.format(run_b)
+    # Then both should use the same color for the same basename
+    color_a = result_a[/(\e\[\d+m).*alpha-app/, 1]
+    color_b = result_b[/(\e\[\d+m).*alpha-app/, 1]
+    assert_equal color_a, color_b, "Same project name should get same color"
   end
 
   private
