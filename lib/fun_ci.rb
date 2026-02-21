@@ -7,7 +7,7 @@ require_relative "fun_ci/stage_job"
 require_relative "fun_ci/project_config"
 
 module FunCi
-  VERSION = "0.0.1"
+  VERSION = "1.0.0"
 
   BUILD_TIMEOUT = 30
   FAST_SUITE_TIMEOUT = 10

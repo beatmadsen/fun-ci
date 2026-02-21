@@ -1,6 +1,6 @@
 # Fun-CI
 
-Opinionated, local-first CI for Ruby and JVM projects. Runs a four-stage pipeline on every commit with strict time budgets, so your feedback loop stays fast.
+Opinionated local CI that checks your code before it leaves your machine. Runs a four-stage pipeline on every commit with strict time budgets, so your feedback loop stays fast.
 
 ## How It Works
 
@@ -27,7 +27,7 @@ This does three things:
 2. Installs pre-commit and pre-push git hooks
 3. Verifies the setup is valid
 
-Supported project types: Ruby (Bundler), JVM (Gradle Kotlin, Gradle Groovy, Maven).
+`fun-ci init` has built-in templates for Ruby (Bundler), JVM (Gradle Kotlin, Gradle Groovy, Maven), but Fun-CI works with any project -- just write your own shell scripts.
 
 ### Manual Setup
 
@@ -90,3 +90,18 @@ Opens a terminal UI showing pipeline status across all branches. Navigation:
 | Slow  | 5min   | nothing (background) |
 
 If a stage exceeds its budget, it is killed and reported as timed out.
+
+## Development
+
+```bash
+bundle install
+rake test
+```
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
+
+## License
+
+MIT
