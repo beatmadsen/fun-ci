@@ -7,6 +7,7 @@ Gem::Specification.new do |spec|
   spec.version = FunCi::VERSION
   spec.authors = ["Erik Thyge Madsen"]
   spec.summary = "Opinionated local CI that checks your code before it leaves your machine"
+  spec.homepage = "https://github.com/beatmadsen/fun-ci"
   spec.license = "MIT"
 
   spec.required_ruby_version = ">= 3.0"
