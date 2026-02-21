@@ -12,8 +12,8 @@ module FunCi
     FAST_REFRESH = 0.1  # seconds (spinner + timer)
     SLOW_REFRESH = 5.0  # seconds (settled board)
 
-    def initialize(db:, output: $stdout, input: $stdin, width: 80, width_provider: nil)
-      @board_data = BoardData.new(db)
+    def initialize(db:, output: $stdout, input: $stdin, width: 80, width_provider: nil, page_size: nil)
+      @board_data = BoardData.new(db, page_size: page_size)
       @screen = Screen.new(output: output, width: width)
       @output = output
       @input = input
@@ -128,6 +128,7 @@ module FunCi
         @cursor_index = 0
       elsif @cursor_index < runs.length - 1
         @cursor_index += 1
+        @board_data.load_more if @cursor_index == runs.length - 1
       end
     end
 

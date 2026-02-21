@@ -79,6 +79,39 @@ class TestBoardData < Minitest::Test
     assert_equal 3, result
   end
 
+  def test_should_use_page_size_as_initial_limit
+    # Given 10 runs and a page_size of 3
+    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    board = FunCi::BoardData.new(@db, page_size: 3)
+    # When we fetch runs
+    result = board.runs
+    # Then only 3 should be returned
+    assert_equal 3, result.length, "Should initially show page_size rows"
+  end
+
+  def test_should_show_more_after_load_more
+    # Given 10 runs and a page_size of 3
+    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    board = FunCi::BoardData.new(@db, page_size: 3)
+    # When we load more
+    board.load_more
+    result = board.runs
+    # Then 6 should be returned (2 pages)
+    assert_equal 6, result.length, "Should show 2 pages after load_more"
+  end
+
+  def test_should_not_exceed_total_runs_after_load_more
+    # Given 5 runs and a page_size of 3
+    5.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    board = FunCi::BoardData.new(@db, page_size: 3)
+    # When we load_more twice (would be 9, but only 5 exist)
+    board.load_more
+    board.load_more
+    result = board.runs
+    # Then all 5 should be shown (capped at actual count)
+    assert_equal 5, result.length, "Should not exceed total runs"
+  end
+
   def test_should_cancel_a_run
     run_id = FunCi::PipelineRun.create(@db, commit_hash: "abc1234", branch: "main")
     board = FunCi::BoardData.new(@db)
