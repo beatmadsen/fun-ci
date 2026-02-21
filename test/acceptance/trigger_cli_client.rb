@@ -141,6 +141,10 @@ class TriggerCliClient
     FunCi::PipelineRun.find_by_commit(@db, commit_hash)
   end
 
+  def store_pid_for_run(run_id, pid)
+    FunCi::PipelineRun.store_pid(@db, run_id, pid)
+  end
+
   # Query stage jobs for a given pipeline run ID.
   def stage_jobs_for(pipeline_run_id:)
     rows = @db.execute(

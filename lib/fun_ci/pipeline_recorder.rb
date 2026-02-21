@@ -10,13 +10,14 @@ module FunCi
     def end_stage(job_id, status) = nil
     def complete_run = nil
     def fail_run = nil
+    def db = nil
     def db_path = nil
     def pipeline_run_id = nil
     def close = nil
   end
 
   class DbRecorder
-    attr_reader :db_path, :pipeline_run_id
+    attr_reader :db, :db_path, :pipeline_run_id
 
     def self.for_background(db_path, pipeline_run_id)
       db = Database.connection(db_path)

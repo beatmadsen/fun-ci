@@ -58,15 +58,10 @@ module FunCi
         @stderr.puts "fun-ci: commit #{@commit_hash} not found in this repository."
         return 1
       end
-      canceller = StalePipelineCanceller.new(
-        project_root: @project_root, branch: @branch,
-        commit_hash: @commit_hash, stdout: @stdout
-      )
-      canceller.cancel
+      cancel_stale_pipelines
       @recorder.create_run(commit_hash: @commit_hash, branch: @branch)
       stage_runner = make_stage_runner
       progress = ProgressReporter.new(stdout: @stdout)
-
       # Phase 1: lint + build in parallel
       results = run_phase_one(stage_runner, config)
       progress.phase_one_result(results)
@@ -127,6 +122,13 @@ module FunCi
       )
     end
 
+    def cancel_stale_pipelines
+      return unless @recorder.db
+      StalePipelineCanceller.new(
+        db: @recorder.db, branch: @branch, stdout: @stdout
+      ).cancel(new_commit_hash: @commit_hash)
+    end
+
     def default_background_launcher(db_path:, pipeline_run_id:, job_id:, executor:)
       @recorder.close
       pid = fork do
@@ -136,10 +138,7 @@ module FunCi
       end
       @recorder = DbRecorder.for_background(db_path, pipeline_run_id)
       Process.detach(pid)
-      StalePipelineCanceller.new(
-        project_root: @project_root, branch: @branch,
-        commit_hash: @commit_hash, stdout: @stdout
-      ).write_pid_file(pid, db_path: db_path, pipeline_run_id: pipeline_run_id)
+      PipelineRun.store_pid(@recorder.db, pipeline_run_id, pid)
     end
 
     def default_commit_validator(commit_hash)

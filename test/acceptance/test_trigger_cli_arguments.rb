@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../test_helper"
-require_relative "trigger_cli_client"
+require_relative "trigger_cli_shared"
 
 # Acceptance tests for CLI invocation and argument handling.
 #
@@ -10,7 +9,7 @@ require_relative "trigger_cli_client"
 
 class TestTriggerCliHappyPath < Minitest::Test
   def setup
-    @client = TriggerCliClient.new
+    @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER)
   end
 
   def teardown
@@ -69,22 +68,29 @@ class TestTriggerCliHappyPath < Minitest::Test
   end
 
   def test_should_return_nonzero_exit_code_when_fast_suite_fails
-    # Given a project with a fast suite that has failing tests
-    # When the trigger CLI is invoked
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "fast.sh" => "echo 'test_foo FAILED'; exit 1" })
-    # Then exit code should be non-zero
-    refute_equal 0, @client.exit_code, "Should return non-zero when fast suite fails"
+    runner = ->(cmd) {
+      cmd.include?("fast.sh") ? ["test_foo FAILED", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    refute_equal 0, client.exit_code, "Should return non-zero when fast suite fails"
+  ensure
+    client&.close
   end
 
   def test_should_display_test_runner_output_when_fast_suite_fails
-    # Given a project with a fast suite that has failing tests
-    # When the trigger CLI is invoked
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "fast.sh" => "echo 'test_foo FAILED'; exit 1" })
-    # Then stdout should contain the test runner output
-    assert_match(/test_foo FAILED/, @client.stdout, "Should show test runner output")
-    # And stdout should contain "Fast suite failed"
-    assert_match(/Fast suite failed/i, @client.stdout, "Should mention fast suite failure")
+    runner = ->(cmd) {
+      if cmd.include?("fast.sh")
+        ["test_foo FAILED", FakeStatus.new(false, 1)]
+      else
+        ["", FakeStatus.new(true, 0)]
+      end
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    assert_match(/test_foo FAILED/, client.stdout, "Should show test runner output")
+    assert_match(/Fast suite failed/i, client.stdout, "Should mention fast suite failure")
+  ensure
+    client&.close
   end
 end

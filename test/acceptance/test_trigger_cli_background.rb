@@ -11,6 +11,7 @@ require_relative "trigger_cli_shared"
 class TestTriggerCliBackgroundProcess < Minitest::Test
   def setup
     @client = TriggerCliClient.new(
+      command_runner: script_simulating_runner,
       background_launcher: SYNC_LAUNCHER
     )
   end
@@ -43,15 +44,11 @@ class TestTriggerCliBackgroundProcess < Minitest::Test
   end
 
   def test_should_not_leave_orphaned_processes_after_completion
-    # Given the trigger CLI has been invoked and the slow suite completes quickly
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "slow.sh" => "exit 0" })
-    # When the pipeline finishes
-    # Then wait briefly for background to complete, then check no orphans
+    # Given the trigger CLI has been invoked and the slow suite completes
+    @client.trigger(commit_hash: "abc1234", branch: "main")
+    # Then slow.sh should have been invoked (via SYNC_LAUNCHER)
     slow_args = @client.script_arguments_for("slow.sh")
     refute_nil slow_args, "slow.sh should have completed"
-    # Background process should have exited after quick script
-    # (no long-running orphan left behind)
   end
 
   def test_should_not_leave_orphaned_processes_after_timeout
@@ -72,12 +69,14 @@ class TestTriggerCliBackgroundProcess < Minitest::Test
   end
 
   def test_should_report_fast_suite_result_when_background_process_crashes
-    # Given the fast suite has passed
-    # When the background process crashes (slow.sh exits non-zero)
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "slow.sh" => "exit 1" })
-    # Then the trigger CLI should still return exit code 0 (fast suite passed)
-    assert_equal 0, @client.exit_code,
+    runner = ->(cmd) {
+      cmd.include?("slow.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner, background_launcher: SYNC_LAUNCHER)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    assert_equal 0, client.exit_code,
       "Should return 0 because fast suite passed, regardless of slow suite"
+  ensure
+    client&.close
   end
 end

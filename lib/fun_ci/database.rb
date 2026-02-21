@@ -19,10 +19,13 @@ module FunCi
           commit_hash TEXT,
           branch TEXT,
           status TEXT DEFAULT 'scheduled',
+          pid INTEGER,
           created_at TEXT,
           updated_at TEXT
         )
       SQL
+
+      add_column_if_missing(db, "pipeline_runs", "pid", "INTEGER")
 
       db.execute(<<~SQL)
         CREATE TABLE IF NOT EXISTS stage_jobs (
@@ -35,5 +38,12 @@ module FunCi
         )
       SQL
     end
+
+    def self.add_column_if_missing(db, table, column, type)
+      columns = db.execute("PRAGMA table_info(#{table})").map { |row| row[1] }
+      return if columns.include?(column)
+      db.execute("ALTER TABLE #{table} ADD COLUMN #{column} #{type}")
+    end
+    private_class_method :add_column_if_missing
   end
 end

@@ -5,63 +5,100 @@ require "fun_ci/stale_pipeline_canceller"
 require "fun_ci/database"
 require "fun_ci/pipeline_run"
 
-class TestStalePipelineCancellerDbUpdate < Minitest::Test
+class TestStalePipelineCancellerCancel < Minitest::Test
   include DatabaseTestSetup
 
   def setup
     setup_test_db
-    @project_dir = Dir.mktmpdir("fun-ci-test")
   end
 
   def teardown
     teardown_test_db
-    FileUtils.remove_entry(@project_dir) rescue nil
   end
 
-  def test_should_mark_old_pipeline_as_cancelled_when_pid_file_has_db_info
-    # Given a pipeline run exists in the database in "running" state
+  def test_should_mark_running_pipeline_as_cancelled_when_process_is_dead
+    # Given a running pipeline with a PID stored in DB
     run_id = FunCi::PipelineRun.create(@db, commit_hash: "abc1234", branch: "main")
     FunCi::PipelineRun.update_status(@db, run_id, "running")
-    db_path = @db.filename("main")
-    # And a PID file exists with a dead process but includes db_path and run_id
-    dead_pid = 2_000_000_000
-    pid_dir = File.join(@project_dir, ".fun-ci-pids")
-    Dir.mkdir(pid_dir)
-    File.write(
-      File.join(pid_dir, "main.pid"),
-      "#{dead_pid}\nabc1234\n#{db_path}\n#{run_id}"
-    )
+    FunCi::PipelineRun.store_pid(@db, run_id, 99999)
     stdout = StringIO.new
+    # And a process_killer that reports the process is dead
+    killed = []
+    process_killer = ->(signal, pid) { killed << [signal, pid]; raise Errno::ESRCH }
     canceller = FunCi::StalePipelineCanceller.new(
-      project_root: @project_dir, branch: "main",
-      commit_hash: "def5678", stdout: stdout
+      db: @db, branch: "main",
+      stdout: stdout,
+      process_killer: process_killer
     )
     # When cancel is called
-    canceller.cancel
-    # Then the old pipeline run should be marked as cancelled
+    canceller.cancel(new_commit_hash: "def5678")
+    # Then the old pipeline should be marked as cancelled
     old_run = FunCi::PipelineRun.find(@db, run_id)
     assert_equal "cancelled", old_run[:status],
-      "Should mark old pipeline as cancelled via DB"
+      "Should mark dead pipeline as cancelled"
   end
 
-  def test_should_not_fail_when_pid_file_has_no_db_info
-    # Given a PID file in the old 2-line format (no db_path or run_id)
-    dead_pid = 2_000_000_000
-    pid_dir = File.join(@project_dir, ".fun-ci-pids")
-    Dir.mkdir(pid_dir)
-    File.write(
-      File.join(pid_dir, "main.pid"),
-      "#{dead_pid}\nabc1234"
-    )
+  def test_should_kill_and_cancel_running_pipeline_when_process_is_alive
+    # Given a running pipeline with a PID stored in DB
+    run_id = FunCi::PipelineRun.create(@db, commit_hash: "abc1234", branch: "main")
+    FunCi::PipelineRun.update_status(@db, run_id, "running")
+    FunCi::PipelineRun.store_pid(@db, run_id, 12345)
     stdout = StringIO.new
+    # And a process_killer that succeeds (process alive)
+    killed = []
+    process_killer = ->(signal, pid) { killed << [signal, pid] }
     canceller = FunCi::StalePipelineCanceller.new(
-      project_root: @project_dir, branch: "main",
-      commit_hash: "def5678", stdout: stdout
+      db: @db, branch: "main",
+      stdout: stdout,
+      process_killer: process_killer
     )
     # When cancel is called
-    canceller.cancel
-    # Then it should not raise (graceful backward compatibility)
-    pid_file = File.join(pid_dir, "main.pid")
-    refute File.exist?(pid_file), "Should still clean up old-format PID file"
+    canceller.cancel(new_commit_hash: "def5678")
+    # Then it should send TERM then KILL signals
+    assert_includes killed, ["TERM", 12345], "Should send TERM to stale process"
+    assert_includes killed, ["KILL", 12345], "Should send KILL to stale process"
+    # And the pipeline should be marked cancelled
+    old_run = FunCi::PipelineRun.find(@db, run_id)
+    assert_equal "cancelled", old_run[:status],
+      "Should mark killed pipeline as cancelled"
+  end
+
+  def test_should_print_cancellation_message
+    # Given a running pipeline with a PID
+    run_id = FunCi::PipelineRun.create(@db, commit_hash: "abc1234", branch: "main")
+    FunCi::PipelineRun.update_status(@db, run_id, "running")
+    FunCi::PipelineRun.store_pid(@db, run_id, 12345)
+    stdout = StringIO.new
+    process_killer = ->(_signal, _pid) {}
+    canceller = FunCi::StalePipelineCanceller.new(
+      db: @db, branch: "main",
+      stdout: stdout,
+      process_killer: process_killer
+    )
+    # When cancel is called
+    canceller.cancel(new_commit_hash: "def5678")
+    # Then it should inform the user
+    assert_match(/cancell.*abc1234/i, stdout.string,
+      "Should mention cancelling the old commit")
+    assert_match(/def5678/, stdout.string,
+      "Should mention the new commit")
+  end
+
+  def test_should_do_nothing_when_no_running_pipeline_on_branch
+    # Given no running pipeline on branch "main"
+    stdout = StringIO.new
+    killed = []
+    process_killer = ->(signal, pid) { killed << [signal, pid] }
+    canceller = FunCi::StalePipelineCanceller.new(
+      db: @db, branch: "main",
+      stdout: stdout,
+      process_killer: process_killer
+    )
+    # When cancel is called
+    canceller.cancel(new_commit_hash: "def5678")
+    # Then no processes should be killed
+    assert_empty killed, "Should not try to kill anything"
+    # And no output
+    assert_empty stdout.string, "Should not print anything"
   end
 end

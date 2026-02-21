@@ -63,7 +63,7 @@ class TestDatabasePipelineRunsSchema < Minitest::Test
     # When we inspect the pipeline_runs table schema
     columns = @db.execute("PRAGMA table_info(pipeline_runs)").map { |row| row[1] }
     # Then it should have the expected columns
-    expected = %w[id commit_hash branch status created_at updated_at]
+    expected = %w[id commit_hash branch status pid created_at updated_at]
     expected.each do |col|
       assert_includes columns, col, "pipeline_runs should have column '#{col}'"
     end

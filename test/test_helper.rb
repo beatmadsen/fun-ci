@@ -33,6 +33,7 @@ class FakeRecorder
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
   def complete_run = @calls << [:complete_run]
   def fail_run = @calls << [:fail_run]
+  def db = nil
   def db_path = nil
   def pipeline_run_id = nil
 end

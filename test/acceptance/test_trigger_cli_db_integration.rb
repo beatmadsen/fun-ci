@@ -10,7 +10,7 @@ require_relative "trigger_cli_shared"
 
 class TestTriggerCliDatabaseIntegration < Minitest::Test
   def setup
-    @client = TriggerCliClient.new
+    @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER)
   end
 
   def teardown
@@ -49,28 +49,43 @@ class TestTriggerCliDatabaseIntegration < Minitest::Test
   end
 
   def test_should_mark_stage_as_failed_when_script_fails
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "build.sh" => "exit 1" })
-    runs = @client.pipeline_runs_for(commit_hash: "abc1234")
-    jobs = @client.stage_jobs_for(pipeline_run_id: runs.first[:id])
+    runner = ->(cmd) {
+      cmd.include?("build.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    runs = client.pipeline_runs_for(commit_hash: "abc1234")
+    jobs = client.stage_jobs_for(pipeline_run_id: runs.first[:id])
     build_job = jobs.find { |j| j[:stage] == "build" }
     assert_equal "failed", build_job[:status], "Build stage should be marked failed"
+  ensure
+    client&.close
   end
 
   def test_should_mark_lint_stage_as_failed_when_lint_script_fails
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "lint.sh" => "exit 1" })
-    runs = @client.pipeline_runs_for(commit_hash: "abc1234")
-    jobs = @client.stage_jobs_for(pipeline_run_id: runs.first[:id])
+    runner = ->(cmd) {
+      cmd.include?("lint.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    runs = client.pipeline_runs_for(commit_hash: "abc1234")
+    jobs = client.stage_jobs_for(pipeline_run_id: runs.first[:id])
     lint_job = jobs.find { |j| j[:stage] == "lint" }
     assert_equal "failed", lint_job[:status], "Lint stage should be marked failed"
+  ensure
+    client&.close
   end
 
   def test_should_mark_pipeline_run_as_failed_when_lint_fails
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "lint.sh" => "exit 1" })
-    runs = @client.pipeline_runs_for(commit_hash: "abc1234")
+    runner = ->(cmd) {
+      cmd.include?("lint.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    runs = client.pipeline_runs_for(commit_hash: "abc1234")
     assert_equal "failed", runs.first[:status], "Pipeline should be marked failed when lint fails"
+  ensure
+    client&.close
   end
 
   def test_should_not_mark_pipeline_run_as_completed_before_slow_suite_finishes
@@ -81,10 +96,15 @@ class TestTriggerCliDatabaseIntegration < Minitest::Test
   end
 
   def test_should_mark_pipeline_run_as_failed_when_build_fails
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "build.sh" => "exit 1" })
-    runs = @client.pipeline_runs_for(commit_hash: "abc1234")
+    runner = ->(cmd) {
+      cmd.include?("build.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    runs = client.pipeline_runs_for(commit_hash: "abc1234")
     assert_equal "failed", runs.first[:status], "Pipeline should be marked failed"
+  ensure
+    client&.close
   end
 end
 
@@ -94,7 +114,7 @@ class TestTriggerCliProductionSlowSuiteRecording < Minitest::Test
   end
 
   def test_should_record_slow_suite_result_when_using_production_path
-    @client = TriggerCliClient.new(background_launcher: SYNC_LAUNCHER)
+    @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER, background_launcher: SYNC_LAUNCHER)
     @client.trigger(commit_hash: "abc1234", branch: "main")
     runs = @client.pipeline_runs_for(commit_hash: "abc1234")
     jobs = @client.stage_jobs_for(pipeline_run_id: runs.first[:id])
@@ -106,9 +126,11 @@ class TestTriggerCliProductionSlowSuiteRecording < Minitest::Test
   end
 
   def test_should_record_slow_suite_failure_when_using_production_path
-    @client = TriggerCliClient.new(background_launcher: SYNC_LAUNCHER)
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "slow.sh" => "exit 1" })
+    runner = ->(cmd) {
+      cmd.include?("slow.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    @client = TriggerCliClient.new(command_runner: runner, background_launcher: SYNC_LAUNCHER)
+    @client.trigger(commit_hash: "abc1234", branch: "main")
     runs = @client.pipeline_runs_for(commit_hash: "abc1234")
     jobs = @client.stage_jobs_for(pipeline_run_id: runs.first[:id])
     slow_job = jobs.find { |j| j[:stage] == "slow" }

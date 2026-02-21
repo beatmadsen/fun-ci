@@ -9,7 +9,7 @@ require_relative "trigger_cli_shared"
 
 class TestTriggerCliProgressFeedback < Minitest::Test
   def setup
-    @client = TriggerCliClient.new
+    @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER)
   end
 
   def teardown
@@ -44,41 +44,49 @@ class TestTriggerCliProgressFeedback < Minitest::Test
   end
 
   def test_should_show_phase_one_failed_when_lint_fails
-    # Given a project where lint fails
-    # When the trigger CLI is invoked
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "lint.sh" => "exit 1" })
-    # Then stdout should show lint FAIL and phase 1 failed
-    assert_match(/lint FAIL/, @client.stdout, "Should show lint FAIL")
-    assert_match(/phase 1 failed/i, @client.stdout, "Should summarize phase 1 failed")
+    runner = ->(cmd) {
+      cmd.include?("lint.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    assert_match(/lint FAIL/, client.stdout, "Should show lint FAIL")
+    assert_match(/phase 1 failed/i, client.stdout, "Should summarize phase 1 failed")
+  ensure
+    client&.close
   end
 
   def test_should_show_phase_one_failed_when_build_fails
-    # Given a project where build fails
-    # When the trigger CLI is invoked
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "build.sh" => "exit 1" })
-    # Then stdout should show build FAIL and phase 1 failed
-    assert_match(/build FAIL/, @client.stdout, "Should show build FAIL")
-    assert_match(/phase 1 failed/i, @client.stdout, "Should summarize phase 1 failed")
+    runner = ->(cmd) {
+      cmd.include?("build.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    assert_match(/build FAIL/, client.stdout, "Should show build FAIL")
+    assert_match(/phase 1 failed/i, client.stdout, "Should summarize phase 1 failed")
+  ensure
+    client&.close
   end
 
   def test_should_show_fast_fail_when_fast_suite_fails
-    # Given a project where fast suite fails
-    # When the trigger CLI is invoked
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "fast.sh" => "exit 1" })
-    # Then stdout should show fast FAIL
-    assert_match(/fast FAIL/, @client.stdout, "Should show fast FAIL")
+    runner = ->(cmd) {
+      cmd.include?("fast.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    assert_match(/fast FAIL/, client.stdout, "Should show fast FAIL")
+  ensure
+    client&.close
   end
 
   def test_should_not_show_fast_result_when_phase_one_fails
-    # Given a project where lint fails (phase 1 aborts, fast never runs)
-    # When the trigger CLI is invoked
-    @client.trigger(commit_hash: "abc1234", branch: "main",
-      scripts: { "lint.sh" => "exit 1" })
-    # Then stdout should NOT show fast result (fast never ran)
-    refute_match(/fast ok/i, @client.stdout, "Should not show fast ok when phase 1 failed")
-    refute_match(/fast FAIL/i, @client.stdout, "Should not show fast FAIL when phase 1 failed")
+    runner = ->(cmd) {
+      cmd.include?("lint.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
+    }
+    client = TriggerCliClient.new(command_runner: runner)
+    client.trigger(commit_hash: "abc1234", branch: "main")
+    refute_match(/fast ok/i, client.stdout, "Should not show fast ok when phase 1 failed")
+    refute_match(/fast FAIL/i, client.stdout, "Should not show fast FAIL when phase 1 failed")
+  ensure
+    client&.close
   end
 end

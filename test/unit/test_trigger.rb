@@ -318,42 +318,6 @@ class TestTriggerTimeBudgets < Minitest::Test
   end
 end
 
-class TestTriggerConcurrentHandling < Minitest::Test
-  include FunCiTestProject
-
-  def test_should_clean_up_stale_pid_file_when_process_is_dead
-    # Given a PID file exists for branch "main" with a dead process
-    Dir.mktmpdir("fun-ci-test") do |dir|
-      make_project_with_scripts(dir)
-      pid_dir = File.join(dir, ".fun-ci-pids")
-      Dir.mkdir(pid_dir)
-
-      dead_pid = 2_000_000_000 # PID too high to exist on any OS
-      pid_file = File.join(pid_dir, "main.pid")
-      File.write(pid_file, "#{dead_pid}\nabc1234")
-
-      stdout = StringIO.new
-      launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
-        FunCi::BackgroundWrapper.new(
-          recorder: FakeRecorder.new, job_id: job_id, executor: executor
-        ).run
-      }
-      trigger = FunCi::Trigger.new(
-        project_root: dir,
-        commit_hash: "def5678",
-        branch: "main",
-        stdout: stdout,
-        commit_validator: ->(_h) { true },
-        command_runner: ->(cmd) { ["", FakeStatus.new(true, 0)] },
-        background_launcher: launcher
-      )
-      # When the trigger is run
-      trigger.run
-      # Then the stale PID file should be cleaned up
-      refute File.exist?(pid_file), "Should remove stale PID file for dead process"
-    end
-  end
-end
 
 class TestTriggerCommitValidation < Minitest::Test
   include FunCiTestProject
