@@ -6,7 +6,7 @@ require_relative "relative_time"
 
 module FunCi
   module RowFormatter
-    STAGE_NAMES = { "build" => "Build", "fast" => "Fast", "slow" => "Slow" }.freeze
+    STAGE_NAMES = { "lint" => "Lint", "build" => "Build", "fast" => "Fast", "slow" => "Slow" }.freeze
     STATUS_LABELS = {
       "completed" => "PASSED", "failed" => "FAILED", "timed_out" => "TIMED OUT",
       "running" => "RUNNING", "scheduled" => "Scheduled...", "cancelled" => "CANCELLED"

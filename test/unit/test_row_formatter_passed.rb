@@ -20,7 +20,8 @@ class TestRowFormatterPassedRun < Minitest::Test
     run_data = make_passed_run
     # When we format it
     result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
-    # Then it should show all three stage times
+    # Then it should show all four stage times
+    assert_match(/Lint 0\.1s/, result, "Should show lint time")
     assert_match(/Build 0\.3s/, result, "Should show build time")
     assert_match(/Fast 1\.8s/, result, "Should show fast time")
     assert_match(/Slow 47s/, result, "Should show slow time")
@@ -70,6 +71,7 @@ class TestRowFormatterPassedRun < Minitest::Test
       commit_hash: "a3f7c01", branch: "main", status: "completed",
       updated_at: now.iso8601,
       stages: [
+        { stage: "lint", status: "completed", duration: 0.1 },
         { stage: "build", status: "completed", duration: 0.3 },
         { stage: "fast", status: "completed", duration: 1.8 },
         { stage: "slow", status: "completed", duration: 47.0 }
