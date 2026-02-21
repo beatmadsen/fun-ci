@@ -24,7 +24,7 @@ class FakeRecorder
     @next_job_id = 0
   end
 
-  def create_run(commit_hash:, branch:) = @calls << [:create_run, commit_hash, branch]
+  def create_run(commit_hash:, branch:, project_path: nil) = @calls << [:create_run, commit_hash, branch, project_path]
 
   def start_stage(stage)
     @calls << [:start_stage, stage]

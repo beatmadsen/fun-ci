@@ -61,7 +61,7 @@ module FunCi
         return 1
       end
       cancel_stale_pipelines
-      @recorder.create_run(commit_hash: @commit_hash, branch: @branch)
+      @recorder.create_run(commit_hash: @commit_hash, branch: @branch, project_path: @project_root)
       stage_runner = make_stage_runner
       progress = ProgressReporter.new(stdout: @stdout)
       results = run_phase_one(stage_runner, config)

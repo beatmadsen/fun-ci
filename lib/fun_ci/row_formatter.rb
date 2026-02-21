@@ -16,30 +16,37 @@ module FunCi
       commit = run[:commit_hash]
       branch = run[:branch]
       status = run[:status]
+      project = format_project(run[:project_path])
 
       case status
       when "scheduled"
-        format_scheduled(commit, branch, run[:updated_at], now)
+        format_scheduled(commit, branch, project, run[:updated_at], now)
       when "cancelled"
-        format_cancelled(commit, branch, run[:stages], run[:updated_at], now)
+        format_cancelled(commit, branch, project, run[:stages], run[:updated_at], now)
       else
         stages_text = format_stages(run[:stages], status, spinner_frame, elapsed_seconds)
         status_text = format_status(status)
         time_text = Ansi.dim(RelativeTime.format(run[:updated_at], now: now))
-        "  #{commit}  #{branch}  #{stages_text}  #{status_text}  #{time_text}"
+        "  #{commit}  #{branch}#{project}  #{stages_text}  #{status_text}  #{time_text}"
       end
     end
 
-    def self.format_scheduled(commit, branch, updated_at, now)
+    def self.format_project(project_path)
+      return "" unless project_path
+      "  #{Ansi.dim(File.basename(project_path))}"
+    end
+    private_class_method :format_project
+
+    def self.format_scheduled(commit, branch, project, updated_at, now)
       time_text = RelativeTime.format(updated_at, now: now)
-      Ansi.dim("  #{commit}  #{branch}  Scheduled...  #{time_text}")
+      Ansi.dim("  #{commit}  #{branch}#{project}  Scheduled...  #{time_text}")
     end
     private_class_method :format_scheduled
 
-    def self.format_cancelled(commit, branch, stages, updated_at, now)
+    def self.format_cancelled(commit, branch, project, stages, updated_at, now)
       stages_text = stages.map { |s| format_cancelled_stage(s) }.join("  ")
       time_text = RelativeTime.format(updated_at, now: now)
-      Ansi.dim("  #{commit}  #{branch}  #{stages_text}  CANCELLED  #{time_text}")
+      Ansi.dim("  #{commit}  #{branch}#{project}  #{stages_text}  CANCELLED  #{time_text}")
     end
     private_class_method :format_cancelled
 

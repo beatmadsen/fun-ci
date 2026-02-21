@@ -5,7 +5,7 @@ require_relative "stage_job"
 
 module FunCi
   class NullRecorder
-    def create_run(commit_hash:, branch:) = nil
+    def create_run(commit_hash:, branch:, project_path: nil) = nil
     def start_stage(stage) = nil
     def end_stage(job_id, status) = nil
     def complete_run = nil
@@ -34,8 +34,8 @@ module FunCi
       @db.close rescue nil
     end
 
-    def create_run(commit_hash:, branch:)
-      @pipeline_run_id = PipelineRun.create(@db, commit_hash: commit_hash, branch: branch)
+    def create_run(commit_hash:, branch:, project_path: nil)
+      @pipeline_run_id = PipelineRun.create(@db, commit_hash: commit_hash, branch: branch, project_path: project_path)
     end
 
     def start_stage(stage)

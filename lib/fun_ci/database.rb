@@ -26,6 +26,7 @@ module FunCi
       SQL
 
       add_column_if_missing(db, "pipeline_runs", "pid", "INTEGER")
+      add_column_if_missing(db, "pipeline_runs", "project_path", "TEXT")
 
       db.execute(<<~SQL)
         CREATE TABLE IF NOT EXISTS stage_jobs (

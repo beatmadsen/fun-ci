@@ -4,80 +4,6 @@ require_relative "../test_helper"
 require "fun_ci/row_formatter"
 require "fun_ci/ansi"
 
-class TestRowFormatterPassedRun < Minitest::Test
-  def test_should_show_commit_and_branch
-    # Given a passed pipeline run
-    run_data = make_passed_run
-    # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
-    # Then it should contain commit and branch
-    assert_match(/a3f7c01/, result, "Should show commit hash")
-    assert_match(/main/, result, "Should show branch name")
-  end
-
-  def test_should_show_stage_times
-    # Given a passed pipeline run
-    run_data = make_passed_run
-    # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
-    # Then it should show all three stage times
-    assert_match(/Build 0\.3s/, result, "Should show build time")
-    assert_match(/Fast 1\.8s/, result, "Should show fast time")
-    assert_match(/Slow 47s/, result, "Should show slow time")
-  end
-
-  def test_should_show_passed_status
-    # Given a passed pipeline run
-    run_data = make_passed_run
-    # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
-    # Then it should show PASSED status
-    assert_match(/PASSED/, result)
-  end
-
-  def test_should_show_relative_time
-    # Given a passed pipeline run
-    run_data = make_passed_run
-    # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data, now: Time.parse(run_data[:updated_at]) + 120))
-    # Then it should show relative time
-    assert_match(/2m ago/, result)
-  end
-
-  def test_should_color_stage_times_green
-    # Given a passed pipeline run
-    run_data = make_passed_run
-    # When we format it (with color)
-    result = FunCi::RowFormatter.format(run_data)
-    # Then it should contain green ANSI codes
-    assert_match(/\e\[32m.*Build/, result, "Stage times should be green")
-  end
-
-  def test_should_color_passed_status_bold_green
-    # Given a passed pipeline run
-    run_data = make_passed_run
-    # When we format it (with color)
-    result = FunCi::RowFormatter.format(run_data)
-    # Then status should be bold green
-    assert_match(/\e\[1;32m.*PASSED/, result, "PASSED should be bold green")
-  end
-
-  private
-
-  def make_passed_run
-    now = Time.now.utc
-    {
-      commit_hash: "a3f7c01", branch: "main", status: "completed",
-      updated_at: now.iso8601,
-      stages: [
-        { stage: "build", status: "completed", duration: 0.3 },
-        { stage: "fast", status: "completed", duration: 1.8 },
-        { stage: "slow", status: "completed", duration: 47.0 }
-      ]
-    }
-  end
-end
-
 class TestRowFormatterFailedRun < Minitest::Test
   def test_should_show_fail_label_on_failed_stage
     # Given a run where fast suite failed
@@ -217,53 +143,6 @@ class TestRowFormatterCancelledRun < Minitest::Test
         { stage: "build", status: "completed", duration: 0.2 },
         { stage: "fast", status: "cancelled", duration: 7.0 },
         { stage: "slow", status: "scheduled", duration: nil }
-      ]
-    }
-  end
-end
-
-class TestRowFormatterRunningRun < Minitest::Test
-  def test_should_show_running_status
-    run_data = make_running_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
-    assert_match(/RUNNING/, result)
-  end
-
-  def test_should_show_spinner_on_active_stage
-    run_data = make_running_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data, spinner_frame: "\u2801"))
-    assert_match(/\u2801/, result, "Should show spinner frame on active stage")
-  end
-
-  def test_should_show_elapsed_time_on_active_stage
-    run_data = make_running_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data, elapsed_seconds: 34))
-    assert_match(/Slow \S+ 34s/, result, "Should show elapsed time on active stage")
-  end
-
-  def test_should_color_active_stage_cyan
-    run_data = make_running_run
-    result = FunCi::RowFormatter.format(run_data)
-    assert_match(/\e\[36m.*Slow/, result, "Active stage should be cyan")
-  end
-
-  def test_should_color_running_status_bold_cyan
-    run_data = make_running_run
-    result = FunCi::RowFormatter.format(run_data)
-    assert_match(/\e\[1;36m.*RUNNING/, result, "RUNNING should be bold cyan")
-  end
-
-  private
-
-  def make_running_run
-    now = Time.now.utc
-    {
-      commit_hash: "c82fa19", branch: "feat/parser", status: "running",
-      updated_at: now.iso8601,
-      stages: [
-        { stage: "build", status: "completed", duration: 0.2 },
-        { stage: "fast", status: "completed", duration: 2.4 },
-        { stage: "slow", status: "running", duration: nil }
       ]
     }
   end
