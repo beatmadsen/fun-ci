@@ -7,7 +7,7 @@ require_relative "streak_counter"
 
 module FunCi
   class BoardData
-    def initialize(db, limit: 20, page_size: nil)
+    def initialize(db, limit: 15, page_size: nil)
       @db = db
       @page_size = page_size || limit
       @limit = @page_size

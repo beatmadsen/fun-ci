@@ -58,6 +58,7 @@ module FunCi
         else
           println row
         end
+        println unless i == rows.length - 1
       end
     end
 

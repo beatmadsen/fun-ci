@@ -71,5 +71,5 @@ Feature: Status board display
     Given 30 pipeline runs exist
     And the terminal height is 24 lines
     When I open the admin TUI
-    Then the board should show approximately 20 rows
+    Then the board should show approximately 15 rows
     And older runs beyond the visible area are simply not shown
