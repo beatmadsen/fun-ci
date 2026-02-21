@@ -4,28 +4,28 @@ module FunCi
   class TemplateWriter
     TEMPLATES = {
       ruby_bundler: {
-        "lint.sh" => "#!/bin/sh\nbundle exec rubocop \"$1\"\n",
+        "lint.sh" => "#!/bin/sh\nbundle exec rubocop\n",
         "build.sh" => "#!/bin/sh\nbundle install --quiet\n",
-        "fast.sh" => "#!/bin/sh\nbundle exec rake test \"$1\"\n",
-        "slow.sh" => "#!/bin/sh\nbundle exec rake test:slow \"$1\"\n"
+        "fast.sh" => "#!/bin/sh\nbundle exec rake test\n",
+        "slow.sh" => "#!/bin/sh\nbundle exec rake test:slow\n"
       },
       jvm_gradle_kotlin: {
-        "lint.sh" => "#!/bin/sh\n./gradlew check -x test \"$1\"\n",
+        "lint.sh" => "#!/bin/sh\n./gradlew check -x test\n",
         "build.sh" => "#!/bin/sh\n./gradlew assemble\n",
-        "fast.sh" => "#!/bin/sh\n./gradlew test \"$1\"\n",
-        "slow.sh" => "#!/bin/sh\n./gradlew integrationTest \"$1\"\n"
+        "fast.sh" => "#!/bin/sh\n./gradlew test\n",
+        "slow.sh" => "#!/bin/sh\n./gradlew integrationTest\n"
       },
       jvm_gradle_groovy: {
-        "lint.sh" => "#!/bin/sh\n./gradlew check -x test \"$1\"\n",
+        "lint.sh" => "#!/bin/sh\n./gradlew check -x test\n",
         "build.sh" => "#!/bin/sh\n./gradlew assemble\n",
-        "fast.sh" => "#!/bin/sh\n./gradlew test \"$1\"\n",
-        "slow.sh" => "#!/bin/sh\n./gradlew integrationTest \"$1\"\n"
+        "fast.sh" => "#!/bin/sh\n./gradlew test\n",
+        "slow.sh" => "#!/bin/sh\n./gradlew integrationTest\n"
       },
       jvm_maven: {
-        "lint.sh" => "#!/bin/sh\nmvn verify -DskipTests \"$1\"\n",
+        "lint.sh" => "#!/bin/sh\nmvn verify -DskipTests\n",
         "build.sh" => "#!/bin/sh\nmvn compile\n",
-        "fast.sh" => "#!/bin/sh\nmvn test \"$1\"\n",
-        "slow.sh" => "#!/bin/sh\nmvn verify \"$1\"\n"
+        "fast.sh" => "#!/bin/sh\nmvn test\n",
+        "slow.sh" => "#!/bin/sh\nmvn verify\n"
       }
     }.freeze
 

@@ -98,7 +98,7 @@ class TestHookWriterGuards < Minitest::Test
     end
   end
 
-  def test_should_refuse_when_existing_hook_has_no_marker
+  def test_should_skip_with_success_when_existing_hook_has_no_marker
     # Given a project with an existing hook from another tool
     Dir.mktmpdir("fun-ci-hook-test") do |dir|
       FileUtils.mkdir_p(File.join(dir, ".git", "hooks"))
@@ -110,9 +110,9 @@ class TestHookWriterGuards < Minitest::Test
       # When we try to install our hook
       exit_code = FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
-      # Then it should refuse to overwrite
-      assert_equal 1, exit_code, "Should refuse to overwrite foreign hook"
-      assert_match(/already exists/i, stdout.string, "Should explain the conflict")
+      # Then it should skip and return success
+      assert_equal 0, exit_code, "Should return 0 when skipping foreign hook"
+      assert_match(/already exists/i, stdout.string, "Should explain the skip")
     end
   end
 

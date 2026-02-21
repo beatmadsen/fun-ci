@@ -33,7 +33,7 @@ module FunCi
     def run
       return reject("Not a git repository — no .git/ found.") unless git_repo?
       return reject("Unknown hook type: #{@hook_type}") unless ALLOWED_HOOKS.include?(@hook_type)
-      return reject("Hook #{@hook_type} already exists from another tool.") if foreign_hook?
+      return skip("Hook #{@hook_type} already exists from another tool — skipping.") if foreign_hook?
 
       write_hook
       @stdout.puts "Installed #{@hook_type} hook."
@@ -63,6 +63,11 @@ module FunCi
     def reject(message)
       @stdout.puts message
       1
+    end
+
+    def skip(message)
+      @stdout.puts message
+      0
     end
   end
 end

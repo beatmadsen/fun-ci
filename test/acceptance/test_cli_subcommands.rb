@@ -16,13 +16,13 @@ class TestCliInitSubcommand < Minitest::Test
     end
   end
 
-  def test_init_refuses_when_fun_ci_already_exists
+  def test_init_skips_when_fun_ci_already_exists
     Dir.mktmpdir("fun-ci-cli-test") do |dir|
       File.write(File.join(dir, "Gemfile"), "source 'https://rubygems.org'\n")
       Dir.mkdir(File.join(dir, ".fun-ci"))
       stdout = StringIO.new
       exit_code = Dir.chdir(dir) { FunCi::Cli.run(["init"], stdout: stdout, stderr: StringIO.new) }
-      assert_equal 1, exit_code
+      assert_equal 0, exit_code, "Should return 0 when skipping (idempotent)"
     end
   end
 end

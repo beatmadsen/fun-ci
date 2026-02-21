@@ -16,8 +16,8 @@ module FunCi
 
     def run
       if Dir.exist?(File.join(@project_root, ".fun-ci"))
-        @stdout.puts ".fun-ci/ already exists. Remove it first to re-initialize."
-        return 1
+        @stdout.puts ".fun-ci/ already exists — skipping init."
+        return 0
       end
 
       filenames = Dir.children(@project_root)

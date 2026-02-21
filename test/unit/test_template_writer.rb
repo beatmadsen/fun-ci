@@ -58,7 +58,7 @@ class TestTemplateWriter < Minitest::Test
       # When we write the template
       writer.write
 
-      # Then scripts should have shebang, use bundler, and reference $1
+      # Then scripts should have shebang and use bundler
       %w[lint.sh build.sh fast.sh slow.sh].each do |script|
         content = File.read(File.join(dir, ".fun-ci", script))
         assert content.start_with?("#!/bin/sh"), "#{script} should have shebang"
@@ -66,10 +66,6 @@ class TestTemplateWriter < Minitest::Test
 
       fast_content = File.read(File.join(dir, ".fun-ci", "fast.sh"))
       assert_match(/bundle exec/, fast_content, "fast.sh should use bundler")
-      assert_match(/\$1/, fast_content, "fast.sh should reference commit hash argument")
-
-      slow_content = File.read(File.join(dir, ".fun-ci", "slow.sh"))
-      assert_match(/\$1/, slow_content, "slow.sh should reference commit hash argument")
     end
   end
 
@@ -85,7 +81,6 @@ class TestTemplateWriter < Minitest::Test
       fast_content = File.read(File.join(dir, ".fun-ci", "fast.sh"))
       assert fast_content.start_with?("#!/bin/sh"), "fast.sh should have shebang"
       assert_match(/gradlew/, fast_content, "fast.sh should use gradlew")
-      assert_match(/\$1/, fast_content, "fast.sh should reference commit hash argument")
     end
   end
 
@@ -101,7 +96,7 @@ class TestTemplateWriter < Minitest::Test
       fast_content = File.read(File.join(dir, ".fun-ci", "fast.sh"))
       assert fast_content.start_with?("#!/bin/sh"), "fast.sh should have shebang"
       assert_match(/mvn/, fast_content, "fast.sh should use mvn")
-      assert_match(/\$1/, fast_content, "fast.sh should reference commit hash argument")
     end
   end
+
 end

@@ -53,7 +53,7 @@ class TestInstallerUnknownProject < Minitest::Test
 end
 
 class TestInstallerAlreadyExists < Minitest::Test
-  def test_should_refuse_when_fun_ci_directory_already_exists
+  def test_should_skip_with_success_when_fun_ci_directory_already_exists
     # Given a project directory that already has .fun-ci/
     Dir.mktmpdir("fun-ci-installer-test") do |dir|
       File.write(File.join(dir, "Gemfile"), "source 'https://rubygems.org'\n")
@@ -63,9 +63,9 @@ class TestInstallerAlreadyExists < Minitest::Test
       # When we run the installer
       exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
 
-      # Then it should refuse and return failure
-      assert_equal 1, exit_code, "Should return 1 when .fun-ci already exists"
-      assert_match(/already exists/i, stdout.string, "Should explain why it refused")
+      # Then it should skip and return success
+      assert_equal 0, exit_code, "Should return 0 when skipping (idempotent)"
+      assert_match(/already exists/i, stdout.string, "Should explain the skip")
     end
   end
 end
