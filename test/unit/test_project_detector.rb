@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/project_detector"
+require "fun_ci/setup/project_detector"
 
 class TestProjectDetector < Minitest::Test
   def test_should_detect_ruby_bundler_when_gemfile_present
     # Given a file list containing Gemfile
-    detector = FunCi::ProjectDetector.new(["Gemfile", "Rakefile", "lib"])
+    detector = FunCi::Setup::ProjectDetector.new(["Gemfile", "Rakefile", "lib"])
 
     # When we detect the project type
     result = detector.detect
@@ -17,7 +17,7 @@ class TestProjectDetector < Minitest::Test
 
   def test_should_detect_jvm_gradle_kotlin_when_build_gradle_kts_present
     # Given a file list containing build.gradle.kts (single-module project)
-    detector = FunCi::ProjectDetector.new(["build.gradle.kts", "src"])
+    detector = FunCi::Setup::ProjectDetector.new(["build.gradle.kts", "src"])
 
     # When we detect the project type
     result = detector.detect
@@ -28,7 +28,7 @@ class TestProjectDetector < Minitest::Test
 
   def test_should_detect_jvm_gradle_groovy_when_build_gradle_present
     # Given a file list containing build.gradle (single-module Groovy project)
-    detector = FunCi::ProjectDetector.new(["build.gradle", "src"])
+    detector = FunCi::Setup::ProjectDetector.new(["build.gradle", "src"])
 
     # When we detect the project type
     result = detector.detect
@@ -39,7 +39,7 @@ class TestProjectDetector < Minitest::Test
 
   def test_should_detect_jvm_gradle_kotlin_from_settings_gradle_kts_alone
     # Given a multi-module project with only settings.gradle.kts at root
-    detector = FunCi::ProjectDetector.new(["settings.gradle.kts", "gradlew", "app"])
+    detector = FunCi::Setup::ProjectDetector.new(["settings.gradle.kts", "gradlew", "app"])
 
     # When we detect the project type
     result = detector.detect
@@ -50,7 +50,7 @@ class TestProjectDetector < Minitest::Test
 
   def test_should_detect_jvm_gradle_groovy_from_settings_gradle_alone
     # Given a multi-module project with only settings.gradle at root
-    detector = FunCi::ProjectDetector.new(["settings.gradle", "gradlew", "app"])
+    detector = FunCi::Setup::ProjectDetector.new(["settings.gradle", "gradlew", "app"])
 
     # When we detect the project type
     result = detector.detect
@@ -61,7 +61,7 @@ class TestProjectDetector < Minitest::Test
 
   def test_should_detect_jvm_maven_when_pom_xml_present
     # Given a file list containing pom.xml
-    detector = FunCi::ProjectDetector.new(["pom.xml", "src", "target"])
+    detector = FunCi::Setup::ProjectDetector.new(["pom.xml", "src", "target"])
 
     # When we detect the project type
     result = detector.detect
@@ -72,7 +72,7 @@ class TestProjectDetector < Minitest::Test
 
   def test_should_return_unknown_when_no_marker_files_present
     # Given a file list with no recognized markers
-    detector = FunCi::ProjectDetector.new(["README.md", "src", "docs"])
+    detector = FunCi::Setup::ProjectDetector.new(["README.md", "src", "docs"])
 
     # When we detect the project type
     result = detector.detect
@@ -85,7 +85,7 @@ end
 class TestProjectDetectorPriority < Minitest::Test
   def test_should_prefer_ruby_when_gemfile_and_pom_xml_both_present
     # Given a polyglot project with both Gemfile and pom.xml
-    detector = FunCi::ProjectDetector.new(["Gemfile", "pom.xml", "src"])
+    detector = FunCi::Setup::ProjectDetector.new(["Gemfile", "pom.xml", "src"])
 
     # When we detect the project type
     result = detector.detect
@@ -96,7 +96,7 @@ class TestProjectDetectorPriority < Minitest::Test
 
   def test_should_prefer_gradle_kotlin_when_both_build_files_present
     # Given a project with both build.gradle.kts and build.gradle
-    detector = FunCi::ProjectDetector.new(["build.gradle.kts", "build.gradle", "src"])
+    detector = FunCi::Setup::ProjectDetector.new(["build.gradle.kts", "build.gradle", "src"])
 
     # When we detect the project type
     result = detector.detect

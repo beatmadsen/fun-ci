@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/row_formatter"
-require "fun_ci/ansi"
+require "fun_ci/tui/row_formatter"
+require "fun_ci/tui/ansi"
 
 class TestRowFormatterFailedRun < Minitest::Test
   def test_should_show_fail_label_on_failed_stage
     # Given a run where fast suite failed
     run_data = make_failed_run
     # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     # Then the failed stage should show FAIL with time
     assert_match(/Fast FAIL 6\.2s/, result)
   end
@@ -18,7 +18,7 @@ class TestRowFormatterFailedRun < Minitest::Test
     # Given a run where fast failed (slow never ran)
     run_data = make_failed_run
     # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     # Then slow should show --
     assert_match(/Slow --/, result)
   end
@@ -26,13 +26,13 @@ class TestRowFormatterFailedRun < Minitest::Test
   def test_should_show_failed_status
     # Given a failed run
     run_data = make_failed_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     assert_match(/FAILED/, result)
   end
 
   def test_should_color_failed_stage_bold_red
     run_data = make_failed_run
-    result = FunCi::RowFormatter.format(run_data)
+    result = FunCi::Tui::RowFormatter.format(run_data)
     assert_match(/\e\[1;31m.*FAIL/, result, "Failed stage should be bold red")
   end
 
@@ -55,19 +55,19 @@ end
 class TestRowFormatterTimedOutRun < Minitest::Test
   def test_should_show_timeout_label
     run_data = make_timed_out_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     assert_match(/Fast TIMEOUT 10s/, result)
   end
 
   def test_should_show_timed_out_status
     run_data = make_timed_out_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     assert_match(/TIMED OUT/, result)
   end
 
   def test_should_color_timed_out_bold_yellow
     run_data = make_timed_out_run
-    result = FunCi::RowFormatter.format(run_data)
+    result = FunCi::Tui::RowFormatter.format(run_data)
     assert_match(/\e\[1;33m.*TIMEOUT/, result, "Timed out should be bold yellow")
   end
 
@@ -90,13 +90,13 @@ end
 class TestRowFormatterScheduledRun < Minitest::Test
   def test_should_show_scheduled_text
     run_data = make_scheduled_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     assert_match(/Scheduled\.\.\./, result)
   end
 
   def test_should_not_show_stage_columns
     run_data = make_scheduled_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     refute_match(/Build/, result, "Scheduled row should not show stage columns")
     refute_match(/Fast/, result)
     refute_match(/Slow/, result)
@@ -104,7 +104,7 @@ class TestRowFormatterScheduledRun < Minitest::Test
 
   def test_should_be_entirely_dim
     run_data = make_scheduled_run
-    result = FunCi::RowFormatter.format(run_data)
+    result = FunCi::Tui::RowFormatter.format(run_data)
     assert_match(/\e\[2m/, result, "Scheduled row should be dim")
   end
 
@@ -122,13 +122,13 @@ end
 class TestRowFormatterCancelledRun < Minitest::Test
   def test_should_show_cancelled_status
     run_data = make_cancelled_run
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     assert_match(/CANCELLED/, result)
   end
 
   def test_should_be_dim
     run_data = make_cancelled_run
-    result = FunCi::RowFormatter.format(run_data)
+    result = FunCi::Tui::RowFormatter.format(run_data)
     assert_match(/\e\[2m.*CANCELLED/, result, "CANCELLED should be dim")
   end
 

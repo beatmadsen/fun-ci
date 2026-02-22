@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/trigger"
-require "fun_ci/database"
-require "fun_ci/pipeline_recorder"
+require "fun_ci/pipeline/trigger"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_recorder"
 require "tmpdir"
 
 # Acceptance test for the --no-validate fork safety contract.
@@ -20,9 +20,9 @@ class TestNoValidateForkSafety < Minitest::Test
     # Given: a real DB connection (as Cli#run_trigger creates)
     dir = Dir.mktmpdir("fun-ci-fork-safety")
     db_path = File.join(dir, "test.sqlite3")
-    db = FunCi::Database.connection(db_path)
-    FunCi::Database.migrate!(db)
-    recorder = FunCi::DbRecorder.new(db)
+    db = FunCi::Persistence::Database.connection(db_path)
+    FunCi::Persistence::Database.migrate!(db)
+    recorder = FunCi::Persistence::DbRecorder.new(db)
 
     # A spy forker that records whether the parent DB was closed
     db_was_closed_before_fork = nil
@@ -31,7 +31,7 @@ class TestNoValidateForkSafety < Minitest::Test
     }
 
     # When: run_from_args with --no-validate
-    exit_code = FunCi::Trigger.run_from_args(
+    exit_code = FunCi::Pipeline::Trigger.run_from_args(
       ["--no-validate", "abc1234", "main"],
       stdout: StringIO.new,
       stderr: StringIO.new,

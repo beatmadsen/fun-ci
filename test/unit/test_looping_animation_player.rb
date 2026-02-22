@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/looping_animation_player"
-require "fun_ci/ansi"
+require "fun_ci/tui/looping_animation_player"
+require "fun_ci/tui/ansi"
 
 class TestLoopingAnimationPlayerLifecycle < Minitest::Test
   def test_should_start_at_frame_zero
@@ -51,7 +51,7 @@ class TestLoopingAnimationPlayerLifecycle < Minitest::Test
 
   def make_player(frame_count:)
     frames = frame_count.times.map { ["line one", "line two"] }
-    FunCi::LoopingAnimationPlayer.new({ name: "test", fps: 4, frames: frames })
+    FunCi::Tui::LoopingAnimationPlayer.new({ name: "test", fps: 4, frames: frames })
   end
 end
 
@@ -66,7 +66,7 @@ class TestLoopingAnimationPlayerRendering < Minitest::Test
     # Then we should get 2 lines, each padded for centering
     assert_equal 2, lines.length
     lines.each do |line|
-      stripped = FunCi::Ansi.strip(line)
+      stripped = FunCi::Tui::Ansi.strip(line)
       assert stripped.start_with?(" "), "Line should be padded: #{stripped.inspect}"
     end
   end
@@ -80,7 +80,7 @@ class TestLoopingAnimationPlayerRendering < Minitest::Test
 
     # Then current_lines should show frame 0 content
     lines = player.current_lines(40)
-    plain = FunCi::Ansi.strip(lines[0])
+    plain = FunCi::Tui::Ansi.strip(lines[0])
     assert_match(/frame-zero/, plain, "Should show frame 0 after wrapping")
   end
 
@@ -100,6 +100,6 @@ class TestLoopingAnimationPlayerRendering < Minitest::Test
   private
 
   def make_player_with_frames(frames)
-    FunCi::LoopingAnimationPlayer.new({ name: "test", fps: 4, frames: frames })
+    FunCi::Tui::LoopingAnimationPlayer.new({ name: "test", fps: 4, frames: frames })
   end
 end

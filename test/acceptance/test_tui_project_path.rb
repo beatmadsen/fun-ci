@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
-require "fun_ci/pipeline_recorder"
-require "fun_ci/trigger"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
+require "fun_ci/persistence/pipeline_recorder"
+require "fun_ci/pipeline/trigger"
 require "tmpdir"
 require "stringio"
 
@@ -39,12 +39,12 @@ class TestTuiProjectPath < Minitest::Test
     create_completed_run_with_project("abc1234", "main", "/home/user/alpha-app")
     create_completed_run_with_project("def5678", "main", "/home/user/beta-service")
 
-    tui = FunCi::AdminTui.new(db: @db, output: @output, input: StringIO.new(""), width: 120)
+    tui = FunCi::Tui::AdminTui.new(db: @db, output: @output, input: StringIO.new(""), width: 120)
     # When the TUI renders
     tui.render_once
 
     # Then each row should show the project name (basename of the path)
-    visible = FunCi::Ansi.strip(@output.string)
+    visible = FunCi::Tui::Ansi.strip(@output.string)
     assert_match(/alpha-app/, visible, "Should display project name 'alpha-app'")
     assert_match(/beta-service/, visible, "Should display project name 'beta-service'")
   end
@@ -53,8 +53,8 @@ class TestTuiProjectPath < Minitest::Test
     # Given a project directory with .fun-ci scripts
     project_dir = Dir.mktmpdir("gamma-lib")
     make_project_with_scripts(project_dir)
-    recorder = FunCi::DbRecorder.new(@db)
-    trigger = FunCi::Trigger.new(
+    recorder = FunCi::Persistence::DbRecorder.new(@db)
+    trigger = FunCi::Pipeline::Trigger.new(
       project_root: project_dir,
       commit_hash: "fff9999", branch: "main",
       stdout: StringIO.new, stderr: StringIO.new,
@@ -68,7 +68,7 @@ class TestTuiProjectPath < Minitest::Test
     trigger.run
 
     # Then the project_path should be stored in the DB
-    run = FunCi::PipelineRun.find_by_commit(@db, "fff9999").first
+    run = FunCi::Persistence::PipelineRun.find_by_commit(@db, "fff9999").first
     assert_equal project_dir, run[:project_path],
       "Trigger should pass project_root to recorder as project_path"
   ensure
@@ -78,13 +78,13 @@ class TestTuiProjectPath < Minitest::Test
   private
 
   def create_completed_run_with_project(commit, branch, project_path)
-    run_id = FunCi::PipelineRun.create(@db, commit_hash: commit, branch: branch, project_path: project_path)
-    FunCi::PipelineRun.update_status(@db, run_id, "running")
-    FunCi::PipelineRun.update_status(@db, run_id, "completed")
+    run_id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: commit, branch: branch, project_path: project_path)
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "running")
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "completed")
     %w[lint build fast slow].each do |stage|
-      job_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: stage)
-      FunCi::StageJob.update_status(@db, job_id, "running")
-      FunCi::StageJob.update_status(@db, job_id, "completed")
+      job_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: stage)
+      FunCi::Persistence::StageJob.update_status(@db, job_id, "running")
+      FunCi::Persistence::StageJob.update_status(@db, job_id, "completed")
     end
     run_id
   end

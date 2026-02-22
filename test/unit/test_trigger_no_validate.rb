@@ -2,7 +2,7 @@
 
 require_relative "../test_helper"
 require "stringio"
-require "fun_ci/trigger"
+require "fun_ci/pipeline/trigger"
 
 class TestTriggerNoValidateArgParsing < Minitest::Test
   def test_should_return_zero_immediately_with_no_validate_flag
@@ -10,7 +10,7 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
     fake_forker = ->(commit_hash:, branch:, db_path:) {
       forker_calls << { commit_hash: commit_hash, branch: branch }
     }
-    exit_code = FunCi::Trigger.run_from_args(
+    exit_code = FunCi::Pipeline::Trigger.run_from_args(
       ["--no-validate", "abc1234", "main"],
       pipeline_forker: fake_forker
     )
@@ -22,7 +22,7 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
     fake_forker = ->(commit_hash:, branch:, db_path:) {
       forker_calls << { commit_hash: commit_hash, branch: branch }
     }
-    FunCi::Trigger.run_from_args(
+    FunCi::Pipeline::Trigger.run_from_args(
       ["--no-validate", "deadbeef", "feature-x"],
       pipeline_forker: fake_forker
     )
@@ -33,7 +33,7 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
 
   def test_should_still_require_commit_and_branch_with_no_validate
     stderr = StringIO.new
-    exit_code = FunCi::Trigger.run_from_args(
+    exit_code = FunCi::Pipeline::Trigger.run_from_args(
       ["--no-validate"],
       stderr: stderr
     )
@@ -43,7 +43,7 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
 
   def test_should_reject_no_validate_with_only_one_positional_arg
     stderr = StringIO.new
-    exit_code = FunCi::Trigger.run_from_args(
+    exit_code = FunCi::Pipeline::Trigger.run_from_args(
       ["--no-validate", "abc1234"],
       stderr: stderr
     )
@@ -55,7 +55,7 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
     fake_forker = ->(commit_hash:, branch:, db_path:) {
       forker_calls << { commit_hash: commit_hash, branch: branch }
     }
-    FunCi::Trigger.run_from_args(
+    FunCi::Pipeline::Trigger.run_from_args(
       ["abc1234", "--no-validate", "main"],
       pipeline_forker: fake_forker
     )
@@ -69,7 +69,7 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
       forker_calls << { db_path: db_path }
     }
     recorder = FakeRecorder.new
-    FunCi::Trigger.run_from_args(
+    FunCi::Pipeline::Trigger.run_from_args(
       ["--no-validate", "abc1234", "main"],
       recorder: recorder,
       pipeline_forker: fake_forker
@@ -88,7 +88,7 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
       close_called_before_fork = closed
     }
 
-    FunCi::Trigger.run_from_args(
+    FunCi::Pipeline::Trigger.run_from_args(
       ["--no-validate", "abc1234", "main"],
       recorder: recorder,
       pipeline_forker: forker
@@ -103,7 +103,7 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
     fake_forker = ->(commit_hash:, branch:, db_path:) {
       forker_calls << true
     }
-    FunCi::Trigger.run_from_args(
+    FunCi::Pipeline::Trigger.run_from_args(
       ["abc1234", "main"],
       pipeline_forker: fake_forker,
       stderr: StringIO.new

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/database"
+require "fun_ci/persistence/database"
 require "tmpdir"
 
 class TestDatabaseConnection < Minitest::Test
@@ -10,7 +10,7 @@ class TestDatabaseConnection < Minitest::Test
     Dir.mktmpdir do |dir|
       db_path = File.join(dir, "test.sqlite3")
       # When we open a database connection
-      db = FunCi::Database.connection(db_path)
+      db = FunCi::Persistence::Database.connection(db_path)
       # Then WAL mode should be enabled
       result = db.execute("PRAGMA journal_mode").first.first
       assert_equal "wal", result, "Database should use WAL journal mode"
@@ -22,8 +22,8 @@ class TestDatabaseConnection < Minitest::Test
     # Given a fresh database
     Dir.mktmpdir do |dir|
       db_path = File.join(dir, "test.sqlite3")
-      db = FunCi::Database.connection(db_path)
-      FunCi::Database.migrate!(db)
+      db = FunCi::Persistence::Database.connection(db_path)
+      FunCi::Persistence::Database.migrate!(db)
       # When we query the schema
       tables = db.execute("SELECT name FROM sqlite_master WHERE type='table'").flatten
       # Then pipeline_runs table should exist
@@ -36,8 +36,8 @@ class TestDatabaseConnection < Minitest::Test
     # Given a fresh database
     Dir.mktmpdir do |dir|
       db_path = File.join(dir, "test.sqlite3")
-      db = FunCi::Database.connection(db_path)
-      FunCi::Database.migrate!(db)
+      db = FunCi::Persistence::Database.connection(db_path)
+      FunCi::Persistence::Database.migrate!(db)
       # When we query the schema
       tables = db.execute("SELECT name FROM sqlite_master WHERE type='table'").flatten
       # Then stage_jobs table should exist
@@ -111,11 +111,11 @@ class TestDatabaseMigrationIdempotency < Minitest::Test
     # Given a database that has already been migrated
     Dir.mktmpdir do |dir|
       db_path = File.join(dir, "test.sqlite3")
-      db = FunCi::Database.connection(db_path)
-      FunCi::Database.migrate!(db)
+      db = FunCi::Persistence::Database.connection(db_path)
+      FunCi::Persistence::Database.migrate!(db)
       # When we run migration again
       # Then it should not raise
-      FunCi::Database.migrate!(db)
+      FunCi::Persistence::Database.migrate!(db)
       tables = db.execute("SELECT name FROM sqlite_master WHERE type='table'").flatten
       assert_includes tables, "pipeline_runs", "Tables should still exist after double migration"
       db.close

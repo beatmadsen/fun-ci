@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/animation_renderer"
-require "fun_ci/screen"
-require "fun_ci/ansi"
+require "fun_ci/tui/animation_renderer"
+require "fun_ci/tui/screen"
+require "fun_ci/tui/ansi"
 require "stringio"
 
 class TestAnimationRendererRunningState < Minitest::Test
@@ -23,7 +23,7 @@ class TestAnimationRendererRunningState < Minitest::Test
 
     # Then subsequent renders should show running animation content
     renderer.render(screen, [make_run(1, "running", lint: "running")])
-    plain = FunCi::Ansi.strip(output.string)
+    plain = FunCi::Tui::Ansi.strip(output.string)
     assert_match(/running-/, plain, "Should show running animation in header")
   end
 
@@ -38,7 +38,7 @@ class TestAnimationRendererRunningState < Minitest::Test
     renderer.render(screen, [make_run(1, "completed", lint: "completed")])
 
     # Then idle animation should be shown
-    plain = FunCi::Ansi.strip(output.string)
+    plain = FunCi::Tui::Ansi.strip(output.string)
     assert_match(/idle-/, plain, "Should show idle when nothing is running")
   end
 
@@ -60,7 +60,7 @@ class TestAnimationRendererRunningState < Minitest::Test
     renderer.render(screen, [make_run(1, "completed", slow: "completed")])
 
     # Then idle should be back (not running)
-    plain = FunCi::Ansi.strip(output.string)
+    plain = FunCi::Tui::Ansi.strip(output.string)
     assert_match(/idle-/, plain, "Should return to idle after pipeline completes")
     refute_match(/running-/, plain, "Should not show running content")
   end
@@ -82,7 +82,7 @@ class TestAnimationRendererRunningState < Minitest::Test
     ])
 
     # Then running animation should show (because run 2 is running)
-    plain = FunCi::Ansi.strip(output.string)
+    plain = FunCi::Tui::Ansi.strip(output.string)
     assert_match(/running-/, plain, "Should show running when any pipeline is active")
   end
 end

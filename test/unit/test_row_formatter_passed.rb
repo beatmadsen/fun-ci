@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/row_formatter"
-require "fun_ci/ansi"
+require "fun_ci/tui/row_formatter"
+require "fun_ci/tui/ansi"
 
 class TestRowFormatterPassedRun < Minitest::Test
   def test_should_show_commit_and_branch
     # Given a passed pipeline run
     run_data = make_passed_run
     # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     # Then it should contain commit and branch
     assert_match(/a3f7c01/, result, "Should show commit hash")
     assert_match(/main/, result, "Should show branch name")
@@ -20,7 +20,7 @@ class TestRowFormatterPassedRun < Minitest::Test
     run_data = make_passed_run
     run_data[:commit_hash] = "a3f7c01deadbeef1234567890abcdef1234567890"
     # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     # Then it should show only the first 7 characters
     assert_match(/a3f7c01/, result, "Should show short hash")
     refute_match(/deadbeef/, result, "Should not show full hash beyond 7 chars")
@@ -30,7 +30,7 @@ class TestRowFormatterPassedRun < Minitest::Test
     # Given a passed pipeline run
     run_data = make_passed_run
     # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     # Then it should show all four stage times
     assert_match(/Lint 0\.1s/, result, "Should show lint time")
     assert_match(/Build 0\.3s/, result, "Should show build time")
@@ -42,7 +42,7 @@ class TestRowFormatterPassedRun < Minitest::Test
     # Given a passed pipeline run
     run_data = make_passed_run
     # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data))
     # Then it should show PASSED status
     assert_match(/PASSED/, result)
   end
@@ -51,7 +51,7 @@ class TestRowFormatterPassedRun < Minitest::Test
     # Given a passed pipeline run
     run_data = make_passed_run
     # When we format it
-    result = FunCi::Ansi.strip(FunCi::RowFormatter.format(run_data, now: Time.parse(run_data[:updated_at]) + 120))
+    result = FunCi::Tui::Ansi.strip(FunCi::Tui::RowFormatter.format(run_data, now: Time.parse(run_data[:updated_at]) + 120))
     # Then it should show relative time
     assert_match(/2m ago/, result)
   end
@@ -60,7 +60,7 @@ class TestRowFormatterPassedRun < Minitest::Test
     # Given a passed pipeline run
     run_data = make_passed_run
     # When we format it (with color)
-    result = FunCi::RowFormatter.format(run_data)
+    result = FunCi::Tui::RowFormatter.format(run_data)
     # Then it should contain green ANSI codes
     assert_match(/\e\[32m.*Build/, result, "Stage times should be green")
   end
@@ -69,7 +69,7 @@ class TestRowFormatterPassedRun < Minitest::Test
     # Given a passed pipeline run
     run_data = make_passed_run
     # When we format it (with color)
-    result = FunCi::RowFormatter.format(run_data)
+    result = FunCi::Tui::RowFormatter.format(run_data)
     # Then status should be bold green
     assert_match(/\e\[1;32m.*PASSED/, result, "PASSED should be bold green")
   end

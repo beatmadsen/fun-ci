@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/installer"
+require "fun_ci/setup/installer"
 require "tmpdir"
 require "stringio"
 
@@ -13,7 +13,7 @@ class TestInstallerHappyPath < Minitest::Test
       stdout = StringIO.new
 
       # When we run the installer
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then stdout should mention Ruby/Bundler
       assert_match(/ruby/i, stdout.string, "Should report detected language")
@@ -27,7 +27,7 @@ class TestInstallerHappyPath < Minitest::Test
       stdout = StringIO.new
 
       # When we run the installer
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should return success
       assert_equal 0, exit_code, "Should return 0 on success"
@@ -43,7 +43,7 @@ class TestInstallerUnknownProject < Minitest::Test
       stdout = StringIO.new
 
       # When we run the installer
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should refuse
       assert_equal 1, exit_code, "Should return 1 for unknown project type"
@@ -61,7 +61,7 @@ class TestInstallerAlreadyExists < Minitest::Test
       stdout = StringIO.new
 
       # When we run the installer
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should skip and return success
       assert_equal 0, exit_code, "Should return 0 when skipping (idempotent)"
@@ -78,7 +78,7 @@ class TestInstallerMultiModuleGradle < Minitest::Test
       stdout = StringIO.new
 
       # When we run the installer
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should succeed and create Gradle scripts
       assert_equal 0, exit_code, "Should return 0 on success"
@@ -99,7 +99,7 @@ class TestInstallerMavenNoLinter < Minitest::Test
       fake_pom_reader = ->(_path) { pom_without_linter }
 
       # When we run the installer with the pom_reader DI seam
-      FunCi::Installer.run(project_root: dir, stdout: stdout, pom_reader: fake_pom_reader)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout, pom_reader: fake_pom_reader)
 
       # Then lint.sh should contain the default mvn verify command
       lint_content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
@@ -124,7 +124,7 @@ class TestInstallerMavenLinterDetection < Minitest::Test
       fake_pom_reader = ->(_path) { pom_with_detekt }
 
       # When we run the installer with the pom_reader DI seam
-      FunCi::Installer.run(project_root: dir, stdout: stdout, pom_reader: fake_pom_reader)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout, pom_reader: fake_pom_reader)
 
       # Then lint.sh should contain the detected linter command
       lint_content = File.read(File.join(dir, ".fun-ci", "lint.sh"))

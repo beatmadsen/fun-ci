@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/installer"
+require "fun_ci/setup/installer"
 require "tmpdir"
 require "stringio"
 
@@ -13,7 +13,7 @@ class TestInitCliRubyProject < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should succeed and create all four executable scripts
       assert_equal 0, exit_code, "Should return success exit code"
@@ -38,7 +38,7 @@ class TestInitCliGradleKotlinProject < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should succeed and create all four executable scripts
       assert_equal 0, exit_code, "Should return success exit code"
@@ -63,7 +63,7 @@ class TestInitCliMavenProject < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should succeed and create all four executable scripts
       assert_equal 0, exit_code, "Should return success exit code"
@@ -88,7 +88,7 @@ class TestInitCliUnknownProject < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should refuse
       assert_equal 1, exit_code, "Should return failure for unknown project type"

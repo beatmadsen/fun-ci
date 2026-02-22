@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/template_writer"
+require "fun_ci/setup/template_writer"
 require "tmpdir"
 
 class TestTemplateWriter < Minitest::Test
   def test_should_create_fun_ci_directory
     # Given a target directory
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:ruby_bundler, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:ruby_bundler, dir)
 
       # When we write the template
       writer.write
@@ -21,7 +21,7 @@ class TestTemplateWriter < Minitest::Test
   def test_should_create_all_four_scripts
     # Given a target directory
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:ruby_bundler, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:ruby_bundler, dir)
 
       # When we write the template
       writer.write
@@ -37,7 +37,7 @@ class TestTemplateWriter < Minitest::Test
   def test_should_make_scripts_executable
     # Given a target directory
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:ruby_bundler, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:ruby_bundler, dir)
 
       # When we write the template
       writer.write
@@ -53,7 +53,7 @@ class TestTemplateWriter < Minitest::Test
   def test_should_write_ruby_bundler_template_with_correct_structure
     # Given a target directory
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:ruby_bundler, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:ruby_bundler, dir)
 
       # When we write the template
       writer.write
@@ -72,7 +72,7 @@ class TestTemplateWriter < Minitest::Test
   def test_should_write_jvm_gradle_kotlin_template_with_gradlew_commands
     # Given a target directory
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:jvm_gradle_kotlin, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:jvm_gradle_kotlin, dir)
 
       # When we write the template
       writer.write
@@ -87,7 +87,7 @@ class TestTemplateWriter < Minitest::Test
   def test_should_write_jvm_maven_template_with_mvn_commands
     # Given a target directory
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:jvm_maven, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:jvm_maven, dir)
 
       # When we write the template
       writer.write
@@ -102,7 +102,7 @@ class TestTemplateWriter < Minitest::Test
   def test_lint_override_replaces_default_lint_command
     # Given a Maven template with a lint override
     Dir.mktmpdir("fun-ci-lint-override") do |dir|
-      writer = FunCi::TemplateWriter.new(:jvm_maven, dir, lint_override: "mvn detekt:check")
+      writer = FunCi::Setup::TemplateWriter.new(:jvm_maven, dir, lint_override: "mvn detekt:check")
 
       # When we write the template
       writer.write
@@ -118,7 +118,7 @@ class TestTemplateWriter < Minitest::Test
   def test_lint_override_does_not_affect_other_scripts
     # Given a Maven template with a lint override
     Dir.mktmpdir("fun-ci-lint-override-other") do |dir|
-      writer = FunCi::TemplateWriter.new(:jvm_maven, dir, lint_override: "mvn detekt:check")
+      writer = FunCi::Setup::TemplateWriter.new(:jvm_maven, dir, lint_override: "mvn detekt:check")
 
       # When we write the template
       writer.write

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
@@ -47,7 +47,7 @@ class TestAdminTuiAnimationRenderer < Minitest::Test
 
     # Then the renderer should receive a Screen
     screen = @render_calls[0][:screen]
-    assert_instance_of FunCi::Screen, screen
+    assert_instance_of FunCi::Tui::Screen, screen
   end
 
   def test_should_pass_current_runs_to_animation_renderer
@@ -72,7 +72,7 @@ class TestAdminTuiAnimationRenderer < Minitest::Test
 
     # When we render -- it should not raise
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     assert_match(/abc1234/, plain)
   end
 
@@ -111,7 +111,7 @@ class TestAdminTuiAnimationRenderer < Minitest::Test
   private
 
   def make_tui(animation_renderer: nil)
-    FunCi::AdminTui.new(
+    FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       animation_renderer: animation_renderer
     )

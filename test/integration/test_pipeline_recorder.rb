@@ -2,17 +2,17 @@
 
 require_relative "../test_helper"
 require "tmpdir"
-require "fun_ci/database"
-require "fun_ci/pipeline_recorder"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_recorder"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
 
 class TestDbRecorderStartStage < Minitest::Test
   include DatabaseTestSetup
 
   def setup
     setup_test_db
-    @recorder = FunCi::DbRecorder.new(@db)
+    @recorder = FunCi::Persistence::DbRecorder.new(@db)
   end
 
   def teardown
@@ -22,12 +22,12 @@ class TestDbRecorderStartStage < Minitest::Test
   def test_should_transition_pipeline_run_to_running_when_first_stage_starts
     # Given a recorder with a scheduled pipeline run
     @recorder.create_run(commit_hash: "abc1234", branch: "main")
-    run_before = FunCi::PipelineRun.find_by_commit(@db, "abc1234").first
+    run_before = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234").first
     assert_equal "scheduled", run_before[:status], "Precondition: run should be scheduled"
     # When the first stage starts
     @recorder.start_stage("build")
     # Then the pipeline run should transition to running
-    run_after = FunCi::PipelineRun.find_by_commit(@db, "abc1234").first
+    run_after = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234").first
     assert_equal "running", run_after[:status],
       "Pipeline run should transition to running when a stage starts"
   end
@@ -39,7 +39,7 @@ class TestDbRecorderStartStage < Minitest::Test
     # When a second stage starts
     @recorder.start_stage("fast")
     # Then the pipeline run should still be running
-    run = FunCi::PipelineRun.find_by_commit(@db, "abc1234").first
+    run = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234").first
     assert_equal "running", run[:status],
       "Pipeline run should remain running when additional stages start"
   end
@@ -50,7 +50,7 @@ class TestDbRecorderStartStage < Minitest::Test
     # When a stage starts
     job_id = @recorder.start_stage("build")
     # Then a stage_job should exist with status "running"
-    job = FunCi::StageJob.find(@db, job_id)
+    job = FunCi::Persistence::StageJob.find(@db, job_id)
     assert_equal "running", job[:status],
       "Stage job should be running after start_stage"
     assert_equal "build", job[:stage],
@@ -71,7 +71,7 @@ class TestDbRecorderEndStage < Minitest::Test
 
   def setup
     setup_test_db
-    @recorder = FunCi::DbRecorder.new(@db)
+    @recorder = FunCi::Persistence::DbRecorder.new(@db)
   end
 
   def teardown
@@ -85,7 +85,7 @@ class TestDbRecorderEndStage < Minitest::Test
     # When the stage ends with success
     @recorder.end_stage(job_id, "completed")
     # Then the stage job should be completed
-    job = FunCi::StageJob.find(@db, job_id)
+    job = FunCi::Persistence::StageJob.find(@db, job_id)
     assert_equal "completed", job[:status],
       "Stage job should be completed after end_stage"
   end
@@ -97,7 +97,7 @@ class TestDbRecorderEndStage < Minitest::Test
     # When the stage ends with failure
     @recorder.end_stage(job_id, "failed")
     # Then the stage job should be failed
-    job = FunCi::StageJob.find(@db, job_id)
+    job = FunCi::Persistence::StageJob.find(@db, job_id)
     assert_equal "failed", job[:status],
       "Stage job should be failed after end_stage"
   end
@@ -115,21 +115,21 @@ class TestDbRecorderForBackground < Minitest::Test
     # Given a pipeline run created by the parent recorder
     dir = Dir.mktmpdir("fun-ci-test")
     db_path = File.join(dir, "pipeline.db")
-    db = FunCi::Database.connection(db_path)
-    FunCi::Database.migrate!(db)
-    parent_recorder = FunCi::DbRecorder.new(db)
+    db = FunCi::Persistence::Database.connection(db_path)
+    FunCi::Persistence::Database.migrate!(db)
+    parent_recorder = FunCi::Persistence::DbRecorder.new(db)
     parent_recorder.create_run(commit_hash: "abc1234", branch: "main")
     job_id = parent_recorder.start_stage("slow")
     pipeline_run_id = parent_recorder.pipeline_run_id
     parent_recorder.close
     # When a background recorder is created from db_path and pipeline_run_id
-    bg_recorder = FunCi::DbRecorder.for_background(db_path, pipeline_run_id)
+    bg_recorder = FunCi::Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
     bg_recorder.end_stage(job_id, "completed")
     bg_recorder.complete_run
     bg_recorder.close
     # Then the results should be persisted in the database
-    verify_db = FunCi::Database.connection(db_path)
-    run = FunCi::PipelineRun.find_by_commit(verify_db, "abc1234").first
+    verify_db = FunCi::Persistence::Database.connection(db_path)
+    run = FunCi::Persistence::PipelineRun.find_by_commit(verify_db, "abc1234").first
     assert_equal "completed", run[:status],
       "Background recorder should record pipeline completion"
   ensure
@@ -143,7 +143,7 @@ class TestDbRecorderTerminalStatus < Minitest::Test
 
   def setup
     setup_test_db
-    @recorder = FunCi::DbRecorder.new(@db)
+    @recorder = FunCi::Persistence::DbRecorder.new(@db)
   end
 
   def teardown
@@ -157,7 +157,7 @@ class TestDbRecorderTerminalStatus < Minitest::Test
     # When complete_run is called
     @recorder.complete_run
     # Then the pipeline run should be completed
-    run = FunCi::PipelineRun.find_by_commit(@db, "abc1234").first
+    run = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234").first
     assert_equal "completed", run[:status],
       "Pipeline run should be completed"
   end
@@ -169,7 +169,7 @@ class TestDbRecorderTerminalStatus < Minitest::Test
     # When fail_run is called
     @recorder.fail_run
     # Then the pipeline run should be failed
-    run = FunCi::PipelineRun.find_by_commit(@db, "abc1234").first
+    run = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234").first
     assert_equal "failed", run[:status],
       "Pipeline run should be failed"
   end

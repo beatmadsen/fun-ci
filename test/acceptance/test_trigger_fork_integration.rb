@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/trigger"
-require "fun_ci/database"
-require "fun_ci/pipeline_recorder"
-require "fun_ci/pipeline_run"
-require "fun_ci/background_wrapper"
+require "fun_ci/pipeline/trigger"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_recorder"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/pipeline/background_wrapper"
 require "tmpdir"
 
 # Integration tests for the real fork-based background path.
@@ -21,9 +21,9 @@ class TestTriggerForkIntegration < Minitest::Test
   def test_should_record_slow_suite_result_via_forked_process
     dir = Dir.mktmpdir("fun-ci-fork-test")
     db_path = File.join(dir, "test.sqlite3")
-    db = FunCi::Database.connection(db_path)
-    FunCi::Database.migrate!(db)
-    recorder = FunCi::DbRecorder.new(db)
+    db = FunCi::Persistence::Database.connection(db_path)
+    FunCi::Persistence::Database.migrate!(db)
+    recorder = FunCi::Persistence::DbRecorder.new(db)
 
     # Set up a pipeline run with a running slow stage (as Trigger would
     # before calling the background launcher).
@@ -40,8 +40,8 @@ class TestTriggerForkIntegration < Minitest::Test
     # crosses the fork boundary.
     recorder.close
     child_pid = fork do
-      child_recorder = FunCi::DbRecorder.for_background(db_path, pipeline_run_id)
-      FunCi::BackgroundWrapper.new(
+      child_recorder = FunCi::Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
+      FunCi::Pipeline::BackgroundWrapper.new(
         recorder: child_recorder, job_id: job_id, executor: executor
       ).run
       child_recorder.close
@@ -52,9 +52,9 @@ class TestTriggerForkIntegration < Minitest::Test
     assert child_status.success?, "Forked child should exit successfully"
 
     # Reopen DB to verify the forked child recorded the result
-    db = FunCi::Database.connection(db_path)
+    db = FunCi::Persistence::Database.connection(db_path)
 
-    runs = FunCi::PipelineRun.find_by_commit(db, "abc1234")
+    runs = FunCi::Persistence::PipelineRun.find_by_commit(db, "abc1234")
     assert_equal "completed", runs.first[:status],
       "Pipeline should be completed after forked slow suite finishes"
 
@@ -83,15 +83,15 @@ class TestTriggerRunWithDefaultBackgroundLauncher < Minitest::Test
     make_project_with_scripts(project_dir)
     db_dir = Dir.mktmpdir("fun-ci-db")
     db_path = File.join(db_dir, "test.sqlite3")
-    db = FunCi::Database.connection(db_path)
-    FunCi::Database.migrate!(db)
-    recorder = FunCi::DbRecorder.new(db)
+    db = FunCi::Persistence::Database.connection(db_path)
+    FunCi::Persistence::Database.migrate!(db)
+    recorder = FunCi::Persistence::DbRecorder.new(db)
 
     # Injected command_runner so scripts don't actually execute
     runner = ->(_cmd) { ["", FakeStatus.new(true, 0)] }
 
     # When Trigger#run uses the real default_background_launcher (no DI override)
-    trigger = FunCi::Trigger.new(
+    trigger = FunCi::Pipeline::Trigger.new(
       project_root: project_dir,
       commit_hash: "abc1234",
       branch: "main",
@@ -107,8 +107,8 @@ class TestTriggerRunWithDefaultBackgroundLauncher < Minitest::Test
 
     # And the fast suite should be recorded in the database
     # (reopen connection — production code closed the original for fork safety)
-    verify_db = FunCi::Database.connection(db_path)
-    runs = FunCi::PipelineRun.find_by_commit(verify_db, "abc1234")
+    verify_db = FunCi::Persistence::Database.connection(db_path)
+    runs = FunCi::Persistence::PipelineRun.find_by_commit(verify_db, "abc1234")
     refute_empty runs, "Should have a pipeline run"
     jobs = verify_db.execute(
       "SELECT stage, status FROM stage_jobs WHERE pipeline_run_id = ?",

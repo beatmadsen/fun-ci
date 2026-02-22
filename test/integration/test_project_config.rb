@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/project_config"
+require "fun_ci/setup/project_config"
 require "tmpdir"
 
 class TestProjectConfigDetection < Minitest::Test
@@ -10,7 +10,7 @@ class TestProjectConfigDetection < Minitest::Test
     Dir.mktmpdir do |dir|
       FileUtils.mkdir_p(File.join(dir, ".fun-ci"))
       # When we check for the folder
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       # Then it should be detected
       assert config.folder_exists?, "Should detect .fun-ci folder"
     end
@@ -20,7 +20,7 @@ class TestProjectConfigDetection < Minitest::Test
     # Given a project directory without a .fun-ci folder
     Dir.mktmpdir do |dir|
       # When we check for the folder
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       # Then it should not be detected
       refute config.folder_exists?, "Should not detect missing .fun-ci folder"
     end
@@ -39,7 +39,7 @@ class TestProjectConfigValidation < Minitest::Test
         File.chmod(0o755, path)
       end
       # When we validate
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       errors = config.validate
       # Then there should be no errors
       assert_empty errors, "Should have no errors when all scripts are present and executable"
@@ -55,7 +55,7 @@ class TestProjectConfigValidation < Minitest::Test
       File.write(path, "#!/bin/sh\nexit 0\n")
       File.chmod(0o755, path)
       # When we validate
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       errors = config.validate
       # Then errors should mention the missing scripts
       assert_includes errors.join(" "), "fast.sh", "Should report missing fast.sh"
@@ -76,7 +76,7 @@ class TestProjectConfigValidation < Minitest::Test
       # Make fast.sh non-executable
       File.chmod(0o644, File.join(fun_ci_dir, "fast.sh"))
       # When we validate
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       errors = config.validate
       # Then errors should mention fast.sh is not executable
       assert_includes errors.join(" "), "fast.sh", "Should report non-executable fast.sh"
@@ -87,7 +87,7 @@ class TestProjectConfigValidation < Minitest::Test
     # Given a project directory without .fun-ci
     Dir.mktmpdir do |dir|
       # When we validate
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       errors = config.validate
       # Then errors should mention the missing folder
       assert errors.any? { |e| e.include?(".fun-ci") }, "Should report missing .fun-ci folder"
@@ -99,7 +99,7 @@ class TestProjectConfigScriptPaths < Minitest::Test
   def test_should_return_script_path
     # Given a project directory
     Dir.mktmpdir do |dir|
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       # When we ask for the build script path
       path = config.script_path("build")
       # Then it should return the full path

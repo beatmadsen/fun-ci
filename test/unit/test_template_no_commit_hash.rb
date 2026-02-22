@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/template_writer"
+require "fun_ci/setup/template_writer"
 require "tmpdir"
 
 class TestTemplateNoCommitHash < Minitest::Test
   def test_should_not_pass_commit_hash_to_lint_commands
     # Given a target directory with ruby_bundler template
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:ruby_bundler, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:ruby_bundler, dir)
 
       # When we write the template
       writer.write
@@ -23,7 +23,7 @@ class TestTemplateNoCommitHash < Minitest::Test
   def test_should_not_pass_commit_hash_to_gradle_lint_commands
     # Given a target directory with jvm_gradle_kotlin template
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:jvm_gradle_kotlin, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:jvm_gradle_kotlin, dir)
 
       # When we write the template
       writer.write
@@ -38,7 +38,7 @@ class TestTemplateNoCommitHash < Minitest::Test
   def test_should_not_pass_commit_hash_to_maven_lint_commands
     # Given a target directory with jvm_maven template
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:jvm_maven, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:jvm_maven, dir)
 
       # When we write the template
       writer.write
@@ -53,7 +53,7 @@ class TestTemplateNoCommitHash < Minitest::Test
   def test_should_not_pass_commit_hash_to_ruby_test_scripts
     # Given a target directory with ruby_bundler template
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:ruby_bundler, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:ruby_bundler, dir)
 
       # When we write the template
       writer.write
@@ -70,7 +70,7 @@ class TestTemplateNoCommitHash < Minitest::Test
   def test_should_not_pass_commit_hash_to_gradle_test_scripts
     # Given a target directory with jvm_gradle_kotlin template
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:jvm_gradle_kotlin, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:jvm_gradle_kotlin, dir)
 
       # When we write the template
       writer.write
@@ -87,7 +87,7 @@ class TestTemplateNoCommitHash < Minitest::Test
   def test_should_not_pass_commit_hash_to_maven_test_scripts
     # Given a target directory with jvm_maven template
     Dir.mktmpdir("fun-ci-writer-test") do |dir|
-      writer = FunCi::TemplateWriter.new(:jvm_maven, dir)
+      writer = FunCi::Setup::TemplateWriter.new(:jvm_maven, dir)
 
       # When we write the template
       writer.write

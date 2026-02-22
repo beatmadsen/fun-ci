@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/setup_checker"
+require "fun_ci/setup/setup_checker"
 require "tmpdir"
 require "stringio"
 
@@ -12,7 +12,7 @@ class TestSetupCheckerWithIssues < Minitest::Test
       stdout = StringIO.new
 
       # When we run the checker
-      FunCi::SetupChecker.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
 
       # Then stdout should mention the missing .fun-ci folder
       assert_match(/\.fun-ci/, stdout.string, "Should report missing .fun-ci folder")
@@ -25,7 +25,7 @@ class TestSetupCheckerWithIssues < Minitest::Test
       stdout = StringIO.new
 
       # When we run the checker
-      exit_code = FunCi::SetupChecker.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
 
       # Then it should return failure exit code
       assert_equal 1, exit_code, "Should return 1 when issues found"
@@ -43,7 +43,7 @@ class TestSetupCheckerAllClear < Minitest::Test
       stdout = StringIO.new
 
       # When we run the checker
-      exit_code = FunCi::SetupChecker.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
 
       # Then it should return success exit code
       assert_equal 0, exit_code, "Should return 0 when all clear"
@@ -57,7 +57,7 @@ class TestSetupCheckerAllClear < Minitest::Test
       stdout = StringIO.new
 
       # When we run the checker
-      FunCi::SetupChecker.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
 
       # Then stdout should report a positive status
       assert_match(/ok|configured|ready/i, stdout.string, "Should report positive status")

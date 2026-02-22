@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
@@ -27,7 +27,7 @@ class TestAdminTuiNavigation < Minitest::Test
     # Given runs on the board
     tui = make_tui
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     # Then no cursor marker should be visible
     refute_match(/>/, plain, "Cursor should be invisible by default")
   end
@@ -36,7 +36,7 @@ class TestAdminTuiNavigation < Minitest::Test
     tui = make_tui
     tui.handle_key("j")
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     lines = plain.lines.select { |l| l.include?("hash") }
     assert_match(/^>/, lines[0], "First row should have cursor marker after j")
     refute_match(/^>/, lines[1], "Second row should not have cursor marker")
@@ -47,7 +47,7 @@ class TestAdminTuiNavigation < Minitest::Test
     tui.handle_key("j")
     tui.handle_key("j")
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     lines = plain.lines.select { |l| l.include?("hash") }
     refute_match(/^>/, lines[0], "First row should not have cursor after moving down")
     assert_match(/^>/, lines[1], "Second row should have cursor after j j")
@@ -59,7 +59,7 @@ class TestAdminTuiNavigation < Minitest::Test
     tui.handle_key("j")
     tui.handle_key("k")
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     lines = plain.lines.select { |l| l.include?("hash") }
     assert_match(/^>/, lines[0], "First row should have cursor after j j k")
   end
@@ -69,7 +69,7 @@ class TestAdminTuiNavigation < Minitest::Test
     # Move to last row (index 2) then try to go further
     4.times { tui.handle_key("j") }
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     lines = plain.lines.select { |l| l.include?("hash") }
     assert_match(/^>/, lines[2], "Cursor should stay on last row")
   end
@@ -79,7 +79,7 @@ class TestAdminTuiNavigation < Minitest::Test
     tui.handle_key("j")  # cursor on row 0
     tui.handle_key("k")  # try to go above
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     lines = plain.lines.select { |l| l.include?("hash") }
     assert_match(/^>/, lines[0], "Cursor should stay on first row")
   end
@@ -87,7 +87,7 @@ class TestAdminTuiNavigation < Minitest::Test
   private
 
   def make_tui
-    FunCi::AdminTui.new(db: @db, output: @output, input: StringIO.new(""))
+    FunCi::Tui::AdminTui.new(db: @db, output: @output, input: StringIO.new(""))
   end
 
 end

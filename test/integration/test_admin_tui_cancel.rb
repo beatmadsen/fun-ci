@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
@@ -31,7 +31,7 @@ class TestAdminTuiCancelConfirmation < Minitest::Test
     # When the user presses "c" to cancel
     tui.handle_key("c")
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
 
     # Then the footer should show the confirmation prompt
     assert_match(/cancel.*\?.*y\/n/i, plain,
@@ -53,7 +53,7 @@ class TestAdminTuiCancelConfirmation < Minitest::Test
     @output.truncate(0)
     @output.rewind
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
 
     # Then the footer should return to normal controls
     refute_match(/cancel.*\?.*y\/n/i, plain,
@@ -72,7 +72,7 @@ class TestAdminTuiCancelConfirmation < Minitest::Test
     @output.truncate(0)
     @output.rewind
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
 
     # Then the footer should return to normal controls
     assert_match(/j\/k move/, plain,
@@ -84,14 +84,14 @@ class TestAdminTuiCancelConfirmation < Minitest::Test
   private
 
   def make_tui
-    FunCi::AdminTui.new(db: @db, output: @output, input: StringIO.new(""))
+    FunCi::Tui::AdminTui.new(db: @db, output: @output, input: StringIO.new(""))
   end
 
   def create_running_run(commit, branch)
-    run_id = FunCi::PipelineRun.create(@db, commit_hash: commit, branch: branch)
-    FunCi::PipelineRun.update_status(@db, run_id, "running")
-    job_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: "build")
-    FunCi::StageJob.update_status(@db, job_id, "running")
+    run_id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: commit, branch: branch)
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "running")
+    job_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "build")
+    FunCi::Persistence::StageJob.update_status(@db, job_id, "running")
     run_id
   end
 end

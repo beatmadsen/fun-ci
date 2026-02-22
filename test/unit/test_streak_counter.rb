@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/streak_counter"
+require "fun_ci/tui/streak_counter"
 
 class TestStreakCounter < Minitest::Test
   def test_should_count_consecutive_passes
     # Given 7 consecutive passed runs (most recent first)
     runs = Array.new(7) { { status: "completed" } }
     # When we count the streak
-    result = FunCi::StreakCounter.count(runs)
+    result = FunCi::Tui::StreakCounter.count(runs)
     # Then the streak should be 7
     assert_equal 7, result, "Should count all consecutive completed runs"
   end
@@ -24,7 +24,7 @@ class TestStreakCounter < Minitest::Test
       { status: "completed" }
     ]
     # When we count the streak
-    result = FunCi::StreakCounter.count(runs)
+    result = FunCi::Tui::StreakCounter.count(runs)
     # Then the streak should be 3
     assert_equal 3, result, "Should stop counting at first non-pass"
   end
@@ -33,7 +33,7 @@ class TestStreakCounter < Minitest::Test
     # Given the most recent run failed
     runs = [{ status: "failed" }, { status: "completed" }]
     # When we count the streak
-    result = FunCi::StreakCounter.count(runs)
+    result = FunCi::Tui::StreakCounter.count(runs)
     # Then the streak should be 0
     assert_equal 0, result, "Streak is 0 when most recent run failed"
   end
@@ -42,7 +42,7 @@ class TestStreakCounter < Minitest::Test
     # Given the most recent run timed out
     runs = [{ status: "timed_out" }, { status: "completed" }]
     # When we count the streak
-    result = FunCi::StreakCounter.count(runs)
+    result = FunCi::Tui::StreakCounter.count(runs)
     # Then the streak should be 0
     assert_equal 0, result, "Streak is 0 when most recent run timed out"
   end
@@ -57,7 +57,7 @@ class TestStreakCounter < Minitest::Test
       { status: "completed" }
     ]
     # When we count the streak
-    result = FunCi::StreakCounter.count(runs)
+    result = FunCi::Tui::StreakCounter.count(runs)
     # Then the streak should be 4 (running doesn't affect it)
     assert_equal 4, result, "Running pipelines should be skipped"
   end
@@ -71,35 +71,35 @@ class TestStreakCounter < Minitest::Test
       { status: "completed" }
     ]
     # When we count the streak
-    result = FunCi::StreakCounter.count(runs)
+    result = FunCi::Tui::StreakCounter.count(runs)
     # Then the streak should be 2
     assert_equal 2, result, "Scheduled pipelines should be skipped"
   end
 
   def test_should_return_nil_for_empty_list
     # Given no runs
-    result = FunCi::StreakCounter.count([])
+    result = FunCi::Tui::StreakCounter.count([])
     # Then the streak should be nil (no runs to count)
     assert_nil result, "Empty list means no completed runs, so nil"
   end
 
   def test_should_format_streak_text_for_passing
     # Given a streak of 7
-    result = FunCi::StreakCounter.format_text(7)
+    result = FunCi::Tui::StreakCounter.format_text(7)
     # Then it should say "7 in a row!"
     assert_equal "7 in a row!", result
   end
 
   def test_should_format_streak_broken_for_zero
     # Given a streak of 0 with completed runs existing
-    result = FunCi::StreakCounter.format_text(0)
+    result = FunCi::Tui::StreakCounter.format_text(0)
     # Then it should say "Streak broken"
     assert_equal "Streak broken", result
   end
 
   def test_should_return_nil_text_when_no_completed_runs
     # Given nil (indicating no completed runs at all)
-    result = FunCi::StreakCounter.format_text(nil)
+    result = FunCi::Tui::StreakCounter.format_text(nil)
     # Then it should return nil (no streak to show)
     assert_nil result, "No text when no completed runs exist"
   end
@@ -108,7 +108,7 @@ class TestStreakCounter < Minitest::Test
     # Given only running/scheduled runs
     runs = [{ status: "running" }, { status: "scheduled" }]
     # When we count the streak
-    result = FunCi::StreakCounter.count(runs)
+    result = FunCi::Tui::StreakCounter.count(runs)
     # Then it should return nil (no completed runs to count)
     assert_nil result, "Should return nil when no terminal runs exist"
   end

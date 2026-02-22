@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require "stringio"
 require "tmpdir"
-require "fun_ci/trigger"
+require "fun_ci/pipeline/trigger"
 
 # Tests for Phase 2: fast (blocking) + slow (background) start simultaneously.
 # The slow suite should be spawned at the start of Phase 2, not after fast completes.
@@ -22,11 +22,11 @@ class TestTriggerParallelPhaseTwo < Minitest::Test
       }
       launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
         events << [:spawn_slow]
-        FunCi::BackgroundWrapper.new(
+        FunCi::Pipeline::BackgroundWrapper.new(
           recorder: FakeRecorder.new, job_id: job_id, executor: executor
         ).run
       }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -60,7 +60,7 @@ class TestTriggerParallelPhaseTwo < Minitest::Test
         end
       }
       launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {}
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
@@ -25,13 +25,13 @@ class TestAdminTuiResize < Minitest::Test
   def test_should_render_header_at_new_width_after_resize
     # Given a TUI at width 80 with a completed run
     create_completed_run("abc1234", "main")
-    tui = FunCi::AdminTui.new(db: @db, output: @output, input: StringIO.new(""), width: 80)
+    tui = FunCi::Tui::AdminTui.new(db: @db, output: @output, input: StringIO.new(""), width: 80)
     # When resize is called with new width
     tui.resize(120)
     @output.truncate(0)
     @output.rewind
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     header = plain.lines.first.chomp
     # Then header should fill 120 columns
     assert_equal 120, header.length,
@@ -43,7 +43,7 @@ class TestAdminTuiResize < Minitest::Test
     create_completed_run("abc1234", "main")
     current_width = 80
     width_provider = -> { current_width }
-    tui = FunCi::AdminTui.new(
+    tui = FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 80, width_provider: width_provider
     )
@@ -53,7 +53,7 @@ class TestAdminTuiResize < Minitest::Test
     @output.truncate(0)
     @output.rewind
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     header = plain.lines.first.chomp
     # Then header should fill 120 columns
     assert_equal 120, header.length,
@@ -65,7 +65,7 @@ class TestAdminTuiResize < Minitest::Test
     create_completed_run("abc1234", "main")
     current_width = 80
     width_provider = -> { current_width }
-    tui = FunCi::AdminTui.new(
+    tui = FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 80, width_provider: width_provider
     )
@@ -75,7 +75,7 @@ class TestAdminTuiResize < Minitest::Test
     @output.truncate(0)
     @output.rewind
     tui.render_once
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     header = plain.lines.first.chomp
     # Then header should still fill 80 columns (previous width)
     assert_equal 80, header.length,
@@ -87,7 +87,7 @@ class TestAdminTuiResize < Minitest::Test
     create_completed_run("abc1234", "main")
     current_width = 80
     width_provider = -> { current_width }
-    tui = FunCi::AdminTui.new(
+    tui = FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 80, width_provider: width_provider
     )
@@ -107,7 +107,7 @@ class TestAdminTuiResize < Minitest::Test
     create_completed_run("abc1234", "main")
     current_width = 80
     width_provider = -> { current_width }
-    tui = FunCi::AdminTui.new(
+    tui = FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 80, width_provider: width_provider
     )

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/relative_time"
+require "fun_ci/tui/relative_time"
 
 class TestRelativeTime < Minitest::Test
   def test_should_show_just_now_for_recent_times
@@ -9,7 +9,7 @@ class TestRelativeTime < Minitest::Test
     now = Time.now
     timestamp = (now - 5).utc.iso8601
     # When we format it
-    result = FunCi::RelativeTime.format(timestamp, now: now)
+    result = FunCi::Tui::RelativeTime.format(timestamp, now: now)
     # Then it should say "just now"
     assert_equal "just now", result, "Times under 60 seconds should show 'just now'"
   end
@@ -19,7 +19,7 @@ class TestRelativeTime < Minitest::Test
     now = Time.now
     timestamp = (now - 120).utc.iso8601
     # When we format it
-    result = FunCi::RelativeTime.format(timestamp, now: now)
+    result = FunCi::Tui::RelativeTime.format(timestamp, now: now)
     # Then it should say "2m ago"
     assert_equal "2m ago", result, "Should show minutes for times between 1-59 minutes"
   end
@@ -29,7 +29,7 @@ class TestRelativeTime < Minitest::Test
     now = Time.now
     timestamp = (now - 3 * 3600).utc.iso8601
     # When we format it
-    result = FunCi::RelativeTime.format(timestamp, now: now)
+    result = FunCi::Tui::RelativeTime.format(timestamp, now: now)
     # Then it should say "3h ago"
     assert_equal "3h ago", result, "Should show hours for times over 60 minutes"
   end
@@ -39,7 +39,7 @@ class TestRelativeTime < Minitest::Test
     now = Time.now
     timestamp = (now - 60).utc.iso8601
     # When we format it
-    result = FunCi::RelativeTime.format(timestamp, now: now)
+    result = FunCi::Tui::RelativeTime.format(timestamp, now: now)
     # Then it should say "1m ago"
     assert_equal "1m ago", result, "60 seconds should round to 1m ago"
   end
@@ -49,7 +49,7 @@ class TestRelativeTime < Minitest::Test
     now = Time.now
     timestamp = (now - 3600).utc.iso8601
     # When we format it
-    result = FunCi::RelativeTime.format(timestamp, now: now)
+    result = FunCi::Tui::RelativeTime.format(timestamp, now: now)
     # Then it should say "1h ago", result
     assert_equal "1h ago", result, "60 minutes should round to 1h ago"
   end

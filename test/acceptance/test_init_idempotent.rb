@@ -2,8 +2,8 @@
 
 require_relative "../test_helper"
 require "fun_ci/cli"
-require "fun_ci/installer"
-require "fun_ci/hook_writer"
+require "fun_ci/setup/installer"
+require "fun_ci/setup/hook_writer"
 require "tmpdir"
 require "stringio"
 
@@ -39,7 +39,7 @@ class TestInitEverythingIdempotent < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+      exit_code = FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then it should skip with exit 0 and explain what happened
       assert_equal 0, exit_code, "Should return 0 when skipping"
@@ -58,7 +58,7 @@ class TestInitEverythingIdempotent < Minitest::Test
       stdout = StringIO.new
 
       # When we try to install our hook
-      exit_code = FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      exit_code = FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then it should skip with exit 0 and explain what happened
       assert_equal 0, exit_code, "Should return 0 when skipping foreign hook"

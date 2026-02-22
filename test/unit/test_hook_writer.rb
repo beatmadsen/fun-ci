@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/hook_writer"
+require "fun_ci/setup/hook_writer"
 require "tmpdir"
 require "stringio"
 
@@ -13,7 +13,7 @@ class TestHookWriterHappyPath < Minitest::Test
       stdout = StringIO.new
 
       # When we install a pre-commit hook
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then the hook file should exist
       hook_path = File.join(dir, ".git", "hooks", "pre-commit")
@@ -28,7 +28,7 @@ class TestHookWriterHappyPath < Minitest::Test
       stdout = StringIO.new
 
       # When we install a pre-commit hook
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then the hook file should be executable
       hook_path = File.join(dir, ".git", "hooks", "pre-commit")
@@ -43,7 +43,7 @@ class TestHookWriterHappyPath < Minitest::Test
       stdout = StringIO.new
 
       # When we install a pre-commit hook
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then the hook should include the marker comment
       content = File.read(File.join(dir, ".git", "hooks", "pre-commit"))
@@ -58,7 +58,7 @@ class TestHookWriterHappyPath < Minitest::Test
       stdout = StringIO.new
 
       # When we install a pre-commit hook
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then the hook should call fun-ci trigger with empty-repo fallback
       content = File.read(File.join(dir, ".git", "hooks", "pre-commit"))
@@ -74,7 +74,7 @@ class TestHookWriterHappyPath < Minitest::Test
       stdout = StringIO.new
 
       # When we install a pre-commit hook
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then the hooks directory and hook file should exist
       hook_path = File.join(dir, ".git", "hooks", "pre-commit")
@@ -91,7 +91,7 @@ class TestHookWriterGuards < Minitest::Test
       stdout = StringIO.new
 
       # When we try to install an unknown hook type
-      exit_code = FunCi::HookWriter.run(project_root: dir, hook_type: "post-merge", stdout: stdout)
+      exit_code = FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "post-merge", stdout: stdout)
 
       # Then it should refuse
       assert_equal 1, exit_code, "Should reject unknown hook type"
@@ -108,7 +108,7 @@ class TestHookWriterGuards < Minitest::Test
       stdout = StringIO.new
 
       # When we try to install our hook
-      exit_code = FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      exit_code = FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then it should skip and return success
       assert_equal 0, exit_code, "Should return 0 when skipping foreign hook"
@@ -126,7 +126,7 @@ class TestHookWriterGuards < Minitest::Test
       stdout = StringIO.new
 
       # When we install our hook
-      exit_code = FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      exit_code = FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then it should succeed and overwrite
       assert_equal 0, exit_code, "Should overwrite our own hook"
@@ -141,7 +141,7 @@ class TestHookWriterGuards < Minitest::Test
       stdout = StringIO.new
 
       # When we try to install a hook
-      exit_code = FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      exit_code = FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then it should refuse
       assert_equal 1, exit_code, "Should refuse without .git"

@@ -24,7 +24,7 @@ class TestTriggerCliConcurrentRuns < Minitest::Test
     @stale_pid = Process.spawn("sleep 300")
     Process.detach(@stale_pid)
     @client.store_pid_for_run(old_run[:id], @stale_pid)
-    FunCi::PipelineRun.update_status(@client.db, old_run[:id], "running")
+    FunCi::Persistence::PipelineRun.update_status(@client.db, old_run[:id], "running")
     # When the trigger CLI is invoked again for branch "main" with a new commit
     @client.trigger(commit_hash: "def5678", branch: "main")
     # Then stdout should mention cancelling the stale pipeline
@@ -41,11 +41,11 @@ class TestTriggerCliConcurrentRuns < Minitest::Test
     @stale_pid = Process.spawn("sleep 300")
     Process.detach(@stale_pid)
     @client.store_pid_for_run(old_run[:id], @stale_pid)
-    FunCi::PipelineRun.update_status(@client.db, old_run[:id], "running")
+    FunCi::Persistence::PipelineRun.update_status(@client.db, old_run[:id], "running")
     # When the trigger CLI is invoked again for the same branch
     @client.trigger(commit_hash: "def5678", branch: "main")
     # Then the old pipeline's state should be cancelled
-    old_run = FunCi::PipelineRun.find(@client.db, old_run[:id])
+    old_run = FunCi::Persistence::PipelineRun.find(@client.db, old_run[:id])
     assert_equal "cancelled", old_run[:status],
       "Old pipeline should be marked cancelled when superseded"
   end

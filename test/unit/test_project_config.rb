@@ -2,7 +2,7 @@
 
 require_relative "../test_helper"
 require "tmpdir"
-require "fun_ci/project_config"
+require "fun_ci/setup/project_config"
 
 class TestProjectConfigLintScript < Minitest::Test
   def test_should_require_lint_script_to_exist
@@ -15,7 +15,7 @@ class TestProjectConfigLintScript < Minitest::Test
         File.write(path, "#!/bin/sh\nexit 0\n")
         File.chmod(0o755, path)
       end
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       # When validating
       errors = config.validate
       # Then it should report lint.sh is missing
@@ -37,7 +37,7 @@ class TestProjectConfigLintScript < Minitest::Test
       lint_path = File.join(fun_ci_dir, "lint.sh")
       File.write(lint_path, "#!/bin/sh\nexit 0\n")
       File.chmod(0o644, lint_path) # not executable
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       # When validating
       errors = config.validate
       # Then it should report lint.sh is not executable
@@ -56,7 +56,7 @@ class TestProjectConfigLintScript < Minitest::Test
         File.write(path, "#!/bin/sh\nexit 0\n")
         File.chmod(0o755, path)
       end
-      config = FunCi::ProjectConfig.new(dir)
+      config = FunCi::Setup::ProjectConfig.new(dir)
       # When validating
       errors = config.validate
       # Then there should be no errors

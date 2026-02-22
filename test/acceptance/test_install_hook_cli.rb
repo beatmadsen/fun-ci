@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/hook_writer"
+require "fun_ci/setup/hook_writer"
 require "tmpdir"
 require "stringio"
 
@@ -13,7 +13,7 @@ class TestInstallHookCli < Minitest::Test
       stdout = StringIO.new
 
       # When we install a pre-commit hook
-      exit_code = FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      exit_code = FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then it should succeed
       assert_equal 0, exit_code, "Should return success"
@@ -39,7 +39,7 @@ class TestInstallHookCli < Minitest::Test
       stdout = StringIO.new
 
       # When we try to install a hook
-      exit_code = FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      exit_code = FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
 
       # Then it should refuse
       assert_equal 1, exit_code, "Should return failure"

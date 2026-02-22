@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/installer"
+require "fun_ci/setup/installer"
 require "tmpdir"
 require "stringio"
 
@@ -13,7 +13,7 @@ class TestInitTemplateContentRuby < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then lint.sh should NOT pass $1 to rubocop (rubocop doesn't accept a commit hash)
       content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
@@ -29,7 +29,7 @@ class TestInitTemplateContentRuby < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then build.sh should NOT pass $1 (bundle install doesn't use commit hashes)
       content = File.read(File.join(dir, ".fun-ci", "build.sh"))
@@ -47,7 +47,7 @@ class TestInitTemplateContentGradle < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then lint.sh should NOT pass $1 to gradlew check
       content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
@@ -63,7 +63,7 @@ class TestInitTemplateContentGradle < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then build.sh should NOT pass $1 (gradlew assemble doesn't use commit hashes)
       content = File.read(File.join(dir, ".fun-ci", "build.sh"))
@@ -81,7 +81,7 @@ class TestInitTemplateContentMaven < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then lint.sh should NOT pass $1 to mvn verify -DskipTests
       content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
@@ -97,7 +97,7 @@ class TestInitTemplateContentMaven < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then build.sh should NOT pass $1 (mvn compile doesn't use commit hashes)
       content = File.read(File.join(dir, ".fun-ci", "build.sh"))
@@ -120,7 +120,7 @@ class TestInitTemplateContentMaven < Minitest::Test
       stdout = StringIO.new
 
       # When we run init (no DI — reads real pom.xml)
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then lint.sh should use the detected linter, not the default
       lint_content = File.read(File.join(dir, ".fun-ci", "lint.sh"))

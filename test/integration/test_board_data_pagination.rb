@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/board_data"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
+require "fun_ci/tui/board_data"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
 require "tmpdir"
 
 # Inner BDD cycle: BoardData pagination support.
@@ -25,7 +25,7 @@ class TestBoardDataPagination < Minitest::Test
   def test_should_respect_initial_limit_as_page_size
     # Given 10 runs and a BoardData with limit 5
     10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
-    board = FunCi::BoardData.new(@db, limit: 5)
+    board = FunCi::Tui::BoardData.new(@db, limit: 5)
 
     # When we fetch runs
     result = board.runs
@@ -37,7 +37,7 @@ class TestBoardDataPagination < Minitest::Test
   def test_should_show_more_runs_after_load_more
     # Given 10 runs and a BoardData with limit 5
     10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
-    board = FunCi::BoardData.new(@db, limit: 5)
+    board = FunCi::Tui::BoardData.new(@db, limit: 5)
 
     # When we call load_more
     board.load_more
@@ -51,7 +51,7 @@ class TestBoardDataPagination < Minitest::Test
   def test_should_not_exceed_total_available_runs
     # Given 7 runs and a BoardData with limit 5
     7.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
-    board = FunCi::BoardData.new(@db, limit: 5)
+    board = FunCi::Tui::BoardData.new(@db, limit: 5)
 
     # When we call load_more twice
     board.load_more

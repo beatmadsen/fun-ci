@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "fun_ci/database"
-require_relative "fun_ci/state_machine"
-require_relative "fun_ci/pipeline_run"
-require_relative "fun_ci/stage_job"
-require_relative "fun_ci/project_config"
+require_relative "fun_ci/persistence/database"
+require_relative "fun_ci/persistence/state_machine"
+require_relative "fun_ci/persistence/pipeline_run"
+require_relative "fun_ci/persistence/stage_job"
+require_relative "fun_ci/setup/project_config"
 
 module FunCi
   VERSION = "1.1.0"

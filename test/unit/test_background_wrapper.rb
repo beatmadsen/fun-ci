@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/background_wrapper"
+require "fun_ci/pipeline/background_wrapper"
 
 class TestBackgroundWrapperEndStage < Minitest::Test
   def test_should_call_end_stage_with_completed_when_command_exits_zero
     # Given an executor that returns success and a fake recorder
     recorder = FakeRecorder.new
     executor = -> { ["", FakeStatus.new(true, 0), false] }
-    wrapper = FunCi::BackgroundWrapper.new(
+    wrapper = FunCi::Pipeline::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
       executor: executor
@@ -26,7 +26,7 @@ class TestBackgroundWrapperEndStage < Minitest::Test
     # Given an executor that returns success and a fake recorder
     recorder = FakeRecorder.new
     executor = -> { ["", FakeStatus.new(true, 0), false] }
-    wrapper = FunCi::BackgroundWrapper.new(
+    wrapper = FunCi::Pipeline::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
       executor: executor
@@ -43,7 +43,7 @@ class TestBackgroundWrapperEndStage < Minitest::Test
     # Given an executor that returns failure and a fake recorder
     recorder = FakeRecorder.new
     executor = -> { ["test failed", FakeStatus.new(false, 1), false] }
-    wrapper = FunCi::BackgroundWrapper.new(
+    wrapper = FunCi::Pipeline::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
       executor: executor
@@ -61,7 +61,7 @@ class TestBackgroundWrapperEndStage < Minitest::Test
     # Given an executor that returns failure and a fake recorder
     recorder = FakeRecorder.new
     executor = -> { ["test failed", FakeStatus.new(false, 1), false] }
-    wrapper = FunCi::BackgroundWrapper.new(
+    wrapper = FunCi::Pipeline::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
       executor: executor
@@ -78,7 +78,7 @@ class TestBackgroundWrapperEndStage < Minitest::Test
     # Given an executor that signals timeout and a fake recorder
     recorder = FakeRecorder.new
     executor = -> { ["", nil, true] }
-    wrapper = FunCi::BackgroundWrapper.new(
+    wrapper = FunCi::Pipeline::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
       executor: executor
@@ -96,7 +96,7 @@ class TestBackgroundWrapperEndStage < Minitest::Test
     # Given an executor that signals timeout and a fake recorder
     recorder = FakeRecorder.new
     executor = -> { ["", nil, true] }
-    wrapper = FunCi::BackgroundWrapper.new(
+    wrapper = FunCi::Pipeline::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
       executor: executor

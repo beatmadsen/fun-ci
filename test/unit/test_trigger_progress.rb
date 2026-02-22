@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require "stringio"
 require "tmpdir"
-require "fun_ci/trigger"
+require "fun_ci/pipeline/trigger"
 
 # Tests for progress feedback output during trigger execution.
 # Verifies that the trigger reports stage results to stdout
@@ -15,11 +15,11 @@ class TestTriggerProgressOnSuccess < Minitest::Test
   def make_trigger(dir, command_runner:)
     stdout = StringIO.new
     launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
-      FunCi::BackgroundWrapper.new(
+      FunCi::Pipeline::BackgroundWrapper.new(
         recorder: FakeRecorder.new, job_id: job_id, executor: executor
       ).run
     }
-    trigger = FunCi::Trigger.new(
+    trigger = FunCi::Pipeline::Trigger.new(
       project_root: dir,
       commit_hash: "abc1234",
       branch: "main",
@@ -67,7 +67,7 @@ class TestTriggerProgressOnFailure < Minitest::Test
   def make_trigger(dir, command_runner:)
     stdout = StringIO.new
     noop_launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {}
-    trigger = FunCi::Trigger.new(
+    trigger = FunCi::Pipeline::Trigger.new(
       project_root: dir,
       commit_hash: "abc1234",
       branch: "main",

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/installer"
+require "fun_ci/setup/installer"
 require "tmpdir"
 require "stringio"
 
@@ -13,7 +13,7 @@ class TestInitTemplateTestScriptsRuby < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then fast.sh should NOT pass $1 (rake test doesn't accept a commit hash)
       content = File.read(File.join(dir, ".fun-ci", "fast.sh"))
@@ -29,7 +29,7 @@ class TestInitTemplateTestScriptsRuby < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then slow.sh should NOT pass $1 (rake test:slow doesn't accept a commit hash)
       content = File.read(File.join(dir, ".fun-ci", "slow.sh"))
@@ -47,7 +47,7 @@ class TestInitTemplateTestScriptsGradle < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then fast.sh should NOT pass $1 (gradlew test doesn't accept a commit hash)
       content = File.read(File.join(dir, ".fun-ci", "fast.sh"))
@@ -63,7 +63,7 @@ class TestInitTemplateTestScriptsGradle < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then slow.sh should NOT pass $1 (gradlew integrationTest doesn't accept a commit hash)
       content = File.read(File.join(dir, ".fun-ci", "slow.sh"))
@@ -81,7 +81,7 @@ class TestInitTemplateTestScriptsMaven < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then fast.sh should NOT pass $1 (mvn test doesn't accept a commit hash)
       content = File.read(File.join(dir, ".fun-ci", "fast.sh"))
@@ -97,7 +97,7 @@ class TestInitTemplateTestScriptsMaven < Minitest::Test
       stdout = StringIO.new
 
       # When we run init
-      FunCi::Installer.run(project_root: dir, stdout: stdout)
+      FunCi::Setup::Installer.run(project_root: dir, stdout: stdout)
 
       # Then slow.sh should NOT pass $1 (mvn verify doesn't accept a commit hash)
       content = File.read(File.join(dir, ".fun-ci", "slow.sh"))

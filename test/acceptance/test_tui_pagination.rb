@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
@@ -40,7 +40,7 @@ class TestTuiPagination < Minitest::Test
     tui.render_once
 
     # Then only 5 commit rows should be visible
-    visible = FunCi::Ansi.strip(@output.string)
+    visible = FunCi::Tui::Ansi.strip(@output.string)
     commit_rows = visible.lines.select { |l| l.match?(/run\d+/) }
     assert_equal PAGE_SIZE, commit_rows.size,
       "Should show only #{PAGE_SIZE} rows initially, got #{commit_rows.size}"
@@ -58,7 +58,7 @@ class TestTuiPagination < Minitest::Test
     tui.render_once
 
     # Then more rows should be visible (second page loaded)
-    visible = FunCi::Ansi.strip(@output.string)
+    visible = FunCi::Tui::Ansi.strip(@output.string)
     commit_rows = visible.lines.select { |l| l.match?(/run\d+/) }
     assert_operator commit_rows.size, :>, PAGE_SIZE,
       "Should show more than #{PAGE_SIZE} rows after scrolling past bottom"
@@ -67,7 +67,7 @@ class TestTuiPagination < Minitest::Test
   private
 
   def make_tui
-    FunCi::AdminTui.new(
+    FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 120, page_size: PAGE_SIZE
     )

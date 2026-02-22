@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/hook_writer"
+require "fun_ci/setup/hook_writer"
 require "tmpdir"
 require "stringio"
 
@@ -10,7 +10,7 @@ class TestHookWriterPreCommitTemplate < Minitest::Test
     Dir.mktmpdir("fun-ci-hook-test") do |dir|
       FileUtils.mkdir_p(File.join(dir, ".git", "hooks"))
       stdout = StringIO.new
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
       content = File.read(File.join(dir, ".git", "hooks", "pre-commit"))
       assert_match(/--no-validate/, content,
         "Pre-commit hook should include --no-validate flag")
@@ -21,7 +21,7 @@ class TestHookWriterPreCommitTemplate < Minitest::Test
     Dir.mktmpdir("fun-ci-hook-test") do |dir|
       FileUtils.mkdir_p(File.join(dir, ".git", "hooks"))
       stdout = StringIO.new
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-commit", stdout: stdout)
       content = File.read(File.join(dir, ".git", "hooks", "pre-commit"))
       assert_match(/fun-ci trigger/, content,
         "Pre-commit hook should use 'fun-ci trigger' command")
@@ -34,7 +34,7 @@ class TestHookWriterPrePushTemplate < Minitest::Test
     Dir.mktmpdir("fun-ci-hook-test") do |dir|
       FileUtils.mkdir_p(File.join(dir, ".git", "hooks"))
       stdout = StringIO.new
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-push", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-push", stdout: stdout)
       content = File.read(File.join(dir, ".git", "hooks", "pre-push"))
       refute_match(/--no-validate/, content,
         "Pre-push hook should NOT include --no-validate flag")
@@ -45,7 +45,7 @@ class TestHookWriterPrePushTemplate < Minitest::Test
     Dir.mktmpdir("fun-ci-hook-test") do |dir|
       FileUtils.mkdir_p(File.join(dir, ".git", "hooks"))
       stdout = StringIO.new
-      FunCi::HookWriter.run(project_root: dir, hook_type: "pre-push", stdout: stdout)
+      FunCi::Setup::HookWriter.run(project_root: dir, hook_type: "pre-push", stdout: stdout)
       content = File.read(File.join(dir, ".git", "hooks", "pre-push"))
       assert_match(/fun-ci trigger/, content,
         "Pre-push hook should use 'fun-ci trigger' command")

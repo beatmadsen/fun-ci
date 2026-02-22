@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require "stringio"
 require "tmpdir"
-require "fun_ci/trigger"
+require "fun_ci/pipeline/trigger"
 
 class TestTriggerProjectPath < Minitest::Test
   include FunCiTestProject
@@ -15,11 +15,11 @@ class TestTriggerProjectPath < Minitest::Test
       recorder = FakeRecorder.new
       fake_runner = ->(_cmd, _opts = {}) { ["", FakeStatus.new(true, 0)] }
       launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
-        FunCi::BackgroundWrapper.new(
+        FunCi::Pipeline::BackgroundWrapper.new(
           recorder: FakeRecorder.new, job_id: job_id, executor: executor
         ).run
       }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",

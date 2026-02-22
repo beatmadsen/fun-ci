@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/animation_renderer"
-require "fun_ci/screen"
-require "fun_ci/ansi"
+require "fun_ci/tui/animation_renderer"
+require "fun_ci/tui/screen"
+require "fun_ci/tui/ansi"
 require "stringio"
 
 class TestAnimationRendererHeaderPlayer < Minitest::Test

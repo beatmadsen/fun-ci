@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
@@ -38,7 +38,7 @@ class TestTuiResizeCleanFrame < Minitest::Test
     create_completed_run("abc1234", "main")
     current_width = 80
     width_provider = -> { current_width }
-    tui = FunCi::AdminTui.new(
+    tui = FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 80, width_provider: width_provider
     )
@@ -50,7 +50,7 @@ class TestTuiResizeCleanFrame < Minitest::Test
 
     # Then the visible output should be a single coherent frame at width 120
     visible = visible_frame(@output.string)
-    plain = FunCi::Ansi.strip(visible)
+    plain = FunCi::Tui::Ansi.strip(visible)
     lines = plain.lines.map(&:chomp)
 
     # Exactly one header (no ghost header from the old frame)

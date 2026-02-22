@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
@@ -50,7 +50,7 @@ class TestAdminTuiAnimationFlicker < Minitest::Test
     # Then the board content should start after the header area,
     # positioned via write_at rather than println padding.
     raw = @output.string
-    header_height = FunCi::HeaderAnimationManager::HEADER_HEIGHT
+    header_height = FunCi::Tui::HeaderAnimationManager::HEADER_HEIGHT
     expected_row = header_height + 1
     assert_match(/\e\[#{expected_row};1H/, raw,
       "Board should be positioned at row #{expected_row} via write_at")
@@ -69,7 +69,7 @@ class TestAdminTuiAnimationFlicker < Minitest::Test
     assert_match(/\e\[48;5;236m/, raw,
       "Header bar should be rendered via println when no animation renderer")
     # And there should be no write_at cursor positioning for the board start
-    header_height = FunCi::HeaderAnimationManager::HEADER_HEIGHT
+    header_height = FunCi::Tui::HeaderAnimationManager::HEADER_HEIGHT
     refute_match(/\e\[#{header_height + 1};1H/, raw,
       "Should not use write_at cursor positioning without animation renderer")
   end
@@ -77,7 +77,7 @@ class TestAdminTuiAnimationFlicker < Minitest::Test
   private
 
   def make_tui(animation_renderer: nil)
-    FunCi::AdminTui.new(
+    FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 120, animation_renderer: animation_renderer
     )

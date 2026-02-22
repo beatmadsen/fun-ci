@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/animation_renderer"
-require "fun_ci/screen"
-require "fun_ci/ansi"
+require "fun_ci/tui/animation_renderer"
+require "fun_ci/tui/screen"
+require "fun_ci/tui/ansi"
 require "stringio"
 
 class TestAnimationRendererOverlayOutput < Minitest::Test
@@ -20,7 +20,7 @@ class TestAnimationRendererOverlayOutput < Minitest::Test
     renderer.render(screen, [make_run(1, "failed", fast: "failed")])
 
     # Then the output should contain the header player's frame content
-    plain = FunCi::Ansi.strip(output.string)
+    plain = FunCi::Tui::Ansi.strip(output.string)
     assert_match(/line-one/, plain, "Should render header player frame content")
   end
 
@@ -76,7 +76,7 @@ class TestAnimationRendererOverlayOutput < Minitest::Test
     renderer.render(screen, [make_run(1, "failed", fast: "failed")])
 
     # Then the footer should identify the failed stage
-    plain = FunCi::Ansi.strip(output.string)
+    plain = FunCi::Tui::Ansi.strip(output.string)
     assert_match(/FAST FAILED/, plain, "Footer should show which stage failed")
   end
 
@@ -92,7 +92,7 @@ class TestAnimationRendererOverlayOutput < Minitest::Test
 
     # Then idle animation should render (save/restore cursor always present)
     assert_match(/\e\[s/, output.string, "Should save cursor for background overlay")
-    plain = FunCi::Ansi.strip(output.string)
+    plain = FunCi::Tui::Ansi.strip(output.string)
     assert_match(/idle-/, plain, "Should render idle animation content")
     refute renderer.any_active?, "No event animations should be active"
   end
@@ -112,7 +112,7 @@ class TestAnimationRendererOverlayOutput < Minitest::Test
     renderer.render(screen, [make_run(1, "completed", slow: "completed")])
 
     # Then the footer should contain NICE!
-    plain = FunCi::Ansi.strip(output.string)
+    plain = FunCi::Tui::Ansi.strip(output.string)
     assert_match(/NICE!/, plain, "Success footer should celebrate")
   end
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/header_animation_manager"
-require "fun_ci/ansi"
+require "fun_ci/tui/header_animation_manager"
+require "fun_ci/tui/ansi"
 
 class TestHeaderAnimationManagerIdle < Minitest::Test
   HEADER_HEIGHT = 14
@@ -32,7 +32,7 @@ class TestHeaderAnimationManagerIdle < Minitest::Test
   private
 
   def make_manager
-    FunCi::HeaderAnimationManager.new(animation_library: make_fake_library)
+    FunCi::Tui::HeaderAnimationManager.new(animation_library: make_fake_library)
   end
 
   def make_fake_library
@@ -64,7 +64,7 @@ class TestHeaderAnimationManagerRunning < Minitest::Test
     manager.start_running
     lines = manager.current_lines(80)
     # Then the header should show running animation content
-    plain = lines.map { |l| FunCi::Ansi.strip(l) }.join
+    plain = lines.map { |l| FunCi::Tui::Ansi.strip(l) }.join
     assert_match(/running-/, plain, "Should show running animation content")
   end
 
@@ -75,7 +75,7 @@ class TestHeaderAnimationManagerRunning < Minitest::Test
     manager.stop_running
     lines = manager.current_lines(80)
     # Then it should show idle content
-    plain = lines.map { |l| FunCi::Ansi.strip(l) }.join
+    plain = lines.map { |l| FunCi::Tui::Ansi.strip(l) }.join
     assert_match(/idle-/, plain, "Should return to idle after running stops")
   end
 
@@ -86,7 +86,7 @@ class TestHeaderAnimationManagerRunning < Minitest::Test
     manager.trigger_failure
     lines = manager.current_lines(80)
     # Then the event animation should take priority (not running content)
-    plain = lines.map { |l| FunCi::Ansi.strip(l) }.join
+    plain = lines.map { |l| FunCi::Tui::Ansi.strip(l) }.join
     assert_match(/event-/, plain, "Event should take priority over running")
   end
 
@@ -99,7 +99,7 @@ class TestHeaderAnimationManagerRunning < Minitest::Test
     manager.expire_if_finished!
     # Then it should go back to running (not idle)
     lines = manager.current_lines(80)
-    plain = lines.map { |l| FunCi::Ansi.strip(l) }.join
+    plain = lines.map { |l| FunCi::Tui::Ansi.strip(l) }.join
     assert_match(/running-/, plain, "Should return to running after event expires")
   end
 
@@ -116,7 +116,7 @@ class TestHeaderAnimationManagerRunning < Minitest::Test
   private
 
   def make_manager
-    FunCi::HeaderAnimationManager.new(animation_library: make_fake_library)
+    FunCi::Tui::HeaderAnimationManager.new(animation_library: make_fake_library)
   end
 
   def make_fake_library
@@ -148,7 +148,7 @@ class TestHeaderAnimationManagerEvents < Minitest::Test
     manager.trigger_failure
     lines = manager.current_lines(80)
     # Then the lines should contain event content (not idle)
-    plain = lines.map { |l| FunCi::Ansi.strip(l) }.join
+    plain = lines.map { |l| FunCi::Tui::Ansi.strip(l) }.join
     assert_match(/line-/, plain, "Should show event animation content")
     assert manager.any_active_event?, "Should report active event"
   end
@@ -197,7 +197,7 @@ class TestHeaderAnimationManagerEvents < Minitest::Test
   private
 
   def make_manager
-    FunCi::HeaderAnimationManager.new(animation_library: make_fake_library)
+    FunCi::Tui::HeaderAnimationManager.new(animation_library: make_fake_library)
   end
 
   def make_fake_library

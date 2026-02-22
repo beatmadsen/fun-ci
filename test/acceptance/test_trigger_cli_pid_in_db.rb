@@ -31,13 +31,13 @@ class TestTriggerCliPidInDb < Minitest::Test
 
     # And its PID is stored in the database (the new way)
     @client.store_pid_for_run(old_run[:id], @stale_pid)
-    FunCi::PipelineRun.update_status(@client.db, old_run[:id], "running")
+    FunCi::Persistence::PipelineRun.update_status(@client.db, old_run[:id], "running")
 
     # When the trigger CLI is invoked again for the same branch
     @client.trigger(commit_hash: "def5678", branch: "main")
 
     # Then the old pipeline should be marked as cancelled
-    old_run = FunCi::PipelineRun.find(@client.db, old_run[:id])
+    old_run = FunCi::Persistence::PipelineRun.find(@client.db, old_run[:id])
     assert_equal "cancelled", old_run[:status],
       "Old pipeline should be cancelled when superseded"
 

@@ -3,10 +3,10 @@
 require "stringio"
 require "tmpdir"
 require "fileutils"
-require "fun_ci/trigger"
-require "fun_ci/database"
-require "fun_ci/pipeline_recorder"
-require "fun_ci/pipeline_run"
+require "fun_ci/pipeline/trigger"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_recorder"
+require "fun_ci/persistence/pipeline_run"
 
 # Acceptance test client for the Trigger CLI.
 #
@@ -25,9 +25,9 @@ class TriggerCliClient
     @stdout = ""
     @stderr = ""
     @db_dir = Dir.mktmpdir("fun-ci-test-db")
-    @db = FunCi::Database.connection(File.join(@db_dir, "test.sqlite3"))
-    FunCi::Database.migrate!(@db)
-    @recorder = FunCi::DbRecorder.new(@db)
+    @db = FunCi::Persistence::Database.connection(File.join(@db_dir, "test.sqlite3"))
+    FunCi::Persistence::Database.migrate!(@db)
+    @recorder = FunCi::Persistence::DbRecorder.new(@db)
     @command_runner = command_runner
     @background_launcher = background_launcher
   end
@@ -68,7 +68,7 @@ class TriggerCliClient
   def trigger_raw(args: [])
     stdout_io = StringIO.new
     stderr_io = StringIO.new
-    @exit_code = FunCi::Trigger.run_from_args(args, stdout: stdout_io, stderr: stderr_io)
+    @exit_code = FunCi::Pipeline::Trigger.run_from_args(args, stdout: stdout_io, stderr: stderr_io)
     @stdout = stdout_io.string
     @stderr = stderr_io.string
   end
@@ -138,11 +138,11 @@ class TriggerCliClient
 
   # Query the most recent pipeline run from the database for a commit.
   def pipeline_runs_for(commit_hash:)
-    FunCi::PipelineRun.find_by_commit(@db, commit_hash)
+    FunCi::Persistence::PipelineRun.find_by_commit(@db, commit_hash)
   end
 
   def store_pid_for_run(run_id, pid)
-    FunCi::PipelineRun.store_pid(@db, run_id, pid)
+    FunCi::Persistence::PipelineRun.store_pid(@db, run_id, pid)
   end
 
   # Query stage jobs for a given pipeline run ID.
@@ -175,7 +175,7 @@ class TriggerCliClient
       command_runner: @command_runner
     }
     opts[:background_launcher] = @background_launcher || method(:noop_launcher)
-    trigger = FunCi::Trigger.new(**opts)
+    trigger = FunCi::Pipeline::Trigger.new(**opts)
     @exit_code = trigger.run
     @stdout = stdout_io.string
     @stderr = stderr_io.string

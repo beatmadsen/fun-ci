@@ -3,14 +3,14 @@
 require_relative "../test_helper"
 require "stringio"
 require "tmpdir"
-require "fun_ci/trigger"
+require "fun_ci/pipeline/trigger"
 
 class TestTriggerArgumentParsing < Minitest::Test
   def test_should_return_nonzero_when_no_args_given
     # Given no arguments
     stderr = StringIO.new
     # When run_from_args is called with empty args
-    exit_code = FunCi::Trigger.run_from_args([], stderr: stderr)
+    exit_code = FunCi::Pipeline::Trigger.run_from_args([], stderr: stderr)
     # Then exit code should be non-zero
     refute_equal 0, exit_code, "Should reject empty arguments"
   end
@@ -19,7 +19,7 @@ class TestTriggerArgumentParsing < Minitest::Test
     # Given only one argument (treated as branch, missing commit)
     stderr = StringIO.new
     # When run_from_args is called with one arg
-    FunCi::Trigger.run_from_args(["main"], stderr: stderr)
+    FunCi::Pipeline::Trigger.run_from_args(["main"], stderr: stderr)
     # Then stderr should mention the missing commit
     assert_match(/commit/i, stderr.string, "Should mention missing commit hash")
   end
@@ -28,7 +28,7 @@ class TestTriggerArgumentParsing < Minitest::Test
     # Given only a commit hash (missing branch)
     stderr = StringIO.new
     # When run_from_args is called with one arg
-    FunCi::Trigger.run_from_args(["abc1234"], stderr: stderr)
+    FunCi::Pipeline::Trigger.run_from_args(["abc1234"], stderr: stderr)
     # Then stderr should mention the missing branch
     assert_match(/branch/i, stderr.string, "Should mention missing branch name")
   end
@@ -41,11 +41,11 @@ class TestTriggerScriptExecution < Minitest::Test
     stdout = StringIO.new
     stderr = StringIO.new
     launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
-      FunCi::BackgroundWrapper.new(
+      FunCi::Pipeline::BackgroundWrapper.new(
         recorder: FakeRecorder.new, job_id: job_id, executor: executor
       ).run
     }
-    trigger = FunCi::Trigger.new(
+    trigger = FunCi::Pipeline::Trigger.new(
       project_root: dir,
       commit_hash: commit_hash,
       branch: "main",
@@ -126,11 +126,11 @@ class TestTriggerLintStage < Minitest::Test
     stdout = StringIO.new
     stderr = StringIO.new
     launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
-      FunCi::BackgroundWrapper.new(
+      FunCi::Pipeline::BackgroundWrapper.new(
         recorder: FakeRecorder.new, job_id: job_id, executor: executor
       ).run
     }
-    trigger = FunCi::Trigger.new(
+    trigger = FunCi::Pipeline::Trigger.new(
       project_root: dir,
       commit_hash: commit_hash,
       branch: "main",
@@ -235,11 +235,11 @@ class TestTriggerLintStage < Minitest::Test
       recorder = FakeRecorder.new
       fake_runner = ->(cmd) { ["", FakeStatus.new(true, 0)] }
       launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
-        FunCi::BackgroundWrapper.new(
+        FunCi::Pipeline::BackgroundWrapper.new(
           recorder: recorder, job_id: job_id, executor: executor
         ).run
       }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -270,7 +270,7 @@ class TestTriggerTimeBudgets < Minitest::Test
         ["", FakeStatus.new(true, 0)]
       }
       stdout = StringIO.new
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -298,7 +298,7 @@ class TestTriggerTimeBudgets < Minitest::Test
       }
       stdout = StringIO.new
       noop_launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {}
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -329,7 +329,7 @@ class TestTriggerCommitValidation < Minitest::Test
       stdout = StringIO.new
       stderr = StringIO.new
       fake_git = ->(_commit) { false }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "deadbeef",
         branch: "main",
@@ -357,7 +357,7 @@ class TestTriggerCommitValidation < Minitest::Test
         ["", FakeStatus.new(true, 0)]
       }
       noop_launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {}
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: null_sha,
         branch: "main",
@@ -383,10 +383,10 @@ class TestTriggerDatabasePersistence < Minitest::Test
   include DatabaseTestSetup
 
   def setup
-    require "fun_ci/database"
-    require "fun_ci/pipeline_recorder"
+    require "fun_ci/persistence/database"
+    require "fun_ci/persistence/pipeline_recorder"
     setup_test_db
-    @recorder = FunCi::DbRecorder.new(@db)
+    @recorder = FunCi::Persistence::DbRecorder.new(@db)
   end
 
   def teardown
@@ -396,8 +396,8 @@ class TestTriggerDatabasePersistence < Minitest::Test
   private
 
   def sync_launcher(db_path:, pipeline_run_id:, job_id:, executor:)
-    recorder = FunCi::DbRecorder.for_background(db_path, pipeline_run_id)
-    FunCi::BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
+    recorder = FunCi::Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
+    FunCi::Pipeline::BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
     recorder.close
   end
 
@@ -408,7 +408,7 @@ class TestTriggerDatabasePersistence < Minitest::Test
     Dir.mktmpdir("fun-ci-test") do |dir|
       make_project_with_scripts(dir)
       fake_runner = ->(cmd) { ["", FakeStatus.new(true, 0)] }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -421,7 +421,7 @@ class TestTriggerDatabasePersistence < Minitest::Test
       # When the trigger is run
       trigger.run
       # Then a pipeline_run record should exist in the database
-      runs = FunCi::PipelineRun.find_by_commit(@db, "abc1234")
+      runs = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234")
       refute_empty runs, "Should create a pipeline_run record"
       assert_equal "abc1234", runs.first[:commit_hash]
       assert_equal "main", runs.first[:branch]
@@ -433,7 +433,7 @@ class TestTriggerDatabasePersistence < Minitest::Test
     Dir.mktmpdir("fun-ci-test") do |dir|
       make_project_with_scripts(dir)
       fake_runner = ->(cmd) { ["", FakeStatus.new(true, 0)] }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -446,7 +446,7 @@ class TestTriggerDatabasePersistence < Minitest::Test
       # When the trigger is run
       trigger.run
       # Then stage_job records should exist for build, fast, and slow
-      runs = FunCi::PipelineRun.find_by_commit(@db, "abc1234")
+      runs = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234")
       jobs = @db.execute("SELECT stage FROM stage_jobs WHERE pipeline_run_id = ?", [runs.first[:id]])
       stages = jobs.map { |row| row[0] }
       assert_includes stages, "build", "Should create a stage_job for build"
@@ -460,7 +460,7 @@ class TestTriggerDatabasePersistence < Minitest::Test
     Dir.mktmpdir("fun-ci-test") do |dir|
       make_project_with_scripts(dir)
       fake_runner = ->(cmd) { ["", FakeStatus.new(true, 0)] }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -473,7 +473,7 @@ class TestTriggerDatabasePersistence < Minitest::Test
       # When the trigger is run
       trigger.run
       # Then the pipeline_run status should be "completed"
-      run = FunCi::PipelineRun.find_by_commit(@db, "abc1234").first
+      run = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234").first
       assert_equal "completed", run[:status], "Pipeline should be marked completed"
     end
   end
@@ -489,7 +489,7 @@ class TestTriggerDatabasePersistence < Minitest::Test
           ["", FakeStatus.new(true, 0)]
         end
       }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -501,7 +501,7 @@ class TestTriggerDatabasePersistence < Minitest::Test
       # When the trigger is run
       trigger.run
       # Then the pipeline_run status should be "failed"
-      run = FunCi::PipelineRun.find_by_commit(@db, "abc1234").first
+      run = FunCi::Persistence::PipelineRun.find_by_commit(@db, "abc1234").first
       assert_equal "failed", run[:status], "Pipeline should be marked failed"
     end
   end
@@ -512,7 +512,7 @@ class TestTriggerMissingFunCiFolder < Minitest::Test
     # Given a project directory without a .fun-ci/ folder
     Dir.mktmpdir("fun-ci-test") do |dir|
       stdout = StringIO.new
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -532,7 +532,7 @@ class TestTriggerMissingFunCiFolder < Minitest::Test
     # Given a project directory without a .fun-ci/ folder
     Dir.mktmpdir("fun-ci-test") do |dir|
       stdout = StringIO.new
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",
@@ -563,11 +563,11 @@ class TestTriggerBackgroundWiring < Minitest::Test
         end
       }
       launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
-        FunCi::BackgroundWrapper.new(
+        FunCi::Pipeline::BackgroundWrapper.new(
           recorder: recorder, job_id: job_id, executor: executor
         ).run
       }
-      trigger = FunCi::Trigger.new(
+      trigger = FunCi::Pipeline::Trigger.new(
         project_root: dir,
         commit_hash: "abc1234",
         branch: "main",

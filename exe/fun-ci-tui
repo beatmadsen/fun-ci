@@ -2,8 +2,8 @@
 # frozen_string_literal: true
 
 require_relative "../lib/fun_ci"
-require_relative "../lib/fun_ci/admin_tui"
-require_relative "../lib/fun_ci/animation_renderer"
+require_relative "../lib/fun_ci/tui/admin_tui"
+require_relative "../lib/fun_ci/tui/animation_renderer"
 
 require "tmpdir"
 require "io/console"
@@ -12,12 +12,12 @@ db_dir = File.join(Dir.tmpdir, "fun-ci")
 Dir.mkdir(db_dir) unless Dir.exist?(db_dir)
 db_path = File.join(db_dir, "db.sqlite3")
 
-db = FunCi::Database.connection(db_path)
-FunCi::Database.migrate!(db)
+db = FunCi::Persistence::Database.connection(db_path)
+FunCi::Persistence::Database.migrate!(db)
 
-tui = FunCi::AdminTui.new(
+tui = FunCi::Tui::AdminTui.new(
   db: db,
   width_provider: -> { IO.console&.winsize&.dig(1) || 80 },
-  animation_renderer: FunCi::AnimationRenderer.new
+  animation_renderer: FunCi::Tui::AnimationRenderer.new
 )
 tui.run

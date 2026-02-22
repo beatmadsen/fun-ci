@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require "stringio"
 require "tmpdir"
-require "fun_ci/trigger"
+require "fun_ci/pipeline/trigger"
 
 # Tests for Phase 1 parallel execution: lint + build run concurrently.
 # Both must pass for Phase 2 (fast + slow) to proceed.
@@ -15,11 +15,11 @@ class TestTriggerParallelPhaseOne < Minitest::Test
     stdout = StringIO.new
     stderr = StringIO.new
     launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
-      FunCi::BackgroundWrapper.new(
+      FunCi::Pipeline::BackgroundWrapper.new(
         recorder: FakeRecorder.new, job_id: job_id, executor: executor
       ).run
     }
-    trigger = FunCi::Trigger.new(
+    trigger = FunCi::Pipeline::Trigger.new(
       project_root: dir,
       commit_hash: commit_hash,
       branch: "main",

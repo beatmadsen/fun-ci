@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/admin_tui"
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/ansi"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/persistence/database"
+require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
+require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
@@ -137,14 +137,14 @@ class TestAdminTuiHeight < Minitest::Test
   private
 
   def make_tui(height_provider: nil)
-    FunCi::AdminTui.new(
+    FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 120, height_provider: height_provider
     )
   end
 
   def rendered_commit_count
-    plain = FunCi::Ansi.strip(@output.string)
+    plain = FunCi::Tui::Ansi.strip(@output.string)
     plain.lines.count { |l| l.match?(/hash\d+/) }
   end
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/header_animation_player"
-require "fun_ci/ansi"
+require "fun_ci/tui/header_animation_player"
+require "fun_ci/tui/ansi"
 
 class TestHeaderAnimationPlayerLifecycle < Minitest::Test
   def test_should_start_at_frame_zero
@@ -43,7 +43,7 @@ class TestHeaderAnimationPlayerLifecycle < Minitest::Test
 
   def make_player(frame_count:)
     frames = frame_count.times.map { ["line one", "line two"] }
-    FunCi::HeaderAnimationPlayer.new({ name: "test", fps: 8, frames: frames })
+    FunCi::Tui::HeaderAnimationPlayer.new({ name: "test", fps: 8, frames: frames })
   end
 end
 
@@ -58,7 +58,7 @@ class TestHeaderAnimationPlayerRendering < Minitest::Test
     # Then we should get 2 lines, each padded for centering
     assert_equal 2, lines.length
     lines.each do |line|
-      stripped = FunCi::Ansi.strip(line)
+      stripped = FunCi::Tui::Ansi.strip(line)
       assert stripped.start_with?(" "), "Line should be padded: #{stripped.inspect}"
     end
   end
@@ -123,6 +123,6 @@ class TestHeaderAnimationPlayerRendering < Minitest::Test
   private
 
   def make_player_with_frames(frames)
-    FunCi::HeaderAnimationPlayer.new({ name: "test", fps: 8, frames: frames })
+    FunCi::Tui::HeaderAnimationPlayer.new({ name: "test", fps: 8, frames: frames })
   end
 end

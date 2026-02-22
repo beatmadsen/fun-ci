@@ -42,31 +42,31 @@ module FunCi
     end
 
     def run_trigger(args)
-      require_relative "trigger"
-      require_relative "pipeline_recorder"
+      require_relative "pipeline/trigger"
+      require_relative "persistence/pipeline_recorder"
       db = setup_db
-      recorder = DbRecorder.new(db)
-      Trigger.run_from_args(args, stdout: @stdout, stderr: @stderr, recorder: recorder)
+      recorder = Persistence::DbRecorder.new(db)
+      Pipeline::Trigger.run_from_args(args, stdout: @stdout, stderr: @stderr, recorder: recorder)
     end
 
     def run_console(_args)
-      require_relative "admin_tui"
-      require_relative "animation_renderer"
+      require_relative "tui/admin_tui"
+      require_relative "tui/animation_renderer"
       require "io/console"
       db = setup_db
-      tui = AdminTui.new(
+      tui = Tui::AdminTui.new(
         db: db,
         width_provider: -> { IO.console&.winsize&.dig(1) || 80 },
         height_provider: -> { IO.console&.winsize&.dig(0) },
-        animation_renderer: AnimationRenderer.new
+        animation_renderer: Tui::AnimationRenderer.new
       )
       tui.run
       0
     end
 
     def run_init(args)
-      require_relative "installer"
-      code = Installer.run(project_root: Dir.pwd, stdout: @stdout)
+      require_relative "setup/installer"
+      code = Setup::Installer.run(project_root: Dir.pwd, stdout: @stdout)
       return code if code != 0 || !args.include?("--everything")
       code = run_install_hooks([])
       return code unless code == 0
@@ -74,26 +74,26 @@ module FunCi
     end
 
     def run_install_hooks(args)
-      require_relative "hook_writer"
+      require_relative "setup/hook_writer"
       types = args.any? ? [args.first] : %w[pre-commit pre-push]
       types.each do |type|
-        code = HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @stdout)
+        code = Setup::HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @stdout)
         return code unless code == 0
       end
       0
     end
 
     def run_check(_args)
-      require_relative "setup_checker"
-      SetupChecker.run(project_root: Dir.pwd, stdout: @stdout, stderr: @stderr)
+      require_relative "setup/setup_checker"
+      Setup::SetupChecker.run(project_root: Dir.pwd, stdout: @stdout, stderr: @stderr)
     end
 
     def setup_db
       db_dir = File.join(Dir.tmpdir, "fun-ci")
       Dir.mkdir(db_dir) unless Dir.exist?(db_dir)
       db_path = File.join(db_dir, "db.sqlite3")
-      db = Database.connection(db_path)
-      Database.migrate!(db)
+      db = Persistence::Database.connection(db_path)
+      Persistence::Database.migrate!(db)
       db
     end
 

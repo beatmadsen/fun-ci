@@ -55,8 +55,8 @@ module DatabaseTestSetup
   def setup_test_db
     @dir = Dir.mktmpdir
     db_path = File.join(@dir, "test.sqlite3")
-    @db = FunCi::Database.connection(db_path)
-    FunCi::Database.migrate!(@db)
+    @db = FunCi::Persistence::Database.connection(db_path)
+    FunCi::Persistence::Database.migrate!(@db)
   end
 
   def teardown_test_db
@@ -91,8 +91,8 @@ module AnimationRendererTestHelpers
 
   def make_renderer_and_screen(width: 80, animation_library: FakeAnimationLibrary)
     output = StringIO.new
-    renderer = FunCi::AnimationRenderer.new(animation_library: animation_library)
-    screen = FunCi::Screen.new(output: output, width: width)
+    renderer = FunCi::Tui::AnimationRenderer.new(animation_library: animation_library)
+    screen = FunCi::Tui::Screen.new(output: output, width: width)
     [renderer, screen, output]
   end
 
@@ -106,31 +106,31 @@ end
 
 module PipelineTestHelpers
   def create_completed_run(commit, branch)
-    run_id = FunCi::PipelineRun.create(@db, commit_hash: commit, branch: branch)
-    FunCi::PipelineRun.update_status(@db, run_id, "running")
-    FunCi::PipelineRun.update_status(@db, run_id, "completed")
+    run_id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: commit, branch: branch)
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "running")
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "completed")
     %w[lint build fast slow].each do |stage|
-      job_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: stage)
-      FunCi::StageJob.update_status(@db, job_id, "running")
-      FunCi::StageJob.update_status(@db, job_id, "completed")
+      job_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: stage)
+      FunCi::Persistence::StageJob.update_status(@db, job_id, "running")
+      FunCi::Persistence::StageJob.update_status(@db, job_id, "completed")
     end
     run_id
   end
 
   def create_failed_run(commit, branch)
-    run_id = FunCi::PipelineRun.create(@db, commit_hash: commit, branch: branch)
-    FunCi::PipelineRun.update_status(@db, run_id, "running")
-    FunCi::PipelineRun.update_status(@db, run_id, "failed")
-    lint_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: "lint")
-    FunCi::StageJob.update_status(@db, lint_id, "running")
-    FunCi::StageJob.update_status(@db, lint_id, "completed")
-    build_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: "build")
-    FunCi::StageJob.update_status(@db, build_id, "running")
-    FunCi::StageJob.update_status(@db, build_id, "completed")
-    fast_id = FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: "fast")
-    FunCi::StageJob.update_status(@db, fast_id, "running")
-    FunCi::StageJob.update_status(@db, fast_id, "failed")
-    FunCi::StageJob.create(@db, pipeline_run_id: run_id, stage: "slow")
+    run_id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: commit, branch: branch)
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "running")
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "failed")
+    lint_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "lint")
+    FunCi::Persistence::StageJob.update_status(@db, lint_id, "running")
+    FunCi::Persistence::StageJob.update_status(@db, lint_id, "completed")
+    build_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "build")
+    FunCi::Persistence::StageJob.update_status(@db, build_id, "running")
+    FunCi::Persistence::StageJob.update_status(@db, build_id, "completed")
+    fast_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "fast")
+    FunCi::Persistence::StageJob.update_status(@db, fast_id, "running")
+    FunCi::Persistence::StageJob.update_status(@db, fast_id, "failed")
+    FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "slow")
     run_id
   end
 end
