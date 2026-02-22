@@ -123,8 +123,8 @@ module FunCi
 
       # Pad lines so all rows in each frame have equal stripped length —
       # prevents the player's per-line centering from misaligning the art.
+      max = raw_frames.flatten.map { |l| l.gsub(/\e\[[0-9;]*m/, "").length }.max
       raw_frames.each do |frame|
-        max = frame.map { |l| l.gsub(/\e\[[0-9;]*m/, "").length }.max
         frame.map! { |l| l + " " * (max - l.gsub(/\e\[[0-9;]*m/, "").length) }
       end
 

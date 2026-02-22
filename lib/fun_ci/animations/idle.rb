@@ -112,8 +112,8 @@ module FunCi
         ],
       ]
 
+      max = raw_frames.flatten.map { |l| l.gsub(/\e\[[0-9;]*m/, "").length }.max
       raw_frames.each do |frame|
-        max = frame.map { |l| l.gsub(/\e\[[0-9;]*m/, "").length }.max
         frame.map! { |l| l + " " * (max - l.gsub(/\e\[[0-9;]*m/, "").length) }
       end
 
