@@ -7,6 +7,7 @@ require_relative "animations/flash"
 require_relative "animations/leprechauns"
 require_relative "animations/yay"
 require_relative "animations/idle"
+require_relative "animations/running"
 
 module FunCi
   module AnimationLibrary
@@ -22,6 +23,8 @@ module FunCi
 
     IDLE = Animations::Idle::DATA
 
+    RUNNING = Animations::Running::DATA
+
     def self.random_failure
       FAILURE.sample
     end
@@ -32,6 +35,10 @@ module FunCi
 
     def self.idle
       IDLE
+    end
+
+    def self.running
+      RUNNING
     end
   end
 end

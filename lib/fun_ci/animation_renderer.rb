@@ -43,6 +43,12 @@ module FunCi
       changes = StageChangeDetector.detect(@previous_runs, runs)
       @previous_runs = snapshot(runs)
       changes.each { |change| queue_animation(change, runs) }
+      update_running_state(runs)
+    end
+
+    def update_running_state(runs)
+      any_running = runs.any? { |r| r[:status] == "running" }
+      any_running ? @header_manager.start_running : @header_manager.stop_running
     end
 
     def queue_animation(change, runs)

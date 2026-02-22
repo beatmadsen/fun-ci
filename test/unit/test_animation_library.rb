@@ -46,6 +46,19 @@ class TestAnimationLibrarySuccess < Minitest::Test
   end
 end
 
+class TestAnimationLibraryRunning < Minitest::Test
+  def test_should_return_running_animation_with_required_keys
+    # When we request the running animation
+    data = FunCi::AnimationLibrary.running
+
+    # Then it should have name, fps, and non-empty frames
+    assert_equal "Running", data[:name]
+    assert_kind_of Array, data[:frames]
+    assert data[:fps] > 0, "fps should be positive"
+    assert data[:frames].length > 1, "Should have multiple frames for looping"
+  end
+end
+
 class TestAnimationLibraryDataIntegrity < Minitest::Test
   def test_should_have_multi_line_frames_as_string_arrays
     # Given a representative animation (explosion)

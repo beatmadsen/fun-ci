@@ -80,18 +80,18 @@ class TestAnimationRendererOverlayOutput < Minitest::Test
     assert_match(/FAST FAILED/, plain, "Footer should show which stage failed")
   end
 
-  def test_should_render_idle_overlay_when_no_event_animations
+  def test_should_render_background_overlay_when_no_event_animations
     renderer, screen, output = make_renderer_and_screen
-    # Given an initial render (no prior state)
-    renderer.render(screen, [make_run(1, "running", lint: "running")])
+    # Given an initial render with a completed pipeline (no prior state)
+    renderer.render(screen, [make_run(1, "completed", lint: "completed")])
     output.truncate(0)
     output.rewind
 
-    # When we render the same state (no transition)
-    renderer.render(screen, [make_run(1, "running", lint: "running")])
+    # When we render the same state (no transition, no running pipeline)
+    renderer.render(screen, [make_run(1, "completed", lint: "completed")])
 
-    # Then idle animation should still render (save/restore cursor always present)
-    assert_match(/\e\[s/, output.string, "Should save cursor for idle overlay")
+    # Then idle animation should render (save/restore cursor always present)
+    assert_match(/\e\[s/, output.string, "Should save cursor for background overlay")
     plain = FunCi::Ansi.strip(output.string)
     assert_match(/idle-/, plain, "Should render idle animation content")
     refute renderer.any_active?, "No event animations should be active"

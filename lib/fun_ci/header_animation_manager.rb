@@ -9,6 +9,7 @@ module FunCi
 
     def initialize(animation_library:)
       @idle_player = LoopingAnimationPlayer.new(animation_library.idle)
+      @running_player = nil
       @header_player = nil
       @animation_library = animation_library
     end
@@ -21,6 +22,14 @@ module FunCi
       @header_player = HeaderAnimationPlayer.new(@animation_library.random_success)
     end
 
+    def start_running
+      @running_player ||= LoopingAnimationPlayer.new(@animation_library.running)
+    end
+
+    def stop_running
+      @running_player = nil
+    end
+
     def current_lines(width)
       lines = active_player.current_lines(width)
       pad_to_height(lines, HEADER_HEIGHT)
@@ -28,6 +37,7 @@ module FunCi
 
     def advance!
       @idle_player.advance!
+      @running_player&.advance!
       @header_player&.advance!
     end
 
@@ -42,7 +52,10 @@ module FunCi
     private
 
     def active_player
-      any_active_event? ? @header_player : @idle_player
+      return @header_player if any_active_event?
+      return @running_player if @running_player
+
+      @idle_player
     end
 
     def pad_to_height(lines, height)

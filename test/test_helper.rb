@@ -76,11 +76,17 @@ module AnimationRendererTestHelpers
     frames: [14.times.map { |i| "idle-#{i}" }, 14.times.map { |i| "idle-#{i}" }]
   }.freeze
 
+  FAKE_RUNNING_DATA = {
+    name: "Running", fps: 4,
+    frames: [14.times.map { |i| "running-#{i}" }, 14.times.map { |i| "running-#{i}" }]
+  }.freeze
+
   FakeAnimationLibrary = Module.new do
     extend self
     define_method(:random_failure) { AnimationRendererTestHelpers::FAKE_ANIMATION_DATA }
     define_method(:random_success) { AnimationRendererTestHelpers::FAKE_ANIMATION_DATA }
     define_method(:idle) { AnimationRendererTestHelpers::FAKE_IDLE_DATA }
+    define_method(:running) { AnimationRendererTestHelpers::FAKE_RUNNING_DATA }
   end
 
   def make_renderer_and_screen(width: 80, animation_library: FakeAnimationLibrary)
