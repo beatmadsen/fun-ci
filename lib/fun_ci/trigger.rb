@@ -12,12 +12,8 @@ require_relative "pipeline_forker"
 
 module FunCi
   class Trigger
-    DEFAULT_BUDGETS = {
-      "lint" => 30,
-      "build" => 30,
-      "fast" => 10,
-      "slow" => 300
-    }.freeze
+    NULL_SHA = ("0" * 40).freeze
+    DEFAULT_BUDGETS = { "lint" => 30, "build" => 30, "fast" => 10, "slow" => 300 }.freeze
 
     def self.run_from_args(args, stdout: $stdout, stderr: $stderr, recorder: NullRecorder.new, pipeline_forker: nil)
       positional = args.reject { |a| a.start_with?("--") }
@@ -57,7 +53,7 @@ module FunCi
     def run
       config = ProjectConfig.new(@project_root)
       return handle_config_errors(config) if config.validate.any?
-      unless @commit_validator.call(@commit_hash)
+      unless @commit_hash == NULL_SHA || @commit_validator.call(@commit_hash)
         @stderr.puts "fun-ci: commit #{@commit_hash} not found in this repository."
         return 1
       end

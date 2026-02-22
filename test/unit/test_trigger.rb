@@ -345,6 +345,37 @@ class TestTriggerCommitValidation < Minitest::Test
       assert_match(/not found/i, stderr.string, "Should say commit not found")
     end
   end
+
+  def test_should_skip_validation_for_null_sha_on_root_commit
+    # Given a project with valid scripts and a validator that rejects everything
+    Dir.mktmpdir("fun-ci-test") do |dir|
+      make_project_with_scripts(dir)
+      null_sha = "0000000000000000000000000000000000000000"
+      invocations = []
+      fake_runner = ->(cmd) {
+        invocations << cmd
+        ["", FakeStatus.new(true, 0)]
+      }
+      noop_launcher = ->(db_path:, pipeline_run_id:, job_id:, executor:) {}
+      trigger = FunCi::Trigger.new(
+        project_root: dir,
+        commit_hash: null_sha,
+        branch: "main",
+        stdout: StringIO.new,
+        stderr: StringIO.new,
+        command_runner: fake_runner,
+        commit_validator: ->(_h) { false },
+        background_launcher: noop_launcher
+      )
+      # When the trigger is run with the null SHA
+      exit_code = trigger.run
+      # Then the pipeline should proceed (exit 0)
+      assert_equal 0, exit_code, "Should accept null SHA for root commits"
+      # And at least one stage script should have been invoked
+      assert invocations.any? { |cmd| cmd.include?("lint.sh") },
+        "Should run the pipeline despite the null SHA"
+    end
+  end
 end
 
 class TestTriggerDatabasePersistence < Minitest::Test
