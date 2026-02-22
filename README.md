@@ -74,7 +74,9 @@ After `fun-ci install-hooks`, two hooks are active:
 fun-ci console
 ```
 
-Opens a terminal UI showing pipeline status across all branches. Navigation:
+Opens a terminal UI showing pipeline status across all branches. The header area displays animated ASCII art: a gentle starfield when idle, a rocket while pipelines run, and celebration/explosion animations on success or failure.
+
+Navigation:
 
 - `j` / `k` -- scroll up/down
 - `c` -- cancel a running pipeline
