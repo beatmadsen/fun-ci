@@ -34,33 +34,38 @@ Fun-CI is an opinionated, local-first CI system for Ruby projects. It runs a fou
 
 ## Architecture
 
-One CLI, multiple subcommands:
+One CLI, multiple subcommands. Source is organized into four module subdirectories under `lib/fun_ci/`:
+
+- **`pipeline/`** -- orchestration and execution
+- **`persistence/`** -- SQLite storage and data models
+- **`tui/`** -- terminal UI, rendering, animations
+- **`setup/`** -- project scaffolding, hooks, validation
+
+### Subcommands
 
 - **`exe/fun-ci`** -> `Cli` routes subcommands to their handlers. Sets up the shared SQLite database and dispatches to the appropriate class.
 
-- **`fun-ci trigger`** -> `Trigger` orchestrates a pipeline: validates the project config, runs lint and build in parallel, then spawns the slow suite in the background via fork, then runs the fast suite while slow runs. Records all results through `PipelineRecorder` (either `DbRecorder` for real use or `NullRecorder`/`FakeRecorder` in tests).
+- **`fun-ci trigger`** -> `pipeline/trigger.rb` orchestrates a pipeline: validates the project config, runs lint and build in parallel, then spawns the slow suite in the background via fork, then runs the fast suite while slow runs. Records all results through `PipelineRecorder` (either `DbRecorder` for real use or `NullRecorder`/`FakeRecorder` in tests).
 
-- **`fun-ci trigger --no-validate`** -> `PipelineForker` forks the entire pipeline into a background process and returns immediately. Used by pre-commit hooks so commits are not blocked.
+- **`fun-ci trigger --no-validate`** -> `pipeline/pipeline_forker.rb` forks the entire pipeline into a background process and returns immediately. Used by pre-commit hooks so commits are not blocked.
 
-- **`fun-ci console`** -> `AdminTui` renders a live status board. Reads from SQLite via `BoardData`, formats rows with `RowFormatter`, and renders through `Screen`. Runs in raw terminal mode with vim-style navigation (j/k/c/q).
+- **`fun-ci console`** -> `tui/admin_tui.rb` coordinates the live status board. Input handling via `TerminalInput` and `KeyHandler`, data via `BoardData`, rendering via `BoardRenderer` and `Screen`. Runs in raw terminal mode with vim-style navigation (j/k/c/q).
 
-- **`fun-ci init`** -> `Installer` detects the project type via `ProjectDetector` and writes template scripts via `TemplateWriter`. Supports Ruby (Bundler), JVM (Gradle Kotlin/Groovy, Maven).
+- **`fun-ci init`** -> `setup/installer.rb` detects the project type via `ProjectDetector` and writes template scripts via `TemplateWriter`. Supports Ruby (Bundler), JVM (Gradle Kotlin/Groovy, Maven).
 
-- **`fun-ci install-hooks`** -> `HookWriter` writes git hooks that call `fun-ci trigger`. Pre-commit uses `--no-validate` (background fork); pre-push runs the full pipeline.
+- **`fun-ci install-hooks`** -> `setup/hook_writer.rb` writes git hooks that call `fun-ci trigger`. Pre-commit uses `--no-validate` (background fork); pre-push runs the full pipeline.
 
-- **`fun-ci check`** -> `SetupChecker` validates that `.fun-ci/` has all required scripts and they are executable.
+- **`fun-ci check`** -> `setup/setup_checker.rb` validates that `.fun-ci/` has all required scripts and they are executable.
 
-Key supporting classes:
-- `Cli` -- subcommand router, DB setup
-- `PipelineForker` -- forks the full pipeline into a child process for non-blocking commits
-- `StageRunner` -- runs a single stage with timeout enforcement
-- `ProgressReporter` -- prints phase results to stdout
-- `Database` -- SQLite connection + migration (two tables: `pipeline_runs`, `stage_jobs`)
-- `PipelineRun` / `StageJob` -- ActiveRecord-lite row wrappers with state machine transitions
-- `Screen` -- raw-mode-aware rendering (`\r\n`, `\e[K` per line, `\e[J` after frame)
-- `ProjectConfig` -- validates `.fun-ci/` directory with lint.sh, build.sh, fast.sh, slow.sh
-- `HookWriter` -- generates git hook scripts
-- `Installer` / `ProjectDetector` / `TemplateWriter` -- project scaffolding
+### Key classes by module
+
+**`pipeline/`**: `Trigger`, `PipelineForker`, `StageRunner`, `BackgroundWrapper`, `ProcessRunner` (shared module), `ProgressReporter`, `StalePipelineCanceller`
+
+**`persistence/`**: `Database` (SQLite connection + migration), `PipelineRun` / `StageJob` (row wrappers with state machine), `PipelineRecorder` (DbRecorder / NullRecorder)
+
+**`tui/`**: `AdminTui`, `TerminalInput`, `KeyHandler`, `BoardRenderer`, `BoardData`, `RowFormatter`, `Screen` (raw-mode rendering), `HeaderAnimationManager`, animation players and library
+
+**`setup/`**: `ProjectConfig`, `Installer`, `ProjectDetector`, `TemplateWriter`, `HookWriter`, `SetupChecker`, `MavenLinterDetector`
 
 ## Testing Conventions
 

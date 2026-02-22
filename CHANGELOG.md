@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-23
+
+### Bug Fixes
+- Replaced unreliable `Timeout.timeout` with process groups (`pgroup: true`) and `Thread#join` for reliable time budget enforcement on lint/build/fast/slow stages
+- Fixed off-by-one in TUI row truncation that caused the top pipeline row to be hidden behind the header in short terminals
+- Added `Screen#height=` to clear screen on terminal height changes, preventing the header from scrolling off-screen when tmux panes resize
+- Fixed header flicker by skipping `println` when animation is active
+- Allowed null SHA on root commits so pipeline still runs
+- Detected multi-module Gradle projects from `settings.gradle`
+
+### Refactoring
+- Extracted `TerminalInput`, `KeyHandler`, `BoardRenderer` from `AdminTui` (was 257 lines/12 ivars, now 4 focused classes all under 150 lines/4 ivars)
+- Organized flat `lib/fun_ci/` into cohesive module subdirectories: `persistence/`, `pipeline/`, `setup/`, `tui/`
+
+### Internal
+- Extracted shared `ProcessRunner` module for consistent process spawning across stages
+- Updated `BackgroundWrapper` to use `[output, status, timed_out]` triples instead of exception-based timeout signaling
+- Truncated TUI board rows to fit terminal height
+
 ## [1.1.0] - 2026-02-22
 
 ### Added
