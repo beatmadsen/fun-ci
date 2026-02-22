@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "timeout"
-
 module FunCi
   class BackgroundWrapper
     def initialize(recorder:, job_id:, executor:)
@@ -11,17 +9,17 @@ module FunCi
     end
 
     def run
-      _output, status = @executor.call
-      if status.success?
+      _output, status, timed_out = @executor.call
+      if timed_out
+        @recorder.end_stage(@job_id, "timed_out")
+        @recorder.fail_run
+      elsif status.success?
         @recorder.end_stage(@job_id, "completed")
         @recorder.complete_run
       else
         @recorder.end_stage(@job_id, "failed")
         @recorder.fail_run
       end
-    rescue Timeout::Error
-      @recorder.end_stage(@job_id, "timed_out")
-      @recorder.fail_run
     end
   end
 end

@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
-require "open3"
 require "timeout"
+require_relative "process_runner"
 
 module FunCi
   class StageRunner
+    include ProcessRunner
+
     def initialize(commit_hash:, stdout:, command_runner: nil, time_budgets: {}, recorder: NullRecorder.new)
       @commit_hash = commit_hash
       @stdout = stdout
@@ -45,40 +47,13 @@ module FunCi
 
       if @command_runner
         begin
-          Timeout.timeout(budget) do
-            output, status = @command_runner.call(cmd)
-            [output, status, false]
-          end
+          output, status = @command_runner.call(cmd)
+          [output, status, false]
         rescue Timeout::Error
           ["", nil, true]
         end
       else
         run_process_with_timeout(cmd, budget)
-      end
-    end
-
-    def run_process_with_timeout(cmd, budget)
-      pid = nil
-      output = ""
-      r, w = IO.pipe
-      pid = Process.spawn(cmd, out: w, err: w)
-      w.close
-
-      begin
-        Timeout.timeout(budget) do
-          output = r.read
-          _, status = Process.waitpid2(pid)
-          pid = nil
-          [output, status, false]
-        end
-      rescue Timeout::Error
-        Process.kill("TERM", pid) rescue nil
-        Process.kill("KILL", pid) rescue nil
-        Process.waitpid(pid) rescue nil
-        r.close rescue nil
-        ["", nil, true]
-      ensure
-        r.close rescue nil
       end
     end
 

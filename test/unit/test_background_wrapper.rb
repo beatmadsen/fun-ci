@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "timeout"
 require "fun_ci/background_wrapper"
 
 class TestBackgroundWrapperEndStage < Minitest::Test
   def test_should_call_end_stage_with_completed_when_command_exits_zero
     # Given an executor that returns success and a fake recorder
     recorder = FakeRecorder.new
-    executor = -> { ["", FakeStatus.new(true, 0)] }
+    executor = -> { ["", FakeStatus.new(true, 0), false] }
     wrapper = FunCi::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
@@ -26,7 +25,7 @@ class TestBackgroundWrapperEndStage < Minitest::Test
   def test_should_call_complete_run_after_successful_slow_stage
     # Given an executor that returns success and a fake recorder
     recorder = FakeRecorder.new
-    executor = -> { ["", FakeStatus.new(true, 0)] }
+    executor = -> { ["", FakeStatus.new(true, 0), false] }
     wrapper = FunCi::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
@@ -43,7 +42,7 @@ class TestBackgroundWrapperEndStage < Minitest::Test
   def test_should_call_end_stage_with_failed_when_command_exits_nonzero
     # Given an executor that returns failure and a fake recorder
     recorder = FakeRecorder.new
-    executor = -> { ["test failed", FakeStatus.new(false, 1)] }
+    executor = -> { ["test failed", FakeStatus.new(false, 1), false] }
     wrapper = FunCi::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
@@ -61,7 +60,7 @@ class TestBackgroundWrapperEndStage < Minitest::Test
   def test_should_call_fail_run_after_failed_slow_stage
     # Given an executor that returns failure and a fake recorder
     recorder = FakeRecorder.new
-    executor = -> { ["test failed", FakeStatus.new(false, 1)] }
+    executor = -> { ["test failed", FakeStatus.new(false, 1), false] }
     wrapper = FunCi::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
@@ -75,10 +74,10 @@ class TestBackgroundWrapperEndStage < Minitest::Test
       "Should call fail_run after failed slow stage"
   end
 
-  def test_should_call_end_stage_with_timed_out_when_executor_raises_timeout
-    # Given an executor that raises Timeout::Error and a fake recorder
+  def test_should_call_end_stage_with_timed_out_when_executor_signals_timeout
+    # Given an executor that signals timeout and a fake recorder
     recorder = FakeRecorder.new
-    executor = -> { raise Timeout::Error, "simulated timeout" }
+    executor = -> { ["", nil, true] }
     wrapper = FunCi::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
@@ -94,9 +93,9 @@ class TestBackgroundWrapperEndStage < Minitest::Test
   end
 
   def test_should_call_fail_run_after_timed_out_slow_stage
-    # Given an executor that raises Timeout::Error and a fake recorder
+    # Given an executor that signals timeout and a fake recorder
     recorder = FakeRecorder.new
-    executor = -> { raise Timeout::Error, "simulated timeout" }
+    executor = -> { ["", nil, true] }
     wrapper = FunCi::BackgroundWrapper.new(
       recorder: recorder,
       job_id: 1,
