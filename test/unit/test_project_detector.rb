@@ -16,8 +16,8 @@ class TestProjectDetector < Minitest::Test
   end
 
   def test_should_detect_jvm_gradle_kotlin_when_build_gradle_kts_present
-    # Given a file list containing build.gradle.kts
-    detector = FunCi::ProjectDetector.new(["build.gradle.kts", "settings.gradle.kts", "src"])
+    # Given a file list containing build.gradle.kts (single-module project)
+    detector = FunCi::ProjectDetector.new(["build.gradle.kts", "src"])
 
     # When we detect the project type
     result = detector.detect
@@ -27,14 +27,36 @@ class TestProjectDetector < Minitest::Test
   end
 
   def test_should_detect_jvm_gradle_groovy_when_build_gradle_present
-    # Given a file list containing build.gradle (Groovy)
-    detector = FunCi::ProjectDetector.new(["build.gradle", "settings.gradle", "src"])
+    # Given a file list containing build.gradle (single-module Groovy project)
+    detector = FunCi::ProjectDetector.new(["build.gradle", "src"])
 
     # When we detect the project type
     result = detector.detect
 
     # Then it should return jvm_gradle_groovy
     assert_equal :jvm_gradle_groovy, result, "Should detect Gradle Groovy from build.gradle"
+  end
+
+  def test_should_detect_jvm_gradle_kotlin_from_settings_gradle_kts_alone
+    # Given a multi-module project with only settings.gradle.kts at root
+    detector = FunCi::ProjectDetector.new(["settings.gradle.kts", "gradlew", "app"])
+
+    # When we detect the project type
+    result = detector.detect
+
+    # Then it should return jvm_gradle_kotlin
+    assert_equal :jvm_gradle_kotlin, result, "Should detect Gradle Kotlin from settings.gradle.kts"
+  end
+
+  def test_should_detect_jvm_gradle_groovy_from_settings_gradle_alone
+    # Given a multi-module project with only settings.gradle at root
+    detector = FunCi::ProjectDetector.new(["settings.gradle", "gradlew", "app"])
+
+    # When we detect the project type
+    result = detector.detect
+
+    # Then it should return jvm_gradle_groovy
+    assert_equal :jvm_gradle_groovy, result, "Should detect Gradle Groovy from settings.gradle"
   end
 
   def test_should_detect_jvm_maven_when_pom_xml_present
@@ -72,7 +94,7 @@ class TestProjectDetectorPriority < Minitest::Test
     assert_equal :ruby_bundler, result, "Ruby should take priority over Maven"
   end
 
-  def test_should_prefer_gradle_kotlin_when_both_gradle_files_present
+  def test_should_prefer_gradle_kotlin_when_both_build_files_present
     # Given a project with both build.gradle.kts and build.gradle
     detector = FunCi::ProjectDetector.new(["build.gradle.kts", "build.gradle", "src"])
 

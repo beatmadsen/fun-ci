@@ -70,6 +70,25 @@ class TestInstallerAlreadyExists < Minitest::Test
   end
 end
 
+class TestInstallerMultiModuleGradle < Minitest::Test
+  def test_should_scaffold_gradle_scripts_when_only_settings_gradle_kts_present
+    # Given a multi-module Gradle project with settings.gradle.kts but no build.gradle.kts at root
+    Dir.mktmpdir("fun-ci-installer-gradle-multi") do |dir|
+      File.write(File.join(dir, "settings.gradle.kts"), "include(\":app\")\n")
+      stdout = StringIO.new
+
+      # When we run the installer
+      exit_code = FunCi::Installer.run(project_root: dir, stdout: stdout)
+
+      # Then it should succeed and create Gradle scripts
+      assert_equal 0, exit_code, "Should return 0 on success"
+      assert_match(/gradle/i, stdout.string, "Should report Gradle detection")
+      lint_content = File.read(File.join(dir, ".fun-ci", "lint.sh"))
+      assert_match(/gradlew/, lint_content, "Should create Gradle-based lint script")
+    end
+  end
+end
+
 class TestInstallerMavenNoLinter < Minitest::Test
   def test_should_use_default_lint_command_when_no_linter_plugin_found
     # Given a Maven project whose pom.xml has no recognized linter plugin
