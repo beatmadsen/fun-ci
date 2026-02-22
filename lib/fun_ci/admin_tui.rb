@@ -32,11 +32,14 @@ module FunCi
     def render_once
       update_width_from_provider
       runs = @board_data.runs
-      streak = @board_data.streak
-      streak_text = StreakCounter.format_text(streak)
 
-      @screen.render_header(streak_text: streak_text)
-      (HEADER_HEIGHT - 1).times { @screen.println }
+      if @animation_renderer
+        @screen.write_at(HEADER_HEIGHT + 1, 1, "")
+      else
+        streak_text = StreakCounter.format_text(@board_data.streak)
+        @screen.render_header(streak_text: streak_text)
+        (HEADER_HEIGHT - 1).times { @screen.println }
+      end
 
       if runs.empty?
         @screen.render_empty_state
