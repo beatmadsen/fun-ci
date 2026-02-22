@@ -57,6 +57,7 @@ module FunCi
       tui = AdminTui.new(
         db: db,
         width_provider: -> { IO.console&.winsize&.dig(1) || 80 },
+        height_provider: -> { IO.console&.winsize&.dig(0) },
         animation_renderer: AnimationRenderer.new
       )
       tui.run

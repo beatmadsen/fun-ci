@@ -15,12 +15,14 @@ module FunCi
     HEADER_HEIGHT = HeaderAnimationManager::HEADER_HEIGHT
 
     def initialize(db:, output: $stdout, input: $stdin, width: 80,
-                   width_provider: nil, page_size: nil, animation_renderer: nil)
+                   width_provider: nil, height_provider: nil,
+                   page_size: nil, animation_renderer: nil)
       @board_data = BoardData.new(db, page_size: page_size)
       @screen = Screen.new(output: output, width: width)
       @animation_renderer = animation_renderer
       @input = input
       @width_provider = width_provider
+      @height_provider = height_provider
       @spinner = Spinner.new
       @cursor_index = nil
       @running = false
@@ -41,6 +43,7 @@ module FunCi
         @screen.render_footer(empty: true)
       else
         rows = runs.map { |run| format_run(run) }
+        rows = truncate_rows_to_height(rows)
         @screen.render_board(rows, cursor_index: @cursor_index)
         @screen.println
         @screen.render_footer(empty: false, confirming: confirming?)
@@ -175,6 +178,19 @@ module FunCi
       when "n", :escape
         @confirm_cancel = nil
       end
+    end
+
+    def truncate_rows_to_height(rows)
+      return rows unless @height_provider
+
+      height = @height_provider.call
+      return rows unless height
+
+      # Chrome: HEADER_HEIGHT lines + 1 blank after board + 1 footer
+      # Each row takes 2 lines (content + separator), last row takes 1
+      # N rows = 2N - 1 board lines => total = HEADER_HEIGHT + 2N + 1
+      max_rows = [(height - HEADER_HEIGHT - 1) / 2, 1].max
+      rows.first(max_rows)
     end
 
     def update_width_from_provider
