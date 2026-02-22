@@ -3,6 +3,7 @@
 
 require_relative "../lib/fun_ci"
 require_relative "../lib/fun_ci/admin_tui"
+require_relative "../lib/fun_ci/animation_renderer"
 
 require "tmpdir"
 require "io/console"
@@ -14,5 +15,9 @@ db_path = File.join(db_dir, "db.sqlite3")
 db = FunCi::Database.connection(db_path)
 FunCi::Database.migrate!(db)
 
-tui = FunCi::AdminTui.new(db: db, width_provider: -> { IO.console&.winsize&.dig(1) || 80 })
+tui = FunCi::AdminTui.new(
+  db: db,
+  width_provider: -> { IO.console&.winsize&.dig(1) || 80 },
+  animation_renderer: FunCi::AnimationRenderer.new
+)
 tui.run

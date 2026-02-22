@@ -51,9 +51,14 @@ module FunCi
 
     def run_console(_args)
       require_relative "admin_tui"
+      require_relative "animation_renderer"
       require "io/console"
       db = setup_db
-      tui = AdminTui.new(db: db, width_provider: -> { IO.console&.winsize&.dig(1) || 80 })
+      tui = AdminTui.new(
+        db: db,
+        width_provider: -> { IO.console&.winsize&.dig(1) || 80 },
+        animation_renderer: AnimationRenderer.new
+      )
       tui.run
       0
     end

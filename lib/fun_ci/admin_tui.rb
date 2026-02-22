@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "board_data"
+require_relative "header_animation_manager"
 require_relative "row_formatter"
 require_relative "screen"
 require_relative "spinner"
@@ -11,11 +12,13 @@ module FunCi
   class AdminTui
     FAST_REFRESH = 0.1  # seconds (spinner + timer)
     SLOW_REFRESH = 5.0  # seconds (settled board)
+    HEADER_HEIGHT = HeaderAnimationManager::HEADER_HEIGHT
 
-    def initialize(db:, output: $stdout, input: $stdin, width: 80, width_provider: nil, page_size: nil)
+    def initialize(db:, output: $stdout, input: $stdin, width: 80,
+                   width_provider: nil, page_size: nil, animation_renderer: nil)
       @board_data = BoardData.new(db, page_size: page_size)
       @screen = Screen.new(output: output, width: width)
-      @output = output
+      @animation_renderer = animation_renderer
       @input = input
       @width_provider = width_provider
       @spinner = Spinner.new
@@ -31,7 +34,7 @@ module FunCi
       streak_text = StreakCounter.format_text(streak)
 
       @screen.render_header(streak_text: streak_text)
-      @screen.println
+      (HEADER_HEIGHT - 1).times { @screen.println }
 
       if runs.empty?
         @screen.render_empty_state
@@ -44,6 +47,7 @@ module FunCi
       end
 
       @screen.clear_below
+      render_animations(runs)
     end
 
     def run
@@ -95,6 +99,12 @@ module FunCi
     end
 
     private
+
+    def render_animations(runs)
+      return unless @animation_renderer
+
+      @animation_renderer.render(@screen, runs)
+    end
 
     def format_run(run)
       opts = {}

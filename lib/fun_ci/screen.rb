@@ -4,6 +4,8 @@ require_relative "ansi"
 
 module FunCi
   class Screen
+    attr_reader :width
+
     def initialize(output: $stdout, width: 80)
       @output = output
       @width = width
@@ -76,6 +78,18 @@ module FunCi
 
     def clear_below
       @output.print "\e[J"
+    end
+
+    def write_at(row, col, text)
+      @output.print "\e[#{row};#{col}H#{text}"
+    end
+
+    def save_cursor
+      @output.print "\e[s"
+    end
+
+    def restore_cursor
+      @output.print "\e[u"
     end
   end
 end
