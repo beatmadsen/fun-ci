@@ -93,7 +93,11 @@ module FunCi
         height = @screen.height
         return rows unless height
 
-        max_rows = [(height - HEADER_HEIGHT - 1) / 2, 0].max
+        # Line budget: N rows consume 2N-1 lines (row + separator between rows).
+        # Remaining height after header, post-board separator, and footer:
+        #   available = height - HEADER_HEIGHT - 2
+        # Solving 2N - 1 <= available gives N <= (available) / 2.
+        max_rows = [(height - HEADER_HEIGHT - 2) / 2, 0].max
         rows.first(max_rows)
       end
     end

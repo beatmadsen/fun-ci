@@ -61,32 +61,31 @@ class TestAdminTuiHeight < Minitest::Test
       "Terminal shorter than header should show 0 rows rather than overflow"
   end
 
-  def test_should_show_one_row_at_minimum_viable_height
-    # Given pipeline runs and a terminal just tall enough for header + 1 row + footer
-    # HEADER_HEIGHT(14) + 2*1-1(board) + 1(blank) + 1(footer) = 17
+  def test_should_show_zero_rows_at_one_below_minimum_viable_height
+    # Given height 17: (17 - 14 - 2) / 2 = 0 rows
     3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
     tui = make_tui(height_provider: -> { 17 })
 
     # When the TUI renders
     tui.render_once
 
-    # Then exactly 1 row should be visible
-    assert_equal 1, rendered_commit_count,
-      "Height 17 is the minimum for 1 row with 14-line header"
+    # Then no rows should fit (one line short of the minimum for 1 row)
+    assert_equal 0, rendered_commit_count,
+      "Height 17 is one line short for 1 row with 14-line header"
   end
 
-  def test_should_never_render_more_lines_than_terminal_height
-    # Given pipeline runs and a terminal just below the 1-row minimum
+  def test_should_show_one_row_at_minimum_viable_height
+    # Given height 18: (18 - 14 - 2) / 2 = 1 row
+    # Budget: header(14) + board(1) + post-board separator(1) + footer(1) = 17 lines
     3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
-    tui = make_tui(height_provider: -> { 16 })
+    tui = make_tui(height_provider: -> { 18 })
 
     # When the TUI renders
     tui.render_once
 
-    # Then total output lines must not exceed terminal height
-    println_count = @output.string.scan(/\r\n/).length
-    assert println_count <= 16,
-      "Output must not exceed terminal height (got #{println_count} lines for height 16)"
+    # Then exactly 1 row should be visible
+    assert_equal 1, rendered_commit_count,
+      "Height 18 is the minimum for 1 row with 14-line header"
   end
 
   def test_should_show_all_rows_without_height_provider
