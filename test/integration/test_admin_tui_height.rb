@@ -48,17 +48,45 @@ class TestAdminTuiHeight < Minitest::Test
       "Tall terminal should show all 3 rows"
   end
 
-  def test_should_show_at_least_one_row_even_in_very_short_terminal
-    # Given pipeline runs and a terminal shorter than the header chrome
+  def test_should_show_zero_rows_when_terminal_shorter_than_header
+    # Given pipeline runs and a terminal shorter than the header + chrome
     3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
     tui = make_tui(height_provider: -> { 10 })
 
     # When the TUI renders
     tui.render_once
 
-    # Then at least 1 row should be visible (never zero)
+    # Then no rows should be shown (header alone exceeds terminal height)
+    assert_equal 0, rendered_commit_count,
+      "Terminal shorter than header should show 0 rows rather than overflow"
+  end
+
+  def test_should_show_one_row_at_minimum_viable_height
+    # Given pipeline runs and a terminal just tall enough for header + 1 row + footer
+    # HEADER_HEIGHT(14) + 2*1-1(board) + 1(blank) + 1(footer) = 17
+    3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
+    tui = make_tui(height_provider: -> { 17 })
+
+    # When the TUI renders
+    tui.render_once
+
+    # Then exactly 1 row should be visible
     assert_equal 1, rendered_commit_count,
-      "Very short terminal should still show 1 row"
+      "Height 17 is the minimum for 1 row with 14-line header"
+  end
+
+  def test_should_never_render_more_lines_than_terminal_height
+    # Given pipeline runs and a terminal just below the 1-row minimum
+    3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
+    tui = make_tui(height_provider: -> { 16 })
+
+    # When the TUI renders
+    tui.render_once
+
+    # Then total output lines must not exceed terminal height
+    println_count = @output.string.scan(/\r\n/).length
+    assert println_count <= 16,
+      "Output must not exceed terminal height (got #{println_count} lines for height 16)"
   end
 
   def test_should_show_all_rows_without_height_provider
