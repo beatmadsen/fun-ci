@@ -48,7 +48,8 @@ class TestAnimationRendererHeaderPlayer < Minitest::Test
     renderer.render(screen, [make_run(1, "failed", fast: "failed")])
 
     # When we advance enough renders for all animations to finish
-    30.times do
+    # (failure footers are held 8x so need more renders)
+    60.times do
       break unless renderer.any_active?
       renderer.render(screen, [make_run(1, "failed", fast: "failed")])
     end

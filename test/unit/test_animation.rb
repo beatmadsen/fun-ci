@@ -18,7 +18,7 @@ class TestAnimationLifecycle < Minitest::Test
   def test_finished_when_frame_reaches_total
     anim = FunCi::Animation.new(type: :stage_pass, run_id: 1, stage: "lint")
     3.times { anim.advance! }
-    assert anim.finished?, "Should be finished after 3 frames"
+    assert anim.finished?, "Should be finished after all frames"
   end
 
   def test_not_finished_before_total_frames
@@ -42,14 +42,14 @@ class TestAnimationLifecycle < Minitest::Test
 end
 
 class TestAnimationFrameCounts < Minitest::Test
-  def test_failure_has_7_frames
+  def test_failure_has_40_frames
     anim = FunCi::Animation.new(type: :failure, run_id: 1)
-    assert_equal 7, anim.total_frames
+    assert_equal 40, anim.total_frames
   end
 
-  def test_success_has_16_frames
+  def test_success_has_40_frames
     anim = FunCi::Animation.new(type: :success, run_id: 1)
-    assert_equal 16, anim.total_frames
+    assert_equal 40, anim.total_frames
   end
 
   def test_stage_pass_has_3_frames

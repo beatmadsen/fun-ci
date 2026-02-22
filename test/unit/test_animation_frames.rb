@@ -41,20 +41,32 @@ class TestAnimationFramesFailure < Minitest::Test
     assert_match(/BOOM/, FunCi::Ansi.strip(frames[1]))
   end
 
-  def test_failure_footer_has_5_frames
+  def test_failure_footer_has_40_frames
+    # 5 visual frames * FOOTER_HOLD(8) = 40
     frames = FunCi::AnimationFrames.failure_footer("fast", 80)
-    assert_equal 5, frames.length
+    assert_equal 40, frames.length
   end
 
   def test_failure_footer_contains_stage_name
+    # First visual content frame starts at index 8 (after 8 nils)
     frames = FunCi::AnimationFrames.failure_footer("fast", 80)
-    assert_match(/FAST FAILED/, FunCi::Ansi.strip(frames[1]))
+    assert_match(/FAST FAILED/, FunCi::Ansi.strip(frames[8]))
   end
 
   def test_failure_footer_first_and_last_are_nil
     frames = FunCi::AnimationFrames.failure_footer("fast", 80)
     assert_nil frames[0]
-    assert_nil frames[4]
+    assert_nil frames[39]
+  end
+
+  def test_failure_footer_holds_each_visual_frame_8_times
+    frames = FunCi::AnimationFrames.failure_footer("fast", 80)
+    # Frames 0-7 should all be nil (first visual frame held 8 times)
+    8.times { |i| assert_nil frames[i], "Frame #{i} should be nil (held)" }
+    # Frames 8-15 should all be the same content (second visual frame held 8 times)
+    content = frames[8]
+    refute_nil content, "Frame 8 should have content"
+    (8..15).each { |i| assert_equal content, frames[i], "Frame #{i} should match frame 8" }
   end
 end
 
@@ -75,14 +87,24 @@ class TestAnimationFramesSuccess < Minitest::Test
     assert_nil frames[7]
   end
 
-  def test_success_footer_has_5_frames
+  def test_success_footer_has_40_frames
+    # 5 visual frames * FOOTER_HOLD(8) = 40
     frames = FunCi::AnimationFrames.success_footer(80)
-    assert_equal 5, frames.length
+    assert_equal 40, frames.length
   end
 
   def test_success_footer_contains_nice
+    # First visual content frame starts at index 8 (after 8 nils)
     frames = FunCi::AnimationFrames.success_footer(80)
-    assert_match(/NICE!/, FunCi::Ansi.strip(frames[1]))
+    assert_match(/NICE!/, FunCi::Ansi.strip(frames[8]))
+  end
+
+  def test_success_footer_holds_each_visual_frame_8_times
+    frames = FunCi::AnimationFrames.success_footer(80)
+    # Frames 8-15 should all be the same content
+    content = frames[8]
+    refute_nil content, "Frame 8 should have content"
+    (8..15).each { |i| assert_equal content, frames[i], "Frame #{i} should match frame 8" }
   end
 end
 

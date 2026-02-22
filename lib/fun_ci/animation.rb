@@ -3,9 +3,9 @@
 module FunCi
   class Animation
     TYPES = {
-      failure: { total_frames: 7, priority: 3 },
+      failure: { total_frames: 40, priority: 3 },
       timeout: { total_frames: 4, priority: 2 },
-      success: { total_frames: 16, priority: 1 },
+      success: { total_frames: 40, priority: 1 },
       stage_pass: { total_frames: 3, priority: 0 }
     }.freeze
 
@@ -25,7 +25,7 @@ module FunCi
     end
 
     def finished?
-      @frame >= total_frames
+      frame >= total_frames
     end
 
     def total_frames

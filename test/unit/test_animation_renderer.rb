@@ -103,8 +103,8 @@ class TestAnimationRendererFrameAdvancement < Minitest::Test
     renderer.render(screen, [make_run(1, "failed", fast: "failed")])
 
     # When we advance enough renders for both Animation and HeaderAnimationPlayer to finish
-    # (advance until no animations remain)
-    30.times do
+    # (advance until no animations remain; failure footers are held 8x so need more renders)
+    60.times do
       break unless renderer.any_active?
       renderer.render(screen, [make_run(1, "failed", fast: "failed")])
     end

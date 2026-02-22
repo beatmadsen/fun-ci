@@ -5,6 +5,7 @@ require_relative "ansi"
 module FunCi
   module AnimationFrames
     RESET = Ansi::RESET
+    FOOTER_HOLD = 8
 
     def self.failure_particles
       # Left/right flanking debris per frame (chars expanding outward)
@@ -35,7 +36,7 @@ module FunCi
     def self.failure_footer(stage_name, width)
       up = stage_name.upcase
       down = stage_name.downcase
-      [
+      hold [
         nil,
         center("\e[1;31m>>> #{up} FAILED <<<#{RESET}", ">>> #{up} FAILED <<<", width),
         center("\e[31m>> #{down} failed <<#{RESET}", ">> #{down} failed <<", width),
@@ -59,7 +60,7 @@ module FunCi
     end
 
     def self.success_footer(width)
-      [
+      hold [
         nil,
         center("\e[1;32m* * * NICE! * * *#{RESET}", "* * * NICE! * * *", width),
         center("\e[32m. + . * NICE! * . + .#{RESET}", ". + . * NICE! * . + .", width),
@@ -95,6 +96,11 @@ module FunCi
       "#{bg_code}\e[1;37m#{padded}#{RESET}"
     end
     private_class_method :banner
+
+    def self.hold(frames)
+      frames.flat_map { |f| Array.new(FOOTER_HOLD, f) }
+    end
+    private_class_method :hold
 
     def self.center(colored_text, plain_text, width)
       pad = [(width - plain_text.length) / 2, 0].max

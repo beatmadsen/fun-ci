@@ -66,7 +66,11 @@ class TestAnimationRendererOverlayOutput < Minitest::Test
     renderer.render(screen, [make_run(1, "running", fast: "running")])
     renderer.render(screen, [make_run(1, "failed", fast: "failed")])
 
-    # When we capture the next render
+    # Advance past the FOOTER_HOLD nil frames (8 nils at start)
+    # Trigger render was frame 0, so we need 8 more renders to reach frame 8
+    7.times { renderer.render(screen, [make_run(1, "failed", fast: "failed")]) }
+
+    # When we capture the render at frame 9 (footer content visible at index 8+)
     output.truncate(0)
     output.rewind
     renderer.render(screen, [make_run(1, "failed", fast: "failed")])
@@ -99,7 +103,10 @@ class TestAnimationRendererOverlayOutput < Minitest::Test
     renderer.render(screen, [make_run(1, "running", slow: "running")])
     renderer.render(screen, [make_run(1, "completed", slow: "completed")])
 
-    # When we capture the next render
+    # Advance past the FOOTER_HOLD nil frames (8 nils at start)
+    7.times { renderer.render(screen, [make_run(1, "completed", slow: "completed")]) }
+
+    # When we capture the render at frame 9 (footer content visible at index 8+)
     output.truncate(0)
     output.rewind
     renderer.render(screen, [make_run(1, "completed", slow: "completed")])

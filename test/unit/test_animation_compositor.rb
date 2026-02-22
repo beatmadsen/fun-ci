@@ -44,14 +44,16 @@ class TestAnimationCompositorHeaderOverlay < Minitest::Test
 end
 
 class TestAnimationCompositorFooterOverlay < Minitest::Test
-  def test_failure_footer_at_frame_1_contains_stage_name
-    anim = make_animation(:failure, stage: "fast", advance: 1)
+  def test_failure_footer_at_frame_8_contains_stage_name
+    # Footer content starts at frame 8 due to FOOTER_HOLD(8) repeating nil 8 times
+    anim = make_animation(:failure, stage: "fast", advance: 8)
     overlay = FunCi::AnimationCompositor.footer_overlay(anim, 80)
     assert_match(/FAST FAILED/, FunCi::Ansi.strip(overlay))
   end
 
-  def test_success_footer_at_frame_1_contains_nice
-    anim = make_animation(:success, advance: 1)
+  def test_success_footer_at_frame_8_contains_nice
+    # Footer content starts at frame 8 due to FOOTER_HOLD(8) repeating nil 8 times
+    anim = make_animation(:success, advance: 8)
     overlay = FunCi::AnimationCompositor.footer_overlay(anim, 80)
     assert_match(/NICE!/, FunCi::Ansi.strip(overlay))
   end

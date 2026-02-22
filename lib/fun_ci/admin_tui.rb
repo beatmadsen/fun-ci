@@ -125,6 +125,8 @@ module FunCi
     end
 
     def refresh_interval
+      return FAST_REFRESH if @animation_renderer
+
       runs = @board_data.runs
       any_running = runs.any? { |r| r[:status] == "running" }
       any_running ? FAST_REFRESH : SLOW_REFRESH

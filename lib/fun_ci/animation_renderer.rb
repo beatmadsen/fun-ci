@@ -75,12 +75,6 @@ module FunCi
       @header_manager.current_lines(screen.width).each_with_index do |line, i|
         screen.write_at(1 + i, 1, line)
       end
-
-      anim = highest_priority(:has_header?)
-      return unless anim
-
-      overlay = AnimationCompositor.header_overlay(anim, screen.width)
-      screen.write_at(1, 1, "#{overlay}\e[K") if overlay
     end
 
     def render_footer_overlay(screen, runs)
