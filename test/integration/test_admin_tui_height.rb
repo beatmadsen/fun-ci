@@ -102,6 +102,24 @@ class TestAdminTuiHeight < Minitest::Test
       "Without height_provider, all rows should be visible"
   end
 
+  def test_should_clear_screen_when_height_shrinks_between_renders
+    # Given pipeline runs and a terminal that shrinks between renders
+    5.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
+    current_height = 40
+    height_provider = -> { current_height }
+    tui = make_tui(height_provider: height_provider)
+    tui.render_once
+
+    # When the terminal height shrinks (e.g. splitting a tmux pane)
+    current_height = 20
+    tui.render_once
+
+    # Then a clear-screen sequence should be emitted to prevent stale content
+    # (Without clear, the old taller frame stays on screen and the header scrolls off)
+    assert_includes @output.string, "\e[2J",
+      "Should emit clear-screen when height shrinks to prevent header from scrolling off"
+  end
+
   def test_should_show_all_rows_when_height_provider_returns_nil
     # Given pipeline runs and a height_provider that returns nil
     # (e.g. IO.console is nil when there is no controlling terminal)

@@ -4,7 +4,7 @@ require_relative "ansi"
 
 module FunCi
   class Screen
-    attr_reader :width
+    attr_reader :width, :height
 
     def initialize(output: $stdout, width: 80)
       @output = output
@@ -16,6 +16,13 @@ module FunCi
 
       clear
       @width = new_width
+    end
+
+    def height=(new_height)
+      return if new_height == @height
+
+      clear
+      @height = new_height
     end
 
     def render_header(streak_text:)

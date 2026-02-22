@@ -16,6 +16,7 @@ module FunCi
     end
 
     def render(runs:, streak:, cursor_index:, confirming:)
+      update_height
       render_header_area(runs, streak)
 
       if runs.empty?
@@ -46,7 +47,7 @@ module FunCi
       @screen.width = new_width
     end
 
-    def has_animation_renderer?
+    def animation_renderer?
       !!@animation_renderer
     end
 
@@ -80,10 +81,15 @@ module FunCi
       @animation_renderer.render(@screen, runs)
     end
 
-    def truncate_rows_to_height(rows)
-      return rows unless @height_provider
+    def update_height
+      return unless @height_provider
 
       height = @height_provider.call
+      @screen.height = height if height
+    end
+
+    def truncate_rows_to_height(rows)
+      height = @screen.height
       return rows unless height
 
       max_rows = [(height - HEADER_HEIGHT - 1) / 2, 0].max

@@ -140,6 +140,34 @@ class TestScreenResize < Minitest::Test
     refute_includes output.string, "\e[2J",
       "Should not clear screen when width unchanged"
   end
+
+  def test_should_clear_screen_when_height_changes
+    # Given a screen with height 40
+    output = StringIO.new
+    screen = FunCi::Screen.new(output: output, width: 60)
+    screen.height = 40
+    output.truncate(0)
+    output.rewind
+    # When height shrinks to 20
+    screen.height = 20
+    # Then output should contain a clear-screen sequence
+    assert_includes output.string, "\e[2J",
+      "Should clear screen when height changes"
+  end
+
+  def test_should_not_clear_screen_when_height_is_set_to_same_value
+    # Given a screen with height 40
+    output = StringIO.new
+    screen = FunCi::Screen.new(output: output, width: 60)
+    screen.height = 40
+    output.truncate(0)
+    output.rewind
+    # When height is set to the same value
+    screen.height = 40
+    # Then no clear-screen sequence should be emitted
+    refute_includes output.string, "\e[2J",
+      "Should not clear screen when height unchanged"
+  end
 end
 
 class TestScreenLineEndings < Minitest::Test
