@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   so the constant was only ever resolvable by luck of load order.
 
 ### Changed
+- The gemspec reads the version from a new `lib/fun_ci/version.rb` instead of
+  loading the whole library. Loading the library pulls in sqlite3, and Bundler
+  reads the gemspec before it installs anything, so `bundle install` failed on
+  any machine that did not already happen to have sqlite3.
 - `required_ruby_version` is now `>= 3.2`. The stated floor of 3.0 was never
   reachable: the TUI uses `Data.define`, which arrived in Ruby 3.2.
 
