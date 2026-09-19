@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2026-09-20
+
+### Bug Fixes
+- `StageRunner` raised `NameError: uninitialized constant FunCi::NullRecorder`
+  when built without an explicit recorder. The module reorganisation in 1.2.0
+  moved `NullRecorder` under `Persistence` and the default argument was left
+  pointing at the old name. The file also never required the recorder it names,
+  so the constant was only ever resolvable by luck of load order.
+
+### Changed
+- `required_ruby_version` is now `>= 3.2`. The stated floor of 3.0 was never
+  reachable: the TUI uses `Data.define`, which arrived in Ruby 3.2.
+
+### Internal
+- The cucumber suite had been broken since the 1.2.0 reorganisation, which moved
+  the files and constants it loads. It runs again, `rake` runs it, and it runs
+  with `--strict` so an undefined step fails instead of passing quietly.
+- `StageRunner` has tests. It had none, which is how the broken default survived.
+
 ## [1.2.0] - 2026-02-23
 
 ### Bug Fixes

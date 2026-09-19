@@ -18,7 +18,7 @@ module FunCi
         errors = @config.validate
 
         if errors.empty?
-          @stdout.puts "All OK — project is configured."
+          @stdout.puts "All OK. The project is configured."
           0
         else
           errors.each { |e| @stdout.puts e }

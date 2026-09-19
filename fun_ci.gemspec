@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
     "changelog_uri" => "#{spec.homepage}/blob/main/CHANGELOG.md"
   }
 
-  spec.required_ruby_version = ">= 3.0"
+  spec.required_ruby_version = ">= 3.2"
 
   spec.files = Dir["lib/**/*", "exe/*", "LICENSE.txt", "README.md", "CHANGELOG.md"]
   spec.bindir = "exe"

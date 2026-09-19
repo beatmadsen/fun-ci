@@ -19,7 +19,7 @@ module FunCi
 
       def run
         if Dir.exist?(File.join(@project_root, ".fun-ci"))
-          @stdout.puts ".fun-ci/ already exists — skipping init."
+          @stdout.puts ".fun-ci/ already exists, so init did nothing."
           return 0
         end
 

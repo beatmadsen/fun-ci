@@ -2,13 +2,14 @@
 
 require "timeout"
 require_relative "process_runner"
+require_relative "../persistence/pipeline_recorder"
 
 module FunCi
   module Pipeline
     class StageRunner
       include ProcessRunner
 
-      def initialize(commit_hash:, stdout:, command_runner: nil, time_budgets: {}, recorder: FunCi::NullRecorder.new)
+      def initialize(commit_hash:, stdout:, command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new)
         @commit_hash = commit_hash
         @stdout = stdout
         @command_runner = command_runner
