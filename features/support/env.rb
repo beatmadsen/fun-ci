@@ -12,11 +12,9 @@ require "time"
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __dir__)
 
-require "fun_ci/database"
-require "fun_ci/pipeline_run"
-require "fun_ci/stage_job"
-require "fun_ci/admin_tui"
-require "fun_ci/ansi"
+require "fun_ci"
+require "fun_ci/tui/admin_tui"
+require "fun_ci/tui/ansi"
 
 # Acceptance test client for the Admin TUI.
 # Provides a high-level API that hides database setup,
@@ -27,8 +25,8 @@ class TuiTestClient
   def initialize
     @dir = Dir.mktmpdir
     db_path = File.join(@dir, "test.sqlite3")
-    @db = FunCi::Database.connection(db_path)
-    FunCi::Database.migrate!(@db)
+    @db = FunCi::Persistence::Database.connection(db_path)
+    FunCi::Persistence::Database.migrate!(@db)
     @output = StringIO.new
     @tui = nil
     @current_run_id = nil
@@ -45,21 +43,21 @@ class TuiTestClient
 
   def create_pipeline_run(commit:, branch:, status: "completed", minutes_ago: 0)
     @now = Time.now
-    run_id = FunCi::PipelineRun.create(@db, commit_hash: commit, branch: branch)
+    run_id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: commit, branch: branch)
 
     if status != "scheduled"
-      FunCi::PipelineRun.update_status(@db, run_id, "running")
+      FunCi::Persistence::PipelineRun.update_status(@db, run_id, "running")
     end
 
     case status
     when "completed"
-      FunCi::PipelineRun.update_status(@db, run_id, "completed")
+      FunCi::Persistence::PipelineRun.update_status(@db, run_id, "completed")
     when "failed"
-      FunCi::PipelineRun.update_status(@db, run_id, "failed")
+      FunCi::Persistence::PipelineRun.update_status(@db, run_id, "failed")
     when "timed_out"
-      FunCi::PipelineRun.update_status(@db, run_id, "timed_out")
+      FunCi::Persistence::PipelineRun.update_status(@db, run_id, "timed_out")
     when "cancelled"
-      FunCi::PipelineRun.update_status(@db, run_id, "cancelled")
+      FunCi::Persistence::PipelineRun.update_status(@db, run_id, "cancelled")
     end
 
     if minutes_ago > 0
@@ -73,29 +71,29 @@ class TuiTestClient
   end
 
   def add_stage(stage:, status: "completed", duration: nil)
-    job_id = FunCi::StageJob.create(@db, pipeline_run_id: @current_run_id, stage: stage)
+    job_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: @current_run_id, stage: stage)
 
     if status != "scheduled"
-      FunCi::StageJob.update_status(@db, job_id, "running")
+      FunCi::Persistence::StageJob.update_status(@db, job_id, "running")
     end
 
     case status
     when "completed"
-      FunCi::StageJob.update_status(@db, job_id, "completed")
+      FunCi::Persistence::StageJob.update_status(@db, job_id, "completed")
       if duration
         started = @now - duration
         @db.execute("UPDATE stage_jobs SET started_at = ?, completed_at = ? WHERE id = ?",
           [started.utc.iso8601(3), @now.utc.iso8601(3), job_id])
       end
     when "failed"
-      FunCi::StageJob.update_status(@db, job_id, "failed")
+      FunCi::Persistence::StageJob.update_status(@db, job_id, "failed")
       if duration
         started = @now - duration
         @db.execute("UPDATE stage_jobs SET started_at = ?, completed_at = ? WHERE id = ?",
           [started.utc.iso8601(3), @now.utc.iso8601(3), job_id])
       end
     when "timed_out"
-      FunCi::StageJob.update_status(@db, job_id, "timed_out")
+      FunCi::Persistence::StageJob.update_status(@db, job_id, "timed_out")
       if duration
         started = @now - duration
         @db.execute("UPDATE stage_jobs SET started_at = ?, completed_at = ? WHERE id = ?",
@@ -126,19 +124,19 @@ class TuiTestClient
     rows = @db.execute("SELECT id FROM pipeline_runs WHERE status = 'running' ORDER BY id DESC LIMIT 1")
     return if rows.empty?
     run_id = rows[0][0]
-    FunCi::PipelineRun.update_status(@db, run_id, "completed")
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "completed")
 
     # Complete all running stage jobs
     stage_rows = @db.execute("SELECT id FROM stage_jobs WHERE pipeline_run_id = ? AND status = 'running'", [run_id])
     stage_rows.each do |row|
-      FunCi::StageJob.update_status(@db, row[0], "completed")
+      FunCi::Persistence::StageJob.update_status(@db, row[0], "completed")
     end
 
     # Complete scheduled stage jobs too
     scheduled_rows = @db.execute("SELECT id FROM stage_jobs WHERE pipeline_run_id = ? AND status = 'scheduled'", [run_id])
     scheduled_rows.each do |row|
-      FunCi::StageJob.update_status(@db, row[0], "running")
-      FunCi::StageJob.update_status(@db, row[0], "completed")
+      FunCi::Persistence::StageJob.update_status(@db, row[0], "running")
+      FunCi::Persistence::StageJob.update_status(@db, row[0], "completed")
     end
   end
 
@@ -150,17 +148,17 @@ class TuiTestClient
       rerender
     else
       @output = StringIO.new
-      @tui = FunCi::AdminTui.new(db: @db, output: @output, input: StringIO.new(""))
+      @tui = FunCi::Tui::AdminTui.new(db: @db, output: @output, input: StringIO.new(""))
       @tui.render_once
-      @plain_output = FunCi::Ansi.strip(@output.string)
+      @plain_output = FunCi::Tui::Ansi.strip(@output.string)
     end
   end
 
   def open_tui_at_width(width)
     @output = StringIO.new
-    @tui = FunCi::AdminTui.new(db: @db, output: @output, input: StringIO.new(""), width: width)
+    @tui = FunCi::Tui::AdminTui.new(db: @db, output: @output, input: StringIO.new(""), width: width)
     @tui.render_once
-    @plain_output = FunCi::Ansi.strip(@output.string)
+    @plain_output = FunCi::Tui::Ansi.strip(@output.string)
   end
 
   def simulate_resize(new_width)
@@ -171,12 +169,12 @@ class TuiTestClient
   def open_tui_with_width_provider(initial_width)
     @current_width = initial_width
     @output = StringIO.new
-    @tui = FunCi::AdminTui.new(
+    @tui = FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: initial_width, width_provider: -> { @current_width }
     )
     @tui.render_once
-    @plain_output = FunCi::Ansi.strip(@output.string)
+    @plain_output = FunCi::Tui::Ansi.strip(@output.string)
   end
 
   def set_width_provider_value(new_width)
@@ -195,7 +193,7 @@ class TuiTestClient
     @output.truncate(0)
     @output.rewind
     @tui.render_once
-    @plain_output = FunCi::Ansi.strip(@output.string)
+    @plain_output = FunCi::Tui::Ansi.strip(@output.string)
   end
 
   def raw_output

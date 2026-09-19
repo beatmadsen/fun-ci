@@ -692,11 +692,11 @@ end
 
 Then("the board should refresh approximately every {int} second(s)") do |seconds|
   # Verify refresh interval matches expectations
-  expected = seconds == 1 ? FunCi::AdminTui::FAST_REFRESH : FunCi::AdminTui::SLOW_REFRESH
+  expected = seconds == 1 ? FunCi::Tui::AdminTui::FAST_REFRESH : FunCi::Tui::AdminTui::SLOW_REFRESH
   if seconds == 1
     assert_operator expected, :<=, 1.0, "Fast refresh should be <= 1 second"
   else
-    assert_equal 5.0, FunCi::AdminTui::SLOW_REFRESH, "Slow refresh should be 5 seconds"
+    assert_equal 5.0, FunCi::Tui::AdminTui::SLOW_REFRESH, "Slow refresh should be 5 seconds"
   end
 end
 

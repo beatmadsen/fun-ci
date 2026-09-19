@@ -2,6 +2,7 @@
 
 require "bundler/gem_tasks"
 require "rake/testtask"
+require "cucumber/rake/task"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -27,4 +28,6 @@ Rake::TestTask.new(:acceptance) do |t|
   t.test_files = FileList["test/acceptance/**/test_*.rb"]
 end
 
-task default: :test
+Cucumber::Rake::Task.new(:cucumber)
+
+task default: %i[test cucumber]
