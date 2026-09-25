@@ -28,7 +28,31 @@ class TestStageRunnerDefaults < Minitest::Test
     assert_includes stdout.string, "Your fast tests have gotten too slow. Split or speed them up."
   end
 
+  def test_says_which_stage_failed_when_its_script_fails
+    assert_includes output_of_failing("build"), "Build failed."
+  end
+
+  def test_shows_what_a_failing_script_printed
+    assert_includes output_of_failing("build"), "undefined method"
+  end
+
+  def test_a_script_that_exits_nonzero_fails_the_stage
+    seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { failing_answer })
+
+    refute FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config,
+                                                                                                               "lint")
+  end
+
   private
+
+  def failing_answer = ["undefined method `x'", FakeStatus.new(false, 1)]
+
+  def output_of_failing(stage)
+    stdout = StringIO.new
+    seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { failing_answer })
+    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: stdout, seams: seams).passes?(config, stage)
+    stdout.string
+  end
 
   def passing_runner
     ->(_cmd) { ["", FakeStatus.new(true, 0)] }
