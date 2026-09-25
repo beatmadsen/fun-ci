@@ -44,6 +44,7 @@ cases! {
     the_second_tile_sits_right_of_the_first: contact_sheet(&marked_frames(4, (4, 2), (0, 0))).pixel(2, 0) => [1, 0, 0];
     the_third_tile_starts_the_second_row: contact_sheet(&marked_frames(4, (4, 2), (0, 0))).pixel(0, 1) => [2, 0, 0];
     the_fourth_tile_ends_the_second_row: contact_sheet(&marked_frames(4, (4, 2), (0, 0))).pixel(2, 1) => [3, 0, 0];
+    a_second_row_tile_starts_one_tile_height_down: contact_sheet(&marked_frames(4, (4, 4), (0, 0))).pixel(0, 2) => [2, 0, 0];
     five_tall_frames_make_a_sheet_two_tiles_high: contact_sheet(&vec![Image::blank(4, 4); 5]).height => 4;
     a_tile_keeps_the_sampled_pixel: contact_sheet(&marked_frames(2, (4, 4), (2, 2))).pixel(2 + 1, 1) => [1, 0, 0];
 }
