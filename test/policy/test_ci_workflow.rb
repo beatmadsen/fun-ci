@@ -44,8 +44,16 @@ class TestCiWorkflow < Minitest::Test
     assert_includes commands("mutation-rust-score"), "bundle exec rake \"mutation:rust:score[#{shards}]\""
   end
 
-  def test_a_newer_push_cancels_the_run_it_supersedes
-    assert_equal true, workflow.dig("concurrency", "cancel-in-progress")
+  def test_a_newer_push_cancels_the_gate_it_supersedes
+    assert_equal true, jobs.dig("gate", "concurrency", "cancel-in-progress")
+  end
+
+  # Mutation lanes take long enough that cancelling them on each push would
+  # leave them never finishing; one runs, and the latest waits its turn.
+  def test_a_newer_push_leaves_every_mutation_run_to_finish
+    lanes = %w[mutation mutation-rust mutation-rust-score]
+
+    assert_equal [false] * lanes.size, lanes.map { |job| jobs.dig(job, "concurrency", "cancel-in-progress") }
   end
 
   def test_every_rust_job_installs_the_pinned_toolchain

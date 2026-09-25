@@ -5,14 +5,13 @@ on:
     branches: [main]
   pull_request:
 
-# A newer push supersedes the run before it.
-concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   gate:
     runs-on: ubuntu-latest
+    # A newer push's gate covers this one.
+    concurrency:
+      group: gate-${{ github.ref }}-${{ matrix.ruby }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
@@ -28,6 +27,9 @@ jobs:
 
   mutation:
     runs-on: ubuntu-latest
+    concurrency:
+      group: mutation-${{ github.ref }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
@@ -40,6 +42,9 @@ jobs:
   # mutation-rust-score judges them together.
   mutation-rust:
     runs-on: ubuntu-latest
+    concurrency:
+      group: mutation-rust-${{ github.ref }}-${{ matrix.shard }}
+      cancel-in-progress: false
     strategy:
       fail-fast: false
       matrix:
@@ -63,6 +68,9 @@ jobs:
   mutation-rust-score:
     needs: mutation-rust
     runs-on: ubuntu-latest
+    concurrency:
+      group: mutation-rust-score-${{ github.ref }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
