@@ -4,7 +4,7 @@ require_relative "animation"
 require_relative "animation_compositor"
 require_relative "animation_library"
 require_relative "header_animation_manager"
-require_relative "stage_change_detector"
+require_relative "../console/stage_change_detector"
 
 module FunCi
   module Tui
@@ -41,7 +41,7 @@ module FunCi
       private
 
       def detect_and_queue(runs)
-        changes = StageChangeDetector.detect(@previous_runs, runs)
+        changes = Console::StageChangeDetector.detect(@previous_runs, runs)
         @previous_runs = snapshot(runs)
         changes.each { |change| queue_animation(change, runs) }
         update_running_state(runs)

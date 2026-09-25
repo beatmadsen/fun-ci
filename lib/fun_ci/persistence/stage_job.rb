@@ -6,6 +6,7 @@ module FunCi
   module Persistence
     module StageJob
       TERMINAL_STATUSES = %w[completed failed timed_out cancelled].freeze
+      COLUMNS = "id, pipeline_run_id, stage, status, started_at, completed_at"
       TIMESTAMP_COLUMNS = TERMINAL_STATUSES.to_h { |status| [status, "completed_at"] }
                                            .merge("running" => "started_at").freeze
 
@@ -23,12 +24,16 @@ module FunCi
       end
 
       def self.find(db, id)
-        row = db.execute(
-          "SELECT id, pipeline_run_id, stage, status, started_at, completed_at FROM stage_jobs WHERE id = ?", [id]
-        ).first
+        row = db.execute("SELECT #{COLUMNS} FROM stage_jobs WHERE id = ?", [id]).first
         return nil unless row
 
         row_to_hash(row)
+      end
+
+      # The run's jobs, in the order they were created.
+      def self.for_run(db, pipeline_run_id)
+        db.execute("SELECT #{COLUMNS} FROM stage_jobs WHERE pipeline_run_id = ? ORDER BY id", [pipeline_run_id])
+          .map { |row| row_to_hash(row) }
       end
 
       def self.update_status(db, id, new_status)

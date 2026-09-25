@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "board_data"
+require_relative "../console/board_data"
 require_relative "board_renderer"
-require_relative "key_handler"
+require_relative "../console/key_handler"
 require_relative "screen"
 require_relative "spinner"
 require_relative "terminal_input"
@@ -18,9 +18,9 @@ module FunCi
                      width_provider: nil, height_provider: nil,
                      page_size: nil, animation_renderer: nil, terminal_input: nil,
                      run_canceller: Pipeline::RunCanceller.new)
-        @board_data = BoardData.new(db, page_size: page_size, run_canceller: run_canceller)
+        @board_data = Console::BoardData.new(db, page_size: page_size, run_canceller: run_canceller)
         @terminal_input = terminal_input || TerminalInput.new(input: input, width_provider: width_provider)
-        @key_handler = KeyHandler.new(board_data: @board_data)
+        @key_handler = Console::KeyHandler.new(board_data: @board_data)
         @renderer = BoardRenderer.new(
           screen: Screen.new(output: output, width: width),
           spinner: Spinner.new,

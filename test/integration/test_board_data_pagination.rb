@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/tui/board_data"
+require "fun_ci/console/board_data"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/pipeline_run"
 require "fun_ci/persistence/stage_job"
@@ -21,7 +21,7 @@ class TestBoardDataPagination < Minitest::Test
 
   def test_should_respect_initial_limit_as_page_size
     10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
-    board = FunCi::Tui::BoardData.new(@db, limit: 5)
+    board = FunCi::Console::BoardData.new(@db, limit: 5)
     result = board.runs
 
     assert_equal 5, result.size, "Should respect initial limit"
@@ -29,7 +29,7 @@ class TestBoardDataPagination < Minitest::Test
 
   def test_should_show_more_runs_after_load_more
     10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
-    board = FunCi::Tui::BoardData.new(@db, limit: 5)
+    board = FunCi::Console::BoardData.new(@db, limit: 5)
     board.load_more
 
     result = board.runs
@@ -39,7 +39,7 @@ class TestBoardDataPagination < Minitest::Test
 
   def test_should_not_exceed_total_available_runs
     7.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
-    board = FunCi::Tui::BoardData.new(@db, limit: 5)
+    board = FunCi::Console::BoardData.new(@db, limit: 5)
     board.load_more
     board.load_more
     result = board.runs
@@ -73,6 +73,6 @@ class TestBoardDataPagination < Minitest::Test
 
   def board_over(count, page_size:)
     count.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
-    FunCi::Tui::BoardData.new(@db, page_size: page_size)
+    FunCi::Console::BoardData.new(@db, page_size: page_size)
   end
 end

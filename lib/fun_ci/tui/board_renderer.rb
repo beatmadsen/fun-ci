@@ -3,7 +3,7 @@
 require_relative "board"
 require_relative "header_animation_manager"
 require_relative "row_formatter"
-require_relative "streak_counter"
+require_relative "../console/streak_counter"
 
 module FunCi
   module Tui
@@ -48,7 +48,7 @@ module FunCi
         if @animation_renderer
           @screen.write_at(HEADER_HEIGHT + 1, 1, "")
         else
-          streak_text = StreakCounter.format_text(streak)
+          streak_text = Console::StreakCounter.format_text(streak)
           @screen.render_header(streak_text: streak_text)
           (HEADER_HEIGHT - 1).times { @screen.println }
         end

@@ -3,7 +3,7 @@
 require "json"
 require_relative "console_state"
 require_relative "view"
-require_relative "../tui/key_handler"
+require_relative "key_handler"
 
 module FunCi
   module Console
@@ -15,7 +15,7 @@ module FunCi
 
       # `log` takes what the renderer got wrong (ConsoleLog).
       def self.build(board_data:, port:, clock:, log:)
-        view = View.new(key_handler: Tui::KeyHandler.new(board_data: board_data))
+        view = View.new(key_handler: KeyHandler.new(board_data: board_data))
         new(state: ConsoleState.new(board_data: board_data, view: view, clock: clock), port: port, log: log)
       end
 

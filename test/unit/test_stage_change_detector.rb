@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/tui/stage_change_detector"
+require "fun_ci/console/stage_change_detector"
 
 module StageChangeDetectorFixtures
   private
 
   def detect(previous, current)
-    FunCi::Tui::StageChangeDetector.detect(previous, current)
+    FunCi::Console::StageChangeDetector.detect(previous, current)
   end
 
   def make_run(id, **statuses)
@@ -83,7 +83,8 @@ end
 
 class TestStageChangeDetectorChangeValue < Minitest::Test
   def test_change_should_be_a_data_object_with_named_fields
-    change = FunCi::Tui::StageChangeDetector::Change.new(run_id: 42, stage: "lint", from: "running", to: "completed")
+    change = FunCi::Console::StageChangeDetector::Change.new(run_id: 42, stage: "lint", from: "running",
+                                                             to: "completed")
     assert_equal 42, change.run_id
     assert_equal "lint", change.stage
     assert_equal "running", change.from
@@ -91,7 +92,7 @@ class TestStageChangeDetectorChangeValue < Minitest::Test
   end
 
   def test_change_should_be_frozen
-    change = FunCi::Tui::StageChangeDetector::Change.new(run_id: 1, stage: "lint", from: "running", to: "completed")
+    change = FunCi::Console::StageChangeDetector::Change.new(run_id: 1, stage: "lint", from: "running", to: "completed")
     assert change.frozen?
   end
 end

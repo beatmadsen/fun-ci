@@ -8,7 +8,7 @@ require_relative "../pipeline/run_canceller"
 require_relative "streak_counter"
 
 module FunCi
-  module Tui
+  module Console
     class BoardData
       def initialize(db, limit: 15, page_size: nil, run_canceller: Pipeline::RunCanceller.new)
         @db = db
@@ -51,18 +51,12 @@ module FunCi
       private
 
       def enrich_with_stages(run)
-        rows = @db.execute(
-          "SELECT id, pipeline_run_id, stage, status, started_at, completed_at FROM stage_jobs WHERE pipeline_run_id = ? ORDER BY id",
-          [run[:id]]
-        )
+        run.merge(stages: Persistence::StageJob.for_run(@db, run[:id]).map { |job| stage(job) })
+      end
 
-        stages = rows.map do |row|
-          job = { id: row[0], pipeline_run_id: row[1], stage: row[2], status: row[3], started_at: row[4], completed_at: row[5] }
-          duration = Persistence::StageJob.elapsed_duration(job)
-          { stage: job[:stage], status: job[:status], duration: duration, started_at: job[:started_at] }
-        end
-
-        run.merge(stages: stages)
+      def stage(job)
+        { stage: job[:stage], status: job[:status], duration: Persistence::StageJob.elapsed_duration(job),
+          started_at: job[:started_at] }
       end
     end
   end

@@ -11,7 +11,6 @@ Layout/EmptyLineAfterGuardClause:
   Exclude:
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
-    - 'lib/fun_ci/tui/streak_counter.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLines:
@@ -55,7 +54,6 @@ Layout/LineLength:
     - 'lib/fun_ci/animations/celebrate.rb'
     - 'lib/fun_ci/animations/flash.rb'
     - 'lib/fun_ci/animations/yay.rb'
-    - 'lib/fun_ci/tui/board_data.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowForAlignment, EnforcedStyleForExponentOperator, EnforcedStyleForRationalLiterals.
@@ -112,14 +110,10 @@ Metrics/MethodLength:
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/animation_frames.rb'
     - 'lib/fun_ci/tui/animation_renderer.rb'
-    - 'lib/fun_ci/tui/board_data.rb'
     - 'lib/fun_ci/tui/duration_formatter.rb'
-    - 'lib/fun_ci/tui/key_handler.rb'
     - 'lib/fun_ci/tui/relative_time.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
     - 'lib/fun_ci/tui/screen.rb'
-    - 'lib/fun_ci/tui/stage_change_detector.rb'
-    - 'lib/fun_ci/tui/streak_counter.rb'
     - 'lib/fun_ci/tui/terminal_input.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne.
@@ -174,13 +168,6 @@ Style/FormatString:
 Style/NumericPredicate:
   Exclude:
     - 'lib/fun_ci/tui/animation_compositor.rb'
-    - 'lib/fun_ci/tui/key_handler.rb'
-    - 'lib/fun_ci/tui/streak_counter.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/ReduceToHash:
-  Exclude:
-    - 'lib/fun_ci/tui/stage_change_detector.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.

@@ -3,7 +3,7 @@
 require_relative "../../test_helper"
 require_relative "../../support/console_fakes"
 require "fun_ci/console/view"
-require "fun_ci/tui/key_handler"
+require "fun_ci/console/key_handler"
 
 # AT-2.4: the board carries one page of runs, as many as the terminal's rows
 # fit, scrolled so the run under the cursor is on it.
@@ -12,7 +12,7 @@ class TestView < Minitest::Test
 
   def setup
     @board_data = ConsoleFakes::BoardData.new(RUNS)
-    @view = FunCi::Console::View.new(key_handler: FunCi::Tui::KeyHandler.new(board_data: @board_data))
+    @view = FunCi::Console::View.new(key_handler: FunCi::Console::KeyHandler.new(board_data: @board_data))
   end
 
   def page(more: false) = @view.page(RUNS, more: more)

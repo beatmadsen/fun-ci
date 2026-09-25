@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../tui/stage_change_detector"
+require_relative "stage_change_detector"
 
 module FunCi
   module Console
@@ -16,7 +16,7 @@ module FunCi
 
       # None on the first poll, which has nothing to compare with.
       def since_last(runs)
-        changes = Tui::StageChangeDetector.detect(@previous, runs)
+        changes = StageChangeDetector.detect(@previous, runs)
         @previous = runs
         changes.select { |change| NAMES.key?(change.to) }.map { |change| event(change) }
       end

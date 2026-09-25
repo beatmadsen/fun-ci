@@ -14,7 +14,7 @@ module ConsoleCancellation
     create_blocked_project
     @sha = commit_stages(**stages)
     run = start_blocked_run(@sha)
-    with_db { |db| FunCi::Tui::BoardData.new(db).cancel_run(run_id_of(@sha)) }
+    with_db { |db| FunCi::Console::BoardData.new(db).cancel_run(run_id_of(@sha)) }
     release_and_wait(run)
   end
 

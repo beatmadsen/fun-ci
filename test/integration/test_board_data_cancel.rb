@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/tui/board_data"
+require "fun_ci/console/board_data"
 require "fun_ci/persistence/database"
 
 # AT-1.12: cancelling from the console stops the run's processes, through the
@@ -50,6 +50,6 @@ class TestBoardDataCancel < Minitest::Test
 
   def cancel(run_id)
     canceller = FunCi::Pipeline::RunCanceller.new(killer: ->(signal, pid) { @signals << [signal, pid] })
-    FunCi::Tui::BoardData.new(@db, run_canceller: canceller).cancel_run(run_id)
+    FunCi::Console::BoardData.new(@db, run_canceller: canceller).cancel_run(run_id)
   end
 end

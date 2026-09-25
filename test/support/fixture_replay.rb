@@ -2,7 +2,7 @@
 
 require "json"
 require "fun_ci/console/console_session"
-require "fun_ci/tui/streak_counter"
+require "fun_ci/console/streak_counter"
 require_relative "console_fakes"
 
 # Replays a contract fixture (contract/fixtures/*.jsonl) against
@@ -20,7 +20,7 @@ class FixtureReplay
       @now = 0
     end
 
-    def streak = FunCi::Tui::StreakCounter.count(runs)
+    def streak = FunCi::Console::StreakCounter.count(runs)
     def load_more = nil
     def resize(_page_size) = nil
     def more? = false

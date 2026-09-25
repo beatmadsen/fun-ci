@@ -2,7 +2,7 @@
 
 require_relative "end_to_end"
 require_relative "descendants"
-require "fun_ci/tui/board_data"
+require "fun_ci/console/board_data"
 
 # A real `fun-ci trigger` run, in a process of its own, whose stage scripts
 # can be parked: a script given `park(stage)` waits on a FIFO the test opens

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "fun_ci/tui/streak_counter"
+require "fun_ci/console/streak_counter"
 
 # Runs are listed most recent first.
 class TestStreakCounter < Minitest::Test
@@ -37,15 +37,15 @@ class TestStreakCounter < Minitest::Test
   end
 
   def test_should_format_streak_text_for_passing
-    assert_equal "7 in a row!", FunCi::Tui::StreakCounter.format_text(7)
+    assert_equal "7 in a row!", FunCi::Console::StreakCounter.format_text(7)
   end
 
   def test_should_format_streak_broken_for_zero
-    assert_equal "Streak broken", FunCi::Tui::StreakCounter.format_text(0)
+    assert_equal "Streak broken", FunCi::Console::StreakCounter.format_text(0)
   end
 
   def test_should_return_nil_text_when_no_completed_runs
-    assert_nil FunCi::Tui::StreakCounter.format_text(nil), "No text when no completed runs exist"
+    assert_nil FunCi::Console::StreakCounter.format_text(nil), "No text when no completed runs exist"
   end
 
   def test_should_count_returns_nil_when_no_terminal_runs
@@ -55,6 +55,6 @@ class TestStreakCounter < Minitest::Test
   private
 
   def streak(*statuses)
-    FunCi::Tui::StreakCounter.count(statuses.map { |status| { status: status } })
+    FunCi::Console::StreakCounter.count(statuses.map { |status| { status: status } })
   end
 end
