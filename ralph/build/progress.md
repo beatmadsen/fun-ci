@@ -1,0 +1,52 @@
+# Build loop progress
+
+Order is deliberate: 2.6 comes first so the golden corpus pins today's renderer
+before §0 refactors `tui/`. After every 10 ticked items the next iteration is a
+refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
+
+- [ ] AT-2.6: Scenarios capture the current Ruby renderer as golden output
+- [ ] AT-0.1: RuboCop is part of the gate with the project's limits
+- [ ] AT-0.2: Constructor parameter objects replace long keyword lists
+- [ ] AT-0.3: The cucumber lane and every documented lane run in the gate
+- [ ] AT-0.4: Tests are confined to temp directories
+- [ ] AT-0.5: Unit and acceptance tests never spawn processes
+- [ ] AT-0.6: Mutation testing lane
+- [ ] AT-0.7: CI runs the gate on every supported Ruby
+- [ ] AT-0.8: The gem ships exactly the tracked runtime files
+- [ ] AT-0.9: CLAUDE.md is written as Invariants and Gotchas
+- [ ] AT-0.10: Legacy executables are gone
+- [ ] AT-1.1: A pipeline runs in a worktree at the requested commit
+- [ ] AT-1.2: Uncommitted changes don't leak into a run
+- [ ] AT-1.3: Ignored caches survive between runs in the same slot
+- [ ] AT-1.4: The slot stays taken until the background slow suite finishes
+- [ ] AT-1.5: Crashed runs don't leak slots
+- [ ] AT-1.6: Cancelling a stale run frees its slot
+- [ ] AT-1.7: Pool size is configurable
+- [ ] AT-1.8: The background hook is post-commit and records the new commit
+- [ ] AT-1.9: Upgrading replaces fun-ci's own pre-commit hook only
+- [ ] AT-1.10: `--no-validate` keeps working as an alias for one release
+- [ ] AT-1.11: Worktrees are cleaned up with `fun-ci prune`
+- [ ] AT-2.1: ConsoleSession separates state from rendering
+- [ ] AT-2.2: `board` messages follow the protocol
+- [ ] AT-2.3: Stage changes become events, not animations
+- [ ] AT-2.4: Resize changes the page size
+- [ ] AT-2.5: Protocol errors never crash the console
+- [ ] AT-3.1: `renderer/` Cargo crate `fun-ci-renderer`
+- [ ] AT-3.2: Handshake
+- [ ] AT-3.3: Headless mode writes `frames.jsonl`, `frames.cast`, `sheet.svg`, `stats.json`
+- [ ] AT-3.4: Differential tests
+- [ ] AT-3.5: Contract fixtures
+- [ ] AT-3.6: Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in)
+- [ ] AT-3.7: Terminal is restored on EOF, `quit`, panic and SIGTERM
+- [ ] AT-3.8: `rake contract:binary` drives the real binary in the gate
+- [ ] AT-3.9: cargo-mutants lane ≥ 90 % caught
+- [ ] AT-4.1: Renderer lookup
+- [ ] AT-4.2: Platform gems for the five targets built in CI
+- [ ] AT-4.3: `cargo install fun-ci-renderer` path documented and tested in CI
+- [ ] AT-5.1: `fun-ci console` uses the Rust renderer
+- [ ] AT-5.2: Golden byte files become Rust `insta` snapshots
+- [ ] AT-5.3: Cucumber TUI features are rewritten against headless frames or deleted where the Rust suite covers them
+- [ ] AT-5.4: README, CHANGELOG, version 2.0.0
+- [ ] AT-6.1: Objective visual gates from `stats.json` in `rake`
+- [ ] AT-6.2: TUI rubric (`docs/v2/tui-rubric.md`)
+- [ ] AT-6.3: Polish loop prompts and `rake polish:approve`
