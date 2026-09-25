@@ -33,6 +33,7 @@ ruby -Itest -Ilib test/unit/test_trigger.rb -n test_method # One test method
 rake contract:capture   # Rewrite contract/golden/ from contract/scenarios/ (after a deliberate TUI change)
 rake mutation           # Mutineer over lib/ except tui/ and animations/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
 rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
+script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
 ```
 
 ### CLI (unified entry point)
@@ -111,6 +112,7 @@ Tests use Minitest. Cucumber features exist for TUI acceptance specs but unit te
 - A test that forks a real child must wait for it (`Process.waitpid`) before its teardown deletes anything the child uses
 - Tests touch only the run's private temp root: `test/support/confinement_guard.rb` points `TMPDIR` at it and fails a test that writes a file, opens a SQLite database or runs git outside it, naming the path (`test/integration/test_confinement_guard.rb`). Build paths from `Dir.mktmpdir`/`Dir.tmpdir`, never from the repo or `$HOME`
 - Only tests under `test/integration/process/` start processes or run git, directly or through the code they call: `test/unit/test_fast_lanes_never_spawn.rb` scans unit and acceptance sources with Prism, and `test/support/spawn_guard.rb` fails any other test that spawns, forks or execs at runtime (`test/integration/process/test_spawn_guard.rb`). That keeps every other test fast enough for the mutation lane
+- The lockfile must install on every Ruby in `.github/workflows/ci.yml` (3.2 to 4.0): the Gemfile pins `parallel < 2` for 3.2 and wraps mutineer in `install_if`, not an `if`, so a frozen bundle accepts one lockfile everywhere. `script/ci-matrix.sh` is how to check
 - The mutation score counts killed / (killed + survived); code that only runs in a forked child shows as no-coverage, not as a pass. `test_hook_script_invocation.rb` is left out of the lane: macOS scans each freshly written executable on first exec, and the Trigger mutants it covers then overran mutineer's 10 s cap
 - Every SQLite connection a test opens must be closed by the end of that test: `test/support/sqlite_connection_guard.rb` fails the test otherwise. A leaked one is inherited by the next fork in the same worker. `Trigger#close` releases the recorder the background launcher swaps in
 
