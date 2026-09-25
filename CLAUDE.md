@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
+bundle exec rake   # The gate: all tests, cucumber, then rubocop
 rake test          # Run all tests (unit + acceptance)
 rake unit          # Run unit tests only
 rake acceptance    # Run acceptance tests only

@@ -3,6 +3,7 @@
 require "bundler/gem_tasks"
 require "rake/testtask"
 require "cucumber/rake/task"
+require "rubocop/rake_task"
 
 Rake::TestTask.new(:test) do |t|
   t.libs << "test"
@@ -39,4 +40,6 @@ namespace :contract do
   end
 end
 
-task default: %i[test cucumber]
+RuboCop::RakeTask.new
+
+task default: %i[test cucumber rubocop]

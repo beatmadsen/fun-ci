@@ -1,0 +1,63 @@
+inherit_from: .rubocop_todo.yml
+
+# Without this, a cop's Exclude below replaces the todo's list for that cop
+# instead of adding to it.
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "pkg/**/*"
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# The limits below are the project's coding standards, so the gate counts them
+# rather than leaving them to be remembered: methods of 7 lines, at most 2 levels
+# of block nesting, at most 4 parameters. Migrations are generated shape, not code
+# written to these standards.
+Metrics/MethodLength:
+  Max: 7
+  CountComments: false
+  Exclude:
+    - "db/migrate/**/*"
+
+# CountBlocks defaults to false, which would let any depth of each/map nesting
+# through and leave the cop checking something narrower than the standard.
+Metrics/BlockNesting:
+  Max: 2
+  CountBlocks: true
+
+Metrics/ParameterLists:
+  Max: 4
+  MaxOptionalParameters: 4
+
+Metrics/BlockLength:
+  Exclude:
+    - "test/**/*"
+    - "*.gemspec"
+    - "Rakefile"
+
+Metrics/AbcSize:
+  Exclude:
+    - "test/**/*"
+    - "db/migrate/**/*"
+
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"
