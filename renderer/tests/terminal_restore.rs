@@ -28,7 +28,7 @@ impl Pty {
     /// A pseudo-terminal whose output a thread reads until the pty closes.
     fn open() -> Self {
         let (mut master, mut slave) = (0, 0);
-        let mut size = libc::winsize { ws_row: 24, ws_col: 80, ws_xpixel: 0, ws_ypixel: 0 };
+        let mut size = libc::winsize { ws_row: 30, ws_col: 100, ws_xpixel: 0, ws_ypixel: 0 };
         let (name, modes) = (std::ptr::null_mut(), std::ptr::null_mut());
         assert_eq!(unsafe { libc::openpty(&raw mut master, &raw mut slave, name, modes, &raw mut size) }, 0);
         let mut master = unsafe { File::from_raw_fd(master) };
@@ -77,25 +77,29 @@ fn ready_renderer(pty: &Pty) -> (Child, ChildStdin) {
     (child, stdin)
 }
 
-fn ended_by(end: impl FnOnce(&mut Child, ChildStdin)) -> Outcome {
+/// Ends the session with `end`. Stdin stays open until the renderer has gone
+/// unless `end` closes it, so a signal is not raced by end of input.
+fn ended_by(end: impl FnOnce(&mut Child, &mut Option<ChildStdin>)) -> Outcome {
     let pty = Pty::open();
     let (mut child, stdin) = ready_renderer(&pty);
     let raw_during = pty.is_raw();
-    end(&mut child, stdin);
+    let mut stdin = Some(stdin);
+    end(&mut child, &mut stdin);
     let status = child.wait().unwrap();
+    drop(stdin);
     let raw_after = pty.is_raw();
     Outcome { raw_during, raw_after, drawn: pty.close(), status }
 }
 
-fn end_of_input(_: &mut Child, stdin: ChildStdin) {
-    drop(stdin);
+fn end_of_input(_: &mut Child, stdin: &mut Option<ChildStdin>) {
+    stdin.take();
 }
 
-fn quit(_: &mut Child, mut stdin: ChildStdin) {
-    stdin.write_all(b"{\"t\":\"quit\"}\n").unwrap();
+fn quit(_: &mut Child, stdin: &mut Option<ChildStdin>) {
+    stdin.as_mut().unwrap().write_all(b"{\"t\":\"quit\"}\n").unwrap();
 }
 
-fn sigterm(child: &mut Child, _stdin: ChildStdin) {
+fn sigterm(child: &mut Child, _: &mut Option<ChildStdin>) {
     unsafe { libc::kill(i32::try_from(child.id()).unwrap(), libc::SIGTERM) };
 }
 
@@ -134,11 +138,19 @@ fn sigterm_exits_with_the_signal_status() {
     assert_eq!(ended_by(sigterm).status.code(), Some(143));
 }
 
-#[test]
-fn ready_reports_the_terminal_size() {
+fn ready() -> serde_json::Value {
     let pty = Pty::open();
     let mut child = renderer(&pty);
     child.stdin.take().unwrap().write_all(b"{\"t\":\"hello\",\"v\":1}\n").unwrap();
-    let ready: serde_json::Value = serde_json::from_slice(&child.wait_with_output().unwrap().stdout).unwrap();
-    assert_eq!(ready["cols"], 80);
+    serde_json::from_slice(&child.wait_with_output().unwrap().stdout).unwrap()
+}
+
+#[test]
+fn ready_reports_the_terminal_width() {
+    assert_eq!(ready()["cols"], 100);
+}
+
+#[test]
+fn ready_reports_the_terminal_height() {
+    assert_eq!(ready()["rows"], 30);
 }

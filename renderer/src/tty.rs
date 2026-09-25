@@ -68,11 +68,21 @@ impl Terminal for Tty {
 /// # Errors
 /// When the terminal refuses the mode change.
 pub fn restore_controlling_terminal() -> io::Result<()> {
-    let Some(mut entered) = lock().take() else {
-        return Ok(());
-    };
-    entered.file.write_all(LEAVE)?;
-    set_modes(&entered.file, &entered.modes)
+    restore_once(&ENTERED, |mut entered| {
+        entered.file.write_all(LEAVE)?;
+        set_modes(&entered.file, &entered.modes)
+    })
+}
+
+/// Takes what `slot` saved and restores it with `restore`, holding the slot
+/// until `restore` returns, so a second caller (the signal thread racing the
+/// main one) cannot see the slot empty and exit mid-restore.
+///
+/// # Errors
+/// Whatever `restore` returns.
+pub fn restore_once<T>(slot: &Mutex<Option<T>>, restore: impl FnOnce(T) -> io::Result<()>) -> io::Result<()> {
+    let mut held = slot.lock().unwrap_or_else(PoisonError::into_inner);
+    held.take().map_or(Ok(()), restore)
 }
 
 fn lock() -> std::sync::MutexGuard<'static, Option<Entered>> {

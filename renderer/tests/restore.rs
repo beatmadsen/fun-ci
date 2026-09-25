@@ -6,8 +6,10 @@ mod support;
 use std::cell::RefCell;
 use std::io::{self, BufRead, Read};
 use std::panic::{AssertUnwindSafe, catch_unwind};
+use std::sync::Mutex;
 
 use fun_ci_renderer::session::{on_terminate, run_session};
+use fun_ci_renderer::tty::restore_once;
 use support::FakeTerminal;
 
 const HELLO: &str = "{\"t\":\"hello\",\"v\":1}\n";
@@ -62,6 +64,31 @@ fn a_panic_mid_session_restores_the_terminal() {
     let reader = PanickingReader(HELLO.as_bytes());
     let outcome = catch_unwind(AssertUnwindSafe(|| run_session(reader, io::sink(), &mut terminal)));
     assert_eq!(outcome.err().map(|_| terminal.calls), Some(vec!["enter", "restore"]));
+}
+
+#[test]
+fn restoring_holds_the_saved_state_until_the_terminal_is_restored() {
+    let saved = Mutex::new(Some("modes"));
+    let mut held_while_restoring = false;
+    restore_once(&saved, |_| {
+        held_while_restoring = saved.try_lock().is_err();
+        Ok(())
+    })
+    .unwrap();
+    assert!(held_while_restoring);
+}
+
+#[test]
+fn the_terminal_is_restored_only_once() {
+    let saved = Mutex::new(Some("modes"));
+    let mut restores = 0;
+    let mut count = |_| {
+        restores += 1;
+        Ok(())
+    };
+    restore_once(&saved, &mut count).unwrap();
+    restore_once(&saved, &mut count).unwrap();
+    assert_eq!(restores, 1);
 }
 
 #[test]
