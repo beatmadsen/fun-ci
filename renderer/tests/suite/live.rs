@@ -69,6 +69,13 @@ fn no_frame_falls_due_before_the_first_board() {
 }
 
 #[test]
+fn frames_keep_coming_at_the_busy_rate_while_a_stage_flashes() {
+    let failed_run = board(&[run(1, "failed", &[("lint", "passed")])]);
+    let inputs = vec![line(&failed_run), line(&event("stage_passed", 1, "lint")), Input::FrameDue];
+    assert_eq!(last_wait(inputs), Some(Duration::from_millis(100)));
+}
+
+#[test]
 fn a_frame_is_drawn_each_time_one_falls_due() {
     assert_eq!(live(vec![line(&idle_board()), Input::FrameDue, Input::FrameDue]).frames.len(), 3);
 }
