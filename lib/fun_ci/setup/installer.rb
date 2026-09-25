@@ -7,14 +7,13 @@ require_relative "maven_linter_detector"
 module FunCi
   module Setup
     class Installer
-      def self.run(project_root:, stdout: $stdout, pom_reader: nil)
-        new(project_root: project_root, stdout: stdout, pom_reader: pom_reader).run
+      def self.run(project_root:, stdout: $stdout)
+        new(project_root: project_root, stdout: stdout).run
       end
 
-      def initialize(project_root:, stdout:, pom_reader: nil)
+      def initialize(project_root:, stdout:)
         @project_root = project_root
         @stdout = stdout
-        @pom_reader = pom_reader || ->(path) { File.read(path) }
       end
 
       def run
@@ -46,9 +45,7 @@ module FunCi
       def detect_maven_linter(detected)
         return nil unless detected == :jvm_maven
 
-        pom_path = File.join(@project_root, "pom.xml")
-        pom_content = @pom_reader.call(pom_path)
-        command = MavenLinterDetector.new(pom_content).lint_command
+        command = MavenLinterDetector.new(File.read(File.join(@project_root, "pom.xml"))).lint_command
         command == MavenLinterDetector::DEFAULT_COMMAND ? nil : command
       end
     end
