@@ -44,6 +44,22 @@ class TestCliCheckSubcommand < Minitest::Test
   end
 end
 
+# The database lives under Dir.tmpdir, which the test run points at its own
+# sandbox.
+class TestCliTriggerSubcommand < Minitest::Test
+  include CliProject
+
+  def test_trigger_lets_the_commit_through_when_the_project_has_no_fun_ci_folder
+    assert_equal 0, run_cli("trigger", "abc1234", "main")
+  end
+
+  def test_trigger_says_the_project_has_no_fun_ci_folder
+    run_cli("trigger", "abc1234", "main")
+
+    assert_match(%r{No \.fun-ci/ folder found}, @stdout.string)
+  end
+end
+
 class TestCliInitEverythingWithoutGit < Minitest::Test
   include CliProject
 
