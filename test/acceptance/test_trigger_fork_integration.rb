@@ -118,9 +118,31 @@ class TestTriggerRunWithDefaultBackgroundLauncher < Minitest::Test
     refute_nil fast_job, "Fast stage should be recorded"
     assert_equal "completed", fast_job[1],
       "Fast stage should be completed after slow suite is spawned"
+
+    # And the forked child records the slow suite it ran
+    refute_nil runs.first[:pid], "The launcher should store the child pid"
+    wait_for_child(runs.first[:pid])
+    slow_status = verify_db.execute(
+      "SELECT status FROM stage_jobs WHERE pipeline_run_id = ? AND stage = 'slow'", [runs.first[:id]]
+    ).dig(0, 0)
+    assert_equal "completed", slow_status, "The background child should record the slow suite"
   ensure
-    verify_db&.close rescue nil
-    FileUtils.remove_entry(db_dir) rescue nil
-    FileUtils.remove_entry(project_dir) rescue nil
+    clean_up(runs, verify_db, [db_dir, project_dir])
+  end
+
+  private
+
+  def clean_up(runs, verify_db, dirs)
+    wait_for_child(runs.first[:pid]) if runs&.first
+    verify_db&.close
+    dirs.compact.each { |dir| FileUtils.rm_rf(dir) }
+  end
+
+  # Process.detach also waits on the child, so whichever waiter loses gets
+  # ECHILD; either way the child has exited when this returns.
+  def wait_for_child(pid)
+    Process.waitpid(pid)
+  rescue Errno::ECHILD
+    nil
   end
 end
