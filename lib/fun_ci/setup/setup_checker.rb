@@ -6,11 +6,11 @@ module FunCi
   module Setup
     class SetupChecker
       def self.run(project_root:, stdout: $stdout)
-        new(project_root: project_root, stdout: stdout).run
+        new(config: ProjectConfig.new(project_root), stdout: stdout).run
       end
 
-      def initialize(project_root:, stdout:)
-        @config = ProjectConfig.new(project_root)
+      def initialize(config:, stdout:)
+        @config = config
         @stdout = stdout
       end
 

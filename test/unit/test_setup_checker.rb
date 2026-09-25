@@ -2,65 +2,37 @@
 
 require_relative "../test_helper"
 require "fun_ci/setup/setup_checker"
-require "tmpdir"
 require "stringio"
 
-class TestSetupCheckerWithIssues < Minitest::Test
-  def test_should_report_missing_fun_ci_folder_to_stdout
-    # Given a project directory without .fun-ci/
-    Dir.mktmpdir("fun-ci-check-test") do |dir|
-      stdout = StringIO.new
+# `fun-ci check`: report what ProjectConfig found wrong, or that all is well.
+class TestSetupChecker < Minitest::Test
+  Config = Struct.new(:validate)
+  PROBLEMS = [".fun-ci/lint.sh is not found", ".fun-ci/fast.sh is not executable"].freeze
 
-      # When we run the checker
-      FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
-
-      # Then stdout should mention the missing .fun-ci folder
-      assert_match(/\.fun-ci/, stdout.string, "Should report missing .fun-ci folder")
-    end
+  def test_should_fail_when_the_project_has_problems
+    assert_equal 1, check(PROBLEMS)
   end
 
-  def test_should_return_one_when_issues_found
-    # Given a project directory without .fun-ci/
-    Dir.mktmpdir("fun-ci-check-test") do |dir|
-      stdout = StringIO.new
+  def test_should_list_each_problem_on_its_own_line
+    check(PROBLEMS)
 
-      # When we run the checker
-      exit_code = FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
-
-      # Then it should return failure exit code
-      assert_equal 1, exit_code, "Should return 1 when issues found"
-    end
-  end
-end
-
-class TestSetupCheckerAllClear < Minitest::Test
-  include FunCiTestProject
-
-  def test_should_return_zero_when_all_clear
-    # Given a fully configured project
-    Dir.mktmpdir("fun-ci-check-test") do |dir|
-      make_project_with_scripts(dir)
-      stdout = StringIO.new
-
-      # When we run the checker
-      exit_code = FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
-
-      # Then it should return success exit code
-      assert_equal 0, exit_code, "Should return 0 when all clear"
-    end
+    assert_equal PROBLEMS, @stdout.string.lines(chomp: true)
   end
 
-  def test_should_report_all_clear_when_no_validation_errors
-    # Given a fully configured project
-    Dir.mktmpdir("fun-ci-check-test") do |dir|
-      make_project_with_scripts(dir)
-      stdout = StringIO.new
+  def test_should_pass_when_the_project_has_no_problems
+    assert_equal 0, check([])
+  end
 
-      # When we run the checker
-      FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
+  def test_should_say_the_project_is_configured_when_it_has_no_problems
+    check([])
 
-      # Then stdout should report a positive status
-      assert_match(/ok|configured|ready/i, stdout.string, "Should report positive status")
-    end
+    assert_equal "All OK. The project is configured.\n", @stdout.string
+  end
+
+  private
+
+  def check(problems)
+    @stdout = StringIO.new
+    FunCi::Setup::SetupChecker.new(config: Config.new(problems), stdout: @stdout).run
   end
 end

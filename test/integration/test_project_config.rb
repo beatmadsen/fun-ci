@@ -4,7 +4,10 @@ require_relative "../test_helper"
 require "fun_ci/setup/project_config"
 require "tmpdir"
 
-module ProjectConfigDir
+# What .fun-ci/ has to hold before fun-ci will run a project's pipeline.
+class TestProjectConfig < Minitest::Test
+  SCRIPTS = %w[lint.sh build.sh fast.sh slow.sh].freeze
+
   def setup
     @dir = Dir.mktmpdir
   end
@@ -13,72 +16,53 @@ module ProjectConfigDir
     FileUtils.remove_entry(@dir)
   end
 
+  def test_should_see_a_fun_ci_folder_that_is_there
+    FileUtils.mkdir_p(fun_ci_dir)
+
+    assert_predicate config, :folder_exists?
+  end
+
+  def test_should_not_see_a_fun_ci_folder_that_is_not_there
+    refute_predicate config, :folder_exists?
+  end
+
+  def test_should_find_nothing_wrong_with_four_executable_scripts
+    write_scripts(*SCRIPTS)
+
+    assert_empty config.validate
+  end
+
+  def test_should_name_each_missing_script
+    write_scripts("build.sh", "lint.sh")
+
+    assert_equal [".fun-ci/fast.sh is not found", ".fun-ci/slow.sh is not found"], config.validate
+  end
+
+  def test_should_name_a_script_that_is_not_executable
+    write_scripts(*SCRIPTS)
+    File.chmod(0o644, File.join(fun_ci_dir, "fast.sh"))
+
+    assert_equal [".fun-ci/fast.sh is not executable"], config.validate
+  end
+
+  def test_should_name_the_project_whose_fun_ci_folder_is_missing
+    assert_equal ["No .fun-ci/ folder found in #{@dir}"], config.validate
+  end
+
+  def test_should_place_each_stage_s_script_in_fun_ci
+    assert_equal File.join(@dir, ".fun-ci", "build.sh"), config.script_path("build")
+  end
+
   private
 
-  def config
-    FunCi::Setup::ProjectConfig.new(@dir)
-  end
+  def config = FunCi::Setup::ProjectConfig.new(@dir)
+  def fun_ci_dir = File.join(@dir, ".fun-ci")
 
-  def fun_ci_dir
-    File.join(@dir, ".fun-ci")
-  end
-
-  def write_executable_scripts(*scripts)
+  def write_scripts(*scripts)
     FileUtils.mkdir_p(fun_ci_dir)
     scripts.each do |script|
-      path = File.join(fun_ci_dir, script)
-      File.write(path, "#!/bin/sh\nexit 0\n")
-      File.chmod(0o755, path)
+      File.write(File.join(fun_ci_dir, script), "#!/bin/sh\nexit 0\n")
+      File.chmod(0o755, File.join(fun_ci_dir, script))
     end
-  end
-end
-
-class TestProjectConfigDetection < Minitest::Test
-  include ProjectConfigDir
-
-  def test_should_detect_fun_ci_folder_when_present
-    FileUtils.mkdir_p(fun_ci_dir)
-    assert config.folder_exists?, "Should detect .fun-ci folder"
-  end
-
-  def test_should_not_detect_fun_ci_folder_when_absent
-    refute config.folder_exists?, "Should not detect missing .fun-ci folder"
-  end
-end
-
-class TestProjectConfigValidation < Minitest::Test
-  include ProjectConfigDir
-
-  ALL_SCRIPTS = %w[lint.sh build.sh fast.sh slow.sh].freeze
-
-  def test_should_validate_when_all_scripts_exist_and_are_executable
-    write_executable_scripts(*ALL_SCRIPTS)
-    assert_empty config.validate, "Should have no errors when all scripts are present and executable"
-  end
-
-  def test_should_report_missing_script
-    write_executable_scripts("build.sh")
-    errors = config.validate
-    assert_includes errors.join(" "), "fast.sh", "Should report missing fast.sh"
-    assert_includes errors.join(" "), "slow.sh", "Should report missing slow.sh"
-  end
-
-  def test_should_report_non_executable_script
-    write_executable_scripts(*ALL_SCRIPTS)
-    File.chmod(0o644, File.join(fun_ci_dir, "fast.sh"))
-    assert_includes config.validate.join(" "), "fast.sh", "Should report non-executable fast.sh"
-  end
-
-  def test_should_report_missing_folder
-    assert config.validate.any? { |e| e.include?(".fun-ci") }, "Should report missing .fun-ci folder"
-  end
-end
-
-class TestProjectConfigScriptPaths < Minitest::Test
-  include ProjectConfigDir
-
-  def test_should_return_script_path
-    assert_equal File.join(@dir, ".fun-ci", "build.sh"), config.script_path("build"),
-                 "Should return full path to build.sh"
   end
 end
