@@ -15,7 +15,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-0.8: The gem ships exactly the tracked runtime files
 - [x] AT-0.9: CLAUDE.md is written as Invariants and Gotchas
 - [x] AT-0.10: Legacy executables are gone
-- [ ] AT-1.1: A pipeline runs in a worktree at the requested commit
+- [x] AT-1.1: A pipeline runs in a worktree at the requested commit
 - [ ] AT-1.2: Uncommitted changes don't leak into a run
 - [ ] AT-1.3: Ignored caches survive between runs in the same slot
 - [ ] AT-1.4: The slot stays taken until the background slow suite finishes

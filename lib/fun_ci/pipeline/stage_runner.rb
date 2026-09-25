@@ -13,10 +13,11 @@ module FunCi
         "slow" => "Pare down integration tests, parallelise, or raise the budget."
       }.freeze
 
-      def initialize(commit_hash:, stdout:, seams: Seams.new)
+      def initialize(commit_hash:, stdout:, seams: Seams.new, dir: Dir.pwd)
         @commit_hash = commit_hash
         @stdout = stdout
         @seams = seams
+        @dir = dir
       end
 
       def passes?(config, stage)
@@ -29,7 +30,7 @@ module FunCi
       private
 
       def execute(config, stage)
-        @seams.executor.call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage])
+        @seams.executor(@dir).call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage])
       end
 
       def outcome(stage, output, status, timed_out)

@@ -98,6 +98,15 @@ class TestDatabaseMigrationFromOlderSchema < Minitest::Test
   end
 end
 
+class TestDatabaseBusyTimeout < Minitest::Test
+  include FreshDatabaseFile
+
+  # Two pipelines write to one database; the second waits up to 5 s.
+  def test_should_wait_for_a_busy_database_instead_of_failing_at_once
+    assert_equal 5000, @db.execute("PRAGMA busy_timeout").first.first
+  end
+end
+
 class TestDatabaseMigrationIdempotency < Minitest::Test
   include FreshDatabaseFile
 

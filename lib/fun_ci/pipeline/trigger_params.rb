@@ -16,19 +16,19 @@ module FunCi
 
     # The collaborators a pipeline run can have replaced. Each one left out
     # gets the real thing.
-    Seams = Data.define(:command_runner, :time_budgets, :commit_validator, :recorder, :background_launcher)
+    Seams = Data.define(:command_runner, :time_budgets, :commit_validator, :recorder, :background_launcher, :workspace)
 
     # Reopened rather than given as a block to Data.define, so tools that read
     # the source (mutineer) see these as Seams' methods.
     class Seams
       def self.defaults
         { command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new, background_launcher: nil,
-          commit_validator: ->(sha) { Open3.capture2e("git", "cat-file", "-t", sha).last.success? } }
+          workspace: nil, commit_validator: ->(sha) { Open3.capture2e("git", "cat-file", "-t", sha).last.success? } }
       end
 
       def initialize(**given) = super(**self.class.defaults.merge(given))
       def budgets = DEFAULT_BUDGETS.merge(time_budgets)
-      def executor = CommandExecutor.new(command_runner)
+      def executor(dir) = CommandExecutor.new(command_runner, dir)
     end
   end
 end

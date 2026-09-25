@@ -49,7 +49,8 @@ module TriggerTestKit
   end
 
   def build_trigger(dir, sha: "abc1234", io: quiet_io, **seams)
-    defaults = { commit_validator: ->(_sha) { true }, background_launcher: noop_launcher }
+    defaults = { commit_validator: ->(_sha) { true }, background_launcher: noop_launcher,
+                 workspace: FunCi::Pipeline::InPlace.new(dir) }
     FunCi::Pipeline::Trigger.new(project: dir, commit: FunCi::Pipeline::Commit.new(sha: sha, branch: "main"),
                                  io: io, seams: FunCi::Pipeline::Seams.new(**defaults, **seams))
   end
@@ -59,6 +60,20 @@ module TriggerTestKit
     io = quiet_io
     exit_code = in_project { |dir| build_trigger(dir, io: io, **options).run }
     Outcome.new(exit_code, io.stdout.string, io.stderr.string)
+  end
+
+  # A workspace whose one slot records whether its lock was let go.
+  class RecordingWorkspace
+    Lock = Struct.new(:closed?) { def close = self[:closed?] = true }
+
+    attr_reader :lock
+
+    def initialize(path)
+      @path = path
+      @lock = Lock.new(false)
+    end
+
+    def acquire(_sha) = FunCi::Pipeline::Slot.new(@path, @lock)
   end
 
   def quiet_io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new)

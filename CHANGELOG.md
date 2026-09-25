@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Every pipeline now runs in a git worktree of its own, checked out at the
+  commit it is testing, under `.git/fun-ci/worktrees/`. Before, the stages ran
+  in your checkout while you kept editing it. The stage scripts come from the
+  commit too, unless it has no `.fun-ci/`, in which case the checkout's are
+  used.
+
 ### Removed
 - The `fun-ci-trigger` and `fun-ci-tui` executables. Use `fun-ci trigger` and
   `fun-ci console`, which have done the same job since 1.0.

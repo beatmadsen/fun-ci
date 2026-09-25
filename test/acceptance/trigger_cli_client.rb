@@ -85,7 +85,8 @@ class TriggerCliClient
   # A temp dir is no git repository, so commits are valid unless a test says otherwise.
   def run_trigger(project_dir, commit, commit_validator = nil)
     io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new)
-    seams = FunCi::Pipeline::Seams.new(**@seams, commit_validator: commit_validator || ->(_sha) { true })
+    seams = FunCi::Pipeline::Seams.new(**@seams, workspace: FunCi::Pipeline::InPlace.new(project_dir),
+                                                 commit_validator: commit_validator || ->(_sha) { true })
     capture(FunCi::Pipeline::Trigger.new(project: project_dir, commit: commit, io: io, seams: seams).run, io)
   end
 

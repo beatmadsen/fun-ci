@@ -11,12 +11,13 @@ module FunCi
     class CommandExecutor
       include ProcessRunner
 
-      def initialize(command_runner)
+      def initialize(command_runner, dir = Dir.pwd)
         @command_runner = command_runner
+        @dir = dir
       end
 
       def call(cmd, budget)
-        return run_process_with_timeout(cmd, budget) unless @command_runner
+        return run_process_with_timeout(cmd, budget, chdir: @dir) unless @command_runner
 
         output, status = @command_runner.call(cmd)
         [output, status, false]

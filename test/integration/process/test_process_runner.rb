@@ -39,7 +39,7 @@ class TestProcessRunner < Minitest::Test
   end
 
   def test_seams_without_a_runner_run_the_command_for_real
-    _, status, = FunCi::Pipeline::Seams.new.executor.call("sh -c 'exit 4'", 30)
+    _, status, = FunCi::Pipeline::Seams.new.executor(Dir.tmpdir).call("sh -c 'exit 4'", 30)
 
     assert_equal 4, status.exitstatus
   end

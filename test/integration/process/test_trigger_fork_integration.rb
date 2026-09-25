@@ -10,6 +10,15 @@ require "fun_ci/persistence/pipeline_run"
 # launcher; these fork like production and wait for the child with
 # Process.waitpid, so nothing polls or sleeps.
 class TestTriggerForkIntegration < Minitest::Test
+  # A slot held through a real flock, as WorktreePool hands them out.
+  LockedWorkspace = Struct.new(:path, :lock_path) do
+    def acquire(_sha)
+      lock = File.new(lock_path, File::RDWR | File::CREAT)
+      lock.flock(File::LOCK_EX)
+      FunCi::Pipeline::Slot.new(path, lock)
+    end
+  end
+
   include FunCiTestProject
   include TriggerTestKit
 
@@ -40,6 +49,14 @@ class TestTriggerForkIntegration < Minitest::Test
     assert_equal("completed", with_db { |db| stage_status(db, "fast") })
   end
 
+  def test_the_slot_is_free_once_the_forked_slow_suite_has_finished
+    lock = File.join(@dir, "slot.lock")
+    run_pipeline(lock: lock)
+    wait_for_child(@pid)
+
+    assert(File.open(lock) { |file| file.flock(File::LOCK_EX | File::LOCK_NB) })
+  end
+
   def test_the_launcher_stores_the_child_pid
     run_pipeline
 
@@ -59,9 +76,9 @@ class TestTriggerForkIntegration < Minitest::Test
 
   private
 
-  def run_pipeline(runner: scripted_runner)
+  def run_pipeline(runner: scripted_runner, lock: nil)
     recorder = FunCi::Persistence::DbRecorder.new(FunCi::Persistence::Database.connection(@db_path))
-    exit_code = in_project { |dir| run_and_close(forking_trigger(dir, recorder, runner)) }
+    exit_code = in_project { |dir| run_and_close(forking_trigger(dir, recorder, runner, lock)) }
     @pid = with_db { |db| FunCi::Persistence::PipelineRun.find_by_commit(db, "abc1234").first[:pid] }
     exit_code
   end
@@ -74,8 +91,10 @@ class TestTriggerForkIntegration < Minitest::Test
   end
 
   # Seams left to their defaults fork the slow suite for real.
-  def forking_trigger(dir, recorder, runner)
-    seams = FunCi::Pipeline::Seams.new(command_runner: runner, recorder: recorder, commit_validator: ->(_) { true })
+  def forking_trigger(dir, recorder, runner, lock)
+    workspace = lock ? LockedWorkspace.new(dir, lock) : FunCi::Pipeline::InPlace.new(dir)
+    seams = FunCi::Pipeline::Seams.new(command_runner: runner, recorder: recorder, commit_validator: ->(_) { true },
+                                       workspace: workspace)
     FunCi::Pipeline::Trigger.new(project: dir, commit: FunCi::Pipeline::Commit.new(sha: "abc1234", branch: "main"),
                                  io: quiet_io, seams: seams)
   end

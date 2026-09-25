@@ -41,11 +41,11 @@ RuboCop::RakeTask.new
 MUTATED = FileList["lib/**/*.rb"].exclude("lib/fun_ci/{tui,animations}/**/*.rb")
 
 # Mutineer runs a mutant's covering tests serially and kills a run that passes
-# ten seconds. The hook script tests write fresh executables, and macOS scans
-# each one on first exec (130-250 ms), so the Trigger mutants they cover blew
-# that cap and reported no verdict; they are left out.
+# ten seconds. End-to-end tests run whole pipelines with real git and freshly
+# written stage scripts, which macOS scans on first exec (130-250 ms each), so
+# the Trigger mutants they cover overran that cap; they are left out.
 MUTATION_TESTS = FileList[TEST_LANES.fetch("test")].exclude("test/test_helper.rb",
-                                                            "test/integration/process/test_hook_script_invocation.rb")
+                                                            "test/integration/process/end_to_end/**/*")
 
 def mutineer(*extra)
   tests = MUTATION_TESTS.flat_map { |file| ["--test", file] }

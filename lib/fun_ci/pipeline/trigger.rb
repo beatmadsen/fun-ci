@@ -4,10 +4,10 @@ require_relative "../setup/project_config"
 require_relative "../persistence/pipeline_recorder"
 require_relative "trigger_params"
 require_relative "trigger_command"
-require_relative "background_fork"
-require_relative "stage_runner"
+require_relative "slot_run"
 require_relative "stale_pipeline_canceller"
-require_relative "progress_reporter"
+require_relative "worktree_pool"
+require_relative "in_place"
 
 module FunCi
   module Pipeline
@@ -31,7 +31,7 @@ module FunCi
         return unknown_commit unless known_commit?
 
         start_run
-        run_stages(config)
+        run_in(workspace.acquire(@commit.sha))
       end
 
       # The background launcher swaps in a fresh recorder after forking, so
@@ -43,9 +43,21 @@ module FunCi
       private
 
       def recorder = @seams.recorder
-      def stage_runner = StageRunner.new(commit_hash: @commit.sha, stdout: @io.stdout, seams: @seams)
-      def progress = ProgressReporter.new(stdout: @io.stdout)
       def known_commit? = @commit.sha == NULL_SHA || @seams.commit_validator.call(@commit.sha)
+
+      def workspace
+        return @seams.workspace if @seams.workspace
+        return InPlace.new(@project) if @commit.sha == NULL_SHA
+
+        WorktreePool.new(Worktrees.new(@project))
+      end
+
+      # The scripts come from the commit when it has them, so they match the
+      # code they test; a project that keeps .fun-ci/ out of git uses its own.
+      def config_for(slot)
+        committed = Setup::ProjectConfig.new(slot.path)
+        committed.folder_exists? ? committed : Setup::ProjectConfig.new(@project)
+      end
 
       def handle_config_errors(config)
         config.validate.each { |e| @io.stdout.puts "fun-ci: #{e}" }
@@ -66,44 +78,10 @@ module FunCi
         recorder.create_run(commit_hash: @commit.sha, branch: @commit.branch, project_path: @project)
       end
 
-      def run_stages(config)
-        return fail_run unless phase_one_passed?(config)
-
-        launch_slow_suite(config)
-        progress.slow_launched
-        fast_passed?(config) ? 0 : fail_run
-      end
-
-      def phase_one_passed?(config)
-        results = %w[lint build].to_h { |stage| [stage, Thread.new { stage_runner.passes?(config, stage) }] }
-                                .transform_values(&:value)
-        progress.phase_one_result(results)
-        results.values.all?
-      end
-
-      def fast_passed?(config)
-        passed = stage_runner.passes?(config, "fast")
-        progress.fast_result(passed)
-        passed
-      end
-
-      def fail_run
-        recorder.fail_run
-        1
-      end
-
-      def launch_slow_suite(config)
-        cmd = "#{config.script_path("slow")} #{@commit.sha}"
-        executor = @seams.executor
-        budget = @seams.budgets["slow"]
-        launch(db_path: recorder.db_path, pipeline_run_id: recorder.pipeline_run_id,
-               job_id: recorder.start_stage("slow"), executor: -> { executor.call(cmd, budget) })
-      end
-
-      def launch(**)
-        return @seams.background_launcher.call(**) if @seams.background_launcher
-
-        @seams = @seams.with(recorder: BackgroundFork.new(recorder).launch(**))
+      # After forking the slow suite the run holds a recorder of its own.
+      def run_in(slot)
+        slot_run = SlotRun.new(commit: @commit, io: @io, seams: @seams, slot: slot)
+        slot_run.run(config_for(slot)).tap { @seams = slot_run.seams }
       end
 
       def cancel_stale_pipelines
