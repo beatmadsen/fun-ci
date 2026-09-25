@@ -1,11 +1,3 @@
-inherit_from: .rubocop_todo.yml
-
-# Without this, a cop's Exclude below replaces the todo's list for that cop
-# instead of adding to it.
-inherit_mode:
-  merge:
-    - Exclude
-
 AllCops:
   TargetRubyVersion: 3.2
   NewCops: enable

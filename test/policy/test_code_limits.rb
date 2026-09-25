@@ -7,11 +7,9 @@ require_relative "../support/instance_variable_count"
 # 150 lines per file and 4 instance variables per class.
 class TestCodeLimits < Minitest::Test
   ROOT = File.expand_path("../..", __dir__)
-  # §3.6 turns these into JSON and §5 deletes them.
-  ANIMATION_DATA = %r{\Alib/fun_ci/animations/}
 
   def test_no_ruby_file_is_longer_than_150_lines
-    long = ruby_files.grep_v(ANIMATION_DATA).select { |path| File.foreach(File.join(ROOT, path)).count > 150 }
+    long = ruby_files.select { |path| File.foreach(File.join(ROOT, path)).count > 150 }
 
     assert_empty long
   end

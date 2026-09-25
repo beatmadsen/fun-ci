@@ -36,18 +36,6 @@ class TestStreakCounter < Minitest::Test
     assert_nil streak, "Empty list means no completed runs, so nil"
   end
 
-  def test_should_format_streak_text_for_passing
-    assert_equal "7 in a row!", FunCi::Console::StreakCounter.format_text(7)
-  end
-
-  def test_should_format_streak_broken_for_zero
-    assert_equal "Streak broken", FunCi::Console::StreakCounter.format_text(0)
-  end
-
-  def test_should_return_nil_text_when_no_completed_runs
-    assert_nil FunCi::Console::StreakCounter.format_text(nil), "No text when no completed runs exist"
-  end
-
   def test_should_count_returns_nil_when_no_terminal_runs
     assert_nil streak("running", "scheduled"), "Should return nil when no terminal runs exist"
   end

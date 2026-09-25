@@ -36,7 +36,7 @@ ruby -Itest -Ilib test/unit/test_stage_runner.rb -n test_method # One test metho
 
 ```bash
 cargo insta review --manifest-path renderer/Cargo.toml   # Accept or reject a deliberate change to what the TUI draws (its snapshots)
-rake mutation           # Mutineer over lib/ except tui/ and animations/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
+rake mutation           # Mutineer over lib/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
 rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
 ruby script/platform_gem.rb arm64-darwin renderer/target/release/fun-ci-renderer pkg   # A platform gem with that renderer in libexec/
 script/smoke-platform-gem.sh pkg/<gem> [none]   # Install a gem into an empty GEM_HOME and run it; `none` for the plain gem
@@ -45,7 +45,6 @@ rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable 
 rake "mutation:rust:shard[k,n]"   # Shard k of n of those mutants, unjudged; CI runs six side by side
 rake "mutation:rust:score[n]"     # Judge the n shards' outcomes together; fails if any shard's outcomes are missing
 cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 --scenario contract/scenarios/running.jsonl --out "$(mktemp -d)"   # PNG frames, sheet, cast, stats
-ruby renderer/tools/convert_animations.rb   # Rewrite renderer/animations/*.json from lib/fun_ci/animations/ (test/policy/test_animation_json_drift.rb fails on drift)
 ```
 
 ### CLI
@@ -79,7 +78,6 @@ Fun-CI is an opinionated, local-first CI for a project's own machine: a four-sta
 - `lib/fun_ci/persistence/` -- `Database` (connection and migration), `PipelineRun` and `StageJob` (row access), `DbRecorder`/`NullRecorder` (what a pipeline records).
 - `lib/fun_ci/setup/` -- `init`, `install-hooks`, `check`: `Installer`, `ProjectDetector`, `TemplateWriter`, `HookWriter`, `SetupChecker`, `ProjectConfig`.
 - `lib/fun_ci/console/` -- the 2.0 console's Ruby half, which decides what is true. `fun-ci console` runs `Launcher`, which starts the renderer and runs a `ConsoleLoop` (renderer lines to the session, a poll after each quiet second): `ConsoleSession` answers the renderer's lines with protocol messages through a port (`RendererProcess` for the real binary, found by `RendererLookup`); `ConsoleState` builds each `board` from `BoardData` (SQLite reads, paging), the `View` (a `KeyHandler`'s cursor and one page of runs) and `StageEvents` (`StageChangeDetector`'s changes as `event`s); `ConsoleLog` takes what the renderer gets wrong.
-- `lib/fun_ci/tui/`, `lib/fun_ci/animations/` -- the 1.x console, the renderer 2.0 replaces: `AdminTui`, `BoardRenderer`, `Screen`, animation players and data. It uses `console/`'s `BoardData`, `KeyHandler`, `StageChangeDetector` and `StreakCounter`.
 - `contract/` -- renderer scenarios, contract fixtures, the binary lane (`binary/`) and, until 5.3b, the tool that converts the Ruby animations to JSON (`capture/`). `docs/v2/` -- the 2.0 architecture, renderer protocol and backlog (`acceptance-tests.md`, worked in the order of `ralph/build/progress.md`). `ralph/` -- the agent build loop (`docs/v2/agentic-pipeline.md`).
 - `test/unit/` (one class, in memory), `test/acceptance/` (a user-facing command or flow), `test/integration/` (SQLite, filesystem), `test/policy/` (checks on the repository itself: lanes, limits, CLAUDE.md, CI), `test/integration/process/` (real processes and git), `test/integration/process/end_to_end/` (whole pipelines with real git and stage scripts; slow, and left out of the mutation lane), `test/support/` (guards, scanners, test kits).
 
@@ -87,14 +85,13 @@ Seams tests use in place of the real thing:
 - `Trigger.new(project:, commit:, io:, seams:)` and `StageRunner.new(commit_hash:, stdout:, seams:)` take a `Pipeline::Seams` (`lib/fun_ci/pipeline/trigger_params.rb`): `command_runner` (stage processes), `background_launcher` (`nil` is the real fork), `commit_validator` (`git cat-file`), `recorder`, `time_budgets`, `workspace` (`nil` is the worktree pool; `InPlace` runs in the project directory itself). Each left out gets the real thing; `test/support/trigger_test_kit.rb` builds one the way tests need it.
 - `pipeline_forker` on `Trigger.run_from_args` (the `--background` fork), `handlers` and `db_dir` on `Cli.run`, `open:` on `Database.connection`.
 - `FUN_CI_RENDERER` names the renderer `fun-ci console` starts; process tests point it at a shell script (`test/support/fake_renderers.rb`).
-- `width_provider` and `terminal_input` on `AdminTui`.
 - `FakeRecorder` in `test/test_helper.rb` captures recorder calls without SQLite.
 
 ## Invariants
 
 - The gate runs exactly the lanes listed under Lanes, and every rake task the docs mention is a lane, a subset of `rake test`, or a tool: `test/policy/test_gate_lanes.rb`.
-- Methods of at most 7 lines, block nesting of at most 2, at most 4 parameters (keywords count): RuboCop in the gate. `.rubocop_todo.yml` only excludes files, and only under `lib/fun_ci/tui/` and `lib/fun_ci/animations/`: `test/policy/test_rubocop_todo.rb`. Fix an offence; never add an exclusion.
-- No Ruby file longer than 150 lines (the animation data modules aside until §3.6), no class or module with more than 4 instance variables: `test/policy/test_code_limits.rb`.
+- Methods of at most 7 lines, block nesting of at most 2, at most 4 parameters (keywords count): RuboCop in the gate, with no file excluded and no todo to inherit exclusions from: `test/policy/test_rubocop_todo.rb`. Fix an offence; never add an exclusion.
+- No Ruby file longer than 150 lines, no class or module with more than 4 instance variables: `test/policy/test_code_limits.rb`.
 - Tests wait on nothing real and reach state through public interfaces: no `sleep`, `Thread.pass`, `Timeout.timeout` or `instance_variable_get/set` in `test/`: `test/policy/test_tests_are_deterministic.rb`. Background work is injected and driven by the test, not spawned and polled; if a test can't get at something through the public API, add a seam.
 - A test run writes nothing to stderr (a dying thread or a forked child's exception is an error no test asserted on); capture expected output with `assert_output`/`capture_io`: `test/integration/process/test_stray_stderr_guard.rb`.
 - Every SQLite connection a test opens is closed by the end of that test, since a leaked one is inherited by the next fork in the same worker: `test/integration/process/test_sqlite_connection_guard.rb`.
@@ -112,11 +109,11 @@ Seams tests use in place of the real thing:
 
 ## Gotchas
 
-- The TUI runs in raw terminal mode, where `\n` alone does not return the carriage: write `\r\n` (`Screen#println` does).
+- The renderer runs the terminal in raw mode, where `\n` alone does not return the carriage: write `\r\n` (`Screen::println` in `renderer/src/screen.rs` does).
 - The renderer's integration tests are one binary, `renderer/tests/suite/`: add a module to `main.rs`, not a new `tests/*.rs` file, because `rake mutation:rust` relinks and launches every test binary once per mutant. Tests find the scenarios and fixtures through `support::contract_dir()` (`FUN_CI_CONTRACT`, which the lane sets, since cargo-mutants copies only `renderer/`). Real-process terminal tests use `support::pty`, which makes pty fds close-on-exec and takes turns at `openpty`/`ttyname_r`: on macOS both go through shared state and fail under parallel tests otherwise.
 - A renderer test that needs SIGWINCH makes the pty the child's controlling terminal (`setsid` and `TIOCSCTTY` before exec, `renderer/tests/suite/live_binary.rs`). When that child exits, macOS revokes every handle open on the pty, so `Pty::is_raw` reads the modes through a fresh one.
 - A mutant that turns a loop's exit test to `true` makes it run until the mutant times out, and `rake mutation:rust` runs several mutants at once, each with several tests. So a fake that records every call (a `Vec` it pushes to) must fail a caller that reads on past its end, as the live `Script` does, or that mutant fills memory (about 150 MB/s per test) and takes the machine down. The same goes for production code: a loop that ends only when a callee makes progress is bounded by the input's size (`keys::decode`), or a mutant that stops the progress fills memory from inside the code under test. Likewise every wait on a child process has a deadline (`support::renderer`, and `ProcessDeadline` on the Ruby side), or a mutant hangs the test until the tool's timeout and the child outlives it.
-- `vt100` treats bold and dim as one intensity (SGR 1 clears dim, SGR 2 clears bold), so `contract/capture/sgr_style.rb` folds escapes the same way when it converts the animations to JSON, or the Rust renderer's grids differ from the golden ones.
+- `vt100` treats bold and dim as one intensity (SGR 1 clears dim, SGR 2 clears bold), so a test reading a cell through the emulator sees at most one of them.
 - A test that forks a real child waits for it (`Process.waitpid`, or joins its `Process.detach` waiter) before teardown deletes anything the child uses. A forked child also holds its own copy of every pipe end: close the write end in the child before reading to EOF, or the read never ends.
 - After the slow suite forks, `Trigger` holds a fresh recorder, because a child must not inherit an open SQLite connection. Release it with `Trigger#close`, not with the recorder you passed in.
 - The lockfile has to install on every Ruby in `.github/workflows/ci.yml`: the Gemfile pins `parallel < 2` (2.x needs Ruby 3.3) and wraps mutineer in `install_if`, not `if RUBY_VERSION`, which a frozen bundle rejects. Check with `script/ci-matrix.sh`.

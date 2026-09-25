@@ -14,13 +14,6 @@ module FunCi
 
         finished.take_while { |run| run[:status] == PASS_STATUS }.size
       end
-
-      def self.format_text(streak)
-        return nil if streak.nil?
-        return "Streak broken" if streak.zero?
-
-        "#{streak} in a row!"
-      end
     end
   end
 end

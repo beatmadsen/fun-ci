@@ -1,7 +1,6 @@
 //! How one run's row looks: its words, and the colours and attributes a
-//! terminal shows them in (what `features/admin_tui/color_coding.feature`,
-//! `status_board.feature` and `running_pipeline.feature` asked of the 1.x
-//! console).
+//! terminal shows them in, as the 1.x console's Cucumber features specified
+//! them.
 
 use fun_ci_renderer::grid::{Colour, Emulator, Grid};
 use fun_ci_renderer::model::Run;

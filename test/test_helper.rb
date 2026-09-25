@@ -115,5 +115,3 @@ module PipelineTestHelpers
     job_id
   end
 end
-
-require_relative "support/animation_renderer_test_helpers"

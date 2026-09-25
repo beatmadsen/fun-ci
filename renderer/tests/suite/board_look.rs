@@ -1,7 +1,5 @@
-//! How the board shows the cursor, the footer and the spinner (what
-//! `features/admin_tui/navigation.feature`, `empty_state.feature`,
-//! `color_coding.feature` and `running_pipeline.feature` asked of the 1.x
-//! console).
+//! How the board shows the cursor, the footer and the spinner, as the 1.x
+//! console's Cucumber features specified them.
 
 use fun_ci_renderer::grid::Grid;
 use serde_json::{Value, json};

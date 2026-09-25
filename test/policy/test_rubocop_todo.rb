@@ -3,27 +3,16 @@
 require_relative "../test_helper"
 require "yaml"
 
-# AT-0.1: offences are fixed, not excluded. The todo may only hold code that
-# §3.6 and §5 delete.
+# AT-0.1: offences are fixed, not excluded. The todo that held the Ruby
+# renderer's code went with it (AT-5.3b); nothing may bring one back.
 class TestRubocopTodo < Minitest::Test
-  TODO = File.expand_path("../../.rubocop_todo.yml", __dir__)
-  DELETED_IN_V2 = %r{\Alib/fun_ci/(tui|animations)/}
+  ROOT = File.expand_path("../..", __dir__)
 
-  def test_the_todo_names_only_code_v2_deletes
-    stray = todo.values.flat_map { |cop| cop.fetch("Exclude", []) }.uniq.grep_v(DELETED_IN_V2)
-
-    assert_empty stray
+  def test_should_have_no_todo_file
+    refute_path_exists File.join(ROOT, ".rubocop_todo.yml")
   end
 
-  def test_the_todo_only_excludes_files_and_never_loosens_a_setting
-    loosened = todo.reject { |_cop, settings| settings.keys == ["Exclude"] }.keys
-
-    assert_empty loosened
-  end
-
-  private
-
-  def todo
-    YAML.safe_load_file(TODO)
+  def test_should_inherit_no_exclusions_from_another_file
+    assert_nil YAML.safe_load_file(File.join(ROOT, ".rubocop.yml"))["inherit_from"]
   end
 end
