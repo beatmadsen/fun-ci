@@ -44,7 +44,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-3.9: cargo-mutants lane ≥ 90 % caught
 - [x] AT-4.1: Renderer lookup
 - [x] AT-4.2: Platform gems for the five targets built in CI
-- [ ] AT-4.3: `cargo install fun-ci-renderer` path documented and tested in CI
+- [x] AT-4.3: `cargo install fun-ci-renderer` path documented and tested in CI
 - [ ] AT-5.1: `fun-ci console` uses the Rust renderer
 - [ ] AT-5.2: Golden byte files become Rust `insta` snapshots
 - [ ] AT-5.3: Cucumber TUI features are rewritten against headless frames or deleted where the Rust suite covers them
