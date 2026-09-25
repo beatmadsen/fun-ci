@@ -9,13 +9,8 @@ require "fun_ci/tui/ansi"
 require "tmpdir"
 require "stringio"
 
-# Acceptance test for Feature 2: TUI pagination.
-#
-# When the database contains many pipeline runs, the TUI should show
-# only a page at a time. Scrolling to the bottom loads the next page.
-#
-# ATDD outer loop: this test stays RED until pagination is implemented.
-
+# With many pipeline runs the TUI shows one page at a time; scrolling past the
+# bottom loads the next page.
 class TestTuiPagination < Minitest::Test
   include DatabaseTestSetup
   include PipelineTestHelpers
@@ -32,36 +27,20 @@ class TestTuiPagination < Minitest::Test
   end
 
   def test_should_show_only_first_page_initially
-    # Given 15 pipeline runs and a page size of 5
     create_numbered_runs(15)
-    tui = make_tui
-
-    # When the TUI renders
-    tui.render_once
-
-    # Then only 5 commit rows should be visible
-    visible = FunCi::Tui::Ansi.strip(@output.string)
-    commit_rows = visible.lines.select { |l| l.match?(/run\d+/) }
-    assert_equal PAGE_SIZE, commit_rows.size,
-      "Should show only #{PAGE_SIZE} rows initially, got #{commit_rows.size}"
+    make_tui.render_once
+    rows = visible_commit_rows
+    assert_equal PAGE_SIZE, rows, "Should show only #{PAGE_SIZE} rows initially, got #{rows}"
   end
 
   def test_should_load_more_when_scrolling_past_bottom
-    # Given 15 pipeline runs and a page size of 5
     create_numbered_runs(15)
     tui = make_tui
-
-    # When user scrolls to the bottom and then presses j once more
     PAGE_SIZE.times { tui.handle_key("j") }
-    @output.truncate(0)
-    @output.rewind
+    @output.string = +""
     tui.render_once
-
-    # Then more rows should be visible (second page loaded)
-    visible = FunCi::Tui::Ansi.strip(@output.string)
-    commit_rows = visible.lines.select { |l| l.match?(/run\d+/) }
-    assert_operator commit_rows.size, :>, PAGE_SIZE,
-      "Should show more than #{PAGE_SIZE} rows after scrolling past bottom"
+    assert_operator visible_commit_rows, :>, PAGE_SIZE,
+                    "Should show more than #{PAGE_SIZE} rows after scrolling past bottom"
   end
 
   private
@@ -73,10 +52,11 @@ class TestTuiPagination < Minitest::Test
     )
   end
 
+  def visible_commit_rows
+    FunCi::Tui::Ansi.strip(@output.string).lines.grep(/run\d+/).size
+  end
+
   def create_numbered_runs(count)
-    count.times do |i|
-      commit = "run#{format("%02d", i + 1)}"
-      create_completed_run(commit, "main")
-    end
+    count.times { |i| create_completed_run("run#{format("%02d", i + 1)}", "main") }
   end
 end

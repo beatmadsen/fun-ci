@@ -35,42 +35,32 @@ end
 
 class TestCliRouting < Minitest::Test
   def test_routes_trigger_subcommand
-    routed = nil
-    handlers = { "trigger" => ->(args) { routed = [:trigger, args]; 0 } }
-    exit_code = FunCi::Cli.run(["trigger", "abc123", "main"], handlers: handlers)
-    assert_equal [:trigger, ["abc123", "main"]], routed
+    routed, exit_code = route(%w[trigger abc123 main], "trigger")
+    assert_equal %w[abc123 main], routed
     assert_equal 0, exit_code
   end
 
   def test_routes_console_subcommand
-    routed = nil
-    handlers = { "console" => ->(args) { routed = [:console, args]; 0 } }
-    exit_code = FunCi::Cli.run(["console"], handlers: handlers)
-    assert_equal [:console, []], routed
+    routed, exit_code = route(["console"], "console")
+    assert_equal [], routed
     assert_equal 0, exit_code
   end
 
   def test_routes_init_subcommand
-    routed = nil
-    handlers = { "init" => ->(args) { routed = [:init, args]; 0 } }
-    exit_code = FunCi::Cli.run(["init"], handlers: handlers)
-    assert_equal [:init, []], routed
+    routed, exit_code = route(["init"], "init")
+    assert_equal [], routed
     assert_equal 0, exit_code
   end
 
   def test_routes_install_hooks_subcommand
-    routed = nil
-    handlers = { "install-hooks" => ->(args) { routed = [:install_hooks, args]; 0 } }
-    exit_code = FunCi::Cli.run(["install-hooks", "pre-push"], handlers: handlers)
-    assert_equal [:install_hooks, ["pre-push"]], routed
+    routed, exit_code = route(%w[install-hooks pre-push], "install-hooks")
+    assert_equal ["pre-push"], routed
     assert_equal 0, exit_code
   end
 
   def test_routes_check_subcommand
-    routed = nil
-    handlers = { "check" => ->(args) { routed = [:check, args]; 0 } }
-    exit_code = FunCi::Cli.run(["check"], handlers: handlers)
-    assert_equal [:check, []], routed
+    routed, exit_code = route(["check"], "check")
+    assert_equal [], routed
     assert_equal 0, exit_code
   end
 
@@ -78,6 +68,19 @@ class TestCliRouting < Minitest::Test
     handlers = { "check" => ->(_args) { 1 } }
     exit_code = FunCi::Cli.run(["check"], handlers: handlers)
     assert_equal 1, exit_code
+  end
+
+  private
+
+  # Returns the args the handler for +command+ received (nil if never called) and the exit code.
+  def route(argv, command)
+    routed = nil
+    handler = lambda { |args|
+      routed = args
+      0
+    }
+    exit_code = FunCi::Cli.run(argv, handlers: { command => handler })
+    [routed, exit_code]
   end
 end
 

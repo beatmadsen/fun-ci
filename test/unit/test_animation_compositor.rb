@@ -73,46 +73,46 @@ class TestAnimationCompositorFooterOverlay < Minitest::Test
 end
 
 class TestAnimationCompositorStageOverlay < Minitest::Test
-  def test_stage_pass_flash_uses_bold_yellow_on_frame_0
+  def test_stage_pass_flash_uses_bold_yellow_on_first_frame
     anim = FunCi::Tui::Animation.new(type: :stage_pass, run_id: 1, stage: "lint")
     overlay = FunCi::Tui::AnimationCompositor.stage_column_overlay(anim, "\e[32mLint 0.1s\e[0m", 0)
     assert_match(/\e\[1;33m/, overlay, "Frame 0 should use bold yellow")
     assert_match(/Lint 0\.1s/, overlay)
   end
 
-  def test_stage_pass_flash_uses_bold_green_on_frame_1
+  def test_stage_pass_flash_uses_bold_green_on_second_frame
     anim = FunCi::Tui::Animation.new(type: :stage_pass, run_id: 1, stage: "lint")
     anim.advance!
     overlay = FunCi::Tui::AnimationCompositor.stage_column_overlay(anim, "\e[32mLint 0.1s\e[0m", 0)
     assert_match(/\e\[1;32m/, overlay, "Frame 1 should use bold green")
   end
 
-  def test_stage_pass_flash_uses_green_on_frame_2
+  def test_stage_pass_flash_uses_green_on_third_frame
     anim = FunCi::Tui::Animation.new(type: :stage_pass, run_id: 1, stage: "lint")
     2.times { anim.advance! }
     overlay = FunCi::Tui::AnimationCompositor.stage_column_overlay(anim, "\e[32mLint 0.1s\e[0m", 0)
     assert_match(/\e\[32m/, overlay, "Frame 2 should use normal green")
   end
 
-  def test_failure_flanks_contain_particles_on_frame_0
+  def test_failure_flanks_contain_particles_on_first_frame
     anim = FunCi::Tui::Animation.new(type: :failure, run_id: 1, stage: "fast")
     overlay = FunCi::Tui::AnimationCompositor.stage_column_overlay(anim, "\e[1;31mFast FAIL 6.2s\e[0m", 0)
     assert_match(/\*.*Fast FAIL 6\.2s.*\*/, FunCi::Tui::Ansi.strip(overlay))
   end
 
-  def test_timeout_uses_bold_yellow_on_frame_0
+  def test_timeout_uses_bold_yellow_on_first_frame
     anim = FunCi::Tui::Animation.new(type: :timeout, run_id: 1, stage: "fast")
     overlay = FunCi::Tui::AnimationCompositor.stage_column_overlay(anim, "Fast TIMEOUT 10s", 0)
     assert_match(/\e\[1;33m/, overlay)
   end
 
-  def test_success_sparkle_sweep_on_lint_at_frame_0
+  def test_success_sparkle_sweep_on_lint_at_first_frame
     anim = FunCi::Tui::Animation.new(type: :success, run_id: 1, stage: "lint")
     overlay = FunCi::Tui::AnimationCompositor.stage_column_overlay(anim, "\e[32mLint 0.1s\e[0m", 0)
     assert_match(/\e\[1;33m/, overlay, "Should have gold sparkle")
   end
 
-  def test_success_sparkle_sweep_on_build_returns_nil_at_frame_0
+  def test_success_sparkle_sweep_on_build_returns_nil_at_first_frame
     anim = FunCi::Tui::Animation.new(type: :success, run_id: 1, stage: "build")
     overlay = FunCi::Tui::AnimationCompositor.stage_column_overlay(anim, "\e[32mBuild 0.3s\e[0m", 0)
     assert_nil overlay

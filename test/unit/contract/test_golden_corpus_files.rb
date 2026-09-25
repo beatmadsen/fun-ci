@@ -24,7 +24,7 @@ class TestGoldenCorpusFiles < Minitest::Test
   def test_messages_are_the_scenario_lines_parsed_as_json
     write_scenario("s", %({"t":"resize","cols":60,"rows":20}\n{"t":"tick","ms":100}\n))
 
-    assert_equal %w[resize tick], @corpus.messages("s").map { |m| m["t"] }
+    assert_equal(%w[resize tick], @corpus.messages("s").map { |m| m["t"] })
   end
 
   def test_written_frames_read_back_byte_for_byte_in_order

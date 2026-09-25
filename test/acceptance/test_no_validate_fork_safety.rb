@@ -6,47 +6,36 @@ require "fun_ci/persistence/database"
 require "fun_ci/persistence/pipeline_recorder"
 require "tmpdir"
 
-# Acceptance test for the --no-validate fork safety contract.
-#
-# Verifies that the parent's DB connection is closed BEFORE the forker
-# is called, preventing SQLite fork safety warnings when PipelineForker
-# forks the process.
-#
-# Uses a spy forker that records whether the DB was closed at call time.
-# Deterministic — no real fork, no timing, no STDERR capture.
-
+# The --no-validate path must close the parent's DB connection BEFORE calling
+# the forker, or SQLite warns about fork safety when PipelineForker forks.
+# A spy forker records whether the DB was closed at call time: no real fork.
 class TestNoValidateForkSafety < Minitest::Test
-  def test_should_close_db_before_calling_forker
-    # Given: a real DB connection (as Cli#run_trigger creates)
-    dir = Dir.mktmpdir("fun-ci-fork-safety")
-    db_path = File.join(dir, "test.sqlite3")
-    db = FunCi::Persistence::Database.connection(db_path)
+  def setup
+    @dir = Dir.mktmpdir("fun-ci-fork-safety")
+    db = FunCi::Persistence::Database.connection(File.join(@dir, "test.sqlite3"))
     FunCi::Persistence::Database.migrate!(db)
-    recorder = FunCi::Persistence::DbRecorder.new(db)
+    @recorder = FunCi::Persistence::DbRecorder.new(db)
+  end
 
-    # A spy forker that records whether the parent DB was closed
+  def teardown
+    @recorder.db.close unless @recorder.db.closed?
+    FileUtils.remove_entry(@dir)
+  end
+
+  def test_should_close_db_before_calling_forker
     db_was_closed_before_fork = nil
-    spy_forker = ->(commit_hash:, branch:, db_path:) {
-      db_was_closed_before_fork = recorder.db.closed?
-    }
-
-    # When: run_from_args with --no-validate
-    exit_code = FunCi::Pipeline::Trigger.run_from_args(
-      ["--no-validate", "abc1234", "main"],
-      stdout: StringIO.new,
-      stderr: StringIO.new,
-      recorder: recorder,
-      pipeline_forker: spy_forker
-    )
-
-    # Then: exit code should be 0
+    exit_code = trigger_no_validate(->(**) { db_was_closed_before_fork = @recorder.db.closed? })
     assert_equal 0, exit_code
-
-    # And: the DB must have been closed before the forker was called
     assert db_was_closed_before_fork,
-      "Parent DB should be closed before calling the forker to prevent SQLite fork safety warnings"
-  ensure
-    db&.close rescue nil
-    FileUtils.remove_entry(dir) rescue nil
+           "Parent DB should be closed before calling the forker to prevent SQLite fork safety warnings"
+  end
+
+  private
+
+  def trigger_no_validate(forker)
+    FunCi::Pipeline::Trigger.run_from_args(
+      ["--no-validate", "abc1234", "main"],
+      stdout: StringIO.new, stderr: StringIO.new, recorder: @recorder, pipeline_forker: forker
+    )
   end
 end
