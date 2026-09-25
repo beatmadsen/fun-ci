@@ -96,6 +96,7 @@ Tests use Minitest. Cucumber features exist for TUI acceptance specs but unit te
 - `background_launcher` lambda on `Trigger` -- controls sync vs async slow suite launch
 - `pipeline_forker` callable on `Trigger.run_from_args` -- replaces real fork in `--no-validate` path
 - `width_provider` lambda on `AdminTui` -- replaces real terminal width detection
+- `terminal_input` on `AdminTui` -- replaces the keyboard, so the cucumber lane drives `AdminTui#run` in a fiber (`features/support/run_loop.rb`) and reads the refresh interval it waits on
 - `commit_validator` lambda on `Trigger` -- replaces real `git cat-file` calls
 - `handlers` hash on `Cli` -- overrides subcommand dispatch for testing
 - `FakeRecorder` in `test_helper.rb` -- captures recorder calls without touching SQLite

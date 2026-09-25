@@ -19,12 +19,12 @@ Feature: Cancel pipeline runs
     And the cursor is on that running row
     When I press "c"
     Then a confirmation prompt should appear
-    And the prompt should show "Cancel feat/search (d4e5f67)? y / n"
+    And the prompt should show "Cancel running pipeline? y/n"
 
   Scenario: Confirming cancellation of a running job
     Given a confirmation prompt is showing for commit "d4e5f67" on branch "feat/search"
     When I press "y"
-    Then the running pipeline process should be killed
+    Then the running pipeline should be recorded as cancelled
     And the row should update to show status "CANCELLED"
     And the confirmation prompt should disappear
 

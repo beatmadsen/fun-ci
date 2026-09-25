@@ -27,15 +27,15 @@ Feature: Running pipeline display
     And the fast suite should show "Fast 2.4s" in green without a spinner
     And the slow suite should show a spinner with elapsed time in cyan
 
-  Scenario: Running row has a subtle highlight
+  Scenario: Running row has no background highlight
     Given a pipeline run currently in the slow suite stage
     When I open the admin TUI
-    Then the running row should have a faint background highlight
+    Then the running row should have no background highlight
 
-  Scenario: Only one spinner visible at a time
+  Scenario: Every running pipeline shows a spinner
     Given two pipeline runs are both in a running state
     When I open the admin TUI
-    Then only the most recent running pipeline should show a spinner
+    Then each running pipeline should show a spinner
 
   Scenario: Early pipeline shows unreached stages as dim dashes
     Given a pipeline run currently in the fast suite stage

@@ -11,11 +11,16 @@ require_relative "tui_driver"
 class TuiTestClient
   extend Forwardable
 
-  def_delegators :@fixtures, :create_pipeline_run, :add_stage, :create_full_passed_run, :complete_running_pipeline
-  def_delegators :@driver, :output, :tui, :plain_output, :raw_output, :header_line, :board_lines
+  def_delegators :@fixtures, :create_pipeline_run, :add_stage, :create_full_passed_run, :complete_running_pipeline,
+                 :let_time_pass, :commits_newest_first, :run_status
+  def_delegators :@driver, :tui, :plain_output, :previous_plain_output, :raw_output, :raw_lines,
+                 :header_line, :board_lines
   def_delegators :@driver, :open_tui, :open_tui_at_width, :open_tui_with_width_provider,
-                 :simulate_resize, :rerender
+                 :simulate_resize, :refresh, :press, :terminal_height=
+  def_delegators :@driver, :exited?, :refresh_interval, :terminal_modes
   def_delegator :@driver, :provide_width, :set_width_provider_value
+  def_delegator :@driver, :refresh, :rerender
+  def_delegator :@driver, :stop, :stop_run_loop
 
   def initialize
     @dir = Dir.mktmpdir
@@ -29,7 +34,4 @@ class TuiTestClient
     @db.close
     FileUtils.remove_entry @dir
   end
-
-  # No-op unless a run loop thread is active
-  def stop_run_loop; end
 end

@@ -109,4 +109,5 @@ end
 
 Given("a pipeline run is currently running on the board") do
   create_running_run("run1234", "feat/test", fast_seconds: 3)
+  @client.open_tui
 end

@@ -2,25 +2,27 @@
 
 require "stringio"
 
-# Holds the stream the TUI renders into and the ANSI-stripped text of the last render.
+# Holds the stream the TUI renders into, split into frames: each frame is what the
+# TUI wrote between two waits for a key.
 class RenderCapture
-  attr_reader :io, :plain
+  attr_reader :io, :frame, :previous_frame
 
   def initialize
     @io = StringIO.new
-    @plain = nil
+    @frame = ""
+    @previous_frame = ""
   end
 
-  def renew
-    @io = StringIO.new
+  def take_frame
+    @previous_frame = @frame
+    @frame = @io.string.dup
+    @io.reopen(+"")
   end
 
-  def clear
-    @io.truncate(0)
-    @io.rewind
-  end
+  def plain = strip(@frame)
+  def previous_plain = strip(@previous_frame)
 
-  def snapshot
-    @plain = FunCi::Tui::Ansi.strip(@io.string)
-  end
+  private
+
+  def strip(text) = FunCi::Tui::Ansi.strip(text)
 end

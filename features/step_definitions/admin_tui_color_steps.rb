@@ -39,7 +39,9 @@ Then("the slow suite stage showing {string} should be displayed in dim") do |tex
 end
 
 Then("the entire row should be displayed in dim") do
-  assert_match(/\e\[2m/, @client.raw_output, "Scheduled row should be dim")
+  row = raw_row("Scheduled...")
+  assert row, "Should show a scheduled row"
+  assert_match(/\A\e\[2m[^\e]*\e\[0m\e\[K\z/, row, "The whole row should be one dim span")
 end
 
 # Relative time reads either "Xm ago" or "just now"; both must be dim.

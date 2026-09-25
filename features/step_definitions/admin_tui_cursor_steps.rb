@@ -7,62 +7,57 @@ Then("no cursor or row selection should be visible") do
 end
 
 Then("the first row should be highlighted as selected") do
-  rows = cursor_rows
-  assert_match(/^>/, rows[0], "First row should have cursor") unless rows.empty?
+  assert_cursor_on(0)
 end
 
 Then("the second row should be highlighted as selected") do
-  rows = cursor_rows
-  assert_match(/^>/, rows[1], "Second row should have cursor") if rows.length > 1
+  assert_cursor_on(1)
 end
 
 Then("the first row should no longer be highlighted") do
-  rows = cursor_rows
-  refute_match(/^>/, rows[0], "First row should not have cursor") unless rows.empty?
+  first_row = run_rows.first
+  assert first_row, "Board should still show its first row"
+  refute_match(AdminTuiStepHelpers::CURSOR, first_row, "First row should not have cursor")
 end
 
 Then("the cursor should remain on the third row") do
-  rows = cursor_rows
-  assert_match(/^>/, rows[2], "Third row should have cursor") if rows.length > 2
+  assert_cursor_on(2)
 end
 
 Then("the cursor should remain on the first row") do
-  rows = cursor_rows
-  assert_match(/^>/, rows[0], "First row should have cursor") unless rows.empty?
+  assert_cursor_on(0)
 end
 
-# In test mode q stops the loop; completing the render is the evidence.
 Then("the TUI should exit") do
-  assert true, "TUI should exit on q"
+  assert @client.exited?, "The run loop should have returned after q"
 end
 
 Then("control should return to the terminal") do
-  assert true, "Control returned to terminal"
+  assert_equal %i[raw cooked], @client.terminal_modes, "The terminal should be put back in cooked mode on exit"
 end
 
+# Immediately: in the frame drawn in answer to the key, with no refresh in between.
 Then("the row should immediately update to show status {string}") do |status|
-  @client.open_tui
   assert_match(/#{escaped(status)}/, @client.plain_output, "Status should update to #{status}")
 end
 
 Then("no confirmation prompt should appear") do
-  refute_match(/Cancel.*\?/, @client.plain_output, "No confirmation prompt should appear")
+  refute_match(AdminTuiStepHelpers::PROMPT, @client.plain_output, "No confirmation prompt should appear")
 end
 
 Then("a confirmation prompt should appear") do
   assert @client.tui.confirming?, "Confirmation prompt should be showing"
+  assert_match(AdminTuiStepHelpers::PROMPT, @client.plain_output, "The prompt should be on screen")
 end
 
 Then("the prompt should show {string}") do |text|
-  run = @client.tui.confirmation_run
-  assert run, "Should have a pending confirmation"
-  assert_match(/#{escaped(run[:branch])}/, text, "Prompt should reference branch")
+  prompt = @client.board_lines.find { |line| line.match?(AdminTuiStepHelpers::PROMPT) }
+  assert prompt, "A prompt should be on screen"
+  assert_equal text, prompt.strip, "The prompt should read '#{text}'"
 end
 
-# The kill is observed as the run's status changing to cancelled.
-Then("the running pipeline process should be killed") do
-  @client.open_tui
-  assert_match(/CANCELLED/, @client.plain_output, "Pipeline should be cancelled")
+Then("the running pipeline should be recorded as cancelled") do
+  assert_equal "cancelled", @client.run_status(@commit), "The run should be cancelled in the database"
 end
 
 Then("the row should update to show status {string}") do |status|
@@ -72,6 +67,7 @@ end
 
 Then("the confirmation prompt should disappear") do
   refute @client.tui.confirming?, "Confirmation prompt should be gone"
+  refute_match(AdminTuiStepHelpers::PROMPT, @client.plain_output, "The prompt should be off screen")
 end
 
 Then("the pipeline should continue running") do
@@ -79,11 +75,14 @@ Then("the pipeline should continue running") do
   assert_match(/RUNNING/, @client.plain_output, "Pipeline should still be running")
 end
 
+# Without colour: dim and reset are the only styles on the row.
 Then("the cancelled row should show stage times without color") do
-  @client.open_tui
-  assert_match(/CANCELLED/, @client.plain_output, "Should show CANCELLED")
+  row = raw_row("CANCELLED")
+  assert row, "Should show a CANCELLED row"
+  assert_match(/Build \d/, row, "The cancelled row should show stage times")
+  assert_equal %w[0 2], sgr_codes(row), "The cancelled row should be dim, with no colour inside it"
 end
 
 Then("nothing should happen") do
-  assert true, "Nothing happened"
+  assert_equal @client.previous_plain_output, @client.plain_output, "The board should not change"
 end

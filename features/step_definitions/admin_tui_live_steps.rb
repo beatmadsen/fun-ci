@@ -6,58 +6,68 @@ Then("the fast suite stage should display a braille spinner") do
   assert_match(AdminTuiStepHelpers::BRAILLE, @client.plain_output, "Should display a braille spinner")
 end
 
-# The frame cadence is pinned by the Spinner unit test; this checks the spinner is present.
+# Eight refreshes show the eight frames once each, the ninth starts the cycle again,
+# and the loop waits about 100ms between them.
 Then("the spinner should cycle through its frames at approximately 100ms") do
-  assert_match(AdminTuiStepHelpers::BRAILLE, @client.plain_output, "Spinner should be present")
+  glyphs = Array.new(9) { spinner_glyph_after_refresh("Fast") }
+  assert_equal 8, glyphs.first(8).uniq.length, "Eight refreshes should show eight frames: #{glyphs.inspect}"
+  assert_equal glyphs.first, glyphs.last, "The ninth refresh should start the cycle again"
+  assert_in_delta 0.1, @client.refresh_interval, 0.01, "Frames should be about 100ms apart"
 end
 
-# The live timer is pinned by unit tests; this checks elapsed time is displayed.
-Then("the elapsed time should increment from {int}s to {int}s") do |_from, _to|
-  assert_match(/\d+s/, @client.plain_output, "Should show elapsed time")
+Then("the elapsed time should increment from {int}s to {int}s") do |from, to|
+  assert_match(/Fast \S #{from}s/, @client.previous_plain_output, "Before, the fast suite should show #{from}s")
+  assert_match(/Fast \S #{to}s/, @client.plain_output, "After, the fast suite should show #{to}s")
 end
 
 Then("the build stage should show {string} in green without a spinner") do |text|
-  assert_match(/\e\[32m.*#{escaped(text)}/, @client.raw_output, "Build should be green")
-  build_segment = @client.plain_output[/Build.*?(?=Fast)/]
-  refute_match(AdminTuiStepHelpers::BRAILLE, build_segment, "Build segment should not have a spinner") if build_segment
+  assert_stage_green_without_spinner("Build", text)
 end
 
 Then("the fast suite should show {string} in green without a spinner") do |text|
-  assert_match(/\e\[32m.*#{escaped(text)}/, @client.raw_output, "Fast should be green")
+  assert_stage_green_without_spinner("Fast", text)
 end
 
 Then("the slow suite should show a spinner with elapsed time in cyan") do
-  assert_match(/\e\[36m.*Slow/, @client.raw_output, "Slow suite should be cyan")
+  assert_match(/\e\[36mSlow #{AdminTuiStepHelpers::BRAILLE} \d+s\e\[0m/, raw_row("RUNNING"),
+               "Slow suite should show a spinner and elapsed seconds, in cyan")
 end
 
-# The highlight itself is cosmetic; this checks the running row is present.
-Then("the running row should have a faint background highlight") do
-  assert_match(/RUNNING/, @client.plain_output, "Running row should be present")
+Then("the running row should have no background highlight") do
+  row = raw_row("RUNNING")
+  assert row, "Should show a RUNNING row"
+  refute(sgr_codes(row).any? { |code| code.match?(/\A(4\d|10\d)(;|\z)/) }, "No background colour on #{row.inspect}")
 end
 
-Then("only the most recent running pipeline should show a spinner") do
-  assert_match(AdminTuiStepHelpers::BRAILLE, @client.plain_output, "Should show at least one spinner")
+# A spinner animates: its glyph changes from one refresh to the next on every running row.
+Then("each running pipeline should show a spinner") do
+  before = running_row_glyphs
+  @client.refresh
+  after = running_row_glyphs
+  assert_equal 2, before.length, "Both running rows should show an active stage: #{@client.plain_output}"
+  before.zip(after).each { |(was, now)| refute_equal was, now, "Each running row's spinner should advance" }
 end
 
-Then("the board should refresh approximately every {int} second(s)") do |seconds|
-  if seconds == 1
-    assert_operator FunCi::Tui::AdminTui::FAST_REFRESH, :<=, 1.0, "Fast refresh should be <= 1 second"
-  else
-    assert_equal 5.0, FunCi::Tui::AdminTui::SLOW_REFRESH, "Slow refresh should be 5 seconds"
-  end
+Then("the board should refresh approximately every {float} second(s)") do |seconds|
+  assert_in_delta seconds, @client.refresh_interval, seconds / 10, "The loop should wait about #{seconds}s"
 end
 
-Then("the row should update from {string} to {string} in place") do |_from, _to|
-  @client.open_tui
-  assert true, "Row updated in place"
+Then("the row should update from {string} to {string} in place") do |from, to|
+  index = @client.previous_plain_output.lines.index { |line| line.include?(from) }
+  assert index, "Before, the board should show a #{from} row"
+  commit = row_commit(@client.previous_plain_output.lines[index])
+  assert_match(/#{commit}.*#{escaped(to)}/, @client.board_lines[index], "The same line should now show #{to}")
 end
 
-# Pinned by the Screen class's own tests.
+# The frame starts by moving the cursor home and never clears the screen.
 Then("no full screen redraw should occur") do
-  assert true, "No full screen redraw"
+  assert @client.raw_output.start_with?("\e[H"), "The frame should be drawn over the last one from the top"
+  refute_includes @client.raw_output, "\e[2J", "The frame should not clear the screen"
 end
 
-# Pinned by the AdminTui refresh logic's own tests.
-Then("the refresh cadence should switch to approximately every {int} second") do |_seconds|
-  assert true, "Refresh cadence switched"
+# The loop is waiting on the settled interval when the run begins; that wait ends in a refresh.
+Then("the refresh cadence should switch to approximately every {float} second(s)") do |seconds|
+  assert_in_delta 5.0, @client.refresh_interval, 0.5, "Before the next refresh the loop is still on 5s"
+  @client.refresh
+  assert_in_delta seconds, @client.refresh_interval, seconds / 10, "After it, the loop should wait about #{seconds}s"
 end

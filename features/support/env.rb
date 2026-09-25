@@ -25,7 +25,9 @@ Before do
   @client = TuiTestClient.new
 end
 
+# Quitting also proves every scenario leaves the run loop able to exit.
 After do
   @client.stop_run_loop
+ensure
   @client.cleanup
 end

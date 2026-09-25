@@ -13,9 +13,8 @@ Given("{int} pipeline runs exist") do |count|
   create_passed_runs(count, "hash")
 end
 
-Given("the terminal height is {int} lines") do |_lines|
-  # Terminal height is handled by the limit parameter in BoardData; the
-  # row-count check is approximate instead.
+Given("the terminal height is {int} lines") do |lines|
+  @client.terminal_height = lines
 end
 
 Given("the TUI is open at terminal width {int}") do |width|
@@ -63,21 +62,25 @@ Given("the last {int} pipeline runs all passed") do |count|
   create_passed_runs(count, "pass")
 end
 
-Given("the streak is {string} and a pipeline is running") do |_streak_text|
+Given("the streak is {string} and a pipeline is running") do |streak_text|
   create_passed_runs(4, "pass")
   create_running_run("run9999", "feat/new", fast_seconds: 3)
+  @client.open_tui
+  assert_includes @client.header_line, streak_text, "The board should start from that streak"
 end
 
+# A fresh test database is empty.
 Given("no pipeline runs have completed") do
-  # Empty database, or only running and scheduled runs.
+  assert_empty @client.commits_newest_first, "The test database should start empty"
 end
 
 Given("only {int} pipeline run has passed") do |count|
   create_passed_runs(count, "solo")
 end
 
+# A fresh test database is empty.
 Given("no pipeline runs exist") do
-  # Empty database: nothing to create.
+  assert_empty @client.commits_newest_first, "The test database should start empty"
 end
 
 Given("all pipeline runs are completed") do
@@ -91,4 +94,6 @@ end
 
 Given("all pipeline runs are completed and refresh is at 5 second cadence") do
   create_passed_runs(3, "done")
+  @client.open_tui
+  assert_in_delta 5.0, @client.refresh_interval, 0.5, "A settled board should refresh every 5 seconds"
 end

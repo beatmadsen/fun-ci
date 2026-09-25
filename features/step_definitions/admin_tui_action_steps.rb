@@ -23,6 +23,7 @@ Given("the cursor is on that running row") do
 end
 
 Given("a confirmation prompt is showing for commit {string} on branch {string}") do |commit, branch|
+  @commit = commit
   create_running_run(commit, branch, fast_seconds: 7)
   open_tui_and_press("j", "c")
 end
@@ -45,25 +46,27 @@ When("I open the admin TUI") do
   @client.open_tui
 end
 
-# Checks the render output rather than waiting in real time.
-When("I watch the admin TUI for {int} seconds") do |_seconds|
+# The clock moves on instead of the test waiting: the next refresh is drawn as if the seconds had passed.
+When("I watch the admin TUI for {int} seconds") do |seconds|
   @client.open_tui
+  @client.let_time_pass(seconds)
+  @client.refresh
 end
 
 When("I press {string}") do |key|
-  press_and_rerender(key)
+  @client.press(key)
 end
 
 When("I press the Down arrow key") do
-  press_and_rerender(:down)
+  @client.press(:down)
 end
 
 When("I press the Up arrow key") do
-  press_and_rerender(:up)
+  @client.press(:up)
 end
 
 When("I press Escape") do
-  press_and_rerender(:escape)
+  @client.press(:escape)
 end
 
 When("the terminal is resized to width {int}") do |width|
@@ -88,7 +91,8 @@ When("the running pipeline completes successfully") do
 end
 
 When("the running pipeline completes") do
-  @client.open_tui
+  @client.complete_running_pipeline
+  @client.refresh
 end
 
 When("I watch the admin TUI") do

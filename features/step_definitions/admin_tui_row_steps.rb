@@ -43,14 +43,15 @@ Then("the row should not show stage columns") do
   refute_match(/Build/, scheduled_line, "Scheduled row should not show Build")
 end
 
-Then("the board should show approximately {int} rows") do |count|
-  data_lines = board_lines_matching(/PASSED|FAILED|RUNNING|TIMED OUT|CANCELLED|Scheduled/)
-  assert_in_delta count, data_lines.length, 3,
-                  "Board should show approximately #{count} rows (got #{data_lines.length})"
+Then("the board should show {int} rows") do |count|
+  assert_equal count, run_rows.length, "Board should show #{count} rows: #{run_rows.inspect}"
 end
 
+# The rows on screen are the newest runs, and no older commit appears anywhere.
 Then("older runs beyond the visible area are simply not shown") do
-  # Covered by the row limit check of the previous step.
+  visible, older = @client.commits_newest_first.partition.with_index { |_, i| i < run_rows.length }
+  assert_equal visible, run_rows.map { |row| row_commit(row) }, "The newest runs should fill the board"
+  assert_empty(older.select { |commit| @client.plain_output.include?(commit) }, "Older runs should not show")
 end
 
 Then("the header should fill {int} columns") do |width|
@@ -64,7 +65,9 @@ Then("the board should show {string}") do |text|
   assert_match(/#{pattern}/, @client.plain_output, "Board should show '#{text}'")
 end
 
-Then("the new run should appear on the board within {int} seconds") do |_seconds|
-  @client.open_tui
+# Within: the loop is waiting no longer than that for its next refresh, which shows the run.
+Then("the new run should appear on the board within {int} seconds") do |seconds|
+  assert_operator @client.refresh_interval, :<=, seconds, "The loop should refresh within #{seconds}s"
+  @client.refresh
   assert_match(/new1234/, @client.plain_output, "New run should appear on board")
 end

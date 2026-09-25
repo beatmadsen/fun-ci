@@ -7,10 +7,10 @@ Feature: Auto-refresh behavior
   Refresh cadence adapts to activity level.
   Only changed rows re-render -- no full screen redraw, no flicker.
 
-  Scenario: Board refreshes every second when a pipeline is running
+  Scenario: Board refreshes every tenth of a second when a pipeline is running
     Given a pipeline run is currently running
     When I watch the admin TUI
-    Then the board should refresh approximately every 1 second
+    Then the board should refresh approximately every 0.1 seconds
 
   Scenario: Board refreshes every 5 seconds when everything is settled
     Given all pipeline runs are completed
@@ -31,4 +31,4 @@ Feature: Auto-refresh behavior
   Scenario: Refresh switches to fast cadence when a new run starts
     Given all pipeline runs are completed and refresh is at 5 second cadence
     When a new pipeline run begins
-    Then the refresh cadence should switch to approximately every 1 second
+    Then the refresh cadence should switch to approximately every 0.1 seconds

@@ -9,6 +9,8 @@ class TuiFixtures
   RUN_FINAL_STATUSES = %w[completed failed timed_out cancelled].freeze
   STAGE_FINAL_STATUSES = %w[completed failed timed_out].freeze
   PASSED_DURATIONS = { build_time: 0.3, fast_time: 1.8, slow_time: 47 }.freeze
+  TIMESTAMPS = [%w[pipeline_runs created_at], %w[pipeline_runs updated_at],
+                %w[stage_jobs started_at], %w[stage_jobs completed_at]].freeze
 
   def initialize(db)
     @db = db
@@ -48,6 +50,19 @@ class TuiFixtures
     stage_ids(run_id, "scheduled").each { |id| advance_job(id, "completed") }
   end
 
+  # Moves every recorded time back, which to the TUI's clock is the same as time passing.
+  def let_time_pass(seconds)
+    TIMESTAMPS.each { |table, column| move_back(table, column, seconds) }
+  end
+
+  def commits_newest_first
+    RUN.recent(@db, limit: 1000).map { |run| run[:commit_hash] }
+  end
+
+  def run_status(commit)
+    @db.get_first_value("SELECT status FROM pipeline_runs WHERE commit_hash = ?", [commit])
+  end
+
   private
 
   def advance_run(status)
@@ -76,6 +91,13 @@ class TuiFixtures
                   [started, @now.utc.iso8601(3), job_id])
     elsif status == "running"
       @db.execute("UPDATE stage_jobs SET started_at = ? WHERE id = ?", [started, job_id])
+    end
+  end
+
+  def move_back(table, column, seconds)
+    @db.execute("SELECT id, #{column} FROM #{table} WHERE #{column} IS NOT NULL").each do |id, time|
+      earlier = (Time.parse(time) - seconds).utc.iso8601(3)
+      @db.execute("UPDATE #{table} SET #{column} = ? WHERE id = ?", [earlier, id])
     end
   end
 
