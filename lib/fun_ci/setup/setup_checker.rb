@@ -5,7 +5,7 @@ require_relative "project_config"
 module FunCi
   module Setup
     class SetupChecker
-      def self.run(project_root:, stdout: $stdout, stderr: $stderr)
+      def self.run(project_root:, stdout: $stdout)
         new(project_root: project_root, stdout: stdout).run
       end
 
@@ -16,14 +16,8 @@ module FunCi
 
       def run
         errors = @config.validate
-
-        if errors.empty?
-          @stdout.puts "All OK. The project is configured."
-          0
-        else
-          errors.each { |e| @stdout.puts e }
-          1
-        end
+        @stdout.puts(errors.empty? ? "All OK. The project is configured." : errors)
+        errors.empty? ? 0 : 1
       end
     end
   end

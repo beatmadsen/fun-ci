@@ -40,13 +40,18 @@ module FunCi
         scripts = TEMPLATES.fetch(@template_id)
         fun_ci_dir = File.join(@target_dir, ".fun-ci")
         Dir.mkdir(fun_ci_dir)
+        scripts.each { |name, content| write_script(File.join(fun_ci_dir, name), script_content(name, content)) }
+      end
 
-        scripts.each do |name, content|
-          content = "#!/bin/sh\n#{@lint_override}\n" if name == "lint.sh" && @lint_override
-          path = File.join(fun_ci_dir, name)
-          File.write(path, content)
-          File.chmod(0o755, path)
-        end
+      private
+
+      def script_content(name, content)
+        name == "lint.sh" && @lint_override ? "#!/bin/sh\n#{@lint_override}\n" : content
+      end
+
+      def write_script(path, content)
+        File.write(path, content)
+        File.chmod(0o755, path)
       end
     end
   end

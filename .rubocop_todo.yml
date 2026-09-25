@@ -284,7 +284,6 @@ Lint/UnusedBlockArgument:
 Lint/UnusedMethodArgument:
   Exclude:
     - 'lib/fun_ci/persistence/pipeline_recorder.rb'
-    - 'lib/fun_ci/setup/setup_checker.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/board_renderer.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
@@ -349,10 +348,6 @@ Metrics/MethodLength:
     - 'lib/fun_ci/pipeline/stage_runner.rb'
     - 'lib/fun_ci/pipeline/stale_pipeline_canceller.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
-    - 'lib/fun_ci/setup/installer.rb'
-    - 'lib/fun_ci/setup/project_config.rb'
-    - 'lib/fun_ci/setup/setup_checker.rb'
-    - 'lib/fun_ci/setup/template_writer.rb'
     - 'lib/fun_ci/tui/admin_tui.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/animation_frames.rb'
@@ -548,13 +543,6 @@ Style/Lambda:
     - 'test/unit/test_trigger_progress.rb'
     - 'test/unit/test_trigger_project_path.rb'
 
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, Recursive.
-# SupportedStyles: literals, strict
-Style/MutableConstant:
-  Exclude:
-    - 'lib/fun_ci/setup/hook_writer.rb'
-
 # This cop supports safe autocorrection (--autocorrect).
 Style/NestedFileDirname:
   Exclude:
@@ -653,13 +641,6 @@ Style/Semicolon:
 Style/StringConcatenation:
   Exclude:
     - 'test/unit/contract/test_frame_recorder.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: .
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  EnforcedStyle: percent
-  MinSize: 6
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.

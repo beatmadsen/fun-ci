@@ -97,7 +97,7 @@ class TestStateMachineInvalidTransitions < Minitest::Test
     sm = FunCi::Persistence::StateMachine.new(:timed_out)
     # When we attempt any transition
     # Then it should raise InvalidTransition for all targets
-    [:scheduled, :running, :completed, :failed, :cancelled].each do |target|
+    %i[scheduled running completed failed cancelled].each do |target|
       assert_raises(FunCi::Persistence::StateMachine::InvalidTransition,
         "Should not allow transition from timed_out to #{target}") do
         sm.transition_to!(target)
@@ -110,7 +110,7 @@ class TestStateMachineInvalidTransitions < Minitest::Test
     sm = FunCi::Persistence::StateMachine.new(:cancelled)
     # When we attempt any transition
     # Then it should raise InvalidTransition for all targets
-    [:scheduled, :running, :completed, :failed, :timed_out].each do |target|
+    %i[scheduled running completed failed timed_out].each do |target|
       assert_raises(FunCi::Persistence::StateMachine::InvalidTransition,
         "Should not allow transition from cancelled to #{target}") do
         sm.transition_to!(target)

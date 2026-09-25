@@ -10,10 +10,9 @@ class TestCheckCliUnconfigured < Minitest::Test
     # Given an unconfigured project (no .fun-ci/ folder)
     Dir.mktmpdir("fun-ci-check-test") do |dir|
       stdout = StringIO.new
-      stderr = StringIO.new
 
       # When we run the check command
-      exit_code = FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout, stderr: stderr)
+      exit_code = FunCi::Setup::SetupChecker.run(project_root: dir, stdout: stdout)
 
       # Then it should report the missing folder and return failure
       assert_equal 1, exit_code, "Should return failure exit code"

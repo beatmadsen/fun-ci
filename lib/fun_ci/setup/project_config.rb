@@ -15,27 +15,23 @@ module FunCi
       end
 
       def validate
-        errors = []
+        return ["No .fun-ci/ folder found in #{@project_root}"] unless folder_exists?
 
-        unless folder_exists?
-          errors << "No .fun-ci/ folder found in #{@project_root}"
-          return errors
-        end
-
-        REQUIRED_SCRIPTS.each do |script|
-          path = File.join(@fun_ci_dir, script)
-          if !File.exist?(path)
-            errors << ".fun-ci/#{script} is not found"
-          elsif !File.executable?(path)
-            errors << ".fun-ci/#{script} is not executable"
-          end
-        end
-
-        errors
+        REQUIRED_SCRIPTS.flat_map { |script| script_errors(script) }
       end
 
       def script_path(stage)
         File.join(@fun_ci_dir, "#{stage}.sh")
+      end
+
+      private
+
+      def script_errors(script)
+        path = File.join(@fun_ci_dir, script)
+        return [".fun-ci/#{script} is not found"] unless File.exist?(path)
+        return [".fun-ci/#{script} is not executable"] unless File.executable?(path)
+
+        []
       end
     end
   end

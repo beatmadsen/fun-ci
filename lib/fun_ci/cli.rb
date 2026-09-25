@@ -85,7 +85,7 @@ module FunCi
 
     def run_check(_args)
       require_relative "setup/setup_checker"
-      Setup::SetupChecker.run(project_root: Dir.pwd, stdout: @stdout, stderr: @stderr)
+      Setup::SetupChecker.run(project_root: Dir.pwd, stdout: @stdout)
     end
 
     def setup_db

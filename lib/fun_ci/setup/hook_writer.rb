@@ -13,7 +13,7 @@ module FunCi
         "pre-push" => "fun-ci trigger"
       }.freeze
 
-      HOOK_TEMPLATE = <<~SH
+      HOOK_TEMPLATE = <<~SH.freeze
         #!/bin/sh
         #{MARKER}
         COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "0000000000000000000000000000000000000000")

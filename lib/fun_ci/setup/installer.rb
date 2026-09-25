@@ -18,29 +18,30 @@ module FunCi
       end
 
       def run
-        if Dir.exist?(File.join(@project_root, ".fun-ci"))
-          @stdout.puts ".fun-ci/ already exists, so init did nothing."
-          return 0
-        end
+        return report(".fun-ci/ already exists, so init did nothing.", 0) if initialised?
 
-        filenames = Dir.children(@project_root)
-        detected = ProjectDetector.new(filenames).detect
+        detected = ProjectDetector.new(Dir.children(@project_root)).detect
+        return report("Could not detect project type. Create .fun-ci/ manually.", 1) if detected == :unknown
 
-        if detected == :unknown
-          @stdout.puts "Could not detect project type. Create .fun-ci/ manually."
-          return 1
-        end
-
-        @stdout.puts "Detected: #{detected.to_s.tr("_", " ")}"
-
-        lint_override = detect_maven_linter(detected)
-        TemplateWriter.new(detected, @project_root, lint_override: lint_override).write
-
-        @stdout.puts "Created .fun-ci/ with template scripts."
-        0
+        write_templates(detected)
       end
 
       private
+
+      def initialised?
+        Dir.exist?(File.join(@project_root, ".fun-ci"))
+      end
+
+      def write_templates(detected)
+        @stdout.puts "Detected: #{detected.to_s.tr("_", " ")}"
+        TemplateWriter.new(detected, @project_root, lint_override: detect_maven_linter(detected)).write
+        report("Created .fun-ci/ with template scripts.", 0)
+      end
+
+      def report(message, exit_code)
+        @stdout.puts message
+        exit_code
+      end
 
       def detect_maven_linter(detected)
         return nil unless detected == :jvm_maven
