@@ -7,10 +7,11 @@ module FunCi
   module Pipeline
     # `fun-ci trigger [--no-validate] <commit-hash> <branch>`
     class TriggerCommand
-      def initialize(io:, recorder:, pipeline_forker:)
+      def initialize(io:, recorder:, pipeline_forker:, project: Dir.pwd)
         @io = io
         @recorder = recorder
         @pipeline_forker = pipeline_forker || PipelineForker.method(:fork_pipeline)
+        @project = project
       end
 
       # Closes the database connection it was given on every path.
@@ -28,7 +29,7 @@ module FunCi
 
       # After forking the slow suite the trigger holds a recorder of its own.
       def run_pipeline(commit)
-        trigger = Trigger.new(project: Dir.pwd, commit: commit, io: @io, seams: Seams.new(recorder: @recorder))
+        trigger = Trigger.new(project: @project, commit: commit, io: @io, seams: Seams.new(recorder: @recorder))
         trigger.run
       ensure
         trigger&.close

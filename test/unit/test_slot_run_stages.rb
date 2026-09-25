@@ -37,6 +37,13 @@ class TestSlotRunStages < Minitest::Test
     assert_equal %w[build.sh lint.sh], ran_before_slow.map { |cmd| File.basename(cmd.split.first) }.sort
   end
 
+  def test_should_run_the_slow_suite_s_script_with_the_commit_hash
+    runner = scripted_runner
+    slot_run(slot_with(Lock.new(false)), command_runner: runner, background_launcher: inline_launcher).run(config)
+
+    assert_equal "/slot-0/.fun-ci/slow.sh abc1234", runner.command_for("slow.sh")
+  end
+
   def test_should_fail_when_fast_fails_while_the_slow_suite_runs
     refute_equal 0, run_with({ "fast.sh" => failing("fast test failed") })
   end

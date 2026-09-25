@@ -28,6 +28,22 @@ class TestStageRunnerDefaults < Minitest::Test
     assert_includes stdout.string, "Your fast tests have gotten too slow. Split or speed them up."
   end
 
+  def test_runs_the_stage_s_script_with_the_commit_hash_as_its_argument
+    commands = []
+    seams = FunCi::Pipeline::Seams.new(command_runner: ->(cmd) { (commands << cmd) && ["", FakeStatus.new(true, 0)] })
+    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config, "lint")
+
+    assert_equal ["lint.sh abc123"], commands
+  end
+
+  def test_records_the_stage_starting
+    recorder = FakeRecorder.new
+    seams = FunCi::Pipeline::Seams.new(command_runner: passing_runner, recorder: recorder)
+    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config, "lint")
+
+    assert_equal [:start_stage, "lint"], recorder.calls.first
+  end
+
   def test_a_stage_over_budget_fails
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { raise Timeout::Error })
 

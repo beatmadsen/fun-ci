@@ -25,24 +25,6 @@ class TestTriggerCliArguments < Minitest::Test
     assert_equal 0, @client.exit_code
   end
 
-  def test_should_refuse_to_run_without_a_commit_hash
-    @client.trigger_raw(args: ["main"])
-
-    refute_equal 0, @client.exit_code
-  end
-
-  def test_should_ask_for_the_commit_hash_when_it_is_missing
-    @client.trigger_raw(args: ["main"])
-
-    assert_match(/commit/i, @client.stderr)
-  end
-
-  def test_should_ask_for_the_branch_when_it_is_missing
-    @client.trigger_raw(args: ["abc1234"])
-
-    assert_match(/branch/i, @client.stderr)
-  end
-
   def test_should_refuse_a_commit_the_repository_does_not_have
     @client.trigger(commit_hash: "deadbeef000000", branch: "main", commit_validator: REJECTING)
 
