@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require_relative "../../../test_helper"
-require_relative "../../../support/git_project"
-require "fun_ci/cli"
-require "fun_ci/persistence/database"
-require "fun_ci/persistence/pipeline_run"
+require_relative "../../../support/end_to_end"
 
 # AT-1.1: a pipeline runs in a worktree at the requested commit, never in the
 # checkout someone is still editing.
 class TestPipelineWorktree < Minitest::Test
+  include EndToEnd
+
   def setup
     @project = GitProject.create
     @record = Dir.mktmpdir("stage-record")
@@ -40,18 +39,5 @@ class TestPipelineWorktree < Minitest::Test
 
   def seen_by(stage) = File.read(File.join(@record, stage))
 
-  def trigger
-    io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new)
-    db_dir = File.join(@record, "db")
-    Dir.chdir(@project.dir) { FunCi::Cli.run(["trigger", @sha, "main"], io: io, db_dir: db_dir) }
-    wait_for_slow_suite(File.join(db_dir, "db.sqlite3"))
-  end
-
-  def wait_for_slow_suite(db_path)
-    db = FunCi::Persistence::Database.connection(db_path)
-    pid = FunCi::Persistence::PipelineRun.find_by_commit(db, @sha).first[:pid]
-    Thread.list.grep(Process::Waiter).find { |waiter| waiter.pid == pid }&.join
-  ensure
-    db&.close
-  end
+  def trigger = super(@project, @sha, db_dir: File.join(@record, "db"))
 end
