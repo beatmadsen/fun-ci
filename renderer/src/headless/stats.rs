@@ -89,8 +89,8 @@ fn is_blank(cell: &Cell) -> bool {
 
 fn histogram(image: &Image) -> [usize; 8] {
     let mut buckets = [0; 8];
-    for rgb in image.pixels.chunks_exact(3) {
-        buckets[usize::from(luminance([rgb[0], rgb[1], rgb[2]]) / 32)] += 1;
+    for rgb in image.pixels.as_chunks::<3>().0 {
+        buckets[usize::from(luminance(*rgb) / 32)] += 1;
     }
     buckets
 }

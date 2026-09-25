@@ -63,6 +63,7 @@ fun-ci prune                                          # Remove fun-ci's worktree
 - Ruby >= 3.2 (CI runs 3.2, 3.3, 3.4, 4.0). One runtime dependency: `sqlite3`, in WAL mode.
 - Minitest, run in parallel processes by ActiveSupport's executor (serially under `MUTATION_TESTING`); Cucumber for the TUI features; RuboCop; mutineer for the mutation lane (Ruby >= 3.4 only).
 - Prism, in tests, to read Ruby sources for the code-limit and call scans.
+- Rust pinned to one release in `renderer/rust-toolchain.toml` (the root `rust-toolchain.toml` links to it); raise it on purpose, with the gate green on the new release.
 - 2.0 adds a Rust renderer (`fun-ci-renderer`) that Ruby drives over JSON Lines; `docs/v2/architecture.md` decides the boundary: Ruby decides what is true, Rust decides how it looks.
 
 ## Layout
@@ -96,6 +97,7 @@ Seams tests use in place of the real thing:
 - What the Ruby TUI draws matches `contract/golden/`, frame for frame, and capturing twice gives identical bytes (the renderer takes its clock from `Board#now`, never `Time.now`): `test/acceptance/test_golden_corpus.rb`. After a deliberate change, run `rake contract:capture` and review the golden diff in the same commit. The Rust renderer is held to the same frames: `renderer/tests/suite/differential.rs` feeds its output and the golden bytes through the `vt100` emulator and compares the cell grids (text, colours, attributes) frame by frame, so until §5 deletes the Ruby renderer a change to what the TUI draws is made in both, in one commit.
 - The gem ships exactly the tracked files under `lib/` and `exe/` plus README, CHANGELOG and LICENSE, and keeps its publishing metadata: `test/integration/process/test_gemspec_contents.rb`.
 - CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and both mutation lanes (Ruby on 3.4, and the Rust renderer's): `test/policy/test_ci_workflow.rb`.
+- Every machine and CI job builds the renderer with the pinned Rust, never whichever stable is latest, so clippy's verdict is the same everywhere: `test/policy/test_rust_toolchain.rb`, `test/policy/test_ci_workflow.rb`.
 - fun-ci processes set up a database one at a time (a lock file beside it), so concurrent hooks never die on a fresh database: `test/integration/test_database_setup_lock.rb`, `test/integration/process/test_database_concurrent_setup.rb`.
 - `fun-ci trigger` closes every database connection it opens: `test/acceptance/test_cli_subcommands.rb`.
 - This file keeps Stack, Layout, Invariants and Gotchas, and every invariant names a test that exists: `test/policy/test_claude_md.rb`.

@@ -1,0 +1,7 @@
+# One Rust for every machine and CI job, so clippy's verdict never depends on
+# which stable happened to be installed. Raise it on purpose, in its own
+# commit, with the gate green on the new release.
+[toolchain]
+channel = "1.98.1"
+profile = "minimal"
+components = ["clippy"]

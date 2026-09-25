@@ -32,6 +32,15 @@ class TestCiWorkflow < Minitest::Test
     assert_includes commands("mutation-rust"), "bundle exec rake mutation:rust"
   end
 
+  def test_every_rust_job_installs_the_pinned_toolchain
+    assert_equal({ "gate" => true, "mutation-rust" => true },
+                 %w[gate mutation-rust].to_h { |job| [job, commands(job).include?("rustup toolchain install")] })
+  end
+
+  def test_no_job_installs_whichever_rust_is_latest
+    refute_includes steps_used, "dtolnay/rust-toolchain@stable"
+  end
+
   def test_ci_runs_on_pushes_to_main
     assert_includes workflow.dig(true, "push", "branches"), "main"
   end
@@ -46,5 +55,6 @@ class TestCiWorkflow < Minitest::Test
   def workflow = YAML.safe_load_file(WORKFLOW)
   def jobs = workflow.fetch("jobs")
   def commands(job) = jobs.dig(job, "steps").filter_map { |step| step["run"] }
+  def steps_used = jobs.values.flat_map { |job| job["steps"].filter_map { |step| step["uses"] } }
   def setup_ruby(job) = jobs.dig(job, "steps").find { |step| step["uses"].to_s.start_with?("ruby/setup-ruby") }
 end
