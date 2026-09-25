@@ -15,18 +15,17 @@ module FunCi
       end
 
       def self.run_in_child(commit_hash:, branch:, db_path:)
-        db = Persistence::Database.connection(db_path)
-        recorder = Persistence::DbRecorder.new(db)
-        Trigger.new(
-          project_root: Dir.pwd,
-          commit_hash: commit_hash,
-          branch: branch,
-          stdout: File.open(File::NULL, "w"),
-          recorder: recorder,
-          background_launcher: method(:sync_launcher)
-        ).run
+        recorder = Persistence::DbRecorder.new(Persistence::Database.connection(db_path))
+        trigger(commit_hash, branch, recorder).run
         recorder.close
       end
+
+      def self.trigger(commit_hash, branch, recorder)
+        Trigger.new(project_root: Dir.pwd, commit_hash: commit_hash, branch: branch,
+                    stdout: File.open(File::NULL, "w"), recorder: recorder,
+                    background_launcher: method(:sync_launcher))
+      end
+      private_class_method :trigger
 
       def self.sync_launcher(db_path:, pipeline_run_id:, job_id:, executor:)
         recorder = Persistence::DbRecorder.for_background(db_path, pipeline_run_id)

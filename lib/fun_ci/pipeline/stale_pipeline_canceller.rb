@@ -31,12 +31,15 @@ module FunCi
         @process_killer.call(0, pid)
         safe_signal("TERM", pid)
         safe_signal("KILL", pid)
-        begin
-          Process.waitpid(pid)
-        rescue Errno::ECHILD, Errno::ESRCH # rubocop:disable Lint/SuppressedException
-        end
+        reap(pid)
       rescue Errno::ESRCH
         # Process already dead
+      end
+
+      def reap(pid)
+        Process.waitpid(pid)
+      rescue Errno::ECHILD, Errno::ESRCH
+        # Not our child, or already reaped
       end
 
       def safe_signal(signal, pid)

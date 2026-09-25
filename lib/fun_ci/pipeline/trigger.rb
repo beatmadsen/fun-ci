@@ -14,10 +14,12 @@ module FunCi
   module Pipeline
     class Trigger
       include ProcessRunner
+
       NULL_SHA = ("0" * 40).freeze
       DEFAULT_BUDGETS = { "lint" => 30, "build" => 30, "fast" => 10, "slow" => 300 }.freeze
 
-      def self.run_from_args(args, stdout: $stdout, stderr: $stderr, recorder: Persistence::NullRecorder.new, pipeline_forker: nil)
+      def self.run_from_args(args, stdout: $stdout, stderr: $stderr, recorder: Persistence::NullRecorder.new,
+                             pipeline_forker: nil)
         positional = args.reject { |a| a.start_with?("--") }
         if positional.length < 2
           stderr.puts "fun-ci: commit hash and branch name are required."
@@ -39,7 +41,8 @@ module FunCi
 
       attr_writer :command_runner
 
-      def initialize(project_root:, commit_hash:, branch:, stdout: $stdout, stderr: $stderr, command_runner: nil, time_budgets: {}, commit_validator: nil, recorder: Persistence::NullRecorder.new, background_launcher: nil)
+      def initialize(project_root:, commit_hash:, branch:, stdout: $stdout, stderr: $stderr, command_runner: nil,
+                     time_budgets: {}, commit_validator: nil, recorder: Persistence::NullRecorder.new, background_launcher: nil)
         @project_root = project_root
         @commit_hash = commit_hash
         @branch = branch
@@ -55,6 +58,7 @@ module FunCi
       def run
         config = Setup::ProjectConfig.new(@project_root)
         return handle_config_errors(config) if config.validate.any?
+
         unless @commit_hash == NULL_SHA || @commit_validator.call(@commit_hash)
           @stderr.puts "fun-ci: commit #{@commit_hash} not found in this repository."
           return 1
@@ -106,16 +110,16 @@ module FunCi
         job_id = @recorder.start_stage("slow")
         budget = @time_budgets["slow"]
         executor = if @command_runner
-          runner = @command_runner
-          -> do
-            output, status = runner.call(cmd)
-            [output, status, false]
-          rescue Timeout::Error
-            ["", nil, true]
-          end
-        else
-          -> { run_process_with_timeout(cmd, budget) }
-        end
+                     runner = @command_runner
+                     lambda do
+                       output, status = runner.call(cmd)
+                       [output, status, false]
+                     rescue Timeout::Error
+                       ["", nil, true]
+                     end
+                   else
+                     -> { run_process_with_timeout(cmd, budget) }
+                   end
         @background_launcher.call(
           db_path: @recorder.db_path, pipeline_run_id: @recorder.pipeline_run_id,
           job_id: job_id, executor: executor
@@ -124,13 +128,14 @@ module FunCi
 
       def make_stage_runner
         StageRunner.new(commit_hash: @commit_hash, stdout: @stdout,
-          command_runner: @command_runner, time_budgets: @time_budgets, recorder: @recorder)
+                        command_runner: @command_runner, time_budgets: @time_budgets, recorder: @recorder)
       end
 
       def cancel_stale_pipelines
         return unless @recorder.db
+
         StalePipelineCanceller.new(db: @recorder.db, branch: @branch, stdout: @stdout)
-          .cancel(new_commit_hash: @commit_hash)
+                              .cancel(new_commit_hash: @commit_hash)
       end
 
       def default_background_launcher(db_path:, pipeline_run_id:, job_id:, executor:)

@@ -4,24 +4,32 @@ module FunCi
   module Pipeline
     module ProcessRunner
       def run_process_with_timeout(cmd, budget)
-        r, w = IO.pipe
-        pid = Process.spawn(cmd, out: w, err: w, pgroup: true)
-        w.close
-
-        reader = Thread.new { r.read }
-
-        if reader.join(budget)
-          output = reader.value
-          _, status = Process.waitpid2(pid)
-          [output, status, false]
-        else
-          Process.kill("TERM", -pid) rescue nil
-          Process.kill("KILL", -pid) rescue nil
-          Process.waitpid(pid) rescue nil
-          ["", nil, true]
-        end
+        reader, writer = IO.pipe
+        pid = Process.spawn(cmd, out: writer, err: writer, pgroup: true)
+        writer.close
+        output = Thread.new { reader.read }
+        output.join(budget) ? process_finished(pid, output.value) : kill_process_group(pid)
       ensure
-        r&.close rescue nil
+        ignoring_errors { reader&.close }
+      end
+
+      private
+
+      def process_finished(pid, output)
+        _, status = Process.waitpid2(pid)
+        [output, status, false]
+      end
+
+      def kill_process_group(pid)
+        %w[TERM KILL].each { |signal| ignoring_errors { Process.kill(signal, -pid) } }
+        ignoring_errors { Process.waitpid(pid) }
+        ["", nil, true]
+      end
+
+      def ignoring_errors
+        yield
+      rescue StandardError
+        nil
       end
     end
   end

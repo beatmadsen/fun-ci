@@ -324,11 +324,7 @@ Metrics/MethodLength:
     - 'db/migrate/**/*'
     - 'features/support/env.rb'
     - 'lib/fun_ci/cli.rb'
-    - 'lib/fun_ci/pipeline/background_wrapper.rb'
-    - 'lib/fun_ci/pipeline/pipeline_forker.rb'
-    - 'lib/fun_ci/pipeline/process_runner.rb'
     - 'lib/fun_ci/pipeline/stage_runner.rb'
-    - 'lib/fun_ci/pipeline/stale_pipeline_canceller.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/admin_tui.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
@@ -595,7 +591,6 @@ Style/RegexpLiteral:
 # This cop supports safe autocorrection (--autocorrect).
 Style/RescueModifier:
   Exclude:
-    - 'lib/fun_ci/pipeline/process_runner.rb'
     - 'test/acceptance/test_no_validate_fork_safety.rb'
     - 'test/acceptance/test_trigger_cli_concurrent_runs.rb'
     - 'test/acceptance/test_trigger_cli_pid_in_db.rb'
