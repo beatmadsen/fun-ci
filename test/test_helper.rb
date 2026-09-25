@@ -30,6 +30,7 @@ class FakeRecorder
     @calls << [:start_stage, stage]
     @next_job_id += 1
   end
+
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
   def complete_run = @calls << [:complete_run]
   def fail_run = @calls << [:fail_run]
@@ -68,7 +69,7 @@ end
 module AnimationRendererTestHelpers
   FAKE_ANIMATION_DATA = {
     name: "Fake", fps: 8,
-    frames: [["line-one", "line-two"], ["line-one", "line-two"]]
+    frames: [%w[line-one line-two], %w[line-one line-two]]
   }.freeze
 
   FAKE_IDLE_DATA = {
@@ -83,6 +84,7 @@ module AnimationRendererTestHelpers
 
   FakeAnimationLibrary = Module.new do
     extend self
+
     define_method(:random_failure) { AnimationRendererTestHelpers::FAKE_ANIMATION_DATA }
     define_method(:random_success) { AnimationRendererTestHelpers::FAKE_ANIMATION_DATA }
     define_method(:idle) { AnimationRendererTestHelpers::FAKE_IDLE_DATA }
@@ -106,31 +108,30 @@ end
 
 module PipelineTestHelpers
   def create_completed_run(commit, branch)
-    run_id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: commit, branch: branch)
-    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "running")
-    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "completed")
-    %w[lint build fast slow].each do |stage|
-      job_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: stage)
-      FunCi::Persistence::StageJob.update_status(@db, job_id, "running")
-      FunCi::Persistence::StageJob.update_status(@db, job_id, "completed")
-    end
+    run_id = create_pipeline_run(commit, branch, "completed")
+    %w[lint build fast slow].each { |stage| create_stage_job(run_id, stage, "running", "completed") }
     run_id
   end
 
   def create_failed_run(commit, branch)
+    run_id = create_pipeline_run(commit, branch, "failed")
+    create_stage_job(run_id, "lint", "running", "completed")
+    create_stage_job(run_id, "build", "running", "completed")
+    create_stage_job(run_id, "fast", "running", "failed")
+    create_stage_job(run_id, "slow")
+    run_id
+  end
+
+  def create_pipeline_run(commit, branch, final_status)
     run_id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: commit, branch: branch)
     FunCi::Persistence::PipelineRun.update_status(@db, run_id, "running")
-    FunCi::Persistence::PipelineRun.update_status(@db, run_id, "failed")
-    lint_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "lint")
-    FunCi::Persistence::StageJob.update_status(@db, lint_id, "running")
-    FunCi::Persistence::StageJob.update_status(@db, lint_id, "completed")
-    build_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "build")
-    FunCi::Persistence::StageJob.update_status(@db, build_id, "running")
-    FunCi::Persistence::StageJob.update_status(@db, build_id, "completed")
-    fast_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "fast")
-    FunCi::Persistence::StageJob.update_status(@db, fast_id, "running")
-    FunCi::Persistence::StageJob.update_status(@db, fast_id, "failed")
-    FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: "slow")
+    FunCi::Persistence::PipelineRun.update_status(@db, run_id, final_status)
     run_id
+  end
+
+  def create_stage_job(run_id, stage, *statuses)
+    job_id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: run_id, stage: stage)
+    statuses.each { |status| FunCi::Persistence::StageJob.update_status(@db, job_id, status) }
+    job_id
   end
 end

@@ -24,64 +24,32 @@ class TestAdminTuiNavigation < Minitest::Test
   end
 
   def test_should_have_no_cursor_initially
-    # Given runs on the board
-    tui = make_tui
-    tui.render_once
-    plain = FunCi::Tui::Ansi.strip(@output.string)
-    # Then no cursor marker should be visible
-    refute_match(/>/, plain, "Cursor should be invisible by default")
+    make_tui.render_once
+    refute_match(/>/, FunCi::Tui::Ansi.strip(@output.string), "Cursor should be invisible by default")
   end
 
   def test_should_show_cursor_on_first_row_after_j
-    tui = make_tui
-    tui.handle_key("j")
-    tui.render_once
-    plain = FunCi::Tui::Ansi.strip(@output.string)
-    lines = plain.lines.select { |l| l.include?("hash") }
-    assert_match(/^>/, lines[0], "First row should have cursor marker after j")
-    refute_match(/^>/, lines[1], "Second row should not have cursor marker")
+    rows = board_rows_after_keys("j")
+    assert_match(/^>/, rows[0], "First row should have cursor marker after j")
+    refute_match(/^>/, rows[1], "Second row should not have cursor marker")
   end
 
   def test_should_move_cursor_down_on_second_j
-    tui = make_tui
-    tui.handle_key("j")
-    tui.handle_key("j")
-    tui.render_once
-    plain = FunCi::Tui::Ansi.strip(@output.string)
-    lines = plain.lines.select { |l| l.include?("hash") }
-    refute_match(/^>/, lines[0], "First row should not have cursor after moving down")
-    assert_match(/^>/, lines[1], "Second row should have cursor after j j")
+    rows = board_rows_after_keys("j", "j")
+    refute_match(/^>/, rows[0], "First row should not have cursor after moving down")
+    assert_match(/^>/, rows[1], "Second row should have cursor after j j")
   end
 
   def test_should_move_cursor_up_on_k
-    tui = make_tui
-    tui.handle_key("j")
-    tui.handle_key("j")
-    tui.handle_key("k")
-    tui.render_once
-    plain = FunCi::Tui::Ansi.strip(@output.string)
-    lines = plain.lines.select { |l| l.include?("hash") }
-    assert_match(/^>/, lines[0], "First row should have cursor after j j k")
+    assert_match(/^>/, board_rows_after_keys("j", "j", "k")[0], "First row should have cursor after j j k")
   end
 
   def test_should_not_move_past_last_row
-    tui = make_tui
-    # Move to last row (index 2) then try to go further
-    4.times { tui.handle_key("j") }
-    tui.render_once
-    plain = FunCi::Tui::Ansi.strip(@output.string)
-    lines = plain.lines.select { |l| l.include?("hash") }
-    assert_match(/^>/, lines[2], "Cursor should stay on last row")
+    assert_match(/^>/, board_rows_after_keys(*%w[j j j j])[2], "Cursor should stay on last row")
   end
 
   def test_should_not_move_above_first_row
-    tui = make_tui
-    tui.handle_key("j")  # cursor on row 0
-    tui.handle_key("k")  # try to go above
-    tui.render_once
-    plain = FunCi::Tui::Ansi.strip(@output.string)
-    lines = plain.lines.select { |l| l.include?("hash") }
-    assert_match(/^>/, lines[0], "Cursor should stay on first row")
+    assert_match(/^>/, board_rows_after_keys("j", "k")[0], "Cursor should stay on first row")
   end
 
   private
@@ -90,4 +58,10 @@ class TestAdminTuiNavigation < Minitest::Test
     FunCi::Tui::AdminTui.new(db: @db, output: @output, input: StringIO.new(""))
   end
 
+  def board_rows_after_keys(*keys)
+    tui = make_tui
+    keys.each { |key| tui.handle_key(key) }
+    tui.render_once
+    FunCi::Tui::Ansi.strip(@output.string).lines.select { |l| l.include?("hash") }
+  end
 end

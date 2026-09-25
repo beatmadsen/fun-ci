@@ -17,43 +17,31 @@ class TestPipelineRunPid < Minitest::Test
   end
 
   def test_should_store_and_retrieve_pid_for_pipeline_run
-    # Given a pipeline run exists
     id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: "abc123", branch: "main")
-    # When we store a PID for it
-    FunCi::Persistence::PipelineRun.store_pid(@db, id, 12345)
-    # Then the PID should be retrievable
+    FunCi::Persistence::PipelineRun.store_pid(@db, id, 12_345)
     run = FunCi::Persistence::PipelineRun.find(@db, id)
-    assert_equal 12345, run[:pid], "Should store and retrieve the background PID"
+    assert_equal 12_345, run[:pid], "Should store and retrieve the background PID"
   end
 
   def test_should_default_pid_to_nil
-    # Given a newly created pipeline run
     id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: "abc123", branch: "main")
-    # When we retrieve it
     run = FunCi::Persistence::PipelineRun.find(@db, id)
-    # Then pid should be nil
     assert_nil run[:pid], "New pipeline run should have nil PID"
   end
 
   def test_should_find_running_pipeline_with_pid_by_branch
-    # Given a running pipeline with a PID on branch "main"
     id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: "abc123", branch: "main")
     FunCi::Persistence::PipelineRun.update_status(@db, id, "running")
-    FunCi::Persistence::PipelineRun.store_pid(@db, id, 12345)
-    # When we look for a running pipeline on "main"
+    FunCi::Persistence::PipelineRun.store_pid(@db, id, 12_345)
     run = FunCi::Persistence::PipelineRun.find_running_with_pid(@db, "main")
-    # Then we should find it with its PID
     assert_equal id, run[:id], "Should find the running pipeline"
-    assert_equal 12345, run[:pid], "Should include the PID"
+    assert_equal 12_345, run[:pid], "Should include the PID"
   end
 
   def test_should_return_nil_when_no_running_pipeline_on_branch
-    # Given a completed pipeline on "main"
     id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: "abc123", branch: "main")
     FunCi::Persistence::PipelineRun.update_status(@db, id, "completed")
-    # When we look for a running pipeline on "main"
     run = FunCi::Persistence::PipelineRun.find_running_with_pid(@db, "main")
-    # Then we should get nil
     assert_nil run, "Should not find completed pipelines"
   end
 end

@@ -60,12 +60,9 @@ class TestAnsi < Minitest::Test
   end
 
   def test_should_strip_cursor_and_screen_control_sequences
-    # Given text with CSI control sequences (clear screen, cursor home)
     text = "\e[2J\e[Hfun-ci header"
-    # When stripped
     result = FunCi::Tui::Ansi.strip(text)
-    # Then only the plain text should remain
     assert_equal "fun-ci header", result,
-      "Should strip clear-screen and cursor-home sequences"
+                 "Should strip clear-screen and cursor-home sequences"
   end
 end

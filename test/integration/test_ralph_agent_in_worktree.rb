@@ -66,7 +66,7 @@ class TestRalphAgentInWorktree < Minitest::Test
     iterate(agent: ONE_COMMIT)
     iterate(agent: "sh -c 'echo y > b.txt && git add b.txt && git commit -qm \"AT-1.2: add b\"'")
 
-    assert_equal %w[1 2], log.lines.map { |l| l.split("\t").first }
+    assert_equal(%w[1 2], log.lines.map { |l| l.split("\t").first })
     assert_equal 1, git("worktree", "list").lines.count
   end
 
@@ -99,8 +99,8 @@ class TestRalphAgentInWorktree < Minitest::Test
     git("config", "user.email", "t@t")
   end
 
-  def git(*args)
-    out, status = Open3.capture2e(GIT_ISOLATION, "git", *args, chdir: @repo)
+  def git(*)
+    out, status = Open3.capture2e(GIT_ISOLATION, "git", *, chdir: @repo)
     raise out unless status.success?
 
     out.strip
