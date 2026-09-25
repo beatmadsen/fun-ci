@@ -9,7 +9,7 @@ use fun_ci_renderer::inputs::Input;
 use serde_json::json;
 
 use crate::support::boards::{self, board, event, run};
-use crate::support::live::{last_wait, line, live, replies_after_ready};
+use crate::support::live::{last_wait, line, live, live_on, replies_after_ready};
 
 const TICK_0: &str = r#"{"t":"tick","ms":0}"#;
 const TICK_100: &str = r#"{"t":"tick","ms":100}"#;
@@ -50,6 +50,12 @@ fn headless_bytes(lines: &[&str]) -> Vec<Vec<u8>> {
 fn a_board_is_drawn_on_the_terminal_when_it_arrives() {
     let frames = live(vec![line(&idle_board())]).frames;
     assert!(screen_text(&frames).contains("b1"));
+}
+
+#[test]
+fn the_board_is_drawn_at_the_size_reported_in_ready() {
+    let headless = headless_bytes(&[r#"{"t":"resize","cols":100,"rows":30}"#, &idle_board(), TICK_0]);
+    assert_eq!(live_on((100, 30), vec![line(&idle_board())]).frames, headless);
 }
 
 #[test]

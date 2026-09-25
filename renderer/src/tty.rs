@@ -40,7 +40,7 @@ impl Default for Tty {
 
 impl Terminal for Tty {
     fn size(&self) -> (u16, u16) {
-        with_entered(|entered| window_size(&entered.file)).flatten().unwrap_or((80, 24))
+        entered_size()
     }
 
     fn enter(&mut self) -> io::Result<()> {
@@ -59,6 +59,21 @@ impl Terminal for Tty {
     fn draw(&mut self, bytes: &[u8]) -> io::Result<()> {
         with_entered(|entered| entered.file.write_all(bytes)).unwrap_or(Ok(()))
     }
+}
+
+/// The size of the terminal this process entered, from any thread; 80x24
+/// when it reports none or none is entered.
+#[must_use]
+pub fn entered_size() -> (u16, u16) {
+    with_entered(|entered| window_size(&entered.file)).flatten().unwrap_or((80, 24))
+}
+
+/// A second handle on the terminal this process entered, to read keys from.
+///
+/// # Errors
+/// When no terminal is entered, or the handle cannot be duplicated.
+pub fn keyboard() -> io::Result<File> {
+    with_entered(|entered| entered.file.try_clone()).unwrap_or_else(|| Err(io::Error::other("no terminal entered")))
 }
 
 /// Leaves the alternate screen and raw mode if this process entered them,

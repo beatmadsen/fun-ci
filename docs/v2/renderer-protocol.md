@@ -124,6 +124,11 @@ Sent when the terminal's size changes and differs from the size last reported
 renderer redraws at the new size at once, with the board it has, rather than
 leave the old layout on screen until Ruby's fresh `board`.
 
+The renderer hears of a size change through SIGWINCH, which the kernel sends
+to the foreground process group of a terminal's session. `/dev/tty` is always
+the renderer's controlling terminal; a device named with `--tty` is one only
+if the renderer's session has made it so, and otherwise no `resize` is sent.
+
 ### `error`
 `{"t":"error","code":"parse"|"unknown_type"|"version"|"terminal","detail":"..."}`
 

@@ -53,9 +53,14 @@ pub struct Outcome {
 
 /// Runs `inputs` (after `hello`) through a live session on an 80x24 terminal.
 pub fn live(inputs: Vec<Input>) -> Outcome {
+    live_on((80, 24), inputs)
+}
+
+/// Runs `inputs` (after `hello`) through a live session on a terminal of `size`.
+pub fn live_on(size: (u16, u16), inputs: Vec<Input>) -> Outcome {
     let (clock, waits) = (Rc::new(Cell::new(5_000)), Rc::new(RefCell::new(Vec::new())));
     let script = Script { inputs: [line(HELLO)].into_iter().chain(inputs).collect(), clock: clock.clone(), waits: waits.clone() };
-    let (mut output, mut terminal) = (Vec::new(), FakeTerminal::sized(80, 24));
+    let (mut output, mut terminal) = (Vec::new(), FakeTerminal::sized(size.0, size.1));
     let console = Console::new(&Library::builtin(), 0, (80, 24));
     run_live(Session { inputs: script, output: &mut output, clock: ScriptClock(clock), console }, &mut terminal);
     let replies = String::from_utf8(output).unwrap().lines().map(|l| serde_json::from_str(l).unwrap()).collect();

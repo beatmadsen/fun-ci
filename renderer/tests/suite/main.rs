@@ -20,6 +20,7 @@ mod headless;
 mod headless_measures;
 mod keys;
 mod live;
+mod live_binary;
 mod protocol_version;
 mod restore;
 mod screen_bytes;

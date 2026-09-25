@@ -39,14 +39,15 @@ impl<C: Clock> Live<C> {
         Self { console, clock, anchor: Anchor::default(), last_frame: None }
     }
 
-    /// Handles inputs until `quit` or the end of Ruby's input. The first
-    /// frame clears the screen.
+    /// Handles inputs until `quit` or the end of Ruby's input. Frames are
+    /// drawn at the terminal's size, the first one clearing the screen.
     pub fn converse<I: Inputs, W: Write, T: Terminal>(
         mut self,
         inputs: &mut I,
         replies: &mut Replies<W>,
         entered: &mut Entered<T>,
     ) -> i32 {
+        self.console.resize(entered.terminal().size());
         self.console.clear();
         while self.handle(inputs.next(self.wait()), replies, entered.terminal()) {}
         EXIT_OK
