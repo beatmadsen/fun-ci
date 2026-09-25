@@ -7,12 +7,6 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: TreatCommentsAsGroupSeparators, ConsiderPunctuation.
-Bundler/OrderedGems:
-  Exclude:
-    - 'Gemfile'
-
-# This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, IndentationWidth.
 # SupportedStyles: with_first_argument, with_fixed_indentation
 Layout/ArgumentAlignment:
@@ -186,8 +180,6 @@ Lint/UnusedMethodArgument:
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
-    - 'test/**/*'
-    - 'db/migrate/**/*'
     - 'lib/fun_ci/pipeline/stage_runner.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
@@ -198,7 +190,6 @@ Metrics/AbcSize:
 # Configuration parameters: CountBlocks, CountModifierForms, Max.
 Metrics/BlockNesting:
   Exclude:
-    - 'Rakefile'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'test/acceptance/trigger_cli_client.rb'
     - 'test/unit/test_trigger.rb'
@@ -209,7 +200,6 @@ Metrics/BlockNesting:
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
-    - 'test/**/*'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/animation_renderer.rb'
 
@@ -222,7 +212,6 @@ Metrics/CyclomaticComplexity:
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 Metrics/MethodLength:
   Exclude:
-    - 'db/migrate/**/*'
     - 'lib/fun_ci/pipeline/stage_runner.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/admin_tui.rb'
@@ -295,7 +284,6 @@ Naming/PredicateMethod:
 # MethodDefinitionMacros: define_method, define_singleton_method
 Naming/PredicatePrefix:
   Exclude:
-    - 'spec/**/*'
     - 'lib/fun_ci/tui/animation.rb'
 
 
@@ -334,19 +322,12 @@ Style/NilLambda:
 # SupportedStyles: predicate, comparison
 Style/NumericPredicate:
   Exclude:
-    - 'spec/**/*'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/key_handler.rb'
     - 'lib/fun_ci/tui/streak_counter.rb'
     - 'test/acceptance/trigger_cli_client.rb'
 
 
-
-# Configuration parameters: AllowedClasses.
-Style/OneClassPerFile:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
 
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -390,10 +371,3 @@ Style/TrailingCommaInArrayLiteral:
     - 'lib/fun_ci/animations/running.rb'
     - 'lib/fun_ci/animations/success.rb'
     - 'lib/fun_ci/animations/yay.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinSize, WordRegex.
-# SupportedStyles: percent, brackets
-Style/WordArray:
-  Exclude:
-    - 'fun_ci.gemspec'

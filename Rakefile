@@ -31,13 +31,15 @@ end
 
 Cucumber::Rake::Task.new(:cucumber)
 
+def capture_golden_corpus
+  require_relative "contract/capture/golden_corpus"
+  corpus = FunCi::Contract::GoldenCorpus.new(root: File.expand_path("contract", __dir__))
+  corpus.scenario_names.each { |name| corpus.write(name, corpus.capture(name)) }
+end
+
 namespace :contract do
   desc "Write the Ruby renderer's frames for every contract/scenarios/*.jsonl to contract/golden/"
-  task :capture do
-    require_relative "contract/capture/golden_corpus"
-    corpus = FunCi::Contract::GoldenCorpus.new(root: File.expand_path("contract", __dir__))
-    corpus.scenario_names.each { |name| corpus.write(name, corpus.capture(name)) }
-  end
+  task(:capture) { capture_golden_corpus }
 end
 
 RuboCop::RakeTask.new

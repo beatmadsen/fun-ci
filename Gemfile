@@ -8,8 +8,8 @@ gem "rake"
 gem "rubocop", "~> 1.60", require: false
 
 group :test do
-  gem "minitest"
+  gem "activesupport", "~> 8.1"
   gem "cucumber", "~> 9.0"
   gem "logger" # required explicitly since Ruby 4.0
-  gem "activesupport", "~> 8.1"
+  gem "minitest"
 end

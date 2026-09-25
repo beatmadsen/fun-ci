@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir["lib/**/*", "exe/*", "LICENSE.txt", "README.md", "CHANGELOG.md"]
   spec.bindir = "exe"
-  spec.executables = ["fun-ci", "fun-ci-trigger", "fun-ci-tui"]
+  spec.executables = %w[fun-ci fun-ci-trigger fun-ci-tui]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "sqlite3", "~> 2.0"

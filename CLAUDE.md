@@ -108,4 +108,5 @@ the frame's clock arrives as `Board#now`.
 ## Code Constraints
 
 - Max **150 lines** per file, max **4 instance variables** per class
+- Methods ≤ 7 lines, block nesting ≤ 2, ≤ 4 parameters (keywords count): RuboCop enforces these in the gate. `.rubocop_todo.yml` may only exclude files, and only under `lib/fun_ci/tui/`, `lib/fun_ci/animations/`, or the AT-0.2 list; `test/unit/test_rubocop_todo.rb` enforces that. Fix an offence, never add an exclusion
 - TUI runs in raw terminal mode: `\n` alone does NOT carriage-return -- always use `\r\n` (Screen#println handles this)
