@@ -15,10 +15,19 @@ Where a test says "the gate", it means `bundle exec rake` (default task).
 **Given** `.rubocop.yml` with `Metrics/MethodLength: 7`, `Metrics/BlockNesting: 2 (CountBlocks: true)`, `Metrics/ParameterLists: 4`, `TargetRubyVersion: 3.2`, `NewCops: enable`
 **When** the gate runs
 **Then** rubocop runs after the tests and the gate fails on any offence.
+**And** when AT-0.1 is done, `.rubocop_todo.yml` names only files under
+`lib/fun_ci/tui/` and `lib/fun_ci/animations/`, and a test fails if it names
+anything else.
 *Bites:* a commit shows a deliberate 8-line method failing the gate, then reverted.
-*Note:* existing offences are fixed, not excluded — split into several AT-0.1.x
-commits by directory (`setup/`, `persistence/`, `pipeline/`, `tui/`). `tui/`
-may use a directory-scoped `.rubocop_todo.yml` since it is deleted in §5.
+*Note:* existing offences are fixed, not excluded. The gate lands first
+(AT-0.1.0) with a generated `.rubocop_todo.yml` listing every existing offence
+by file, so the gate is green and measuring from the first commit. Each later
+AT-0.1.x commit fixes one area and deletes its entries: `lib/fun_ci/setup/`,
+`persistence/`, `pipeline/`, the top-level `lib/` files and `exe/`, then
+`test/unit/`, `test/acceptance/`, `test/integration/`, `features/`,
+`contract/` and the root files. Most method-length offences are in the tests,
+and the 7-line limit applies to test code too. `tui/` and `animations/` keep
+their entries: §3.6 turns the animations into JSON and §5 deletes both.
 
 ### 0.2 Constructor parameter objects replace long keyword lists
 **Given** `Trigger.new` takes 10 keyword arguments
