@@ -39,6 +39,8 @@ ruby -Itest -Ilib test/unit/test_stage_runner.rb -n test_method # One test metho
 rake contract:capture   # Rewrite contract/golden/ from contract/scenarios/ (after a deliberate TUI change)
 rake mutation           # Mutineer over lib/ except tui/ and animations/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
 rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
+ruby script/platform_gem.rb arm64-darwin renderer/target/release/fun-ci-renderer pkg   # A platform gem with that renderer in libexec/
+script/smoke-platform-gem.sh pkg/<gem> [none]   # Install a gem into an empty GEM_HOME and run it; `none` for the plain gem
 script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
 rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable mutants caught. Not in the gate: about 20 minutes. CI runs it
 cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 --scenario contract/scenarios/running.jsonl --out "$(mktemp -d)"   # PNG frames, sheet, cast, stats
@@ -99,6 +101,7 @@ Seams tests use in place of the real thing:
 - Ruby's ConsoleSession and the real renderer binary, on a pseudo-terminal, hold the happy-7 contract conversation line for line, and the binary exits 0 on `quit`: `contract/binary/test_renderer_binary.rb` (the `contract:binary` lane; the Ruby and Rust suites each hold every fixture on their own side: `test/acceptance/test_contract_fixtures.rb`, `renderer/tests/suite/contract_fixtures.rs`).
 - What the Ruby TUI draws matches `contract/golden/`, frame for frame, and capturing twice gives identical bytes (the renderer takes its clock from `Board#now`, never `Time.now`): `test/acceptance/test_golden_corpus.rb`. After a deliberate change, run `rake contract:capture` and review the golden diff in the same commit. The Rust renderer is held to the same frames: `renderer/tests/suite/differential.rs` feeds its output and the golden bytes through the `vt100` emulator and compares the cell grids (text, colours, attributes) frame by frame, so until §5 deletes the Ruby renderer a change to what the TUI draws is made in both, in one commit.
 - The gem ships exactly the tracked files under `lib/` and `exe/` plus README, CHANGELOG and LICENSE, and keeps its publishing metadata: `test/integration/process/test_gemspec_contents.rb`.
+- CI builds the platform gem for each of the five targets in architecture.md, installs each into an empty GEM_HOME and runs it (the musl one on a musl Ruby), and checks the plain gem says how to get a renderer: `test/policy/test_gems_workflow.rb`.
 - CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and both mutation lanes (Ruby on 3.4, and the Rust renderer's): `test/policy/test_ci_workflow.rb`.
 - Every machine and CI job builds the renderer with the pinned Rust, never whichever stable is latest, so clippy's verdict is the same everywhere: `test/policy/test_rust_toolchain.rb`, `test/policy/test_ci_workflow.rb`.
 - fun-ci processes set up a database one at a time (a lock file beside it), so concurrent hooks never die on a fresh database: `test/integration/test_database_setup_lock.rb`, `test/integration/process/test_database_concurrent_setup.rb`.

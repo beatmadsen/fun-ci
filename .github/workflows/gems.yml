@@ -1,0 +1,64 @@
+# The gems fun-ci is installed as (docs/v2/architecture.md, Distribution): a
+# platform gem per target with the renderer in libexec/, and the plain gem,
+# whose console asks for a renderer. Each is installed into an empty GEM_HOME
+# and run (script/smoke-platform-gem.sh). Nothing here publishes.
+name: Gems
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  platform:
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { platform: x86_64-linux, target: x86_64-unknown-linux-gnu, runner: ubuntu-22.04, smoke: true }
+          - { platform: aarch64-linux, target: aarch64-unknown-linux-gnu, runner: ubuntu-22.04-arm, smoke: true }
+          - { platform: x86_64-linux-musl, target: x86_64-unknown-linux-musl, runner: ubuntu-22.04, smoke: false }
+          - { platform: arm64-darwin, target: aarch64-apple-darwin, runner: macos-14, smoke: true }
+          - { platform: x86_64-darwin, target: x86_64-apple-darwin, runner: macos-15-intel, smoke: true }
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get install -y musl-tools
+        if: matrix.target == 'x86_64-unknown-linux-musl'
+      - run: rustup toolchain install && rustup target add ${{ matrix.target }}
+      - run: cargo build --release --locked --manifest-path renderer/Cargo.toml --target ${{ matrix.target }}
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+      - run: ruby script/platform_gem.rb ${{ matrix.platform }} renderer/target/${{ matrix.target }}/release/fun-ci-renderer pkg
+      - run: script/smoke-platform-gem.sh pkg/*.gem
+        if: matrix.smoke
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gem-${{ matrix.platform }}
+          path: pkg/*.gem
+
+  # A gem for musl only installs on a Ruby built for musl.
+  musl-smoke:
+    needs: platform
+    runs-on: ubuntu-22.04
+    container: ruby:3.4-alpine
+    steps:
+      - run: apk add --no-cache bash
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: gem-x86_64-linux-musl
+          path: pkg
+      - run: script/smoke-platform-gem.sh pkg/*.gem
+
+  plain:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+      - run: mkdir -p pkg && gem build fun_ci.gemspec -o pkg/fun_ci.gem
+      - run: script/smoke-platform-gem.sh pkg/fun_ci.gem none

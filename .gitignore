@@ -38,3 +38,4 @@ ralph/log.tsv
 renderer/target/
 renderer/mutants.out/
 renderer/mutants.out.old/
+/libexec/
