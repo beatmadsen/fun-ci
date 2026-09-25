@@ -178,3 +178,16 @@ asserts that `ConsoleSession` emits exactly the Ruby→renderer lines given the
 recorded renderer→Ruby lines; the Rust suite asserts the reverse. Changing the
 protocol means changing a fixture, which breaks both suites until both sides
 agree.
+
+Each line is an object with exactly one key:
+
+- `{"ruby": <message>}`: a line Ruby sends the renderer.
+- `{"renderer": <message>}`: a line the renderer sends Ruby.
+- `{"state": {"now": <epoch>, "runs": [...]}}`: Ruby-side context the renderer
+  never sees: what the database holds (runs as `BoardData` reads them from
+  SQLite) and the clock. The first `state` line is the starting point; each
+  later one is what Ruby's next poll finds.
+
+The Ruby replay (`test/acceptance/test_contract_fixtures.rb`) feeds in the
+`renderer` lines and compares the whole conversation, both directions in
+order, with the fixture.
