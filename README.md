@@ -14,6 +14,8 @@ After each commit (**post-commit**), the entire pipeline forks to the background
 
 Results are stored in a local SQLite database. A terminal dashboard lets you monitor pipeline status across branches.
 
+Each pipeline runs in a git worktree of its own under `.git/fun-ci/worktrees/`, checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. Two pipelines run at once; set `worktree_slots: 3` in `.fun-ci/config` for more. `fun-ci prune` removes the worktrees when you want the space back.
+
 ## Getting Started
 
 ```bash
@@ -79,11 +81,11 @@ Opens a terminal UI showing pipeline status across all branches. The header area
 
 The console is drawn by a separate program, `fun-ci-renderer`. The gem for Linux (x86_64, aarch64, musl) and macOS (arm64, x86_64) includes it. On other systems you get the plain gem, where every command except `console` works; install the renderer with `cargo install fun-ci-renderer`, or point `FUN_CI_RENDERER` at a copy you built. When something goes wrong between the two, the details are in `.fun-ci/console.log`.
 
-Navigation:
+Keys:
 
-- `j` / `k` -- scroll up/down
-- `c` -- cancel a running pipeline
-- `q` -- quit
+- `j` and `k`, or the arrow keys, move the cursor down and up
+- `c` cancels the run under the cursor: a scheduled one at once, a running one once you answer `y` (`n` or `Esc` keeps it running)
+- `q` quits
 
 ## Time Budgets
 
@@ -102,6 +104,8 @@ If a stage exceeds its budget, it is killed and reported as timed out.
 bundle install
 bundle exec rake   # the gate: tests, the renderer's tests, the binary contract, rubocop, clippy
 ```
+
+The renderer is written in Rust. Install Rust with [rustup](https://rustup.rs), which picks up the version the repository pins in `rust-toolchain.toml`.
 
 ## Changelog
 
