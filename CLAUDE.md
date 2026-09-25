@@ -15,7 +15,6 @@ or a tool.
 
 ```bash
 bundle exec rake test       # Every Minitest test: unit, acceptance, integration
-bundle exec rake cucumber   # Cucumber feature specs
 bundle exec rake rust:test  # cargo test for the Rust renderer (renderer/)
 bundle exec rake contract:binary # Ruby drives the built renderer binary on a pty through contract/fixtures/happy-7.jsonl
 bundle exec rake rubocop    # RuboCop with the project's limits
@@ -66,7 +65,7 @@ fun-ci prune                                          # Remove fun-ci's worktree
 ## Stack
 
 - Ruby >= 3.2 (CI runs 3.2, 3.3, 3.4, 4.0). One runtime dependency: `sqlite3`, in WAL mode.
-- Minitest, run in parallel processes by ActiveSupport's executor (serially under `MUTATION_TESTING`); Cucumber for the TUI features; RuboCop; mutineer for the mutation lane (Ruby >= 3.4 only).
+- Minitest, run in parallel processes by ActiveSupport's executor (serially under `MUTATION_TESTING`); RuboCop; mutineer for the mutation lane (Ruby >= 3.4 only).
 - Prism, in tests, to read Ruby sources for the code-limit and call scans.
 - Rust pinned to one release in `renderer/rust-toolchain.toml` (the root `rust-toolchain.toml` links to it); raise it on purpose, with the gate green on the new release.
 - 2.0 adds a Rust renderer (`fun-ci-renderer`) that Ruby drives over JSON Lines; `docs/v2/architecture.md` decides the boundary: Ruby decides what is true, Rust decides how it looks.
@@ -82,13 +81,13 @@ Fun-CI is an opinionated, local-first CI for a project's own machine: a four-sta
 - `lib/fun_ci/console/` -- the 2.0 console's Ruby half, which decides what is true. `fun-ci console` runs `Launcher`, which starts the renderer and runs a `ConsoleLoop` (renderer lines to the session, a poll after each quiet second): `ConsoleSession` answers the renderer's lines with protocol messages through a port (`RendererProcess` for the real binary, found by `RendererLookup`); `ConsoleState` builds each `board` from `BoardData` (SQLite reads, paging), the `View` (a `KeyHandler`'s cursor and one page of runs) and `StageEvents` (`StageChangeDetector`'s changes as `event`s); `ConsoleLog` takes what the renderer gets wrong.
 - `lib/fun_ci/tui/`, `lib/fun_ci/animations/` -- the 1.x console, the renderer 2.0 replaces: `AdminTui`, `BoardRenderer`, `Screen`, animation players and data. It uses `console/`'s `BoardData`, `KeyHandler`, `StageChangeDetector` and `StreakCounter`.
 - `contract/` -- renderer scenarios, contract fixtures, the binary lane (`binary/`) and, until 5.3b, the tool that converts the Ruby animations to JSON (`capture/`). `docs/v2/` -- the 2.0 architecture, renderer protocol and backlog (`acceptance-tests.md`, worked in the order of `ralph/build/progress.md`). `ralph/` -- the agent build loop (`docs/v2/agentic-pipeline.md`).
-- `test/unit/` (one class, in memory), `test/acceptance/` (a user-facing command or flow), `test/integration/` (SQLite, filesystem), `test/policy/` (checks on the repository itself: lanes, limits, CLAUDE.md, CI), `test/integration/process/` (real processes and git), `test/integration/process/end_to_end/` (whole pipelines with real git and stage scripts; slow, and left out of the mutation lane), `test/support/` (guards, scanners, test kits), `features/` (Cucumber).
+- `test/unit/` (one class, in memory), `test/acceptance/` (a user-facing command or flow), `test/integration/` (SQLite, filesystem), `test/policy/` (checks on the repository itself: lanes, limits, CLAUDE.md, CI), `test/integration/process/` (real processes and git), `test/integration/process/end_to_end/` (whole pipelines with real git and stage scripts; slow, and left out of the mutation lane), `test/support/` (guards, scanners, test kits).
 
 Seams tests use in place of the real thing:
 - `Trigger.new(project:, commit:, io:, seams:)` and `StageRunner.new(commit_hash:, stdout:, seams:)` take a `Pipeline::Seams` (`lib/fun_ci/pipeline/trigger_params.rb`): `command_runner` (stage processes), `background_launcher` (`nil` is the real fork), `commit_validator` (`git cat-file`), `recorder`, `time_budgets`, `workspace` (`nil` is the worktree pool; `InPlace` runs in the project directory itself). Each left out gets the real thing; `test/support/trigger_test_kit.rb` builds one the way tests need it.
 - `pipeline_forker` on `Trigger.run_from_args` (the `--background` fork), `handlers` and `db_dir` on `Cli.run`, `open:` on `Database.connection`.
 - `FUN_CI_RENDERER` names the renderer `fun-ci console` starts; process tests point it at a shell script (`test/support/fake_renderers.rb`).
-- `width_provider` and `terminal_input` on `AdminTui`; the cucumber lane drives `AdminTui#run` in a fiber (`features/support/run_loop.rb`).
+- `width_provider` and `terminal_input` on `AdminTui`.
 - `FakeRecorder` in `test/test_helper.rb` captures recorder calls without SQLite.
 
 ## Invariants
@@ -96,7 +95,7 @@ Seams tests use in place of the real thing:
 - The gate runs exactly the lanes listed under Lanes, and every rake task the docs mention is a lane, a subset of `rake test`, or a tool: `test/policy/test_gate_lanes.rb`.
 - Methods of at most 7 lines, block nesting of at most 2, at most 4 parameters (keywords count): RuboCop in the gate. `.rubocop_todo.yml` only excludes files, and only under `lib/fun_ci/tui/` and `lib/fun_ci/animations/`: `test/policy/test_rubocop_todo.rb`. Fix an offence; never add an exclusion.
 - No Ruby file longer than 150 lines (the animation data modules aside until §3.6), no class or module with more than 4 instance variables: `test/policy/test_code_limits.rb`.
-- Tests wait on nothing real and reach state through public interfaces: no `sleep`, `Thread.pass`, `Timeout.timeout` or `instance_variable_get/set` in `test/` or `features/`: `test/policy/test_tests_are_deterministic.rb`. Background work is injected and driven by the test, not spawned and polled; if a test can't get at something through the public API, add a seam.
+- Tests wait on nothing real and reach state through public interfaces: no `sleep`, `Thread.pass`, `Timeout.timeout` or `instance_variable_get/set` in `test/`: `test/policy/test_tests_are_deterministic.rb`. Background work is injected and driven by the test, not spawned and polled; if a test can't get at something through the public API, add a seam.
 - A test run writes nothing to stderr (a dying thread or a forked child's exception is an error no test asserted on); capture expected output with `assert_output`/`capture_io`: `test/integration/process/test_stray_stderr_guard.rb`.
 - Every SQLite connection a test opens is closed by the end of that test, since a leaked one is inherited by the next fork in the same worker: `test/integration/process/test_sqlite_connection_guard.rb`.
 - Tests touch only the run's private temp root, which `TMPDIR` points at: no file written, database opened or git run outside it. Build paths from `Dir.mktmpdir`/`Dir.tmpdir`, never from the repository or `$HOME`: `test/integration/process/test_confinement_guard.rb`, `test/policy/test_confinement_guard_installed.rb`.

@@ -16,7 +16,7 @@ git init -q . && git add -A >/dev/null && git -c user.name=ci -c user.email=ci@e
 gem install bundler -v "$(tail -1 Gemfile.lock | tr -d ' ')" --no-document >/dev/null
 bundle config set frozen true >/dev/null
 bundle install --quiet
-CUCUMBER_OPTS="--format progress" bundle exec rake
+bundle exec rake
 SH
 versions=("$@")
 if [ ${#versions[@]} -eq 0 ]; then

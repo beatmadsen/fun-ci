@@ -76,4 +76,18 @@ class TestKeyHandler < Minitest::Test
 
     assert_equal 0, handler.cursor_index
   end
+
+  def test_should_drop_the_confirmation_on_n
+    handler = handler_over("running")
+    press(handler, "j", "c", "n")
+
+    assert_equal [[], false], [@board_data.cancelled, handler.confirming?]
+  end
+
+  def test_should_do_nothing_on_c_over_a_finished_run
+    handler = handler_over("completed")
+    press(handler, "j", "c")
+
+    assert_equal [[], false], [@board_data.cancelled, handler.confirming?]
+  end
 end

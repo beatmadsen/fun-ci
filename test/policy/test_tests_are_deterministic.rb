@@ -9,6 +9,6 @@ class TestTestsAreDeterministic < Minitest::Test
   ROOT = File.expand_path("../..", __dir__)
 
   def test_no_test_or_feature_sleeps_times_out_or_reads_another_object_s_instance_variables
-    assert_empty CallScanner.scan(ROOT, "{test,features}/**/*.rb", CallScanner::NONDETERMINISTIC)
+    assert_empty CallScanner.scan(ROOT, "test/**/*.rb", CallScanner::NONDETERMINISTIC)
   end
 end

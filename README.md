@@ -100,7 +100,7 @@ If a stage exceeds its budget, it is killed and reported as timed out.
 
 ```bash
 bundle install
-bundle exec rake   # the gate: tests, cucumber, rubocop
+bundle exec rake   # the gate: tests, the renderer's tests, the binary contract, rubocop, clippy
 ```
 
 ## Changelog

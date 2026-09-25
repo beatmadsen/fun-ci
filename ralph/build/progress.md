@@ -47,7 +47,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-4.3: `cargo install fun-ci-renderer` path documented and tested in CI
 - [x] AT-5.1: `fun-ci console` uses the Rust renderer
 - [x] AT-5.2: Golden byte files become Rust `insta` snapshots
-- [ ] AT-5.3: Cucumber TUI features are rewritten against headless frames or deleted where the Rust suite covers them
+- [x] AT-5.3: Cucumber TUI features are rewritten against headless frames or deleted where the Rust suite covers them
 - [ ] AT-5.3b: Ruby `tui/` rendering and `animations/` are deleted
 - [ ] AT-5.4: README, CHANGELOG, version 2.0.0
 - [ ] AT-6.1: Objective visual gates from `stats.json` and `frames/` in `rake`

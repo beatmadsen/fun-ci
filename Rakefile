@@ -2,7 +2,6 @@
 
 require "bundler/gem_tasks"
 require "rake/testtask"
-require "cucumber/rake/task"
 require "rubocop/rake_task"
 require "etc"
 
@@ -22,8 +21,6 @@ TEST_LANES.each do |lane, pattern|
     t.test_files = FileList[pattern]
   end
 end
-
-Cucumber::Rake::Task.new(:cucumber)
 
 # Kept out of `rake test`: it needs the binary cargo builds first.
 def drive_renderer_binary
@@ -132,4 +129,4 @@ task("mutation:rust:shard", %i[k n]) { |_, args| rust_mutation_shard(Integer(arg
 desc "Judge the outcomes of all n shards together against the threshold"
 task("mutation:rust:score", %i[n]) { |_, args| judge_rust_shards(args[:n], RUST_MUTATION_THRESHOLD) }
 
-task default: %i[test cucumber rust:test contract:binary rubocop rust:clippy]
+task default: %i[test rust:test contract:binary rubocop rust:clippy]

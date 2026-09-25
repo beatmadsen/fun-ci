@@ -31,7 +31,7 @@ class TestCodeLimits < Minitest::Test
   private
 
   def ruby_files
-    Dir.glob("{lib,exe,test,features,contract}/**/*.rb", base: ROOT) + %w[Rakefile fun_ci.gemspec]
+    Dir.glob("{lib,exe,test,contract}/**/*.rb", base: ROOT) + %w[Rakefile fun_ci.gemspec]
   end
 
   def crowded_scopes(path)

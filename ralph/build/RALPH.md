@@ -23,7 +23,7 @@ commands:
     run: cat docs/v2/acceptance-tests.md
     timeout: 5
   - name: gate
-    run: bash -c 'set -o pipefail; CUCUMBER_OPTS="--format progress" bundle exec rake 2>&1 | tail -60; echo "gate exit status $?"'
+    run: bash -c 'set -o pipefail; bundle exec rake 2>&1 | tail -60; echo "gate exit status $?"'
     timeout: 600
 ---
 

@@ -6,8 +6,8 @@ require_relative "../test_helper"
 # invariant names a test that exists to enforce it.
 class TestClaudeMd < Minitest::Test
   ROOT = File.expand_path("../..", __dir__)
-  # Minitest and Cucumber, the Rust suite, and the binary contract lane.
-  TEST_PATH = %r{`((?:test|features|renderer/tests|contract/binary)/[\w/.-]+\.(?:rb|feature|rs))`}
+  # Minitest, the Rust suite, and the binary contract lane.
+  TEST_PATH = %r{`((?:test|renderer/tests|contract/binary)/[\w/.-]+\.(?:rb|rs))`}
 
   def test_has_the_stack_layout_invariants_and_gotchas_sections
     assert_empty(%w[Stack Layout Invariants Gotchas] - sections.keys)
