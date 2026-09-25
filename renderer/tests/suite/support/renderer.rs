@@ -34,8 +34,12 @@ impl Renderer {
         Self { child, stdin, lines }
     }
 
-    pub fn send(&mut self, line: &str) {
-        writeln!(self.stdin.as_mut().expect("the renderer's input was closed"), "{line}").unwrap();
+    /// Writes `lines` and a newline in one write, so a renderer that reads
+    /// them and exits never leaves part of them to a write that finds the
+    /// pipe closed.
+    pub fn send(&mut self, lines: &str) {
+        let input = self.stdin.as_mut().expect("the renderer's input was closed");
+        input.write_all(format!("{lines}\n").as_bytes()).unwrap();
     }
 
     /// Ends the renderer's input.

@@ -49,9 +49,10 @@ fn end_of_input(renderer: &mut Renderer) {
 
 /// `quit`, then a line a running session would answer, then end of input,
 /// so a renderer that ignored `quit` answers instead of hanging the test.
+/// Both lines go in one write: the renderer exits on `quit`, and a second
+/// write could find its input already closed.
 fn quit(renderer: &mut Renderer) {
-    renderer.send(r#"{"t":"quit"}"#);
-    renderer.send("not json");
+    renderer.send("{\"t\":\"quit\"}\nnot json");
     renderer.close_input();
 }
 
