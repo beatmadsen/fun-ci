@@ -57,7 +57,6 @@ The full state to show. Always complete — never a diff.
 ```json
 {"t":"board",
  "now": 1790000000,
- "project": "/home/erik/src/fun-ci",
  "streak": 7,
  "cursor": 0,
  "confirming": false,
