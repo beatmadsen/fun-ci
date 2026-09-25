@@ -1,6 +1,10 @@
+use std::io;
+use std::process::exit;
+
+use fun_ci_renderer::session::run_session;
+use fun_ci_renderer::tty::Tty;
+
 fn main() {
-    println!(
-        "fun-ci-renderer speaks protocol v{}",
-        fun_ci_renderer::PROTOCOL_VERSION
-    );
+    let mut tty = Tty::default();
+    exit(run_session(io::stdin().lock(), io::stdout().lock(), &mut tty));
 }

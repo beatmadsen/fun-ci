@@ -1,6 +1,11 @@
 //! The fun-ci console renderer: Ruby decides what is true, this crate decides
 //! how it looks. See `docs/v2/architecture.md`.
 
+pub mod protocol;
+pub mod session;
+pub mod terminal;
+pub mod tty;
+
 /// The renderer protocol version this build speaks (`docs/v2/renderer-protocol.md`).
 pub const PROTOCOL_VERSION: u64 = 1;
 

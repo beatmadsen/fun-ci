@@ -99,7 +99,10 @@ Names: `stage_failed`, `stage_passed`, `run_passed`, `run_failed`,
 a fresh `board`.
 
 ### `error`
-`{"t":"error","code":"parse"|"unknown_type"|"version","detail":"..."}`
+`{"t":"error","code":"parse"|"unknown_type"|"version"|"terminal","detail":"..."}`
+
+`terminal` means the renderer could not open `/dev/tty` or enter raw mode;
+it exits 1 after sending it.
 
 ## Headless mode
 
