@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Runs the build loop in Docker, then fetches what it landed into local
-# branches for review. Never touches v2: a human fast-forwards it.
+# branches for review. Never touches main: a human fast-forwards it.
 #
 # Usage: ralph/docker/run.sh -n 5 -t 900      (arguments go to `ralph run`)
 #
@@ -29,7 +29,7 @@ docker run --rm \
   -v "$out":/out \
   fun-ci-ralph "$@" || status=$?
 
-if [ -f "$out/v2.bundle" ]; then git -C "$repo" fetch --quiet "$out/v2.bundle" "v2:ralph/incoming"; fi
+if [ -f "$out/main.bundle" ]; then git -C "$repo" fetch --quiet "$out/main.bundle" "main:ralph/incoming"; fi
 if [ -f "$out/rejected.bundle" ]; then git -C "$repo" fetch --quiet --force "$out/rejected.bundle" "refs/heads/ralph/rejected/*:refs/heads/ralph/rejected/*"; fi
 echo "run.sh: loop exit $status; output in $out"
 [ -f "$out/log.tsv" ] && cat "$out/log.tsv"

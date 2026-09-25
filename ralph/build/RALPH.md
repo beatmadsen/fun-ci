@@ -29,7 +29,7 @@ commands:
 
 # fun-ci 2.0 build loop
 
-Run from the repository root with the integration branch (`v2`) checked out.
+Run from the repository root with the trunk (`main`) checked out.
 `ralph/agent-in-worktree.sh` gives you a fresh worktree on a new branch; you
 are already inside it. Relative paths only.
 

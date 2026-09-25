@@ -39,11 +39,11 @@ with skip-permissions, so the loop runs in Docker:
 
     ralph/docker/run.sh -n 5 -t 900
 
-The container gets the host repo read-only, clones `v2`, runs the loop on the
+The container gets the host repo read-only, clones `main`, runs the loop on the
 clone as a non-root user, and hands back a git bundle. It has no git
 credentials, so it can't push. `run.sh` fetches the result into
-`ralph/incoming` (and any `ralph/rejected/*` branches) without touching `v2`;
-a human reviews and runs `git merge --ff-only ralph/incoming`. If `v2` moved on
+`ralph/incoming` (and any `ralph/rejected/*` branches) without touching `main`;
+a human reviews and runs `git merge --ff-only ralph/incoming`. If `main` moved on
 the host meanwhile, rebase `ralph/incoming` first. The container still has
 outbound network, and its commits are unsigned. It needs a Claude Code token
 from `claude setup-token` in `~/.config/fun-ci-ralph/oauth-token`.
