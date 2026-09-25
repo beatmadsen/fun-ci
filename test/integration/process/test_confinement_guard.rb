@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../test_helper"
-require "open3"
+require_relative "../../support/probe_suite"
 require "tmpdir"
 
 # AT-0.4: a test that writes, opens a database or runs git outside the run's
@@ -57,24 +57,5 @@ class TestConfinementGuard < Minitest::Test
 
   def outside_path = File.join(@outside, "probe.sqlite3")
 
-  def probe_output(body)
-    Dir.mktmpdir("confinement-guard") do |dir|
-      File.write(File.join(dir, "test_probe.rb"), probe(body))
-      Open3.capture2e({ "TMPDIR" => Dir.tmpdir }, "ruby", "-I#{ROOT}/test", "-I#{ROOT}/lib", "test_probe.rb",
-                      chdir: dir).first
-    end
-  end
-
-  def probe(body)
-    <<~RUBY
-      require "test_helper"
-      require "sqlite3"
-      require "open3"
-      class TestProbe < Minitest::Test
-        def test_probe
-          #{body}
-        end
-      end
-    RUBY
-  end
+  def probe_output(body) = ProbeSuite.run(body, env: { "TMPDIR" => Dir.tmpdir }).first
 end

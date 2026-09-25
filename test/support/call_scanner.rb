@@ -15,6 +15,11 @@ class CallScanner
                                any_receiver: %i[instance_variable_get instance_variable_set],
                                on_receiver: { "Thread" => %i[pass], "Timeout" => %i[timeout], "Kernel" => %i[sleep] })
 
+  # Every offence in the files +pattern+ matches under +root+, named relative to it.
+  def self.scan(root, pattern, rules)
+    Dir.glob(pattern, base: root).flat_map { |path| new(File.read(File.join(root, path)), path, rules).offences }
+  end
+
   def initialize(source, path, rules)
     @root = Prism.parse(source).value
     @path = path

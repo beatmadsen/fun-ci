@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 require_relative "../../test_helper"
-require "open3"
+require_relative "../../support/probe_suite"
 require "tmpdir"
 
 # A green run writes nothing to stderr, so anything there is an error nobody
 # asserted on: a dying thread, a forked child's exception. It fails the run.
 class TestStrayStderrGuard < Minitest::Test
-  ROOT = File.expand_path("../../..", __dir__)
-
   def test_a_run_that_writes_to_stderr_fails
     refute_predicate run_suite(%(Thread.new { warn "stray boom" }.join)).last, :success?
   end
@@ -29,21 +27,5 @@ class TestStrayStderrGuard < Minitest::Test
 
   private
 
-  def run_suite(body, preamble: "")
-    Dir.mktmpdir("stderr-guard") do |dir|
-      path = File.join(dir, "test_probe.rb")
-      File.write(path, probe(body, preamble))
-      Open3.capture2e("ruby", "-I#{ROOT}/test", "-I#{ROOT}/lib", path, chdir: dir)
-    end
-  end
-
-  def probe(body, preamble)
-    <<~RUBY
-      require "test_helper"
-      #{preamble}
-      class TestProbe < Minitest::Test
-        def test_probe = #{body}
-      end
-    RUBY
-  end
+  def run_suite(body, preamble: "") = ProbeSuite.run(body, preamble: preamble)
 end
