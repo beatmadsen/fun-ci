@@ -70,15 +70,34 @@ class TestRalphAgentInWorktree < Minitest::Test
     assert_equal 1, git("worktree", "list").lines.count
   end
 
-  def test_a_killed_iteration_is_rejected_and_its_worktree_removed
+  def test_an_agent_that_fails_is_rejected_with_its_exit_status
+    iterate(agent: "exit 1")
+
+    assert_match(/rejected\t\h+\tagent exited 1\n/, log)
+  end
+
+  # What ralph -t does: SIGTERM to the whole process group.
+  def test_an_iteration_whose_group_is_killed_is_rejected_and_cleaned_up
     iterate(agent: "sh -c 'kill -TERM 0'")
 
-    assert_equal 1, git("worktree", "list").lines.count
-    assert_includes git("branch", "--list", "ralph/rejected/*"), "ralph/rejected/iter-1"
-    assert_match(/rejected\t\h+\tagent exited 143/, log)
+    assert_killed_iteration_cleaned_up
+  end
+
+  # The wrapper leads its group (pgroup: true), so its pid is the pgid. A
+  # SIGTERM that reaches it outside a wait kills bash unless it traps it.
+  def test_a_wrapper_killed_directly_still_rejects_and_cleans_up
+    iterate(agent: %(sh -c 'kill -TERM "$(ps -o pgid= -p $$ | tr -d " ")"'))
+
+    assert_killed_iteration_cleaned_up
   end
 
   private
+
+  def assert_killed_iteration_cleaned_up
+    assert_equal 1, git("worktree", "list").lines.count
+    assert_includes git("branch", "--list", "ralph/rejected/*"), "ralph/rejected/iter-1"
+    assert_match(/rejected\t\h+\tkilled by signal/, log)
+  end
 
   def iterate(agent:, gate: "true")
     env = GIT_ISOLATION.merge("RALPH_AGENT" => agent, "RALPH_GATE" => gate, "RALPH_DIR" => File.join(@tmp, "wt"))

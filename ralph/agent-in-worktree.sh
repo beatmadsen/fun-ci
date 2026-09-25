@@ -44,8 +44,12 @@ reject() {
 [ "$(git -C "$repo_root" symbolic-ref --short HEAD)" = "$base" ] || { echo "ralph: main worktree must have $base checked out" >&2; exit 2; }
 start=$(git -C "$repo_root" rev-parse "$base")
 git -C "$repo_root" worktree add --quiet -b "$branch" "$wt" "$start"
+# ralph -t and Ctrl-C send SIGTERM/SIGINT to the whole group. Unhandled, one
+# that lands outside a wait kills this script before it can clean up.
+trap 'reject "killed by signal"' TERM INT
 
-(cd "$wt" && bash -c "$agent" < "$prompt") || reject "agent exited $?"
+agent_failed() { [ "$1" -ge 128 ] && reject "killed by signal"; reject "agent exited $1"; }
+(cd "$wt" && bash -c "$agent" < "$prompt") || agent_failed $?
 
 commits=$(git -C "$wt" rev-list --count "$start..HEAD")
 [ "$commits" -eq 1 ] || reject "expected exactly 1 commit, got $commits"
@@ -53,6 +57,7 @@ commits=$(git -C "$wt" rev-list --count "$start..HEAD")
 
 (cd "$wt" && bash -c "$gate") > "$wt_root/iter-$n.gate.log" 2>&1 || reject "gate red (see $wt_root/iter-$n.gate.log)"
 
+trap - TERM INT
 [ "$(git -C "$repo_root" rev-parse "$base")" = "$start" ] || reject "$base moved during the iteration"
 git -C "$repo_root" merge --quiet --ff-only "$branch"
 sha=$(git -C "$repo_root" rev-parse --short HEAD)
