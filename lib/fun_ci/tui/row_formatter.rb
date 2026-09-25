@@ -3,6 +3,7 @@
 require_relative "ansi"
 require_relative "duration_formatter"
 require_relative "relative_time"
+require "zlib"
 
 module FunCi
   module Tui
@@ -36,7 +37,7 @@ module FunCi
       def self.format_project(project_path)
         return "" unless project_path
         name = File.basename(project_path)
-        code = PROJECT_COLORS[name.hash.abs % PROJECT_COLORS.size]
+        code = PROJECT_COLORS[Zlib.crc32(name) % PROJECT_COLORS.size]
         "  \e[#{code}m#{name}#{Ansi::RESET}"
       end
       private_class_method :format_project

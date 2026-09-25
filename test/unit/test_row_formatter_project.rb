@@ -50,6 +50,16 @@ class TestRowFormatterProjectName < Minitest::Test
     assert_equal color_a, color_b, "Same project name should get same color"
   end
 
+  # The palette index is CRC-32 of the basename (renderer-protocol.md), so the
+  # colour survives a restart; String#hash is seeded per process.
+  def test_project_colour_depends_only_on_the_project_name
+    colours = %w[fun-ci agent-tome].map do |name|
+      FunCi::Tui::RowFormatter.format(make_run_with_project("/src/#{name}"))[/\e\[(\d+)m#{name}/, 1]
+    end
+
+    assert_equal %w[35 92], colours
+  end
+
   private
 
   def make_run_with_project(project_path)
