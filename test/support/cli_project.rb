@@ -23,6 +23,7 @@ module CliProject
   def fun_ci_dir_exists? = Dir.exist?(File.join(@dir, ".fun-ci"))
 
   def run_cli(*args)
-    Dir.chdir(@dir) { FunCi::Cli.run(args, stdout: @stdout, stderr: StringIO.new) }
+    io = FunCi::Pipeline::Io.new(stdout: @stdout, stderr: StringIO.new)
+    Dir.chdir(@dir) { FunCi::Cli.run(args, io: io, db_dir: File.join(@dir, "db")) }
   end
 end

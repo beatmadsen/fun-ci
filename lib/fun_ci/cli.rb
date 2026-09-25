@@ -4,6 +4,7 @@ require "fileutils"
 require "tmpdir"
 require_relative "../fun_ci"
 require_relative "cli_help"
+require_relative "pipeline/trigger_params"
 require_relative "setup/installer"
 require_relative "setup/hook_writer"
 require_relative "setup/setup_checker"
@@ -18,13 +19,15 @@ module FunCi
       "check" => :run_check
     }.freeze
 
-    def self.run(args, stdout: $stdout, stderr: $stderr, handlers: {})
-      new(stdout: stdout, stderr: stderr, handlers: handlers).run(args)
+    def self.default_db_dir = File.join(Dir.tmpdir, "fun-ci")
+
+    def self.run(args, io: Pipeline::Io.new, handlers: {}, db_dir: default_db_dir)
+      new(io: io, handlers: handlers, db_dir: db_dir).run(args)
     end
 
-    def initialize(stdout:, stderr:, handlers:)
-      @stdout = stdout
-      @stderr = stderr
+    def initialize(io:, handlers:, db_dir:)
+      @io = io
+      @db_dir = db_dir
       @handlers = handlers
     end
 
@@ -51,7 +54,7 @@ module FunCi
       require_relative "persistence/pipeline_recorder"
       db = setup_db
       recorder = Persistence::DbRecorder.new(db)
-      Pipeline::Trigger.run_from_args(args, io: Pipeline::Io.new(stdout: @stdout, stderr: @stderr), recorder: recorder)
+      Pipeline::Trigger.run_from_args(args, io: @io, recorder: recorder)
     end
 
     def run_console(_args)
@@ -69,7 +72,7 @@ module FunCi
     end
 
     def run_init(args)
-      code = Setup::Installer.run(project_root: Dir.pwd, stdout: @stdout)
+      code = Setup::Installer.run(project_root: Dir.pwd, stdout: @io.stdout)
       return code if !code.zero? || !args.include?("--everything")
 
       code = run_install_hooks([])
@@ -81,38 +84,37 @@ module FunCi
     def run_install_hooks(args)
       types = args.any? ? [args.first] : %w[pre-commit pre-push]
       types.each do |type|
-        code = Setup::HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @stdout)
+        code = Setup::HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @io.stdout)
         return code unless code.zero?
       end
       0
     end
 
     def run_check(_args)
-      Setup::SetupChecker.run(project_root: Dir.pwd, stdout: @stdout)
+      Setup::SetupChecker.run(project_root: Dir.pwd, stdout: @io.stdout)
     end
 
     def setup_db
-      db_dir = File.join(Dir.tmpdir, "fun-ci")
-      FileUtils.mkdir_p(db_dir)
-      db_path = File.join(db_dir, "db.sqlite3")
+      FileUtils.mkdir_p(@db_dir)
+      db_path = File.join(@db_dir, "db.sqlite3")
       db = Persistence::Database.connection(db_path)
       Persistence::Database.migrate!(db)
       db
     end
 
     def help(exit_code)
-      @stdout.puts CliHelp::TEXT
+      @io.stdout.puts CliHelp::TEXT
       exit_code
     end
 
     def version
-      @stdout.puts "fun-ci #{FunCi::VERSION}"
+      @io.stdout.puts "fun-ci #{FunCi::VERSION}"
       0
     end
 
     def unknown_command(subcommand)
-      @stderr.puts "fun-ci: unknown command '#{subcommand}'", "" if subcommand
-      @stderr.puts "Usage: fun-ci <command> [options]", "", "Run 'fun-ci --help' for available commands."
+      @io.stderr.puts "fun-ci: unknown command '#{subcommand}'", "" if subcommand
+      @io.stderr.puts "Usage: fun-ci <command> [options]", "", "Run 'fun-ci --help' for available commands."
       1
     end
   end

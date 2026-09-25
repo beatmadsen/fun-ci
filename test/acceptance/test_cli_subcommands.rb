@@ -44,10 +44,24 @@ class TestCliCheckSubcommand < Minitest::Test
   end
 end
 
-# The database lives under Dir.tmpdir, which the test run points at its own
-# sandbox.
+module DatabaseTables
+  def table_names(path)
+    db = SQLite3::Database.new(path)
+    db.execute("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").flatten
+  ensure
+    db&.close
+  end
+end
+
 class TestCliTriggerSubcommand < Minitest::Test
   include CliProject
+  include DatabaseTables
+
+  def test_trigger_sets_up_its_database_before_anything_else
+    run_cli("trigger", "abc1234", "main")
+
+    assert_equal %w[pipeline_runs stage_jobs], table_names(File.join(@dir, "db", "db.sqlite3"))
+  end
 
   def test_trigger_lets_the_commit_through_when_the_project_has_no_fun_ci_folder
     assert_equal 0, run_cli("trigger", "abc1234", "main")
