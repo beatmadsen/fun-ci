@@ -95,6 +95,7 @@ class TestTriggerRunWithDefaultBackgroundLauncher < Minitest::Test
       project_root: project_dir,
       commit_hash: "abc1234",
       branch: "main",
+      stdout: StringIO.new,
       recorder: recorder,
       command_runner: runner,
       commit_validator: ->(_) { true }
@@ -127,6 +128,7 @@ class TestTriggerRunWithDefaultBackgroundLauncher < Minitest::Test
     ).dig(0, 0)
     assert_equal "completed", slow_status, "The background child should record the slow suite"
   ensure
+    trigger&.close
     clean_up(runs, verify_db, [db_dir, project_dir])
   end
 

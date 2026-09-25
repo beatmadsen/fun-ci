@@ -6,10 +6,12 @@ require "active_support/testing/parallelization"
 require "active_support/testing/parallelize_executor"
 require "concurrent/utility/processor_counter"
 
+require_relative "support/sqlite_connection_guard"
 require_relative "support/stray_stderr_guard"
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 StrayStderrGuard.install
+SqliteConnectionGuard.install
 
 Minitest.parallel_executor = ActiveSupport::Testing::ParallelizeExecutor.new(
   size: Concurrent.processor_count,

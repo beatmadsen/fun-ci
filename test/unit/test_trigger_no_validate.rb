@@ -63,6 +63,6 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
   private
 
   def run_trigger(args, **)
-    FunCi::Pipeline::Trigger.run_from_args(args, pipeline_forker: @forker, **)
+    FunCi::Pipeline::Trigger.run_from_args(args, stdout: StringIO.new, pipeline_forker: @forker, **)
   end
 end

@@ -16,8 +16,9 @@ module FunCi
 
       def self.run_in_child(commit_hash:, branch:, db_path:)
         recorder = Persistence::DbRecorder.new(Persistence::Database.connection(db_path))
-        trigger(commit_hash, branch, recorder).run
-        recorder.close
+        trigger = trigger(commit_hash, branch, recorder)
+        trigger.run
+        trigger.close
       end
 
       def self.trigger(commit_hash, branch, recorder)

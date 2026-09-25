@@ -85,6 +85,12 @@ module FunCi
         0
       end
 
+      # The background launcher swaps in a fresh recorder after forking, so
+      # callers release the connection through the trigger, not their own copy.
+      def close
+        @recorder.close
+      end
+
       private
 
       def handle_config_errors(config)
