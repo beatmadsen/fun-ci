@@ -42,7 +42,9 @@ rake mutation:changed   # The same over lines changed since HEAD; a prompt to lo
 ruby script/platform_gem.rb arm64-darwin renderer/target/release/fun-ci-renderer pkg   # A platform gem with that renderer in libexec/
 script/smoke-platform-gem.sh pkg/<gem> [none]   # Install a gem into an empty GEM_HOME and run it; `none` for the plain gem
 script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
-rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable mutants caught. Not in the gate: about 20 minutes. CI runs it
+rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable mutants caught. Not in the gate: over an hour on one machine
+rake "mutation:rust:shard[k,n]"   # Shard k of n of those mutants, unjudged; CI runs six side by side
+rake "mutation:rust:score[n]"     # Judge the n shards' outcomes together; fails if any shard's outcomes are missing
 cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 --scenario contract/scenarios/running.jsonl --out "$(mktemp -d)"   # PNG frames, sheet, cast, stats
 ruby renderer/tools/convert_animations.rb   # Rewrite renderer/animations/*.json from lib/fun_ci/animations/ (test/policy/test_animation_json_drift.rb fails on drift)
 ```

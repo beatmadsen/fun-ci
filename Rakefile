@@ -84,24 +84,48 @@ end
 
 RUST_MUTATION_THRESHOLD = 90
 
+MUTANT_SHARDS = File.expand_path("renderer/mutants-shards", __dir__)
+
 def rust_mutation(threshold)
+  mutate_renderer(File.expand_path("renderer", __dir__))
+  judge_rust_mutation([File.expand_path("renderer/mutants.out/outcomes.json", __dir__)], threshold)
+end
+
+# One shard of the mutants, k of n, as CI runs them side by side; judged
+# together by mutation:rust:score.
+def rust_mutation_shard(shard, shards)
+  mutate_renderer(File.join(MUTANT_SHARDS, shard.to_s), "--shard", "#{shard}/#{shards}")
+end
+
+def mutate_renderer(out, *shard)
   require_relative "renderer/tools/mutation_score"
-  status = run_cargo_mutants
+  status = run_cargo_mutants(out, *shard)
   abort "cargo mutants measured nothing (exit #{status.inspect})" unless FunCi::Mutation.completed?(status)
-  score = FunCi::Mutation::Score.load(File.expand_path("renderer/mutants.out/outcomes.json", __dir__))
+end
+
+def judge_rust_mutation(outcomes, threshold)
+  require_relative "renderer/tools/mutation_score"
+  score = FunCi::Mutation::Score.combine(outcomes)
   puts score.summary
   abort "Rust mutation score is under #{threshold}%" unless score.passes?(threshold)
+end
+
+def judge_rust_shards(shards, threshold)
+  outcomes = Dir.glob(File.join(MUTANT_SHARDS, "**", "outcomes.json"))
+  abort "found the outcomes of #{outcomes.size} shards, not #{shards}" unless outcomes.size == Integer(shards)
+
+  judge_rust_mutation(outcomes, threshold)
 end
 
 # Tests read the golden corpus through FUN_CI_CONTRACT, because cargo-mutants
 # builds a copy of renderer/ that has no ../contract next to it. The suite takes
 # seconds; the fixed timeout is for mutants that make a test wait forever (one
 # that stops SIGTERM being handled leaves the pty test waiting for an exit).
-def run_cargo_mutants
+def run_cargo_mutants(out, *shard)
   renderer = File.expand_path("renderer", __dir__)
   env = { "FUN_CI_CONTRACT" => File.expand_path("contract", __dir__) }
   jobs = [Etc.nprocessors / 2, 1].max.to_s
-  system(env, "cargo", "mutants", "-d", renderer, "-o", renderer, "-j", jobs, "--timeout", "120")
+  system(env, "cargo", "mutants", "-d", renderer, "-o", out, "-j", jobs, "--timeout", "120", *shard)
   Process.last_status.exitstatus
 end
 
@@ -109,5 +133,11 @@ namespace :mutation do
   desc "Mutation-test the Rust renderer with cargo-mutants; fails under 90% of viable mutants caught"
   task(:rust) { rust_mutation(RUST_MUTATION_THRESHOLD) }
 end
+
+desc "cargo-mutants on shard k of n of renderer/'s mutants, as CI runs them; judged by mutation:rust:score"
+task("mutation:rust:shard", %i[k n]) { |_, args| rust_mutation_shard(Integer(args[:k]), Integer(args[:n])) }
+
+desc "Judge the outcomes of all n shards together against the threshold"
+task("mutation:rust:score", %i[n]) { |_, args| judge_rust_shards(args[:n], RUST_MUTATION_THRESHOLD) }
 
 task default: %i[test cucumber rust:test contract:binary rubocop rust:clippy]

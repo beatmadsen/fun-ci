@@ -18,8 +18,16 @@ module FunCi
     class Score
       def self.load(path) = new(JSON.parse(File.read(path)))
 
+      # One score over the outcomes of several shards of a run.
+      def self.combine(paths)
+        shards = paths.map { |path| JSON.parse(File.read(path)).slice(*COUNTED) }
+        new(shards.reduce { |sum, counts| sum.merge(counts) { |_, a, b| a + b } })
+      end
+
+      COUNTED = %w[caught missed timeout unviable].freeze
+
       def initialize(counts)
-        @counts = counts.slice("caught", "missed", "timeout", "unviable")
+        @counts = counts.slice(*COUNTED)
       end
 
       def percent

@@ -2,8 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main, v2]
+    branches: [main]
   pull_request:
+
+# A newer push supersedes the run before it.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   gate:
@@ -31,8 +36,14 @@ jobs:
           bundler-cache: true
       - run: bundle exec rake mutation
 
+  # 900-odd mutants take hours in one job, so six jobs take a shard each and
+  # mutation-rust-score judges them together.
   mutation-rust:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
     steps:
       - uses: actions/checkout@v4
       - run: rustup toolchain install
@@ -43,4 +54,23 @@ jobs:
         with:
           ruby-version: "3.4"
           bundler-cache: true
-      - run: bundle exec rake mutation:rust
+      - run: bundle exec rake "mutation:rust:shard[${{ matrix.shard }},6]"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mutants-shard-${{ matrix.shard }}
+          path: renderer/mutants-shards/${{ matrix.shard }}/mutants.out/outcomes.json
+
+  mutation-rust-score:
+    needs: mutation-rust
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: mutants-shard-*
+          path: renderer/mutants-shards
+      - run: bundle exec rake "mutation:rust:score[6]"

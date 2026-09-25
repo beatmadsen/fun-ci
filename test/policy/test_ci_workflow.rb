@@ -28,8 +28,24 @@ class TestCiWorkflow < Minitest::Test
     assert_includes commands("mutation"), "bundle exec rake mutation"
   end
 
-  def test_the_rust_mutation_job_runs_the_rust_mutation_lane
-    assert_includes commands("mutation-rust"), "bundle exec rake mutation:rust"
+  def test_the_rust_mutation_lane_runs_every_shard_of_the_mutants
+    shards = jobs.dig("mutation-rust", "strategy", "matrix", "shard")
+
+    command = "bundle exec rake \"mutation:rust:shard[${{ matrix.shard }},#{shards.size}]\""
+
+    run = commands("mutation-rust").grep(/mutation:rust:shard/).first
+
+    assert_equal [(0...shards.size).to_a, command], [shards, run]
+  end
+
+  def test_the_rust_mutation_lane_is_judged_on_every_shard_together
+    shards = jobs.dig("mutation-rust", "strategy", "matrix", "shard").size
+
+    assert_includes commands("mutation-rust-score"), "bundle exec rake \"mutation:rust:score[#{shards}]\""
+  end
+
+  def test_a_newer_push_cancels_the_run_it_supersedes
+    assert_equal true, workflow.dig("concurrency", "cancel-in-progress")
   end
 
   def test_every_rust_job_installs_the_pinned_toolchain
