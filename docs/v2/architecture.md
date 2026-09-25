@@ -24,6 +24,12 @@ what would make us change it.
 Rule of thumb: Ruby decides **what is true**; Rust decides **how it looks**.
 Ruby never emits an ANSI escape once 2.0 ships.
 
+**Decision — one tick, one frame.** The 1.x console draws a frame every
+100 ms while animating, and its animations advance per frame, not per
+millisecond. Scenarios therefore draw on `tick` only; `board` just replaces
+state. *Revisit if* the Rust renderer moves animations to wall-clock time,
+at which point the differential tests need a frame-to-time mapping.
+
 **Decision — formatting lives in Rust.** Ruby sends raw values (epoch seconds,
 milliseconds, full SHAs). "2m ago" must keep ticking between Ruby pushes, and
 the renderer owns the clock, so it owns the formatting.
@@ -137,10 +143,15 @@ the integration branch. See [`agentic-pipeline.md`](agentic-pipeline.md).
 
 The Ruby renderer is the oracle until the Rust one reaches parity:
 
-1. Scenario files (`contract/scenarios/*.json`) describe board states, events
-   and ticks.
-2. A Ruby capture tool drives today's `BoardRenderer` with a fake clock and
-   records the raw byte stream per frame → `contract/golden/<scenario>.bytes`.
+1. Scenario files (`contract/scenarios/*.jsonl`) describe board states, events
+   and ticks **in protocol v1 messages** plus the headless-only `tick` and
+   `resize` (format in `renderer-protocol.md`). The Rust headless mode replays
+   the same files, so there is one scenario format, not two.
+2. A Ruby capture tool drives today's `BoardRenderer` and `AnimationRenderer`,
+   wired as `fun-ci console` wires them, with the scenario clock, and records
+   the bytes of each frame → `contract/golden/<scenario>/NNNN.bytes`. A test in
+   the gate re-captures and compares, so the golden corpus also guards the Ruby
+   renderer against drift while §0 refactors it.
 3. The Rust test suite feeds both the golden bytes and its own output through
    the `vt100` crate and compares **cell grids** (text + colour + attributes),
    not bytes, so the Rust side is free to emit fewer, smarter escapes.

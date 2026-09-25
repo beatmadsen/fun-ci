@@ -146,9 +146,23 @@ All tests here are integration tests against a real temporary git repository.
 **Then** Ruby logs it to `.fun-ci/console.log` and carries on.
 
 ### 2.6 Scenarios capture the current Ruby renderer as golden output
-**Given** each scenario in `contract/scenarios/` (empty, happy-7, running, fail-explosion, success-fireworks, narrow-60, wide-200, resize-mid-animation)
+**Given** eight scenarios in `contract/scenarios/<name>.jsonl`, written in the
+headless scenario format of `renderer-protocol.md` (`empty`, `happy-7`, `running`,
+`fail-explosion`, `success-fireworks`, `narrow-60`, `wide-200`,
+`resize-mid-animation`), which between them use every run and stage status
 **When** `rake contract:capture` runs
-**Then** it writes `contract/golden/<scenario>.bytes` using today's `BoardRenderer` driven by a fake clock, and running it twice produces identical files.
+**Then** it writes `contract/golden/<name>/NNNN.bytes`, one file per `tick`, holding
+exactly the bytes today's Ruby renderer writes for that frame when wired as
+`fun-ci console` wires it (animated header, `AnimationRenderer`, live height),
+with the scenario's clock in place of `Time.now`
+**And** running it again in a new process produces identical files
+**And** a test in the gate fails when the Ruby renderer's output no longer matches
+the golden files, so §0 refactors of `tui/` can't change what users see unnoticed.
+*Bites:* a deliberate change to the footer text fails the gate, then reverted.
+*Note:* the project name colour came from `String#hash`, which Ruby seeds per
+process, so it changed on every console start. It is fixed to a CRC-32 of the
+name before capture; otherwise neither a byte-identical golden nor Rust parity
+is possible.
 
 ---
 

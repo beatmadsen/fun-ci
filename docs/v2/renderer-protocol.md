@@ -51,7 +51,8 @@ The full state to show. Always complete — never a diff.
  "has_more": true,
  "runs": [
    {"id": 42, "sha": "a3f7c01e...", "branch": "main",
-    "status": "running", "started_at": 1789999880,
+    "project": "/home/erik/src/fun-ci",
+    "status": "running", "started_at": 1789999880, "updated_at": 1789999990,
     "stages": [
       {"stage": "lint",  "status": "passed",  "duration_ms": 300},
       {"stage": "build", "status": "passed",  "duration_ms": 200},
@@ -63,9 +64,15 @@ The full state to show. Always complete — never a diff.
 
 - `now` lets headless/test runs pin the clock; live runs send wall time and the
   renderer advances from there.
-- `status` values (run): `pending`, `running`, `passed`, `failed`, `cancelled`.
-  (stage): `pending`, `running`, `passed`, `failed`, `cancelled`, `timeout`.
+- `status` values (run): `pending`, `running`, `passed`, `failed`, `timeout`,
+  `cancelled`. (stage): `pending`, `running`, `passed`, `failed`, `cancelled`,
+  `timeout`.
 - `sha` is always the full 40-hex SHA; shortening is the renderer's job.
+- `updated_at` is the run's last status change; the row's "2m ago" counts from
+  it.
+- `project` (optional) is the path of the project the run belongs to. The
+  renderer shows its basename in a colour chosen by CRC-32 of the basename, so
+  a project keeps its colour across restarts.
 
 ### `event`
 `{"t":"event","name":"<name>","run_id":42,"stage":"fast"}`
@@ -107,6 +114,25 @@ lines advancing the fake clock) and writes, per frame:
 - `stats.json` — bytes written per frame, longest row, frames per animation
 
 `tick` is only valid in headless mode.
+
+### Scenario files
+
+`contract/scenarios/<name>.jsonl` are the scenarios both renderers replay: the
+Ruby capture tool (AT-2.6) and `--headless --scenario` (AT-3.3, AT-3.4).
+
+- Every scenario starts with `{"t":"resize","cols":C,"rows":R}`. In a scenario,
+  `resize` means *the terminal changed size*; it takes effect at the next frame.
+- `board` replaces the state and sets the clock to its `now`. It doesn't draw.
+- `event` is sent alongside the `board` that caused it. It may carry
+  `"animation":"<name>"` (e.g. `"success"`, `"explosion"`) to pin a choice the
+  renderer would otherwise make at random. Live Ruby never sends that field.
+- `{"t":"tick","ms":100}` advances the clock and draws **exactly one frame**.
+  Frames are numbered from 1 in tick order, which is what lets two renderers
+  be compared frame by frame.
+
+The Ruby oracle's frames are `contract/golden/<name>/NNNN.bytes` (0001, 0002,
+...). Frame 0001 includes the initial screen clear. Frames are cumulative: feed
+them in order to one terminal emulator and compare its grid after each.
 
 ## Contract fixtures
 
