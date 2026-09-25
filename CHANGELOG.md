@@ -43,6 +43,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `fun-ci console`, which have done the same job since 1.0.
 
 ### Bug Fixes
+- With no runs yet, the console suggested `fun-ci trigger HEAD`, which fails
+  without a branch, and `fun-ci install-hook pre-push`, a command that does
+  not exist. It now suggests `fun-ci init --everything` and says each commit
+  then starts a run.
 - Git runs hooks with variables such as `GIT_INDEX_FILE` pointing at the
   checkout. fun-ci passed them on to the git commands it runs and to your
   stage scripts, which then read the checkout's index instead of the

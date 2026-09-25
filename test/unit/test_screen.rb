@@ -62,12 +62,12 @@ class TestScreenEmptyState < Minitest::Test
     assert_match(/No runs yet\./, plain_screen_output(&:render_empty_state))
   end
 
-  def test_should_show_trigger_command
-    assert_match(/fun-ci trigger HEAD/, plain_screen_output(&:render_empty_state))
+  def test_should_show_the_command_that_sets_fun_ci_up
+    assert_match(/fun-ci init --everything/, plain_screen_output(&:render_empty_state))
   end
 
-  def test_should_show_hook_command
-    assert_match(/fun-ci install-hook pre-push/, plain_screen_output(&:render_empty_state))
+  def test_should_say_a_commit_starts_a_run
+    assert_match(/each commit starts a run/, plain_screen_output(&:render_empty_state))
   end
 end
 

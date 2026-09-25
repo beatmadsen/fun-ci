@@ -4,14 +4,14 @@ Feature: Empty state on first launch
   So that I know how to get started
 
   Centered, minimal, calm. No banner, no decoration.
-  Just the two commands you need.
+  Just how to get started.
 
   Scenario: First launch with no pipeline runs
     Given no pipeline runs exist
     When I open the admin TUI
     Then the board should show "No runs yet."
-    And the board should show "Trigger one: fun-ci trigger HEAD"
-    And the board should show "Or hook it: fun-ci install-hook pre-push"
+    And the board should show "Set it up: fun-ci init --everything"
+    And the board should show "Then commit: each commit starts a run"
 
   Scenario: Empty state footer only shows quit
     Given no pipeline runs exist

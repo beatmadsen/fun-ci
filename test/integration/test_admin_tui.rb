@@ -37,7 +37,7 @@ class TestAdminTuiEmptyState < Minitest::Test
   def test_should_show_empty_state_with_no_runs
     plain = rendered_board
     assert_match(/No runs yet\./, plain)
-    assert_match(/fun-ci trigger HEAD/, plain)
+    assert_match(/fun-ci init --everything/, plain)
   end
 
   def test_should_show_only_quit_in_footer_when_empty

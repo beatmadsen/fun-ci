@@ -14,8 +14,8 @@ const EMPTY_STATE: [&str; 7] = [
     "",
     "          No runs yet.",
     "",
-    "          Trigger one:  fun-ci trigger HEAD",
-    "          Or hook it:   fun-ci install-hook pre-push",
+    "          Set it up:    fun-ci init --everything",
+    "          Then commit:  each commit starts a run",
     "",
 ];
 

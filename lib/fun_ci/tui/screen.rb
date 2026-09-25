@@ -56,8 +56,8 @@ module FunCi
         println ""
         println "          No runs yet."
         println ""
-        println "          Trigger one:  fun-ci trigger HEAD"
-        println "          Or hook it:   fun-ci install-hook pre-push"
+        println "          Set it up:    fun-ci init --everything"
+        println "          Then commit:  each commit starts a run"
         println ""
       end
 
