@@ -47,10 +47,15 @@ module BlockedRun
     run.wait_for_all
   end
 
-  # Opening a FIFO for writing without blocking fails when nothing reads it.
-  def release_what_survived
-    File.open(release, File::WRONLY | File::NONBLOCK) { |fifo| fifo.write("go\n") }
-  rescue Errno::ENXIO
+  # Opening a FIFO for writing without blocking fails when nothing reads it;
+  # writing to it fails when its last reader was a script the cancel killed
+  # after the open. Either way no script survived to release.
+  def release_what_survived(after_open: -> {})
+    File.open(release, File::WRONLY | File::NONBLOCK) do |fifo|
+      after_open.call
+      fifo.write("go\n")
+    end
+  rescue Errno::ENXIO, Errno::EPIPE
     nil
   end
 
