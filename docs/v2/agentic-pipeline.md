@@ -34,8 +34,19 @@ Why: the agent can wreck its worktree without touching the integration branch;
 every commit on the integration branch passed a gate the agent didn't run; and
 a human can review `ralph/rejected/*` to see where the loop struggles.
 
-Note: a worktree is isolation for git state, not a security sandbox. Run the
-loop inside a container or VM if the agent has skip-permissions.
+A worktree isolates git state; it is not a security sandbox. The agent runs
+with skip-permissions, so the loop runs in Docker:
+
+    ralph/docker/run.sh -n 5 -t 900
+
+The container gets the host repo read-only, clones `v2`, runs the loop on the
+clone as a non-root user, and hands back a git bundle. It has no git
+credentials, so it can't push. `run.sh` fetches the result into
+`ralph/incoming` (and any `ralph/rejected/*` branches) without touching `v2`;
+a human reviews and runs `git merge --ff-only ralph/incoming`. If `v2` moved on
+the host meanwhile, rebase `ralph/incoming` first. The container still has
+outbound network, and its commits are unsigned. It needs a Claude Code token
+from `claude setup-token` in `~/.config/fun-ci-ralph/oauth-token`.
 
 ## Build loop rules (summary — full text in `ralph/build/RALPH.md`)
 

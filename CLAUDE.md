@@ -36,7 +36,8 @@ Work happens on the `v2` branch. Read `docs/v2/architecture.md` first — it
 decides the Ruby/Rust boundary (Ruby decides what is true, Rust decides how it
 looks), the renderer protocol and the quality gates. The backlog is
 `docs/v2/acceptance-tests.md`, worked in the order of `ralph/build/progress.md`.
-Agents run one iteration per worktree via `ralph/agent-in-worktree.sh`.
+Agents run one iteration per worktree via `ralph/agent-in-worktree.sh`, inside
+Docker via `ralph/docker/run.sh` (see `docs/v2/agentic-pipeline.md`).
 
 ## What This Is
 

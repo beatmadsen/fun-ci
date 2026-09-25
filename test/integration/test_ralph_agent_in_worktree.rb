@@ -30,6 +30,12 @@ class TestRalphAgentInWorktree < Minitest::Test
     assert_match(/\A1\tlanded\t\h+\tAT-1\.1: add a\n\z/, log)
   end
 
+  def test_the_first_iteration_prints_only_its_verdict
+    output, = iterate(agent: ONE_COMMIT)
+
+    assert_equal "ralph: iteration 1 landed AT-1.1: add a\n", output
+  end
+
   def test_rejects_an_iteration_whose_gate_is_red_and_keeps_its_branch
     _, status = iterate(agent: ONE_COMMIT, gate: "false")
 

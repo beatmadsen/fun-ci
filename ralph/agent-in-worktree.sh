@@ -23,7 +23,7 @@ log="$repo_root/ralph/log.tsv"
 
 mkdir -p "$wt_root"
 taken() { git -C "$repo_root" show-ref --quiet "refs/heads/ralph/iter-$1" "refs/heads/ralph/rejected/iter-$1"; }
-n=$(( $(wc -l < "$log" 2>/dev/null || echo 0) + 1 ))
+n=$(( $( [ -f "$log" ] && wc -l < "$log" || echo 0) + 1 ))
 while taken "$n"; do n=$((n + 1)); done
 branch="ralph/iter-$n"
 wt="$wt_root/iter-$n"
