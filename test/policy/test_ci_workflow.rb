@@ -53,7 +53,7 @@ class TestCiWorkflow < Minitest::Test
   def test_a_newer_push_leaves_every_mutation_run_to_finish
     lanes = %w[mutation mutation-rust mutation-rust-score]
 
-    assert_equal [false] * lanes.size, lanes.map { |job| jobs.dig(job, "concurrency", "cancel-in-progress") }
+    assert_equal([false] * lanes.size, lanes.map { |job| jobs.dig(job, "concurrency", "cancel-in-progress") })
   end
 
   def test_every_rust_job_installs_the_pinned_toolchain
