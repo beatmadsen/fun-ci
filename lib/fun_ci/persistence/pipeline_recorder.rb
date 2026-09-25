@@ -50,21 +50,16 @@ module FunCi
         job_id
       end
 
+      # Without a run there is no job and no row to update, so these write nothing.
       def end_stage(job_id, status)
-        return unless job_id
-
         StageJob.update_status(@db, job_id, status)
       end
 
       def complete_run
-        return unless @pipeline_run_id
-
         PipelineRun.update_status(@db, @pipeline_run_id, "completed")
       end
 
       def fail_run
-        return unless @pipeline_run_id
-
         PipelineRun.update_status(@db, @pipeline_run_id, "failed")
       end
 

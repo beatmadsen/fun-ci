@@ -1,0 +1,6 @@
+# The mutation lane: `rake mutation` (Ruby >= 3.4 only). Mutineer loads the
+# boot file once, then forks a worker per mutant that runs the covering tests.
+boot: test/mutation_boot.rb
+framework: minitest
+threshold: 90
+jobs: 4

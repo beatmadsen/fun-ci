@@ -4,6 +4,9 @@ require "fileutils"
 require "tmpdir"
 require_relative "../fun_ci"
 require_relative "cli_help"
+require_relative "setup/installer"
+require_relative "setup/hook_writer"
+require_relative "setup/setup_checker"
 
 module FunCi
   class Cli
@@ -66,7 +69,6 @@ module FunCi
     end
 
     def run_init(args)
-      require_relative "setup/installer"
       code = Setup::Installer.run(project_root: Dir.pwd, stdout: @stdout)
       return code if !code.zero? || !args.include?("--everything")
 
@@ -77,7 +79,6 @@ module FunCi
     end
 
     def run_install_hooks(args)
-      require_relative "setup/hook_writer"
       types = args.any? ? [args.first] : %w[pre-commit pre-push]
       types.each do |type|
         code = Setup::HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @stdout)
@@ -87,7 +88,6 @@ module FunCi
     end
 
     def run_check(_args)
-      require_relative "setup/setup_checker"
       Setup::SetupChecker.run(project_root: Dir.pwd, stdout: @stdout)
     end
 

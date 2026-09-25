@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../test_helper"
-require_relative "../support/cli_project"
+require_relative "../../test_helper"
+require_relative "../../support/cli_project"
 require "fun_ci/setup/hook_writer"
 
 class TestInstallHookCli < Minitest::Test

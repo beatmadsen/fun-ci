@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
-# Unit and acceptance tests never start a process, directly or through the
-# code they call; tests that must, live in test/integration. A spawn, fork
-# or exec during a fast-lane test raises and fails it, naming the test.
-# FUN_CI_FAST_LANES (PATH-separated directories) replaces the default lanes.
+# Only tests under test/integration/process start processes, directly or
+# through the code they call. A spawn, fork or exec during any other test
+# raises and fails it, naming the test, which keeps every other test fast
+# enough for the mutation lane. FUN_CI_NO_SPAWN_DIRS and FUN_CI_SPAWN_DIRS
+# (PATH-separated) replace the defaults.
 module SpawnGuard
   class Forbidden < SecurityError; end
 
   ROOT = File.expand_path("../..", __dir__)
-  DEFAULT_LANES = %w[test/unit test/acceptance].map { |lane| File.join(ROOT, lane) }.join(File::PATH_SEPARATOR)
+  NO_SPAWN = File.join(ROOT, "test")
+  SPAWN = File.join(ROOT, "test/integration/process")
 
   module Hooks
     { spawn: "spawn", system: "system", fork: "fork", exec: "exec", "`": "backticks" }.each do |name, label|
@@ -41,7 +43,8 @@ module SpawnGuard
 
   class << self
     def install
-      @lanes = ENV.fetch("FUN_CI_FAST_LANES", DEFAULT_LANES).split(File::PATH_SEPARATOR).map { |lane| "#{lane}/" }
+      @forbidden = dirs("FUN_CI_NO_SPAWN_DIRS", NO_SPAWN)
+      @allowed = dirs("FUN_CI_SPAWN_DIRS", SPAWN)
       [Kernel, Kernel.singleton_class, Process.singleton_class].each { |target| target.prepend(Hooks) }
       IO.singleton_class.prepend(Popen)
       Minitest::Test.prepend(TrackTest)
@@ -49,13 +52,16 @@ module SpawnGuard
 
     def enter(test, file)
       @test = test
-      @fast = @lanes.any? { |lane| File.expand_path(file).start_with?(lane) }
+      @fast = within?(file, @forbidden) && !within?(file, @allowed)
     end
+
+    def dirs(variable, default) = ENV.fetch(variable, default).split(File::PATH_SEPARATOR).map { |dir| "#{dir}/" }
+    def within?(file, dirs) = dirs.any? { |dir| File.expand_path(file).start_with?(dir) }
 
     def label(receiver, name, bare) = receiver == Process ? "Process.#{name}" : bare
 
     def check(call)
-      raise Forbidden, "#{@test} started a process (#{call}); tests that must live in test/integration" if @fast
+      raise Forbidden, "#{@test} started a process (#{call}); tests that must live in test/integration/process" if @fast
     end
   end
 end

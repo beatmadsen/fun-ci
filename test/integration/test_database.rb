@@ -87,6 +87,17 @@ class TestDatabaseStageJobsSchema < Minitest::Test
   end
 end
 
+class TestDatabaseMigrationFromOlderSchema < Minitest::Test
+  include FreshDatabaseFile
+
+  def test_should_add_the_pid_column_to_a_table_created_before_it_existed
+    @db.execute("CREATE TABLE pipeline_runs (id INTEGER PRIMARY KEY, commit_hash TEXT, branch TEXT, status TEXT)")
+    FunCi::Persistence::Database.migrate!(@db)
+
+    assert_includes @db.execute("PRAGMA table_info(pipeline_runs)").map { |row| row[1] }, "pid"
+  end
+end
+
 class TestDatabaseMigrationIdempotency < Minitest::Test
   include FreshDatabaseFile
 

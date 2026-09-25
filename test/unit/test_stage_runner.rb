@@ -20,6 +20,14 @@ class TestStageRunnerDefaults < Minitest::Test
     assert_match(/exceeded 10s time budget/, stdout.string)
   end
 
+  def test_a_stage_over_budget_is_told_how_to_get_back_under_it
+    stdout = StringIO.new
+    seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { raise Timeout::Error })
+    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: stdout, seams: seams).passes?(config, "fast")
+
+    assert_includes stdout.string, "Your fast tests have gotten too slow. Split or speed them up."
+  end
+
   private
 
   def passing_runner

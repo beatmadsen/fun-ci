@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../acceptance/trigger_cli_shared"
+require_relative "../../acceptance/trigger_cli_shared"
 
 # A pipeline superseded on its branch is cancelled through the pid stored in
 # the database. The stale pipeline is a real process, so this lives here.

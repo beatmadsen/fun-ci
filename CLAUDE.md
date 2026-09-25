@@ -22,7 +22,7 @@ bundle exec rake rubocop    # RuboCop with the project's limits
 ```bash
 rake unit                                                  # test/unit only
 rake acceptance                                            # test/acceptance only
-rake integration                                           # test/integration only
+rake integration                                           # test/integration only (process/ included)
 ruby -Itest -Ilib test/unit/test_trigger.rb                # One test file
 ruby -Itest -Ilib test/unit/test_trigger.rb -n test_method # One test method
 ```
@@ -31,6 +31,8 @@ ruby -Itest -Ilib test/unit/test_trigger.rb -n test_method # One test method
 
 ```bash
 rake contract:capture   # Rewrite contract/golden/ from contract/scenarios/ (after a deliberate TUI change)
+rake mutation           # Mutineer over lib/ except tui/ and animations/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
+rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
 ```
 
 ### CLI (unified entry point)
@@ -90,7 +92,7 @@ One CLI, multiple subcommands. Source is organized into four module subdirectori
 
 **`pipeline/`**: `Trigger`, `TriggerCommand` (argument parsing), `Commit`/`Io`/`Seams` (parameter objects), `CommandExecutor`, `BackgroundFork`, `PipelineForker`, `StageRunner`, `BackgroundWrapper`, `ProcessRunner` (shared module), `ProgressReporter`, `StalePipelineCanceller`
 
-**`persistence/`**: `Database` (SQLite connection + migration), `PipelineRun` / `StageJob` (row wrappers with state machine), `PipelineRecorder` (DbRecorder / NullRecorder)
+**`persistence/`**: `Database` (SQLite connection + migration), `PipelineRun` / `StageJob` (row wrappers), `PipelineRecorder` (DbRecorder / NullRecorder)
 
 **`tui/`**: `AdminTui`, `TerminalInput`, `KeyHandler`, `BoardRenderer`, `BoardData`, `RowFormatter`, `Screen` (raw-mode rendering), `HeaderAnimationManager`, animation players and library
 
@@ -108,7 +110,8 @@ Tests use Minitest. Cucumber features exist for TUI acceptance specs but unit te
 - A test run must write **nothing to stderr**: `test/support/stray_stderr_guard.rb` fails the run otherwise (a dying thread or a forked child's exception is an error no test asserted on). Capture output a test expects with `assert_output`/`capture_io`
 - A test that forks a real child must wait for it (`Process.waitpid`) before its teardown deletes anything the child uses
 - Tests touch only the run's private temp root: `test/support/confinement_guard.rb` points `TMPDIR` at it and fails a test that writes a file, opens a SQLite database or runs git outside it, naming the path (`test/integration/test_confinement_guard.rb`). Build paths from `Dir.mktmpdir`/`Dir.tmpdir`, never from the repo or `$HOME`
-- Unit and acceptance tests never start a process, directly or through the code they call: `test/unit/test_fast_lanes_never_spawn.rb` scans their sources with Prism, and `test/support/spawn_guard.rb` fails a test that spawns, forks or execs at runtime (`test/integration/test_spawn_guard.rb`). Tests that need real processes or real git live in `test/integration/`
+- Only tests under `test/integration/process/` start processes or run git, directly or through the code they call: `test/unit/test_fast_lanes_never_spawn.rb` scans unit and acceptance sources with Prism, and `test/support/spawn_guard.rb` fails any other test that spawns, forks or execs at runtime (`test/integration/process/test_spawn_guard.rb`). That keeps every other test fast enough for the mutation lane
+- The mutation score counts killed / (killed + survived); code that only runs in a forked child shows as no-coverage, not as a pass. `test_hook_script_invocation.rb` is left out of the lane: macOS scans each freshly written executable on first exec, and the Trigger mutants it covers then overran mutineer's 10 s cap
 - Every SQLite connection a test opens must be closed by the end of that test: `test/support/sqlite_connection_guard.rb` fails the test otherwise. A leaked one is inherited by the next fork in the same worker. `Trigger#close` releases the recorder the background launcher swaps in
 
 **DI seams used throughout:**

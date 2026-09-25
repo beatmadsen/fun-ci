@@ -75,6 +75,7 @@ GEM
       drb (~> 2.0)
       prism (~> 1.5)
     multi_test (1.1.0)
+    mutineer (1.0.2)
     parallel (2.2.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
@@ -138,6 +139,7 @@ DEPENDENCIES
   fun_ci!
   logger
   minitest
+  mutineer (~> 1.0)
   rake
   rubocop (~> 1.60)
 
@@ -179,6 +181,7 @@ CHECKSUMS
   mini_mime (1.1.5) sha256=8681b7e2e4215f2a159f9400b5816d85e9d8c6c6b491e96a12797e798f8bccef
   minitest (6.0.6) sha256=153ea36d1d987a62942382b61075745042a2b3123b1cd48f4c3675af9cc7d6f1
   multi_test (1.1.0) sha256=e9e550cdd863fb72becfe344aefdcd4cbd26ebf307847f4a6c039a4082324d10
+  mutineer (1.0.2) sha256=70a401228734d383d439a3e3ccc6115e91afce8caa455f2b018748dd32213c34
   parallel (2.2.0) sha256=e1059c5fd7b649558a0aec38a769f06a42942bdb40503d005a59c352fe011cd8
   parser (3.3.12.0) sha256=21a6d7f755d5a24dfbdc6e6b772e4e879a52e7631a88bc5a3a134606052c9828
   prism (1.9.0) sha256=7b530c6a9f92c24300014919c9dcbc055bf4cdf51ec30aed099b06cd6674ef85

@@ -27,9 +27,7 @@ module FunCi
       end
 
       def self.update_status(db, id, new_status)
-        column = TIMESTAMP_COLUMNS[new_status]
-        return db.execute("UPDATE stage_jobs SET status = ? WHERE id = ?", [new_status, id]) unless column
-
+        column = TIMESTAMP_COLUMNS.fetch(new_status)
         now = Time.now.utc.iso8601
         db.execute("UPDATE stage_jobs SET status = ?, #{column} = ? WHERE id = ?", [new_status, now, id])
       end

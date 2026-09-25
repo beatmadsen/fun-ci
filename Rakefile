@@ -36,4 +36,29 @@ end
 
 RuboCop::RakeTask.new
 
+# tui/ and animations/ are left out: §5 of the 2.0 plan deletes them once the
+# Rust renderer takes over, and killing their mutants would be spent effort.
+MUTATED = FileList["lib/**/*.rb"].exclude("lib/fun_ci/{tui,animations}/**/*.rb")
+
+# Mutineer runs a mutant's covering tests serially and kills a run that passes
+# ten seconds. The hook script tests write fresh executables, and macOS scans
+# each one on first exec (130-250 ms), so the Trigger mutants they cover blew
+# that cap and reported no verdict; they are left out.
+MUTATION_TESTS = FileList[TEST_LANES.fetch("test")].exclude("test/test_helper.rb",
+                                                            "test/integration/process/test_hook_script_invocation.rb")
+
+def mutineer(*extra)
+  tests = MUTATION_TESTS.flat_map { |file| ["--test", file] }
+  command = ["bundle", "exec", "mutineer", "run", *MUTATED, *tests, "--strategy", "redefine", *extra]
+  sh({ "MUTATION_TESTING" => "1", "RUBYOPT" => "-Ilib -Itest" }, *command, verbose: false)
+end
+
+desc "Mutation testing over lib (Ruby >= 3.4); fails below the threshold in .mutineer.yml"
+task(:mutation) { mutineer }
+
+namespace :mutation do
+  desc "Mutation testing over lines changed since HEAD; a prompt to look, not a verdict"
+  task(:changed) { mutineer("--since", "HEAD") }
+end
+
 task default: %i[test cucumber rubocop]

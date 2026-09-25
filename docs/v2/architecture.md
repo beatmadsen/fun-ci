@@ -139,8 +139,8 @@ the integration branch. See [`agentic-pipeline.md`](agentic-pipeline.md).
 - Tests are confined: temp dirs only, never `ENV`/home, guards fail the suite.
 - **Deviation from intent-record:** no blanket no-subprocess rule — fun-ci is a
   process and git orchestrator. Tests that spawn processes or use real git live
-  in `test/integration/` and only touch temp repositories; a meta-test enforces
-  that `test/unit/` and `test/acceptance/` never spawn.
+  in `test/integration/process/` and only touch temp repositories; a Prism scan
+  and a runtime guard enforce that no other test spawns.
 - The renderer protocol has one set of contract fixtures
   (`contract/fixtures/*.jsonl`) that both suites read: Ruby asserts it *emits*
   them, Rust asserts it *accepts and renders* them. One `rake contract:binary`

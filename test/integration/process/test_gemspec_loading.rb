@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../test_helper"
+require_relative "../../test_helper"
 require "open3"
 
 # Bundler evaluates the gemspec before it installs anything, so a gemspec that
@@ -14,7 +14,7 @@ class TestGemspecLoading < Minitest::Test
   private
 
   def load_gemspec_and_report_sqlite3
-    root = File.expand_path("../..", __dir__)
+    root = File.expand_path("../../..", __dir__)
     script = 'Gem::Specification.load(ARGV[0]); print defined?(SQLite3) ? "loaded" : "not loaded"'
     stdout, = Open3.capture3(
       { "RUBYOPT" => nil, "BUNDLER_SETUP" => nil, "BUNDLE_BIN_PATH" => nil },

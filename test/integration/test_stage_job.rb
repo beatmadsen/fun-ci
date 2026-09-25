@@ -24,6 +24,16 @@ class TestStageJobCreate < Minitest::Test
     assert_predicate id, :positive?, "Id should be positive"
   end
 
+  def test_should_find_nothing_for_an_unknown_id
+    assert_nil FunCi::Persistence::StageJob.find(@db, 99_999)
+  end
+
+  def test_should_refuse_a_status_it_has_no_timestamp_for
+    id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: @run_id, stage: "build")
+
+    assert_raises(KeyError) { FunCi::Persistence::StageJob.update_status(@db, id, "paused") }
+  end
+
   def test_should_default_status_to_scheduled
     id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: @run_id, stage: "build")
     job = FunCi::Persistence::StageJob.find(@db, id)

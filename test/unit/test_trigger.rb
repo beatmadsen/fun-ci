@@ -14,6 +14,13 @@ class TestTriggerArgumentParsing < Minitest::Test
     assert_match(/commit/i, @stderr.string)
   end
 
+  def test_should_print_what_is_required_and_the_usage_when_arguments_are_missing
+    run_from_args([])
+
+    assert_equal "fun-ci: commit hash and branch name are required.\n" \
+                 "Usage: fun-ci trigger <commit-hash> <branch>\n", @stderr.string
+  end
+
   def test_should_mention_branch_when_only_commit_given
     run_from_args(["abc1234"])
 

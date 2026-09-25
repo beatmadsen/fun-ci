@@ -31,3 +31,6 @@ ralph/log.tsv
 
 # Claude Code agent worktrees
 /.claude/worktrees/
+
+# Mutineer coverage cache
+/.mutineer/

@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require_relative "../test_helper"
+require_relative "../../test_helper"
 require "open3"
 require "tmpdir"
 
 # A connection a test leaves open is inherited by the next fork in the same
 # worker, which is how an order-dependent SQLite fork-safety warning got in.
 class TestSqliteConnectionGuard < Minitest::Test
-  ROOT = File.expand_path("../..", __dir__)
+  ROOT = File.expand_path("../../..", __dir__)
 
   def test_a_test_that_leaves_a_connection_open_fails_and_is_named
     output, status = run_suite(%(SQLite3::Database.new(":memory:")))

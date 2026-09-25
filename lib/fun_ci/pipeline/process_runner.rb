@@ -37,7 +37,7 @@ module FunCi
       def ignoring_errors
         yield
       rescue StandardError
-        nil
+        # A process that already exited or was already reaped needs nothing.
       end
     end
   end

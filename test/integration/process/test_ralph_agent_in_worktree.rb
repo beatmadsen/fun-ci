@@ -8,7 +8,7 @@ require "tmpdir"
 # Drives ralph/agent-in-worktree.sh against a throwaway repository with a fake
 # agent and a fake gate. Real git, temp directories only.
 class TestRalphAgentInWorktree < Minitest::Test
-  SCRIPT = File.expand_path("../../ralph/agent-in-worktree.sh", __dir__)
+  SCRIPT = File.expand_path("../../../ralph/agent-in-worktree.sh", __dir__)
   GIT_ISOLATION = { "GIT_CONFIG_GLOBAL" => File::NULL, "GIT_CONFIG_NOSYSTEM" => "1" }.freeze
   ONE_COMMIT = "sh -c 'echo x > a.txt && git add a.txt && git commit -qm \"AT-1.1: add a\"'"
 

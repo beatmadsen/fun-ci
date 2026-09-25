@@ -30,6 +30,16 @@ class TestStalePipelineCancellerCancel < Minitest::Test
                  "Should mark dead pipeline as cancelled"
   end
 
+  def test_should_send_no_signal_but_the_probe_to_a_process_already_gone
+    create_running_run(99_999)
+    cancel_with(lambda { |signal, pid|
+      @killed << [signal, pid]
+      raise Errno::ESRCH
+    })
+
+    assert_equal [[0, 99_999]], @killed
+  end
+
   def test_should_send_term_then_kill_to_live_stale_process
     create_running_run(12_345)
     cancel_with(recording_killer)

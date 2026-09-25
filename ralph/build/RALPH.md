@@ -98,7 +98,7 @@ if you make zero or several commits, leave uncommitted changes, or if
   real signals, no polling, no `Timeout`.
 - Public interfaces only in tests; if you can't test it, add a seam.
 - Tests touch only temp directories. Spawning processes or using real git is
-  only allowed in `test/integration/`.
+  only allowed in `test/integration/process/`.
 - Name tests for the behaviour they pin, never for the event that caused them.
 - Don't weaken a limit, threshold or test to get green. If one is genuinely
   wrong, stop and write why in `ralph/build/QUESTIONS.md` as your commit.

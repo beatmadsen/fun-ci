@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require_relative "../test_helper"
+require_relative "../../test_helper"
 require "open3"
 require "tmpdir"
 
 # A green run writes nothing to stderr, so anything there is an error nobody
 # asserted on: a dying thread, a forked child's exception. It fails the run.
 class TestStrayStderrGuard < Minitest::Test
-  ROOT = File.expand_path("../..", __dir__)
+  ROOT = File.expand_path("../../..", __dir__)
 
   def test_a_run_that_writes_to_stderr_fails
     refute_predicate run_suite(%(Thread.new { warn "stray boom" }.join)).last, :success?

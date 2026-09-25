@@ -14,6 +14,18 @@ class TestProjectConfigLintScript < Minitest::Test
            "Should report lint.sh is not found, got: #{errors.inspect}"
   end
 
+  def test_should_say_a_missing_script_is_not_found
+    errors = validation_errors("build.sh" => EXECUTABLE, "fast.sh" => EXECUTABLE, "slow.sh" => EXECUTABLE)
+
+    assert_equal [".fun-ci/lint.sh is not found"], errors
+  end
+
+  def test_should_name_the_project_whose_fun_ci_folder_is_missing
+    Dir.mktmpdir("fun-ci-test") do |dir|
+      assert_equal ["No .fun-ci/ folder found in #{dir}"], FunCi::Setup::ProjectConfig.new(dir).validate
+    end
+  end
+
   def test_should_require_lint_script_to_be_executable
     errors = validation_errors("build.sh" => EXECUTABLE, "fast.sh" => EXECUTABLE, "slow.sh" => EXECUTABLE,
                                "lint.sh" => NOT_EXECUTABLE)

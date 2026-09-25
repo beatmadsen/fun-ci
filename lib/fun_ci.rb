@@ -2,7 +2,6 @@
 
 require_relative "fun_ci/version"
 require_relative "fun_ci/persistence/database"
-require_relative "fun_ci/persistence/state_machine"
 require_relative "fun_ci/persistence/pipeline_run"
 require_relative "fun_ci/persistence/stage_job"
 require_relative "fun_ci/setup/project_config"

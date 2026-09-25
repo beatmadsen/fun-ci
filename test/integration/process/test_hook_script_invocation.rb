@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../acceptance/trigger_cli_shared"
+require_relative "../../acceptance/trigger_cli_shared"
 
 # The contract with a project's stage scripts, run as real processes: each
 # gets the commit hash as $1, and its exit status decides pass or fail.

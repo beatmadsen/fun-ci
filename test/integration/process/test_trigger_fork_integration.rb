@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../test_helper"
-require_relative "../support/trigger_test_kit"
+require_relative "../../test_helper"
+require_relative "../../support/trigger_test_kit"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/pipeline_recorder"
 require "fun_ci/persistence/pipeline_run"
@@ -46,18 +46,38 @@ class TestTriggerForkIntegration < Minitest::Test
     refute_nil @pid
   end
 
+  # The slow suite waits on a pipe, so the child is still running when the
+  # waiter is looked for, and exits only when the test lets it.
+  def test_the_launcher_reaps_its_child_when_the_slow_suite_ends
+    gate, release = IO.pipe
+    run_pipeline(runner: ->(cmd) { cmd.include?("slow.sh") ? wait_for(gate, release) : PASS })
+    waiter = Thread.list.grep(Process::Waiter).find { |thread| thread.pid == @pid }
+    release.close
+
+    assert_predicate waiter.value, :success?
+  end
+
   private
 
-  def run_pipeline
+  def run_pipeline(runner: scripted_runner)
     recorder = FunCi::Persistence::DbRecorder.new(FunCi::Persistence::Database.connection(@db_path))
-    exit_code = in_project { |dir| run_and_close(forking_trigger(dir, recorder)) }
+    exit_code = in_project { |dir| run_and_close(forking_trigger(dir, recorder, runner)) }
     @pid = with_db { |db| FunCi::Persistence::PipelineRun.find_by_commit(db, "abc1234").first[:pid] }
     exit_code
   end
 
-  # A nil launcher puts the real forking one back.
-  def forking_trigger(dir, recorder)
-    build_trigger(dir, command_runner: scripted_runner, recorder: recorder, background_launcher: nil)
+  # Runs in the forked child, which holds its own copy of the write end and
+  # has to close it before reading can end.
+  def wait_for(gate, release)
+    release.close
+    [gate.read, FakeStatus.new(true, 0)]
+  end
+
+  # Seams left to their defaults fork the slow suite for real.
+  def forking_trigger(dir, recorder, runner)
+    seams = FunCi::Pipeline::Seams.new(command_runner: runner, recorder: recorder, commit_validator: ->(_) { true })
+    FunCi::Pipeline::Trigger.new(project: dir, commit: FunCi::Pipeline::Commit.new(sha: "abc1234", branch: "main"),
+                                 io: quiet_io, seams: seams)
   end
 
   def run_and_close(trigger)

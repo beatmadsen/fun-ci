@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../test_helper"
+require_relative "../../test_helper"
 require "open3"
 require "tmpdir"
 
@@ -8,7 +8,7 @@ require "tmpdir"
 # temp root fails, naming the path. The probe suite nests its own root inside
 # this run's, so a sibling directory is outside the probe's root and inside ours.
 class TestConfinementGuard < Minitest::Test
-  ROOT = File.expand_path("../..", __dir__)
+  ROOT = File.expand_path("../../..", __dir__)
 
   def test_should_fail_a_test_that_writes_a_file_outside_the_temp_root
     escape = /TestProbe#test_probe .*outside the test temp root: #{Regexp.escape(outside_path)}/

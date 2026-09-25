@@ -18,11 +18,15 @@ SqliteConnectionGuard.install
 SpawnGuard.install
 Minitest::Test.prepend(ConfinementGuard::CheckAfterTest)
 
-Minitest.parallel_executor = ActiveSupport::Testing::ParallelizeExecutor.new(
-  size: Concurrent.processor_count,
-  with: :processes,
-  threshold: 0
-)
+# Mutineer already forks a worker per mutant; forking again here would multiply
+# processes until the machine runs out of memory, so a mutation run is serial.
+unless ENV["MUTATION_TESTING"]
+  Minitest.parallel_executor = ActiveSupport::Testing::ParallelizeExecutor.new(
+    size: Concurrent.processor_count,
+    with: :processes,
+    threshold: 0
+  )
+end
 
 FakeStatus = Data.define(:success?, :exitstatus) unless defined?(FakeStatus)
 
