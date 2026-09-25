@@ -96,7 +96,6 @@ impl Animator {
         self.effects.iter_mut().for_each(|effect| effect.frame += 1);
         self.effects.retain(|effect| !effect.finished());
         self.header.advance();
-        self.header.expire();
     }
 }
 

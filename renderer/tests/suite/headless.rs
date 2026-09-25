@@ -11,7 +11,7 @@ use tempfile::TempDir;
 const CELL: (u32, u32) = (8, 16);
 
 fn scenario(name: &str) -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!("../contract/scenarios/{name}.jsonl"))
+    crate::support::contract_dir().join(format!("scenarios/{name}.jsonl"))
 }
 
 fn renderer(scenario: &Path, out: &Path) -> ExitStatus {
@@ -112,4 +112,15 @@ fn stats_counts_the_frames_each_animation_showed() {
 fn a_scenario_that_cannot_be_read_fails_the_run() {
     let out = tempfile::tempdir().unwrap();
     assert_eq!(renderer(&out.path().join("missing.jsonl"), out.path()).code(), Some(64));
+}
+
+#[test]
+fn frames_jsonl_numbers_frames_from_one() {
+    assert_eq!(lines(&headless("running").path().join("frames.jsonl"))[0]["frame"], 1);
+}
+
+#[test]
+fn cast_events_are_stamped_with_scenario_time() {
+    let events = lines(&headless("running").path().join("frames.cast"));
+    assert_eq!((events[1][0].as_f64(), events[2][0].as_f64()), (Some(0.1), Some(0.2)));
 }

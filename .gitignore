@@ -36,3 +36,5 @@ ralph/log.tsv
 /.mutineer/
 
 renderer/target/
+renderer/mutants.out/
+renderer/mutants.out.old/

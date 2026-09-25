@@ -1,16 +1,14 @@
 //! AT-3.7: whatever ends the session, the terminal leaves raw mode and the
 //! alternate screen exactly once.
 
-mod support;
-
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 use std::io::{self, BufRead, Read};
 use std::panic::{AssertUnwindSafe, catch_unwind};
 use std::sync::Mutex;
 
 use fun_ci_renderer::session::{on_terminate, run_session};
 use fun_ci_renderer::tty::restore_once;
-use support::FakeTerminal;
+use crate::support::FakeTerminal;
 
 const HELLO: &str = "{\"t\":\"hello\",\"v\":1}\n";
 
@@ -66,29 +64,26 @@ fn a_panic_mid_session_restores_the_terminal() {
     assert_eq!(outcome.err().map(|_| terminal.calls), Some(vec!["enter", "restore"]));
 }
 
+// Shaped as the restore callback restore_once takes, which can fail.
+#[allow(clippy::unnecessary_wraps)]
+fn note(seen: &Cell<u32>, value: u32) -> io::Result<()> {
+    seen.set(value);
+    Ok(())
+}
+
 #[test]
 fn restoring_holds_the_saved_state_until_the_terminal_is_restored() {
-    let saved = Mutex::new(Some("modes"));
-    let mut held_while_restoring = false;
-    restore_once(&saved, |_| {
-        held_while_restoring = saved.try_lock().is_err();
-        Ok(())
-    })
-    .unwrap();
-    assert!(held_while_restoring);
+    let (saved, held) = (Mutex::new(Some("modes")), Cell::new(0));
+    restore_once(&saved, |_| note(&held, u32::from(saved.try_lock().is_err()))).unwrap();
+    assert_eq!(held.get(), 1);
 }
 
 #[test]
 fn the_terminal_is_restored_only_once() {
-    let saved = Mutex::new(Some("modes"));
-    let mut restores = 0;
-    let mut count = |_| {
-        restores += 1;
-        Ok(())
-    };
-    restore_once(&saved, &mut count).unwrap();
-    restore_once(&saved, &mut count).unwrap();
-    assert_eq!(restores, 1);
+    let (saved, restores) = (Mutex::new(Some("modes")), Cell::new(0));
+    restore_once(&saved, |_| note(&restores, restores.get() + 1)).unwrap();
+    restore_once(&saved, |_| note(&restores, restores.get() + 1)).unwrap();
+    assert_eq!(restores.get(), 1);
 }
 
 #[test]

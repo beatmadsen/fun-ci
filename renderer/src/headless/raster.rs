@@ -61,7 +61,7 @@ fn paint(image: &mut Image, (left, top): (usize, usize), cell: &Cell) {
 /// Sixteen rows of eight pixels, bit 0 leftmost.
 fn glyph(ch: char) -> [u8; 16] {
     if ('\u{2800}'..='\u{28FF}').contains(&ch) {
-        return braille(u32::from(ch) - 0x2800);
+        return braille(u32::from(ch) & 0xFF);
     }
     let rows = [BASIC_FONTS.get(ch), LATIN_FONTS.get(ch), BOX_FONTS.get(ch), BLOCK_FONTS.get(ch)];
     let rows = rows.into_iter().flatten().next().unwrap_or([0xFF, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0xFF]);
@@ -80,5 +80,5 @@ fn braille_row(dots: u32, y: usize) -> u8 {
     };
     let raised = |col: &usize| BRAILLE_DOTS.iter().position(|&dot| dot == (*col, offset / 4));
     let raised = |col: &usize| raised(col).is_some_and(|bit| dots & (1 << bit) != 0);
-    (0..2).filter(raised).fold(0, |bits, col| bits | 0b11 << (1 + col * 4))
+    (0..2).filter(raised).map(|col| 0b11 << (1 + col * 4)).sum()
 }

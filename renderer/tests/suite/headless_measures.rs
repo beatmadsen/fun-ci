@@ -42,6 +42,16 @@ cases! {
     blue_is_hue_sector_eight: hue_sector([0, 0, 255]) => Some(8);
     orange_is_hue_sector_one: hue_sector([255, 135, 0]) => Some(1);
     grey_has_no_hue: hue_sector([128, 128, 128]) => None;
+    yellow_is_hue_sector_two: hue_sector([255, 255, 0]) => Some(2);
+    cyan_is_hue_sector_six: hue_sector([0, 255, 255]) => Some(6);
+    magenta_is_hue_sector_ten: hue_sector([255, 0, 255]) => Some(10);
+    a_green_led_hue_counts_from_green: hue_sector([64, 255, 200]) => Some(5);
+    a_blue_led_hue_counts_from_blue: hue_sector([200, 64, 255]) => Some(9);
+    a_red_led_hue_below_red_wraps_to_the_last_sector: hue_sector([255, 0, 128]) => Some(11);
+    a_quarter_saturated_colour_has_a_hue: hue_sector([100, 75, 75]) => Some(0);
+    a_less_saturated_colour_has_none: hue_sector([100, 76, 76]) => None;
+    the_darkest_colour_with_a_hue: hue_sector([51, 0, 0]) => Some(0);
+    bold_leaves_bright_black_alone: cell_colours(&cell(Colour::Idx(8), &["bold"])).0 => [127, 127, 127];
     near_black_has_no_hue: hue_sector([40, 0, 0]) => None;
     the_default_foreground_is_light_grey: cell_colours(&cell(Colour::Default, &[])).0 => [229, 229, 229];
     colour_208_is_xterm_orange: cell_colours(&cell(Colour::Idx(208), &[])).0 => [255, 135, 0];
@@ -63,6 +73,9 @@ cases! {
     the_longest_row_ends_at_its_last_glyph: measured(&[frame("ab")]).frames[0].volume.longest_row => 2;
     an_empty_screen_is_all_dark: measured(&[frame("")]).frames[0].colour.dark_cell_share.total_cmp(&1.0) => std::cmp::Ordering::Equal;
     two_colours_spread_over_two_hues: measured(&[frame("\u{1b}[31ma\u{1b}[32mb")]).frames[0].colour.hue_spread => 2;
+    the_first_frame_is_numbered_one: measured(&[frame("a")]).frames[0].frame => 1;
+    a_blank_screen_is_all_in_the_darkest_luminance_bucket: measured(&[frame("")]).frames[0].colour.luminance_histogram => [1024, 0, 0, 0, 0, 0, 0, 0];
+    luminance_64_is_not_dark: measured(&[frame("\u{1b}[48;2;64;64;64m\u{1b}[2J")]).frames[0].colour.dark_cell_share.total_cmp(&0.0) => std::cmp::Ordering::Equal;
     the_bytes_written_are_counted: measured(&[frame("abc")]).frames[0].volume.bytes => 3;
     frames_are_counted_per_animation_shown: measured(&[frame("a"), frame("b")]).animations["idle"] => 2;
 }

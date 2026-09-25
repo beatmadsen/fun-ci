@@ -36,3 +36,10 @@ fn an_unpinned_success_animation_is_chosen_by_the_seed() {
     let mut cast = Cast::new(Library::builtin(), 1);
     assert_eq!(cast.success().name(), "celebrate");
 }
+
+#[test]
+fn unpinned_success_animations_follow_the_xorshift_sequence_of_the_seed() {
+    let mut cast = Cast::new(Library::builtin(), 1);
+    let picks = [(); 5].map(|()| cast.success().name().to_string());
+    assert_eq!(picks, ["celebrate", "success", "flash", "success", "leprechauns"]);
+}

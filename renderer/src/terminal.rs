@@ -19,10 +19,4 @@ pub trait Terminal {
     /// # Errors
     /// When the terminal refuses the mode change.
     fn restore(&mut self) -> io::Result<()>;
-
-    /// Writes one frame's bytes.
-    ///
-    /// # Errors
-    /// When the terminal cannot be written.
-    fn draw(&mut self, bytes: &[u8]) -> io::Result<()>;
 }

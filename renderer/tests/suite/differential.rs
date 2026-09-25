@@ -11,7 +11,7 @@ use fun_ci_renderer::replay::{TickFrame, replay};
 use fun_ci_renderer::scenario;
 
 fn contract() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../contract")
+    crate::support::contract_dir()
 }
 
 fn golden(name: &str) -> Vec<Vec<u8>> {

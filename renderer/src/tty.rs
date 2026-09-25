@@ -55,11 +55,6 @@ impl Terminal for Tty {
     fn restore(&mut self) -> io::Result<()> {
         restore_controlling_terminal()
     }
-
-    fn draw(&mut self, bytes: &[u8]) -> io::Result<()> {
-        let written = with_entered(|entered| entered.file.write_all(bytes).and_then(|()| entered.file.flush()));
-        written.unwrap_or_else(|| Err(io::Error::other("terminal not entered")))
-    }
 }
 
 /// Leaves the alternate screen and raw mode if this process entered them,
@@ -111,6 +106,6 @@ fn set_modes(file: &File, modes: &libc::termios) -> io::Result<()> {
 
 fn window_size(file: &File) -> Option<(u16, u16)> {
     let mut size = libc::winsize { ws_row: 0, ws_col: 0, ws_xpixel: 0, ws_ypixel: 0 };
-    let status = unsafe { libc::ioctl(file.as_raw_fd(), libc::TIOCGWINSZ, &raw mut size) };
-    (status == 0 && size.ws_col > 0).then_some((size.ws_col, size.ws_row))
+    unsafe { libc::ioctl(file.as_raw_fd(), libc::TIOCGWINSZ, &raw mut size) };
+    (size.ws_col > 0).then_some((size.ws_col, size.ws_row))
 }

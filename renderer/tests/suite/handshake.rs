@@ -1,11 +1,9 @@
 //! AT-3.2: `hello {v:1}` is answered with `ready {v:1,cols,rows}`; any other
 //! version with `error {code:"version"}` and exit status 2.
 
-mod support;
-
 use fun_ci_renderer::session::run_session;
 use serde_json::{Value, json};
-use support::FakeTerminal;
+use crate::support::FakeTerminal;
 
 const HELLO: &str = "{\"t\":\"hello\",\"v\":1}\n";
 
@@ -67,6 +65,16 @@ fn an_unsupported_version_leaves_the_terminal_untouched() {
 #[test]
 fn a_hello_without_a_version_exits_with_status_two() {
     assert_eq!(status("{\"t\":\"hello\"}\n"), 2);
+}
+
+#[test]
+fn a_version_error_names_the_version_asked_for() {
+    assert_eq!(replies("{\"t\":\"hello\",\"v\":2}\n")[0]["detail"], "unsupported version 2");
+}
+
+#[test]
+fn a_version_error_says_when_hello_has_no_version() {
+    assert_eq!(replies("{\"t\":\"hello\"}\n")[0]["detail"], "hello without a version");
 }
 
 #[test]

@@ -4,6 +4,7 @@ require "bundler/gem_tasks"
 require "rake/testtask"
 require "cucumber/rake/task"
 require "rubocop/rake_task"
+require "etc"
 
 # `test` is the gate's lane; the others are quicker subsets of it.
 # test/policy/test_gate_lanes.rb holds them to that.
@@ -70,6 +71,34 @@ namespace :rust do
 
   desc "Lint the Rust renderer with clippy (pedantic, warnings are errors)"
   task(:clippy) { sh "cargo", "clippy", "--manifest-path", RENDERER_MANIFEST, "--all-targets", "--", "-D", "warnings" }
+end
+
+RUST_MUTATION_THRESHOLD = 90
+
+def rust_mutation(threshold)
+  require_relative "renderer/tools/mutation_score"
+  status = run_cargo_mutants
+  abort "cargo mutants measured nothing (exit #{status.inspect})" unless FunCi::Mutation.completed?(status)
+  score = FunCi::Mutation::Score.load(File.expand_path("renderer/mutants.out/outcomes.json", __dir__))
+  puts score.summary
+  abort "Rust mutation score is under #{threshold}%" unless score.passes?(threshold)
+end
+
+# Tests read the golden corpus through FUN_CI_CONTRACT, because cargo-mutants
+# builds a copy of renderer/ that has no ../contract next to it. The suite takes
+# seconds; the fixed timeout is for mutants that make a test wait forever (one
+# that stops SIGTERM being handled leaves the pty test waiting for an exit).
+def run_cargo_mutants
+  renderer = File.expand_path("renderer", __dir__)
+  env = { "FUN_CI_CONTRACT" => File.expand_path("contract", __dir__) }
+  jobs = [Etc.nprocessors / 2, 1].max.to_s
+  system(env, "cargo", "mutants", "-d", renderer, "-o", renderer, "-j", jobs, "--timeout", "120")
+  Process.last_status.exitstatus
+end
+
+namespace :mutation do
+  desc "Mutation-test the Rust renderer with cargo-mutants; fails under 90% of viable mutants caught"
+  task(:rust) { rust_mutation(RUST_MUTATION_THRESHOLD) }
 end
 
 task default: %i[test cucumber rust:test rubocop rust:clippy]

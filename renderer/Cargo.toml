@@ -34,3 +34,8 @@ tempfile = "3.27.0"
 # tests encode dozens of PNGs, which is slow unoptimised.
 [profile.dev.package."*"]
 opt-level = 3
+
+# The renderer itself lightly optimised in test builds too: the suite runs
+# about four times faster, which is what the cargo-mutants lane pays per mutant.
+[profile.dev]
+opt-level = 1

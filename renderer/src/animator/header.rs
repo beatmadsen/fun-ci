@@ -84,10 +84,6 @@ impl Header {
         self.running.iter_mut().chain(self.event.iter_mut()).for_each(Player::advance);
     }
 
-    pub fn expire(&mut self) {
-        self.event = self.event.take().filter(|player| !player.finished());
-    }
-
     /// The name of the animation `lines` draws.
     #[must_use]
     pub fn showing(&self) -> &str {

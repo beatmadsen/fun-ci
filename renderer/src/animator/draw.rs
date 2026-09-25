@@ -38,7 +38,7 @@ fn placed(effect: &Effect, runs: &[Run]) -> Option<(usize, usize, String)> {
 }
 
 fn most_important(effects: &[Effect]) -> Option<&Effect> {
-    let candidates = effects.iter().filter(|e| e.kind.has_footer() && !e.finished());
+    let candidates = effects.iter().filter(|e| e.kind.has_footer());
     candidates.fold(None, |best: Option<&Effect>, e| match best {
         Some(b) if b.kind.priority() >= e.kind.priority() => Some(b),
         _ => Some(e),
