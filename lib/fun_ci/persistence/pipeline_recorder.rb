@@ -6,9 +6,9 @@ require_relative "stage_job"
 module FunCi
   module Persistence
     class NullRecorder
-      def create_run(commit_hash:, branch:, project_path: nil) = nil
-      def start_stage(stage) = nil
-      def end_stage(job_id, status) = nil
+      def create_run(**) = nil
+      def start_stage(_stage) = nil
+      def end_stage(_job_id, _status) = nil
       def complete_run = nil
       def fail_run = nil
       def db = nil
@@ -32,7 +32,9 @@ module FunCi
       end
 
       def close
-        @db.close rescue nil
+        @db.close
+      rescue StandardError
+        nil
       end
 
       def create_run(commit_hash:, branch:, project_path: nil)
@@ -41,6 +43,7 @@ module FunCi
 
       def start_stage(stage)
         return nil unless @pipeline_run_id
+
         ensure_running
         job_id = StageJob.create(@db, pipeline_run_id: @pipeline_run_id, stage: stage)
         StageJob.update_status(@db, job_id, "running")
@@ -49,16 +52,19 @@ module FunCi
 
       def end_stage(job_id, status)
         return unless job_id
+
         StageJob.update_status(@db, job_id, status)
       end
 
       def complete_run
         return unless @pipeline_run_id
+
         PipelineRun.update_status(@db, @pipeline_run_id, "completed")
       end
 
       def fail_run
         return unless @pipeline_run_id
+
         PipelineRun.update_status(@db, @pipeline_run_id, "failed")
       end
 
@@ -67,6 +73,7 @@ module FunCi
       def ensure_running
         run = PipelineRun.find(@db, @pipeline_run_id)
         return unless run && run[:status] == "scheduled"
+
         PipelineRun.update_status(@db, @pipeline_run_id, "running")
       end
     end

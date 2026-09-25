@@ -14,19 +14,11 @@ Bundler/OrderedGems:
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: outdent, indent
-Layout/AccessModifierIndentation:
-  Exclude:
-    - 'lib/fun_ci/persistence/state_machine.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
 # SupportedStyles: with_first_argument, with_fixed_indentation
 Layout/ArgumentAlignment:
   Exclude:
     - 'features/step_definitions/admin_tui_steps.rb'
     - 'features/support/env.rb'
-    - 'lib/fun_ci/persistence/state_machine.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'test/acceptance/test_no_validate_fork_safety.rb'
     - 'test/acceptance/test_trigger_cli_arguments.rb'
@@ -76,10 +68,6 @@ Layout/EmptyLineAfterGuardClause:
   Exclude:
     - 'features/support/env.rb'
     - 'lib/fun_ci/cli.rb'
-    - 'lib/fun_ci/persistence/database.rb'
-    - 'lib/fun_ci/persistence/pipeline_recorder.rb'
-    - 'lib/fun_ci/persistence/pipeline_run.rb'
-    - 'lib/fun_ci/persistence/stage_job.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
@@ -181,7 +169,6 @@ Layout/HashAlignment:
 # SupportedStylesAlignWith: start_of_line, relative_to_receiver
 Layout/IndentationWidth:
   Exclude:
-    - 'lib/fun_ci/persistence/state_machine.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
@@ -194,8 +181,6 @@ Layout/LineLength:
     - 'lib/fun_ci/animations/celebrate.rb'
     - 'lib/fun_ci/animations/flash.rb'
     - 'lib/fun_ci/animations/yay.rb'
-    - 'lib/fun_ci/persistence/pipeline_run.rb'
-    - 'lib/fun_ci/persistence/stage_job.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/board_data.rb'
     - 'test/acceptance/test_golden_corpus.rb'
@@ -283,7 +268,6 @@ Lint/UnusedBlockArgument:
 # NotImplementedExceptions: NotImplementedError
 Lint/UnusedMethodArgument:
   Exclude:
-    - 'lib/fun_ci/persistence/pipeline_recorder.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/board_renderer.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
@@ -340,8 +324,6 @@ Metrics/MethodLength:
     - 'db/migrate/**/*'
     - 'features/support/env.rb'
     - 'lib/fun_ci/cli.rb'
-    - 'lib/fun_ci/persistence/database.rb'
-    - 'lib/fun_ci/persistence/stage_job.rb'
     - 'lib/fun_ci/pipeline/background_wrapper.rb'
     - 'lib/fun_ci/pipeline/pipeline_forker.rb'
     - 'lib/fun_ci/pipeline/process_runner.rb'
@@ -613,7 +595,6 @@ Style/RegexpLiteral:
 # This cop supports safe autocorrection (--autocorrect).
 Style/RescueModifier:
   Exclude:
-    - 'lib/fun_ci/persistence/pipeline_recorder.rb'
     - 'lib/fun_ci/pipeline/process_runner.rb'
     - 'test/acceptance/test_no_validate_fork_safety.rb'
     - 'test/acceptance/test_trigger_cli_concurrent_runs.rb'

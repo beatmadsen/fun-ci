@@ -6,6 +6,8 @@ module FunCi
   module Persistence
     module StageJob
       TERMINAL_STATUSES = %w[completed failed timed_out cancelled].freeze
+      TIMESTAMP_COLUMNS = TERMINAL_STATUSES.to_h { |status| [status, "completed_at"] }
+                                           .merge("running" => "started_at").freeze
 
       def self.create(db, pipeline_run_id:, stage:)
         db.execute(
@@ -16,24 +18,25 @@ module FunCi
       end
 
       def self.find(db, id)
-        row = db.execute("SELECT id, pipeline_run_id, stage, status, started_at, completed_at FROM stage_jobs WHERE id = ?", [id]).first
+        row = db.execute(
+          "SELECT id, pipeline_run_id, stage, status, started_at, completed_at FROM stage_jobs WHERE id = ?", [id]
+        ).first
         return nil unless row
+
         row_to_hash(row)
       end
 
       def self.update_status(db, id, new_status)
+        column = TIMESTAMP_COLUMNS[new_status]
+        return db.execute("UPDATE stage_jobs SET status = ? WHERE id = ?", [new_status, id]) unless column
+
         now = Time.now.utc.iso8601
-        if new_status == "running"
-          db.execute("UPDATE stage_jobs SET status = ?, started_at = ? WHERE id = ?", [new_status, now, id])
-        elsif TERMINAL_STATUSES.include?(new_status)
-          db.execute("UPDATE stage_jobs SET status = ?, completed_at = ? WHERE id = ?", [new_status, now, id])
-        else
-          db.execute("UPDATE stage_jobs SET status = ? WHERE id = ?", [new_status, id])
-        end
+        db.execute("UPDATE stage_jobs SET status = ?, #{column} = ? WHERE id = ?", [new_status, now, id])
       end
 
       def self.elapsed_duration(job)
         return nil unless job[:started_at] && job[:completed_at]
+
         Time.parse(job[:completed_at]) - Time.parse(job[:started_at])
       end
 
