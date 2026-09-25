@@ -27,6 +27,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   commit too, unless it has no `.fun-ci/`, in which case the checkout's are
   used. Two pipelines run at once by default; set `worktree_slots: 3` (or
   any number above 0) in `.fun-ci/config` for more.
+- `fun-ci console` is drawn by a separate program, `fun-ci-renderer`,
+  written in Rust. The gems for Linux (x86_64, aarch64, musl) and macOS
+  (arm64, x86_64) include it. Elsewhere, install it with
+  `cargo install fun-ci-renderer` or point `FUN_CI_RENDERER` at a copy you
+  built; without it, `console` says so and every other command works as
+  before. What the renderer reports going wrong ends up in
+  `.fun-ci/console.log`, since it owns the terminal.
 - The console's cancel prompt names the run it would cancel, as in
   `Cancel feat/search (d4e5f67)? y / n`, instead of the generic
   "Cancel running pipeline? y/n".

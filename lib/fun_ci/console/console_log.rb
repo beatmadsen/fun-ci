@@ -9,6 +9,8 @@ module FunCi
     # renderer got wrong: the terminal is the renderer's, so stderr would
     # draw over it.
     class ConsoleLog
+      attr_reader :path
+
       def initialize(project_dir:, clock:)
         @path = File.join(project_dir, ".fun-ci", "console.log")
         @clock = clock

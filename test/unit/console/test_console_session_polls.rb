@@ -44,4 +44,14 @@ class TestConsoleSessionPolls < Minitest::Test
 
     assert_equal 4, @port.sent.last["runs"].size
   end
+
+  def test_should_send_nothing_on_refresh_before_the_renderer_is_ready
+    port = ConsoleFakes::Port.new
+    session = FunCi::Console::ConsoleSession.build(board_data: @board_data, port: port, clock: -> { Time.at(0) },
+                                                   log: ConsoleFakes::Log.new)
+    session.start
+    session.refresh
+
+    assert_equal(["hello"], port.sent.map { |message| message["t"] })
+  end
 end

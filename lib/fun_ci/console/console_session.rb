@@ -12,6 +12,7 @@ module FunCi
     # Ruby decides what is true here; drawing it is the renderer's job.
     class ConsoleSession
       VERSION = 1
+      HANDLERS = { "ready" => :ready, "resize" => :resize, "key" => :key, "error" => :renderer_error }.freeze
 
       # `log` takes what the renderer got wrong (ConsoleLog).
       def self.build(board_data:, port:, clock:, log:)
@@ -23,7 +24,7 @@ module FunCi
         @state = state
         @port = port
         @log = log
-        @finished = false
+        @phase = :starting
       end
 
       def start = @port.write(t: "hello", v: VERSION)
@@ -36,33 +37,43 @@ module FunCi
         @log.write("the renderer sent a line that is not JSON: #{line.inspect}")
       end
 
-      # Sends what the runs look like now, as each poll does.
-      def refresh = @state.updates.each { |message| @port.write(message) }
+      # Sends what the runs look like now, as each poll does; nothing before
+      # the renderer is ready, since its size decides the page.
+      def refresh = @phase == :running && send_updates
 
-      def finished? = @finished
+      def finished? = @phase == :finished
 
       private
 
       def handle(message)
-        case message["t"]
-        when "ready", "resize" then resize(message["rows"])
-        when "key" then key(message["key"])
-        when "error" then @log.write("the renderer reported a #{message["code"]} error: #{message["detail"]}")
-        else @log.write("the renderer sent a message of unknown type #{message["t"].inspect}")
-        end
+        handler = HANDLERS[message["t"]]
+        return @log.write("the renderer sent a message of unknown type #{message["t"].inspect}") unless handler
+
+        send(handler, message)
       end
 
-      def resize(rows)
-        @state.resize(rows)
-        refresh
+      def ready(message)
+        @phase = :running
+        resize(message)
       end
 
-      def key(key)
-        return refresh unless @state.press(key) == :quit
+      def resize(message)
+        @state.resize(message["rows"])
+        send_updates
+      end
 
-        @finished = true
+      def key(message)
+        return send_updates unless @state.press(message["key"]) == :quit
+
+        @phase = :finished
         @port.write(t: "quit")
       end
+
+      def renderer_error(message)
+        @log.write("the renderer reported a #{message["code"]} error: #{message["detail"]}")
+      end
+
+      def send_updates = @state.updates.each { |update| @port.write(update) }
     end
   end
 end

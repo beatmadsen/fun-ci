@@ -59,18 +59,21 @@ module FunCi
       Pipeline::Trigger.run_from_args(args, io: @io, recorder: recorder)
     end
 
+    # Only `console` needs the renderer, so only it fails without one.
     def run_console(_args)
-      require_relative "tui/admin_tui"
-      require_relative "tui/animation_renderer"
-      require "io/console"
-      admin_tui(setup_db).run
-      0
+      require_relative "console/launcher"
+      require_relative "console/renderer_lookup"
+      launch_console(Console::RendererLookup.default.path)
+    rescue Console::RendererLookup::Missing => e
+      @io.stderr.puts e.message
+      1
     end
 
-    def admin_tui(db)
-      Tui::AdminTui.new(db: db, width_provider: -> { IO.console&.winsize&.dig(1) || 80 },
-                        height_provider: -> { IO.console&.winsize&.dig(0) },
-                        animation_renderer: Tui::AnimationRenderer.new)
+    def launch_console(renderer)
+      db = setup_db
+      Console::Launcher.run(renderer: renderer, db: db, project_dir: Dir.pwd, stderr: @io.stderr)
+    ensure
+      db&.close
     end
 
     def run_init(args)

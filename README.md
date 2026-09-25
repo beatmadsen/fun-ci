@@ -77,6 +77,8 @@ fun-ci console
 
 Opens a terminal UI showing pipeline status across all branches. The header area displays animated ASCII art: a gentle starfield when idle, a rocket while pipelines run, and celebration/explosion animations on success or failure.
 
+The console is drawn by a separate program, `fun-ci-renderer`. The gem for Linux (x86_64, aarch64, musl) and macOS (arm64, x86_64) includes it. On other systems you get the plain gem, where every command except `console` works; install the renderer with `cargo install fun-ci-renderer`, or point `FUN_CI_RENDERER` at a copy you built. When something goes wrong between the two, the details are in `.fun-ci/console.log`.
+
 Navigation:
 
 - `j` / `k` -- scroll up/down
