@@ -3,7 +3,8 @@
 
 use crate::animator::{Animator, HEADER_HEIGHT};
 use crate::ansi::{DIM, paint};
-use crate::model::{Board, View};
+use crate::format::short_sha;
+use crate::model::{Board, Run};
 use crate::row::format_run;
 use crate::screen::Screen;
 use crate::spinner::Spinner;
@@ -86,7 +87,7 @@ impl BoardView {
         if !lines.is_empty() {
             self.screen.println("");
         }
-        self.screen.println(&paint(DIM, footer(&board.view)));
+        self.screen.println(&paint(DIM, &footer(board)));
     }
 
     fn lines(&self, board: &Board, now_ms: i64, rows: u16) -> Vec<String> {
@@ -106,8 +107,15 @@ impl BoardView {
     }
 }
 
-fn footer(view: &View) -> &'static str {
-    if view.confirming { "  Cancel running pipeline? y/n" } else { "  j/k move   c cancel   q quit" }
+fn footer(board: &Board) -> String {
+    match confirming(board) {
+        Some(run) => format!("  Cancel {} ({})? y / n", run.commit.branch, short_sha(&run.commit.sha)),
+        None => "  j/k move   c cancel   q quit".to_string(),
+    }
+}
+
+fn confirming(board: &Board) -> Option<&Run> {
+    board.view.cursor.filter(|_| board.view.confirming).and_then(|index| board.runs.get(index))
 }
 
 fn lstrip(line: &str) -> &str {

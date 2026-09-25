@@ -63,7 +63,11 @@ module FunCi
         rows = truncate_rows_to_height(board.runs.map { |run| format_run(run, board.now) })
         @screen.render_board(rows, cursor_index: board.cursor_index)
         @screen.println unless rows.empty?
-        @screen.render_footer(empty: false, confirming: board.confirming)
+        @screen.render_footer(empty: false, confirming: confirming_run(board))
+      end
+
+      def confirming_run(board)
+        board.runs[board.cursor_index] if board.confirming && board.cursor_index
       end
 
       def format_run(run, now)

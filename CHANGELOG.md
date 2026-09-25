@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in your checkout while you kept editing it. The stage scripts come from the
   commit too, unless it has no `.fun-ci/`, in which case the checkout's are
   used.
+- The console's cancel prompt names the run it would cancel, as in
+  `Cancel feat/search (d4e5f67)? y / n`, instead of the generic
+  "Cancel running pipeline? y/n".
 
 ### Removed
 - The `fun-ci-trigger` and `fun-ci-tui` executables. Use `fun-ci trigger` and

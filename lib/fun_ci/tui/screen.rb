@@ -40,14 +40,15 @@ module FunCi
         println Ansi.bg_charcoal(Ansi.white(line))
       end
 
-      def render_footer(empty: false, confirming: false)
-        if confirming
-          println Ansi.dim("  Cancel running pipeline? y/n")
-        elsif empty
-          println Ansi.dim("  q quit")
-        else
-          println Ansi.dim("  j/k move   c cancel   q quit")
-        end
+      # `confirming` is the run whose cancellation awaits y or n, if any.
+      def render_footer(empty: false, confirming: nil)
+        println Ansi.dim(footer_text(empty, confirming))
+      end
+
+      def footer_text(empty, confirming)
+        return "  Cancel #{confirming[:branch]} (#{confirming[:commit_hash][0, 7]})? y / n" if confirming
+
+        empty ? "  q quit" : "  j/k move   c cancel   q quit"
       end
 
       def render_empty_state

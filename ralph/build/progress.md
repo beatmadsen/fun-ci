@@ -39,7 +39,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [ ] AT-3.5: Contract fixtures
 - [x] AT-3.6: Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in)
 - [x] AT-3.7: Terminal is restored on EOF, `quit`, panic and SIGTERM
-- [ ] AT-3.7b: The cancel prompt names the branch and short SHA
+- [x] AT-3.7b: The cancel prompt names the branch and short SHA
 - [ ] AT-3.8: `rake contract:binary` drives the real binary in the gate
 - [ ] AT-3.9: cargo-mutants lane ≥ 90 % caught
 - [ ] AT-4.1: Renderer lookup

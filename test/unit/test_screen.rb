@@ -43,12 +43,15 @@ class TestScreenFooter < Minitest::Test
     assert_match(/\e\[2m/, raw, "Footer should be dim")
   end
 
-  def test_should_show_confirmation_prompt_when_confirming
-    plain = plain_screen_output { |screen| screen.render_footer(confirming: true) }
-    assert_match(%r{cancel.*\?.*y/n}i, plain,
-                 "Footer should show confirmation prompt with y/n when confirming")
-    refute_match(%r{j/k move}, plain,
-                 "Normal key bindings should be hidden during confirmation")
+  RUN = { branch: "feat/search", commit_hash: "d4e5f67a3f7c01e9b2d4c6f8a1b3c5d7e9f0a2b4" }.freeze
+
+  def test_the_cancel_prompt_names_the_branch_and_short_sha_of_the_run
+    plain = plain_screen_output { |screen| screen.render_footer(confirming: RUN) }
+    assert_equal "  Cancel feat/search (d4e5f67)? y / n", plain.lines.first.chomp
+  end
+
+  def test_the_cancel_prompt_replaces_the_key_bindings
+    refute_match(%r{j/k move}, plain_screen_output { |screen| screen.render_footer(confirming: RUN) })
   end
 end
 

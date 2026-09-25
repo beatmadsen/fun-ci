@@ -13,7 +13,7 @@ class TestAdminTuiCancelConfirmation < Minitest::Test
   include DatabaseTestSetup
   include PipelineTestHelpers
 
-  CONFIRMATION_PROMPT = %r{cancel.*\?.*y/n}i
+  CONFIRMATION_PROMPT = %r{cancel.*\?.*y / n}i
   NORMAL_BINDINGS = %r{j/k move}
 
   def setup
