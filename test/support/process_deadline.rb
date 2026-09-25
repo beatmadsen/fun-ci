@@ -10,12 +10,16 @@
 # asking ps, not the code under test, which a mutant may have stopped from
 # reporting them.
 #
-# Once a wait has hung, the code under test is broken, and every later wait
-# in the same process fails at once, stopping what the test started:
-# otherwise each test would hang in turn until the mutation lane's cap,
-# which covers all of a mutant's tests together, cut one off mid-wait.
+# The deadline is generous in the gate, whose parallel workers make real
+# processes several times slower, and short in the serial mutation lane,
+# which must fail a hang inside mutineer's 10 s cap per mutant. There, once a
+# wait has hung, the code under test is broken, and every later wait in the
+# same process fails at once, stopping what the test started: otherwise each
+# test would hang in turn until that cap, which covers all of a mutant's
+# tests together, cut one off mid-wait.
 module ProcessDeadline
-  SECONDS = 5
+  MUTATING = !ENV["MUTATION_TESTING"].nil?
+  SECONDS = MUTATING ? 5 : 30
 
   class << self
     attr_accessor :hung
@@ -40,7 +44,7 @@ module ProcessDeadline
   end
 
   def give_up
-    ProcessDeadline.hung = true
+    ProcessDeadline.hung = MUTATING
     stop_children
     flunk "still waiting on a process after #{SECONDS} s"
   end
