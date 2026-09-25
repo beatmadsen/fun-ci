@@ -28,7 +28,7 @@ pub struct Session<I: Inputs, W: Write, C: Clock> {
 /// Runs one session on Ruby's lines alone, with a clock that stands still.
 pub fn run_session<R: BufRead, W: Write, T: Terminal>(input: R, output: W, terminal: &mut T) -> i32 {
     let console = Console::new(&Library::builtin(), 0, (80, 24));
-    run_live(Session { inputs: LineInputs::new(input), output, clock: StillClock, console }, terminal)
+    run_live(Session { inputs: LineInputs::new(input), output, clock: StillClock(0), console }, terminal)
 }
 
 /// Runs one session to its end and returns the process exit status. Once

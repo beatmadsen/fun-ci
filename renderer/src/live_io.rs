@@ -54,7 +54,13 @@ pub struct WallClock(Instant);
 impl WallClock {
     #[must_use]
     pub fn start() -> Self {
-        Self(Instant::now())
+        Self::started_at(Instant::now())
+    }
+
+    /// A clock that has been running since `start`.
+    #[must_use]
+    pub fn started_at(start: Instant) -> Self {
+        Self(start)
     }
 }
 

@@ -2,6 +2,7 @@
 //! the choice; otherwise success animations are picked at random.
 
 use crate::animation::{Animation, Library};
+use std::time::{SystemTime, UNIX_EPOCH};
 
 const FAILURES: [&str; 1] = ["explosion"];
 const SUCCESSES: [&str; 5] = ["success", "celebrate", "flash", "leprechauns", "yay"];
@@ -68,4 +69,12 @@ impl Cast {
     fn named(&self, name: &str) -> Animation {
         self.library.get(name).cloned().unwrap_or_else(|| Animation::blank(name))
     }
+}
+
+/// A seed for `Cast` from the time `now`: its nanoseconds past the second,
+/// with the low bit set, so it differs from run to run and is never zero,
+/// which the generator would never leave.
+#[must_use]
+pub fn seed_at(now: SystemTime) -> u64 {
+    now.duration_since(UNIX_EPOCH).map_or(1, |since| u64::from(since.subsec_nanos()) | 1)
 }

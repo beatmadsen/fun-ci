@@ -49,12 +49,12 @@ impl<R: BufRead> Inputs for LineInputs<R> {
     }
 }
 
-/// A clock that never moves.
+/// A clock stopped at a time, in milliseconds.
 #[derive(Debug, Default, Clone, Copy)]
-pub struct StillClock;
+pub struct StillClock(pub u64);
 
 impl Clock for StillClock {
     fn now_ms(&self) -> u64 {
-        0
+        self.0
     }
 }

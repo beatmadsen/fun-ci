@@ -4,12 +4,13 @@ use std::path::PathBuf;
 use std::process::exit;
 use std::sync::mpsc;
 use std::thread;
-use std::time::{SystemTime, UNIX_EPOCH};
+use std::time::SystemTime;
 
 use signal_hook::consts::{SIGHUP, SIGINT, SIGTERM};
 use signal_hook::iterator::Signals;
 
 use fun_ci_renderer::animation::Library;
+use fun_ci_renderer::animator::seed_at;
 use fun_ci_renderer::cli::{EXIT_USAGE, Headless, Options};
 use fun_ci_renderer::console::Console;
 use fun_ci_renderer::headless;
@@ -36,15 +37,9 @@ fn live(tty: PathBuf, library: &Library) -> i32 {
     }
     let (sender, receiver) = mpsc::channel();
     read_lines(BufReader::new(io::stdin()), sender.clone());
-    let console = Console::new(library, seed(), (80, 24));
+    let console = Console::new(library, seed_at(SystemTime::now()), (80, 24));
     let session = Session { inputs: ChannelInputs::new(receiver), output: io::stdout().lock(), clock: WallClock::start(), console };
     run_live(session, &mut LiveTty::new(tty, sender))
-}
-
-/// A seed for the animation choices that differs from run to run; never zero,
-/// which the generator would never leave.
-fn seed() -> u64 {
-    SystemTime::now().duration_since(UNIX_EPOCH).map_or(1, |since| u64::from(since.subsec_nanos()) | 1)
 }
 
 fn listen(mut signals: Signals) {

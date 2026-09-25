@@ -2,7 +2,8 @@
 //! escapes are measured.
 
 use fun_ci_renderer::animation::Library;
-use fun_ci_renderer::animator::{Cast, Kind};
+use fun_ci_renderer::animator::{Animator, Cast, Kind};
+use fun_ci_renderer::model::Event;
 use fun_ci_renderer::ansi::strip;
 
 macro_rules! cases {
@@ -42,4 +43,16 @@ fn unpinned_success_animations_follow_the_xorshift_sequence_of_the_seed() {
     let mut cast = Cast::new(Library::builtin(), 1);
     let picks = [(); 5].map(|()| cast.success().name().to_string());
     assert_eq!(picks, ["celebrate", "success", "flash", "success", "leprechauns"]);
+}
+
+#[test]
+fn an_event_waiting_to_be_played_counts_as_animating() {
+    let mut animator = Animator::new(Cast::new(Library::builtin(), 1));
+    animator.queue(Event { name: "stage_failed".into(), run_id: Some(1), stage: Some("fast".into()), animation: None });
+    assert!(animator.animating());
+}
+
+#[test]
+fn nothing_queued_or_playing_is_not_animating() {
+    assert!(!Animator::new(Cast::new(Library::builtin(), 1)).animating());
 }
