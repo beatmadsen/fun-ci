@@ -13,12 +13,10 @@ class TestHookScriptInvocation < Minitest::Test
     @client.close
   end
 
-  %w[lint build fast slow].each do |stage|
-    define_method(:"test_should_invoke_#{stage}_script_with_commit_hash_as_first_argument") do
-      @client.trigger(commit_hash: "abc1234", branch: "main")
+  def test_should_invoke_every_stage_script_with_the_commit_hash_as_its_argument
+    @client.trigger(commit_hash: "abc1234", branch: "main")
 
-      assert_equal ["abc1234"], @client.script_arguments_for("#{stage}.sh")
-    end
+    assert_equal [["abc1234"]] * 4, arguments_by_stage
   end
 
   def test_should_treat_nonzero_exit_from_build_script_as_failure
@@ -38,4 +36,8 @@ class TestHookScriptInvocation < Minitest::Test
 
     assert_equal 0, @client.exit_code
   end
+
+  private
+
+  def arguments_by_stage = %w[lint build fast slow].map { |stage| @client.script_arguments_for("#{stage}.sh") }
 end

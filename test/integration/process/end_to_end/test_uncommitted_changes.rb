@@ -20,11 +20,9 @@ class TestUncommittedChanges < Minitest::Test
     [@project.dir, @record].each { |dir| FileUtils.rm_rf(dir) }
   end
 
-  GitProject::STAGES.each do |stage|
-    define_method(:"test_#{stage}_sees_the_committed_content_not_the_edit") do
-      trigger(@project, @sha, db_dir: File.join(@record, "db"))
+  def test_every_stage_sees_the_committed_content_not_the_edit
+    trigger(@project, @sha, db_dir: File.join(@record, "db"))
 
-      assert_equal "committed\n", File.read(File.join(@record, stage))
-    end
+    assert_equal(["committed\n"] * 4, GitProject::STAGES.map { |stage| File.read(File.join(@record, stage)) })
   end
 end

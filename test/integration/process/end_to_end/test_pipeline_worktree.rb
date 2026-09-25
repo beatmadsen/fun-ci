@@ -21,18 +21,17 @@ class TestPipelineWorktree < Minitest::Test
     [@project.dir, @record].each { |dir| FileUtils.rm_rf(dir) }
   end
 
-  GitProject::STAGES.each do |stage|
-    define_method(:"test_#{stage}_runs_in_a_fun_ci_worktree") do
-      trigger
+  def test_every_stage_runs_in_a_fun_ci_worktree
+    trigger
+    worktrees = %r{\A#{Regexp.escape(@project.common_dir)}/fun-ci/worktrees/slot-\d+ }
 
-      assert_match(%r{\A#{Regexp.escape(@project.common_dir)}/fun-ci/worktrees/slot-\d+ }, seen_by(stage))
-    end
+    assert_empty(GitProject::STAGES.reject { |stage| seen_by(stage).match?(worktrees) })
+  end
 
-    define_method(:"test_#{stage}_sees_the_requested_commit") do
-      trigger
+  def test_every_stage_sees_the_requested_commit
+    trigger
 
-      assert_equal @sha, seen_by(stage).split.last
-    end
+    assert_equal([@sha] * 4, GitProject::STAGES.map { |stage| seen_by(stage).split.last })
   end
 
   private
