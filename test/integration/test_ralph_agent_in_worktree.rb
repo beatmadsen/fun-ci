@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "minitest/autorun"
+require "fileutils"
 require "open3"
 require "tmpdir"
 
@@ -8,6 +9,7 @@ require "tmpdir"
 # agent and a fake gate. Real git, temp directories only.
 class TestRalphAgentInWorktree < Minitest::Test
   SCRIPT = File.expand_path("../../ralph/agent-in-worktree.sh", __dir__)
+  GIT_ISOLATION = { "GIT_CONFIG_GLOBAL" => File::NULL, "GIT_CONFIG_NOSYSTEM" => "1" }.freeze
   ONE_COMMIT = "sh -c 'echo x > a.txt && git add a.txt && git commit -qm \"AT-1.1: add a\"'"
 
   def setup
@@ -68,11 +70,19 @@ class TestRalphAgentInWorktree < Minitest::Test
     assert_equal 1, git("worktree", "list").lines.count
   end
 
+  def test_a_killed_iteration_is_rejected_and_its_worktree_removed
+    iterate(agent: "sh -c 'kill -TERM 0'")
+
+    assert_equal 1, git("worktree", "list").lines.count
+    assert_includes git("branch", "--list", "ralph/rejected/*"), "ralph/rejected/iter-1"
+    assert_match(/rejected\t\h+\tagent exited 143/, log)
+  end
+
   private
 
   def iterate(agent:, gate: "true")
-    env = { "RALPH_AGENT" => agent, "RALPH_GATE" => gate, "RALPH_DIR" => File.join(@tmp, "wt") }
-    Open3.capture2e(env, SCRIPT, chdir: @repo, stdin_data: "prompt")
+    env = GIT_ISOLATION.merge("RALPH_AGENT" => agent, "RALPH_GATE" => gate, "RALPH_DIR" => File.join(@tmp, "wt"))
+    Open3.capture2e(env, SCRIPT, chdir: @repo, stdin_data: "prompt", pgroup: true)
   end
 
   def log
@@ -90,7 +100,7 @@ class TestRalphAgentInWorktree < Minitest::Test
   end
 
   def git(*args)
-    out, status = Open3.capture2e("git", *args, chdir: @repo)
+    out, status = Open3.capture2e(GIT_ISOLATION, "git", *args, chdir: @repo)
     raise out unless status.success?
 
     out.strip

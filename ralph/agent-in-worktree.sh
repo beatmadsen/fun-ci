@@ -45,7 +45,7 @@ reject() {
 start=$(git -C "$repo_root" rev-parse "$base")
 git -C "$repo_root" worktree add --quiet -b "$branch" "$wt" "$start"
 
-(cd "$wt" && bash -c "$agent" < "$prompt") || reject "agent exited non-zero"
+(cd "$wt" && bash -c "$agent" < "$prompt") || reject "agent exited $?"
 
 commits=$(git -C "$wt" rev-list --count "$start..HEAD")
 [ "$commits" -eq 1 ] || reject "expected exactly 1 commit, got $commits"
