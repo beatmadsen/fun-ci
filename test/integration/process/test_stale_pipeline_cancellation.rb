@@ -12,7 +12,7 @@ class TestStalePipelineCancellation < Minitest::Test
   end
 
   def teardown
-    Process.kill("KILL", @stale_pid) if @stale_pid && !@waiter.join(0)
+    stop_stale_process if @stale_pid
     @client.close
   end
 
@@ -42,6 +42,16 @@ class TestStalePipelineCancellation < Minitest::Test
     leave_stale_process_for(old_run_id)
     @client.trigger(commit_hash: "def5678", branch: "main")
     old_run_id
+  end
+
+  # The canceller has usually killed it already, and the detach thread may
+  # have reaped it; either way it is gone once the waiter finishes.
+  def stop_stale_process
+    Process.kill("KILL", @stale_pid)
+  rescue Errno::ESRCH
+    nil
+  ensure
+    @waiter.join
   end
 
   def leave_stale_process_for(run_id)
