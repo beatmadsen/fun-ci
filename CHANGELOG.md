@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `fun-ci console`, which have done the same job since 1.0.
 
 ### Bug Fixes
+- Two fun-ci processes starting at the same moment against a database that
+  didn't exist yet (the first commit and push on a machine, say) could die
+  with `database is locked` or `duplicate column name: project_path`.
+  Setting up the database now takes a lock file beside it, so they take
+  turns.
+- The phase 1 line printed lint and build in whichever order they finished,
+  so the same result could read `build ok  lint ok`. Lint always comes first
+  now.
 - A project's name in the console changed colour every time the console
   started, because the colour came from `String#hash`, which Ruby seeds per
   process. It now comes from a CRC-32 of the name and stays the same.
