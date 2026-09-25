@@ -13,7 +13,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-0.6: Mutation testing lane
 - [x] AT-0.7: CI runs the gate on every supported Ruby
 - [x] AT-0.8: The gem ships exactly the tracked runtime files
-- [ ] AT-0.9: CLAUDE.md is written as Invariants and Gotchas
+- [x] AT-0.9: CLAUDE.md is written as Invariants and Gotchas
 - [ ] AT-0.10: Legacy executables are gone
 - [ ] AT-1.1: A pipeline runs in a worktree at the requested commit
 - [ ] AT-1.2: Uncommitted changes don't leak into a run

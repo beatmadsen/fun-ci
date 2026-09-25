@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require_relative "../support/spawn_scanner"
+require_relative "../support/call_scanner"
 
 # AT-0.5: unit and acceptance tests never start a process; the ones that must
 # live in test/integration. SpawnGuard catches the spawns this scan can't see,
@@ -10,7 +10,11 @@ class TestFastLanesNeverSpawn < Minitest::Test
   ROOT = File.expand_path("../..", __dir__)
 
   def test_unit_and_acceptance_sources_never_start_a_process
-    assert_empty(fast_lane_files.flat_map { |path| SpawnScanner.new(File.read(path), relative(path)).offences })
+    offences = fast_lane_files.flat_map do |path|
+      CallScanner.new(File.read(path), relative(path), CallScanner::SPAWNING).offences
+    end
+
+    assert_empty offences
   end
 
   def test_the_scan_reads_both_lanes
