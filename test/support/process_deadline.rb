@@ -11,9 +11,9 @@
 # reporting them.
 #
 # Once a wait has hung, the code under test is broken, and every later wait
-# in the same process fails at once without starting anything: otherwise
-# each test would hang in turn until the mutation lane's cap, which covers
-# all of a mutant's tests together, cut one off mid-wait.
+# in the same process fails at once, stopping what the test started:
+# otherwise each test would hang in turn until the mutation lane's cap,
+# which covers all of a mutant's tests together, cut one off mid-wait.
 module ProcessDeadline
   SECONDS = 5
 
@@ -22,7 +22,7 @@ module ProcessDeadline
   end
 
   def within_deadline(&)
-    flunk "an earlier wait on a process hung, so none is started" if ProcessDeadline.hung
+    refuse if ProcessDeadline.hung
     worker = Thread.new(&).tap { |thread| thread.report_on_exception = false }
     return worker.value if worker.join(SECONDS)
 
@@ -33,6 +33,11 @@ module ProcessDeadline
   end
 
   private
+
+  def refuse
+    stop_children
+    flunk "an earlier wait on a process hung, so this one is not waited on"
+  end
 
   def give_up
     ProcessDeadline.hung = true
@@ -47,9 +52,17 @@ module ProcessDeadline
                             .select { |_, parent| parent == Process.pid }.map(&:first)
   end
 
+  # A child that leads no group of its own is killed alone; one already gone,
+  # such as the ps that listed it, needs nothing.
   def kill_group(pid)
     Process.kill("KILL", -pid)
   rescue Errno::ESRCH, Errno::EPERM
+    kill_alone(pid)
+  end
+
+  def kill_alone(pid)
     Process.kill("KILL", pid)
+  rescue Errno::ESRCH
+    nil
   end
 end
