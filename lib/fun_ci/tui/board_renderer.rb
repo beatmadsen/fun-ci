@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "board"
 require_relative "header_animation_manager"
 require_relative "row_formatter"
 require_relative "streak_counter"
@@ -16,23 +17,12 @@ module FunCi
         @height_provider = height_provider
       end
 
-      def render(runs:, streak:, cursor_index:, confirming:)
+      def render(board)
         update_height
-        render_header_area(runs, streak)
-
-        if runs.empty?
-          @screen.render_empty_state
-          @screen.render_footer(empty: true)
-        else
-          rows = runs.map { |run| format_run(run) }
-          rows = truncate_rows_to_height(rows)
-          @screen.render_board(rows, cursor_index: cursor_index)
-          @screen.println unless rows.empty?
-          @screen.render_footer(empty: false, confirming: confirming)
-        end
-
+        render_header_area(board.runs, board.streak)
+        board.runs.empty? ? render_empty : render_rows(board)
         @screen.clear_below
-        render_animations(runs)
+        render_animations(board.runs)
       end
 
       def begin_frame
@@ -64,16 +54,28 @@ module FunCi
         end
       end
 
-      def format_run(run)
-        opts = {}
-        if run[:status] == "running"
-          active_stage = run[:stages].find { |s| s[:status] == "running" }
-          if active_stage && active_stage[:started_at]
-            opts[:elapsed_seconds] = Time.now - Time.parse(active_stage[:started_at])
-          end
-          opts[:spinner_frame] = @spinner.current_frame
-        end
-        RowFormatter.format(run, **opts)
+      def render_empty
+        @screen.render_empty_state
+        @screen.render_footer(empty: true)
+      end
+
+      def render_rows(board)
+        rows = truncate_rows_to_height(board.runs.map { |run| format_run(run, board.now) })
+        @screen.render_board(rows, cursor_index: board.cursor_index)
+        @screen.println unless rows.empty?
+        @screen.render_footer(empty: false, confirming: board.confirming)
+      end
+
+      def format_run(run, now)
+        return RowFormatter.format(run, now: now) unless run[:status] == "running"
+
+        RowFormatter.format(run, now: now, spinner_frame: @spinner.current_frame,
+                                 elapsed_seconds: elapsed_seconds(run, now))
+      end
+
+      def elapsed_seconds(run, now)
+        active_stage = run[:stages].find { |s| s[:status] == "running" }
+        now - Time.parse(active_stage[:started_at]) if active_stage&.dig(:started_at)
       end
 
       def render_animations(runs)

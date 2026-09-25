@@ -30,12 +30,11 @@ module FunCi
 
       def render_once
         update_width_from_provider
-        @renderer.render(
-          runs: @board_data.runs,
-          streak: @board_data.streak,
-          cursor_index: @key_handler.cursor_index,
-          confirming: @key_handler.confirming?
-        )
+        @renderer.render(Board.new(
+          runs: @board_data.runs, streak: @board_data.streak,
+          cursor_index: @key_handler.cursor_index, confirming: @key_handler.confirming?,
+          now: Time.now
+        ))
       end
 
       def run

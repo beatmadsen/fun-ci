@@ -30,4 +30,13 @@ end
 
 Cucumber::Rake::Task.new(:cucumber)
 
+namespace :contract do
+  desc "Write the Ruby renderer's frames for every contract/scenarios/*.jsonl to contract/golden/"
+  task :capture do
+    require_relative "contract/capture/golden_corpus"
+    corpus = FunCi::Contract::GoldenCorpus.new(root: File.expand_path("contract", __dir__))
+    corpus.scenario_names.each { |name| corpus.write(name, corpus.capture(name)) }
+  end
+end
+
 task default: %i[test cucumber]

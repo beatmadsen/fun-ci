@@ -11,6 +11,7 @@ rake acceptance    # Run acceptance tests only
 bundle exec cucumber           # Run Cucumber feature specs
 ruby -Itest -Ilib test/unit/test_trigger.rb                    # Run a single test file
 ruby -Itest -Ilib test/unit/test_trigger.rb -n test_method     # Run a single test method
+rake contract:capture   # Rewrite contract/golden/ from contract/scenarios/ (after a deliberate TUI change)
 ```
 
 ### CLI (unified entry point)
@@ -93,6 +94,15 @@ Tests use Minitest. Cucumber features exist for TUI acceptance specs but unit te
 - `commit_validator` lambda on `Trigger` -- replaces real `git cat-file` calls
 - `handlers` hash on `Cli` -- overrides subcommand dispatch for testing
 - `FakeRecorder` in `test_helper.rb` -- captures recorder calls without touching SQLite
+
+## Golden corpus
+
+`test/acceptance/test_golden_corpus.rb` replays `contract/scenarios/*.jsonl`
+through the Ruby renderer and compares every frame with
+`contract/golden/<scenario>/NNNN.bytes`. Any change to what the TUI draws fails
+it. If the change is deliberate, run `rake contract:capture` and review the
+golden diff in the same commit. The renderer never reads `Time.now` itself:
+the frame's clock arrives as `Board#now`.
 
 ## Code Constraints
 
