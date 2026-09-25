@@ -33,6 +33,14 @@ their entries: §3.6 turns the animations into JSON and §5 deletes both.
 **Given** `Trigger.new` takes 10 keyword arguments
 **When** ParameterLists (4, keywords counted) is enforced
 **Then** collaborators are grouped (`Trigger.new(project:, commit:, io:, seams:)`), and every existing DI seam listed in CLAUDE.md is still injectable.
+**And** `Trigger` and `StageRunner` meet every limit: at most 4 instance variables,
+4 parameters, 7-line methods and 150-line files (`trigger.rb` is 158 lines with 10
+instance variables today).
+**And** the files listed in `AWAITING_AT_0_2` in `test/unit/test_rubocop_todo.rb`
+(the two classes plus the tests that construct them) have no entries left in
+`.rubocop_todo.yml`, and that list is deleted.
+*Note:* AT-0.1 left these files alone on purpose. Their offences come from the
+constructors this item redesigns, and fixing the tests twice would be waste.
 
 ### 0.3 The cucumber lane and every documented lane run in the gate
 **Given** `rake -T` lists lanes
