@@ -32,30 +32,10 @@
       "dim": true
     },
     "h": {
-      "fg": 1,
-      "bold": true,
-      "dim": true
-    },
-    "i": {
-      "fg": 208,
-      "bold": true,
-      "dim": true
-    },
-    "j": {
-      "fg": 3,
-      "bold": true,
-      "dim": true
-    },
-    "k": {
-      "fg": 7,
-      "bold": true,
-      "dim": true
-    },
-    "l": {
       "fg": 52,
       "dim": true
     },
-    "m": {
+    "i": {
       "fg": 52
     }
   },
@@ -206,11 +186,11 @@
       "style": [
         "    f    d         d   f   ",
         "       ddb  ffff  bbe      ",
-        "     b  ceehhhhhhih  b     ",
-        "    c b fffffffjkkhh b c   ",
-        "   d  fffkkkkkkkhhh  d     ",
-        "    c b ffkkkkkhh b c      ",
-        "     b  ceehhhhhhih  b     ",
+        "     b  ceeffffffgc  b     ",
+        "    c b fffffffbaaff b c   ",
+        "   d  fffaaaaaaafff  d     ",
+        "    c b ffaaaaaff b c      ",
+        "     b  ceeffffffgc  b     ",
         "       ddb  ffff  bbe      ",
         "    f    d         d   f   ",
         "  f         fff         f  "
@@ -232,11 +212,11 @@
       "style": [
         "  f       f       f       f",
         "      f            f       ",
-        "         ffllllf           ",
-        "    f   mmfffffll   f      ",
-        "        mfffffffl          ",
-        "    f   mmfffffll   f      ",
-        "         ffllllf           ",
+        "         ffhhhhf           ",
+        "    f   iifffffhh   f      ",
+        "        ifffffffh          ",
+        "    f   iifffffhh   f      ",
+        "         ffhhhhf           ",
         "      f            f       ",
         "  f       f       f       f",
         "                           "
@@ -259,9 +239,9 @@
         "                           ",
         "     f         f           ",
         "                           ",
-        "          mmmmm            ",
-        "   f    mmmmmmm    f       ",
-        "          mmmmm            ",
+        "          iiiii            ",
+        "   f    iiiiiii    f       ",
+        "          iiiii            ",
         "                           ",
         "     f         f           ",
         "                           ",

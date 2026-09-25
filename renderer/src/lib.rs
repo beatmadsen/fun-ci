@@ -2,9 +2,20 @@
 //! how it looks. See `docs/v2/architecture.md`.
 
 pub mod animation;
+pub mod animator;
+pub mod ansi;
+pub mod board_view;
 pub mod cli;
+pub mod format;
+pub mod grid;
+pub mod model;
 pub mod protocol;
+pub mod replay;
+pub mod row;
+pub mod scenario;
+pub mod screen;
 pub mod session;
+pub mod spinner;
 pub mod terminal;
 pub mod tty;
 

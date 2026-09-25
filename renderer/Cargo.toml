@@ -14,9 +14,11 @@ name = "fun-ci-renderer"
 path = "src/main.rs"
 
 [dependencies]
+crc32fast = "1.5.2"
 crossterm = { version = "0.29.0", default-features = false }
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = { version = "1.0.151", features = ["preserve_order"] }
+vt100 = "0.16.2"
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }

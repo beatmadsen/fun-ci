@@ -10,44 +10,24 @@
     },
     "b": {
       "fg": 7,
-      "bold": true,
-      "dim": true
+      "bold": true
     },
     "c": {
       "fg": 2,
-      "bold": true,
-      "dim": true
+      "bold": true
     },
     "d": {
-      "fg": 2,
+      "fg": 6,
       "bold": true
     },
     "e": {
-      "fg": 6,
+      "fg": 4,
       "bold": true
     },
     "f": {
-      "fg": 7,
-      "bold": true
-    },
-    "g": {
-      "fg": 4,
-      "bold": true
-    },
-    "h": {
       "fg": 4
     },
-    "i": {
-      "fg": 4,
-      "bold": true,
-      "dim": true
-    },
-    "j": {
-      "fg": 6,
-      "bold": true,
-      "dim": true
-    },
-    "k": {
+    "g": {
       "fg": 7,
       "dim": true
     }
@@ -68,7 +48,7 @@
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcccccccccccccccccccccccccccccc  ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa  ",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -90,8 +70,8 @@
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa    ",
-        "  aaaaaaaaabbbbccccccccbbbbbbbbccccccccbbbbccccccccccccccccccc       ",
-        "  aaaaaaaaaabbccccccccbbbbbbbbccccccccbbcccccccccccccccccccc         ",
+        "  aaaaaaaaabbbbcccaaaaabbbbbbbbccaaaaaabbbbcccaaaaaaaaaaaaaaaa       ",
+        "  aaaaaaaaaabbccaaaaaabbbbbbbbcaaaaaaabbccaaaaaaaaaaaaaaaaaa         ",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      ",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
@@ -110,12 +90,12 @@
       ],
       "style": [
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "  aaacccccccccccccccccccccccccccccccccccccccccccccc                  ",
-        "  aaaabbbcccbbbbcccbbbbcccbbbbcccbbbcccbbbbcccbbbbcccccccccc         ",
-        "  aaaaaccbbbbccccccbbbbbbbbccccccbbbbccccbbbbcccccccc                ",
-        "  aaaaaaaaacbbcccccccbbcccccccccbbcccccccbbcccccccccccccccccc        ",
-        "  aaaabbbcccccbbbcccbbcccccccccbbcccbbbcccccbbbcccbbbbcccccccc       ",
-        "  aaacccccccccccccccccccccccccccccccccccccccccccc                    ",
+        "  aaaccccccccccccccccccccccccccccccccccccccaaaaaaaa                  ",
+        "  aaaabbbaaabbbbaaabbbbaaabbbbaaabbbaaabbbbaaabbbbaaaaaaaaaa         ",
+        "  aaaaaccbbbbccccccbbbbbbbbccccccbbbbccccbbbbaaaaaaaa                ",
+        "  aaaaaaaaacbbccccaaabbaaaaaaaaabbaaaaaacbbccccaaaaaaaaaaaaaa        ",
+        "  aaaabbbaaaaabbbaaabbaaaaaaaaabbaaabbbaaaaabbbaaabbbbaaaaaaaa       ",
+        "  aaaccccccccccccccccccccccccccccccccccccaaaaaaaa                    ",
         "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
       ]
     },
@@ -131,14 +111,14 @@
         "  ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' '                        "
       ],
       "style": [
-        "  deeddeeddeeddeeddeeddeeddeeddeeddeeddeeddee                        ",
-        "  edddffdddddddddffdddddddffffdddddddffdddddddddffdddffffddde        ",
-        "  edddddffdddddffffdddffdddddffdddddffdddddffffdddffffddde           ",
-        "  edddddddffffdddddffdddddddddffdddddddffffdddddddffffddde           ",
-        "  edddddddddffdddddffffffffdddddddddffddddddddddddddddddde           ",
-        "  edddddddddffdddddffdddddddddffdddddddddffdddddddffffddde           ",
-        "  edddddddddffdddddffdddddddddffdddddddddffdddddddffffddde           ",
-        "  deeddeeddeeddeeddeeddeeddeeddeeddeeddeeddee                        "
+        "  cddccddccddccddccddccddccddccddccddccddccdd                        ",
+        "  dcccbbcccccccccbbcccccccbbbbcccccccbbcccccccccbbcccbbbbcccd        ",
+        "  dcccccbbcccccbbbbcccbbcccccbbcccccbbcccccbbbbcccbbbbcccd           ",
+        "  dcccccccbbbbcccccbbcccccccccbbcccccccbbbbcccccccbbbbcccd           ",
+        "  dcccccccccbbcccccbbbbbbbbcccccccccbbcccccccccccccccccccd           ",
+        "  dcccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbcccd           ",
+        "  dcccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbcccd           ",
+        "  cddccddccddccddccddccddccddccddccddccddccdd                        "
       ]
     },
     {
@@ -153,14 +133,14 @@
         "  ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' '                        "
       ],
       "style": [
-        "  eddeeddeeddeeddeeddeeddeeddeeddeeddeeddeedd                        ",
-        "  ddddffdddddddddffdddddddffffdddddddffdddddddddffdddffffdddd        ",
-        "  ddddddffdddddffffdddffdddddffdddddffdddddffffdddffffdddd           ",
-        "  ddddddddffffdddddffdddddddddffdddddddffffdddddddffffdddd           ",
-        "  ddddddddddffdddddffffffffdddddddddffdddddddddddddddddddd           ",
-        "  ddddddddddffdddddffdddddddddffdddddddddffdddddddffffdddd           ",
-        "  ddddddddddffdddddffdddddddddffdddddddddffdddddddffffdddd           ",
-        "  eddeeddeeddeeddeeddeeddeeddeeddeeddeeddeedd                        "
+        "  dccddccddccddccddccddccddccddccddccddccddcc                        ",
+        "  ccccbbcccccccccbbcccccccbbbbcccccccbbcccccccccbbcccbbbbcccc        ",
+        "  ccccccbbcccccbbbbcccbbcccccbbcccccbbcccccbbbbcccbbbbcccc           ",
+        "  ccccccccbbbbcccccbbcccccccccbbcccccccbbbbcccccccbbbbcccc           ",
+        "  ccccccccccbbcccccbbbbbbbbcccccccccbbcccccccccccccccccccc           ",
+        "  ccccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbcccc           ",
+        "  ccccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbcccc           ",
+        "  dccddccddccddccddccddccddccddccddccddccddcc                        "
       ]
     },
     {
@@ -175,14 +155,14 @@
         "  * * * * * * * * * * * * * * * * * * *                              "
       ],
       "style": [
-        "  gggggddeeddeeddeeddeeddeeddeegggggggg                              ",
-        "  hddeffeeddeeffeeddeffffeeddeffeeddeeffeeeffffeegg                  ",
-        "  geeeeffeeeffffeeffeeeffeeeffeeeffffeeeffffeegg                     ",
-        "  deedddffffdddffddddddffddddffffddddffffddee                        ",
-        "  eddeeddffddeffffffffeeddeffddeeddeeddeeddee                        ",
-        "  geeeedffeeeeffeeeeeeffeeeeeeffeeeeeffffeegg                        ",
-        "  hddeeeeffeeddffeeddeeffeeddeeffeedddffffeegg                       ",
-        "  gggggddeeddeeddeeddeeddeeddeegggggggg                              "
+        "  eeeeeccddccddccddccddccddccddeeeeeeee                              ",
+        "  fccdbbddccddbbddccdbbbbddccdbbddccddbbdddbbbbddee                  ",
+        "  eddddbbdddbbbbddbbdddbbdddbbdddbbbbdddbbbbddee                     ",
+        "  cddcccbbbbcccbbccccccbbccccbbbbccccbbbbccdd                        ",
+        "  dccddccbbccdbbbbbbbbddccdbbccddccddccddccdd                        ",
+        "  eddddcbbddddbbddddddbbddddddbbdddddbbbbddee                        ",
+        "  fccddddbbddccbbddccddbbddccddbbddcccbbbbddee                       ",
+        "  eeeeeccddccddccddccddccddccddeeeeeeee                              "
       ]
     },
     {
@@ -197,14 +177,14 @@
         "  * * * * * * * * * * * * * * * * * * * *                            "
       ],
       "style": [
-        "  gddeeddeeddeeddeeddeeddeeddeeddeeddgggg                            ",
-        "  deedffddeeddffddeedffffddeedffddeeddffdddffffddee                  ",
-        "  eddeeffeedffffeeffddeffddeffeedffffdddffffeedd                     ",
-        "  deeddeffffeedffddeeddffddeeffffeeddffffeeee                        ",
-        "  eddeeddffddeffffffffeeddeffddeeddeeddeeddee                        ",
-        "  deeddeffeeddffddeeddffddeeddffddeeeffffeeee                        ",
-        "  eddeedffddeeffeeddeeffeeddeeffddeeeffffdddd                        ",
-        "  gddeeddeeddeeddeeddeeddeeddeeddeeddgggg                            "
+        "  eccddccddccddccddccddccddccddccddcceeee                            ",
+        "  cddcbbccddccbbccddcbbbbccddcbbccddccbbcccbbbbccdd                  ",
+        "  dccddbbddcbbbbddbbccdbbccdbbddcbbbbcccbbbbddcc                     ",
+        "  cddccdbbbbddcbbccddccbbccddbbbbddccbbbbdddd                        ",
+        "  dccddccbbccdbbbbbbbbddccdbbccddccddccddccdd                        ",
+        "  cddccdbbddccbbccddccbbccddccbbccdddbbbbdddd                        ",
+        "  dccddcbbccddbbddccddbbddccddbbccdddbbbbcccc                        ",
+        "  eccddccddccddccddccddccddccddccddcceeee                            "
       ]
     },
     {
@@ -219,14 +199,14 @@
         "  * * * * * * * * * * * * * * * * * * * *                            "
       ],
       "style": [
-        "  eddeeddggddeeddeeddeeddeeddggddeeddeegg                            ",
-        "  dddeffddddddffdddddffffdddddffddddddffdddffffdddd                  ",
-        "  eeeddffddeffffddffeedffeedffddeffffeeeffffddee                     ",
-        "  dddeedffffdddffddddddffddddffffddddffffdddd                        ",
-        "  eeeddeeffeeeffffffffeeeeeffeeeeeeeeeeeeee                          ",
-        "  dddeedffddddffddddddffddddddffdddddffffdddd                        ",
-        "  eeeddeffeeeeffeeeeeeffeeeeeeffeeeeeffffeeee                        ",
-        "  eddeeddggddeeddeeddeeddeeddggddeeddeegg                            "
+        "  dccddcceeccddccddccddccddcceeccddccddee                            ",
+        "  cccdbbccccccbbcccccbbbbcccccbbccccccbbcccbbbbcccc                  ",
+        "  dddccbbccdbbbbccbbddcbbddcbbccdbbbbdddbbbbccdd                     ",
+        "  cccddcbbbbcccbbccccccbbccccbbbbccccbbbbcccc                        ",
+        "  dddccddbbdddbbbbbbbbdddddbbdddddddddddddd                          ",
+        "  cccddcbbccccbbccccccbbccccccbbcccccbbbbcccc                        ",
+        "  dddccdbbddddbbddddddbbddddddbbdddddbbbbdddd                        ",
+        "  dccddcceeccddccddccddccddcceeccddccddee                            "
       ]
     },
     {
@@ -241,14 +221,14 @@
         "  * * * * * * * * * * * * * * * * * * * *                            "
       ],
       "style": [
-        "  hggddeeddeeddeeddeeddeeddeeddeegggggggg                            ",
-        "  geedffeeddeeffddeedffffeeddeffddeeddffeeeffffddgg                  ",
-        "  deeeeffddeffffddffeedffeedffddeffffeeeffffdddd                     ",
-        "  eddddeffffeedffddeeddffddeeffffeeddffffeeee                        ",
-        "  deeeeddffddeffffffffeeddeffddeeddeeddeeddee                        ",
-        "  eddddeffeeddffddeeddffddeeddffddeeeffffeeee                        ",
-        "  geeeedffddeeffeeddeeffeeddeeffeedddffffddgg                        ",
-        "  hggddeeddeeddeeddeeddeeddeeddeegggggggg                            "
+        "  feeccddccddccddccddccddccddccddeeeeeeee                            ",
+        "  eddcbbddccddbbccddcbbbbddccdbbccddccbbdddbbbbccee                  ",
+        "  cddddbbccdbbbbccbbddcbbddcbbccdbbbbdddbbbbcccc                     ",
+        "  dccccdbbbbddcbbccddccbbccddbbbbddccbbbbdddd                        ",
+        "  cddddccbbccdbbbbbbbbddccdbbccddccddccddccdd                        ",
+        "  dccccdbbddccbbccddccbbccddccbbccdddbbbbdddd                        ",
+        "  eddddcbbccddbbddccddbbddccddbbddcccbbbbccee                        ",
+        "  feeccddccddccddccddccddccddccddeeeeeeee                            "
       ]
     },
     {
@@ -263,14 +243,14 @@
         "  . * * * * * * * * * * * * * * * * * * . . .                        "
       ],
       "style": [
-        "  aaiccjjccjjccjjccjjccjjccjjccjjccjjiicccccc                        ",
-        "  geeeffeeeeeeffeeeeeffffeeeeeffeeeeeeffeeeffffeegg                  ",
-        "  dddddffdddffffddffdddffdddffdddffffdddffffdddd                     ",
-        "  eeeddeffffeeeffeeeeeeffeeeeffffeeeeffffeeee                        ",
-        "  dddeeddffdddffffffffdddddffdddddddddddddddd                        ",
-        "  eeeddeffeeeeffeeeeeeffeeeeeeffeeeeeffffeeee                        ",
-        "  geeeedffeeeeffeeeeeeffeeeeeeffeeeeeffffeegg                        ",
-        "  aaiccjjccjjccjjccjjccjjccjjccjjccjjiicccccc                        "
+        "  aaeccddccddccddccddccddccddccddccddeeaaaaaa                        ",
+        "  edddbbddddddbbdddddbbbbdddddbbddddddbbdddbbbbddee                  ",
+        "  cccccbbcccbbbbccbbcccbbcccbbcccbbbbcccbbbbcccc                     ",
+        "  dddccdbbbbdddbbddddddbbddddbbbbddddbbbbdddd                        ",
+        "  cccddccbbcccbbbbbbbbcccccbbcccccccccccccccc                        ",
+        "  dddccdbbddddbbddddddbbddddddbbdddddbbbbdddd                        ",
+        "  eddddcbbddddbbddddddbbddddddbbdddddbbbbddee                        ",
+        "  aaeccddccddccddccddccddccddccddccddeeaaaaaa                        "
       ]
     },
     {
@@ -285,14 +265,14 @@
         "  . . * * * * * * * * * * * * * * * * * * . . .                      "
       ],
       "style": [
-        "  aaaaccccccccccccccccccccccccccccccccccccccccc                      ",
-        "  aaccccbbcccccccccbbcccccccbbbbcccccccbbcccccccccbbcccbbbbcccccc    ",
-        "  aaccccccbbcccccbbbbcccbbcccccbbcccccbbcccccbbbbcccbbbbcccccc       ",
-        "  aaaaccccccbbbbcccccbbcccccccccbbcccccccbbbbcccccccbbbbcccccc       ",
-        "  aaaaccccccccbbcccccbbbbbbbbcccccccccbbcccccccccccccccccccccccc     ",
-        "  aaccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbcccccc         ",
-        "  aaccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbcccccc         ",
-        "  aaaaccccccccccccccccccccccccccccccccccccccccc                      "
+        "  aaaacccccccccccccccccccccccccccccccccccaaaaaa                      ",
+        "  aaccccbbcccccccccbbcccccccbbbbcccccccbbcccccccccbbcccbbbbccccaa    ",
+        "  aaccccccbbcccccbbbbcccbbcccccbbcccccbbcccccbbbbcccbbbbccccaa       ",
+        "  aaaaccccccbbbbcccccbbcccccccccbbcccccccbbbbcccccccbbbbccccaa       ",
+        "  aaaaccccccccbbcccccbbbbbbbbcccccccccbbccccccccccccccccccccccaa     ",
+        "  aaccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbccccaa         ",
+        "  aaccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbccccaa         ",
+        "  aaaacccccccccccccccccccccccccccccccccccaaaaaa                      "
       ]
     },
     {
@@ -307,14 +287,14 @@
         "  . . . . ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' . . . . .                  "
       ],
       "style": [
-        "  aaaaaaaaacccccccccccccccccccccccccccccccccccccccc                  ",
-        "  aaaaaaaakkaaaaaaaaakkaaaaaaakkkkaaaaaaakkaaaaaaaaakkaaakkkkaaaaaa  ",
-        "  aaaaaaaakkkaaaaakkkkaaakkaaaaakkaaaaakkkaaaaakkkkaaakkkkaaaaaa     ",
-        "  aaaaaaaaaakkkkaaaaakkaaaaaaaaakkaaaaaaakkkkaaaaaaakkkkaaaaaa       ",
-        "  aaaaaaaaaaaakkaaaaakkkkkkkkaaaaaaaaakkaaaaaaaaaaaaaaaaaaaaaaaa     ",
-        "  aaaaaaaaaakkaaaaakkaaaaaaaaakkaaaaaaaaakkaaaaaaakkkkaaaaaaaa       ",
-        "  aaaaaaaakkkaaaaakkkaaakkaaaaakkaaakkkaaaaakkkaaakkkkaaaaaa         ",
-        "  aaaaaaaaacccccccccccccccccccccccccccccccccccccccc                  "
+        "  aaaaaaaaaccccccccccccccccccccccccccccccaaaaaaaaaa                  ",
+        "  aaaaaaaaggaaaaaaaaaggaaaaaaaggggaaaaaaaggaaaaaaaaaggaaaggggaaaaaa  ",
+        "  aaaaaaaagggaaaaaggggaaaggaaaaaggaaaaagggaaaaaggggaaaggggaaaaaa     ",
+        "  aaaaaaaaaaggggaaaaaggaaaaaaaaaggaaaaaaaggggaaaaaaaggggaaaaaa       ",
+        "  aaaaaaaaaaaaggaaaaaggggggggaaaaaaaaaggaaaaaaaaaaaaaaaaaaaaaaaa     ",
+        "  aaaaaaaaaaggaaaaaggaaaaaaaaaggaaaaaaaaaggaaaaaaaggggaaaaaaaa       ",
+        "  aaaaaaaagggaaaaagggaaaggaaaaaggaaagggaaaaagggaaaggggaaaaaa         ",
+        "  aaaaaaaaaccccccccccccccccccccccccccccccaaaaaaaaaa                  "
       ]
     }
   ]

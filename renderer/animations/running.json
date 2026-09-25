@@ -32,7 +32,6 @@
     },
     "h": {
       "fg": 3,
-      "bold": true,
       "dim": true
     }
   },

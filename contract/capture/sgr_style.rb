@@ -3,7 +3,9 @@
 module FunCi
   module Contract
     # The SGR state a terminal carries from one escape to the next: a
-    # foreground colour index (nil for the default), bold and dim.
+    # foreground colour index (nil for the default), bold and dim. Bold and
+    # dim are one intensity, as in ECMA-48 and the vt100 emulator the Rust
+    # differential tests read frames with: setting one clears the other.
     SgrStyle = Data.define(:fg, :bold, :dim) do
       def self.default = new(fg: nil, bold: false, dim: false)
 
@@ -30,7 +32,9 @@ module FunCi
     end
 
     SgrStyle::ATTRIBUTES = {
-      0 => ->(_) { SgrStyle.default }, 1 => ->(s) { s.with(bold: true) }, 2 => ->(s) { s.with(dim: true) }
+      0 => ->(_) { SgrStyle.default },
+      1 => ->(s) { s.with(bold: true, dim: false) },
+      2 => ->(s) { s.with(bold: false, dim: true) }
     }.freeze
     SgrStyle::COLOURS = (30..37).to_h { |code| [code, code - 30] }
                                 .merge((90..97).to_h { |code| [code, code - 82] }, 39 => nil).freeze

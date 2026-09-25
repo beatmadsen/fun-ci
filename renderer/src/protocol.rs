@@ -1,7 +1,9 @@
 //! Protocol v1 messages (`docs/v2/renderer-protocol.md`).
 
 use serde::Deserialize;
-use serde_json::{Map, Value, json};
+use serde_json::{Value, json};
+
+use crate::model::{Board, Event};
 
 const KNOWN_TYPES: [&str; 6] = ["hello", "board", "event", "resize", "tick", "quit"];
 
@@ -10,8 +12,8 @@ const KNOWN_TYPES: [&str; 6] = ["hello", "board", "event", "resize", "tick", "qu
 #[serde(tag = "t", rename_all = "snake_case")]
 pub enum Inbound {
     Hello { v: Option<u64> },
-    Board(Map<String, Value>),
-    Event(Map<String, Value>),
+    Board(Box<Board>),
+    Event(Event),
     Resize { cols: u16, rows: u16 },
     Tick { ms: u64 },
     Quit,

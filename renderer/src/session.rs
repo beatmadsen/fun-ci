@@ -2,7 +2,7 @@
 
 use std::io::{BufRead, Write};
 
-use crate::protocol::{Inbound, Outbound, parse};
+use crate::protocol::{Inbound, Outbound, ParseError, parse};
 use crate::terminal::Terminal;
 
 /// Exit status after `quit` or end of input.
@@ -39,13 +39,20 @@ impl<W: Write, T: Terminal> Session<'_, W, T> {
 
     fn converse(&mut self, lines: impl Iterator<Item = String>) -> i32 {
         for line in lines {
-            match parse(&line) {
-                Ok(Inbound::Quit) => break,
-                Ok(_) => {}
-                Err(error) => self.replies.send(&error.reply()),
+            if !self.handle(parse(&line)) {
+                break;
             }
         }
         self.close()
+    }
+
+    fn handle(&mut self, message: Result<Inbound, ParseError>) -> bool {
+        match message {
+            Ok(Inbound::Quit) => return false,
+            Ok(_) => {}
+            Err(error) => self.replies.send(&error.reply()),
+        }
+        true
     }
 
     fn close(&mut self) -> i32 {

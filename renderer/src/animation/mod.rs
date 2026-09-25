@@ -66,6 +66,13 @@ impl Animation {
         Ok(Self { name: parsed.name, playback: parsed.playback, frames })
     }
 
+    /// An animation with no frames, for a name the library lacks.
+    #[must_use]
+    pub fn blank(name: &str) -> Self {
+        let playback = Playback { frame_ms: 100, looped: true, anchor: "header".to_string() };
+        Self { name: name.to_string(), playback, frames: Vec::new() }
+    }
+
     #[must_use]
     pub fn name(&self) -> &str {
         &self.name

@@ -35,7 +35,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-3.1: `renderer/` Cargo crate `fun-ci-renderer`
 - [x] AT-3.2: Handshake
 - [ ] AT-3.3: Headless mode writes `frames.jsonl`, `frames/NNNN.png`, `sheet.png`, `frames.cast`, `stats.json`
-- [ ] AT-3.4: Differential tests
+- [x] AT-3.4: Differential tests
 - [ ] AT-3.5: Contract fixtures
 - [x] AT-3.6: Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in)
 - [ ] AT-3.7: Terminal is restored on EOF, `quit`, panic and SIGTERM

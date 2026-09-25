@@ -15,6 +15,14 @@ class TestSgrStyle < Minitest::Test
     assert_equal BOLD_RED.with(fg: 208), BOLD_RED.apply("38;5;208")
   end
 
+  def test_bold_replaces_dim_because_both_set_the_intensity
+    assert_equal BOLD_RED, BOLD_RED.with(bold: false, dim: true).apply("1")
+  end
+
+  def test_dim_replaces_bold_because_both_set_the_intensity
+    assert_equal BOLD_RED.with(bold: false, dim: true), BOLD_RED.apply("2")
+  end
+
   def test_bright_colours_are_indexes_eight_to_fifteen
     assert_equal 9, STYLE.default.apply("91").fg
   end
