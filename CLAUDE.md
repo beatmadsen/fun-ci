@@ -39,9 +39,9 @@ rake contract:capture   # Rewrite contract/golden/ from contract/scenarios/ (aft
 rake mutation           # Mutineer over lib/ except tui/ and animations/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
 rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
 script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
-rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable mutants caught. Not in the gate: about 20 minutes
-cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 --scenario contract/scenarios/running.jsonl --out /tmp/frames   # PNG frames, sheet, cast, stats
-ruby renderer/tools/convert_animations.rb   # Rewrite renderer/animations/*.json from lib/fun_ci/animations/ (test_animation_json.rb fails on drift)
+rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable mutants caught. Not in the gate: about 20 minutes. CI runs it
+cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 --scenario contract/scenarios/running.jsonl --out "$(mktemp -d)"   # PNG frames, sheet, cast, stats
+ruby renderer/tools/convert_animations.rb   # Rewrite renderer/animations/*.json from lib/fun_ci/animations/ (test/policy/test_animation_json_drift.rb fails on drift)
 ```
 
 ### CLI
@@ -94,7 +94,7 @@ Seams tests use in place of the real thing:
 - Only tests under `test/integration/process/` start processes, send real signals or run git, directly or through the code they call (signals: directly): `test/policy/test_fast_lanes_never_spawn.rb` (a Prism scan of unit and acceptance sources) and `test/integration/process/test_spawn_guard.rb` (the runtime guard for every other test).
 - What the Ruby TUI draws matches `contract/golden/`, frame for frame, and capturing twice gives identical bytes (the renderer takes its clock from `Board#now`, never `Time.now`): `test/acceptance/test_golden_corpus.rb`. After a deliberate change, run `rake contract:capture` and review the golden diff in the same commit. The Rust renderer is held to the same frames: `renderer/tests/suite/differential.rs` feeds its output and the golden bytes through the `vt100` emulator and compares the cell grids (text, colours, attributes) frame by frame, so until §5 deletes the Ruby renderer a change to what the TUI draws is made in both, in one commit.
 - The gem ships exactly the tracked files under `lib/` and `exe/` plus README, CHANGELOG and LICENSE, and keeps its publishing metadata: `test/integration/process/test_gemspec_contents.rb`.
-- CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and the mutation lane on 3.4: `test/policy/test_ci_workflow.rb`.
+- CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and both mutation lanes (Ruby on 3.4, and the Rust renderer's): `test/policy/test_ci_workflow.rb`.
 - fun-ci processes set up a database one at a time (a lock file beside it), so concurrent hooks never die on a fresh database: `test/integration/test_database_setup_lock.rb`, `test/integration/process/test_database_concurrent_setup.rb`.
 - `fun-ci trigger` closes every database connection it opens: `test/acceptance/test_cli_subcommands.rb`.
 - This file keeps Stack, Layout, Invariants and Gotchas, and every invariant names a test that exists: `test/policy/test_claude_md.rb`.

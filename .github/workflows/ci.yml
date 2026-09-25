@@ -32,3 +32,17 @@ jobs:
           ruby-version: "3.4"
           bundler-cache: true
       - run: bundle exec rake mutation
+
+  mutation-rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-mutants
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - run: bundle exec rake mutation:rust

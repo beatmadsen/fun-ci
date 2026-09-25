@@ -3,29 +3,22 @@
 require_relative "../../test_helper"
 require_relative "../../../contract/capture/animation_json"
 
-# AT-3.6: renderer/animations/*.json are the 1.x Ruby animations as data.
-# Until §5 deletes the Ruby modules, the JSON must stay a faithful conversion.
+# AT-3.6: converting a 1.x Ruby animation module into the renderer's JSON.
+# test/policy/test_animation_json_drift.rb holds the checked-in files to it.
 class TestAnimationJson < Minitest::Test
-  JSON_DIR = File.expand_path("../../../renderer/animations", __dir__)
   ANIMATIONS = FunCi::Contract::AnimationJson.all.to_h { |animation| [animation.name, animation] }
   DATA = { fps: 8, frames: [["\e[1;31m*\e[0m ", "  "]] }.freeze
-
-  ANIMATIONS.each do |name, animation|
-    define_method("test_the_checked_in_#{name}_json_is_the_conversion_of_the_ruby_module") do
-      assert_equal animation.json, File.read(File.join(JSON_DIR, "#{name}.json"))
-    end
-  end
-
-  def test_every_ruby_animation_has_a_json_file
-    assert_equal ANIMATIONS.keys.sort, Dir[File.join(JSON_DIR, "*.json")].map { |p| File.basename(p, ".json") }.sort
-  end
 
   def test_frame_duration_comes_from_fps
     assert_equal 125, convert(DATA)["frame_ms"]
   end
 
-  def test_idle_and_running_loop
-    assert_equal([true, true], %w[idle running].map { |name| ANIMATIONS[name].to_h["loop"] })
+  def test_the_idle_animation_loops
+    assert ANIMATIONS["idle"].to_h["loop"]
+  end
+
+  def test_the_running_animation_loops
+    assert ANIMATIONS["running"].to_h["loop"]
   end
 
   def test_event_animations_play_once

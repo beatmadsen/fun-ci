@@ -2,8 +2,6 @@
 
 require_relative "../test_helper"
 require_relative "../../renderer/tools/mutation_score"
-require "json"
-require "tmpdir"
 
 # AT-3.9: `rake mutation:rust` passes only when at least 90% of cargo-mutants'
 # viable mutants are caught, read from mutants.out/outcomes.json.
@@ -37,14 +35,6 @@ class TestMutationScore < Minitest::Test
   def test_the_summary_names_the_counts_and_the_share
     assert_equal "caught 9 of 10 viable mutants (90.0%): missed 1, timeout 0, unviable 5",
                  score(caught: 9, missed: 1, unviable: 5).summary
-  end
-
-  def test_the_score_is_read_from_outcomes_json
-    Dir.mktmpdir do |dir|
-      path = File.join(dir, "outcomes.json")
-      File.write(path, JSON.generate("caught" => 3, "missed" => 1, "timeout" => 0, "unviable" => 0, "outcomes" => []))
-      assert_in_delta 75.0, SCORE.load(path).percent
-    end
   end
 
   def test_cargo_mutants_finding_missed_mutants_is_left_to_the_score

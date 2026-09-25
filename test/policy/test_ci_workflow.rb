@@ -28,6 +28,10 @@ class TestCiWorkflow < Minitest::Test
     assert_includes commands("mutation"), "bundle exec rake mutation"
   end
 
+  def test_the_rust_mutation_job_runs_the_rust_mutation_lane
+    assert_includes commands("mutation-rust"), "bundle exec rake mutation:rust"
+  end
+
   def test_ci_runs_on_pushes_to_main
     assert_includes workflow.dig(true, "push", "branches"), "main"
   end
