@@ -9,6 +9,8 @@ module FunCi
       def create_run(**) = nil
       def start_stage(_stage) = nil
       def end_stage(_job_id, _status) = nil
+      def stage_process(_job_id, _pid) = nil
+      def slot_taken(_lock_file) = nil
       def complete_run = nil
       def fail_run = nil
       def db = nil
@@ -37,8 +39,19 @@ module FunCi
         nil
       end
 
+      # Notes this process as the one running the pipeline, so cancelling can stop it.
       def create_run(commit_hash:, branch:, project_path: nil)
         @pipeline_run_id = PipelineRun.create(@db, commit_hash: commit_hash, branch: branch, project_path: project_path)
+        PipelineRun.store_trigger_pid(@db, @pipeline_run_id, Process.pid)
+        @pipeline_run_id
+      end
+
+      def stage_process(job_id, pid)
+        StageJob.store_pid(@db, job_id, pid)
+      end
+
+      def slot_taken(lock_file)
+        PipelineRun.store_slot_lock(@db, @pipeline_run_id, lock_file)
       end
 
       def start_stage(stage)

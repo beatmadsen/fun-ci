@@ -36,12 +36,16 @@ module FunCi
         with_setup_lock(db_path) { configure(open.call(db_path)) }
       end
 
+      # Columns added after the tables were first released, so older
+      # databases gain them on the next migrate!.
+      ADDED_COLUMNS = [%w[pipeline_runs pid INTEGER], %w[pipeline_runs project_path TEXT],
+                       %w[pipeline_runs trigger_pid INTEGER], %w[pipeline_runs slot_lock TEXT],
+                       %w[stage_jobs pid INTEGER]].freeze
+
       def self.migrate!(db)
         with_setup_lock(db.filename("main")) do
-          db.execute(PIPELINE_RUNS_TABLE)
-          add_column_if_missing(db, "pipeline_runs", "pid", "INTEGER")
-          add_column_if_missing(db, "pipeline_runs", "project_path", "TEXT")
-          db.execute(STAGE_JOBS_TABLE)
+          [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE].each { |table| db.execute(table) }
+          ADDED_COLUMNS.each { |table, column, type| add_column_if_missing(db, table, column, type) }
         end
       end
 

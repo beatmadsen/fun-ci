@@ -22,15 +22,15 @@ module FunCi
 
       def passes?(config, stage)
         job_id = @seams.recorder.start_stage(stage)
-        status = outcome(stage, *execute(config, stage))
+        status = outcome(stage, *execute(config, stage) { |pid| @seams.recorder.stage_process(job_id, pid) })
         @seams.recorder.end_stage(job_id, status)
         status == "completed"
       end
 
       private
 
-      def execute(config, stage)
-        @seams.executor(@dir).call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage])
+      def execute(config, stage, &)
+        @seams.executor(@dir).call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage], &)
       end
 
       def outcome(stage, output, status, timed_out)

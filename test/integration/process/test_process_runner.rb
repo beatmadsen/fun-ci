@@ -38,6 +38,13 @@ class TestProcessRunner < Minitest::Test
     assert_equal("none", in_fresh_process { run_command("exec tail -f /dev/null", 0) })
   end
 
+  def test_reports_the_process_it_started
+    started = []
+    _, status, = Host.new.run_process_with_timeout("true", 30) { |pid| started << pid }
+
+    assert_equal [status.pid], started
+  end
+
   def test_seams_without_a_runner_run_the_command_for_real
     _, status, = FunCi::Pipeline::Seams.new.executor(Dir.tmpdir).call("sh -c 'exit 4'", 30)
 

@@ -49,6 +49,8 @@ class FakeRecorder
   end
 
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
+  def stage_process(job_id, pid) = @calls << [:stage_process, job_id, pid]
+  def slot_taken(lock_file) = @calls << [:slot_taken, lock_file]
   def complete_run = @calls << [:complete_run]
   def fail_run = @calls << [:fail_run]
   def close = nil

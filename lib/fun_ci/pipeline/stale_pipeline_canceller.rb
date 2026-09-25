@@ -1,55 +1,30 @@
 # frozen_string_literal: true
 
-require_relative "../persistence/pipeline_run"
+require_relative "../persistence/active_runs"
+require_relative "run_canceller"
 
 module FunCi
   module Pipeline
+    # A newer commit on a branch cancels every run still going for an older
+    # one: its processes are stopped and it is recorded cancelled.
     class StalePipelineCanceller
-      def initialize(db:, branch:, stdout:, process_killer: nil)
+      def initialize(db:, branch:, stdout:, run_canceller: RunCanceller.new)
         @db = db
         @branch = branch
         @stdout = stdout
-        @process_killer = process_killer || method(:default_process_killer)
+        @run_canceller = run_canceller
       end
 
       def cancel(new_commit_hash:)
-        run = Persistence::PipelineRun.find_running_with_pid(@db, @branch)
-        return unless run
-
-        kill_process(run[:pid])
-        Persistence::PipelineRun.update_status(@db, run[:id], "cancelled")
-        @stdout.puts "Cancelled stale pipeline for #{run[:commit_hash]}. Starting fresh for #{new_commit_hash}."
-      end
-
-      def store_pid(run_id, pid)
-        Persistence::PipelineRun.store_pid(@db, run_id, pid)
+        Persistence::ActiveRuns.on_branch(@db, @branch).each { |run| cancel_run(run, new_commit_hash) }
       end
 
       private
 
-      def kill_process(pid)
-        @process_killer.call(0, pid)
-        safe_signal("TERM", pid)
-        safe_signal("KILL", pid)
-        reap(pid)
-      rescue Errno::ESRCH
-        # Process already dead
-      end
-
-      def reap(pid)
-        Process.waitpid(pid)
-      rescue Errno::ECHILD, Errno::ESRCH
-        # Not our child, or already reaped
-      end
-
-      def safe_signal(signal, pid)
-        @process_killer.call(signal, pid)
-      rescue Errno::ESRCH
-        # Already dead
-      end
-
-      def default_process_killer(signal, pid)
-        Process.kill(signal, pid)
+      def cancel_run(run, new_commit_hash)
+        @run_canceller.stop(run)
+        Persistence::ActiveRuns.cancelled(@db, run)
+        @stdout.puts "Cancelled stale pipeline for #{run.commit_hash}. Starting fresh for #{new_commit_hash}."
       end
     end
   end

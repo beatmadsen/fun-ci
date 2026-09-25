@@ -60,6 +60,10 @@ class TestWorktreePool < Minitest::Test
     assert_equal File.join(@worktrees.root, "slot-0"), hold(pool.acquire("abc1234")).path
   end
 
+  def test_names_the_lock_file_of_the_slot_it_hands_out
+    assert_equal File.join(@worktrees.root, "slot-0.lock"), hold(pool.acquire("abc1234")).lock_file
+  end
+
   def test_writes_its_own_pid_over_a_longer_one_left_in_the_lock
     File.write(File.join(@worktrees.root, "slot-0.lock"), "1234567890123")
     hold(pool.acquire("abc1234"))

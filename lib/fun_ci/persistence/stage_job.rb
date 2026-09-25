@@ -17,6 +17,11 @@ module FunCi
         db.last_insert_row_id
       end
 
+      # The stage script's process, which leads a process group of its own.
+      def self.store_pid(db, id, pid)
+        db.execute("UPDATE stage_jobs SET pid = ? WHERE id = ?", [pid, id])
+      end
+
       def self.find(db, id)
         row = db.execute(
           "SELECT id, pipeline_run_id, stage, status, started_at, completed_at FROM stage_jobs WHERE id = ?", [id]

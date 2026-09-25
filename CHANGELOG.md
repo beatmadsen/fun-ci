@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `fun-ci console`, which have done the same job since 1.0.
 
 ### Bug Fixes
+- Cancelling a stale pipeline (a newer commit on the same branch) left its
+  stage scripts running and could let the old run record itself as failed
+  after it was cancelled. fun-ci now records every process a run starts and
+  stops all of them, its own first, and cancels runs still waiting for a
+  worktree as well. A run that had already died is only marked cancelled:
+  the process ids it left behind may belong to something else by now.
 - Two fun-ci processes starting at the same moment against a database that
   didn't exist yet (the first commit and push on a machine, say) could die
   with `database is locked` or `duplicate column name: project_path`.

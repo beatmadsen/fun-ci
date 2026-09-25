@@ -3,10 +3,11 @@
 module FunCi
   module Pipeline
     module ProcessRunner
-      def run_process_with_timeout(cmd, budget, chdir: Dir.pwd)
+      # Yields the pid of the process it starts, which leads a process group
+      # of its own, so the caller can stop the command and all it spawned.
+      def run_process_with_timeout(cmd, budget, chdir: Dir.pwd, &)
         reader, writer = IO.pipe
-        pid = Process.spawn(cmd, out: writer, err: writer, pgroup: true, chdir: chdir)
-        writer.close
+        pid = start(cmd, writer, chdir, &)
         output = Thread.new { read_until_closed(reader) }
         output.join(budget) ? process_finished(pid, output.value) : kill_process_group(pid)
       ensure
@@ -14,6 +15,13 @@ module FunCi
       end
 
       private
+
+      def start(cmd, writer, chdir)
+        pid = Process.spawn(cmd, out: writer, err: writer, pgroup: true, chdir: chdir)
+        writer.close
+        yield pid if block_given?
+        pid
+      end
 
       # On a timeout the reader is closed while this thread may still be
       # reading; whatever the killed command wrote no longer matters.

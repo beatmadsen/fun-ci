@@ -21,6 +21,7 @@ module FunCi
       end
 
       def run(config)
+        recorder.slot_taken(@slot.lock_file) if @slot.lock_file
         return released(fail_run) unless phase_one_passed?(config)
 
         launch_slow_suite(config)
@@ -66,7 +67,7 @@ module FunCi
         cmd = "#{config.script_path("slow")} #{@commit.sha}"
         executor = @seams.executor(slot.path)
         budget = @seams.budgets["slow"]
-        -> { holding(slot) { executor.call(cmd, budget) } }
+        ->(&on_start) { holding(slot) { executor.call(cmd, budget, &on_start) } }
       end
 
       def holding(slot)

@@ -20,7 +20,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-1.3: Ignored caches survive between runs in the same slot
 - [x] AT-1.4: The slot stays taken until the background slow suite finishes
 - [x] AT-1.5: Crashed runs don't leak slots
-- [ ] AT-1.6: Cancelling a stale run frees its slot
+- [x] AT-1.6: Cancelling a stale run frees its slot
 - [ ] AT-1.12: Cancelling from the console stops the run
 - [ ] AT-1.7: Pool size is configurable
 - [ ] AT-1.8: The background hook is post-commit and records the new commit

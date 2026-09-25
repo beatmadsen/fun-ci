@@ -36,6 +36,14 @@ class TestStageRunnerDefaults < Minitest::Test
     assert_equal ["lint.sh abc123"], commands
   end
 
+  def test_records_the_process_the_stage_s_script_runs_in
+    recorder = FakeRecorder.new
+    seams = FunCi::Pipeline::Seams.new(command_runner: runner_starting(4242), recorder: recorder)
+    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config, "lint")
+
+    assert_includes recorder.calls, [:stage_process, 1, 4242]
+  end
+
   def test_records_the_stage_starting
     recorder = FakeRecorder.new
     seams = FunCi::Pipeline::Seams.new(command_runner: passing_runner, recorder: recorder)
@@ -75,6 +83,13 @@ class TestStageRunnerDefaults < Minitest::Test
   end
 
   private
+
+  def runner_starting(pid)
+    lambda do |_cmd, &on_start|
+      on_start.call(pid)
+      ["", FakeStatus.new(true, 0)]
+    end
+  end
 
   def failing_answer = ["undefined method `x'", FakeStatus.new(false, 1)]
 

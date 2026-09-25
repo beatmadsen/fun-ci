@@ -44,6 +44,17 @@ class TestBackgroundWrapperEndStage < Minitest::Test
                  "Should call fail_run after timed out slow stage"
   end
 
+  def test_should_record_the_process_the_slow_suite_runs_in
+    recorder = FakeRecorder.new
+    executor = lambda do |&on_start|
+      on_start.call(4242)
+      SUCCESS
+    end
+    FunCi::Pipeline::BackgroundWrapper.new(recorder: recorder, job_id: 1, executor: executor).run
+
+    assert_includes recorder.calls, [:stage_process, 1, 4242]
+  end
+
   private
 
   def calls_after(outcome, method_name)

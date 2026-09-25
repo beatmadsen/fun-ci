@@ -47,7 +47,7 @@ module FunCi
       # The lock stays open for as long as the slot is held, so no block.
       def try_lock(path)
         lock = File.new("#{path}.lock", File::RDWR | File::CREAT, 0o644)
-        return Slot.new(path, stamped(lock)) if lock.flock(File::LOCK_EX | File::LOCK_NB)
+        return Slot.new(path, stamped(lock), lock.path) if lock.flock(File::LOCK_EX | File::LOCK_NB)
 
         lock.close
         nil

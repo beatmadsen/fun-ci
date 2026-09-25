@@ -10,6 +10,17 @@ class TestCommandExecutor < Minitest::Test
     assert_equal ["", nil, true], executor.call("fast.sh", 10)
   end
 
+  def test_passes_on_the_process_the_command_started
+    started = []
+    runner = lambda do |_cmd, &on_start|
+      on_start.call(4242)
+      ["", FakeStatus.new(true, 0)]
+    end
+    FunCi::Pipeline::CommandExecutor.new(runner).call("fast.sh", 10) { |pid| started << pid }
+
+    assert_equal [4242], started
+  end
+
   def test_a_runner_that_finishes_reports_its_output_and_status_and_no_timeout
     status = FakeStatus.new(true, 0)
     executor = FunCi::Pipeline::CommandExecutor.new(->(_cmd) { ["ok", status] })

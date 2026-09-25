@@ -22,6 +22,21 @@ class TestSlotRunSlot < Minitest::Test
     assert_predicate lock, :closed?
   end
 
+  def test_should_record_the_lock_of_the_slot_it_runs_in
+    recorder = FakeRecorder.new
+    slot = FunCi::Pipeline::Slot.new("/slot-0", Lock.new(false), "/slot-0.lock")
+    slot_run(slot, recorder: recorder).run(config)
+
+    assert_includes recorder.calls, [:slot_taken, "/slot-0.lock"]
+  end
+
+  def test_should_record_no_lock_for_a_slot_without_one
+    recorder = FakeRecorder.new
+    slot_run(slot_with(Lock.new(false)), recorder: recorder).run(config)
+
+    refute(recorder.calls.any? { |call| call.first == :slot_taken })
+  end
+
   def test_should_keep_the_slot_while_the_slow_suite_is_still_running
     lock = Lock.new(false)
     slot_run(slot_with(lock)).run(config)

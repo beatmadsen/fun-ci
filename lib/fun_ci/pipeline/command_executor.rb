@@ -16,10 +16,11 @@ module FunCi
         @dir = dir
       end
 
-      def call(cmd, budget)
-        return run_process_with_timeout(cmd, budget, chdir: @dir) unless @command_runner
+      # Yields the pid of the process the command runs in, when there is one.
+      def call(cmd, budget, &)
+        return run_process_with_timeout(cmd, budget, chdir: @dir, &) unless @command_runner
 
-        output, status = @command_runner.call(cmd)
+        output, status = @command_runner.call(cmd, &)
         [output, status, false]
       rescue Timeout::Error
         ["", nil, true]

@@ -30,12 +30,19 @@ module FunCi
         query(db, "WHERE commit_hash = ? ORDER BY id DESC", commit_hash)
       end
 
+      # The forked slow suite's process.
       def self.store_pid(db, id, pid)
         db.execute("UPDATE pipeline_runs SET pid = ? WHERE id = ?", [pid, id])
       end
 
-      def self.find_running_with_pid(db, branch)
-        query(db, "WHERE branch = ? AND status = 'running' AND pid IS NOT NULL ORDER BY id DESC LIMIT 1", branch).first
+      # The lock file of the worktree slot the run holds.
+      def self.store_slot_lock(db, id, path)
+        db.execute("UPDATE pipeline_runs SET slot_lock = ? WHERE id = ?", [path, id])
+      end
+
+      # The process running the pipeline itself.
+      def self.store_trigger_pid(db, id, pid)
+        db.execute("UPDATE pipeline_runs SET trigger_pid = ? WHERE id = ?", [pid, id])
       end
 
       def self.update_status(db, id, new_status)
