@@ -8,7 +8,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-0.1: RuboCop is part of the gate with the project's limits
 - [x] AT-0.2: Constructor parameter objects replace long keyword lists
 - [x] AT-0.3: The cucumber lane and every documented lane run in the gate
-- [ ] AT-0.4: Tests are confined to temp directories
+- [x] AT-0.4: Tests are confined to temp directories
 - [ ] AT-0.5: Unit and acceptance tests never spawn processes
 - [ ] AT-0.6: Mutation testing lane
 - [ ] AT-0.7: CI runs the gate on every supported Ruby
