@@ -2,13 +2,13 @@
 agent: ralph/agent-in-worktree.sh
 commands:
   - name: done_check
-    run: test -f ralph/build/DONE && echo "ALL_DONE" || echo "NOT_DONE"
+    run: bash -c 'test -f ralph/build/DONE && echo ALL_DONE || echo NOT_DONE'
     timeout: 5
   - name: progress
     run: cat ralph/build/progress.md
     timeout: 5
   - name: recent_iterations
-    run: tail -15 ralph/log.tsv 2>/dev/null || echo "No iterations yet"
+    run: bash -c 'tail -15 ralph/log.tsv 2>/dev/null || echo "No iterations yet"'
     timeout: 5
   - name: recent_commits
     run: git log --oneline -10
@@ -23,7 +23,7 @@ commands:
     run: cat docs/v2/acceptance-tests.md
     timeout: 5
   - name: gate
-    run: bundle exec rake 2>&1 | tail -60
+    run: bash -c 'set -o pipefail; CUCUMBER_OPTS="--format progress" bundle exec rake 2>&1 | tail -60; echo "gate exit status $?"'
     timeout: 600
 ---
 
