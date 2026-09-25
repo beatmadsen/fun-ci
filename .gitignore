@@ -40,3 +40,4 @@ renderer/mutants.out/
 renderer/mutants.out.old/
 /libexec/
 renderer/mutants-shards/
+*.snap.new

@@ -1,0 +1,253 @@
+---
+source: tests/suite/snapshots.rs
+expression: "render(& frames(\"happy-7\"))"
+---
+frame 0001 at 120x40
+  |                                      *                  .                         .
+  |
+  |                                           .                       *
+  |                                                       .                          .
+  |
+  |                                    .              .                  *
+  |
+  |                                                .                                    .
+  |                                                            .         .
+  |
+  |                                         *                    .
+  |                                                    .                       .
+  |
+  |                                     .                              .
+  |> d699a82  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 40s  PASSED  just now
+  |
+  |  f7cf32d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 44s  PASSED  5m ago
+  |
+  |  d54ede8  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 48s  PASSED  15m ago
+  |
+  |  f731578  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 52s  PASSED  1h ago
+  |
+  |  8d552d0  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 56s  PASSED  2h ago
+  |
+  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m00  PASSED  3h ago
+  |
+  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m04  PASSED  24h ago
+  |
+  |  j/k move   c cancel   q quit
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :......................................a..................b.........................a
+  :
+  :...........................................b.......................a
+  :.......................................................a..........................b
+  :
+  :....................................b..............b..................a
+  :
+  :................................................a....................................b
+  :............................................................b.........a
+  :
+  :.........................................a....................b
+  :....................................................b.......................a
+  :
+  :.....................................b..............................b
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeeee
+  :
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0002 at 120x40
+  |                                     .                              .
+  |                                      *                  .                         .
+  |
+  |                                           .                       *
+  |                                                       .                          .
+  |
+  |                                    .              .                  *
+  |
+  |                                                .                                    .
+  |                                                            .         .
+  |
+  |                                         *                    .
+  |                                                    .                       .
+  |
+  |> d699a82  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 40s  PASSED  just now
+  |
+  |  f7cf32d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 44s  PASSED  5m ago
+  |
+  |  d54ede8  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 48s  PASSED  15m ago
+  |
+  |  f731578  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 52s  PASSED  1h ago
+  |
+  |  8d552d0  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 56s  PASSED  2h ago
+  |
+  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m00  PASSED  3h ago
+  |
+  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m04  PASSED  24h ago
+  |
+  |  j/k move   c cancel   q quit
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :.....................................b..............................b
+  :......................................a..................b.........................a
+  :
+  :...........................................b.......................a
+  :.......................................................a..........................b
+  :
+  :....................................b..............b..................a
+  :
+  :................................................a....................................b
+  :............................................................b.........a
+  :
+  :.........................................a....................b
+  :....................................................b.......................a
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeeee
+  :
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0003 at 120x40
+  |                                                    .                       .
+  |
+  |                                     .                              .
+  |                                      *                  .                         .
+  |
+  |                                           .                       *
+  |                                                       .                          .
+  |
+  |                                    .              .                  *
+  |
+  |                                                .                                    .
+  |                                                            .         .
+  |
+  |                                         *                    .
+  |> d699a82  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 40s  PASSED  just now
+  |
+  |  f7cf32d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 44s  PASSED  5m ago
+  |
+  |  d54ede8  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 48s  PASSED  15m ago
+  |
+  |  f731578  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 52s  PASSED  1h ago
+  |
+  |  8d552d0  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 56s  PASSED  2h ago
+  |
+  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m00  PASSED  3h ago
+  |
+  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m04  PASSED  24h ago
+  |
+  |  j/k move   c cancel   q quit
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :....................................................b.......................a
+  :
+  :.....................................b..............................b
+  :......................................a..................b.........................a
+  :
+  :...........................................b.......................a
+  :.......................................................a..........................b
+  :
+  :....................................b..............b..................a
+  :
+  :................................................a....................................b
+  :............................................................b.........a
+  :
+  :.........................................a....................b
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeee
+  :
+  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeeee
+  :
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+legend
+a = fg Idx(6), bg Default, []
+b = fg Idx(6), bg Default, ["dim"]
+c = fg Idx(2), bg Default, []
+d = fg Idx(2), bg Default, ["bold"]
+e = fg Default, bg Default, ["dim"]

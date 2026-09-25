@@ -25,12 +25,6 @@ end
 
 Cucumber::Rake::Task.new(:cucumber)
 
-def capture_golden_corpus
-  require_relative "contract/capture/golden_corpus"
-  corpus = FunCi::Contract::GoldenCorpus.new(root: File.expand_path("contract", __dir__))
-  corpus.scenario_names.each { |name| corpus.write(name, corpus.capture(name)) }
-end
-
 # Kept out of `rake test`: it needs the binary cargo builds first.
 def drive_renderer_binary
   sh "cargo", "build", "--manifest-path", RENDERER_MANIFEST
@@ -39,9 +33,6 @@ def drive_renderer_binary
 end
 
 namespace :contract do
-  desc "Write the Ruby renderer's frames for every contract/scenarios/*.jsonl to contract/golden/"
-  task(:capture) { capture_golden_corpus }
-
   desc "Drive the real renderer binary on a pseudo-terminal through the happy-7 contract fixture"
   task(:binary) { drive_renderer_binary }
 end
@@ -118,7 +109,7 @@ def judge_rust_shards(shards, threshold)
   judge_rust_mutation(outcomes, threshold)
 end
 
-# Tests read the golden corpus through FUN_CI_CONTRACT, because cargo-mutants
+# Tests read the scenarios and fixtures through FUN_CI_CONTRACT, because cargo-mutants
 # builds a copy of renderer/ that has no ../contract next to it. The suite takes
 # seconds; the fixed timeout is for mutants that make a test wait forever (one
 # that stops SIGTERM being handled leaves the pty test waiting for an exit).

@@ -33,6 +33,7 @@ pedantic = { level = "warn", priority = -1 }
 cognitive_complexity = "warn"
 
 [dev-dependencies]
+insta = "1"
 tempfile = "3.27.0"
 wait-timeout = "0.2"
 

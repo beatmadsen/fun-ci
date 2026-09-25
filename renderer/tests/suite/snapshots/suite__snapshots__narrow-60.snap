@@ -1,0 +1,200 @@
+---
+source: tests/suite/snapshots.rs
+expression: "render(& frames(\"narrow-60\"))"
+---
+frame 0001 at 60x30
+  |                 .                    *            .
+  |        .                        .
+  |                            .                       .
+  |     .                                    .
+  |                           /\
+  |                          /  \
+  |                  ~      | oo |              *
+  |                ===~     |    |====>
+  |                  ~      |FUN!|
+  |                          \  /
+  |                           \/             .
+  |      .                                         .
+  |                 .           .
+  |                                         .
+  |>   d54ede8  main  Scheduled...  just now
+  |
+  |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
+  |low --  FAILED  4m ago
+  |
+  |  8d552d0  main  Lint 0.4s  Build 1.3s  Fast TIMEOUT 10s  Sl
+  |ow --  TIMED OUT  25m ago
+  |
+  |  c67191d  spike  Lint 0.3s  Build 1.2s  Fast 0.7s  Slow --
+  | CANCELLED  1h ago
+  |
+  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m02
+  |  PASSED  25h ago
+  |
+  |  Cancel main (d54ede8)? y / n
+  |
+  :.................a....................b............a
+  :........b........................a
+  :............................c.......................a
+  :.....a....................................c
+  :...........................dd
+  :..........................dddd
+  :..................e......ddbbdd..............b
+  :................fghh.....ddddddddddd
+  :..................e......dbbbbd
+  :..........................dddd
+  :...........................dd.............a
+  :......c.........................................b
+  :.................a...........c
+  :.........................................a
+  :..iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :
+  :......................jjjjjjjjj..kkkkkkkkkkkkkkk..iiiiiii..i
+  :iiiiii..kkkkkk..iiiiii
+  :
+  :.................jjjjjjjjj..jjjjjjjjjj..ffffffffffffffff..ii
+  :iiiii..fffffffff..iiiiiii
+  :
+  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :iiiiiiiiiiiiiiiiii
+  :
+  :.................jjjjjjjjj..jjjjjjjjjj..jjjjjjjjj..jjjjjjjjj
+  :..llllll..iiiiiii
+  :
+  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :
+frame 0002 at 60x30
+  |             .                *                .
+  |                           .                    .
+  |                      .                           .
+  |                                             .
+  |                           /\
+  |                          /  \
+  |                ~~~      | oo |            *
+  |              =====~     |    |====>
+  |                ~~~      |FUN!|
+  |                          \  /
+  |                           \/         .
+  |                                                  .
+  |             .               .
+  |     .                                .
+  |>   d54ede8  main  Scheduled...  just now
+  |
+  |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
+  |low --  FAILED  4m ago
+  |
+  |  8d552d0  main  Lint 0.4s  Build 1.3s  Fast TIMEOUT 10s  Sl
+  |ow --  TIMED OUT  25m ago
+  |
+  |  c67191d  spike  Lint 0.3s  Build 1.2s  Fast 0.7s  Slow --
+  | CANCELLED  1h ago
+  |
+  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m02
+  |  PASSED  25h ago
+  |
+  |  Cancel main (d54ede8)? y / n
+  |
+  :.............a................b................a
+  :...........................a....................b
+  :......................c...........................a
+  :.............................................c
+  :...........................dd
+  :..........................dddd
+  :................eee......ddbbdd............b
+  :..............fgghhh.....ddddddddddd
+  :................eee......dbbbbd
+  :..........................dddd
+  :...........................dd.........a
+  :..................................................b
+  :.............a...............c
+  :.....c................................a
+  :..iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :
+  :......................jjjjjjjjj..kkkkkkkkkkkkkkk..iiiiiii..i
+  :iiiiii..kkkkkk..iiiiii
+  :
+  :.................jjjjjjjjj..jjjjjjjjjj..ffffffffffffffff..ii
+  :iiiii..fffffffff..iiiiiii
+  :
+  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :iiiiiiiiiiiiiiiiii
+  :
+  :.................jjjjjjjjj..jjjjjjjjjj..jjjjjjjjj..jjjjjjjjj
+  :..llllll..iiiiiii
+  :
+  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :
+frame 0003 at 60x30
+  |         .            *                    .
+  |                       .                          .
+  |                  .                           .
+  |                   .                      .
+  |                           /\
+  |                          /  \
+  |              ~~~~~      | oo |          *
+  |            =======~     |    |====>
+  |              ~~~~~      |FUN!|
+  |                          \  /
+  |                           \/     .
+  |                                                    .
+  |         .                   .
+  |                                           .
+  |>   d54ede8  main  Scheduled...  just now
+  |
+  |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
+  |low --  FAILED  4m ago
+  |
+  |  8d552d0  main  Lint 0.4s  Build 1.3s  Fast TIMEOUT 10s  Sl
+  |ow --  TIMED OUT  25m ago
+  |
+  |  c67191d  spike  Lint 0.3s  Build 1.2s  Fast 0.7s  Slow --
+  | CANCELLED  1h ago
+  |
+  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m02
+  |  PASSED  25h ago
+  |
+  |  Cancel main (d54ede8)? y / n
+  |
+  :.........a............b....................a
+  :.......................a..........................b
+  :..................c...........................a
+  :...................a......................c
+  :...........................dd
+  :..........................dddd
+  :..............eeeee......ddbbdd..........b
+  :............fffgghhh.....ddddddddddd
+  :..............eeeee......dbbbbd
+  :..........................dddd
+  :...........................dd.....a
+  :....................................................b
+  :.........a...................c
+  :...........................................a
+  :..iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :
+  :......................jjjjjjjjj..kkkkkkkkkkkkkkk..iiiiiii..i
+  :iiiiii..kkkkkk..iiiiii
+  :
+  :.................jjjjjjjjj..jjjjjjjjjj..ffffffffffffffff..ii
+  :iiiii..fffffffff..iiiiiii
+  :
+  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :iiiiiiiiiiiiiiiiii
+  :
+  :.................jjjjjjjjj..jjjjjjjjjj..jjjjjjjjj..jjjjjjjjj
+  :..llllll..iiiiiii
+  :
+  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :
+legend
+a = fg Idx(6), bg Default, ["dim"]
+b = fg Idx(6), bg Default, ["bold"]
+c = fg Idx(6), bg Default, []
+d = fg Idx(7), bg Default, ["bold"]
+e = fg Idx(208), bg Default, []
+f = fg Idx(3), bg Default, ["bold"]
+g = fg Idx(208), bg Default, ["bold"]
+h = fg Idx(3), bg Default, ["dim"]
+i = fg Default, bg Default, ["dim"]
+j = fg Idx(2), bg Default, []
+k = fg Idx(1), bg Default, ["bold"]
+l = fg Idx(2), bg Default, ["bold"]

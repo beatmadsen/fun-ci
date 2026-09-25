@@ -198,9 +198,9 @@ Ruby capture tool (AT-2.6) and `--headless --scenario` (AT-3.3, AT-3.4).
   Frames are numbered from 1 in tick order, which is what lets two renderers
   be compared frame by frame.
 
-The Ruby oracle's frames are `contract/golden/<name>/NNNN.bytes` (0001, 0002,
-...). Frame 0001 includes the initial screen clear. Frames are cumulative: feed
-them in order to one terminal emulator and compare its grid after each.
+What the renderer draws for each scenario is held as a snapshot, frame by frame,
+in `renderer/tests/suite/snapshots/` (`snapshots.rs`): each frame's characters,
+then a letter per cell for its style, with a legend.
 
 ## Contract fixtures
 

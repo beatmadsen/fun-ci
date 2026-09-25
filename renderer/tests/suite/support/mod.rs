@@ -6,6 +6,7 @@ pub mod input;
 pub mod live;
 pub mod pty;
 pub mod renderer;
+pub mod snapshot;
 
 use std::io;
 use std::path::PathBuf;
