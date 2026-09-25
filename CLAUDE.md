@@ -4,14 +4,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
+`bundle exec rake` is the gate. It runs every lane below, in this order;
+`test/unit/test_gate_lanes.rb` fails if the gate and this list disagree, or if
+the docs mention a rake task that is none of a lane, a subset of `rake test`,
+or a tool.
+
+### Lanes
+
 ```bash
-bundle exec rake   # The gate: all tests, cucumber, then rubocop
-rake test          # Run all tests (unit + acceptance)
-rake unit          # Run unit tests only
-rake acceptance    # Run acceptance tests only
-bundle exec cucumber           # Run Cucumber feature specs
-ruby -Itest -Ilib test/unit/test_trigger.rb                    # Run a single test file
-ruby -Itest -Ilib test/unit/test_trigger.rb -n test_method     # Run a single test method
+bundle exec rake test       # Every Minitest test: unit, acceptance, integration
+bundle exec rake cucumber   # Cucumber feature specs
+bundle exec rake rubocop    # RuboCop with the project's limits
+```
+
+### Subsets of `rake test`, for a quicker loop
+
+```bash
+rake unit                                                  # test/unit only
+rake acceptance                                            # test/acceptance only
+rake integration                                           # test/integration only
+ruby -Itest -Ilib test/unit/test_trigger.rb                # One test file
+ruby -Itest -Ilib test/unit/test_trigger.rb -n test_method # One test method
+```
+
+### Tools
+
+```bash
 rake contract:capture   # Rewrite contract/golden/ from contract/scenarios/ (after a deliberate TUI change)
 ```
 

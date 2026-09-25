@@ -5,28 +5,20 @@ require "rake/testtask"
 require "cucumber/rake/task"
 require "rubocop/rake_task"
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << "test"
-  t.libs << "lib"
-  t.test_files = FileList["test/**/**/test_*.rb"]
-end
+# `test` is the gate's lane; the others are quicker subsets of it.
+# test/unit/test_gate_lanes.rb holds them to that.
+TEST_LANES = {
+  "test" => "test/**/test_*.rb",
+  "unit" => "test/unit/**/test_*.rb",
+  "integration" => "test/integration/**/test_*.rb",
+  "acceptance" => "test/acceptance/**/test_*.rb"
+}.freeze
 
-Rake::TestTask.new(:unit) do |t|
-  t.libs << "test"
-  t.libs << "lib"
-  t.test_files = FileList["test/unit/**/test_*.rb"]
-end
-
-Rake::TestTask.new(:integration) do |t|
-  t.libs << "test"
-  t.libs << "lib"
-  t.test_files = FileList["test/integration/**/test_*.rb"]
-end
-
-Rake::TestTask.new(:acceptance) do |t|
-  t.libs << "test"
-  t.libs << "lib"
-  t.test_files = FileList["test/acceptance/**/test_*.rb"]
+TEST_LANES.each do |lane, pattern|
+  Rake::TestTask.new(lane) do |t|
+    t.libs.push("test", "lib")
+    t.test_files = FileList[pattern]
+  end
 end
 
 Cucumber::Rake::Task.new(:cucumber)
