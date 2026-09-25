@@ -7,7 +7,7 @@ use std::ffi::CString;
 use std::io::{self, BufRead, BufReader, Write};
 use std::os::unix::process::CommandExt;
 use std::process::{Child, ChildStdin, Command, Stdio};
-use std::sync::mpsc::{self, Receiver};
+use std::sync::mpsc::{self, Receiver, RecvTimeoutError};
 use std::thread;
 use std::time::Duration;
 
@@ -72,6 +72,12 @@ fn ready_renderer(pty: &Pty) -> (Child, ChildStdin, Receiver<Value>) {
     (child, stdin, replies)
 }
 
+/// Whether the renderer closes its output, as it does on exiting, within
+/// `patience`.
+fn closes_within(replies: &Receiver<Value>, patience: Duration) -> bool {
+    matches!(replies.recv_timeout(patience), Err(RecvTimeoutError::Disconnected))
+}
+
 fn board_on_branch(branch: &str) -> String {
     let mut drawn = run(1, "passed", &[("lint", "passed")]);
     drawn["branch"] = json!(branch);
@@ -91,6 +97,7 @@ fn a_live_renderer_draws_the_board_sends_keys_and_resizes_and_restores_the_termi
     assert_eq!(replies.recv_timeout(PATIENCE).unwrap(), json!({"t":"resize","cols":120,"rows":40}));
 
     send(&mut stdin, r#"{"t":"quit"}"#);
+    assert!(closes_within(&replies, PATIENCE), "the renderer did not exit on quit");
     assert_eq!(child.wait().unwrap().code(), Some(0));
     assert!(!pty.is_raw(), "the terminal was left in raw mode");
     assert!(pty.close().contains(LEAVE_ALTERNATE_SCREEN));
