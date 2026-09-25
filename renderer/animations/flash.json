@@ -1,0 +1,403 @@
+{
+  "name": "flash",
+  "frame_ms": 100,
+  "loop": false,
+  "anchor": "header",
+  "styles": {
+    "a": {
+      "fg": 2,
+      "dim": true
+    },
+    "b": {
+      "fg": 7,
+      "dim": true
+    },
+    "c": {
+      "fg": 3,
+      "bold": true,
+      "dim": true
+    },
+    "d": {
+      "fg": 2,
+      "bold": true,
+      "dim": true
+    },
+    "e": {
+      "fg": 3,
+      "dim": true
+    },
+    "f": {
+      "fg": 6,
+      "bold": true,
+      "dim": true
+    },
+    "g": {
+      "fg": 7,
+      "bold": true,
+      "dim": true
+    },
+    "h": {
+      "fg": 2
+    },
+    "i": {
+      "fg": 2,
+      "bold": true
+    },
+    "j": {
+      "fg": 6,
+      "bold": true
+    },
+    "k": {
+      "fg": 7,
+      "bold": true
+    },
+    "l": {
+      "fg": 3,
+      "bold": true
+    },
+    "m": {
+      "fg": 6
+    },
+    "n": {
+      "fg": 3
+    }
+  },
+  "frames": [
+    {
+      "text": [
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . o . * . * . * . * . .  ",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * . * . *"
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "text": [
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . | . * . * . * . * . .  ",
+        "  * . * . * . * . */* . * . * . * . * .    ",
+        "  . * . * . * . * * * . * . * . * . * .    ",
+        "  * . * . * . * .\\* . * . * . * . * . *    ",
+        "  . * . * . * . * . | . * . * . * . * . .  ",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . * . * . * . * . * . * ."
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaa    ",
+        "  aaaaaaaaaaaaaaaacdddddddddddddddddddd    ",
+        "  aaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaaa    ",
+        "  aaaaaaaaaaaaaaaaaabaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "text": [
+        "  . * . * . * . * . | . * . * . * . * . .  ",
+        "  * . * . * . * . */* . * . * . * . * . *  ",
+        "  . * . * . * . *|* . * . * . * . * . * .  ",
+        "  * . * . * . * .\\* . * . * . * . * .      ",
+        "  . * . * . * * . *|* . * * . * . * . * .  ",
+        "  * . * . * . * ./* . * . * . * . * .      ",
+        "  . * . * . * . *|* . * . * . * . * . * .  ",
+        "  * . * . * . * .\\* . * . * . * . * . * .  ",
+        "  . * . * . * . * . | . * . * . * . * . .  ",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . * . * . * . * . * . * ."
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaadcddddddddddddddddddddddd  ",
+        "  aaaaaaaaaaaadddcfdddddddddddddddddd      ",
+        "  aaaaaaaaaaaafcccgcgcccfdddddddddddddddd  ",
+        "  aaaaaaaaaaaadddcfdddddddddddddddddd      ",
+        "  aaaaaaaaaaaaaadcddddddddddddddddddddddd  ",
+        "  aaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "text": [
+        "  . * . * . * . * .| . * . * . * . * . * . ",
+        "  * . * . * . * ./* . * . * . * . * . * .  ",
+        "  . * . * * . * .|* . * . * . * . * . .    ",
+        "  * . . * . * . *\\ @ @ * . * . * . * . *   ",
+        "  . * * . * . * @#|#@ * . * . * . * .      ",
+        "  * . . * . * . */ @ @ * . * . * . * . *   ",
+        "  . * . * * . * .|* . * . * . * . * . .    ",
+        "  * . * . * . * .\\* . * . * . * . * . * .  ",
+        "  . * . * . * . * . | . * . * . * . * . .  ",
+        "  * . * . * . * . */* . * . * . * . * . *  ",
+        "  . * . * . * . * . | . * . * . * . * . .  "
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaddcdddddddddddddddddddddd ",
+        "  aaaaaaaaaaaadddcddddddddddddddddddddddd  ",
+        "  aaaaaaaadffffffcfffffffffdddddddddddd    ",
+        "  aaaaaddffffcccccggccccccffffdddddddddd   ",
+        "  aaaadffffccccgggcggccccffffdddddddd      ",
+        "  aaaaaddffffcccccggccccccffffdddddddddd   ",
+        "  aaaaaaaadffffffcfffffffffdddddddddddd    ",
+        "  aaaaaaaaaaaadddcddddddddddddddddddddddd  ",
+        "  aaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaaa  ",
+        "  aaaaaaaaaaaaaaaaaaeaaaaaaaaaaaaaaaaaaaa  "
+      ]
+    },
+    {
+      "text": [
+        "  * . * . * . *| * . * . * . * . * . *     ",
+        "  . * . * . * ./ . * . * . * . * . *       ",
+        "  * . * . * . *| * . * . * . * . * .       ",
+        "  . * . * . * .\\ @ @ @ * . * . * . * .     ",
+        "  * . * . * @#@|@#@#@ * . * . * .          ",
+        "  . * . * . * ./ @ @ @ * . * . * . * .     ",
+        "  * . * . * . *| * . * . * . * . * .       ",
+        "  . * . * . * .\\ . * . * . * . * . *       ",
+        "  * . * . * . *| * . * . * . * . * . *     ",
+        "  . * . * . * . */* . * . * . * . * . * .  ",
+        "  * . * . * . * . | . * . * . * . * . * .  "
+      ],
+      "style": [
+        "  aaaaaddddddddgdddddddddddddddddddddd     ",
+        "  hhhiijjiijjiikjjjjiijjiijjiiiiiiii       ",
+        "  ijjjjjjjjjjjjklllllljjjjjjjjjjjidd       ",
+        "  jjjjjllllllllkkkkkkklllllllljjjjjjii     ",
+        "  jjjllllkkkkkkkkkkkkkklllljjjjii          ",
+        "  jjjjjllllllllkkkkkkklllllllljjjjjjii     ",
+        "  ijjjjjjjjjjjjklllllljjjjjjjjjjjidd       ",
+        "  hhhiijjiijjiikjjjjiijjiijjiiiiiiii       ",
+        "  aaaaaddddddddgdddddddddddddddddddddd     ",
+        "  aaaaaaaaaaaaaaagddddddddddddddddddddddd  ",
+        "  aaaaaaaaaaaaaaaagdddddddddddddddddddddd  "
+      ]
+    },
+    {
+      "text": [
+        "  . * . * . *| * . * . * . * . * .         ",
+        "  * . * . * / * . * . * . * . * . *        ",
+        "  . * . * .| * . * . * . * . * . * .       ",
+        "  * . * . \\ . @ @ @ @ @ . * . * . *        ",
+        "  . * . @ @#@|@#@#@#@ @ . * . *            ",
+        "  * . * . / . @ @ @ @ @ . * . * . *        ",
+        "  . * . * .| * . * . * . * . * . * .       ",
+        "  * . * . *\\ * . * . * . * . * . *         ",
+        "  . * . * . | . * . * . * . * . * .        ",
+        "  * . * . * . / . * . * . * . * . * . *    ",
+        "  . * . * . * . | . * . * . * . * . * . * ."
+      ],
+      "style": [
+        "  iiiiijjiijjkjjiijjiijjiijjiiiiii         ",
+        "  jiijjjjjjjkjjjjjjjjjjjjjjjjjjiiij        ",
+        "  jjjjjjjllklllllllllllljjlljjjjjjjj       ",
+        "  mlllllllkkkkkkkkkkkkkkklllllllllj        ",
+        "  lllkkkkkkkkkkkkkkkkkkkkllllll            ",
+        "  mlllllllkkkkkkkkkkkkkkklllllllllj        ",
+        "  jjjjjjjllklllllllllllljjlljjjjjjjj       ",
+        "  jiijjjjjjkjjjjjjjjjjjjjjjjjjiiij         ",
+        "  iiiiijjiijkiijjiijjiijjiijjiiiiii        ",
+        "  aaaaadddddddgdddddddddddddddddddddddd    ",
+        "  aaaaaaaaaaaaaagdddddddddddddddddddddddddd"
+      ]
+    },
+    {
+      "text": [
+        "  * . * . * | . * . * . * . * . * .        ",
+        "  . * . * ./ . * . * . * . * . * .         ",
+        "  * . * . | . * . * . * . * . * . *        ",
+        "  . * . * .\\@ @#@#@ @ . * . * . *          ",
+        "  * . @ @#@#@|@#@#@#@#@ @ . * .            ",
+        "  . * . * . @/#@#@ @ . * . * . *           ",
+        "  * . * . *| * . * . * . * . * . *         ",
+        "  . * . * \\ * . * . * . * . * .            ",
+        "  * . * . *| * . * . * . * . * . * .       ",
+        "  . * . * / * . * . * . * . * . *          ",
+        "  * . * . | . * . * . * . * . * .          "
+      ],
+      "style": [
+        "  ijjiijjiijkjjiijjiijjiijjiijjiijj        ",
+        "  jjjjjjjjjkjjjjjjjjjjjjjjjjjjjjjj         ",
+        "  mlljjlljklllllllllljjlljjlljjlljj        ",
+        "  lllllllkkkkkkkkkkkkkkllllllllll          ",
+        "  lkkkkkkkkkkkkkkkkkkkkkkkkllll            ",
+        "  lllllllkkkkkkkkkkkkkllllllllll           ",
+        "  mlljjlljjklllllllljjlljjlljjlljj         ",
+        "  jjjjjjjjkjjjjjjjjjjjjjjjjjjjj            ",
+        "  ijjiijjiikiijjiijjiijjiijjiijjiijj       ",
+        "  hiiiiiiikiiiiiiiiiiiiiiiiiiiiii          ",
+        "  aaaaaaaagdddddddddddddddddddddd          "
+      ]
+    },
+    {
+      "text": [
+        "  . * . * . | . * . * . * . * . *          ",
+        "  * . * . *\\ . * . * . * . * . *           ",
+        "  . * . * . | . * . * . * . * . * .        ",
+        "  * . * . @ @\\@#@#@ @ . * . * . *          ",
+        "  . @#@#@#@#@|@#@#@#@#@#@ . *              ",
+        "  * . * . @ @#/#@#@ @ . * . * . *          ",
+        "  . * . * . | . * . * . * . * . * .        ",
+        "  * . * . / . * . * . * . * . * . *        ",
+        "  . * . * | * . * . * . * . * . *          ",
+        "  * . * . \\ . * . * . * . * . * . *        ",
+        "  . * . * .| . * . * . * . * . * . *       "
+      ],
+      "style": [
+        "  jiijjiijjikjjiijjiijjiijjiijjii          ",
+        "  mjjjjjjjjkjjjjjjjjjjjjjjjjjjjj           ",
+        "  ljjlljjlljklllllllllljjlljjlljjll        ",
+        "  nllllkkkkkkkkkkkkkkkkllllllllll          ",
+        "  kkkkkkkkkkkkkkkkkkkkkkkkkll              ",
+        "  nllllkkkkkkkkkkkkkkkkllllllllll          ",
+        "  ljjlljjlljklllllllllljjlljjlljjll        ",
+        "  mjjjjjjjkjjjjjjjjjjjjjjjjjjjjjjjj        ",
+        "  jiijjiijkiijjiijjiijjiijjiijjii          ",
+        "  iiiiiiiikiiiiiiiiiiiiiiiiiiiiiiii        ",
+        "  haaaaaaaagdddddddddddddddddddddddd       "
+      ]
+    },
+    {
+      "text": [
+        "  * . * . * . * . * . * . * . * . * .      ",
+        "  . * . * . * . * . * . * . * . * .        ",
+        "  * . * . * | * . * . * . * . * . *        ",
+        "  . * . * . \\ @#@#@ * . * . * . *          ",
+        "  * . @ @#@#|#@#@#@ @ . * . * .            ",
+        "  . * . * . / @#@#@ * . * . * . *          ",
+        "  * . * . * | * . * . * . * . * . *        ",
+        "  . * . * . \\ . * . * . * . * . * .        ",
+        "  * . * . * .| . * . * . * . * . * .       ",
+        "  . * . * . / . * . * . * . * . * . *      ",
+        "  * . * . * . * . * . * . * . * . * .      "
+      ],
+      "style": [
+        "  ijjiijjiijjiijjiijjiijjiijjiijjiijj      ",
+        "  jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj        ",
+        "  mjjjjjjjjjllllllllljjjjjjjjjjjjjj        ",
+        "  jjjllllllllkkkkkklllllllljjjjjj          ",
+        "  mllkkkkkkklkkkkkkkkkklljjjjjj            ",
+        "  jjjllllllllkkkkkklllllllljjjjjj          ",
+        "  mjjjjjjjjjllllllllljjjjjjjjjjjjjj        ",
+        "  jjjjjjjjjjljjjjjjjjjjjjjjjjjjjjjj        ",
+        "  ijjiijjiijjljjiijjiijjiijjiijjiijj       ",
+        "  hiiiiiiiiiliiiiiiiiiiiiiiiiiiiiiiii      ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      "
+      ]
+    },
+    {
+      "text": [
+        "  . * . * . * . * . * . * . * . * . *      ",
+        "  * . * . * . * . * . * . * . * . *        ",
+        "  . * . * . * . * . * . * . * . * .        ",
+        "  * . * . * | * . * . * . * . * . *        ",
+        "  . * . * . \\ . *# * . * . * . * . .       ",
+        "  * . * . * .| * . * . * . * . * . *       ",
+        "  . * . * . / . * . * . * . * . * .        ",
+        "  * . * . * | * . * . * . * . * . *        ",
+        "  . * . * . * . * . * . * . * . * . *      ",
+        "  * . * . * . * . * . * . * . * . * .      ",
+        "  . * . * . * . * . * . * . * . * . * . * ."
+      ],
+      "style": [
+        "  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii      ",
+        "  ijjiijjiijjiijjiijjiijjiijjiijjii        ",
+        "  jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj        ",
+        "  mjjjjjjjjjgffffffffffffffffffffff        ",
+        "  jjjjjjjjjjgccccgccccffffffffffffff       ",
+        "  mjjjjjjjjjjgffffffffffffffffffffff       ",
+        "  jjjjjjjjjjgffffffffffffffffffffff        ",
+        "  ijjiijjiijgddffddffddffddffddffdd        ",
+        "  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii      ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "text": [
+        "  * . * . * . * . * . * . * . * . * .      ",
+        "  . * . * . * . * . * . * . * . * . *      ",
+        "  * . * . * . * . * . * . * . * . *        ",
+        "  . * . * . * . * . * . * . * . * .        ",
+        "  * . * . * . * . * . * . * . * . *        ",
+        "  . * . * . * . * . * . * . * . * .        ",
+        "  * . * . * . * . * . * . * . * . *        ",
+        "  . * . * . * . * . * . * . * . * . *      ",
+        "  * . * . * . * . * . * . * . * . * .      ",
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * . * . *"
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      ",
+        "  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii      ",
+        "  iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii        ",
+        "  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii        ",
+        "  iiiiiiiiiiiiilllliiiiiiiiiiiiiiii        ",
+        "  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii        ",
+        "  iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii        ",
+        "  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii      ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "text": [
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * .      ",
+        "  . * . * . * . * . * . * . * . * .        ",
+        "  * . * . * . * . * . * . * . * . *        ",
+        "  . * . * . * . * . * . * . * . * .        ",
+        "  * . * . * . * . * . * . * . * . *        ",
+        "  . * . * . * . * . * . * . * . * .        ",
+        "  * . * . * . * . * . * . * . * . * .      ",
+        "  . * . * . * . * . * . * . * . * . * . * .",
+        "  * . * . * . * . * . * . * . * . * . * . *",
+        "  . * . * . * . * . * . * . * . * . * . * ."
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      ",
+        "  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii        ",
+        "  aaaaaaaaadddddddddddddddddddddddd        ",
+        "  hiiiiiiiiiiiilliiiiiiiiiiiiiiiiii        ",
+        "  aaaaaaaaadddddddddddddddddddddddd        ",
+        "  hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii        ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    }
+  ]
+}

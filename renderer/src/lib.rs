@@ -1,6 +1,8 @@
 //! The fun-ci console renderer: Ruby decides what is true, this crate decides
 //! how it looks. See `docs/v2/architecture.md`.
 
+pub mod animation;
+pub mod cli;
 pub mod protocol;
 pub mod session;
 pub mod terminal;

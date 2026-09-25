@@ -39,6 +39,7 @@ rake contract:capture   # Rewrite contract/golden/ from contract/scenarios/ (aft
 rake mutation           # Mutineer over lib/ except tui/ and animations/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
 rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
 script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
+ruby renderer/tools/convert_animations.rb   # Rewrite renderer/animations/*.json from lib/fun_ci/animations/ (test_animation_json.rb fails on drift)
 ```
 
 ### CLI

@@ -1,0 +1,321 @@
+{
+  "name": "yay",
+  "frame_ms": 125,
+  "loop": false,
+  "anchor": "header",
+  "styles": {
+    "a": {
+      "fg": 2,
+      "dim": true
+    },
+    "b": {
+      "fg": 7,
+      "bold": true,
+      "dim": true
+    },
+    "c": {
+      "fg": 2,
+      "bold": true,
+      "dim": true
+    },
+    "d": {
+      "fg": 2,
+      "bold": true
+    },
+    "e": {
+      "fg": 6,
+      "bold": true
+    },
+    "f": {
+      "fg": 7,
+      "bold": true
+    },
+    "g": {
+      "fg": 4,
+      "bold": true
+    },
+    "h": {
+      "fg": 4
+    },
+    "i": {
+      "fg": 4,
+      "bold": true,
+      "dim": true
+    },
+    "j": {
+      "fg": 6,
+      "bold": true,
+      "dim": true
+    },
+    "k": {
+      "fg": 7,
+      "dim": true
+    }
+  },
+  "frames": [
+    {
+      "text": [
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . * . . . . . . . . . . . . . . .  ",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcccccccccccccccccccccccccccccc  ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "text": [
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    ",
+        "  . . . ---####--- . --########-- . ---####--- . . . . . . . .       ",
+        "  . . . . --##-- . . -########- . . --##-- . . . . . . . . .         ",
+        "  . . ' ' ' ' ' . ' ' ' ' ' ' ' ' ' . ' ' ' ' ' . . . . . . . .      ",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa    ",
+        "  aaaaaaaaabbbbccccccccbbbbbbbbccccccccbbbbccccccccccccccccccc       ",
+        "  aaaaaaaaaabbccccccccbbbbbbbbccccccccbbcccccccccccccccccccc         ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa      ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "text": [
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .",
+        "  . * * * * * * * * * * * * * * * * * * * * . . . .                  ",
+        "  . . \\## . /\\## . #### . #### . \\## . /\\## . #### . . . . .         ",
+        "  . . * *#### * * *######## * * *#### * *#### . . . .                ",
+        "  . . . . * ## * * . ## . . . . ## . . * ## * * . . . . . . .        ",
+        "  . . /## . . \\## . ## . . . . ## . /## . . \\## . #### . . . .       ",
+        "  . ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' . . . .                    ",
+        "  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."
+      ],
+      "style": [
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "  aaacccccccccccccccccccccccccccccccccccccccccccccc                  ",
+        "  aaaabbbcccbbbbcccbbbbcccbbbbcccbbbcccbbbbcccbbbbcccccccccc         ",
+        "  aaaaaccbbbbccccccbbbbbbbbccccccbbbbccccbbbbcccccccc                ",
+        "  aaaaaaaaacbbcccccccbbcccccccccbbcccccccbbcccccccccccccccccc        ",
+        "  aaaabbbcccccbbbcccbbcccccccccbbcccbbbcccccbbbcccbbbbcccccccc       ",
+        "  aaacccccccccccccccccccccccccccccccccccccccccccc                    ",
+        "  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      ]
+    },
+    {
+      "text": [
+        "  * * * * * * * * * * * * * * * * * * * * * *                        ",
+        "  * . ## . . . . ## . . . #### . . . ## . . . . ## . #### . *        ",
+        "  * . . ## . . /\\## . ## . . ## . . ## . . /\\## . #### . *           ",
+        "  * . . . #### . . ## . . . . ## . . . #### . . . #### . *           ",
+        "  * . . . . ## . . ######## . . . . ## . . . . . . . . . *           ",
+        "  * . . . . ## . . ## . . . . ## . . . . ## . . . #### . *           ",
+        "  * . . . . ## . . ## . . . . ## . . . . ## . . . #### . *           ",
+        "  ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' '                        "
+      ],
+      "style": [
+        "  deeddeeddeeddeeddeeddeeddeeddeeddeeddeeddee                        ",
+        "  edddffdddddddddffdddddddffffdddddddffdddddddddffdddffffddde        ",
+        "  edddddffdddddffffdddffdddddffdddddffdddddffffdddffffddde           ",
+        "  edddddddffffdddddffdddddddddffdddddddffffdddddddffffddde           ",
+        "  edddddddddffdddddffffffffdddddddddffddddddddddddddddddde           ",
+        "  edddddddddffdddddffdddddddddffdddddddddffdddddddffffddde           ",
+        "  edddddddddffdddddffdddddddddffdddddddddffdddddddffffddde           ",
+        "  deeddeeddeeddeeddeeddeeddeeddeeddeeddeeddee                        "
+      ]
+    },
+    {
+      "text": [
+        "  * * * * * * * * * * * * * * * * * * * * * *                        ",
+        "  * . ## . . . . ## . . . #### . . . ## . . . . ## . #### . *        ",
+        "  * . . ## . . /\\## . ## . . ## . . ## . . /\\## . #### . *           ",
+        "  * . . . #### . . ## . . . . ## . . . #### . . . #### . *           ",
+        "  * . . . . ## . . ######## . . . . ## . . . . . . . . . *           ",
+        "  * . . . . ## . . ## . . . . ## . . . . ## . . . #### . *           ",
+        "  * . . . . ## . . ## . . . . ## . . . . ## . . . #### . *           ",
+        "  ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' '                        "
+      ],
+      "style": [
+        "  eddeeddeeddeeddeeddeeddeeddeeddeeddeeddeedd                        ",
+        "  ddddffdddddddddffdddddddffffdddddddffdddddddddffdddffffdddd        ",
+        "  ddddddffdddddffffdddffdddddffdddddffdddddffffdddffffdddd           ",
+        "  ddddddddffffdddddffdddddddddffdddddddffffdddddddffffdddd           ",
+        "  ddddddddddffdddddffffffffdddddddddffdddddddddddddddddddd           ",
+        "  ddddddddddffdddddffdddddddddffdddddddddffdddddddffffdddd           ",
+        "  ddddddddddffdddddffdddddddddffdddddddddffdddddddffffdddd           ",
+        "  eddeeddeeddeeddeeddeeddeeddeeddeeddeeddeedd                        "
+      ]
+    },
+    {
+      "text": [
+        "  * * * * * * * * * * * * * * * * * * *                              ",
+        "  * * ## * * *## * * #### * * ## * * *## * #### * *                  ",
+        "  * * *## * /\\## *## * ## * ## * /\\## * #### * *                     ",
+        "  * * * #### * ## * * *## * *#### * *#### * *                        ",
+        "  * * * *## * ######## * * ## * * * * * * * *                        ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  * * * *## * *## * * *## * * *## * * #### * *                       ",
+        "  * * * * * * * * * * * * * * * * * * *                              "
+      ],
+      "style": [
+        "  gggggddeeddeeddeeddeeddeeddeegggggggg                              ",
+        "  hddeffeeddeeffeeddeffffeeddeffeeddeeffeeeffffeegg                  ",
+        "  geeeeffeeeffffeeffeeeffeeeffeeeffffeeeffffeegg                     ",
+        "  deedddffffdddffddddddffddddffffddddffffddee                        ",
+        "  eddeeddffddeffffffffeeddeffddeeddeeddeeddee                        ",
+        "  geeeedffeeeeffeeeeeeffeeeeeeffeeeeeffffeegg                        ",
+        "  hddeeeeffeeddffeeddeeffeeddeeffeedddffffeegg                       ",
+        "  gggggddeeddeeddeeddeeddeeddeegggggggg                              "
+      ]
+    },
+    {
+      "text": [
+        "  * * * * * * * * * * * * * * * * * * * *                            ",
+        "  * * ## * * *## * * #### * * ## * * *## * #### * *                  ",
+        "  * * *## * /\\## *## * ## * ## * /\\## * #### * *                     ",
+        "  * * * #### * ## * * *## * *#### * *#### * *                        ",
+        "  * * * *## * ######## * * ## * * * * * * * *                        ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  * * * * * * * * * * * * * * * * * * * *                            "
+      ],
+      "style": [
+        "  gddeeddeeddeeddeeddeeddeeddeeddeeddgggg                            ",
+        "  deedffddeeddffddeedffffddeedffddeeddffdddffffddee                  ",
+        "  eddeeffeedffffeeffddeffddeffeedffffdddffffeedd                     ",
+        "  deeddeffffeedffddeeddffddeeffffeeddffffeeee                        ",
+        "  eddeeddffddeffffffffeeddeffddeeddeeddeeddee                        ",
+        "  deeddeffeeddffddeeddffddeeddffddeeeffffeeee                        ",
+        "  eddeedffddeeffeeddeeffeeddeeffddeeeffffdddd                        ",
+        "  gddeeddeeddeeddeeddeeddeeddeeddeeddgggg                            "
+      ]
+    },
+    {
+      "text": [
+        "  * * * * * * * * * * * * * * * * * * * *                            ",
+        "  * * ## * * *## * * #### * * ## * * *## * #### * *                  ",
+        "  * * *## * /\\## *## * ## * ## * /\\## * #### * *                     ",
+        "  * * * #### * ## * * *## * *#### * *#### * *                        ",
+        "  * * * *## * ######## * * ## * * * * * * *                          ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  * * * * * * * * * * * * * * * * * * * *                            "
+      ],
+      "style": [
+        "  eddeeddggddeeddeeddeeddeeddggddeeddeegg                            ",
+        "  dddeffddddddffdddddffffdddddffddddddffdddffffdddd                  ",
+        "  eeeddffddeffffddffeedffeedffddeffffeeeffffddee                     ",
+        "  dddeedffffdddffddddddffddddffffddddffffdddd                        ",
+        "  eeeddeeffeeeffffffffeeeeeffeeeeeeeeeeeeee                          ",
+        "  dddeedffddddffddddddffddddddffdddddffffdddd                        ",
+        "  eeeddeffeeeeffeeeeeeffeeeeeeffeeeeeffffeeee                        ",
+        "  eddeeddggddeeddeeddeeddeeddggddeeddeegg                            "
+      ]
+    },
+    {
+      "text": [
+        "  * * * * * * * * * * * * * * * * * * * *                            ",
+        "  * * ## * * *## * * #### * * ## * * *## * #### * *                  ",
+        "  * * *## * /\\## *## * ## * ## * /\\## * #### * *                     ",
+        "  * * * #### * ## * * *## * *#### * *#### * *                        ",
+        "  * * * *## * ######## * * ## * * * * * * * *                        ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  * * * * * * * * * * * * * * * * * * * *                            "
+      ],
+      "style": [
+        "  hggddeeddeeddeeddeeddeeddeeddeegggggggg                            ",
+        "  geedffeeddeeffddeedffffeeddeffddeeddffeeeffffddgg                  ",
+        "  deeeeffddeffffddffeedffeedffddeffffeeeffffdddd                     ",
+        "  eddddeffffeedffddeeddffddeeffffeeddffffeeee                        ",
+        "  deeeeddffddeffffffffeeddeffddeeddeeddeeddee                        ",
+        "  eddddeffeeddffddeeddffddeeddffddeeeffffeeee                        ",
+        "  geeeedffddeeffeeddeeffeeddeeffeedddffffddgg                        ",
+        "  hggddeeddeeddeeddeeddeeddeeddeegggggggg                            "
+      ]
+    },
+    {
+      "text": [
+        "  . * * * * * * * * * * * * * * * * * * . . .                        ",
+        "  * * ## * * *## * * #### * * ## * * *## * #### * *                  ",
+        "  * * *## * /\\## *## * ## * ## * /\\## * #### * *                     ",
+        "  * * * #### * ## * * *## * *#### * *#### * *                        ",
+        "  * * * *## * ######## * * ## * * * * * * * *                        ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  * * * ## * *## * * *## * * *## * * #### * *                        ",
+        "  . * * * * * * * * * * * * * * * * * * . . .                        "
+      ],
+      "style": [
+        "  aaiccjjccjjccjjccjjccjjccjjccjjccjjiicccccc                        ",
+        "  geeeffeeeeeeffeeeeeffffeeeeeffeeeeeeffeeeffffeegg                  ",
+        "  dddddffdddffffddffdddffdddffdddffffdddffffdddd                     ",
+        "  eeeddeffffeeeffeeeeeeffeeeeffffeeeeffffeeee                        ",
+        "  dddeeddffdddffffffffdddddffdddddddddddddddd                        ",
+        "  eeeddeffeeeeffeeeeeeffeeeeeeffeeeeeffffeeee                        ",
+        "  geeeedffeeeeffeeeeeeffeeeeeeffeeeeeffffeegg                        ",
+        "  aaiccjjccjjccjjccjjccjjccjjccjjccjjiicccccc                        "
+      ]
+    },
+    {
+      "text": [
+        "  . . * * * * * * * * * * * * * * * * * * . . .                      ",
+        "  . * . ## . . . . ## . . . #### . . . ## . . . . ## . #### . * .    ",
+        "  . * . . ## . . /\\## . ## . . ## . . ## . . /\\## . #### . * .       ",
+        "  . . * . . #### . . ## . . . . ## . . . #### . . . #### . * .       ",
+        "  . . * . . . ## . . ######## . . . . ## . . . . . . . . . . * .     ",
+        "  . * . . . ## . . ## . . . . ## . . . . ## . . . #### . * .         ",
+        "  . * . . . ## . . ## . . . . ## . . . . ## . . . #### . * .         ",
+        "  . . * * * * * * * * * * * * * * * * * * . . .                      "
+      ],
+      "style": [
+        "  aaaaccccccccccccccccccccccccccccccccccccccccc                      ",
+        "  aaccccbbcccccccccbbcccccccbbbbcccccccbbcccccccccbbcccbbbbcccccc    ",
+        "  aaccccccbbcccccbbbbcccbbcccccbbcccccbbcccccbbbbcccbbbbcccccc       ",
+        "  aaaaccccccbbbbcccccbbcccccccccbbcccccccbbbbcccccccbbbbcccccc       ",
+        "  aaaaccccccccbbcccccbbbbbbbbcccccccccbbcccccccccccccccccccccccc     ",
+        "  aaccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbcccccc         ",
+        "  aaccccccccbbcccccbbcccccccccbbcccccccccbbcccccccbbbbcccccc         ",
+        "  aaaaccccccccccccccccccccccccccccccccccccccccc                      "
+      ]
+    },
+    {
+      "text": [
+        "  . . . . * * * * * * * * * * * * * * * * . . . . .                  ",
+        "  . . . . ## . . . . ## . . . #### . . . ## . . . . ## . #### . . .  ",
+        "  . . . . \\## . . /\\## . ## . . ## . . \\## . . /\\## . #### . . .     ",
+        "  . . . . . #### . . ## . . . . ## . . . #### . . . #### . . .       ",
+        "  . . . . . . ## . . ######## . . . . ## . . . . . . . . . . . .     ",
+        "  . . . . . ## . . ## . . . . ## . . . . ## . . . #### . . . .       ",
+        "  . . . . \\## . . \\## . ## . . ## . \\## . . \\## . #### . . .         ",
+        "  . . . . ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' ' . . . . .                  "
+      ],
+      "style": [
+        "  aaaaaaaaacccccccccccccccccccccccccccccccccccccccc                  ",
+        "  aaaaaaaakkaaaaaaaaakkaaaaaaakkkkaaaaaaakkaaaaaaaaakkaaakkkkaaaaaa  ",
+        "  aaaaaaaakkkaaaaakkkkaaakkaaaaakkaaaaakkkaaaaakkkkaaakkkkaaaaaa     ",
+        "  aaaaaaaaaakkkkaaaaakkaaaaaaaaakkaaaaaaakkkkaaaaaaakkkkaaaaaa       ",
+        "  aaaaaaaaaaaakkaaaaakkkkkkkkaaaaaaaaakkaaaaaaaaaaaaaaaaaaaaaaaa     ",
+        "  aaaaaaaaaakkaaaaakkaaaaaaaaakkaaaaaaaaakkaaaaaaakkkkaaaaaaaa       ",
+        "  aaaaaaaakkkaaaaakkkaaakkaaaaakkaaakkkaaaaakkkaaakkkkaaaaaa         ",
+        "  aaaaaaaaacccccccccccccccccccccccccccccccccccccccc                  "
+      ]
+    }
+  ]
+}

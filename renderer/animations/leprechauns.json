@@ -1,0 +1,441 @@
+{
+  "name": "leprechauns",
+  "frame_ms": 125,
+  "loop": false,
+  "anchor": "header",
+  "styles": {
+    "a": {
+      "fg": 2,
+      "dim": true
+    },
+    "b": {
+      "fg": 2,
+      "bold": true,
+      "dim": true
+    },
+    "c": {
+      "fg": 2,
+      "bold": true
+    },
+    "d": {
+      "fg": 3,
+      "bold": true
+    },
+    "e": {
+      "fg": 215
+    },
+    "f": {
+      "fg": 94
+    }
+  },
+  "frames": [
+    {
+      "text": [
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "                                              ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (o o)                          (o o)   ",
+        "        \\_/                            \\_/    ",
+        "       __|__                          __|__   ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       |   |                          |   |   ",
+        "       _| |_                          _| |_   ",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "  abbbbbb                          abbbbbb    ",
+        "                                              ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "       ccccc                          ccccc   ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "       fffff                          fffff   ",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    },
+    {
+      "text": [
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "                                              ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (o o)                          (o o)   ",
+        "        \\_/                            \\_/    ",
+        "       __|__                          __|__   ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       |   |                          |   |   ",
+        "       _| |_                          _| |_   ",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "  abbbbbb                          abbbbbb    ",
+        "                                              ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "       ccccc                          ccccc   ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "       fffff                          fffff   ",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    },
+    {
+      "text": [
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "                                              ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (^ ^)                          (^ ^)   ",
+        "        \\_/                            \\_/    ",
+        "    \\__|__|__/                    \\__|__|__/  ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       |    \\                          |    \\ ",
+        "       _|    \\                         _|    \\",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "  abbbbbb                          abbbbbb    ",
+        "                                              ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "    cccccccccc                    cccccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       cccccc                          cccccc ",
+        "       fffffff                         fffffff",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    },
+    {
+      "text": [
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "                                              ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (^ ^)                          (^ ^)   ",
+        "        \\_/                            \\_/    ",
+        "    \\__|__|__/                    \\__|__|__/  ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       |    \\                          |    \\ ",
+        "       _|    \\                         _|    \\",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "  abbbbbb                          abbbbbb    ",
+        "                                              ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "    cccccccccc                    cccccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       cccccc                          cccccc ",
+        "       fffffff                         fffffff",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    },
+    {
+      "text": [
+        "                                              ",
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (o o)                          (o o)   ",
+        "        \\_/                            \\_/    ",
+        "       __|__                          __|__   ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       |   |                          |   |   ",
+        "       _| |_                          _| |_   ",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "                                              ",
+        "  abbbbbb                          abbbbbb    ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "       ccccc                          ccccc   ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "       fffff                          fffff   ",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    },
+    {
+      "text": [
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "                                              ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (^ ^)                          (^ ^)   ",
+        "        \\_/                            \\_/    ",
+        "    \\__|__|__/                    \\__|__|__/  ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       /   |                          /   |   ",
+        "      /   |_                         /   |_   ",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "  abbbbbb                          abbbbbb    ",
+        "                                              ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "    cccccccccc                    cccccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "      ffffff                         ffffff   ",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    },
+    {
+      "text": [
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "                                              ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (^ ^)                          (^ ^)   ",
+        "        \\_/                            \\_/    ",
+        "    \\__|__|__/                    \\__|__|__/  ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       /   |                          /   |   ",
+        "      /   |_                         /   |_   ",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "  abbbbbb                          abbbbbb    ",
+        "                                              ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "    cccccccccc                    cccccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "      ffffff                         ffffff   ",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    },
+    {
+      "text": [
+        "                                              ",
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (o o)                          (o o)   ",
+        "        \\_/                            \\_/    ",
+        "       __|__                          __|__   ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       |   |                          |   |   ",
+        "       _| |_                          _| |_   ",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "                                              ",
+        "  abbbbbb                          abbbbbb    ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "       ccccc                          ccccc   ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "       fffff                          fffff   ",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    },
+    {
+      "text": [
+        "                                              ",
+        "                                              ",
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "       _____           *            _____     ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (> <)                          (> <)   ",
+        "        \\_/                            \\_/    ",
+        "   \\__ |   | __/                \\__ |   | __/ ",
+        "      |     |                        |     |  ",
+        "       \\ _ /                          \\ _ /   ",
+        "        V V                            V V    ",
+        "                                              ",
+        "           ~}}|{{~   *   ~}}|{{~              "
+      ],
+      "style": [
+        "                                              ",
+        "                                              ",
+        "  abbbbbb                          abbbbbb    ",
+        "       ccccc           d            ccccc     ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "   ccccccccccccc                ccccccccccccc ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "        fff                            fff    ",
+        "                                              ",
+        "           abbbbbb   d   abbbbbb              "
+      ]
+    },
+    {
+      "text": [
+        "                                              ",
+        "                                              ",
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "       _____           *            _____     ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (> <)                          (> <)   ",
+        "        \\_/                            \\_/    ",
+        "   \\__ |   | __/                \\__ |   | __/ ",
+        "      |     |                        |     |  ",
+        "       \\ _ /                          \\ _ /   ",
+        "        V V                            V V    ",
+        "                                              ",
+        "           ~}}|{{~   *   ~}}|{{~              "
+      ],
+      "style": [
+        "                                              ",
+        "                                              ",
+        "  abbbbbb                          abbbbbb    ",
+        "       ccccc           d            ccccc     ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "   ccccccccccccc                ccccccccccccc ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "        fff                            fff    ",
+        "                                              ",
+        "           abbbbbb   d   abbbbbb              "
+      ]
+    },
+    {
+      "text": [
+        "                                              ",
+        "                                              ",
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "       _____           *            _____     ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (> <)                          (> <)   ",
+        "        \\_/                            \\_/    ",
+        "   \\__ |   | __/                \\__ |   | __/ ",
+        "      |     |                        |     |  ",
+        "       \\ _ /                          \\ _ /   ",
+        "        V V                            V V    ",
+        "                                              ",
+        "           ~}}|{{~   *   ~}}|{{~              "
+      ],
+      "style": [
+        "                                              ",
+        "                                              ",
+        "  abbbbbb                          abbbbbb    ",
+        "       ccccc           d            ccccc     ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "   ccccccccccccc                ccccccccccccc ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "        fff                            fff    ",
+        "                                              ",
+        "           abbbbbb   d   abbbbbb              "
+      ]
+    },
+    {
+      "text": [
+        "                                              ",
+        "  ~}}|{{~                          ~}}|{{~    ",
+        "       _____                          _____   ",
+        "      |XXXXX|                        |XXXXX|  ",
+        "      |_____|                        |_____|  ",
+        "       (o o)                          (o o)   ",
+        "        \\_/                            \\_/    ",
+        "       __|__                          __|__   ",
+        "      |     |                        |     |  ",
+        "      |     |                        |     |  ",
+        "       |   |                          |   |   ",
+        "       _| |_                          _| |_   ",
+        "                                              ",
+        "           ~}}|{{~        ~}}|{{~             "
+      ],
+      "style": [
+        "                                              ",
+        "  abbbbbb                          abbbbbb    ",
+        "       ccccc                          ccccc   ",
+        "      cdddddc                        cdddddc  ",
+        "      ccccccc                        ccccccc  ",
+        "       eeeee                          eeeee   ",
+        "        eee                            eee    ",
+        "       ccccc                          ccccc   ",
+        "      ccccccc                        ccccccc  ",
+        "      ccccccc                        ccccccc  ",
+        "       ccccc                          ccccc   ",
+        "       fffff                          fffff   ",
+        "                                              ",
+        "           abbbbbb        abbbbbb             "
+      ]
+    }
+  ]
+}

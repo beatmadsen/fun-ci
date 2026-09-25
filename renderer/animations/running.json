@@ -1,0 +1,245 @@
+{
+  "name": "running",
+  "frame_ms": 250,
+  "loop": true,
+  "anchor": "header",
+  "styles": {
+    "a": {
+      "fg": 6,
+      "dim": true
+    },
+    "b": {
+      "fg": 6,
+      "bold": true
+    },
+    "c": {
+      "fg": 6
+    },
+    "d": {
+      "fg": 7,
+      "bold": true
+    },
+    "e": {
+      "fg": 208
+    },
+    "f": {
+      "fg": 3,
+      "bold": true
+    },
+    "g": {
+      "fg": 208,
+      "bold": true
+    },
+    "h": {
+      "fg": 3,
+      "bold": true,
+      "dim": true
+    }
+  },
+  "frames": [
+    {
+      "text": [
+        "            .                    *            .   ",
+        "   .                        .                     ",
+        "                       .                       .  ",
+        ".                                    .            ",
+        "                      /\\                          ",
+        "                     /  \\                         ",
+        "             ~      | oo |              *         ",
+        "           ===~     |    |====>                   ",
+        "             ~      |FUN!|                        ",
+        "                     \\  /                         ",
+        "                      \\/             .            ",
+        " .                                         .      ",
+        "            .           .                         ",
+        "                                    .             "
+      ],
+      "style": [
+        "            a                    b            a   ",
+        "   b                        a                     ",
+        "                       c                       a  ",
+        "a                                    c            ",
+        "                      dd                          ",
+        "                     dddd                         ",
+        "             e      ddbbdd              b         ",
+        "           fghh     ddddddddddd                   ",
+        "             e      dbbbbd                        ",
+        "                     dddd                         ",
+        "                      dd             a            ",
+        " c                                         b      ",
+        "            a           c                         ",
+        "                                    a             "
+      ]
+    },
+    {
+      "text": [
+        "        .                *                .       ",
+        "                      .                    .      ",
+        "                 .                           .    ",
+        "                                        .         ",
+        "                      /\\                          ",
+        "                     /  \\                         ",
+        "           ~~~      | oo |            *           ",
+        "         =====~     |    |====>                   ",
+        "           ~~~      |FUN!|                        ",
+        "                     \\  /                         ",
+        "                      \\/         .                ",
+        "                                             .    ",
+        "        .               .                         ",
+        ".                                .                "
+      ],
+      "style": [
+        "        a                b                a       ",
+        "                      a                    b      ",
+        "                 c                           a    ",
+        "                                        c         ",
+        "                      dd                          ",
+        "                     dddd                         ",
+        "           eee      ddbbdd            b           ",
+        "         fgghhh     ddddddddddd                   ",
+        "           eee      dbbbbd                        ",
+        "                     dddd                         ",
+        "                      dd         a                ",
+        "                                             b    ",
+        "        a               c                         ",
+        "c                                a                "
+      ]
+    },
+    {
+      "text": [
+        "    .            *                    .           ",
+        "                  .                          .    ",
+        "             .                           .        ",
+        "              .                      .            ",
+        "                      /\\                          ",
+        "                     /  \\                         ",
+        "         ~~~~~      | oo |          *             ",
+        "       =======~     |    |====>                   ",
+        "         ~~~~~      |FUN!|                        ",
+        "                     \\  /                         ",
+        "                      \\/     .                    ",
+        "                                               .  ",
+        "    .                   .                         ",
+        "                                      .           "
+      ],
+      "style": [
+        "    a            b                    a           ",
+        "                  a                          b    ",
+        "             c                           a        ",
+        "              a                      c            ",
+        "                      dd                          ",
+        "                     dddd                         ",
+        "         eeeee      ddbbdd          b             ",
+        "       fffgghhh     ddddddddddd                   ",
+        "         eeeee      dbbbbd                        ",
+        "                     dddd                         ",
+        "                      dd     a                    ",
+        "                                               b  ",
+        "    a                   c                         ",
+        "                                      a           "
+      ]
+    },
+    {
+      "text": [
+        ".        *                          .             ",
+        "              .                        .          ",
+        "         .                               .        ",
+        "          .                          .            ",
+        "                      /\\                          ",
+        "                     /  \\                         ",
+        "             ~      | oo |        *               ",
+        "           ===~     |    |====>                   ",
+        "             ~      |FUN!|                        ",
+        "                     \\  /                         ",
+        "                      \\/   .                      ",
+        "  .                                           .   ",
+        ".                       .                         ",
+        "                                          .       "
+      ],
+      "style": [
+        "a        b                          a             ",
+        "              a                        b          ",
+        "         c                               a        ",
+        "          a                          c            ",
+        "                      dd                          ",
+        "                     dddd                         ",
+        "             e      ddbbdd        b               ",
+        "           fghh     ddddddddddd                   ",
+        "             e      dbbbbd                        ",
+        "                     dddd                         ",
+        "                      dd   a                      ",
+        "  a                                           b   ",
+        "a                       c                         ",
+        "                                          a       "
+      ]
+    },
+    {
+      "text": [
+        "                    *                .          . ",
+        "          .                              .        ",
+        "     .                                   .        ",
+        "      .                              .            ",
+        "                      /\\                          ",
+        "                     /  \\                         ",
+        "           ~~~      | oo |      *                 ",
+        "         =====~     |    |====>                   ",
+        "           ~~~      |FUN!|                        ",
+        "                     \\  /                         ",
+        "                      \\/                .         ",
+        "                                               .  ",
+        "              .         .                         ",
+        "                                      .           "
+      ],
+      "style": [
+        "                    b                a          b ",
+        "          a                              a        ",
+        "     c                                   a        ",
+        "      a                              c            ",
+        "                      dd                          ",
+        "                     dddd                         ",
+        "           eee      ddbbdd      b                 ",
+        "         fgghhh     ddddddddddd                   ",
+        "           eee      dbbbbd                        ",
+        "                     dddd                         ",
+        "                      dd                a         ",
+        "                                               b  ",
+        "              a         c                         ",
+        "                                      a           "
+      ]
+    },
+    {
+      "text": [
+        "              *                    .          .   ",
+        "      .                                .          ",
+        " .                                       .        ",
+        "  .                                  .            ",
+        "                      /\\                          ",
+        "                     /  \\                         ",
+        "         ~~~~~      | oo |    *                   ",
+        "       =======~     |    |====>                   ",
+        "         ~~~~~      |FUN!|                        ",
+        "                     \\  /                         ",
+        "                      \\/              .           ",
+        "                                                 .",
+        "          .             .                         ",
+        "                                          .       "
+      ],
+      "style": [
+        "              b                    a          b   ",
+        "      a                                a          ",
+        " c                                       a        ",
+        "  a                                  c            ",
+        "                      dd                          ",
+        "                     dddd                         ",
+        "         eeeee      ddbbdd    b                   ",
+        "       fffgghhh     ddddddddddd                   ",
+        "         eeeee      dbbbbd                        ",
+        "                     dddd                         ",
+        "                      dd              a           ",
+        "                                                 b",
+        "          a             c                         ",
+        "                                          a       "
+      ]
+    }
+  ]
+}
