@@ -34,3 +34,5 @@ ralph/log.tsv
 
 # Mutineer coverage cache
 /.mutineer/
+
+renderer/target/

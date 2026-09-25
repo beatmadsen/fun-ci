@@ -16,7 +16,9 @@ or a tool.
 ```bash
 bundle exec rake test       # Every Minitest test: unit, acceptance, integration
 bundle exec rake cucumber   # Cucumber feature specs
+bundle exec rake rust:test  # cargo test for the Rust renderer (renderer/)
 bundle exec rake rubocop    # RuboCop with the project's limits
+bundle exec rake rust:clippy # Clippy on renderer/: pedantic, -D warnings, thresholds in renderer/clippy.toml
 ```
 
 ### Subsets of `rake test`, for a quicker loop

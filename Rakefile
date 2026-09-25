@@ -62,4 +62,14 @@ namespace :mutation do
   task(:changed) { mutineer("--since", "HEAD") }
 end
 
-task default: %i[test cucumber rubocop]
+RENDERER_MANIFEST = File.expand_path("renderer/Cargo.toml", __dir__)
+
+namespace :rust do
+  desc "Run the Rust renderer's tests"
+  task(:test) { sh "cargo", "test", "--manifest-path", RENDERER_MANIFEST }
+
+  desc "Lint the Rust renderer with clippy (pedantic, warnings are errors)"
+  task(:clippy) { sh "cargo", "clippy", "--manifest-path", RENDERER_MANIFEST, "--all-targets", "--", "-D", "warnings" }
+end
+
+task default: %i[test cucumber rust:test rubocop rust:clippy]

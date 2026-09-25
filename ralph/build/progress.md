@@ -32,7 +32,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [ ] AT-2.3: Stage changes become events, not animations
 - [ ] AT-2.4: Resize changes the page size
 - [ ] AT-2.5: Protocol errors never crash the console
-- [ ] AT-3.1: `renderer/` Cargo crate `fun-ci-renderer`
+- [x] AT-3.1: `renderer/` Cargo crate `fun-ci-renderer`
 - [ ] AT-3.2: Handshake
 - [ ] AT-3.3: Headless mode writes `frames.jsonl`, `frames/NNNN.png`, `sheet.png`, `frames.cast`, `stats.json`
 - [ ] AT-3.4: Differential tests

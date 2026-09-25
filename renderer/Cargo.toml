@@ -1,0 +1,20 @@
+[package]
+name = "fun-ci-renderer"
+version = "0.1.0"
+edition = "2024"
+description = "Terminal renderer for the fun-ci console"
+license = "MIT"
+
+[lib]
+name = "fun_ci_renderer"
+path = "src/lib.rs"
+
+[[bin]]
+name = "fun-ci-renderer"
+path = "src/main.rs"
+
+[dependencies]
+
+[lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+cognitive_complexity = "warn"
