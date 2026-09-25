@@ -136,6 +136,21 @@ All tests here are integration tests against a real temporary git repository.
 **When** `fun-ci prune` runs with no pipeline active
 **Then** all fun-ci worktrees and their admin entries (`git worktree prune`) are removed.
 
+### 1.12 Cancelling from the console stops the run
+**Given** a running pipeline, in its foreground stages or its background slow
+suite, and the console with the cursor on it
+**When** the user presses `c`, then `y`
+**Then** the run's process group is killed, stage scripts included, the run is
+recorded `cancelled`, and its worktree slot is released.
+**And** `features/admin_tui/cancellation.feature` asserts the kill again, in
+place of today's "the running pipeline should be recorded as cancelled".
+*Note:* 1.x records `cancelled` and stops nothing (found when the cucumber
+steps were made to check what they say). It stores a pid only for the slow
+suite's forked child, and each stage script runs in a process group of its
+own, so killing that pid would leave `slow.sh` running. `StalePipelineCanceller`
+has the same hole, which AT-1.6 closes. Both need the process group of the
+whole pipeline recorded per run.
+
 ---
 
 ## 2. Protocol and golden corpus (still Ruby-only)
@@ -192,6 +207,7 @@ is possible.
 - 3.5 Contract fixtures: the Rust suite accepts every fixture's Ruby→renderer lines and emits its renderer→Ruby lines.
 - 3.6 Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in).
 - 3.7 Terminal is restored on EOF, `quit`, panic and SIGTERM.
+- 3.7b The cancel prompt names the run's branch and short SHA (`Cancel feat/search (d4e5f67)? y / n`), as the original feature spec asked. The 1.x prompt is generic, and the renderer has what it needs from `cursor` and `runs`.
 - 3.8 `rake contract:binary`: Ruby drives the real binary through a pty for the `happy-7` fixture. In the gate.
 - 3.9 cargo-mutants lane ≥ 90 % caught.
 

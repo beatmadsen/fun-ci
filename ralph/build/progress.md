@@ -21,6 +21,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [ ] AT-1.4: The slot stays taken until the background slow suite finishes
 - [ ] AT-1.5: Crashed runs don't leak slots
 - [ ] AT-1.6: Cancelling a stale run frees its slot
+- [ ] AT-1.12: Cancelling from the console stops the run
 - [ ] AT-1.7: Pool size is configurable
 - [ ] AT-1.8: The background hook is post-commit and records the new commit
 - [ ] AT-1.9: Upgrading replaces fun-ci's own pre-commit hook only
@@ -38,6 +39,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [ ] AT-3.5: Contract fixtures
 - [ ] AT-3.6: Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in)
 - [ ] AT-3.7: Terminal is restored on EOF, `quit`, panic and SIGTERM
+- [ ] AT-3.7b: The cancel prompt names the branch and short SHA
 - [ ] AT-3.8: `rake contract:binary` drives the real binary in the gate
 - [ ] AT-3.9: cargo-mutants lane ≥ 90 % caught
 - [ ] AT-4.1: Renderer lookup
