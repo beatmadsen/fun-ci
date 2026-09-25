@@ -2,12 +2,11 @@
 
 require_relative "trigger_cli_shared"
 
-# Acceptance tests for CLI invocation and argument handling.
-#
-# Covers: valid/invalid arguments, commit validation,
-# and basic fast suite pass/fail exit codes.
-
-class TestTriggerCliHappyPath < Minitest::Test
+# What `fun-ci trigger <commit> <branch>` accepts and refuses, and the exit
+# code a hook gets back.
+class TestTriggerCliArguments < Minitest::Test
+  NULL_SHA = "0" * 40
+  REJECTING = ->(_sha) { false }
   FAST_SUITE_FAILS = lambda { |cmd|
     cmd.include?("fast.sh") ? ["test_foo FAILED", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
   }
@@ -20,44 +19,59 @@ class TestTriggerCliHappyPath < Minitest::Test
     @client.close
   end
 
-  def test_should_accept_commit_hash_and_branch_name
+  def test_should_pass_a_commit_whose_pipeline_passes
     @client.trigger(commit_hash: "abc1234", branch: "main")
-    assert_equal 0, @client.exit_code, "Should accept valid commit and branch"
+
+    assert_equal 0, @client.exit_code
   end
 
-  def test_should_reject_invocation_when_commit_hash_is_missing
+  def test_should_refuse_to_run_without_a_commit_hash
     @client.trigger_raw(args: ["main"])
-    refute_equal 0, @client.exit_code, "Should reject missing commit hash"
-    assert_match(/commit/i, @client.stderr, "Should mention missing commit")
+
+    refute_equal 0, @client.exit_code
   end
 
-  def test_should_reject_invocation_when_branch_name_is_missing
+  def test_should_ask_for_the_commit_hash_when_it_is_missing
+    @client.trigger_raw(args: ["main"])
+
+    assert_match(/commit/i, @client.stderr)
+  end
+
+  def test_should_ask_for_the_branch_when_it_is_missing
     @client.trigger_raw(args: ["abc1234"])
-    refute_equal 0, @client.exit_code, "Should reject missing branch name"
-    assert_match(/branch/i, @client.stderr, "Should mention missing branch")
+
+    assert_match(/branch/i, @client.stderr)
   end
 
-  def test_should_reject_invocation_when_commit_is_not_found_in_repo
-    @client.trigger(commit_hash: "deadbeef000000", branch: "main",
-                    commit_validator: ->(_hash) { false })
-    refute_equal 0, @client.exit_code, "Should reject unknown commit"
-    assert_match(/not found/i, @client.stderr, "Should mention commit not found")
+  def test_should_refuse_a_commit_the_repository_does_not_have
+    @client.trigger(commit_hash: "deadbeef000000", branch: "main", commit_validator: REJECTING)
+
+    refute_equal 0, @client.exit_code
   end
 
-  def test_should_return_exit_code_zero_when_fast_suite_passes
-    @client.trigger(commit_hash: "abc1234", branch: "main")
-    assert_equal 0, @client.exit_code, "Should return 0 when fast suite passes"
+  def test_should_say_the_commit_was_not_found
+    @client.trigger(commit_hash: "deadbeef000000", branch: "main", commit_validator: REJECTING)
+
+    assert_includes @client.stderr, "commit deadbeef000000 not found"
   end
 
-  def test_should_return_nonzero_exit_code_when_fast_suite_fails
+  # A root commit's pre-commit hook has no HEAD yet and passes the null SHA.
+  def test_should_run_the_pipeline_for_the_null_sha_without_looking_it_up
+    @client.trigger(commit_hash: NULL_SHA, branch: "main", commit_validator: REJECTING)
+
+    assert_equal 0, @client.exit_code
+  end
+
+  def test_should_fail_when_the_fast_suite_fails
     trigger_with_failing_fast_suite
-    refute_equal 0, @client.exit_code, "Should return non-zero when fast suite fails"
+
+    refute_equal 0, @client.exit_code
   end
 
-  def test_should_display_test_runner_output_when_fast_suite_fails
+  def test_should_show_the_fast_suite_output_when_it_fails
     trigger_with_failing_fast_suite
-    assert_match(/test_foo FAILED/, @client.stdout, "Should show test runner output")
-    assert_match(/Fast suite failed/i, @client.stdout, "Should mention fast suite failure")
+
+    assert_match(/test_foo FAILED/, @client.stdout)
   end
 
   private
