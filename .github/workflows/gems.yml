@@ -62,3 +62,20 @@ jobs:
           ruby-version: "3.4"
       - run: mkdir -p pkg && gem build fun_ci.gemspec -o pkg/fun_ci.gem
       - run: script/smoke-platform-gem.sh pkg/fun_ci.gem none
+
+  # `cargo install fun-ci-renderer`, short of publishing: the crate packages
+  # and builds as crates.io would take it, and the renderer cargo installs is
+  # the one the plain gem finds on PATH.
+  cargo-install:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install
+      - run: cargo publish --dry-run --locked --manifest-path renderer/Cargo.toml
+      - run: cargo install --locked --path renderer --root "$RUNNER_TEMP/cargo"
+      - run: echo "$RUNNER_TEMP/cargo/bin" >> "$GITHUB_PATH"
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+      - run: mkdir -p pkg && gem build fun_ci.gemspec -o pkg/fun_ci.gem
+      - run: script/smoke-platform-gem.sh pkg/fun_ci.gem path

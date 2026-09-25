@@ -215,11 +215,11 @@ is possible.
 
 - 4.1 Renderer lookup (`Console::RendererLookup`): `FUN_CI_RENDERER` → bundled `libexec/` → `PATH` (empty entries skipped, never the current directory); a named renderer that cannot run is an error, not a fallback; with none found, the error says how to get one (`cargo install fun-ci-renderer`, or `FUN_CI_RENDERER`). `fun-ci console` uses it from 5.1, whose tests show that a missing renderer fails only `console`.
 - 4.2 Platform gems for the five targets built in CI; each installed into an empty `GEM_HOME` and smoke-tested headless.
-- 4.3 `cargo install fun-ci-renderer` path documented and tested in CI.
+- 4.3 `cargo install fun-ci-renderer` path documented (`renderer/README.md`, the crate's page) and tested in CI short of publishing: `cargo publish --dry-run` packages and builds the crate as crates.io would take it, and a renderer installed with `cargo install --path renderer` is the one the plain gem finds on `PATH` and runs. Publishing the crate and the gems is a release decision, not a test.
 
 ## 5. Cut-over (outline)
 
-- 5.1 `fun-ci console` uses the Rust renderer, found by `RendererLookup`; without one, `console` exits non-zero with the lookup's instructions and every other command works as before. Ruby `tui/` rendering classes and `animations/` are deleted.
+- 5.1 `fun-ci console` uses the Rust renderer, found by `RendererLookup`, and the README says how to get one where the gem does not bundle it (`cargo install fun-ci-renderer`, `FUN_CI_RENDERER`); without one, `console` exits non-zero with the lookup's instructions and every other command works as before. Ruby `tui/` rendering classes and `animations/` are deleted.
 - 5.2 Golden byte files become Rust `insta` snapshots; `contract:capture` is removed.
 - 5.3 Cucumber TUI features are rewritten against headless frames or deleted where the Rust suite covers them.
 - 5.4 README, CHANGELOG, version 2.0.0.

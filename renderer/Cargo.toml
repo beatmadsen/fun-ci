@@ -4,6 +4,11 @@ version = "0.1.0"
 edition = "2024"
 description = "Terminal renderer for the fun-ci console"
 license = "MIT"
+repository = "https://github.com/beatmadsen/fun-ci"
+homepage = "https://github.com/beatmadsen/fun-ci"
+readme = "README.md"
+keywords = ["ci", "tui", "terminal", "fun-ci"]
+categories = ["command-line-utilities"]
 
 [lib]
 name = "fun_ci_renderer"
