@@ -133,7 +133,7 @@ class TestAnimationFramesColors < Minitest::Test
     assert_equal 4, FunCi::Tui::AnimationFrames.timeout_colors.length
   end
 
-  def test_failure_header_uses_dark_red_bg_on_frame_2
+  def test_failure_header_uses_dark_red_bg_on_second_frame
     frames = FunCi::Tui::AnimationFrames.failure_header(80)
     assert_match(/\e\[48;5;124m/, frames[1])
   end

@@ -16,11 +16,11 @@ class TestGoldenCorpus < Minitest::Test
   end
 
   def test_the_scenarios_between_them_use_every_run_status
-    assert_equal RUN_STATUSES.sort, statuses_used { |run| [run["status"]] }
+    assert_equal(RUN_STATUSES.sort, statuses_used { |run| [run["status"]] })
   end
 
   def test_the_scenarios_between_them_use_every_stage_status
-    assert_equal STAGE_STATUSES.sort, statuses_used { |run| run["stages"].map { |s| s["status"] } }
+    assert_equal(STAGE_STATUSES.sort, statuses_used { |run| run["stages"].map { |s| s["status"] } })
   end
 
   SCENARIOS.each do |name|
@@ -29,7 +29,8 @@ class TestGoldenCorpus < Minitest::Test
       frame = first_difference(corpus.capture(name), golden)
 
       refute_empty golden
-      assert_nil frame, "#{name}: frame #{frame} differs from contract/golden/#{name}/ (rake contract:capture rewrites it)"
+      assert_nil frame,
+                 "#{name}: frame #{frame} differs from contract/golden/#{name}/ (rake contract:capture rewrites it)"
     end
   end
 

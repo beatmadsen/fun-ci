@@ -24,113 +24,66 @@ class TestAdminTuiAnimationRenderer < Minitest::Test
   end
 
   def test_should_call_animation_renderer_each_frame
-    # Given a TUI with an animation renderer
     create_completed_run("abc1234", "main")
-    renderer = make_recording_renderer
-    tui = make_tui(animation_renderer: renderer)
-
-    # When we render
-    tui.render_once
-
-    # Then the animation renderer should have been called once
+    render_with(recording_renderer)
     assert_equal 1, @render_calls.length
   end
 
   def test_should_pass_screen_to_animation_renderer
-    # Given a TUI with an animation renderer
     create_completed_run("abc1234", "main")
-    renderer = make_recording_renderer
-    tui = make_tui(animation_renderer: renderer)
-
-    # When we render
-    tui.render_once
-
-    # Then the renderer should receive a Screen
-    screen = @render_calls[0][:screen]
-    assert_instance_of FunCi::Tui::Screen, screen
+    render_with(recording_renderer)
+    assert_instance_of FunCi::Tui::Screen, @render_calls[0][:screen]
   end
 
   def test_should_pass_current_runs_to_animation_renderer
-    # Given a TUI with a completed run
     create_completed_run("abc1234", "main")
-    renderer = make_recording_renderer
-    tui = make_tui(animation_renderer: renderer)
-
-    # When we render
-    tui.render_once
-
-    # Then the renderer should receive the runs data
+    render_with(recording_renderer)
     runs = @render_calls[0][:runs]
     assert_equal 1, runs.length
     assert_equal "abc1234", runs[0][:commit_hash]
   end
 
   def test_should_not_fail_when_no_animation_renderer
-    # Given a TUI without an animation renderer
     create_completed_run("abc1234", "main")
-    tui = make_tui
-
-    # When we render -- it should not raise
-    tui.render_once
-    plain = FunCi::Tui::Ansi.strip(@output.string)
-    assert_match(/abc1234/, plain)
+    render_with(nil)
+    assert_match(/abc1234/, FunCi::Tui::Ansi.strip(@output.string))
   end
 
   def test_should_call_animation_renderer_after_clear_below
-    # Given a TUI with a renderer that writes an overlay
     create_completed_run("abc1234", "main")
-    renderer = make_overlay_renderer("EXPLOSION")
-    tui = make_tui(animation_renderer: renderer)
-
-    # When we render
-    tui.render_once
-
-    # Then the overlay text should appear after the clear_below sequence
-    raw = @output.string
-    clear_pos = raw.rindex("\e[J")
-    overlay_pos = raw.index("EXPLOSION")
+    render_with(overlay_renderer("EXPLOSION"))
+    clear_pos = @output.string.rindex("\e[J")
+    overlay_pos = @output.string.index("EXPLOSION")
     assert clear_pos, "Output should contain clear_below"
     assert overlay_pos, "Output should contain overlay text"
-    assert clear_pos < overlay_pos,
-      "Overlay should be rendered after clear_below"
+    assert clear_pos < overlay_pos, "Overlay should be rendered after clear_below"
   end
 
   def test_animation_renderer_receives_runs_on_empty_board
-    # Given no pipeline runs
-    renderer = make_recording_renderer
-    tui = make_tui(animation_renderer: renderer)
-
-    # When we render the empty state
-    tui.render_once
-
-    # Then the renderer should still be called with an empty runs array
+    render_with(recording_renderer)
     assert_equal 1, @render_calls.length
     assert_equal [], @render_calls[0][:runs]
   end
 
   private
 
-  def make_tui(animation_renderer: nil)
+  def render_with(animation_renderer)
     FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       animation_renderer: animation_renderer
-    )
+    ).render_once
   end
 
-  def make_recording_renderer
+  def recording_renderer
     calls = @render_calls
     Object.new.tap do |r|
-      r.define_singleton_method(:render) do |screen, runs|
-        calls << { screen: screen, runs: runs }
-      end
+      r.define_singleton_method(:render) { |screen, runs| calls << { screen: screen, runs: runs } }
     end
   end
 
-  def make_overlay_renderer(text)
+  def overlay_renderer(text)
     Object.new.tap do |r|
-      r.define_singleton_method(:render) do |screen, _runs|
-        screen.write_at(5, 10, text)
-      end
+      r.define_singleton_method(:render) { |screen, _runs| screen.write_at(5, 10, text) }
     end
   end
 end

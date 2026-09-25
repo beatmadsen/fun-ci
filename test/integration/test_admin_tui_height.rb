@@ -23,126 +23,67 @@ class TestAdminTuiHeight < Minitest::Test
   end
 
   def test_should_truncate_rows_to_fit_terminal_height
-    # Given 10 pipeline runs and a short terminal
-    10.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
-    tui = make_tui(height_provider: -> { 20 })
-
-    # When the TUI renders
-    tui.render_once
-
-    # Then fewer rows than available should be visible
-    assert_equal 2, rendered_commit_count,
-      "Terminal height 20 should show 2 rows"
+    assert_equal 2, rendered_commit_count(runs: 10, height_provider: -> { 20 }),
+                 "Terminal height 20 should show 2 rows"
   end
 
   def test_should_show_all_rows_when_terminal_is_tall_enough
-    # Given 3 pipeline runs and a tall terminal
-    3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
-    tui = make_tui(height_provider: -> { 50 })
-
-    # When the TUI renders
-    tui.render_once
-
-    # Then all 3 rows should be visible
-    assert_equal 3, rendered_commit_count,
-      "Tall terminal should show all 3 rows"
+    assert_equal 3, rendered_commit_count(runs: 3, height_provider: -> { 50 }),
+                 "Tall terminal should show all 3 rows"
   end
 
   def test_should_show_zero_rows_when_terminal_shorter_than_header
-    # Given pipeline runs and a terminal shorter than the header + chrome
-    3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
-    tui = make_tui(height_provider: -> { 10 })
-
-    # When the TUI renders
-    tui.render_once
-
-    # Then no rows should be shown (header alone exceeds terminal height)
-    assert_equal 0, rendered_commit_count,
-      "Terminal shorter than header should show 0 rows rather than overflow"
+    assert_equal 0, rendered_commit_count(runs: 3, height_provider: -> { 10 }),
+                 "Terminal shorter than header should show 0 rows rather than overflow"
   end
 
+  # Height 17: (17 - 14 - 2) / 2 = 0 rows.
   def test_should_show_zero_rows_at_one_below_minimum_viable_height
-    # Given height 17: (17 - 14 - 2) / 2 = 0 rows
-    3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
-    tui = make_tui(height_provider: -> { 17 })
-
-    # When the TUI renders
-    tui.render_once
-
-    # Then no rows should fit (one line short of the minimum for 1 row)
-    assert_equal 0, rendered_commit_count,
-      "Height 17 is one line short for 1 row with 14-line header"
+    assert_equal 0, rendered_commit_count(runs: 3, height_provider: -> { 17 }),
+                 "Height 17 is one line short for 1 row with 14-line header"
   end
 
+  # Height 18: (18 - 14 - 2) / 2 = 1 row.
+  # Budget: header(14) + board(1) + post-board separator(1) + footer(1) = 17 lines.
   def test_should_show_one_row_at_minimum_viable_height
-    # Given height 18: (18 - 14 - 2) / 2 = 1 row
-    # Budget: header(14) + board(1) + post-board separator(1) + footer(1) = 17 lines
-    3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
-    tui = make_tui(height_provider: -> { 18 })
-
-    # When the TUI renders
-    tui.render_once
-
-    # Then exactly 1 row should be visible
-    assert_equal 1, rendered_commit_count,
-      "Height 18 is the minimum for 1 row with 14-line header"
+    assert_equal 1, rendered_commit_count(runs: 3, height_provider: -> { 18 }),
+                 "Height 18 is the minimum for 1 row with 14-line header"
   end
 
   def test_should_show_all_rows_without_height_provider
-    # Given pipeline runs and no height_provider (backward compatibility)
-    3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
-    tui = make_tui
-
-    # When the TUI renders
-    tui.render_once
-
-    # Then all rows should be visible (no truncation)
-    assert_equal 3, rendered_commit_count,
-      "Without height_provider, all rows should be visible"
+    assert_equal 3, rendered_commit_count(runs: 3, height_provider: nil),
+                 "Without height_provider, all rows should be visible"
   end
 
+  # Without a clear, the old taller frame stays on screen and the header scrolls off.
   def test_should_clear_screen_when_height_shrinks_between_renders
-    # Given pipeline runs and a terminal that shrinks between renders
-    5.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
     current_height = 40
-    height_provider = -> { current_height }
-    tui = make_tui(height_provider: height_provider)
+    tui = tui_with_runs(5, height_provider: -> { current_height })
     tui.render_once
-
-    # When the terminal height shrinks (e.g. splitting a tmux pane)
     current_height = 20
     tui.render_once
-
-    # Then a clear-screen sequence should be emitted to prevent stale content
-    # (Without clear, the old taller frame stays on screen and the header scrolls off)
     assert_includes @output.string, "\e[2J",
-      "Should emit clear-screen when height shrinks to prevent header from scrolling off"
+                    "Should emit clear-screen when height shrinks to prevent header from scrolling off"
   end
 
+  # IO.console is nil when there is no controlling terminal.
   def test_should_show_all_rows_when_height_provider_returns_nil
-    # Given pipeline runs and a height_provider that returns nil
-    # (e.g. IO.console is nil when there is no controlling terminal)
-    3.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
-    tui = make_tui(height_provider: -> { nil })
-
-    # When the TUI renders
-    tui.render_once
-
-    # Then all rows should be visible (nil treated as unknown)
-    assert_equal 3, rendered_commit_count,
-      "Nil height should not truncate rows"
+    assert_equal 3, rendered_commit_count(runs: 3, height_provider: -> {}),
+                 "Nil height should not truncate rows"
   end
 
   private
 
-  def make_tui(height_provider: nil)
+  def tui_with_runs(count, height_provider:)
+    count.times { |i| create_completed_run("hash#{format("%03d", i)}", "main") }
     FunCi::Tui::AdminTui.new(
       db: @db, output: @output, input: StringIO.new(""),
       width: 120, height_provider: height_provider
     )
   end
 
-  def rendered_commit_count
+  def rendered_commit_count(runs:, height_provider:)
+    tui_with_runs(runs, height_provider: height_provider).render_once
     plain = FunCi::Tui::Ansi.strip(@output.string)
     plain.lines.count { |l| l.match?(/hash\d+/) }
   end

@@ -13,7 +13,7 @@ class TestRalphBuildCommands < Minitest::Test
   def test_no_command_relies_on_shell_syntax_outside_bash_c
     offenders = commands.select { |c| Shellwords.split(c["run"]).any?(SHELL_TOKEN) }
 
-    assert_empty offenders.map { |c| c["name"] }
+    assert_empty(offenders.map { |c| c["name"] })
   end
 
   private

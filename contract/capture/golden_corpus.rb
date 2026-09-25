@@ -38,7 +38,7 @@ module FunCi
       private
 
       def frame_paths(name)
-        Dir.glob(File.join(golden_dir(name), "*.bytes")).sort
+        Dir.glob(File.join(golden_dir(name), "*.bytes"))
       end
 
       def frame_path(name, number)
