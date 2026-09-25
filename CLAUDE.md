@@ -2,12 +2,12 @@
 
 Rules and reference for working in this repository: what it is built with,
 where things live, what must stay true (each with the test that holds it), and
-what bites. `test/unit/test_claude_md.rb` keeps it in that shape.
+what bites. `test/policy/test_claude_md.rb` keeps it in that shape.
 
 ## Commands
 
 `bundle exec rake` is the gate. It runs every lane below, in this order;
-`test/unit/test_gate_lanes.rb` fails if the gate and this list disagree, or if
+`test/policy/test_gate_lanes.rb` fails if the gate and this list disagree, or if
 the docs mention a rake task that is none of a lane, a subset of `rake test`,
 or a tool.
 
@@ -25,8 +25,9 @@ bundle exec rake rubocop    # RuboCop with the project's limits
 rake unit                                                  # test/unit only
 rake acceptance                                            # test/acceptance only
 rake integration                                           # test/integration only (process/ included)
-ruby -Itest -Ilib test/unit/test_trigger.rb                # One test file
-ruby -Itest -Ilib test/unit/test_trigger.rb -n test_method # One test method
+rake policy                                                # test/policy only
+ruby -Itest -Ilib test/unit/test_stage_runner.rb                # One test file
+ruby -Itest -Ilib test/unit/test_stage_runner.rb -n test_method # One test method
 ```
 
 ### Tools
@@ -68,7 +69,7 @@ Fun-CI is an opinionated, local-first CI for a project's own machine: a four-sta
 - `lib/fun_ci/setup/` -- `init`, `install-hooks`, `check`: `Installer`, `ProjectDetector`, `TemplateWriter`, `HookWriter`, `SetupChecker`, `ProjectConfig`.
 - `lib/fun_ci/tui/`, `lib/fun_ci/animations/` -- the 1.x console, the renderer 2.0 replaces: `AdminTui`, `BoardData`, `KeyHandler`, `BoardRenderer`, `Screen`, animation players and data.
 - `contract/` -- renderer scenarios, the Ruby renderer's golden frames and the capture tool. `docs/v2/` -- the 2.0 architecture, renderer protocol and backlog (`acceptance-tests.md`, worked in the order of `ralph/build/progress.md`). `ralph/` -- the agent build loop (`docs/v2/agentic-pipeline.md`).
-- `test/unit/`, `test/acceptance/`, `test/integration/` (SQLite, filesystem), `test/integration/process/` (real processes and git), `test/integration/process/end_to_end/` (whole pipelines with real git and stage scripts; slow, and left out of the mutation lane), `test/support/` (guards, scanners, test kits), `features/` (Cucumber).
+- `test/unit/` (one class, in memory), `test/acceptance/` (a user-facing command or flow), `test/integration/` (SQLite, filesystem), `test/policy/` (checks on the repository itself: lanes, limits, CLAUDE.md, CI), `test/integration/process/` (real processes and git), `test/integration/process/end_to_end/` (whole pipelines with real git and stage scripts; slow, and left out of the mutation lane), `test/support/` (guards, scanners, test kits), `features/` (Cucumber).
 
 Seams tests use in place of the real thing:
 - `Trigger.new(project:, commit:, io:, seams:)` and `StageRunner.new(commit_hash:, stdout:, seams:)` take a `Pipeline::Seams` (`lib/fun_ci/pipeline/trigger_params.rb`): `command_runner` (stage processes), `background_launcher` (`nil` is the real fork), `commit_validator` (`git cat-file`), `recorder`, `time_budgets`, `workspace` (`nil` is the worktree pool; `InPlace` runs in the project directory itself). Each left out gets the real thing; `test/support/trigger_test_kit.rb` builds one the way tests need it.
@@ -78,20 +79,20 @@ Seams tests use in place of the real thing:
 
 ## Invariants
 
-- The gate runs exactly the lanes listed under Lanes, and every rake task the docs mention is a lane, a subset of `rake test`, or a tool: `test/unit/test_gate_lanes.rb`.
-- Methods of at most 7 lines, block nesting of at most 2, at most 4 parameters (keywords count): RuboCop in the gate. `.rubocop_todo.yml` only excludes files, and only under `lib/fun_ci/tui/` and `lib/fun_ci/animations/`: `test/unit/test_rubocop_todo.rb`. Fix an offence; never add an exclusion.
-- No Ruby file longer than 150 lines (the animation data modules aside until §3.6), no class or module with more than 4 instance variables: `test/unit/test_code_limits.rb`.
-- Tests wait on nothing real and reach state through public interfaces: no `sleep`, `Thread.pass`, `Timeout.timeout` or `instance_variable_get/set` in `test/` or `features/`: `test/unit/test_tests_are_deterministic.rb`. Background work is injected and driven by the test, not spawned and polled; if a test can't get at something through the public API, add a seam.
+- The gate runs exactly the lanes listed under Lanes, and every rake task the docs mention is a lane, a subset of `rake test`, or a tool: `test/policy/test_gate_lanes.rb`.
+- Methods of at most 7 lines, block nesting of at most 2, at most 4 parameters (keywords count): RuboCop in the gate. `.rubocop_todo.yml` only excludes files, and only under `lib/fun_ci/tui/` and `lib/fun_ci/animations/`: `test/policy/test_rubocop_todo.rb`. Fix an offence; never add an exclusion.
+- No Ruby file longer than 150 lines (the animation data modules aside until §3.6), no class or module with more than 4 instance variables: `test/policy/test_code_limits.rb`.
+- Tests wait on nothing real and reach state through public interfaces: no `sleep`, `Thread.pass`, `Timeout.timeout` or `instance_variable_get/set` in `test/` or `features/`: `test/policy/test_tests_are_deterministic.rb`. Background work is injected and driven by the test, not spawned and polled; if a test can't get at something through the public API, add a seam.
 - A test run writes nothing to stderr (a dying thread or a forked child's exception is an error no test asserted on); capture expected output with `assert_output`/`capture_io`: `test/integration/process/test_stray_stderr_guard.rb`.
 - Every SQLite connection a test opens is closed by the end of that test, since a leaked one is inherited by the next fork in the same worker: `test/integration/process/test_sqlite_connection_guard.rb`.
-- Tests touch only the run's private temp root, which `TMPDIR` points at: no file written, database opened or git run outside it. Build paths from `Dir.mktmpdir`/`Dir.tmpdir`, never from the repository or `$HOME`: `test/integration/process/test_confinement_guard.rb`, `test/unit/test_confinement_guard_installed.rb`.
-- Only tests under `test/integration/process/` start processes, send real signals or run git, directly or through the code they call (signals: directly): `test/unit/test_fast_lanes_never_spawn.rb` (a Prism scan of unit and acceptance sources) and `test/integration/process/test_spawn_guard.rb` (the runtime guard for every other test).
+- Tests touch only the run's private temp root, which `TMPDIR` points at: no file written, database opened or git run outside it. Build paths from `Dir.mktmpdir`/`Dir.tmpdir`, never from the repository or `$HOME`: `test/integration/process/test_confinement_guard.rb`, `test/policy/test_confinement_guard_installed.rb`.
+- Only tests under `test/integration/process/` start processes, send real signals or run git, directly or through the code they call (signals: directly): `test/policy/test_fast_lanes_never_spawn.rb` (a Prism scan of unit and acceptance sources) and `test/integration/process/test_spawn_guard.rb` (the runtime guard for every other test).
 - What the Ruby TUI draws matches `contract/golden/`, frame for frame, and capturing twice gives identical bytes (the renderer takes its clock from `Board#now`, never `Time.now`): `test/acceptance/test_golden_corpus.rb`. After a deliberate change, run `rake contract:capture` and review the golden diff in the same commit.
 - The gem ships exactly the tracked files under `lib/` and `exe/` plus README, CHANGELOG and LICENSE, and keeps its publishing metadata: `test/integration/process/test_gemspec_contents.rb`.
-- CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and the mutation lane on 3.4: `test/unit/test_ci_workflow.rb`.
+- CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and the mutation lane on 3.4: `test/policy/test_ci_workflow.rb`.
 - fun-ci processes set up a database one at a time (a lock file beside it), so concurrent hooks never die on a fresh database: `test/integration/test_database_setup_lock.rb`, `test/integration/process/test_database_concurrent_setup.rb`.
 - `fun-ci trigger` closes every database connection it opens: `test/acceptance/test_cli_subcommands.rb`.
-- This file keeps Stack, Layout, Invariants and Gotchas, and every invariant names a test that exists: `test/unit/test_claude_md.rb`.
+- This file keeps Stack, Layout, Invariants and Gotchas, and every invariant names a test that exists: `test/policy/test_claude_md.rb`.
 
 ## Gotchas
 

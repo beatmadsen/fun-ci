@@ -6,12 +6,13 @@ require "cucumber/rake/task"
 require "rubocop/rake_task"
 
 # `test` is the gate's lane; the others are quicker subsets of it.
-# test/unit/test_gate_lanes.rb holds them to that.
+# test/policy/test_gate_lanes.rb holds them to that.
 TEST_LANES = {
   "test" => "test/**/test_*.rb",
   "unit" => "test/unit/**/test_*.rb",
   "integration" => "test/integration/**/test_*.rb",
-  "acceptance" => "test/acceptance/**/test_*.rb"
+  "acceptance" => "test/acceptance/**/test_*.rb",
+  "policy" => "test/policy/**/test_*.rb"
 }.freeze
 
 TEST_LANES.each do |lane, pattern|
