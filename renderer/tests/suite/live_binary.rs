@@ -4,29 +4,26 @@
 //! deadline that fails it rather than hang, never on a fixed time.
 
 use std::ffi::CString;
-use std::io::{self, BufRead, BufReader, Write};
+use std::io;
 use std::os::unix::process::CommandExt;
-use std::process::{Child, ChildStdin, Command, Stdio};
-use std::sync::mpsc::{self, Receiver, RecvTimeoutError};
-use std::thread;
-use std::time::Duration;
+use std::process::Stdio;
 
 use serde_json::{Value, json};
 
 use crate::support::boards::{board, run};
 use crate::support::pty::Pty;
+use crate::support::renderer::{PATIENCE, Renderer, binary};
 
-const PATIENCE: Duration = Duration::from_secs(10);
 const LEAVE_ALTERNATE_SCREEN: &str = "\u{1b}[?1049l";
 
 /// The renderer drawing on `pty`, which is also its controlling terminal, so
 /// resizing the pty signals it as resizing a real terminal would.
-fn renderer_controlled_by(pty: &Pty) -> Child {
+fn renderer_controlled_by(pty: &Pty) -> Renderer {
     let path = CString::new(pty.path.clone()).unwrap();
-    let mut command = Command::new(env!("CARGO_BIN_EXE_fun-ci-renderer"));
-    command.args(["--tty", &pty.path]).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
+    let mut command = binary();
+    command.args(["--tty", &pty.path]).stderr(Stdio::null());
     unsafe { command.pre_exec(move || take_as_controlling_terminal(&path)) };
-    command.spawn().unwrap()
+    Renderer::start(&mut command)
 }
 
 /// Runs in the child between fork and exec: only async-signal-safe calls.
@@ -48,34 +45,16 @@ fn set_controlling_terminal(fd: i32) -> i32 {
     unsafe { libc::ioctl(fd, libc::TIOCSCTTY, 0) }
 }
 
-fn send(stdin: &mut ChildStdin, line: &str) {
-    stdin.write_all(format!("{line}\n").as_bytes()).unwrap();
-}
-
-/// Each line the renderer writes to stdout, as it comes.
-fn replies(stdout: impl io::Read + Send + 'static) -> Receiver<Value> {
-    let (sender, receiver) = mpsc::channel();
-    thread::spawn(move || {
-        for line in BufReader::new(stdout).lines().map_while(Result::ok) {
-            let _ = sender.send(serde_json::from_str(&line).unwrap());
-        }
-    });
-    receiver
+fn reply(renderer: &Renderer) -> Value {
+    serde_json::from_str(&renderer.line()).unwrap()
 }
 
 /// The renderer on `pty`, after it has answered `hello` with `ready`.
-fn ready_renderer(pty: &Pty) -> (Child, ChildStdin, Receiver<Value>) {
-    let mut child = renderer_controlled_by(pty);
-    let (mut stdin, replies) = (child.stdin.take().unwrap(), replies(child.stdout.take().unwrap()));
-    send(&mut stdin, r#"{"t":"hello","v":1}"#);
-    assert_eq!(replies.recv_timeout(PATIENCE).unwrap()["t"], "ready");
-    (child, stdin, replies)
-}
-
-/// Whether the renderer closes its output, as it does on exiting, within
-/// `patience`.
-fn closes_within(replies: &Receiver<Value>, patience: Duration) -> bool {
-    matches!(replies.recv_timeout(patience), Err(RecvTimeoutError::Disconnected))
+fn ready_renderer(pty: &Pty) -> Renderer {
+    let mut renderer = renderer_controlled_by(pty);
+    renderer.send(r#"{"t":"hello","v":1}"#);
+    assert_eq!(reply(&renderer)["t"], "ready");
+    renderer
 }
 
 fn board_on_branch(branch: &str) -> String {
@@ -87,18 +66,18 @@ fn board_on_branch(branch: &str) -> String {
 #[test]
 fn a_live_renderer_draws_the_board_sends_keys_and_resizes_and_restores_the_terminal_on_quit() {
     let mut pty = Pty::open();
-    let (mut child, mut stdin, replies) = ready_renderer(&pty);
-    send(&mut stdin, &board_on_branch("livemark"));
+    let mut renderer = ready_renderer(&pty);
+    renderer.send(&board_on_branch("livemark"));
     assert!(pty.shows_within("livemark", PATIENCE), "the board never reached the terminal");
 
     pty.type_keys(b"j");
-    assert_eq!(replies.recv_timeout(PATIENCE).unwrap(), json!({"t":"key","key":"j"}));
+    assert_eq!(reply(&renderer), json!({"t":"key","key":"j"}));
     pty.resize(120, 40);
-    assert_eq!(replies.recv_timeout(PATIENCE).unwrap(), json!({"t":"resize","cols":120,"rows":40}));
+    assert_eq!(reply(&renderer), json!({"t":"resize","cols":120,"rows":40}));
 
-    send(&mut stdin, r#"{"t":"quit"}"#);
-    assert!(closes_within(&replies, PATIENCE), "the renderer did not exit on quit");
-    assert_eq!(child.wait().unwrap().code(), Some(0));
+    renderer.send(r#"{"t":"quit"}"#);
+    assert!(renderer.closes_output(), "the renderer did not exit on quit");
+    assert_eq!(renderer.wait().code(), Some(0));
     assert!(!pty.is_raw(), "the terminal was left in raw mode");
     assert!(pty.close().contains(LEAVE_ALTERNATE_SCREEN));
 }

@@ -2,9 +2,10 @@
 
 use std::fs;
 use std::path::PathBuf;
-use std::process::Command;
 
 use fun_ci_renderer::cli::Options;
+
+use crate::support::renderer::{Renderer, binary};
 
 fn parse(args: &[&str]) -> Result<Options, String> {
     Options::parse(args.iter().map(ToString::to_string))
@@ -84,9 +85,6 @@ fn the_library_takes_animations_from_the_named_directory() {
 fn the_binary_refuses_an_animations_directory_it_cannot_read() {
     let dir = tempfile::tempdir().unwrap();
     let missing = dir.path().join("missing");
-    let status = Command::new(env!("CARGO_BIN_EXE_fun-ci-renderer"))
-        .args(["--animations", missing.to_str().unwrap()])
-        .status()
-        .unwrap();
-    assert_eq!(status.code(), Some(64));
+    let mut renderer = Renderer::start(binary().args(["--animations", missing.to_str().unwrap()]));
+    assert_eq!(renderer.wait().code(), Some(64));
 }

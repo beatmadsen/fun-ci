@@ -2,8 +2,10 @@
 
 
 pub mod boards;
+pub mod input;
 pub mod live;
 pub mod pty;
+pub mod renderer;
 
 use std::io;
 use std::path::PathBuf;

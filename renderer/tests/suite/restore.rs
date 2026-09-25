@@ -9,12 +9,13 @@ use std::sync::Mutex;
 use fun_ci_renderer::session::{on_terminate, run_session};
 use fun_ci_renderer::tty::restore_once;
 use crate::support::FakeTerminal;
+use crate::support::input::ends_once;
 
 const HELLO: &str = "{\"t\":\"hello\",\"v\":1}\n";
 
 fn calls_after(input: &str) -> Vec<&'static str> {
     let mut terminal = FakeTerminal::sized(80, 24);
-    run_session(input.as_bytes(), io::sink(), &mut terminal);
+    run_session(ends_once(input), io::sink(), &mut terminal);
     terminal.calls
 }
 
@@ -52,7 +53,7 @@ fn quit_restores_the_terminal() {
 fn nothing_after_quit_is_read() {
     let mut output = Vec::new();
     let input = format!("{HELLO}{{\"t\":\"quit\"}}\nnot json\n");
-    run_session(input.as_bytes(), &mut output, &mut FakeTerminal::sized(80, 24));
+    run_session(ends_once(&input), &mut output, &mut FakeTerminal::sized(80, 24));
     assert_eq!(String::from_utf8(output).unwrap().lines().count(), 1);
 }
 

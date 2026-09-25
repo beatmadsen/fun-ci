@@ -4,12 +4,13 @@
 use fun_ci_renderer::session::run_session;
 use serde_json::{Value, json};
 use crate::support::FakeTerminal;
+use crate::support::input::ends_once;
 
 const HELLO: &str = "{\"t\":\"hello\",\"v\":1}\n";
 
 fn converse(input: &str, terminal: &mut FakeTerminal) -> (i32, Vec<Value>) {
     let mut output = Vec::new();
-    let status = run_session(input.as_bytes(), &mut output, terminal);
+    let status = run_session(ends_once(input), &mut output, terminal);
     let text = String::from_utf8(output).unwrap();
     (status, text.lines().map(|l| serde_json::from_str(l).unwrap()).collect())
 }

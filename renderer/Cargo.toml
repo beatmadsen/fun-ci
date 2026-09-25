@@ -29,6 +29,7 @@ cognitive_complexity = "warn"
 
 [dev-dependencies]
 tempfile = "3.27.0"
+wait-timeout = "0.2"
 
 # Dependencies (png, zlib, vt100) optimised even in test builds: the headless
 # tests encode dozens of PNGs, which is slow unoptimised.

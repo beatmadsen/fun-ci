@@ -1,14 +1,16 @@
 //! AT-3.7 against the real binary, drawing on a pseudo-terminal named with
 //! `--tty`: after end of input, `quit` or SIGTERM the terminal is out of raw
 //! mode and off the alternate screen. The test waits on `ready`, on process
-//! exit and on the pty closing, never on time.
+//! exit and on the pty closing, each with the deadline `support::renderer`
+//! gives every wait on the binary.
 
-use std::io::{BufRead, BufReader, Read, Write};
-use std::process::{Child, ChildStdin, Command, ExitStatus, Stdio};
+use std::process::{ExitStatus, Stdio};
 
 use crate::support::pty::Pty;
+use crate::support::renderer::{Renderer, binary};
 
 const LEAVE_ALTERNATE_SCREEN: &str = "\u{1b}[?1049l";
+const HELLO: &str = r#"{"t":"hello","v":1}"#;
 
 struct Outcome {
     raw_during_and_after: (bool, bool),
@@ -17,57 +19,51 @@ struct Outcome {
     status: ExitStatus,
 }
 
-fn renderer(pty: &Pty) -> Child {
-    let mut command = Command::new(env!("CARGO_BIN_EXE_fun-ci-renderer"));
-    command.args(["--tty", &pty.path]).stdin(Stdio::piped()).stdout(Stdio::piped()).stderr(Stdio::null());
-    command.spawn().unwrap()
+fn renderer(pty: &Pty) -> Renderer {
+    Renderer::start(binary().args(["--tty", &pty.path]).stderr(Stdio::null()))
 }
 
 /// The renderer, drawing on `pty`, after it has answered `ready`.
-fn ready_renderer(pty: &Pty) -> (Child, Option<ChildStdin>) {
-    let mut child = renderer(pty);
-    let mut stdin = child.stdin.take().unwrap();
-    stdin.write_all(b"{\"t\":\"hello\",\"v\":1}\n").unwrap();
-    BufReader::new(child.stdout.as_mut().unwrap()).read_line(&mut String::new()).unwrap();
-    (child, Some(stdin))
+fn ready_renderer(pty: &Pty) -> Renderer {
+    let mut renderer = renderer(pty);
+    renderer.send(HELLO);
+    let _ready = renderer.line();
+    renderer
 }
 
-/// Ends the session with `end`. Stdin stays open until the renderer has gone
+/// Ends the session with `end`. Input stays open until the renderer has gone
 /// unless `end` closes it, so a signal is not raced by end of input.
-fn ended_by(end: impl FnOnce(&mut Child, &mut Option<ChildStdin>)) -> Outcome {
+fn ended_by(end: impl FnOnce(&mut Renderer)) -> Outcome {
     let pty = Pty::open();
-    let (mut child, mut stdin) = ready_renderer(&pty);
+    let mut renderer = ready_renderer(&pty);
     let raw_during = pty.is_raw();
-    end(&mut child, &mut stdin);
-    let status = child.wait().unwrap();
-    let replies_after_ready = rest_of_stdout(&mut child);
+    end(&mut renderer);
+    let status = renderer.wait();
+    let replies_after_ready = renderer.rest().concat();
     Outcome { raw_during_and_after: (raw_during, pty.is_raw()), replies_after_ready, drawn: pty.close(), status }
 }
 
-fn rest_of_stdout(child: &mut Child) -> String {
-    let mut rest = String::new();
-    child.stdout.take().unwrap().read_to_string(&mut rest).unwrap();
-    rest
-}
-
-fn end_of_input(_: &mut Child, stdin: &mut Option<ChildStdin>) {
-    stdin.take();
+fn end_of_input(renderer: &mut Renderer) {
+    renderer.close_input();
 }
 
 /// `quit`, then a line a running session would answer, then end of input,
 /// so a renderer that ignored `quit` answers instead of hanging the test.
-fn quit(_: &mut Child, stdin: &mut Option<ChildStdin>) {
-    stdin.take().unwrap().write_all(b"{\"t\":\"quit\"}\nnot json\n").unwrap();
+fn quit(renderer: &mut Renderer) {
+    renderer.send(r#"{"t":"quit"}"#);
+    renderer.send("not json");
+    renderer.close_input();
 }
 
-fn sigterm(child: &mut Child, _: &mut Option<ChildStdin>) {
-    unsafe { libc::kill(i32::try_from(child.id()).unwrap(), libc::SIGTERM) };
+fn sigterm(renderer: &mut Renderer) {
+    unsafe { libc::kill(i32::try_from(renderer.id()).unwrap(), libc::SIGTERM) };
 }
 
 fn ready_on(pty: &Pty) -> serde_json::Value {
-    let mut child = renderer(pty);
-    child.stdin.take().unwrap().write_all(b"{\"t\":\"hello\",\"v\":1}\n").unwrap();
-    serde_json::from_slice(&child.wait_with_output().unwrap().stdout).unwrap()
+    let mut renderer = renderer(pty);
+    renderer.send(HELLO);
+    renderer.close_input();
+    serde_json::from_str(&renderer.line()).unwrap()
 }
 
 #[test]
