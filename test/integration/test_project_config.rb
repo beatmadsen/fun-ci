@@ -49,6 +49,33 @@ class TestProjectConfig < Minitest::Test
     assert_equal ["No .fun-ci/ folder found in #{@dir}"], config.validate
   end
 
+  def test_should_give_two_worktree_slots_when_nothing_says_otherwise
+    write_scripts(*SCRIPTS)
+
+    assert_equal 2, config.worktree_slots
+  end
+
+  def test_should_give_the_worktree_slots_the_config_file_asks_for
+    write_scripts(*SCRIPTS)
+    File.write(File.join(fun_ci_dir, "config"), "worktree_slots: 3\n")
+
+    assert_equal 3, config.worktree_slots
+  end
+
+  def test_should_name_a_worktree_slot_count_that_is_not_a_whole_number_above_zero
+    write_scripts(*SCRIPTS)
+    File.write(File.join(fun_ci_dir, "config"), "worktree_slots: 0\n")
+
+    assert_equal [".fun-ci/config: worktree_slots must be a whole number above 0, not 0"], config.validate
+  end
+
+  def test_should_name_a_config_file_that_is_not_a_mapping
+    write_scripts(*SCRIPTS)
+    File.write(File.join(fun_ci_dir, "config"), "- worktree_slots\n")
+
+    assert_equal [".fun-ci/config must be a mapping such as `worktree_slots: 2`"], config.validate
+  end
+
   def test_should_place_each_stage_s_script_in_fun_ci
     assert_equal File.join(@dir, ".fun-ci", "build.sh"), config.script_path("build")
   end

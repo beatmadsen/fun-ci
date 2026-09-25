@@ -6,13 +6,12 @@ require_relative "trigger_params"
 require_relative "trigger_command"
 require_relative "slot_run"
 require_relative "stale_pipeline_canceller"
-require_relative "worktree_pool"
-require_relative "in_place"
+require_relative "workspaces"
 
 module FunCi
   module Pipeline
     class Trigger
-      NULL_SHA = ("0" * 40).freeze
+      NULL_SHA = Workspaces::NULL_SHA
 
       def self.run_from_args(args, io: Io.new, recorder: Persistence::NullRecorder.new, pipeline_forker: nil)
         TriggerCommand.new(io: io, recorder: recorder, pipeline_forker: pipeline_forker).run(args)
@@ -45,12 +44,7 @@ module FunCi
       def recorder = @seams.recorder
       def known_commit? = @commit.sha == NULL_SHA || @seams.commit_validator.call(@commit.sha)
 
-      def workspace
-        return @seams.workspace if @seams.workspace
-        return InPlace.new(@project) if @commit.sha == NULL_SHA
-
-        WorktreePool.new(Worktrees.new(@project))
-      end
+      def workspace = @seams.workspace || Workspaces.for(@project, @commit.sha)
 
       # The scripts come from the commit when it has them, so they match the
       # code they test; a project that keeps .fun-ci/ out of git uses its own.

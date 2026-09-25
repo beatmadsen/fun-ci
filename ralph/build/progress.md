@@ -22,7 +22,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-1.5: Crashed runs don't leak slots
 - [x] AT-1.6: Cancelling a stale run frees its slot
 - [x] AT-1.12: Cancelling from the console stops the run
-- [ ] AT-1.7: Pool size is configurable
+- [x] AT-1.7: Pool size is configurable
 - [ ] AT-1.8: The background hook is post-commit and records the new commit
 - [ ] AT-1.9: Upgrading replaces fun-ci's own pre-commit hook only
 - [ ] AT-1.10: `--no-validate` keeps working as an alias for one release

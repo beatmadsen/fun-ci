@@ -12,7 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   commit it is testing, under `.git/fun-ci/worktrees/`. Before, the stages ran
   in your checkout while you kept editing it. The stage scripts come from the
   commit too, unless it has no `.fun-ci/`, in which case the checkout's are
-  used.
+  used. Two pipelines run at once by default; set `worktree_slots: 3` (or
+  any number above 0) in `.fun-ci/config` for more.
 - The console's cancel prompt names the run it would cancel, as in
   `Cancel feat/search (d4e5f67)? y / n`, instead of the generic
   "Cancel running pipeline? y/n".

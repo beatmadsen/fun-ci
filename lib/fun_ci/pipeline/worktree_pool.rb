@@ -12,6 +12,8 @@ module FunCi
     class WorktreePool
       DEFAULT_SIZE = 2
 
+      attr_reader :size
+
       def initialize(worktrees, size: DEFAULT_SIZE, waiter: -> { sleep 0.25 })
         @worktrees = worktrees
         @size = size

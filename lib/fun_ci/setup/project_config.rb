@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "settings"
+
 module FunCi
   module Setup
     class ProjectConfig
@@ -17,14 +19,18 @@ module FunCi
       def validate
         return ["No .fun-ci/ folder found in #{@project_root}"] unless folder_exists?
 
-        REQUIRED_SCRIPTS.flat_map { |script| script_errors(script) }
+        REQUIRED_SCRIPTS.flat_map { |script| script_errors(script) } + settings.errors
       end
+
+      def worktree_slots = settings.worktree_slots
 
       def script_path(stage)
         File.join(@fun_ci_dir, "#{stage}.sh")
       end
 
       private
+
+      def settings = Settings.new(File.join(@fun_ci_dir, "config"))
 
       def script_errors(script)
         path = File.join(@fun_ci_dir, script)
