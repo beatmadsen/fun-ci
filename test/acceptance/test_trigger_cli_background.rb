@@ -4,9 +4,10 @@ require_relative "trigger_cli_shared"
 
 # Acceptance tests for background process behavior.
 #
-# Covers: slow suite runs in background with deadline,
-# no orphaned processes after completion or timeout,
-# foreground result unaffected by background crash.
+# Covers: the slow suite's deadline and result, a build timeout, and the
+# foreground result when the background suite fails. Commands are injected,
+# so no process exists here; killing a stage's whole process group is
+# covered with real processes by AT-1.6.
 
 class TestTriggerCliBackgroundProcess < Minitest::Test
   def teardown
@@ -18,14 +19,14 @@ class TestTriggerCliBackgroundProcess < Minitest::Test
     assert_equal 0, @client.exit_code, "Foreground should return 0 for fast suite"
   end
 
-  def test_should_spawn_background_process_with_strict_deadline
+  def test_should_record_the_slow_suite_as_timed_out_when_it_overruns
     trigger_with(timing_out_script_runner("slow.sh"), SYNC_LAUNCHER)
     runs = @client.pipeline_runs_for(commit_hash: "abc1234")
     slow_job = @client.stage_jobs_for(pipeline_run_id: runs.first[:id]).find { |j| j[:stage] == "slow" }
     assert_equal "timed_out", slow_job[:status], "Slow stage should be timed_out"
   end
 
-  def test_should_not_leave_orphaned_processes_after_completion
+  def test_should_run_the_slow_suite
     trigger_with(script_simulating_runner, SYNC_LAUNCHER)
     slow_args = @client.script_arguments_for("slow.sh")
     refute_nil slow_args, "slow.sh should have completed"
@@ -36,7 +37,7 @@ class TestTriggerCliBackgroundProcess < Minitest::Test
     refute_equal 0, @client.exit_code, "Should fail on build timeout"
   end
 
-  def test_should_not_leave_orphaned_processes_after_timeout
+  def test_should_report_a_timed_out_build_as_killed
     trigger_with(timing_out_script_runner("build.sh"))
     assert_match(/killed/i, @client.stdout, "Should mention process was killed")
   end

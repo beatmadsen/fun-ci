@@ -36,12 +36,11 @@ class TestBoardData < Minitest::Test
 
   def test_should_calculate_stage_durations
     create_completed_run("abc1234", "main")
-    board = FunCi::Tui::BoardData.new(@db)
-    result = board.runs
-    stages = result[0][:stages]
-    stages.select { |s| s[:status] == "completed" }.each do |stage|
-      refute_nil stage[:duration], "Completed stages should have duration"
-    end
+    stages = FunCi::Tui::BoardData.new(@db).runs[0][:stages]
+    durations = stages.select { |s| s[:status] == "completed" }.map { |s| s[:duration] }
+
+    assert_equal 4, durations.size, "the fixture's four stages should all be completed"
+    refute_includes durations, nil
   end
 
   def test_should_return_runs_in_reverse_chronological_order

@@ -80,8 +80,12 @@ class TestDbRecorderEndStage < Minitest::Test
   end
 
   # Passes as long as the nil guard keeps end_stage from raising.
-  def test_should_ignore_nil_job_id
+  def test_ending_a_nil_job_id_leaves_existing_stages_untouched
+    create_run
+    job_id = @recorder.start_stage("lint")
     @recorder.end_stage(nil, "completed")
+
+    assert_equal "running", job(job_id)[:status]
   end
 end
 
