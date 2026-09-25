@@ -25,7 +25,9 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = ">= 3.2"
 
-  spec.files = Dir["lib/**/*", "exe/*", "LICENSE.txt", "README.md", "CHANGELOG.md"]
+  # Tracked files only, so nothing lying around uncommitted in lib/ ships.
+  spec.files = IO.popen(%w[git ls-files -z -- lib exe LICENSE.txt README.md CHANGELOG.md], chdir: __dir__, &:read)
+                 .split("\x0")
   spec.bindir = "exe"
   spec.executables = %w[fun-ci fun-ci-trigger fun-ci-tui]
   spec.require_paths = ["lib"]
