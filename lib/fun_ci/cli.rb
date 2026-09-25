@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require "fileutils"
 require "tmpdir"
 require_relative "../fun_ci"
+require_relative "cli_help"
 
 module FunCi
   class Cli
@@ -27,10 +29,9 @@ module FunCi
       subcommand = args.first
       return help(0) if %w[-h --help].include?(subcommand)
       return version if subcommand == "--version"
-      unless ROUTES.key?(subcommand)
-        print_error(subcommand)
-        return 1
-      end
+
+      return unknown_command(subcommand) unless ROUTES.key?(subcommand)
+
       dispatch(subcommand, args.drop(1))
     end
 
@@ -38,6 +39,7 @@ module FunCi
 
     def dispatch(subcommand, args)
       return @handlers[subcommand].call(args) if @handlers.key?(subcommand)
+
       send(ROUTES[subcommand], args)
     end
 
@@ -53,23 +55,24 @@ module FunCi
       require_relative "tui/admin_tui"
       require_relative "tui/animation_renderer"
       require "io/console"
-      db = setup_db
-      tui = Tui::AdminTui.new(
-        db: db,
-        width_provider: -> { IO.console&.winsize&.dig(1) || 80 },
-        height_provider: -> { IO.console&.winsize&.dig(0) },
-        animation_renderer: Tui::AnimationRenderer.new
-      )
-      tui.run
+      admin_tui(setup_db).run
       0
+    end
+
+    def admin_tui(db)
+      Tui::AdminTui.new(db: db, width_provider: -> { IO.console&.winsize&.dig(1) || 80 },
+                        height_provider: -> { IO.console&.winsize&.dig(0) },
+                        animation_renderer: Tui::AnimationRenderer.new)
     end
 
     def run_init(args)
       require_relative "setup/installer"
       code = Setup::Installer.run(project_root: Dir.pwd, stdout: @stdout)
-      return code if code != 0 || !args.include?("--everything")
+      return code if !code.zero? || !args.include?("--everything")
+
       code = run_install_hooks([])
-      return code unless code == 0
+      return code unless code.zero?
+
       run_check([])
     end
 
@@ -78,7 +81,7 @@ module FunCi
       types = args.any? ? [args.first] : %w[pre-commit pre-push]
       types.each do |type|
         code = Setup::HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @stdout)
-        return code unless code == 0
+        return code unless code.zero?
       end
       0
     end
@@ -90,45 +93,15 @@ module FunCi
 
     def setup_db
       db_dir = File.join(Dir.tmpdir, "fun-ci")
-      Dir.mkdir(db_dir) unless Dir.exist?(db_dir)
+      FileUtils.mkdir_p(db_dir)
       db_path = File.join(db_dir, "db.sqlite3")
       db = Persistence::Database.connection(db_path)
       Persistence::Database.migrate!(db)
       db
     end
 
-    HELP_TEXT = <<~HELP
-      fun-ci - Opinionated, local-first CI for your projects
-
-      Usage:
-        fun-ci <command> [options]
-
-      Commands:
-        trigger        Run CI pipeline for a commit
-        console        Launch the admin TUI dashboard
-        init           Initialize .fun-ci/ with template scripts
-        install-hooks  Install pre-commit and pre-push git hooks
-        check          Verify project setup
-
-      Options:
-        -h, --help     Show this help message
-        --version      Show version
-
-      Trigger options:
-        --no-validate  Fork pipeline to background and return immediately
-
-      Init options:
-        --everything   Run init + install-hooks + check in one step
-
-      Examples:
-        fun-ci init --everything
-        fun-ci trigger abc1234 main
-        fun-ci trigger --no-validate abc1234 main
-        fun-ci console
-    HELP
-
     def help(exit_code)
-      @stdout.puts HELP_TEXT
+      @stdout.puts CliHelp::TEXT
       exit_code
     end
 
@@ -137,14 +110,10 @@ module FunCi
       0
     end
 
-    def print_error(subcommand)
-      if subcommand
-        @stderr.puts "fun-ci: unknown command '#{subcommand}'"
-        @stderr.puts ""
-      end
-      @stderr.puts "Usage: fun-ci <command> [options]"
-      @stderr.puts ""
-      @stderr.puts "Run 'fun-ci --help' for available commands."
+    def unknown_command(subcommand)
+      @stderr.puts "fun-ci: unknown command '#{subcommand}'", "" if subcommand
+      @stderr.puts "Usage: fun-ci <command> [options]", "", "Run 'fun-ci --help' for available commands."
+      1
     end
   end
 end

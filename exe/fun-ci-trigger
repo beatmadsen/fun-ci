@@ -5,10 +5,11 @@ require_relative "../lib/fun_ci"
 require_relative "../lib/fun_ci/pipeline/trigger"
 require_relative "../lib/fun_ci/persistence/pipeline_recorder"
 
+require "fileutils"
 require "tmpdir"
 
 db_dir = File.join(Dir.tmpdir, "fun-ci")
-Dir.mkdir(db_dir) unless Dir.exist?(db_dir)
+FileUtils.mkdir_p(db_dir)
 db_path = File.join(db_dir, "db.sqlite3")
 
 db = FunCi::Persistence::Database.connection(db_path)

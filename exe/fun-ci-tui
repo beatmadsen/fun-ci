@@ -5,11 +5,12 @@ require_relative "../lib/fun_ci"
 require_relative "../lib/fun_ci/tui/admin_tui"
 require_relative "../lib/fun_ci/tui/animation_renderer"
 
+require "fileutils"
 require "tmpdir"
 require "io/console"
 
 db_dir = File.join(Dir.tmpdir, "fun-ci")
-Dir.mkdir(db_dir) unless Dir.exist?(db_dir)
+FileUtils.mkdir_p(db_dir)
 db_path = File.join(db_dir, "db.sqlite3")
 
 db = FunCi::Persistence::Database.connection(db_path)

@@ -67,7 +67,6 @@ Layout/ElseAlignment:
 Layout/EmptyLineAfterGuardClause:
   Exclude:
     - 'features/support/env.rb'
-    - 'lib/fun_ci/cli.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
@@ -239,9 +238,6 @@ Lint/AmbiguousOperatorPrecedence:
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Lint/NonAtomicFileOperation:
   Exclude:
-    - 'exe/fun-ci-trigger'
-    - 'exe/fun-ci-tui'
-    - 'lib/fun_ci/cli.rb'
     - 'test/acceptance/trigger_cli_client.rb'
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -273,10 +269,6 @@ Lint/UnusedMethodArgument:
     - 'lib/fun_ci/tui/row_formatter.rb'
     - 'test/acceptance/trigger_cli_client.rb'
 
-Lint/UselessConstantScoping:
-  Exclude:
-    - 'lib/fun_ci/cli.rb'
-
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
@@ -307,7 +299,6 @@ Metrics/ClassLength:
   Exclude:
     - 'test/**/*'
     - 'features/support/env.rb'
-    - 'lib/fun_ci/cli.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/animation_renderer.rb'
 
@@ -323,7 +314,6 @@ Metrics/MethodLength:
   Exclude:
     - 'db/migrate/**/*'
     - 'features/support/env.rb'
-    - 'lib/fun_ci/cli.rb'
     - 'lib/fun_ci/pipeline/stage_runner.rb'
     - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/admin_tui.rb'
@@ -548,7 +538,6 @@ Style/NumericPredicate:
   Exclude:
     - 'spec/**/*'
     - 'features/support/env.rb'
-    - 'lib/fun_ci/cli.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/key_handler.rb'
     - 'lib/fun_ci/tui/streak_counter.rb'
