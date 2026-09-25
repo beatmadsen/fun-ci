@@ -99,6 +99,7 @@ end
 
 def mutate_renderer(out, *shard)
   require_relative "renderer/tools/mutation_score"
+  FileUtils.mkdir_p(out)
   status = run_cargo_mutants(out, *shard)
   abort "cargo mutants measured nothing (exit #{status.inspect})" unless FunCi::Mutation.completed?(status)
 end
