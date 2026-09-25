@@ -9,74 +9,48 @@ require_relative "trigger_cli_shared"
 # foreground result unaffected by background crash.
 
 class TestTriggerCliBackgroundProcess < Minitest::Test
-  def setup
-    @client = TriggerCliClient.new(
-      command_runner: script_simulating_runner,
-      background_launcher: SYNC_LAUNCHER
-    )
+  def teardown
+    @client&.close
   end
 
-  def teardown
-    @client.close
+  def test_should_return_fast_suite_result_when_slow_suite_times_out
+    trigger_with(timing_out_script_runner("slow.sh"), SYNC_LAUNCHER)
+    assert_equal 0, @client.exit_code, "Foreground should return 0 for fast suite"
   end
 
   def test_should_spawn_background_process_with_strict_deadline
-    # Given a command runner that simulates a timeout on the slow suite
-    runner = ->(cmd) {
-      raise Timeout::Error, "budget exceeded" if cmd.include?("slow.sh")
-      ["", FakeStatus.new(true, 0)]
-    }
-    client = TriggerCliClient.new(
-      command_runner: runner,
-      background_launcher: SYNC_LAUNCHER
-    )
-    # When the trigger CLI is invoked
-    client.trigger(commit_hash: "abc1234", branch: "main")
-    # Then the foreground should return exit code 0 (fast suite passed)
-    assert_equal 0, client.exit_code, "Foreground should return 0 for fast suite"
-    # And the slow stage should be recorded as timed_out in the database
-    runs = client.pipeline_runs_for(commit_hash: "abc1234")
-    jobs = client.stage_jobs_for(pipeline_run_id: runs.first[:id])
-    slow_job = jobs.find { |j| j[:stage] == "slow" }
+    trigger_with(timing_out_script_runner("slow.sh"), SYNC_LAUNCHER)
+    runs = @client.pipeline_runs_for(commit_hash: "abc1234")
+    slow_job = @client.stage_jobs_for(pipeline_run_id: runs.first[:id]).find { |j| j[:stage] == "slow" }
     assert_equal "timed_out", slow_job[:status], "Slow stage should be timed_out"
-  ensure
-    client&.close
   end
 
   def test_should_not_leave_orphaned_processes_after_completion
-    # Given the trigger CLI has been invoked and the slow suite completes
-    @client.trigger(commit_hash: "abc1234", branch: "main")
-    # Then slow.sh should have been invoked (via SYNC_LAUNCHER)
+    trigger_with(script_simulating_runner, SYNC_LAUNCHER)
     slow_args = @client.script_arguments_for("slow.sh")
     refute_nil slow_args, "slow.sh should have completed"
   end
 
+  def test_should_fail_when_build_times_out
+    trigger_with(timing_out_script_runner("build.sh"))
+    refute_equal 0, @client.exit_code, "Should fail on build timeout"
+  end
+
   def test_should_not_leave_orphaned_processes_after_timeout
-    # Given a command runner that simulates a timeout on the build stage
-    runner = ->(cmd) {
-      raise Timeout::Error, "budget exceeded" if cmd.include?("build.sh")
-      ["", FakeStatus.new(true, 0)]
-    }
-    client = TriggerCliClient.new(command_runner: runner)
-    # When the trigger CLI is invoked
-    client.trigger(commit_hash: "abc1234", branch: "main")
-    # Then exit code should be non-zero (build timed out)
-    refute_equal 0, client.exit_code, "Should fail on build timeout"
-    # And stdout should mention the build was killed
-    assert_match(/killed/i, client.stdout, "Should mention process was killed")
-  ensure
-    client&.close
+    trigger_with(timing_out_script_runner("build.sh"))
+    assert_match(/killed/i, @client.stdout, "Should mention process was killed")
   end
 
   def test_should_report_fast_suite_result_when_background_process_crashes
-    runner = ->(cmd) {
-      cmd.include?("slow.sh") ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
-    }
-    client = TriggerCliClient.new(command_runner: runner, background_launcher: SYNC_LAUNCHER)
-    client.trigger(commit_hash: "abc1234", branch: "main")
-    assert_equal 0, client.exit_code,
-      "Should return 0 because fast suite passed, regardless of slow suite"
-  ensure
-    client&.close
+    trigger_with(failing_script_runner("slow.sh"), SYNC_LAUNCHER)
+    assert_equal 0, @client.exit_code,
+                 "Should return 0 because fast suite passed, regardless of slow suite"
+  end
+
+  private
+
+  def trigger_with(command_runner, background_launcher = nil)
+    @client = TriggerCliClient.new(command_runner: command_runner, background_launcher: background_launcher)
+    @client.trigger(commit_hash: "abc1234", branch: "main")
   end
 end

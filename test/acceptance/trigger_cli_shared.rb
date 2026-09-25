@@ -12,29 +12,43 @@ INSTANT_SUCCESS_RUNNER = ->(_cmd) { ["", FakeStatus.new(true, 0)] }
 # Use for tests that assert on script_arguments_for (which reads the args file).
 # Derives project_dir from the command path: /project/.fun-ci/script.sh -> /project
 def script_simulating_runner(failures: {})
-  ->(cmd) {
-    parts = cmd.split(" ")
-    script_path = parts.first
-    script_name = File.basename(script_path)
-    args = parts[1..]
+  lambda { |cmd|
+    script_path, *args = cmd.split
+    record_script_args(script_path, args)
+    simulated_script_result(failures[File.basename(script_path)])
+  }
+end
 
-    project_dir = File.dirname(File.dirname(script_path))
-    args_dir = File.join(project_dir, ".fun-ci-args")
-    FileUtils.mkdir_p(args_dir)
-    File.write(File.join(args_dir, script_name), args.join(" "))
+def record_script_args(script_path, args)
+  args_dir = File.join(File.dirname(script_path, 2), ".fun-ci-args")
+  FileUtils.mkdir_p(args_dir)
+  File.write(File.join(args_dir, File.basename(script_path)), args.join(" "))
+end
 
-    if failures.key?(script_name)
-      [failures[script_name][:output] || "", FakeStatus.new(false, failures[script_name][:exit] || 1)]
-    else
-      ["", FakeStatus.new(true, 0)]
-    end
+def simulated_script_result(failure)
+  return ["", FakeStatus.new(true, 0)] unless failure
+
+  [failure[:output] || "", FakeStatus.new(false, failure[:exit] || 1)]
+end
+
+# A command runner where the named script exits 1 and every other script succeeds.
+def failing_script_runner(script_name)
+  ->(cmd) { cmd.include?(script_name) ? ["", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)] }
+end
+
+# A command runner where the named script blows its time budget and every other script succeeds.
+def timing_out_script_runner(script_name)
+  lambda { |cmd|
+    raise Timeout::Error, "budget exceeded" if cmd.include?(script_name)
+
+    ["", FakeStatus.new(true, 0)]
   }
 end
 
 # Synchronous launcher for deterministic slow-suite testing.
 # Runs BackgroundWrapper inline instead of forking, so the test
 # can inspect database state immediately after trigger() returns.
-SYNC_LAUNCHER = ->(db_path:, pipeline_run_id:, job_id:, executor:) {
+SYNC_LAUNCHER = lambda { |db_path:, pipeline_run_id:, job_id:, executor:|
   recorder = FunCi::Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
   FunCi::Pipeline::BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
   recorder.close

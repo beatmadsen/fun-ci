@@ -6,47 +6,50 @@ require_relative "trigger_cli_shared"
 # PIDs are stored in the database, not on the filesystem.
 
 class TestTriggerCliConcurrentRuns < Minitest::Test
+  RUN = FunCi::Persistence::PipelineRun
+
   def setup
     @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER)
     @stale_pid = nil
   end
 
   def teardown
-    Process.kill("KILL", @stale_pid) rescue nil if @stale_pid
+    kill_stale_process
     @client.close
   end
 
   def test_should_cancel_stale_pipeline_when_same_branch_triggered_again
-    # Given a pipeline has run and left a stale background process
-    @client.trigger(commit_hash: "abc1234", branch: "main")
-    old_run = @client.pipeline_runs_for(commit_hash: "abc1234").first
-    # Simulate a stale slow suite process with PID in DB
-    @stale_pid = Process.spawn("sleep 300")
-    Process.detach(@stale_pid)
-    @client.store_pid_for_run(old_run[:id], @stale_pid)
-    FunCi::Persistence::PipelineRun.update_status(@client.db, old_run[:id], "running")
-    # When the trigger CLI is invoked again for branch "main" with a new commit
-    @client.trigger(commit_hash: "def5678", branch: "main")
-    # Then stdout should mention cancelling the stale pipeline
+    supersede_stale_pipeline
     assert_match(/cancell/i, @client.stdout, "Should mention cancelling stale pipeline")
-    # And exit code should be 0 (new pipeline started successfully)
     assert_equal 0, @client.exit_code, "New pipeline should succeed"
   end
 
   def test_should_mark_cancelled_pipeline_state_as_cancelled
-    # Given a pipeline run exists for branch "main" with commit "abc1234"
+    old_run_id = supersede_stale_pipeline
+    assert_equal "cancelled", RUN.find(@client.db, old_run_id)[:status],
+                 "Old pipeline should be marked cancelled when superseded"
+  end
+
+  private
+
+  def supersede_stale_pipeline
     @client.trigger(commit_hash: "abc1234", branch: "main")
-    old_run = @client.pipeline_runs_for(commit_hash: "abc1234").first
-    # And a stale background process is still running for that pipeline
+    old_run_id = @client.pipeline_runs_for(commit_hash: "abc1234").first[:id]
+    leave_stale_process_for(old_run_id)
+    @client.trigger(commit_hash: "def5678", branch: "main")
+    old_run_id
+  end
+
+  def leave_stale_process_for(run_id)
     @stale_pid = Process.spawn("sleep 300")
     Process.detach(@stale_pid)
-    @client.store_pid_for_run(old_run[:id], @stale_pid)
-    FunCi::Persistence::PipelineRun.update_status(@client.db, old_run[:id], "running")
-    # When the trigger CLI is invoked again for the same branch
-    @client.trigger(commit_hash: "def5678", branch: "main")
-    # Then the old pipeline's state should be cancelled
-    old_run = FunCi::Persistence::PipelineRun.find(@client.db, old_run[:id])
-    assert_equal "cancelled", old_run[:status],
-      "Old pipeline should be marked cancelled when superseded"
+    @client.store_pid_for_run(run_id, @stale_pid)
+    RUN.update_status(@client.db, run_id, "running")
+  end
+
+  def kill_stale_process
+    Process.kill("KILL", @stale_pid) if @stale_pid
+  rescue StandardError
+    nil
   end
 end

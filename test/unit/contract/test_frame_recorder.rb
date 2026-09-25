@@ -6,7 +6,7 @@ require_relative "../../../contract/capture/frame_recorder"
 class TestFrameRecorder < Minitest::Test
   NOW = 1_790_000_000
   TICK = { "t" => "tick", "ms" => 100 }.freeze
-  RUNNING = { "id" => 1, "sha" => "a3f7c01" + ("0" * 33), "branch" => "main", "status" => "running",
+  RUNNING = { "id" => 1, "sha" => "a3f7c01#{"0" * 33}", "branch" => "main", "status" => "running",
               "updated_at" => NOW, "stages" => [
                 { "stage" => "fast", "status" => "running", "started_at" => NOW - 9 }
               ] }.freeze
@@ -26,7 +26,7 @@ class TestFrameRecorder < Minitest::Test
   def test_elapsed_time_comes_from_the_scenario_clock
     frames = replay(SCENARIO[0..1] + Array.new(10, TICK))
 
-    assert_equal ["9s", "10s"], [frames[8], frames[9]].map { |f| f[/Fast \S+ (\d+s)/, 1] }
+    assert_equal(%w[9s 10s], [frames[8], frames[9]].map { |f| f[/Fast \S+ (\d+s)/, 1] })
   end
 
   def test_a_frame_holds_only_the_bytes_of_its_own_tick
