@@ -28,6 +28,14 @@ fun-ci check                                          # Verify .fun-ci/ setup is
 
 Legacy entry points (`fun-ci-trigger`, `fun-ci-tui`) still exist but are superseded by the unified `fun-ci` CLI.
 
+## 2.0 in progress
+
+Work happens on the `v2` branch. Read `docs/v2/architecture.md` first — it
+decides the Ruby/Rust boundary (Ruby decides what is true, Rust decides how it
+looks), the renderer protocol and the quality gates. The backlog is
+`docs/v2/acceptance-tests.md`, worked in the order of `ralph/build/progress.md`.
+Agents run one iteration per worktree via `ralph/agent-in-worktree.sh`.
+
 ## What This Is
 
 Fun-CI is an opinionated, local-first CI system for Ruby projects. It runs a four-stage pipeline (lint + build in parallel, then fast suite, then slow suite in background) with strict time budgets (30s lint / 30s build / 10s fast / 5min slow). It uses SQLite with WAL for persistence and has a single CLI entry point with subcommands for triggering pipelines and monitoring via a TUI.
