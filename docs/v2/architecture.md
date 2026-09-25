@@ -61,6 +61,15 @@ them at build time (`include_str!`) and can also load a directory at runtime
 with `--animations <dir>` — that's what lets the polishing agents iterate
 without a recompile.
 
+**Decision: visual review uses ordered PNG frames.** The polish loop's
+evaluator is a vision model, and Claude reads only the first frame of an
+animated image, so headless mode renders each frame to PNG and the evaluator
+reads them in order. Measurements in `stats.json` sit beside the images to
+explain what looks wrong. Background in `research/llm-tui-iteration.md`, which
+also found the animations-as-data pattern (a fixed renderer consuming
+model-edited scene data) in use elsewhere.
+*Revisit if* the evaluator moves to a model that takes video at every frame.
+
 ## Distribution
 
 **Decision — precompiled platform gems** (the tailwindcss-ruby pattern), built

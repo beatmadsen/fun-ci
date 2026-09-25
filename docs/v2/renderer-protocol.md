@@ -108,10 +108,14 @@ a fresh `board`.
 Reads messages from the scenario file instead of stdin (with `{"t":"tick","ms":100}`
 lines advancing the fake clock) and writes, per frame:
 
-- `frames.jsonl` — cell grid per frame (text, fg, bg, attrs) — machine checks
-- `frames.cast` — asciicast v2 — human playback
-- `sheet.svg` — contact sheet of all frames — agent/visual review
-- `stats.json` — bytes written per frame, longest row, frames per animation
+- `frames.jsonl`: cell grid per frame (text, fg, bg, attrs), for machine checks
+- `frames/NNNN.png`: each frame rendered with a bundled monospace font, for
+  visual review of layout and motion
+- `sheet.png`: contact sheet of all frames
+- `frames.cast`: asciicast v2, for human playback
+- `stats.json`: per frame, bytes written, longest row, cells changed since the
+  previous frame, luminance histogram, dark-cell share and hue spread; per
+  animation, frame count
 
 `tick` is only valid in headless mode.
 

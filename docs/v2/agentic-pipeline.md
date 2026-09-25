@@ -51,6 +51,29 @@ loop inside a container or VM if the agent has skip-permissions.
 
 ## Polish loop
 
+Background: `research/llm-tui-iteration.md` surveys how others let a model
+design and tune terminal interfaces. This loop follows its recommendation:
+deterministic scenarios, rendered images, measurements, and a human who
+approves what ships.
+
+### What the evaluator can see
+
+Each observation answers a different question, so the evaluator gets all of
+them, per scenario, from headless mode:
+
+| Input | Answers |
+|---|---|
+| `frames.jsonl` (cell grid per frame) | Exact text, colour, selection, layout bounds |
+| `frames/NNNN.png`, in order | Hierarchy, spacing, contrast, and motion read frame by frame |
+| `sheet.png` (contact sheet) | The whole animation at a glance, side by side with references |
+| `stats.json` | Why something looks wrong: luminance, dark space, hue spread, cells changed per frame, bytes per frame |
+
+Never a GIF. Claude's vision input uses only the first frame of an animated
+image, so a GIF would show the evaluator one still and let it pass judgement
+on motion it never saw. Motion is judged from the ordered PNG frames, and
+every frame of a one-shot animation is included (sampling at a fixed rate
+misses short flashes).
+
 ### Objective gates (in `rake`, block merges)
 
 From `stats.json` / `frames.jsonl` of every scenario at 60, 80, 120 and 200
@@ -58,29 +81,51 @@ columns:
 
 - no row wider than the terminal; nothing wraps
 - every one-shot animation ends within its declared frame count
-- bytes per frame ≤ budget (flicker proxy); no full-screen clear except on resize
+- consecutive frames of an animation differ (a frozen animation fails)
+- bytes per frame <= budget (flicker proxy); no full-screen clear except on resize
 - only the 256-colour palette; every SGR is reset by end of row
 - the board rows and the footer are never overdrawn by an animation
+- every `frames/NNNN.png` decodes as an image of the expected pixel size, so
+  the evaluator is known to receive pixels and not an unrendered file
 
 ### Evaluator (produces findings, never edits)
 
-Reads `sheet.svg` contact sheets (rasterised to PNG for vision) plus
-`docs/v2/tui-rubric.md`, which is derived from `wireframe.md` and
-`docs/animation-design.md`. Scores each scenario on: legibility at a glance,
-motion quality (easing, no jitter), restraint (animation never hides status),
-consistency with the wireframe, and delight. Writes
-`ralph/polish/findings.md`: one finding per item, with scenario, frame range,
-score and a concrete suggestion.
+Reads the inputs above plus `docs/v2/tui-rubric.md`, which is derived from
+`wireframe.md` and `docs/animation-design.md` and may point at reference
+screenshots in `docs/v2/tui-references/`. The rubric separates animation that
+reports state (a stage failed, the run passed) from decoration; the first must
+be legible at a glance, the second must never hide status. Scores each
+scenario on legibility, motion quality (easing, no jitter), restraint,
+consistency with the wireframe, and delight. Correctness is the objective
+gates' job; the evaluator judges preference.
+
+Writes `ralph/polish/findings.md`: one finding per item, each tied to a
+scenario and a frame range or image region, with a score and a concrete
+suggestion.
 
 ### Iterator (one finding per iteration)
 
-Takes the highest-impact open finding, changes animation data
-(`renderer/animations/*.json`) or renderer code, re-renders, runs the objective
-gates, and commits. Snapshot changes are included as `*.snap.new` files and the
-finding is marked `awaiting-approval`.
+Takes the highest-impact open finding and works it like a tuner:
+
+1. Name the parameters in the animation's JSON that bear on the finding
+   (speed, frame count, colour ramp, easing, density).
+2. Change one parameter at a time, render a small sweep of candidates, and
+   compare them as labelled images against the finding and the rubric.
+3. Use `stats.json` to explain the difference, not only to pick a winner.
+4. If no parameter sweep can fix it because a mechanism is missing (no easing
+   curve, no depth, a transition that doesn't exist), stop tuning: mark the
+   finding `needs-design` with what is missing.
+
+Edits are small changes to `renderer/animations/*.json`, leaving unrelated
+values alone, or renderer code when the finding is a mechanism. The objective
+gates run, and the commit carries `*.snap.new` files with the finding marked
+`awaiting-approval`.
 
 ### Human approval
 
 Visual snapshots are only accepted by a human (`cargo insta review`, or
-`rake polish:approve`). The loop can propose aesthetics; it can't approve its
-own. The evaluator re-scores after approval, closing or reopening the finding.
+`rake polish:approve`), after watching the change in a real terminal:
+`fun-ci console --headless` output reconstructs the screen but can't show how
+the intended terminal's font and repaint behave. The loop can propose
+aesthetics; it can't approve its own. The evaluator re-scores after approval,
+closing or reopening the finding.

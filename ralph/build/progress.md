@@ -33,7 +33,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [ ] AT-2.5: Protocol errors never crash the console
 - [ ] AT-3.1: `renderer/` Cargo crate `fun-ci-renderer`
 - [ ] AT-3.2: Handshake
-- [ ] AT-3.3: Headless mode writes `frames.jsonl`, `frames.cast`, `sheet.svg`, `stats.json`
+- [ ] AT-3.3: Headless mode writes `frames.jsonl`, `frames/NNNN.png`, `sheet.png`, `frames.cast`, `stats.json`
 - [ ] AT-3.4: Differential tests
 - [ ] AT-3.5: Contract fixtures
 - [ ] AT-3.6: Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in)
@@ -47,6 +47,8 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [ ] AT-5.2: Golden byte files become Rust `insta` snapshots
 - [ ] AT-5.3: Cucumber TUI features are rewritten against headless frames or deleted where the Rust suite covers them
 - [ ] AT-5.4: README, CHANGELOG, version 2.0.0
-- [ ] AT-6.1: Objective visual gates from `stats.json` in `rake`
+- [ ] AT-6.1: Objective visual gates from `stats.json` and `frames/` in `rake`
 - [ ] AT-6.2: TUI rubric (`docs/v2/tui-rubric.md`)
-- [ ] AT-6.3: Polish loop prompts and `rake polish:approve`
+- [ ] AT-6.3: Polish evaluator prompt
+- [ ] AT-6.4: Polish iterator prompt
+- [ ] AT-6.5: `rake polish:approve` after review in a real terminal

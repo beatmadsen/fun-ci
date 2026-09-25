@@ -187,7 +187,7 @@ is possible.
 
 - 3.1 `renderer/` Cargo crate `fun-ci-renderer`; `rake` runs `cargo test` and `cargo clippy -D warnings` with the thresholds from architecture.md. Bites shown.
 - 3.2 Handshake: `hello v1` → `ready`; unknown version → `error version`, exit 2.
-- 3.3 Headless mode writes `frames.jsonl`, `frames.cast`, `sheet.svg`, `stats.json`.
+- 3.3 Headless mode writes `frames.jsonl`, `frames/NNNN.png`, `sheet.png`, `frames.cast`, `stats.json` (fields in `renderer-protocol.md`). The PNGs decode at the expected pixel size for the grid and font.
 - 3.4 Differential tests: for every scenario, the `vt100` cell grid of the Rust output equals that of `contract/golden/<scenario>.bytes`, frame by frame.
 - 3.5 Contract fixtures: the Rust suite accepts every fixture's Ruby→renderer lines and emits its renderer→Ruby lines.
 - 3.6 Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in).
@@ -208,8 +208,10 @@ is possible.
 - 5.3 Cucumber TUI features are rewritten against headless frames or deleted where the Rust suite covers them.
 - 5.4 README, CHANGELOG, version 2.0.0.
 
-## 6. Polish loop (outline — see agentic-pipeline.md)
+## 6. Polish loop (outline; see agentic-pipeline.md)
 
-- 6.1 Objective visual gates from `stats.json` in `rake`.
-- 6.2 `docs/v2/tui-rubric.md`.
-- 6.3 `ralph/polish/` evaluator + iterator prompts; `rake polish:approve`.
+- 6.1 Objective visual gates from `stats.json` and `frames/` in `rake`, including "consecutive animation frames differ" and "every PNG decodes at the expected size". Bites shown for each.
+- 6.2 `docs/v2/tui-rubric.md`, separating state feedback from decoration, with optional reference screenshots in `docs/v2/tui-references/`.
+- 6.3 `ralph/polish/` evaluator prompt: reads ordered PNG frames (never a GIF), the contact sheet, `stats.json` and the rubric; every finding names a scenario and a frame range or region.
+- 6.4 Iterator prompt: one-parameter sweeps rendered as labelled candidates, edits limited to the values the finding concerns, `needs-design` when no parameter can fix it.
+- 6.5 `rake polish:approve`, run by a human after viewing the change in a real terminal.
