@@ -17,6 +17,7 @@ or a tool.
 bundle exec rake test       # Every Minitest test: unit, acceptance, integration
 bundle exec rake cucumber   # Cucumber feature specs
 bundle exec rake rust:test  # cargo test for the Rust renderer (renderer/)
+bundle exec rake contract:binary # Ruby drives the built renderer binary on a pty through contract/fixtures/happy-7.jsonl
 bundle exec rake rubocop    # RuboCop with the project's limits
 bundle exec rake rust:clippy # Clippy on renderer/: pedantic, -D warnings, thresholds in renderer/clippy.toml
 ```
@@ -94,6 +95,7 @@ Seams tests use in place of the real thing:
 - Every SQLite connection a test opens is closed by the end of that test, since a leaked one is inherited by the next fork in the same worker: `test/integration/process/test_sqlite_connection_guard.rb`.
 - Tests touch only the run's private temp root, which `TMPDIR` points at: no file written, database opened or git run outside it. Build paths from `Dir.mktmpdir`/`Dir.tmpdir`, never from the repository or `$HOME`: `test/integration/process/test_confinement_guard.rb`, `test/policy/test_confinement_guard_installed.rb`.
 - Only tests under `test/integration/process/` start processes, send real signals or run git, directly or through the code they call (signals: directly): `test/policy/test_fast_lanes_never_spawn.rb` (a Prism scan of unit and acceptance sources) and `test/integration/process/test_spawn_guard.rb` (the runtime guard for every other test).
+- Ruby's ConsoleSession and the real renderer binary, on a pseudo-terminal, hold the happy-7 contract conversation line for line, and the binary exits 0 on `quit`: `contract/binary/test_renderer_binary.rb` (the `contract:binary` lane; the Ruby and Rust suites each hold every fixture on their own side: `test/acceptance/test_contract_fixtures.rb`, `renderer/tests/suite/contract_fixtures.rs`).
 - What the Ruby TUI draws matches `contract/golden/`, frame for frame, and capturing twice gives identical bytes (the renderer takes its clock from `Board#now`, never `Time.now`): `test/acceptance/test_golden_corpus.rb`. After a deliberate change, run `rake contract:capture` and review the golden diff in the same commit. The Rust renderer is held to the same frames: `renderer/tests/suite/differential.rs` feeds its output and the golden bytes through the `vt100` emulator and compares the cell grids (text, colours, attributes) frame by frame, so until §5 deletes the Ruby renderer a change to what the TUI draws is made in both, in one commit.
 - The gem ships exactly the tracked files under `lib/` and `exe/` plus README, CHANGELOG and LICENSE, and keeps its publishing metadata: `test/integration/process/test_gemspec_contents.rb`.
 - CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and both mutation lanes (Ruby on 3.4, and the Rust renderer's): `test/policy/test_ci_workflow.rb`.

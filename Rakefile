@@ -31,9 +31,19 @@ def capture_golden_corpus
   corpus.scenario_names.each { |name| corpus.write(name, corpus.capture(name)) }
 end
 
+# Kept out of `rake test`: it needs the binary cargo builds first.
+def drive_renderer_binary
+  sh "cargo", "build", "--manifest-path", RENDERER_MANIFEST
+  binary = File.expand_path("renderer/target/debug/fun-ci-renderer", __dir__)
+  sh({ "FUN_CI_RENDERER" => binary }, FileUtils::RUBY, "-Itest", "-Ilib", "contract/binary/test_renderer_binary.rb")
+end
+
 namespace :contract do
   desc "Write the Ruby renderer's frames for every contract/scenarios/*.jsonl to contract/golden/"
   task(:capture) { capture_golden_corpus }
+
+  desc "Drive the real renderer binary on a pseudo-terminal through the happy-7 contract fixture"
+  task(:binary) { drive_renderer_binary }
 end
 
 RuboCop::RakeTask.new
@@ -100,4 +110,4 @@ namespace :mutation do
   task(:rust) { rust_mutation(RUST_MUTATION_THRESHOLD) }
 end
 
-task default: %i[test cucumber rust:test rubocop rust:clippy]
+task default: %i[test cucumber rust:test contract:binary rubocop rust:clippy]
