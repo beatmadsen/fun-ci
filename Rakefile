@@ -38,9 +38,8 @@ end
 
 RuboCop::RakeTask.new
 
-# tui/ and animations/ are left out: §5 of the 2.0 plan deletes them once the
-# Rust renderer takes over, and killing their mutants would be spent effort.
-MUTATED = FileList["lib/**/*.rb"].exclude("lib/fun_ci/{tui,animations}/**/*.rb")
+require_relative "test/support/mutation_scope"
+MUTATED = MutationScope.sources
 
 # Mutineer runs a mutant's covering tests serially and kills a run that passes
 # ten seconds. End-to-end tests run whole pipelines with real git and freshly
