@@ -12,7 +12,6 @@ module FunCi
 
       def initialize(board_data:)
         @board_data = board_data
-        @cursor_index = nil
         @confirm_cancel = nil
       end
 

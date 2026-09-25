@@ -54,6 +54,14 @@ class TestBoardDataPagination < Minitest::Test
     assert_equal 5, board.runs.size
   end
 
+  def test_should_load_pages_of_the_new_size_after_a_resize
+    board = board_over(10, page_size: 3)
+    board.resize(4)
+    board.load_more
+
+    assert_equal 8, board.runs.size
+  end
+
   def test_should_keep_what_it_loaded_when_resized_smaller
     board = board_over(10, page_size: 5)
     board.resize(3)
