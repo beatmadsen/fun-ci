@@ -1,0 +1,26 @@
+# frozen_string_literal: true
+
+require "tempfile"
+
+# A green run writes nothing to stderr. Anything that lands there (a dying
+# thread, an exception in a forked child) is an error no test asserted on,
+# so the run fails. fd 2 is redirected before the parallel workers fork, so
+# they and their children write to the same file.
+module StrayStderrGuard
+  def self.install
+    log = Tempfile.new("fun-ci-stderr")
+    terminal = $stderr.dup
+    $stderr.reopen(log)
+    main_pid = Process.pid
+    Minitest.after_run { report(log, terminal) if Process.pid == main_pid }
+  end
+
+  def self.report(log, terminal)
+    $stderr.reopen(terminal)
+    written = File.read(log.path)
+    return if written.empty?
+
+    warn "Stray output on stderr fails the run:\n#{written}"
+    exit 1
+  end
+end

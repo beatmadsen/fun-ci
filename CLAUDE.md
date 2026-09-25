@@ -86,6 +86,8 @@ Tests use Minitest. Cucumber features exist for TUI acceptance specs but unit te
 - Tests must use **public interfaces only** -- no `instance_variable_get/set`
 - If you can't test through the public API, fix the design (add a DI seam)
 - Background behavior should be **injected and controlled** by the test, not spawned and polled
+- A test run must write **nothing to stderr**: `test/support/stray_stderr_guard.rb` fails the run otherwise (a dying thread or a forked child's exception is an error no test asserted on). Capture output a test expects with `assert_output`/`capture_io`
+- A test that forks a real child must wait for it (`Process.waitpid`) before its teardown deletes anything the child uses
 
 **DI seams used throughout:**
 - `command_runner` lambda on `Trigger`, `StageRunner`, and `BackgroundWrapper` -- replaces real process spawning in tests
