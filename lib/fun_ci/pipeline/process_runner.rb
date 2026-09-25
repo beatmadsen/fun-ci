@@ -7,13 +7,21 @@ module FunCi
         reader, writer = IO.pipe
         pid = Process.spawn(cmd, out: writer, err: writer, pgroup: true)
         writer.close
-        output = Thread.new { reader.read }
+        output = Thread.new { read_until_closed(reader) }
         output.join(budget) ? process_finished(pid, output.value) : kill_process_group(pid)
       ensure
         ignoring_errors { reader&.close }
       end
 
       private
+
+      # On a timeout the reader is closed while this thread may still be
+      # reading; whatever the killed command wrote no longer matters.
+      def read_until_closed(reader)
+        reader.read
+      rescue IOError
+        ""
+      end
 
       def process_finished(pid, output)
         _, status = Process.waitpid2(pid)
