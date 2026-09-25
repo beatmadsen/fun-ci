@@ -6,6 +6,7 @@ pub mod animator;
 pub mod ansi;
 pub mod board_view;
 pub mod cli;
+pub mod console;
 pub mod format;
 pub mod grid;
 pub mod headless;
