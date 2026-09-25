@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "gate"
 require_relative "git_environment"
 
 module FunCi
@@ -25,18 +26,13 @@ module FunCi
       private
 
       def start(cmd, writer, chdir)
-        gate, opener = IO.pipe
-        pid = Process.spawn(GitEnvironment::CLEAN, format(GATED, cmd), out: writer, err: writer, 9 => gate,
-                                                                       pgroup: true, chdir: chdir)
-        [writer, gate].each(&:close)
+        gate = Gate.create
+        pid = Process.spawn(GitEnvironment::CLEAN, format(GATED, cmd), out: writer, err: writer,
+                                                                       9 => gate.child_end, pgroup: true, chdir: chdir)
+        [writer, gate.child_end].each(&:close)
         yield pid if block_given?
-        open_gate(opener)
+        gate.open
         pid
-      end
-
-      def open_gate(opener)
-        ignoring_errors { opener.puts }
-        opener.close
       end
 
       # On a timeout the reader is closed while this thread may still be
