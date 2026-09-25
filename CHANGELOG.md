@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   commit before it. `fun-ci install-hooks` writes `post-commit` and
   `pre-push`. `fun-ci trigger --background` is the new name for
   `--no-validate`, which still works until 2.1 and says so on stderr.
+  `install-hooks` removes the `pre-commit` hook fun-ci 1.x wrote. A
+  `pre-commit` hook of your own is left alone, and if it still calls
+  fun-ci, `fun-ci check` warns you to take that out.
 - Every pipeline now runs in a git worktree of its own, checked out at the
   commit it is testing, under `.git/fun-ci/worktrees/`. Before, the stages ran
   in your checkout while you kept editing it. The stage scripts come from the

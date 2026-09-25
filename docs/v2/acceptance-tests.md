@@ -126,7 +126,7 @@ All tests here are integration tests against a real temporary git repository.
 ### 1.9 Upgrading replaces fun-ci's own pre-commit hook only
 **Given** a pre-commit hook written by fun-ci 1.x, and separately a user's own pre-commit hook
 **When** `fun-ci install-hooks` runs
-**Then** fun-ci's 1.x hook is removed; a user's hook is left alone and `fun-ci check` warns that it doesn't call fun-ci.
+**Then** fun-ci's 1.x hook is removed; a user's hook is left alone, and when it still calls fun-ci, `fun-ci check` warns that fun-ci now runs after the commit (the warning doesn't fail the check).
 
 ### 1.10 `--no-validate` keeps working as an alias for one release
 **When** `fun-ci trigger --no-validate <sha> <branch>` runs

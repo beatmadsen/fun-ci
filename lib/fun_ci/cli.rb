@@ -8,6 +8,7 @@ require_relative "pipeline/trigger_params"
 require_relative "setup/installer"
 require_relative "setup/hook_writer"
 require_relative "setup/setup_checker"
+require_relative "setup/legacy_hooks"
 
 module FunCi
   class Cli
@@ -82,7 +83,11 @@ module FunCi
     end
 
     def run_install_hooks(args)
-      types = args.any? ? [args.first] : Setup::HookScript.types
+      Setup::LegacyHooks.new(Dir.pwd).remove(@io.stdout)
+      install_hooks(args.any? ? [args.first] : Setup::HookScript.types)
+    end
+
+    def install_hooks(types)
       types.each do |type|
         code = Setup::HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @io.stdout)
         return code unless code.zero?

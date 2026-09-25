@@ -41,6 +41,14 @@ class TestCliInstallHooks < Minitest::Test
 
     refute hook_exists?("pre-commit")
   end
+
+  # AT-1.9: upgrading from 1.x takes out the pre-commit hook fun-ci wrote.
+  def test_removes_fun_ci_s_1x_pre_commit_hook
+    File.write(hook_path("pre-commit"), "#!/bin/sh\n# fun-ci-managed-hook\nfun-ci trigger --no-validate\n")
+    run_cli("install-hooks")
+
+    refute hook_exists?("pre-commit")
+  end
 end
 
 class TestCliInitEverything < Minitest::Test
