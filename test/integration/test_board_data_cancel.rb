@@ -13,16 +13,15 @@ class TestBoardDataCancel < Minitest::Test
 
   def setup
     setup_test_db
-    @stopped = []
+    @signals = []
   end
 
   def teardown = teardown_test_db
 
   def test_should_stop_the_processes_of_the_run_it_cancels
-    run_id = running_run
-    cancel(run_id)
+    cancel(running_run)
 
-    assert_equal([[run_id, [100]]], @stopped.map { |run| [run.id, run.processes] })
+    assert_equal [["KILL", 100]], @signals
   end
 
   def test_should_record_the_run_it_cancels_as_cancelled
@@ -37,7 +36,7 @@ class TestBoardDataCancel < Minitest::Test
     RUN.update_status(@db, run_id, "completed")
     cancel(run_id)
 
-    assert_empty @stopped
+    assert_empty @signals
   end
 
   private
@@ -50,7 +49,7 @@ class TestBoardDataCancel < Minitest::Test
   end
 
   def cancel(run_id)
-    stopper = Struct.new(:stopped) { def stop(run) = stopped << run }.new(@stopped)
-    FunCi::Tui::BoardData.new(@db, run_canceller: stopper).cancel_run(run_id)
+    canceller = FunCi::Pipeline::RunCanceller.new(killer: ->(signal, pid) { @signals << [signal, pid] })
+    FunCi::Tui::BoardData.new(@db, run_canceller: canceller).cancel_run(run_id)
   end
 end

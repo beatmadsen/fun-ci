@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require_relative "end_to_end"
+require_relative "descendants"
 require "fun_ci/tui/board_data"
 
 # A real `fun-ci trigger` run, in a process of its own, whose stage scripts
 # can be parked: a script given `park(stage)` waits on a FIFO the test opens
 # only after cancelling; one still alive then writes its stage to `outlived`
 # and exits, so the run always ends and a failed cancel fails a test rather
-# than hanging it. The run gets one end of a pipe as fd 3, which every
-# process it starts inherits, so reading that pipe to its end waits exactly
-# until all of them are gone. Expects @project and @tmp.
+# than hanging it. Descendants tells when every process of the run is gone.
+# Expects @project and @tmp.
 module BlockedRun
   include EndToEnd
 
@@ -35,22 +35,16 @@ module BlockedRun
     @project.commit("#{fast} / #{slow}")
   end
 
-  # Starts the run and returns once a stage script has said it started, with
-  # the run's pid and the reading end of its pipe.
+  # Starts the run and returns once a stage script has said it started.
   def start_blocked_run(sha)
-    all_gone, held = IO.pipe
-    pid = Process.spawn({ "TMPDIR" => @tmp }, RbConfig.ruby, FUN_CI, "trigger", sha, "main",
-                        chdir: @project.dir, 3 => held, %i[out err] => File::NULL)
-    held.close
-    File.read(started)
-    [pid, all_gone]
+    Descendants.spawn({ "TMPDIR" => @tmp }, RbConfig.ruby, FUN_CI, "trigger", sha, "main",
+                      chdir: @project.dir, %i[out err] => File::NULL).tap { File.read(started) }
   end
 
   # Lets whatever survived the cancel finish, and waits for the run to end.
-  def release_and_wait(pid, all_gone)
+  def release_and_wait(run)
     release_what_survived
-    all_gone.read
-    Process.wait(pid)
+    run.wait_for_all
   end
 
   # Opening a FIFO for writing without blocking fails when nothing reads it.

@@ -22,8 +22,7 @@ module FunCi
       private
 
       def cancel_run(run, new_commit_hash)
-        @run_canceller.stop(run)
-        Persistence::ActiveRuns.cancelled(@db, run)
+        @run_canceller.cancel(@db, run)
         @stdout.puts "Cancelled stale pipeline for #{run.commit_hash}. Starting fresh for #{new_commit_hash}."
       end
     end

@@ -34,10 +34,7 @@ module FunCi
       # Stops the run's processes, then records it cancelled. A run that has
       # finished meanwhile is left as it is.
       def cancel_run(run_id)
-        Persistence::ActiveRuns.with_id(@db, run_id).each do |run|
-          @run_canceller.stop(run)
-          Persistence::ActiveRuns.cancelled(@db, run)
-        end
+        Persistence::ActiveRuns.with_id(@db, run_id).each { |run| @run_canceller.cancel(@db, run) }
       end
 
       private

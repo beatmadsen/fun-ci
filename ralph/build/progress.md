@@ -55,3 +55,4 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [ ] AT-6.4: Polish iterator prompt
 - [ ] AT-6.5: `rake polish:approve` after review in a real terminal
 - [x] R1: One ProbeSuite helper replaces the guard tests' own probe runners; CallScanner.scan replaces two hand-rolled source scans
+- [x] R2: RunCanceller#cancel is the one stop-and-record the stale canceller and the console share; one Descendants helper waits for a command and everything it started

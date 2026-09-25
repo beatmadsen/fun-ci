@@ -15,16 +15,17 @@ class TestStalePipelineCanceller < Minitest::Test
   def setup
     setup_test_db
     @stdout = StringIO.new
-    @stopped = []
+    @signals = []
   end
 
   def teardown = teardown_test_db
 
   def test_should_stop_every_unfinished_run_on_the_branch
-    runs = [active_run("abc1234"), active_run("bcd2345")]
+    active_run("abc1234")
+    active_run("bcd2345")
     cancel
 
-    assert_equal runs, @stopped.map(&:id)
+    assert_equal [["KILL", 100], ["KILL", 100]], @signals
   end
 
   def test_should_record_a_stopped_run_cancelled
@@ -45,25 +46,28 @@ class TestStalePipelineCanceller < Minitest::Test
     active_run("abc1234", branch: "feature")
     cancel
 
-    assert_empty @stopped
+    assert_empty @signals
   end
 
   def test_should_leave_finished_runs_alone
     RUN.update_status(@db, active_run("abc1234"), "completed")
     cancel
 
-    assert_empty @stopped
+    assert_empty @signals
   end
 
   private
 
   def active_run(sha, branch: "main")
-    RUN.create(@db, commit_hash: sha, branch: branch).tap { |id| RUN.update_status(@db, id, "running") }
+    RUN.create(@db, commit_hash: sha, branch: branch).tap do |id|
+      RUN.update_status(@db, id, "running")
+      RUN.store_trigger_pid(@db, id, 100)
+    end
   end
 
   def cancel
-    stopper = Struct.new(:stopped) { def stop(run) = stopped << run }.new(@stopped)
-    FunCi::Pipeline::StalePipelineCanceller.new(db: @db, branch: "main", stdout: @stdout, run_canceller: stopper)
+    canceller = FunCi::Pipeline::RunCanceller.new(killer: ->(signal, pid) { @signals << [signal, pid] })
+    FunCi::Pipeline::StalePipelineCanceller.new(db: @db, branch: "main", stdout: @stdout, run_canceller: canceller)
                                            .cancel(new_commit_hash: "def5678")
   end
 end

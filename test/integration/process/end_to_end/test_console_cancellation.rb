@@ -13,9 +13,9 @@ module ConsoleCancellation
   def setup
     create_blocked_project
     @sha = commit_stages(**stages)
-    pid, all_gone = start_blocked_run(@sha)
+    run = start_blocked_run(@sha)
     with_db { |db| FunCi::Tui::BoardData.new(db).cancel_run(run_id_of(@sha)) }
-    release_and_wait(pid, all_gone)
+    release_and_wait(run)
   end
 
   def teardown = remove_blocked_project

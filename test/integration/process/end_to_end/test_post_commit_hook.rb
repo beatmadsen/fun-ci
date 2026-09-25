@@ -2,13 +2,13 @@
 
 require_relative "../../../test_helper"
 require_relative "../../../support/git_project"
+require_relative "../../../support/descendants"
 require "fun_ci/cli"
 
 # AT-1.8: the hook that runs a pipeline in the background is post-commit, so
 # the commit it tests is the one just made. The commit runs with `fun-ci` on
-# PATH, and with one end of a pipe as fd 3, which git, the hook, the trigger
-# and its background fork all inherit, so reading that pipe to its end waits
-# until every one of them has finished.
+# PATH; Descendants waits until git, the hook, the trigger and its
+# background fork have all finished.
 class TestPostCommitHook < Minitest::Test
   FUN_CI = File.expand_path("../../../../exe/fun-ci", __dir__)
 
@@ -43,11 +43,8 @@ class TestPostCommitHook < Minitest::Test
   def commit_with_hooks
     @project.write("change.txt", "a change\n")
     @project.git("add", "-A")
-    all_gone, held = IO.pipe
-    pid = Process.spawn(hook_env, "git", "commit", "-q", "-m", "a change", chdir: @project.dir,
-                                                                           3 => held, %i[out err] => File::NULL)
-    held.close
-    all_gone.read.then { Process.wait2(pid).last }
+    Descendants.spawn(hook_env, "git", "commit", "-q", "-m", "a change", chdir: @project.dir,
+                                                                         %i[out err] => File::NULL).wait_for_all
   end
 
   def hook_env

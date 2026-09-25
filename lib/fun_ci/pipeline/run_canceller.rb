@@ -16,6 +16,12 @@ module FunCi
         @slot_held = slot_held
       end
 
+      # Stops the run and records it, and its unfinished stages, cancelled.
+      def cancel(db, run)
+        stop(run)
+        Persistence::ActiveRuns.cancelled(db, run)
+      end
+
       def stop(run)
         return unless alive?(run)
 

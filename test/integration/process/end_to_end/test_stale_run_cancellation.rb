@@ -13,9 +13,9 @@ class TestStaleRunCancellation < Minitest::Test
     create_blocked_project
     @old = commit_stages(fast: "#{say_started}\n#{park("fast")}", slow: park("slow"))
     new = commit_stages(fast: "true", slow: "true")
-    pid, all_gone = start_blocked_run(@old)
+    run = start_blocked_run(@old)
     trigger(@project, new, db_dir: db_dir)
-    release_and_wait(pid, all_gone)
+    release_and_wait(run)
   end
 
   def teardown = remove_blocked_project
