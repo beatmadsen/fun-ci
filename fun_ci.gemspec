@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.files = IO.popen(%w[git ls-files -z -- lib exe LICENSE.txt README.md CHANGELOG.md], chdir: __dir__, &:read)
                  .split("\x0")
   spec.bindir = "exe"
-  spec.executables = %w[fun-ci fun-ci-trigger fun-ci-tui]
+  spec.executables = %w[fun-ci]
   spec.require_paths = ["lib"]
 
   spec.add_dependency "sqlite3", "~> 2.0"

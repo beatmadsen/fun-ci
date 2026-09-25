@@ -39,6 +39,10 @@ class TestGemspecContents < Minitest::Test
     end
   end
 
+  def test_installs_only_the_fun_ci_executable
+    assert_equal %w[fun-ci], SPEC["executables"]
+  end
+
   def test_requires_multi_factor_auth_to_publish
     assert_equal "true", SPEC.dig("metadata", "rubygems_mfa_required")
   end

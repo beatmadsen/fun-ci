@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+- The `fun-ci-trigger` and `fun-ci-tui` executables. Use `fun-ci trigger` and
+  `fun-ci console`, which have done the same job since 1.0.
+
 ### Bug Fixes
 - A project's name in the console changed colour every time the console
   started, because the colour came from `String#hash`, which Ruby seeds per

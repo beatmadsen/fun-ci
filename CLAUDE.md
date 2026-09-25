@@ -51,8 +51,6 @@ fun-ci install-hooks pre-commit                       # Install a single hook ty
 fun-ci check                                          # Verify .fun-ci/ setup is valid
 ```
 
-Legacy entry points (`fun-ci-trigger`, `fun-ci-tui`) still exist but are superseded by the unified `fun-ci` CLI.
-
 ## Stack
 
 - Ruby >= 3.2 (CI runs 3.2, 3.3, 3.4, 4.0). One runtime dependency: `sqlite3`, in WAL mode.
