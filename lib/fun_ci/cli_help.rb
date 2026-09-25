@@ -14,6 +14,7 @@ module FunCi
         init           Initialize .fun-ci/ with template scripts
         install-hooks  Install post-commit and pre-push git hooks
         check          Verify project setup
+        prune          Remove fun-ci's worktrees when no pipeline is running
 
       Options:
         -h, --help     Show this help message

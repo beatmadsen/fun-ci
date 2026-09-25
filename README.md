@@ -10,7 +10,7 @@ Fun-CI hooks into git and runs your pipeline locally:
 2. **Slow suite** (spawned in background, 5min budget) -- integration/end-to-end tests
 3. **Fast suite** (synchronous, 10s budget) -- unit tests
 
-On **pre-commit**, the entire pipeline forks to the background so your commit is not blocked. On **pre-push**, lint, build, and fast suite must pass before the push proceeds. The slow suite always runs in the background.
+After each commit (**post-commit**), the entire pipeline forks to the background so your commit is not blocked. On **pre-push**, lint, build, and fast suite must pass before the push proceeds. The slow suite always runs in the background.
 
 Results are stored in a local SQLite database. A terminal dashboard lets you monitor pipeline status across branches.
 
@@ -24,7 +24,7 @@ fun-ci init --everything
 
 This does three things:
 1. Detects your project type and creates `.fun-ci/` with template scripts
-2. Installs pre-commit and pre-push git hooks
+2. Installs post-commit and pre-push git hooks
 3. Verifies the setup is valid
 
 `fun-ci init` has built-in templates for Ruby (Bundler), JVM (Gradle Kotlin, Gradle Groovy, Maven), but Fun-CI works with any project -- just write your own shell scripts.
@@ -51,20 +51,21 @@ Each script receives the commit hash as its first argument.
 
 ```
 fun-ci trigger <commit> <branch>               Run the full pipeline
-fun-ci trigger --no-validate <commit> <branch>  Fork pipeline to background (used by pre-commit)
+fun-ci trigger --background <commit> <branch>  Fork pipeline to background (used by post-commit)
 fun-ci console                                 Launch the TUI dashboard
 fun-ci init                                     Scaffold .fun-ci/ for detected project type
 fun-ci init --everything                        init + install-hooks + check in one step
-fun-ci install-hooks                            Install pre-commit and pre-push hooks
-fun-ci install-hooks pre-commit                 Install a single hook type
+fun-ci install-hooks                            Install post-commit and pre-push hooks
+fun-ci install-hooks post-commit                Install a single hook type
 fun-ci check                                    Verify .fun-ci/ setup
+fun-ci prune                                    Remove fun-ci's worktrees when no pipeline is running
 ```
 
 ## Git Hooks
 
 After `fun-ci install-hooks`, two hooks are active:
 
-**pre-commit** -- Runs `fun-ci trigger --no-validate <commit> <branch>`. This forks the pipeline into a background process and returns immediately, so commits are never blocked.
+**post-commit** -- Runs `fun-ci trigger --background <commit> <branch>` for the commit you just made. This forks the pipeline into a background process and returns immediately, so commits are never blocked.
 
 **pre-push** -- Runs `fun-ci trigger <commit> <branch>`. This validates the project config, runs lint + build + fast suite synchronously, and blocks the push if any stage fails. The slow suite runs in the background.
 

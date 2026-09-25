@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `fun-ci prune` deletes the worktrees fun-ci keeps under
+  `.git/fun-ci/worktrees/` and has git forget them. It refuses, and
+  deletes nothing, while a pipeline is running.
+
 ### Changed
 - The hook that runs a pipeline in the background is now `post-commit`,
   so it tests the commit you just made; the `pre-commit` hook tested the

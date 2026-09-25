@@ -27,6 +27,9 @@ module FunCi
         git(path, "clean", "-fd")
       end
 
+      # Has git forget the worktrees whose directories are gone.
+      def prune = git(@project_root, "worktree", "prune")
+
       private
 
       def add(path, sha) = git(@project_root, "worktree", "add", "--detach", "--force", path, sha)

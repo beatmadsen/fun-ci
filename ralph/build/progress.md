@@ -26,7 +26,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-1.8: The background hook is post-commit and records the new commit
 - [x] AT-1.9: Upgrading replaces fun-ci's own pre-commit hook only
 - [x] AT-1.10: `--no-validate` keeps working as an alias for one release
-- [ ] AT-1.11: Worktrees are cleaned up with `fun-ci prune`
+- [x] AT-1.11: Worktrees are cleaned up with `fun-ci prune`
 - [ ] AT-2.1: ConsoleSession separates state from rendering
 - [ ] AT-2.2: `board` messages follow the protocol
 - [ ] AT-2.3: Stage changes become events, not animations

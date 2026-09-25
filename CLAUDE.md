@@ -55,6 +55,7 @@ fun-ci init --everything                              # init + install-hooks + c
 fun-ci install-hooks                                  # Install post-commit and pre-push git hooks
 fun-ci install-hooks post-commit                      # Install a single hook type
 fun-ci check                                          # Verify .fun-ci/ setup is valid
+fun-ci prune                                          # Remove fun-ci's worktrees when no pipeline is running
 ```
 
 ## Stack

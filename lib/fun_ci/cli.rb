@@ -17,7 +17,8 @@ module FunCi
       "console" => :run_console,
       "init" => :run_init,
       "install-hooks" => :run_install_hooks,
-      "check" => :run_check
+      "check" => :run_check,
+      "prune" => :run_prune
     }.freeze
 
     def self.default_db_dir = File.join(Dir.tmpdir, "fun-ci")
@@ -97,6 +98,16 @@ module FunCi
 
     def run_check(_args)
       Setup::SetupChecker.run(project_root: Dir.pwd, stdout: @io.stdout)
+    end
+
+    def run_prune(_args)
+      require_relative "pipeline/worktree_prune"
+      removed = Pipeline::WorktreePrune.new(Pipeline::Worktrees.new(Dir.pwd)).run
+      @io.stdout.puts "Removed #{removed} fun-ci worktree#{"s" unless removed == 1}."
+      0
+    rescue Pipeline::WorktreePrune::Busy, Pipeline::Worktrees::GitError => e
+      @io.stderr.puts "fun-ci prune: #{e.message}"
+      1
     end
 
     def setup_db
