@@ -2,6 +2,7 @@
 
 
 pub mod boards;
+pub mod live;
 pub mod pty;
 
 use std::io;
@@ -15,6 +16,7 @@ pub struct FakeTerminal {
     pub size: (u16, u16),
     pub calls: Vec<&'static str>,
     pub fail_enter: bool,
+    pub frames: Vec<Vec<u8>>,
 }
 
 impl FakeTerminal {
@@ -42,6 +44,11 @@ impl Terminal for FakeTerminal {
 
     fn restore(&mut self) -> io::Result<()> {
         self.calls.push("restore");
+        Ok(())
+    }
+
+    fn draw(&mut self, bytes: &[u8]) -> io::Result<()> {
+        self.frames.push(bytes.to_vec());
         Ok(())
     }
 }

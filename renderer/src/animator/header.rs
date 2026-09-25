@@ -84,6 +84,12 @@ impl Header {
         self.running.iter_mut().chain(self.event.iter_mut()).for_each(Player::advance);
     }
 
+    /// Whether an event animation is still playing.
+    #[must_use]
+    pub fn playing_event(&self) -> bool {
+        self.event.as_ref().is_some_and(|player| !player.finished())
+    }
+
     /// The name of the animation `lines` draws.
     #[must_use]
     pub fn showing(&self) -> &str {
@@ -91,7 +97,7 @@ impl Header {
     }
 
     fn active(&self) -> &Player {
-        let event = self.event.as_ref().filter(|player| !player.finished());
+        let event = self.event.as_ref().filter(|_| self.playing_event());
         event.or(self.running.as_ref()).unwrap_or(&self.idle)
     }
 }

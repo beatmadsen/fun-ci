@@ -36,6 +36,15 @@ Ruby                                  renderer
 - Ruby sends `board` whenever its data changes and at least every 5 s. The
   renderer redraws on its own clock (10 fps while anything animates or runs,
   otherwise once a second for relative times) using the latest `board`.
+  "Animates" means an event's animation (in the header or over a stage) is
+  playing or queued; the looping idle and running header animations do not
+  count by themselves, so an idle board with nothing running twinkles once a
+  second. The next frame is due that interval after the last one drawn.
+- Nothing is drawn before the first `board`. Each `board` is drawn at once,
+  and its `now` sets the renderer's clock, which then advances with wall
+  time until the next `board`.
+- A live frame is byte for byte the headless frame for the same state and
+  clock: both draw through the same code.
 
 ## Ruby → renderer
 
@@ -98,9 +107,22 @@ Names: `stage_failed`, `stage_passed`, `run_passed`, `run_failed`,
 `up`, `down`, `enter`, `esc`, `ctrl_c`. Ruby's `KeyHandler` gives it meaning.
 `ctrl_c` is delivered as a key (raw mode), and Ruby answers with `quit`.
 
+How terminal bytes become keys: a printable character (any UTF-8 character
+that is not a control character) is itself; `ESC [ A` and `ESC O A` are `up`,
+`ESC [ B` and `ESC O B` are `down`; CR or LF is `enter`; byte 3 is `ctrl_c`; an
+escape byte that starts no sequence is `esc`. Other control bytes and escape
+sequences send nothing. Each read from the terminal is decoded on its own,
+since a terminal writes a sequence in one go; several keys in one read are
+sent in order, one message each.
+
 ### `resize`
 `{"t":"resize","cols":120,"rows":40}` — Ruby recomputes the page size and sends
 a fresh `board`.
+
+Sent when the terminal's size changes and differs from the size last reported
+(in `ready` or an earlier `resize`). Once the first `board` has arrived, the
+renderer redraws at the new size at once, with the board it has, rather than
+leave the old layout on screen until Ruby's fresh `board`.
 
 ### `error`
 `{"t":"error","code":"parse"|"unknown_type"|"version"|"terminal","detail":"..."}`

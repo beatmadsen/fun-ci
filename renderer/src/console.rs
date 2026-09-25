@@ -46,6 +46,13 @@ impl Console {
         self.size
     }
 
+    /// Whether the next frames change without a new board: an animation is
+    /// playing or queued, or a run is running.
+    #[must_use]
+    pub fn busy(&self) -> bool {
+        self.view.animating() || self.board.runs.iter().any(|run| run.status() == "running")
+    }
+
     /// Draws one frame as of `now_ms`: the bytes, and the header animation shown.
     pub fn frame(&mut self, now_ms: i64) -> (Vec<u8>, String) {
         self.view.begin_frame();

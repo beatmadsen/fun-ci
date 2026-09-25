@@ -1,8 +1,13 @@
-//! The live session: the protocol conversation with Ruby over stdin/stdout.
+//! The live session: the protocol conversation with Ruby over stdin/stdout,
+//! and the console drawn on the terminal.
 
 use std::io::{BufRead, Write};
 
-use crate::protocol::{Inbound, Outbound, ParseError, parse};
+use crate::animation::Library;
+use crate::console::Console;
+use crate::inputs::{Clock, Input, Inputs, LineInputs, StillClock};
+use crate::live::Live;
+use crate::protocol::{Inbound, Outbound, parse};
 use crate::terminal::Terminal;
 
 /// Exit status after `quit` or end of input.
@@ -12,14 +17,32 @@ pub const EXIT_TERMINAL: i32 = 1;
 /// Exit status when `hello` names a version this build does not speak.
 pub const EXIT_VERSION: i32 = 2;
 
+/// What a live session reads, writes to Ruby, tells the time by, and draws.
+pub struct Session<I: Inputs, W: Write, C: Clock> {
+    pub inputs: I,
+    pub output: W,
+    pub clock: C,
+    pub console: Console,
+}
+
+/// Runs one session on Ruby's lines alone, with a clock that stands still.
+pub fn run_session<R: BufRead, W: Write, T: Terminal>(input: R, output: W, terminal: &mut T) -> i32 {
+    let console = Console::new(&Library::builtin(), 0, (80, 24));
+    run_live(Session { inputs: LineInputs::new(input), output, clock: StillClock, console }, terminal)
+}
+
 /// Runs one session to its end and returns the process exit status. Once
 /// entered, the terminal is restored however the session ends: end of input,
 /// `quit`, or a panic unwinding through here.
-pub fn run_session<R: BufRead, W: Write, T: Terminal>(input: R, output: W, terminal: &mut T) -> i32 {
-    let mut lines = input.lines().map_while(Result::ok);
+pub fn run_live<I: Inputs, W: Write, C: Clock, T: Terminal>(session: Session<I, W, C>, terminal: &mut T) -> i32 {
+    let Session { mut inputs, output, clock, console } = session;
     let mut replies = Replies(output);
-    match open(lines.next().as_deref(), &mut replies, terminal) {
-        Ok(entered) => converse(&entered, lines, &mut replies),
+    let hello = match inputs.next(None) {
+        Input::Line(line) => Some(line),
+        _ => None,
+    };
+    match open(hello.as_deref(), &mut replies, terminal) {
+        Ok(mut entered) => Live::new(console, clock).converse(&mut inputs, &mut replies, &mut entered),
         Err(status) => status,
     }
 }
@@ -31,7 +54,15 @@ pub fn on_terminate(signal: i32, restore: impl FnOnce(), exit: impl FnOnce(i32))
     exit(128 + signal);
 }
 
-struct Entered<'t, T: Terminal>(&'t mut T);
+/// The terminal while the session holds it; restored when dropped.
+pub struct Entered<'t, T: Terminal>(&'t mut T);
+
+impl<T: Terminal> Entered<'_, T> {
+    /// The terminal, to draw on.
+    pub fn terminal(&mut self) -> &mut T {
+        self.0
+    }
+}
 
 impl<T: Terminal> Drop for Entered<'_, T> {
     fn drop(&mut self) {
@@ -54,28 +85,6 @@ fn open<'t, W: Write, T: Terminal>(
     Ok(Entered(terminal))
 }
 
-fn converse<W: Write, T: Terminal>(
-    _entered: &Entered<T>,
-    lines: impl Iterator<Item = String>,
-    replies: &mut Replies<W>,
-) -> i32 {
-    for line in lines {
-        if !handle(parse(&line), replies) {
-            break;
-        }
-    }
-    EXIT_OK
-}
-
-fn handle<W: Write>(message: Result<Inbound, ParseError>, replies: &mut Replies<W>) -> bool {
-    match message {
-        Ok(Inbound::Quit) => return false,
-        Ok(_) => {}
-        Err(error) => replies.send(&error.reply()),
-    }
-    true
-}
-
 fn check_hello(line: Option<&str>) -> Result<(), String> {
     match line.map(parse) {
         Some(Ok(Inbound::Hello { v: Some(v) })) if crate::supports(v) => Ok(()),
@@ -85,10 +94,12 @@ fn check_hello(line: Option<&str>) -> Result<(), String> {
     }
 }
 
-struct Replies<W: Write>(W);
+/// Lines to Ruby.
+pub struct Replies<W: Write>(W);
 
 impl<W: Write> Replies<W> {
-    fn send(&mut self, message: &Outbound) {
+    /// Writes `message` and flushes it; a failure is reported on stderr.
+    pub fn send(&mut self, message: &Outbound) {
         let written = writeln!(self.0, "{}", message.line()).and_then(|()| self.0.flush());
         if let Err(error) = written {
             eprintln!("fun-ci-renderer: could not write to Ruby: {error}");

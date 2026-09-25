@@ -66,6 +66,16 @@ impl Outbound {
     }
 
     #[must_use]
+    pub fn key(key: &str) -> Self {
+        Self::from(&json!({"t": "key", "key": key}))
+    }
+
+    #[must_use]
+    pub fn resize(cols: u16, rows: u16) -> Self {
+        Self::from(&json!({"t": "resize", "cols": cols, "rows": rows}))
+    }
+
+    #[must_use]
     pub fn error(code: &str, detail: &str) -> Self {
         Self::from(&json!({"t": "error", "code": code, "detail": detail}))
     }

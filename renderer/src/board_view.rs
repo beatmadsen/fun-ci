@@ -37,6 +37,11 @@ impl BoardView {
         &mut self.animator
     }
 
+    #[must_use]
+    pub fn animating(&self) -> bool {
+        self.animator.animating()
+    }
+
     pub fn clear(&mut self) {
         self.screen.clear();
     }

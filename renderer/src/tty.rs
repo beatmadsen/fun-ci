@@ -55,6 +55,10 @@ impl Terminal for Tty {
     fn restore(&mut self) -> io::Result<()> {
         restore_controlling_terminal()
     }
+
+    fn draw(&mut self, bytes: &[u8]) -> io::Result<()> {
+        with_entered(|entered| entered.file.write_all(bytes)).unwrap_or(Ok(()))
+    }
 }
 
 /// Leaves the alternate screen and raw mode if this process entered them,

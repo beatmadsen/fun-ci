@@ -38,6 +38,13 @@ impl Animator {
         self.pending.push(event);
     }
 
+    /// Whether anything but the looping idle and running animations is
+    /// playing, or an event waits to be played.
+    #[must_use]
+    pub fn animating(&self) -> bool {
+        !self.pending.is_empty() || !self.effects.is_empty() || self.header.playing_event()
+    }
+
     /// Draws this frame's animations over the board, then advances them.
     /// Returns the name of the header animation drawn.
     pub fn render(&mut self, screen: &mut Screen, runs: &[Run]) -> String {

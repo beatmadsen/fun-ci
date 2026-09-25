@@ -19,6 +19,7 @@ mod pictures;
 mod headless;
 mod headless_measures;
 mod keys;
+mod live;
 mod protocol_version;
 mod restore;
 mod screen_bytes;
