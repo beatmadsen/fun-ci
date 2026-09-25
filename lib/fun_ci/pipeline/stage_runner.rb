@@ -1,86 +1,57 @@
 # frozen_string_literal: true
 
-require "timeout"
-require_relative "process_runner"
-require_relative "../persistence/pipeline_recorder"
+require_relative "trigger_params"
 
 module FunCi
   module Pipeline
     class StageRunner
-      include ProcessRunner
+      LABELS = { "lint" => "Lint", "build" => "Build", "fast" => "Fast suite", "slow" => "Slow suite" }.freeze
+      ADVICE = {
+        "lint" => "Trim your linter config or split into stages.",
+        "build" => "Keep your build efficient and not let it become a bottleneck.",
+        "fast" => "Your fast tests have gotten too slow. Split or speed them up.",
+        "slow" => "Pare down integration tests, parallelise, or raise the budget."
+      }.freeze
 
-      def initialize(commit_hash:, stdout:, command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new)
+      def initialize(commit_hash:, stdout:, seams: Seams.new)
         @commit_hash = commit_hash
         @stdout = stdout
-        @command_runner = command_runner
-        @time_budgets = time_budgets
-        @recorder = recorder
+        @seams = seams
       end
 
-      def run_stage(config, stage)
-        script = config.script_path(stage)
-        budget = @time_budgets[stage]
-
-        job_id = @recorder.start_stage(stage)
-        output, status, timed_out = run_with_timeout(script, budget)
-
-        if timed_out
-          @recorder.end_stage(job_id, "timed_out")
-          @stdout.puts "#{stage_label(stage)} killed -- exceeded #{budget}s time budget."
-          @stdout.puts budget_advice(stage)
-          return false
-        end
-
-        unless status.success?
-          @recorder.end_stage(job_id, "failed")
-          @stdout.puts output unless output.empty?
-          @stdout.puts "#{stage_label(stage)} failed."
-          return false
-        end
-
-        @recorder.end_stage(job_id, "completed")
-        true
+      def passes?(config, stage)
+        job_id = @seams.recorder.start_stage(stage)
+        status = outcome(stage, *execute(config, stage))
+        @seams.recorder.end_stage(job_id, status)
+        status == "completed"
       end
 
       private
 
-      def run_with_timeout(script, budget)
-        cmd = "#{script} #{@commit_hash}"
-
-        if @command_runner
-          begin
-            output, status = @command_runner.call(cmd)
-            [output, status, false]
-          rescue Timeout::Error
-            ["", nil, true]
-          end
-        else
-          run_process_with_timeout(cmd, budget)
-        end
+      def execute(config, stage)
+        @seams.executor.call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage])
       end
 
-      def stage_label(stage)
-        case stage
-        when "lint" then "Lint"
-        when "build" then "Build"
-        when "fast" then "Fast suite"
-        when "slow" then "Slow suite"
-        else stage
-        end
+      def outcome(stage, output, status, timed_out)
+        return report_timeout(stage) if timed_out
+        return report_failure(stage, output) unless status.success?
+
+        "completed"
       end
 
-      def budget_advice(stage)
-        case stage
-        when "lint"
-          "Trim your linter config or split into stages."
-        when "build"
-          "Keep your build efficient and not let it become a bottleneck."
-        when "fast"
-          "Your fast tests have gotten too slow. Split or speed them up."
-        when "slow"
-          "Pare down integration tests, parallelise, or raise the budget."
-        end
+      def report_timeout(stage)
+        @stdout.puts "#{label(stage)} killed -- exceeded #{@seams.budgets[stage]}s time budget."
+        @stdout.puts ADVICE[stage]
+        "timed_out"
       end
+
+      def report_failure(stage, output)
+        @stdout.puts output unless output.empty?
+        @stdout.puts "#{label(stage)} failed."
+        "failed"
+      end
+
+      def label(stage) = LABELS.fetch(stage, stage)
     end
   end
 end

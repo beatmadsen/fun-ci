@@ -3,6 +3,7 @@
 require_relative "../persistence/database"
 require_relative "../persistence/pipeline_recorder"
 require_relative "background_wrapper"
+require_relative "trigger_params"
 
 module FunCi
   module Pipeline
@@ -22,9 +23,9 @@ module FunCi
       end
 
       def self.trigger(commit_hash, branch, recorder)
-        Trigger.new(project_root: Dir.pwd, commit_hash: commit_hash, branch: branch,
-                    stdout: File.open(File::NULL, "w"), recorder: recorder,
-                    background_launcher: method(:sync_launcher))
+        Trigger.new(project: Dir.pwd, commit: Commit.new(sha: commit_hash, branch: branch),
+                    io: Io.new(stdout: File.open(File::NULL, "w")),
+                    seams: Seams.new(recorder: recorder, background_launcher: method(:sync_launcher)))
       end
       private_class_method :trigger
 

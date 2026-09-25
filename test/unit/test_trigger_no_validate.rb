@@ -23,13 +23,13 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
 
   def test_should_still_require_commit_and_branch_with_no_validate
     stderr = StringIO.new
-    exit_code = FunCi::Pipeline::Trigger.run_from_args(["--no-validate"], stderr: stderr)
+    exit_code = FunCi::Pipeline::Trigger.run_from_args(["--no-validate"], io: FunCi::Pipeline::Io.new(stderr: stderr))
     refute_equal 0, exit_code
     assert_match(/commit/i, stderr.string)
   end
 
   def test_should_reject_no_validate_with_only_one_positional_arg
-    exit_code = FunCi::Pipeline::Trigger.run_from_args(["--no-validate", "abc1234"], stderr: StringIO.new)
+    exit_code = FunCi::Pipeline::Trigger.run_from_args(["--no-validate", "abc1234"], io: quiet_io)
     refute_equal 0, exit_code
   end
 
@@ -56,13 +56,15 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
   end
 
   def test_should_not_invoke_forker_without_no_validate_flag
-    run_trigger(%w[abc1234 main], stderr: StringIO.new)
+    run_trigger(%w[abc1234 main])
     assert_empty @forker_calls
   end
 
   private
 
-  def run_trigger(args, **)
-    FunCi::Pipeline::Trigger.run_from_args(args, stdout: StringIO.new, pipeline_forker: @forker, **)
+  def run_trigger(args, recorder: FakeRecorder.new)
+    FunCi::Pipeline::Trigger.run_from_args(args, io: quiet_io, recorder: recorder, pipeline_forker: @forker)
   end
+
+  def quiet_io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new)
 end

@@ -7,57 +7,16 @@
 # versions of RuboCop, may require this file to be generated again.
 
 # This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: with_first_argument, with_fixed_indentation
-Layout/ArgumentAlignment:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
-    - 'test/acceptance/test_trigger_fork_integration.rb'
-    - 'test/acceptance/test_tui_project_path.rb'
-    - 'test/unit/test_trigger.rb'
-    - 'test/unit/test_trigger_parallel_phase_two.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Layout/ElseAlignment:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLineAfterGuardClause:
   Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
     - 'lib/fun_ci/tui/streak_counter.rb'
-    - 'test/acceptance/trigger_cli_client.rb'
-    - 'test/unit/test_trigger.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EmptyLineBetweenMethodDefs, EmptyLineBetweenClassDefs, EmptyLineBetweenModuleDefs, DefLikeMacros, AllowAdjacentOneLineDefs, NumberOfEmptyLines.
-Layout/EmptyLineBetweenDefs:
-  Exclude:
-    - 'test/unit/test_trigger.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 Layout/EmptyLines:
   Exclude:
     - 'lib/fun_ci/animations/leprechauns.rb'
-    - 'test/unit/test_trigger.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLinesAfterModuleInclusion:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
-
-
-
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyleAlignWith.
-# SupportedStylesAlignWith: keyword, variable, start_of_line
-Layout/EndAlignment:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowForAlignment, AllowBeforeTrailingComments, ForceEqualSignAlignment.
@@ -88,25 +47,6 @@ Layout/FirstArrayElementIndentation:
     - 'lib/fun_ci/animations/success.rb'
     - 'lib/fun_ci/animations/yay.rb'
 
-
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowMultipleStyles, EnforcedHashRocketStyle, EnforcedColonStyle, EnforcedLastArgumentHashStyle.
-# SupportedHashRocketStyles: key, separator, table
-# SupportedColonStyles: key, separator, table
-# SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/HashAlignment:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
-    - 'test/unit/test_trigger.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: Width, EnforcedStyleAlignWith, AllowedPatterns.
-# SupportedStylesAlignWith: start_of_line, relative_to_receiver
-Layout/IndentationWidth:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
-
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: Max, AllowHeredoc, AllowURI, AllowQualifiedName, URISchemes, AllowRBSInlineAnnotation, AllowCopDirectives, AllowedPatterns, SplitStrings.
 # URISchemes: http, https
@@ -115,19 +55,7 @@ Layout/LineLength:
     - 'lib/fun_ci/animations/celebrate.rb'
     - 'lib/fun_ci/animations/flash.rb'
     - 'lib/fun_ci/animations/yay.rb'
-    - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/board_data.rb'
-    - 'test/acceptance/test_tui_project_path.rb'
-    - 'test/acceptance/trigger_cli_client.rb'
-
-
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, IndentationWidth.
-# SupportedStyles: aligned, indented, indented_relative_to_receiver
-Layout/MultilineMethodCallIndentation:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowForAlignment, EnforcedStyleForExponentOperator, EnforcedStyleForRationalLiterals.
@@ -136,7 +64,6 @@ Layout/MultilineMethodCallIndentation:
 Layout/SpaceAroundOperators:
   Exclude:
     - 'lib/fun_ci/tui/ansi.rb'
-
 
 # This cop supports safe autocorrection (--autocorrect).
 Lint/AmbiguousOperatorPrecedence:
@@ -150,23 +77,6 @@ Lint/AmbiguousOperatorPrecedence:
     - 'lib/fun_ci/animations/success.rb'
     - 'lib/fun_ci/animations/yay.rb'
 
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/NonAtomicFileOperation:
-  Exclude:
-    - 'test/acceptance/trigger_cli_client.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: IgnoreEmptyBlocks, AllowUnusedKeywordArguments.
-Lint/UnusedBlockArgument:
-  Exclude:
-    - 'test/acceptance/test_tui_project_path.rb'
-    - 'test/unit/test_trigger.rb'
-    - 'test/unit/test_trigger_parallel.rb'
-    - 'test/unit/test_trigger_parallel_phase_two.rb'
-    - 'test/unit/test_trigger_progress.rb'
-    - 'test/unit/test_trigger_project_path.rb'
-
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods, IgnoreNotImplementedMethods, NotImplementedExceptions.
 # NotImplementedExceptions: NotImplementedError
@@ -175,32 +85,18 @@ Lint/UnusedMethodArgument:
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/board_renderer.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
-    - 'test/acceptance/trigger_cli_client.rb'
 
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
   Exclude:
-    - 'lib/fun_ci/pipeline/stage_runner.rb'
-    - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/animation_renderer.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
     - 'lib/fun_ci/tui/terminal_input.rb'
 
-# Configuration parameters: CountBlocks, CountModifierForms, Max.
-Metrics/BlockNesting:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
-    - 'test/acceptance/trigger_cli_client.rb'
-    - 'test/unit/test_trigger.rb'
-    - 'test/unit/test_trigger_parallel.rb'
-    - 'test/unit/test_trigger_parallel_phase_two.rb'
-    - 'test/unit/test_trigger_progress.rb'
-
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/animation_renderer.rb'
 
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
@@ -212,8 +108,6 @@ Metrics/CyclomaticComplexity:
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
 Metrics/MethodLength:
   Exclude:
-    - 'lib/fun_ci/pipeline/stage_runner.rb'
-    - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/admin_tui.rb'
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/animation_frames.rb'
@@ -227,14 +121,6 @@ Metrics/MethodLength:
     - 'lib/fun_ci/tui/stage_change_detector.rb'
     - 'lib/fun_ci/tui/streak_counter.rb'
     - 'lib/fun_ci/tui/terminal_input.rb'
-    - 'test/acceptance/test_trigger_fork_integration.rb'
-    - 'test/acceptance/test_tui_project_path.rb'
-    - 'test/acceptance/trigger_cli_client.rb'
-    - 'test/unit/test_trigger.rb'
-    - 'test/unit/test_trigger_parallel.rb'
-    - 'test/unit/test_trigger_parallel_phase_two.rb'
-    - 'test/unit/test_trigger_progress.rb'
-    - 'test/unit/test_trigger_project_path.rb'
 
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ModuleLength:
@@ -251,11 +137,8 @@ Metrics/ModuleLength:
 # Configuration parameters: Max, CountKeywordArgs, MaxOptionalParameters.
 Metrics/ParameterLists:
   Exclude:
-    - 'lib/fun_ci/pipeline/stage_runner.rb'
-    - 'lib/fun_ci/pipeline/trigger.rb'
     - 'lib/fun_ci/tui/admin_tui.rb'
     - 'lib/fun_ci/tui/row_formatter.rb'
-    - 'test/acceptance/trigger_cli_client.rb'
 
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
 Metrics/PerceivedComplexity:
@@ -269,14 +152,6 @@ Naming/MemoizedInstanceVariableName:
   Exclude:
     - 'lib/fun_ci/tui/header_animation_manager.rb'
 
-# Configuration parameters: Mode, AllowedMethods, AllowedPatterns, AllowBangMethods, WaywardPredicates.
-# AllowedMethods: call
-# WaywardPredicates: infinite?, nonzero?
-Naming/PredicateMethod:
-  Exclude:
-    - 'lib/fun_ci/pipeline/stage_runner.rb'
-    - 'lib/fun_ci/pipeline/trigger.rb'
-
 # Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros, UseSorbetSigs.
 # NamePrefix: is_, has_, have_, does_
 # ForbiddenPrefixes: is_, has_, have_, does_
@@ -286,36 +161,12 @@ Naming/PredicatePrefix:
   Exclude:
     - 'lib/fun_ci/tui/animation.rb'
 
-
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: format, sprintf, percent
 Style/FormatString:
   Exclude:
     - 'lib/fun_ci/tui/duration_formatter.rb'
-
-# Configuration parameters: MinBranchesCount.
-Style/HashLikeCase:
-  Exclude:
-    - 'lib/fun_ci/pipeline/stage_runner.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: line_count_dependent, lambda, literal
-Style/Lambda:
-  Exclude:
-    - 'lib/fun_ci/pipeline/trigger.rb'
-    - 'test/unit/test_trigger.rb'
-    - 'test/unit/test_trigger_parallel.rb'
-    - 'test/unit/test_trigger_parallel_phase_two.rb'
-    - 'test/unit/test_trigger_progress.rb'
-    - 'test/unit/test_trigger_project_path.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/NilLambda:
-  Exclude:
-    - 'test/acceptance/test_tui_project_path.rb'
-
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
@@ -325,38 +176,11 @@ Style/NumericPredicate:
     - 'lib/fun_ci/tui/animation_compositor.rb'
     - 'lib/fun_ci/tui/key_handler.rb'
     - 'lib/fun_ci/tui/streak_counter.rb'
-    - 'test/acceptance/trigger_cli_client.rb'
-
-
-
 
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Style/ReduceToHash:
   Exclude:
     - 'lib/fun_ci/tui/stage_change_detector.rb'
-
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Methods.
-Style/RedundantArgument:
-  Exclude:
-    - 'test/acceptance/trigger_cli_client.rb'
-
-
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, AllowInnerSlashes.
-# SupportedStyles: slashes, percent_r, mixed
-Style/RegexpLiteral:
-  Exclude:
-    - 'test/unit/test_trigger.rb'
-
-# This cop supports safe autocorrection (--autocorrect).
-Style/RescueModifier:
-  Exclude:
-    - 'test/acceptance/test_trigger_fork_integration.rb'
-    - 'test/acceptance/test_tui_project_path.rb'
-    - 'test/acceptance/trigger_cli_client.rb'
-
-
 
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyleForMultiline.

@@ -35,7 +35,8 @@ class TestNoValidateForkSafety < Minitest::Test
   def trigger_no_validate(forker)
     FunCi::Pipeline::Trigger.run_from_args(
       ["--no-validate", "abc1234", "main"],
-      stdout: StringIO.new, stderr: StringIO.new, recorder: @recorder, pipeline_forker: forker
+      io: FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new),
+      recorder: @recorder, pipeline_forker: forker
     )
   end
 end

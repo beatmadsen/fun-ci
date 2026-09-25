@@ -70,7 +70,7 @@ One CLI, multiple subcommands. Source is organized into four module subdirectori
 
 ### Key classes by module
 
-**`pipeline/`**: `Trigger`, `PipelineForker`, `StageRunner`, `BackgroundWrapper`, `ProcessRunner` (shared module), `ProgressReporter`, `StalePipelineCanceller`
+**`pipeline/`**: `Trigger`, `TriggerCommand` (argument parsing), `Commit`/`Io`/`Seams` (parameter objects), `CommandExecutor`, `BackgroundFork`, `PipelineForker`, `StageRunner`, `BackgroundWrapper`, `ProcessRunner` (shared module), `ProgressReporter`, `StalePipelineCanceller`
 
 **`persistence/`**: `Database` (SQLite connection + migration), `PipelineRun` / `StageJob` (row wrappers with state machine), `PipelineRecorder` (DbRecorder / NullRecorder)
 
@@ -92,12 +92,13 @@ Tests use Minitest. Cucumber features exist for TUI acceptance specs but unit te
 - Every SQLite connection a test opens must be closed by the end of that test: `test/support/sqlite_connection_guard.rb` fails the test otherwise. A leaked one is inherited by the next fork in the same worker. `Trigger#close` releases the recorder the background launcher swaps in
 
 **DI seams used throughout:**
-- `command_runner` lambda on `Trigger`, `StageRunner`, and `BackgroundWrapper` -- replaces real process spawning in tests
-- `background_launcher` lambda on `Trigger` -- controls sync vs async slow suite launch
+- `Trigger.new(project:, commit:, io:, seams:)` and `StageRunner.new(commit_hash:, stdout:, seams:)` take a `Pipeline::Seams` (`lib/fun_ci/pipeline/trigger_params.rb`); every seam left out gets the real thing. `test/support/trigger_test_kit.rb` builds one the way tests need it
+- `Seams#command_runner` lambda -- replaces real process spawning in tests
+- `Seams#background_launcher` lambda -- controls sync vs async slow suite launch; `nil` means the real fork (`BackgroundFork`)
 - `pipeline_forker` callable on `Trigger.run_from_args` -- replaces real fork in `--no-validate` path
 - `width_provider` lambda on `AdminTui` -- replaces real terminal width detection
 - `terminal_input` on `AdminTui` -- replaces the keyboard, so the cucumber lane drives `AdminTui#run` in a fiber (`features/support/run_loop.rb`) and reads the refresh interval it waits on
-- `commit_validator` lambda on `Trigger` -- replaces real `git cat-file` calls
+- `Seams#commit_validator` lambda -- replaces real `git cat-file` calls
 - `handlers` hash on `Cli` -- overrides subcommand dispatch for testing
 - `FakeRecorder` in `test_helper.rb` -- captures recorder calls without touching SQLite
 

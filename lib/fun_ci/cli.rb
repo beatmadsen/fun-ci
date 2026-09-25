@@ -48,7 +48,7 @@ module FunCi
       require_relative "persistence/pipeline_recorder"
       db = setup_db
       recorder = Persistence::DbRecorder.new(db)
-      Pipeline::Trigger.run_from_args(args, stdout: @stdout, stderr: @stderr, recorder: recorder)
+      Pipeline::Trigger.run_from_args(args, io: Pipeline::Io.new(stdout: @stdout, stderr: @stderr), recorder: recorder)
     end
 
     def run_console(_args)
