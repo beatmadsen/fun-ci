@@ -10,7 +10,14 @@ class TestTriggerProgress < Minitest::Test
   include TriggerTestKit
 
   def test_should_show_phase_one_passed_when_lint_and_build_succeed
-    assert_match(/lint ok  build ok  \(phase 1 passed\)|build ok  lint ok  \(phase 1 passed\)/, progress)
+    assert_includes progress, "fun-ci: lint ok  build ok  (phase 1 passed)"
+  end
+
+  def test_should_report_lint_before_build_whichever_finishes_first
+    io = quiet_io
+    in_project { |dir| build_trigger(dir, io: io, command_runner: build_finishing_first).run }
+
+    assert_includes io.stdout.string, "fun-ci: lint ok  build ok  (phase 1 passed)"
   end
 
   def test_should_show_fast_ok_when_all_pass

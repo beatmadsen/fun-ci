@@ -9,7 +9,7 @@ class TestTriggerCliConcurrentRuns < Minitest::Test
   RUN = FunCi::Persistence::PipelineRun
 
   def setup
-    @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER)
+    @client = TriggerCliClient.open(command_runner: INSTANT_SUCCESS_RUNNER)
     @stale_pid = nil
   end
 

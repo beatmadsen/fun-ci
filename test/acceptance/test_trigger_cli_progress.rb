@@ -56,7 +56,7 @@ class TestTriggerCliProgressFeedback < Minitest::Test
   private
 
   def trigger_with(command_runner)
-    @client = TriggerCliClient.new(command_runner: command_runner)
+    @client = TriggerCliClient.open(command_runner: command_runner)
     @client.trigger(commit_hash: "abc1234", branch: "main")
   end
 end

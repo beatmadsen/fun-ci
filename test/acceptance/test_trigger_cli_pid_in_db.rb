@@ -7,7 +7,7 @@ require_relative "trigger_cli_shared"
 
 class TestTriggerCliPidInDb < Minitest::Test
   def setup
-    @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER)
+    @client = TriggerCliClient.open(command_runner: INSTANT_SUCCESS_RUNNER)
     @stale_pid = nil
   end
 

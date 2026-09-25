@@ -10,7 +10,7 @@ require_relative "trigger_cli_shared"
 
 class TestTriggerCliProjectConfiguration < Minitest::Test
   def setup
-    @client = TriggerCliClient.new
+    @client = TriggerCliClient.open
   end
 
   def teardown
@@ -63,7 +63,7 @@ end
 
 class TestTriggerCliHookScriptInvocation < Minitest::Test
   def setup
-    @client = TriggerCliClient.new
+    @client = TriggerCliClient.open
   end
 
   def teardown
@@ -90,7 +90,7 @@ class TestTriggerCliHookScriptInvocation < Minitest::Test
 
   def test_should_invoke_slow_script_with_commit_hash_as_first_argument
     @client.close
-    @client = TriggerCliClient.new(background_launcher: SYNC_LAUNCHER)
+    @client = TriggerCliClient.open(background_launcher: SYNC_LAUNCHER)
     args = arguments_passed_to("slow.sh")
     refute_nil args, "slow.sh should have been invoked"
     assert_equal "abc1234", args.first, "slow.sh should receive commit hash as $1"

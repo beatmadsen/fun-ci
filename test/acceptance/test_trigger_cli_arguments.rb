@@ -13,7 +13,7 @@ class TestTriggerCliHappyPath < Minitest::Test
   }
 
   def setup
-    @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER)
+    @client = TriggerCliClient.open(command_runner: INSTANT_SUCCESS_RUNNER)
   end
 
   def teardown
@@ -64,7 +64,7 @@ class TestTriggerCliHappyPath < Minitest::Test
 
   def trigger_with_failing_fast_suite
     @client.close
-    @client = TriggerCliClient.new(command_runner: FAST_SUITE_FAILS)
+    @client = TriggerCliClient.open(command_runner: FAST_SUITE_FAILS)
     @client.trigger(commit_hash: "abc1234", branch: "main")
   end
 end

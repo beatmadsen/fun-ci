@@ -75,9 +75,8 @@ module FunCi
       end
 
       def phase_one_passed?(config)
-        results = {}
-        %w[lint build].map { |stage| Thread.new { results[stage] = stage_runner.passes?(config, stage) } }
-                      .each(&:join)
+        results = %w[lint build].to_h { |stage| [stage, Thread.new { stage_runner.passes?(config, stage) }] }
+                                .transform_values(&:value)
         progress.phase_one_result(results)
         results.values.all?
       end

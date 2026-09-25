@@ -9,7 +9,7 @@ require "fun_ci/pipeline/background_wrapper"
 INSTANT_SUCCESS_RUNNER = ->(_cmd) { ["", FakeStatus.new(true, 0)] }
 
 # A command runner that simulates script execution: writes args to file + returns success/failure.
-# Use for tests that assert on script_arguments_for (which reads the args file).
+# Use for tests that assert on ran? or script_arguments_for (which read the args file).
 # Derives project_dir from the command path: /project/.fun-ci/script.sh -> /project
 def script_simulating_runner(failures: {})
   lambda { |cmd|

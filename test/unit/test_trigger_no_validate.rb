@@ -16,15 +16,18 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
 
   def test_should_call_pipeline_forker_with_commit_and_branch
     run_trigger(["--no-validate", "deadbeef", "feature-x"])
-    assert_equal 1, @forker_calls.length
-    assert_equal "deadbeef", @forker_calls.first[:commit_hash]
-    assert_equal "feature-x", @forker_calls.first[:branch]
+
+    assert_equal [%w[deadbeef feature-x]], forked_commits
   end
 
-  def test_should_still_require_commit_and_branch_with_no_validate
+  def test_should_fail_without_commit_and_branch_even_with_no_validate
+    refute_equal 0, FunCi::Pipeline::Trigger.run_from_args(["--no-validate"], io: quiet_io)
+  end
+
+  def test_should_ask_for_the_commit_when_no_validate_is_given_alone
     stderr = StringIO.new
-    exit_code = FunCi::Pipeline::Trigger.run_from_args(["--no-validate"], io: FunCi::Pipeline::Io.new(stderr: stderr))
-    refute_equal 0, exit_code
+    FunCi::Pipeline::Trigger.run_from_args(["--no-validate"], io: FunCi::Pipeline::Io.new(stderr: stderr))
+
     assert_match(/commit/i, stderr.string)
   end
 
@@ -35,8 +38,8 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
 
   def test_should_handle_no_validate_flag_in_any_position
     run_trigger(["abc1234", "--no-validate", "main"])
-    assert_equal "abc1234", @forker_calls.first[:commit_hash]
-    assert_equal "main", @forker_calls.first[:branch]
+
+    assert_equal [%w[abc1234 main]], forked_commits
   end
 
   def test_should_pass_db_path_from_recorder_to_forker
@@ -66,5 +69,6 @@ class TestTriggerNoValidateArgParsing < Minitest::Test
     FunCi::Pipeline::Trigger.run_from_args(args, io: quiet_io, recorder: recorder, pipeline_forker: @forker)
   end
 
+  def forked_commits = @forker_calls.map { |call| call.values_at(:commit_hash, :branch) }
   def quiet_io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new)
 end

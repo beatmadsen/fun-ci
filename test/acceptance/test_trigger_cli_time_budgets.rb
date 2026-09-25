@@ -46,7 +46,7 @@ class TestTriggerCliTimeBudgets < Minitest::Test
   private
 
   def trigger_timing_out_on(script, **client_options)
-    @client = TriggerCliClient.new(command_runner: timing_out_on(script), **client_options)
+    @client = TriggerCliClient.open(command_runner: timing_out_on(script), **client_options)
     @client.trigger(commit_hash: "abc1234", branch: "main")
   end
 

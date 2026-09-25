@@ -17,10 +17,10 @@ class ScriptedProject
     SCRIPTS.each { |script| write_script(script, bodies.fetch(script, "exit 0"), mode) }
   end
 
-  def arguments_for(script)
-    path = File.join(args_dir, script)
-    File.size?(path) ? File.read(path).split : nil
-  end
+  def ran?(script) = File.exist?(args_path(script))
+
+  # Empty when the script ran without arguments or did not run at all.
+  def arguments_for(script) = ran?(script) ? File.read(args_path(script)).split : []
 
   def remove(script) = File.delete(File.join(scripts_dir, script))
   def chmod(script, mode) = File.chmod(mode, File.join(scripts_dir, script))
@@ -29,6 +29,7 @@ class ScriptedProject
 
   def scripts_dir = File.join(@dir, ".fun-ci")
   def args_dir = File.join(@dir, ".fun-ci-args")
+  def args_path(script) = File.join(args_dir, script)
 
   def write_script(script, body, mode)
     path = File.join(scripts_dir, script)

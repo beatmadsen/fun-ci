@@ -30,10 +30,14 @@ class TestTriggerForkIntegration < Minitest::Test
     assert_equal("completed", with_db { |db| slow_status(db) })
   end
 
-  def test_the_fast_suite_is_recorded_after_the_slow_suite_is_forked
-    exit_code = run_pipeline
+  def test_the_pipeline_passes_with_the_real_forking_launcher
+    assert_equal 0, run_pipeline
+  end
 
-    assert_equal [0, "completed"], [exit_code, with_db { |db| stage_status(db, "fast") }]
+  def test_the_fast_suite_is_recorded_after_the_slow_suite_is_forked
+    run_pipeline
+
+    assert_equal("completed", with_db { |db| stage_status(db, "fast") })
   end
 
   def test_the_launcher_stores_the_child_pid

@@ -28,8 +28,8 @@ class TestTriggerCliBackgroundProcess < Minitest::Test
 
   def test_should_run_the_slow_suite
     trigger_with(script_simulating_runner, SYNC_LAUNCHER)
-    slow_args = @client.script_arguments_for("slow.sh")
-    refute_nil slow_args, "slow.sh should have completed"
+
+    assert @client.ran?("slow.sh")
   end
 
   def test_should_fail_when_build_times_out
@@ -51,7 +51,7 @@ class TestTriggerCliBackgroundProcess < Minitest::Test
   private
 
   def trigger_with(command_runner, background_launcher = nil)
-    @client = TriggerCliClient.new(command_runner: command_runner, background_launcher: background_launcher)
+    @client = TriggerCliClient.open(command_runner: command_runner, background_launcher: background_launcher)
     @client.trigger(commit_hash: "abc1234", branch: "main")
   end
 end

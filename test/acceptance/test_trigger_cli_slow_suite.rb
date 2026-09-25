@@ -35,7 +35,7 @@ class TestTriggerCliSlowSuiteResults < Minitest::Test
 
   def trigger_with_slow_suite(slow_outcome)
     runner = ->(cmd) { cmd.include?("slow.sh") ? slow_outcome.call : ["", FakeStatus.new(true, 0)] }
-    @client = TriggerCliClient.new(command_runner: runner, background_launcher: SYNC_LAUNCHER)
+    @client = TriggerCliClient.open(command_runner: runner, background_launcher: SYNC_LAUNCHER)
     @client.trigger(commit_hash: "abc1234", branch: "main")
     run = @client.pipeline_runs_for(commit_hash: "abc1234").first
     jobs = @client.stage_jobs_for(pipeline_run_id: run[:id])

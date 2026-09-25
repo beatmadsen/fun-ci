@@ -14,26 +14,26 @@ class TestTriggerCliPipelineStages < Minitest::Test
 
   def test_should_run_both_lint_and_build_in_phase_one
     trigger(command_runner: script_simulating_runner)
-    refute_nil @client.script_arguments_for("lint.sh"), "lint.sh should run in Phase 1"
-    refute_nil @client.script_arguments_for("build.sh"), "build.sh should run in Phase 1"
+    assert @client.ran?("lint.sh"), "lint.sh should run in Phase 1"
+    assert @client.ran?("build.sh"), "build.sh should run in Phase 1"
   end
 
   def test_should_still_run_build_when_lint_fails
     trigger(command_runner: script_simulating_runner(failures: { "lint.sh" => { exit: 1 } }))
-    refute_nil @client.script_arguments_for("build.sh"), "build.sh should still run when lint fails (parallel)"
+    assert @client.ran?("build.sh"), "build.sh should still run when lint fails (parallel)"
     refute_equal 0, @client.exit_code, "Should fail when lint fails"
     assert_match(/Lint failed/i, @client.stdout, "Should mention lint failure")
   end
 
   def test_should_run_build_stage_before_fast_suite
     trigger(command_runner: script_simulating_runner)
-    refute_nil @client.script_arguments_for("build.sh"), "build.sh should run"
-    refute_nil @client.script_arguments_for("fast.sh"), "fast.sh should run after build"
+    assert @client.ran?("build.sh"), "build.sh should run"
+    assert @client.ran?("fast.sh"), "fast.sh should run after build"
   end
 
   def test_should_not_run_fast_suite_when_build_fails
     trigger(command_runner: script_simulating_runner(failures: { "build.sh" => { exit: 1 } }))
-    assert_nil @client.script_arguments_for("fast.sh"), "fast.sh should not run when build fails"
+    refute @client.ran?("fast.sh"), "fast.sh should not run when build fails"
     refute_equal 0, @client.exit_code, "Should fail when build fails"
     assert_match(/Build failed/i, @client.stdout, "Should mention build failure")
   end
@@ -53,7 +53,7 @@ class TestTriggerCliPipelineStages < Minitest::Test
   private
 
   def trigger(**client_options)
-    @client = TriggerCliClient.new(**client_options)
+    @client = TriggerCliClient.open(**client_options)
     @client.trigger(commit_hash: "abc1234", branch: "main")
   end
 

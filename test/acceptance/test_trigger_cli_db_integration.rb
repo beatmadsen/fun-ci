@@ -14,7 +14,7 @@ module TriggerCliDbSteps
   end
 
   def trigger(**client_options)
-    @client = TriggerCliClient.new(command_runner: INSTANT_SUCCESS_RUNNER, **client_options)
+    @client = TriggerCliClient.open(command_runner: INSTANT_SUCCESS_RUNNER, **client_options)
     @client.trigger(commit_hash: "abc1234", branch: "main")
   end
 
