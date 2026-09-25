@@ -9,11 +9,13 @@ require "concurrent/utility/processor_counter"
 require_relative "support/sqlite_connection_guard"
 require_relative "support/stray_stderr_guard"
 require_relative "support/confinement_guard"
+require_relative "support/spawn_guard"
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 ConfinementGuard.install
 StrayStderrGuard.install
 SqliteConnectionGuard.install
+SpawnGuard.install
 Minitest::Test.prepend(ConfinementGuard::CheckAfterTest)
 
 Minitest.parallel_executor = ActiveSupport::Testing::ParallelizeExecutor.new(
