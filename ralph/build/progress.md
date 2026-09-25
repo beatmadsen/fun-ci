@@ -18,7 +18,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-1.1: A pipeline runs in a worktree at the requested commit
 - [x] AT-1.2: Uncommitted changes don't leak into a run
 - [x] AT-1.3: Ignored caches survive between runs in the same slot
-- [ ] AT-1.4: The slot stays taken until the background slow suite finishes
+- [x] AT-1.4: The slot stays taken until the background slow suite finishes
 - [ ] AT-1.5: Crashed runs don't leak slots
 - [ ] AT-1.6: Cancelling a stale run frees its slot
 - [ ] AT-1.12: Cancelling from the console stops the run
