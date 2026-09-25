@@ -27,7 +27,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-1.9: Upgrading replaces fun-ci's own pre-commit hook only
 - [x] AT-1.10: `--no-validate` keeps working as an alias for one release
 - [x] AT-1.11: Worktrees are cleaned up with `fun-ci prune`
-- [ ] AT-2.1: ConsoleSession separates state from rendering
+- [x] AT-2.1: ConsoleSession separates state from rendering
 - [ ] AT-2.2: `board` messages follow the protocol
 - [ ] AT-2.3: Stage changes become events, not animations
 - [ ] AT-2.4: Resize changes the page size
