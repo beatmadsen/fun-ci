@@ -35,6 +35,12 @@ class TestConfinementGuard < Minitest::Test
     RUBY
   end
 
+  def test_should_fail_a_test_that_runs_git_through_io_popen_outside_the_temp_root
+    assert_match(/git .*outside the test temp root: #{Regexp.escape(ROOT)}/, probe_output(<<~RUBY))
+      IO.popen(["git", "status"], chdir: #{ROOT.inspect}, &:read)
+    RUBY
+  end
+
   def test_should_pass_a_test_that_writes_inside_the_temp_root
     assert_match(/1 runs, .* 0 failures, 0 errors/, probe_output(<<~RUBY))
       File.write(File.join(Dir.mktmpdir, "x"), "x")

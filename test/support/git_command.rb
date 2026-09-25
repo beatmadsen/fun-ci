@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 # A spawn call read as a git command: which subcommand, and the directory it
-# works on. Open3 hands spawn its options as a trailing positional Hash.
+# works on. Open3 hands spawn its options as a trailing positional Hash, and
+# IO.popen takes the command as an Array.
 class GitCommand
   def initialize(args, opts)
-    hashes, command = args.partition { |arg| arg.is_a?(Hash) }
+    hashes, command = args.flatten.partition { |arg| arg.is_a?(Hash) }
     @words = command.flat_map { |arg| arg.to_s.split }
     @chdir = hashes.reduce(opts) { |all, hash| all.merge(hash) }[:chdir]
   end

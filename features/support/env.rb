@@ -16,10 +16,12 @@ require "fun_ci"
 require "fun_ci/tui/admin_tui"
 require "fun_ci/tui/ansi"
 
+require_relative "../../test/support/confinement_guard"
 require_relative "minitest_world"
 require_relative "tui_test_client"
 
 World(MinitestWorld)
+ConfinementGuard.install
 
 Before do
   @client = TuiTestClient.new

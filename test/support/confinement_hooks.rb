@@ -61,12 +61,20 @@ module ConfinementHooks
     end
   end
 
+  module GitPopens
+    def popen(*args, **opts, &)
+      ConfinementHooks.check_git(args, opts)
+      super
+    end
+  end
+
   class << self
     def install
       File.singleton_class.prepend(FileWrites)
       Dir.singleton_class.prepend(DirWrites)
       SQLite3::Database.prepend(SqliteOpens)
       [Kernel, Process.singleton_class].each { |target| target.prepend(GitSpawns) }
+      IO.singleton_class.prepend(GitPopens)
       @installed = true
     end
 
