@@ -39,13 +39,14 @@ impl Animator {
     }
 
     /// Draws this frame's animations over the board, then advances them.
-    pub fn render(&mut self, screen: &mut Screen, runs: &[Run]) {
+    /// Returns the name of the header animation drawn.
+    pub fn render(&mut self, screen: &mut Screen, runs: &[Run]) -> String {
         self.take_events(runs);
         self.follow_running(runs);
-        screen.save_cursor();
+        let showing = self.header.showing().to_string();
         self.draw(screen, runs);
-        screen.restore_cursor();
         self.advance();
+        showing
     }
 
     fn take_events(&mut self, runs: &[Run]) {
@@ -84,9 +85,11 @@ impl Animator {
     }
 
     fn draw(&self, screen: &mut Screen, runs: &[Run]) {
+        screen.save_cursor();
         draw::header(screen, &self.header);
         draw::stages(screen, &self.effects, runs);
         draw::footer(screen, &self.effects, runs);
+        screen.restore_cursor();
     }
 
     fn advance(&mut self) {

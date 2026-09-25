@@ -88,6 +88,12 @@ impl Header {
         self.event = self.event.take().filter(|player| !player.finished());
     }
 
+    /// The name of the animation `lines` draws.
+    #[must_use]
+    pub fn showing(&self) -> &str {
+        self.active().animation.name()
+    }
+
     fn active(&self) -> &Player {
         let event = self.event.as_ref().filter(|player| !player.finished());
         event.or(self.running.as_ref()).unwrap_or(&self.idle)

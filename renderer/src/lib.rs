@@ -8,6 +8,7 @@ pub mod board_view;
 pub mod cli;
 pub mod format;
 pub mod grid;
+pub mod headless;
 pub mod model;
 pub mod protocol;
 pub mod replay;

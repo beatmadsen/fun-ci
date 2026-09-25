@@ -50,13 +50,14 @@ impl BoardView {
         self.screen.set_width(cols);
     }
 
-    /// Draws `board` as of `now_ms` on a terminal `rows` high.
-    pub fn render(&mut self, board: &Board, now_ms: i64, rows: u16) {
+    /// Draws `board` as of `now_ms` on a terminal `rows` high, returning the
+    /// name of the header animation drawn.
+    pub fn render(&mut self, board: &Board, now_ms: i64, rows: u16) -> String {
         self.screen.set_height(rows);
         self.screen.write_at(HEADER_HEIGHT + 1, 1, "");
         self.render_body(board, now_ms, rows);
         self.screen.clear_below();
-        self.animator.render(&mut self.screen, &board.runs);
+        self.animator.render(&mut self.screen, &board.runs)
     }
 
     /// The bytes drawn since the last take.

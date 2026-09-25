@@ -120,7 +120,33 @@ lines advancing the fake clock) and writes, per frame:
   previous frame, luminance histogram, dark-cell share and hue spread; per
   animation, frame count
 
-`tick` is only valid in headless mode.
+`tick` is only valid in headless mode. `--cols`/`--rows` are the terminal size
+until the scenario's first `resize`. An unreadable scenario or output
+directory exits 64 with the reason on stderr.
+
+The details, which `renderer/tests/headless.rs` and `headless_measures.rs` pin:
+
+- Each frame is what the terminal shows after feeding every frame so far to one
+  `vt100` emulator. `frames.jsonl` has one object per frame:
+  `{"frame":N,"cols":C,"rows":R,"cells":[[{"text","fg","bg","attrs"}...]...]}`,
+  with colours `"default"`, `{"idx":N}` or `{"rgb":[r,g,b]}` and attrs a list
+  of `bold`, `dim`, `italic`, `underline`, `inverse`.
+- PNG cells are 8x16 pixels: the MIT-licensed `font8x8` bitmap font compiled
+  into the binary, each row doubled; braille (the spinner) is drawn as dots.
+  Colours are the xterm 256-colour palette, default foreground `#e5e5e5` on
+  black; bold brightens colours 0-7 to 8-15, dim takes the foreground to 5/8.
+- `sheet.png` tiles every frame at half size, `ceil(sqrt(n))` across.
+- `frames.cast` starts at the first frame's size, has an `"o"` event per frame
+  at its scenario time and an `"r"` event before a frame drawn at a new size.
+- `stats.json` is `{"frames":[...],"animations":{"<name>":frames}}`. Per frame:
+  `bytes`; `longest_row` (columns up to the last glyph of the longest row);
+  `cells_changed` (cells that differ from the previous frame, or non-blank
+  cells for the first frame and after a resize); `luminance_histogram` (pixel
+  counts in eight buckets of 32 luminance levels, Rec. 709 weights);
+  `dark_cell_share` (share of cells whose visible colour, the foreground of a
+  glyph or else the background, has luminance under 64); `hue_spread` (how
+  many 30-degree hue sectors the glyphs' colours cover, greys and near-black
+  excluded). `animations` counts the frames each header animation was shown.
 
 ### Scenario files
 

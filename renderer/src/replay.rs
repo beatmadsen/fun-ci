@@ -6,19 +6,22 @@ use crate::board_view::BoardView;
 use crate::model::Board;
 use crate::protocol::Inbound;
 
-/// The bytes one tick wrote, and the terminal size they were drawn for.
+/// The bytes one tick wrote, the terminal size (cols, rows) they were drawn
+/// for, the scenario time they were drawn at, and the header animation shown.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct TickFrame {
-    pub cols: u16,
-    pub rows: u16,
+    pub size: (u16, u16),
+    pub elapsed_ms: u64,
     pub bytes: Vec<u8>,
+    pub showing: String,
 }
 
-/// Draws a scenario, returning one frame per `tick`. Frame 1 includes the
-/// initial screen clear.
+/// Draws a scenario on a terminal of `size` (cols, rows) until its first
+/// `resize`, returning one frame per `tick`. Frame 1 includes the initial
+/// screen clear.
 #[must_use]
-pub fn replay(messages: &[Inbound], library: &Library) -> Vec<TickFrame> {
-    let mut replay = Replay::new(library);
+pub fn replay(messages: &[Inbound], library: &Library, size: (u16, u16)) -> Vec<TickFrame> {
+    let mut replay = Replay::new(library, size);
     replay.view.clear();
     messages.iter().filter_map(|message| replay.apply(message)).collect()
 }
@@ -26,14 +29,20 @@ pub fn replay(messages: &[Inbound], library: &Library) -> Vec<TickFrame> {
 struct Replay {
     view: BoardView,
     board: Board,
-    now_ms: i64,
+    clock: Clock,
     size: (u16, u16),
 }
 
+#[derive(Debug, Default)]
+struct Clock {
+    now_ms: i64,
+    elapsed_ms: u64,
+}
+
 impl Replay {
-    fn new(library: &Library) -> Self {
+    fn new(library: &Library, size: (u16, u16)) -> Self {
         let view = BoardView::new(Animator::new(Cast::new(library.clone(), 0)));
-        Self { view, board: Board::default(), now_ms: 0, size: (80, 24) }
+        Self { view, board: Board::default(), clock: Clock::default(), size }
     }
 
     fn apply(&mut self, message: &Inbound) -> Option<TickFrame> {
@@ -55,15 +64,15 @@ impl Replay {
 
     fn show(&mut self, board: &Board) {
         self.board = board.clone();
-        self.now_ms = board.now * 1000;
+        self.clock.now_ms = board.now * 1000;
     }
 
     fn tick(&mut self, ms: u64) -> TickFrame {
-        self.now_ms += i64::try_from(ms).unwrap_or(i64::MAX);
-        let (cols, rows) = self.size;
+        self.clock.now_ms += i64::try_from(ms).unwrap_or(i64::MAX);
+        self.clock.elapsed_ms += ms;
         self.view.begin_frame();
-        self.view.resize(cols);
-        self.view.render(&self.board, self.now_ms, rows);
-        TickFrame { cols, rows, bytes: self.view.take() }
+        self.view.resize(self.size.0);
+        let showing = self.view.render(&self.board, self.clock.now_ms, self.size.1);
+        TickFrame { size: self.size, elapsed_ms: self.clock.elapsed_ms, bytes: self.view.take(), showing }
     }
 }

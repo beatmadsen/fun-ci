@@ -76,13 +76,15 @@ pub struct Emulator {
 }
 
 impl Emulator {
+    /// An emulator of `size` (cols, rows).
     #[must_use]
-    pub fn new(cols: u16, rows: u16) -> Self {
+    pub fn new((cols, rows): (u16, u16)) -> Self {
         Self { parser: vt100::Parser::new(rows, cols, 0) }
     }
 
-    /// Resizes (when the size changed) and processes one frame's bytes.
-    pub fn feed(&mut self, cols: u16, rows: u16, bytes: &[u8]) {
+    /// Resizes to `size` (cols, rows) when it changed, then processes one
+    /// frame's bytes.
+    pub fn feed(&mut self, (cols, rows): (u16, u16), bytes: &[u8]) {
         if self.parser.screen().size() != (rows, cols) {
             self.parser.screen_mut().set_size(rows, cols);
         }

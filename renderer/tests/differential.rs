@@ -25,7 +25,7 @@ fn golden(name: &str) -> Vec<Vec<u8>> {
 
 fn first_mismatch(name: &str) -> Option<String> {
     let messages = scenario::load(&contract().join("scenarios").join(format!("{name}.jsonl"))).unwrap();
-    let (ours, theirs) = (replay(&messages, &Library::builtin()), golden(name));
+    let (ours, theirs) = (replay(&messages, &Library::builtin(), (80, 24)), golden(name));
     if ours.len() != theirs.len() {
         return Some(format!("{} frames, golden has {}", ours.len(), theirs.len()));
     }
@@ -33,11 +33,10 @@ fn first_mismatch(name: &str) -> Option<String> {
 }
 
 fn compare(ours: &[TickFrame], theirs: &[Vec<u8>], sizes: &[(u16, u16)]) -> Option<String> {
-    let (cols, rows) = sizes[0];
-    let (mut rust, mut ruby) = (Emulator::new(cols, rows), Emulator::new(cols, rows));
-    ours.iter().zip(theirs).zip(sizes).enumerate().find_map(|(i, ((our, their), &(cols, rows)))| {
-        rust.feed(cols, rows, &our.bytes);
-        ruby.feed(cols, rows, their);
+    let (mut rust, mut ruby) = (Emulator::new(sizes[0]), Emulator::new(sizes[0]));
+    ours.iter().zip(theirs).zip(sizes).enumerate().find_map(|(i, ((our, their), &size))| {
+        rust.feed(size, &our.bytes);
+        ruby.feed(size, their);
         rust.grid().first_difference(&ruby.grid()).map(|d| format!("frame {:04}: {d}", i + 1))
     })
 }

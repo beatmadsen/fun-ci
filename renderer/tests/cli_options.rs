@@ -12,12 +12,12 @@ fn parse(args: &[&str]) -> Result<Options, String> {
 
 #[test]
 fn animations_names_a_directory() {
-    assert_eq!(parse(&["--animations", "anim"]).unwrap().animations, Some(PathBuf::from("anim")));
+    assert_eq!(parse(&["--animations", "anim"]).unwrap().paths.animations, Some(PathBuf::from("anim")));
 }
 
 #[test]
 fn no_arguments_mean_the_embedded_animations() {
-    assert_eq!(parse(&[]).unwrap().animations, None);
+    assert_eq!(parse(&[]).unwrap().paths.animations, None);
 }
 
 #[test]
@@ -28,6 +28,37 @@ fn an_unknown_option_is_refused() {
 #[test]
 fn an_option_without_its_value_is_refused() {
     assert!(parse(&["--animations"]).is_err());
+}
+
+#[test]
+fn cols_set_the_headless_terminal_width() {
+    assert_eq!(parse(&["--cols", "120"]).unwrap().size, (120, 24));
+}
+
+#[test]
+fn rows_set_the_headless_terminal_height() {
+    assert_eq!(parse(&["--rows", "40"]).unwrap().size, (80, 40));
+}
+
+#[test]
+fn a_size_that_is_not_a_positive_number_is_refused() {
+    assert!(parse(&["--cols", "0"]).is_err());
+}
+
+#[test]
+fn headless_takes_no_value() {
+    let options = parse(&["--headless", "--scenario", "s.jsonl", "--out", "o"]).unwrap();
+    assert_eq!(options.headless().unwrap().unwrap().scenario, PathBuf::from("s.jsonl"));
+}
+
+#[test]
+fn headless_needs_an_output_directory() {
+    assert!(parse(&["--headless", "--scenario", "s.jsonl"]).unwrap().headless().is_err());
+}
+
+#[test]
+fn without_headless_the_renderer_runs_live() {
+    assert_eq!(parse(&["--out", "o"]).unwrap().headless(), Ok(None));
 }
 
 #[test]
