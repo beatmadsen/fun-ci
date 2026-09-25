@@ -5,21 +5,24 @@ require_relative "stage_events"
 
 module FunCi
   module Console
-    # What the console shows: the runs BoardData reads, where KeyHandler's
-    # cursor is, and the clock's time, as a protocol `board` message, after
-    # an `event` for each stage that changed since the last one.
+    # What the console shows: the page of runs BoardData reads that the View
+    # puts on screen, and the clock's time, as a protocol `board` message,
+    # after an `event` for each stage that changed since the last one.
     class ConsoleState
       KEYS = { "up" => :up, "down" => :down, "esc" => :escape, "ctrl_c" => "q", "enter" => :enter }.freeze
 
-      def initialize(board_data:, key_handler:, clock:)
+      def initialize(board_data:, view:, clock:)
         @board_data = board_data
-        @key_handler = key_handler
+        @view = view
         @clock = clock
         @events = StageEvents.new
       end
 
       # :quit when the key ends the session.
-      def press(key) = @key_handler.handle_key(KEYS.fetch(key, key))
+      def press(key) = @view.press(KEYS.fetch(key, key))
+
+      # Pages for a terminal of `rows`.
+      def resize(rows) = @board_data.resize(@view.resize(rows))
 
       def updates
         runs = @board_data.runs
@@ -29,8 +32,9 @@ module FunCi
       private
 
       def board(runs)
-        { t: "board", now: @clock.call.to_i, streak: @board_data.streak, cursor: @key_handler.cursor_index,
-          confirming: @key_handler.confirming?, has_more: false, runs: runs.map { |run| RunMessage.from(run) } }
+        page = @view.page(runs, more: @board_data.more?)
+        { t: "board", now: @clock.call.to_i, streak: @board_data.streak, **page,
+          runs: page[:runs].map { |run| RunMessage.from(run) } }
       end
     end
   end

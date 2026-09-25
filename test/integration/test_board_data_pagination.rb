@@ -46,4 +46,33 @@ class TestBoardDataPagination < Minitest::Test
     assert_equal 7, result.size,
                  "Should not exceed total available runs"
   end
+
+  def test_should_load_a_page_of_the_new_size_once_resized
+    board = board_over(10, page_size: 3)
+    board.resize(5)
+
+    assert_equal 5, board.runs.size
+  end
+
+  def test_should_keep_what_it_loaded_when_resized_smaller
+    board = board_over(10, page_size: 5)
+    board.resize(3)
+
+    assert_equal 5, board.runs.size
+  end
+
+  def test_should_report_more_when_the_store_holds_runs_beyond_those_loaded
+    assert_predicate board_over(4, page_size: 3), :more?
+  end
+
+  def test_should_report_no_more_when_every_run_is_loaded
+    refute_predicate board_over(3, page_size: 3), :more?
+  end
+
+  private
+
+  def board_over(count, page_size:)
+    count.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    FunCi::Tui::BoardData.new(@db, page_size: page_size)
+  end
 end

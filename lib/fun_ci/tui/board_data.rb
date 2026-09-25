@@ -21,6 +21,17 @@ module FunCi
         @limit += @page_size
       end
 
+      # Pages by `page_size` from now on, loading at least one such page.
+      def resize(page_size)
+        @page_size = page_size
+        @limit = [@limit, page_size].max
+      end
+
+      # Whether the store holds runs beyond those `runs` loads.
+      def more?
+        Persistence::PipelineRun.recent(@db, limit: @limit + 1).size > @limit
+      end
+
       def runs
         pipeline_runs = Persistence::PipelineRun.recent(@db, limit: @limit)
         pipeline_runs.map { |run| enrich_with_stages(run) }

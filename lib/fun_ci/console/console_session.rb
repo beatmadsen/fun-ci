@@ -2,6 +2,7 @@
 
 require "json"
 require_relative "console_state"
+require_relative "view"
 require_relative "../tui/key_handler"
 
 module FunCi
@@ -13,8 +14,8 @@ module FunCi
       VERSION = 1
 
       def self.build(board_data:, port:, clock:)
-        key_handler = Tui::KeyHandler.new(board_data: board_data)
-        new(state: ConsoleState.new(board_data: board_data, key_handler: key_handler, clock: clock), port: port)
+        view = View.new(key_handler: Tui::KeyHandler.new(board_data: board_data))
+        new(state: ConsoleState.new(board_data: board_data, view: view, clock: clock), port: port)
       end
 
       def initialize(state:, port:)
@@ -28,7 +29,7 @@ module FunCi
       def receive(line)
         message = JSON.parse(line)
         case message["t"]
-        when "ready" then refresh
+        when "ready", "resize" then resize(message["rows"])
         when "key" then key(message["key"])
         end
       end
@@ -39,6 +40,11 @@ module FunCi
       def finished? = @finished
 
       private
+
+      def resize(rows)
+        @state.resize(rows)
+        refresh
+      end
 
       def key(key)
         return refresh unless @state.press(key) == :quit

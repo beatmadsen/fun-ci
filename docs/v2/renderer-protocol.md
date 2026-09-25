@@ -85,6 +85,11 @@ The full state to show. Always complete — never a diff.
 - `project` (optional) is the path of the project the run belongs to. The
   renderer shows its basename in a colour chosen by CRC-32 of the basename, so
   a project keeps its colour across restarts.
+- `runs` is one page: at most `(rows - 16) / 2` runs for the terminal's `rows`
+  (a 14-row header, a blank line and the footer; two rows per run), scrolled
+  so the run under the cursor is on it. `cursor` indexes into `runs`, and
+  `has_more` says there are runs below the page. Ruby pages from the `rows` of
+  `ready` and of each `resize`.
 
 ### `event`
 `{"t":"event","name":"<name>","run_id":42,"stage":"fast"}`

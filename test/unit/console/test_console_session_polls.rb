@@ -36,4 +36,11 @@ class TestConsoleSessionPolls < Minitest::Test
 
     assert_equal "stage_failed", @port.sent[-2]["name"]
   end
+
+  def test_should_page_the_board_for_the_rows_of_a_resize
+    @board_data.runs = (1..6).map { |id| ConsoleFakes.run_row(id) }
+    @session.receive('{"t":"resize","cols":120,"rows":24}')
+
+    assert_equal 4, @port.sent.last["runs"].size
+  end
 end

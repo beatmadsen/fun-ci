@@ -17,6 +17,8 @@ module ConsoleFakes
 
     def streak = 3
     def load_more = nil
+    def resize(_page_size) = nil
+    def more? = false
     def cancel_run(id) = @cancelled << id
   end
 

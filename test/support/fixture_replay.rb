@@ -9,7 +9,8 @@ require "fun_ci/tui/streak_counter"
 # (each after the first is a poll), `renderer` lines are fed in, and the
 # conversation is the renderer lines with every message Ruby sent in between.
 class FixtureReplay
-  # BoardData over the fixture's runs, as SQLite would return them.
+  # BoardData over the fixture's runs, as SQLite would return them, all of
+  # them loaded.
   class Store
     attr_accessor :runs, :now
 
@@ -20,6 +21,8 @@ class FixtureReplay
 
     def streak = FunCi::Tui::StreakCounter.count(runs)
     def load_more = nil
+    def resize(_page_size) = nil
+    def more? = false
     def cancel_run(_id) = nil
   end
 
