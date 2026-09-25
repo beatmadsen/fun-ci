@@ -10,6 +10,7 @@ pub mod console;
 pub mod format;
 pub mod grid;
 pub mod headless;
+pub mod keys;
 pub mod model;
 pub mod protocol;
 pub mod replay;
