@@ -16,6 +16,9 @@ ConfinementGuard.install
 StrayStderrGuard.install
 SqliteConnectionGuard.install
 SpawnGuard.install
+# Minitest shells out to `diff -u` to show long strings that differ, which the
+# spawn guard would turn into an error; plain Expected/Actual output instead.
+Minitest::Assertions.diff = nil
 Minitest::Test.prepend(ConfinementGuard::CheckAfterTest)
 
 # Mutineer already forks a worker per mutant; forking again here would multiply

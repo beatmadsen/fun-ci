@@ -23,6 +23,11 @@ class TestSpawnGuard < Minitest::Test
     assert_match(/TestProbe#test_probe started a process \(fork\)/, probe_output("fork { exit! }"))
   end
 
+  # Minitest shells out to `diff -u` to show two long strings that differ.
+  def test_should_report_a_failed_comparison_of_long_strings_as_a_failure
+    assert_match(/1 failures, 0 errors/, probe_output(%(assert_equal "one\\ntwo\\n" * 20, "one\\nthree\\n" * 20)))
+  end
+
   def test_should_let_a_test_outside_the_fast_lanes_spawn
     assert_match(/1 runs, .* 0 failures, 0 errors/, probe_output(%(system("true")), lanes: "/nowhere"))
   end
