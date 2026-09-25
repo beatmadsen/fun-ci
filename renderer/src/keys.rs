@@ -13,7 +13,9 @@ pub fn decode(bytes: &[u8]) -> Vec<String> {
     let text = String::from_utf8_lossy(bytes);
     let mut rest = text.as_ref();
     let mut keys = Vec::new();
-    while let Some((key, length)) = next_key(rest) {
+    let at_most_one_key_per_byte = text.len();
+    for _ in 0..at_most_one_key_per_byte {
+        let Some((key, length)) = next_key(rest) else { break };
         keys.extend(key);
         rest = &rest[length..];
     }
