@@ -52,6 +52,19 @@ class TestActiveRuns < Minitest::Test
     assert_empty FunCi::Persistence::ActiveRuns.on_branch(@db, "feature")
   end
 
+  def test_should_find_an_unfinished_run_by_its_id
+    run_id = running_run
+
+    assert_equal [run_id], FunCi::Persistence::ActiveRuns.with_id(@db, run_id).map(&:id)
+  end
+
+  def test_should_find_nothing_for_a_finished_run_s_id
+    run_id = running_run
+    RUN.update_status(@db, run_id, "completed")
+
+    assert_empty FunCi::Persistence::ActiveRuns.with_id(@db, run_id)
+  end
+
   def test_should_record_the_run_cancelled
     run_id = running_run
     FunCi::Persistence::ActiveRuns.cancelled(@db, active.first)

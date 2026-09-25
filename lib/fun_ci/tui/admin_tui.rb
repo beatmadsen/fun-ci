@@ -16,8 +16,9 @@ module FunCi
 
       def initialize(db:, output: $stdout, input: $stdin, width: 80,
                      width_provider: nil, height_provider: nil,
-                     page_size: nil, animation_renderer: nil, terminal_input: nil)
-        @board_data = BoardData.new(db, page_size: page_size)
+                     page_size: nil, animation_renderer: nil, terminal_input: nil,
+                     run_canceller: Pipeline::RunCanceller.new)
+        @board_data = BoardData.new(db, page_size: page_size, run_canceller: run_canceller)
         @terminal_input = terminal_input || TerminalInput.new(input: input, width_provider: width_provider)
         @key_handler = KeyHandler.new(board_data: @board_data)
         @renderer = BoardRenderer.new(

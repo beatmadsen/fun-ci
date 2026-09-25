@@ -29,9 +29,12 @@ module FunCi
 
       private
 
+      # Records its own pid before the slow suite starts, so a cancel can't
+      # miss it; the parent records it too, for its callers.
       def run_in_child(db_path, pipeline_run_id, job_id, executor)
         @slot.release
         recorder = Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
+        Persistence::PipelineRun.store_pid(recorder.db, pipeline_run_id, Process.pid)
         BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
         recorder.close
       end

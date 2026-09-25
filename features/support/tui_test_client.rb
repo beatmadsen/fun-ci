@@ -11,6 +11,10 @@ require_relative "tui_driver"
 class TuiTestClient
   extend Forwardable
 
+  # The test database, and the signals the TUI sent to stop runs: the TUI's
+  # RunCanceller only records them, so no real process is ever signalled.
+  Backend = Struct.new(:db, :signals)
+
   def_delegators :@fixtures, :create_pipeline_run, :add_stage, :create_full_passed_run, :complete_running_pipeline,
                  :let_time_pass, :commits_newest_first, :run_status
   def_delegators :@driver, :tui, :plain_output, :previous_plain_output, :raw_output, :raw_lines,
@@ -21,17 +25,20 @@ class TuiTestClient
   def_delegator :@driver, :provide_width, :set_width_provider_value
   def_delegator :@driver, :refresh, :rerender
   def_delegator :@driver, :stop, :stop_run_loop
+  def_delegator :@fixtures, :recorded_processes
+
+  def signals_sent = @backend.signals
 
   def initialize
     @dir = Dir.mktmpdir
-    @db = FunCi::Persistence::Database.connection(File.join(@dir, "test.sqlite3"))
-    FunCi::Persistence::Database.migrate!(@db)
-    @fixtures = TuiFixtures.new(@db)
-    @driver = TuiDriver.new(@db)
+    @backend = Backend.new(FunCi::Persistence::Database.connection(File.join(@dir, "test.sqlite3")), [])
+    FunCi::Persistence::Database.migrate!(@backend.db)
+    @fixtures = TuiFixtures.new(@backend.db)
+    @driver = TuiDriver.new(@backend)
   end
 
   def cleanup
-    @db.close
+    @backend.db.close
     FileUtils.remove_entry @dir
   end
 end

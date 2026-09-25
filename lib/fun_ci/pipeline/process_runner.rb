@@ -3,6 +3,12 @@
 module FunCi
   module Pipeline
     module ProcessRunner
+      # The command waits on fd 9 until the caller has been told its pid, so a
+      # cancel that reads the recorded pid can never miss a stage that has
+      # started; exec keeps the pid and the process group. If the caller dies
+      # first, the pipe closes and the command never runs.
+      GATED = "read _ <&9 || exit 125; exec 9<&-; exec %s"
+
       # Yields the pid of the process it starts, which leads a process group
       # of its own, so the caller can stop the command and all it spawned.
       def run_process_with_timeout(cmd, budget, chdir: Dir.pwd, &)
@@ -17,9 +23,12 @@ module FunCi
       private
 
       def start(cmd, writer, chdir)
-        pid = Process.spawn(cmd, out: writer, err: writer, pgroup: true, chdir: chdir)
-        writer.close
+        gate, opener = IO.pipe
+        pid = Process.spawn(format(GATED, cmd), out: writer, err: writer, 9 => gate, pgroup: true, chdir: chdir)
+        [writer, gate].each(&:close)
         yield pid if block_given?
+        ignoring_errors { opener.puts }
+        opener.close
         pid
       end
 

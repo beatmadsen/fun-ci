@@ -45,6 +45,18 @@ class TestProcessRunner < Minitest::Test
     assert_equal [status.pid], started
   end
 
+  # So a cancel never misses a stage that has started: whoever is told the
+  # pid has recorded it before the stage's script runs.
+  def test_the_command_starts_only_after_the_caller_has_its_pid
+    Dir.mktmpdir do |dir|
+      marker = File.join(dir, "ran")
+      seen = []
+      Host.new.run_process_with_timeout("touch #{marker}", 30) { seen << File.exist?(marker) }
+
+      assert_equal [false], seen
+    end
+  end
+
   def test_seams_without_a_runner_run_the_command_for_real
     _, status, = FunCi::Pipeline::Seams.new.executor(Dir.tmpdir).call("sh -c 'exit 4'", 30)
 

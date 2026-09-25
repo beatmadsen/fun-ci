@@ -21,6 +21,7 @@ class TuiFixtures
   def create_pipeline_run(commit:, branch:, status: "completed", minutes_ago: 0)
     @now = Time.now
     @current_run_id = RUN.create(@db, commit_hash: commit, branch: branch)
+    RUN.store_trigger_pid(@db, @current_run_id, 40_000 + @current_run_id)
     advance_run(status)
     backdate_run(minutes_ago) if minutes_ago.positive?
     @current_run_id
@@ -28,6 +29,7 @@ class TuiFixtures
 
   def add_stage(stage:, status: "completed", duration: nil)
     job_id = JOB.create(@db, pipeline_run_id: @current_run_id, stage: stage)
+    JOB.store_pid(@db, job_id, 50_000 + job_id) unless status == "scheduled"
     advance_job(job_id, status)
     record_timing(job_id, status, duration) if duration
     job_id
@@ -57,6 +59,16 @@ class TuiFixtures
 
   def commits_newest_first
     RUN.recent(@db, limit: 1000).map { |run| run[:commit_hash] }
+  end
+
+  # What a run recorded of the processes a cancel had to stop: the trigger's
+  # pid, then the process group of each stage that was running, as
+  # RunCanceller signals them.
+  def recorded_processes(commit)
+    run_id, trigger = @db.get_first_row("SELECT id, trigger_pid FROM pipeline_runs WHERE commit_hash = ?", [commit])
+    stages = @db.execute("SELECT pid FROM stage_jobs WHERE pipeline_run_id = ? " \
+                         "AND status IN ('running', 'cancelled') AND pid IS NOT NULL", [run_id]).flatten
+    [trigger] + stages.map(&:-@)
   end
 
   def run_status(commit)

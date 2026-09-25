@@ -37,6 +37,14 @@ class TestSlotRunSlot < Minitest::Test
     refute(recorder.calls.any? { |call| call.first == :slot_taken })
   end
 
+  # Its pid may be reused once it has gone, so a cancel must not signal it.
+  def test_should_record_that_the_foreground_is_done_before_the_slow_suite_ends
+    recorder = FakeRecorder.new
+    slot_run(slot_with(Lock.new(false)), recorder: recorder).run(config)
+
+    assert_equal [:foreground_done], recorder.calls.last
+  end
+
   def test_should_keep_the_slot_while_the_slow_suite_is_still_running
     lock = Lock.new(false)
     slot_run(slot_with(lock)).run(config)

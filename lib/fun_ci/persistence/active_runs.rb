@@ -15,16 +15,22 @@ module FunCi
     module ActiveRuns
       ACTIVE = "status IN ('scheduled', 'running')"
 
-      def self.on_branch(db, branch)
-        db.execute("SELECT id, commit_hash, trigger_pid, pid, slot_lock FROM pipeline_runs " \
-                   "WHERE branch = ? AND #{ACTIVE} ORDER BY id", [branch]).map { |row| active_run(db, row) }
-      end
+      def self.on_branch(db, branch) = where(db, "branch = ?", branch)
+
+      # The run with this id, when it has not finished; none otherwise.
+      def self.with_id(db, id) = where(db, "id = ?", id)
 
       def self.cancelled(db, run)
         db.execute("UPDATE stage_jobs SET status = 'cancelled', completed_at = ? " \
                    "WHERE pipeline_run_id = ? AND #{ACTIVE}", [Time.now.utc.iso8601, run.id])
         PipelineRun.update_status(db, run.id, "cancelled")
       end
+
+      def self.where(db, clause, value)
+        db.execute("SELECT id, commit_hash, trigger_pid, pid, slot_lock FROM pipeline_runs " \
+                   "WHERE #{clause} AND #{ACTIVE} ORDER BY id", [value]).map { |row| active_run(db, row) }
+      end
+      private_class_method :where
 
       def self.active_run(db, (id, commit_hash, trigger_pid, pid, slot_lock))
         groups = db.execute("SELECT pid FROM stage_jobs WHERE pipeline_run_id = ? AND #{ACTIVE} AND pid IS NOT NULL",

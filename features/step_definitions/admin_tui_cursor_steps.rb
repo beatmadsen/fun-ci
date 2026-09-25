@@ -56,8 +56,8 @@ Then("the prompt should show {string}") do |text|
   assert_equal text, prompt.strip, "The prompt should read '#{text}'"
 end
 
-Then("the running pipeline should be recorded as cancelled") do
-  assert_equal "cancelled", @client.run_status(@commit), "The run should be cancelled in the database"
+Then("every process of the running pipeline should be killed, stage scripts included") do
+  assert_equal @client.recorded_processes(@commit).map { |pid| ["KILL", pid] }, @client.signals_sent
 end
 
 Then("the row should update to show status {string}") do |status|

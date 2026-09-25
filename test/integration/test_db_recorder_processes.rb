@@ -21,6 +21,13 @@ class TestDbRecorderProcesses < Minitest::Test
     assert_equal "/worktrees/slot-0.lock", @db.execute("SELECT slot_lock FROM pipeline_runs").dig(0, 0)
   end
 
+  def test_should_forget_the_trigger_process_once_the_foreground_is_done
+    create_run
+    @recorder.foreground_done
+
+    assert_nil @db.execute("SELECT trigger_pid FROM pipeline_runs").dig(0, 0)
+  end
+
   def test_should_record_the_process_a_stage_runs_in
     create_run
     @recorder.stage_process(@recorder.start_stage("lint"), 4242)

@@ -24,7 +24,7 @@ Feature: Cancel pipeline runs
   Scenario: Confirming cancellation of a running job
     Given a confirmation prompt is showing for commit "d4e5f67" on branch "feat/search"
     When I press "y"
-    Then the running pipeline should be recorded as cancelled
+    Then every process of the running pipeline should be killed, stage scripts included
     And the row should update to show status "CANCELLED"
     And the confirmation prompt should disappear
 

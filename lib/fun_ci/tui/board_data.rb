@@ -3,15 +3,18 @@
 require "time"
 require_relative "../persistence/pipeline_run"
 require_relative "../persistence/stage_job"
+require_relative "../persistence/active_runs"
+require_relative "../pipeline/run_canceller"
 require_relative "streak_counter"
 
 module FunCi
   module Tui
     class BoardData
-      def initialize(db, limit: 15, page_size: nil)
+      def initialize(db, limit: 15, page_size: nil, run_canceller: Pipeline::RunCanceller.new)
         @db = db
         @page_size = page_size || limit
         @limit = @page_size
+        @run_canceller = run_canceller
       end
 
       def load_more
@@ -28,8 +31,13 @@ module FunCi
         StreakCounter.count(pipeline_runs)
       end
 
+      # Stops the run's processes, then records it cancelled. A run that has
+      # finished meanwhile is left as it is.
       def cancel_run(run_id)
-        Persistence::PipelineRun.update_status(@db, run_id, "cancelled")
+        Persistence::ActiveRuns.with_id(@db, run_id).each do |run|
+          @run_canceller.stop(run)
+          Persistence::ActiveRuns.cancelled(@db, run)
+        end
       end
 
       private

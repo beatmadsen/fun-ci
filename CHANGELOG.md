@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   stops all of them, its own first, and cancels runs still waiting for a
   worktree as well. A run that had already died is only marked cancelled:
   the process ids it left behind may belong to something else by now.
+- Cancelling a run from the console (`c`, then `y`) only marked it
+  cancelled; its stages kept running. It now stops the run the same way,
+  whether the fast suite is still running or only the slow suite is left.
 - Two fun-ci processes starting at the same moment against a database that
   didn't exist yet (the first commit and push on a machine, say) could die
   with `database is locked` or `duplicate column name: project_path`.

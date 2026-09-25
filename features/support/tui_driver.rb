@@ -13,8 +13,8 @@ class TuiDriver
 
   def_delegators :@session, :tui, :exited?, :refresh_interval, :terminal_modes
 
-  def initialize(db)
-    @db = db
+  def initialize(backend)
+    @backend = backend
     @capture = RenderCapture.new
     @size = TerminalSize.new(80, nil)
     @session = nil
@@ -70,11 +70,15 @@ class TuiDriver
 
   def open_with(width: 80, width_provider: nil)
     terminal = ScriptedTerminal.new(width_provider: width_provider)
-    tui = FunCi::Tui::AdminTui.new(db: @db, output: @capture.io, width: width, terminal_input: terminal,
-                                   height_provider: -> { @size.height })
+    tui = FunCi::Tui::AdminTui.new(db: @backend.db, output: @capture.io, width: width, terminal_input: terminal,
+                                   height_provider: -> { @size.height }, run_canceller: recording_canceller)
     @session = RunLoop.new(tui, terminal)
     @capture.io.reopen(+"")
     advance(nil)
+  end
+
+  def recording_canceller
+    FunCi::Pipeline::RunCanceller.new(killer: ->(signal, pid) { @backend.signals << [signal, pid] })
   end
 
   def advance(key)

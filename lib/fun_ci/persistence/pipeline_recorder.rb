@@ -11,6 +11,7 @@ module FunCi
       def end_stage(_job_id, _status) = nil
       def stage_process(_job_id, _pid) = nil
       def slot_taken(_lock_file) = nil
+      def foreground_done = nil
       def complete_run = nil
       def fail_run = nil
       def db = nil
@@ -48,6 +49,11 @@ module FunCi
 
       def stage_process(job_id, pid)
         StageJob.store_pid(@db, job_id, pid)
+      end
+
+      # Once it has exited its pid may be reused, so a cancel must not signal it.
+      def foreground_done
+        PipelineRun.store_trigger_pid(@db, @pipeline_run_id, nil)
       end
 
       def slot_taken(lock_file)
