@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- The hook that runs a pipeline in the background is now `post-commit`,
+  so it tests the commit you just made; the `pre-commit` hook tested the
+  commit before it. `fun-ci install-hooks` writes `post-commit` and
+  `pre-push`. `fun-ci trigger --background` is the new name for
+  `--no-validate`, which still works until 2.1 and says so on stderr.
 - Every pipeline now runs in a git worktree of its own, checked out at the
   commit it is testing, under `.git/fun-ci/worktrees/`. Before, the stages ran
   in your checkout while you kept editing it. The stage scripts come from the
@@ -23,6 +28,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `fun-ci console`, which have done the same job since 1.0.
 
 ### Bug Fixes
+- Git runs hooks with variables such as `GIT_INDEX_FILE` pointing at the
+  checkout. fun-ci passed them on to the git commands it runs and to your
+  stage scripts, which then read the checkout's index instead of the
+  commit's. They are cleared now.
 - Cancelling a stale pipeline (a newer commit on the same branch) left its
   stage scripts running and could let the old run record itself as failed
   after it was cancelled. fun-ci now records every process a run starts and
@@ -47,6 +56,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.1] - 2026-09-20
 
 ### Bug Fixes
+- Git runs hooks with variables such as `GIT_INDEX_FILE` pointing at the
+  checkout. fun-ci passed them on to the git commands it runs and to your
+  stage scripts, which then read the checkout's index instead of the
+  commit's. They are cleared now.
 - `StageRunner` raised `NameError: uninitialized constant FunCi::NullRecorder`
   when built without an explicit recorder. The module reorganisation in 1.2.0
   moved `NullRecorder` under `Persistence` and the default argument was left
@@ -54,6 +67,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   so the constant was only ever resolvable by luck of load order.
 
 ### Changed
+- The hook that runs a pipeline in the background is now `post-commit`,
+  so it tests the commit you just made; the `pre-commit` hook tested the
+  commit before it. `fun-ci install-hooks` writes `post-commit` and
+  `pre-push`. `fun-ci trigger --background` is the new name for
+  `--no-validate`, which still works until 2.1 and says so on stderr.
 - The gemspec reads the version from a new `lib/fun_ci/version.rb` instead of
   loading the whole library. Loading the library pulls in sqlite3, and Bundler
   reads the gemspec before it installs anything, so `bundle install` failed on
@@ -70,6 +88,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0] - 2026-02-23
 
 ### Bug Fixes
+- Git runs hooks with variables such as `GIT_INDEX_FILE` pointing at the
+  checkout. fun-ci passed them on to the git commands it runs and to your
+  stage scripts, which then read the checkout's index instead of the
+  commit's. They are cleared now.
 - Replaced unreliable `Timeout.timeout` with process groups (`pgroup: true`) and `Thread#join` for reliable time budget enforcement on lint/build/fast/slow stages
 - Fixed off-by-one in TUI row truncation that caused the top pipeline row to be hidden behind the header in short terminals
 - Added `Screen#height=` to clear screen on terminal height changes, preventing the header from scrolling off-screen when tmux panes resize

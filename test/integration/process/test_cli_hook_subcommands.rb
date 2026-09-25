@@ -15,7 +15,7 @@ class TestCliInstallHooks < Minitest::Test
     assert_equal 0, run_cli("install-hooks")
   end
 
-  %w[pre-commit pre-push].each do |hook|
+  %w[post-commit pre-push].each do |hook|
     define_method(:"test_installs_#{hook}_when_no_type_given") do
       run_cli("install-hooks")
 
@@ -31,6 +31,13 @@ class TestCliInstallHooks < Minitest::Test
 
   def test_installs_no_other_hook_when_a_type_is_given
     run_cli("install-hooks", "pre-push")
+
+    refute hook_exists?("post-commit")
+  end
+
+  # AT-1.8: the background hook runs after the commit, not before it.
+  def test_installs_no_pre_commit_hook
+    run_cli("install-hooks")
 
     refute hook_exists?("pre-commit")
   end
@@ -50,7 +57,7 @@ class TestCliInitEverything < Minitest::Test
     assert_equal 0, run_cli("init", "--everything")
   end
 
-  %w[pre-commit pre-push].each do |hook|
+  %w[post-commit pre-push].each do |hook|
     define_method(:"test_everything_installs_#{hook}") do
       add_gemfile
       run_cli("init", "--everything")
@@ -73,6 +80,6 @@ class TestCliInitEverything < Minitest::Test
   def test_everything_installs_no_hooks_when_init_fails
     run_cli("init", "--everything")
 
-    refute hook_exists?("pre-commit")
+    refute hook_exists?("post-commit")
   end
 end

@@ -23,9 +23,9 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-1.6: Cancelling a stale run frees its slot
 - [x] AT-1.12: Cancelling from the console stops the run
 - [x] AT-1.7: Pool size is configurable
-- [ ] AT-1.8: The background hook is post-commit and records the new commit
+- [x] AT-1.8: The background hook is post-commit and records the new commit
 - [ ] AT-1.9: Upgrading replaces fun-ci's own pre-commit hook only
-- [ ] AT-1.10: `--no-validate` keeps working as an alias for one release
+- [x] AT-1.10: `--no-validate` keeps working as an alias for one release
 - [ ] AT-1.11: Worktrees are cleaned up with `fun-ci prune`
 - [ ] AT-2.1: ConsoleSession separates state from rendering
 - [ ] AT-2.2: `board` messages follow the protocol

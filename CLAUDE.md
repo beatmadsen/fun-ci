@@ -48,12 +48,12 @@ ruby renderer/tools/convert_animations.rb   # Rewrite renderer/animations/*.json
 
 ```bash
 fun-ci trigger <commit-hash> <branch>               # Run the full pipeline (pre-push)
-fun-ci trigger --no-validate <commit-hash> <branch>  # Fork pipeline to background (pre-commit)
+fun-ci trigger --background <commit-hash> <branch>   # Fork pipeline to background (post-commit); --no-validate is the old name, until 2.1
 fun-ci console                                       # Launch the TUI dashboard
 fun-ci init                                           # Scaffold .fun-ci/ for detected project type
 fun-ci init --everything                              # init + install-hooks + check in one step
-fun-ci install-hooks                                  # Install pre-commit and pre-push git hooks
-fun-ci install-hooks pre-commit                       # Install a single hook type
+fun-ci install-hooks                                  # Install post-commit and pre-push git hooks
+fun-ci install-hooks post-commit                      # Install a single hook type
 fun-ci check                                          # Verify .fun-ci/ setup is valid
 ```
 
@@ -69,7 +69,7 @@ fun-ci check                                          # Verify .fun-ci/ setup is
 Fun-CI is an opinionated, local-first CI for a project's own machine: a four-stage pipeline (lint and build in parallel, then the fast suite, with the slow suite in the background) under strict time budgets (30 s lint, 30 s build, 10 s fast, 5 min slow), results in SQLite, and a TUI to watch them.
 
 - `exe/fun-ci` -> `Cli` routes subcommands and sets up the shared database (`Cli.run(args, io:, handlers:, db_dir:)`).
-- `lib/fun_ci/pipeline/` -- running a pipeline. `TriggerCommand` parses `fun-ci trigger`; `Trigger` validates the project and the commit, records the run and takes a worktree slot from `WorktreePool` (`<git-common-dir>/fun-ci/worktrees/slot-N`, checked out at the commit by `Worktrees`; `Workspaces.for` sizes the pool from `worktree_slots` in `.fun-ci/config`, read by `Setup::Settings`); `SlotRun` runs lint and build in threads there, forks the slow suite (`BackgroundFork`) and runs the fast suite. A `Slot` is held through an flock on `slot-N.lock` by each stage that uses it and frees when the last lets go, or when its holders die; `StageRunner` runs one stage through `CommandExecutor` (an injected runner, or `ProcessRunner` with its budget); `StalePipelineCanceller` cancels the unfinished runs on the same branch through `RunCanceller`, which kills a run's recorded processes (`Persistence::ActiveRuns`: the trigger, the forked slow suite, and each stage script's process group); `PipelineForker` backs `--no-validate`.
+- `lib/fun_ci/pipeline/` -- running a pipeline. `TriggerCommand` parses `fun-ci trigger`; `Trigger` validates the project and the commit, records the run and takes a worktree slot from `WorktreePool` (`<git-common-dir>/fun-ci/worktrees/slot-N`, checked out at the commit by `Worktrees`; `Workspaces.for` sizes the pool from `worktree_slots` in `.fun-ci/config`, read by `Setup::Settings`); `SlotRun` runs lint and build in threads there, forks the slow suite (`BackgroundFork`) and runs the fast suite. A `Slot` is held through an flock on `slot-N.lock` by each stage that uses it and frees when the last lets go, or when its holders die; `StageRunner` runs one stage through `CommandExecutor` (an injected runner, or `ProcessRunner` with its budget); `StalePipelineCanceller` cancels the unfinished runs on the same branch through `RunCanceller`, which kills a run's recorded processes (`Persistence::ActiveRuns`: the trigger, the forked slow suite, and each stage script's process group); `PipelineForker` backs `--background`.
 - `lib/fun_ci/persistence/` -- `Database` (connection and migration), `PipelineRun` and `StageJob` (row access), `DbRecorder`/`NullRecorder` (what a pipeline records).
 - `lib/fun_ci/setup/` -- `init`, `install-hooks`, `check`: `Installer`, `ProjectDetector`, `TemplateWriter`, `HookWriter`, `SetupChecker`, `ProjectConfig`.
 - `lib/fun_ci/tui/`, `lib/fun_ci/animations/` -- the 1.x console, the renderer 2.0 replaces: `AdminTui`, `BoardData`, `KeyHandler`, `BoardRenderer`, `Screen`, animation players and data.
@@ -78,7 +78,7 @@ Fun-CI is an opinionated, local-first CI for a project's own machine: a four-sta
 
 Seams tests use in place of the real thing:
 - `Trigger.new(project:, commit:, io:, seams:)` and `StageRunner.new(commit_hash:, stdout:, seams:)` take a `Pipeline::Seams` (`lib/fun_ci/pipeline/trigger_params.rb`): `command_runner` (stage processes), `background_launcher` (`nil` is the real fork), `commit_validator` (`git cat-file`), `recorder`, `time_budgets`, `workspace` (`nil` is the worktree pool; `InPlace` runs in the project directory itself). Each left out gets the real thing; `test/support/trigger_test_kit.rb` builds one the way tests need it.
-- `pipeline_forker` on `Trigger.run_from_args` (the `--no-validate` fork), `handlers` and `db_dir` on `Cli.run`, `open:` on `Database.connection`.
+- `pipeline_forker` on `Trigger.run_from_args` (the `--background` fork), `handlers` and `db_dir` on `Cli.run`, `open:` on `Database.connection`.
 - `width_provider` and `terminal_input` on `AdminTui`; the cucumber lane drives `AdminTui#run` in a fiber (`features/support/run_loop.rb`).
 - `FakeRecorder` in `test/test_helper.rb` captures recorder calls without SQLite.
 

@@ -7,7 +7,7 @@ module FunCi
       MARKER = "# fun-ci-managed-hook"
 
       COMMANDS = {
-        "pre-commit" => "fun-ci trigger --no-validate",
+        "post-commit" => "fun-ci trigger --background",
         "pre-push" => "fun-ci trigger"
       }.freeze
 

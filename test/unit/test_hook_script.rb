@@ -5,8 +5,9 @@ require "fun_ci/setup/hook_script"
 
 # The script fun-ci writes into a git hook.
 class TestHookScript < Minitest::Test
-  def test_should_hand_a_pre_commit_to_the_background
-    assert_includes FunCi::Setup::HookScript.for("pre-commit"), %(fun-ci trigger --no-validate "$COMMIT" "$BRANCH")
+  # After the commit, so the commit it tests is the one just made.
+  def test_should_hand_each_new_commit_to_the_background
+    assert_includes FunCi::Setup::HookScript.for("post-commit"), %(fun-ci trigger --background "$COMMIT" "$BRANCH")
   end
 
   def test_should_run_the_full_pipeline_before_a_push
@@ -31,6 +32,6 @@ class TestHookScript < Minitest::Test
   end
 
   def test_should_know_the_hooks_it_can_write
-    assert_equal %w[pre-commit pre-push], FunCi::Setup::HookScript.types
+    assert_equal %w[post-commit pre-push], FunCi::Setup::HookScript.types
   end
 end

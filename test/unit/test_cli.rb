@@ -108,7 +108,7 @@ class TestCliHelp < Minitest::Test
   def test_help_includes_options
     stdout = StringIO.new
     FunCi::Cli.run(["--help"], io: FunCi::Pipeline::Io.new(stdout: stdout))
-    assert_match(/--no-validate/, stdout.string)
+    assert_match(/--background/, stdout.string)
     assert_match(/--everything/, stdout.string)
   end
 

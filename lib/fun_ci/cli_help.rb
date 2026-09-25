@@ -12,7 +12,7 @@ module FunCi
         trigger        Run CI pipeline for a commit
         console        Launch the admin TUI dashboard
         init           Initialize .fun-ci/ with template scripts
-        install-hooks  Install pre-commit and pre-push git hooks
+        install-hooks  Install post-commit and pre-push git hooks
         check          Verify project setup
 
       Options:
@@ -20,7 +20,7 @@ module FunCi
         --version      Show version
 
       Trigger options:
-        --no-validate  Fork pipeline to background and return immediately
+        --background   Run the pipeline in the background and return at once
 
       Init options:
         --everything   Run init + install-hooks + check in one step
@@ -28,7 +28,7 @@ module FunCi
       Examples:
         fun-ci init --everything
         fun-ci trigger abc1234 main
-        fun-ci trigger --no-validate abc1234 main
+        fun-ci trigger --background abc1234 main
         fun-ci console
     HELP
   end

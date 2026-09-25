@@ -3,6 +3,7 @@
 require "open3"
 require_relative "../persistence/pipeline_recorder"
 require_relative "command_executor"
+require_relative "git_environment"
 
 module FunCi
   module Pipeline
@@ -23,8 +24,10 @@ module FunCi
     class Seams
       def self.defaults
         { command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new, background_launcher: nil,
-          workspace: nil, commit_validator: ->(sha) { Open3.capture2e("git", "cat-file", "-t", sha).last.success? } }
+          workspace: nil, commit_validator: method(:commit_exists?) }
       end
+
+      def self.commit_exists?(sha) = Open3.capture2e(GitEnvironment::CLEAN, "git", "cat-file", "-t", sha).last.success?
 
       def initialize(**given) = super(**self.class.defaults.merge(given))
       def budgets = DEFAULT_BUDGETS.merge(time_budgets)

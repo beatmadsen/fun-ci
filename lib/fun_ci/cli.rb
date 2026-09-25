@@ -82,7 +82,7 @@ module FunCi
     end
 
     def run_install_hooks(args)
-      types = args.any? ? [args.first] : %w[pre-commit pre-push]
+      types = args.any? ? [args.first] : Setup::HookScript.types
       types.each do |type|
         code = Setup::HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @io.stdout)
         return code unless code.zero?

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "open3"
+require_relative "git_environment"
 
 module FunCi
   module Pipeline
@@ -31,7 +32,7 @@ module FunCi
       def add(path, sha) = git(@project_root, "worktree", "add", "--detach", "--force", path, sha)
 
       def git(dir, *args)
-        output, status = Open3.capture2e("git", *args, chdir: dir)
+        output, status = Open3.capture2e(GitEnvironment::CLEAN, "git", *args, chdir: dir)
         raise GitError, "git #{args.join(" ")}: #{output}" unless status.success?
 
         output
