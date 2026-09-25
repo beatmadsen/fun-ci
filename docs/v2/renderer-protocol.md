@@ -26,7 +26,11 @@ Ruby                                  renderer
  |                                     |   (restores terminal, exits 0)
 ```
 
-- EOF on stdin is treated as `quit`. The terminal is always restored.
+- EOF on stdin is treated as `quit`. The terminal is always restored: on EOF,
+  `quit`, a panic, and SIGTERM, SIGHUP or SIGINT (which then exit with
+  `128 + signal`, so 143 for SIGTERM).
+- The renderer draws on `/dev/tty`; `--tty <path>` names another terminal
+  device (tests use a pseudo-terminal this way).
 - If `hello.v` isn't supported, the renderer replies `error{code:"version"}`,
   restores the terminal and exits 2.
 - Ruby sends `board` whenever its data changes and at least every 5 s. The

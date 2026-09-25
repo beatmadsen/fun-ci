@@ -1,5 +1,8 @@
 //! Test doubles shared by the integration tests.
 
+// Each test crate compiles this module and uses only part of it.
+#![allow(dead_code)]
+
 use std::io;
 
 use fun_ci_renderer::terminal::Terminal;

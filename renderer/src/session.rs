@@ -12,55 +12,68 @@ pub const EXIT_TERMINAL: i32 = 1;
 /// Exit status when `hello` names a version this build does not speak.
 pub const EXIT_VERSION: i32 = 2;
 
-/// Runs one session to its end and returns the process exit status.
+/// Runs one session to its end and returns the process exit status. Once
+/// entered, the terminal is restored however the session ends: end of input,
+/// `quit`, or a panic unwinding through here.
 pub fn run_session<R: BufRead, W: Write, T: Terminal>(input: R, output: W, terminal: &mut T) -> i32 {
     let mut lines = input.lines().map_while(Result::ok);
-    let mut session = Session { replies: Replies(output), terminal };
-    match session.open(lines.next().as_deref()) {
-        Ok(()) => session.converse(lines),
+    let mut replies = Replies(output);
+    match open(lines.next().as_deref(), &mut replies, terminal) {
+        Ok(entered) => converse(&entered, lines, &mut replies),
         Err(status) => status,
     }
 }
 
-struct Session<'t, W: Write, T: Terminal> {
-    replies: Replies<W>,
-    terminal: &'t mut T,
+/// What a terminating signal does: restore the terminal, then exit with the
+/// conventional `128 + signal` status.
+pub fn on_terminate(signal: i32, restore: impl FnOnce(), exit: impl FnOnce(i32)) {
+    restore();
+    exit(128 + signal);
 }
 
-impl<W: Write, T: Terminal> Session<'_, W, T> {
-    fn open(&mut self, hello: Option<&str>) -> Result<(), i32> {
-        check_hello(hello).map_err(|detail| self.replies.refuse("version", &detail, EXIT_VERSION))?;
-        let entered = self.terminal.enter();
-        entered.map_err(|e| self.replies.refuse("terminal", &e.to_string(), EXIT_TERMINAL))?;
-        let (cols, rows) = self.terminal.size();
-        self.replies.send(&Outbound::ready(cols, rows));
-        Ok(())
-    }
+struct Entered<'t, T: Terminal>(&'t mut T);
 
-    fn converse(&mut self, lines: impl Iterator<Item = String>) -> i32 {
-        for line in lines {
-            if !self.handle(parse(&line)) {
-                break;
-            }
-        }
-        self.close()
-    }
-
-    fn handle(&mut self, message: Result<Inbound, ParseError>) -> bool {
-        match message {
-            Ok(Inbound::Quit) => return false,
-            Ok(_) => {}
-            Err(error) => self.replies.send(&error.reply()),
-        }
-        true
-    }
-
-    fn close(&mut self) -> i32 {
-        if let Err(error) = self.terminal.restore() {
+impl<T: Terminal> Drop for Entered<'_, T> {
+    fn drop(&mut self) {
+        if let Err(error) = self.0.restore() {
             eprintln!("fun-ci-renderer: could not restore the terminal: {error}");
         }
-        EXIT_OK
     }
+}
+
+fn open<'t, W: Write, T: Terminal>(
+    hello: Option<&str>,
+    replies: &mut Replies<W>,
+    terminal: &'t mut T,
+) -> Result<Entered<'t, T>, i32> {
+    check_hello(hello).map_err(|detail| replies.refuse("version", &detail, EXIT_VERSION))?;
+    let entered = terminal.enter();
+    entered.map_err(|e| replies.refuse("terminal", &e.to_string(), EXIT_TERMINAL))?;
+    let (cols, rows) = terminal.size();
+    replies.send(&Outbound::ready(cols, rows));
+    Ok(Entered(terminal))
+}
+
+fn converse<W: Write, T: Terminal>(
+    _entered: &Entered<T>,
+    lines: impl Iterator<Item = String>,
+    replies: &mut Replies<W>,
+) -> i32 {
+    for line in lines {
+        if !handle(parse(&line), replies) {
+            break;
+        }
+    }
+    EXIT_OK
+}
+
+fn handle<W: Write>(message: Result<Inbound, ParseError>, replies: &mut Replies<W>) -> bool {
+    match message {
+        Ok(Inbound::Quit) => return false,
+        Ok(_) => {}
+        Err(error) => replies.send(&error.reply()),
+    }
+    true
 }
 
 fn check_hello(line: Option<&str>) -> Result<(), String> {

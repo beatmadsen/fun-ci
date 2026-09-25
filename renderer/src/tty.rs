@@ -1,43 +1,106 @@
-//! The real terminal: `/dev/tty`, so the stdin/stdout pipes never carry
-//! terminal bytes. Opened on `enter`, so a refused handshake never touches it.
+//! The real terminal: `/dev/tty` (or `--tty <path>`), so the stdin/stdout
+//! pipes never carry terminal bytes. Opened on `enter`, so a refused
+//! handshake never touches it.
 
 use std::fs::{File, OpenOptions};
 use std::io::{self, Write};
-
-use crossterm::{cursor, execute, terminal};
+use std::os::fd::AsRawFd;
+use std::path::PathBuf;
+use std::sync::{Mutex, PoisonError};
 
 use crate::terminal::Terminal;
 
-/// The controlling terminal of this process.
-#[derive(Default)]
+const ENTER: &[u8] = b"\x1b[?1049h\x1b[?25l";
+const LEAVE: &[u8] = b"\x1b[?25h\x1b[?1049l";
+
+static ENTERED: Mutex<Option<Entered>> = Mutex::new(None);
+
+struct Entered {
+    file: File,
+    modes: libc::termios,
+}
+
+/// A terminal device by path.
 pub struct Tty {
-    out: Option<File>,
+    path: PathBuf,
+}
+
+impl Tty {
+    #[must_use]
+    pub fn new(path: PathBuf) -> Self {
+        Self { path }
+    }
+}
+
+impl Default for Tty {
+    fn default() -> Self {
+        Self::new(PathBuf::from("/dev/tty"))
+    }
 }
 
 impl Terminal for Tty {
     fn size(&self) -> (u16, u16) {
-        terminal::size().unwrap_or((80, 24))
+        with_entered(|entered| window_size(&entered.file)).flatten().unwrap_or((80, 24))
     }
 
     fn enter(&mut self) -> io::Result<()> {
-        let mut out = OpenOptions::new().write(true).open("/dev/tty")?;
-        terminal::enable_raw_mode()?;
-        execute!(out, terminal::EnterAlternateScreen, cursor::Hide)?;
-        self.out = Some(out);
+        let mut file = OpenOptions::new().read(true).write(true).open(&self.path)?;
+        let modes = get_modes(&file)?;
+        set_modes(&file, &raw(modes))?;
+        file.write_all(ENTER)?;
+        *lock() = Some(Entered { file, modes });
         Ok(())
     }
 
     fn restore(&mut self) -> io::Result<()> {
-        let Some(mut out) = self.out.take() else {
-            return Ok(());
-        };
-        execute!(out, cursor::Show, terminal::LeaveAlternateScreen)?;
-        terminal::disable_raw_mode()
+        restore_controlling_terminal()
     }
 
     fn draw(&mut self, bytes: &[u8]) -> io::Result<()> {
-        let out = self.out.as_mut().ok_or_else(|| io::Error::other("terminal not entered"))?;
-        out.write_all(bytes)?;
-        out.flush()
+        let written = with_entered(|entered| entered.file.write_all(bytes).and_then(|()| entered.file.flush()));
+        written.unwrap_or_else(|| Err(io::Error::other("terminal not entered")))
     }
+}
+
+/// Leaves the alternate screen and raw mode if this process entered them,
+/// from any thread (a signal handler's, say). Does nothing the second time.
+///
+/// # Errors
+/// When the terminal refuses the mode change.
+pub fn restore_controlling_terminal() -> io::Result<()> {
+    let Some(mut entered) = lock().take() else {
+        return Ok(());
+    };
+    entered.file.write_all(LEAVE)?;
+    set_modes(&entered.file, &entered.modes)
+}
+
+fn lock() -> std::sync::MutexGuard<'static, Option<Entered>> {
+    ENTERED.lock().unwrap_or_else(PoisonError::into_inner)
+}
+
+fn with_entered<T>(action: impl FnOnce(&mut Entered) -> T) -> Option<T> {
+    lock().as_mut().map(action)
+}
+
+fn raw(mut modes: libc::termios) -> libc::termios {
+    unsafe { libc::cfmakeraw(&raw mut modes) };
+    modes
+}
+
+fn get_modes(file: &File) -> io::Result<libc::termios> {
+    let mut modes = unsafe { std::mem::zeroed::<libc::termios>() };
+    let status = unsafe { libc::tcgetattr(file.as_raw_fd(), &raw mut modes) };
+    if status == 0 { Ok(modes) } else { Err(io::Error::last_os_error()) }
+}
+
+fn set_modes(file: &File, modes: &libc::termios) -> io::Result<()> {
+    let status = unsafe { libc::tcsetattr(file.as_raw_fd(), libc::TCSAFLUSH, modes) };
+    if status == 0 { Ok(()) } else { Err(io::Error::last_os_error()) }
+}
+
+fn window_size(file: &File) -> Option<(u16, u16)> {
+    let mut size = libc::winsize { ws_row: 0, ws_col: 0, ws_xpixel: 0, ws_ypixel: 0 };
+    let status = unsafe { libc::ioctl(file.as_raw_fd(), libc::TIOCGWINSZ, &raw mut size) };
+    (status == 0 && size.ws_col > 0).then_some((size.ws_col, size.ws_row))
 }

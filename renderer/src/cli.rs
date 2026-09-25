@@ -21,6 +21,7 @@ pub struct Paths {
     pub animations: Option<PathBuf>,
     pub scenario: Option<PathBuf>,
     pub out: Option<PathBuf>,
+    pub tty: Option<PathBuf>,
 }
 
 /// A headless run: replay `scenario` on a `size` terminal, write into `out`.
@@ -64,6 +65,12 @@ impl Options {
         Ok(library)
     }
 
+    /// The terminal a live session draws on: `--tty <path>`, else `/dev/tty`.
+    #[must_use]
+    pub fn tty(&self) -> PathBuf {
+        self.paths.tty.clone().unwrap_or_else(|| PathBuf::from("/dev/tty"))
+    }
+
     /// The headless run asked for, if `--headless` was given.
     ///
     /// # Errors
@@ -81,7 +88,7 @@ impl Options {
         match flag {
             "--headless" => self.headless = true,
             "--cols" | "--rows" => self.set_size(flag, &value)?,
-            "--animations" | "--scenario" | "--out" => self.paths.set(flag, value),
+            "--animations" | "--scenario" | "--out" | "--tty" => self.paths.set(flag, value),
             _ => return Err(format!("unknown option {flag}")),
         }
         Ok(())
@@ -100,6 +107,7 @@ impl Paths {
         match flag {
             "--animations" => self.animations = path,
             "--scenario" => self.scenario = path,
+            "--tty" => self.tty = path,
             _ => self.out = path,
         }
     }

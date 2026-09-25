@@ -62,6 +62,16 @@ fn without_headless_the_renderer_runs_live() {
 }
 
 #[test]
+fn a_live_session_draws_on_the_controlling_terminal() {
+    assert_eq!(parse(&[]).unwrap().tty(), PathBuf::from("/dev/tty"));
+}
+
+#[test]
+fn tty_names_the_terminal_to_draw_on() {
+    assert_eq!(parse(&["--tty", "/dev/ttys042"]).unwrap().tty(), PathBuf::from("/dev/ttys042"));
+}
+
+#[test]
 fn the_library_takes_animations_from_the_named_directory() {
     let dir = tempfile::tempdir().unwrap();
     let json = fs::read_to_string("animations/explosion.json").unwrap().replace("\"explosion\"", "\"boom\"");
