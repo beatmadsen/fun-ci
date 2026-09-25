@@ -3,6 +3,7 @@
 require "json"
 require "fun_ci/console/console_session"
 require "fun_ci/tui/streak_counter"
+require_relative "console_fakes"
 
 # Replays a contract fixture (contract/fixtures/*.jsonl) against
 # ConsoleSession: `state` lines set what the database holds and the clock
@@ -42,7 +43,8 @@ class FixtureReplay
   def expected = @lines.reject { |line| line.key?("state") }
 
   def conversation
-    session = FunCi::Console::ConsoleSession.build(board_data: @store, port: @port, clock: -> { @store.now })
+    session = FunCi::Console::ConsoleSession.build(board_data: @store, port: @port, clock: -> { @store.now },
+                                                   log: ConsoleFakes::Log.new)
     @lines.each_with_index { |line, index| play(session, line, index) }
     @port.conversation
   end

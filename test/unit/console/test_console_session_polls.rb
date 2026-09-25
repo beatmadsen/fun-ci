@@ -11,7 +11,8 @@ class TestConsoleSessionPolls < Minitest::Test
   def setup
     @board_data = ConsoleFakes::BoardData.new([ConsoleFakes.fast_stage(2, "running")])
     @port = ConsoleFakes::Port.new
-    @session = FunCi::Console::ConsoleSession.build(board_data: @board_data, port: @port, clock: -> { Time.at(0) })
+    @session = FunCi::Console::ConsoleSession.build(board_data: @board_data, port: @port, clock: -> { Time.at(0) },
+                                                    log: ConsoleFakes::Log.new)
     @session.start
     @session.receive('{"t":"ready","v":1,"cols":120,"rows":40}')
   end

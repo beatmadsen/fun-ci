@@ -32,6 +32,16 @@ module ConsoleFakes
     def write(message) = @sent << JSON.parse(JSON.generate(message))
   end
 
+  class Log
+    attr_reader :lines
+
+    def initialize
+      @lines = []
+    end
+
+    def write(text) = @lines << text
+  end
+
   def self.run_row(id, status: "completed")
     { id: id, commit_hash: "a" * 40, branch: "main", status: status, project_path: nil,
       created_at: "2026-09-25T10:00:00Z", updated_at: "2026-09-25T10:01:00Z", stages: [] }

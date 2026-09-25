@@ -12,7 +12,8 @@ class TestConsoleSession < Minitest::Test
   def setup
     @board_data = ConsoleFakes::BoardData.new([ConsoleFakes.run_row(2, status: "running"), ConsoleFakes.run_row(1)])
     @port = ConsoleFakes::Port.new
-    @session = FunCi::Console::ConsoleSession.build(board_data: @board_data, port: @port, clock: -> { NOW })
+    @session = FunCi::Console::ConsoleSession.build(board_data: @board_data, port: @port, clock: -> { NOW },
+                                                    log: ConsoleFakes::Log.new)
     @session.start
   end
 
