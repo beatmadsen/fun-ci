@@ -28,17 +28,20 @@ module FunCi
       def receive(line)
         message = JSON.parse(line)
         case message["t"]
-        when "ready" then @port.write(@state.board)
+        when "ready" then refresh
         when "key" then key(message["key"])
         end
       end
+
+      # Sends what the runs look like now, as each poll does.
+      def refresh = @state.updates.each { |message| @port.write(message) }
 
       def finished? = @finished
 
       private
 
       def key(key)
-        return @port.write(@state.board) unless @state.press(key) == :quit
+        return refresh unless @state.press(key) == :quit
 
         @finished = true
         @port.write(t: "quit")

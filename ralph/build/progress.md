@@ -29,7 +29,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-1.11: Worktrees are cleaned up with `fun-ci prune`
 - [x] AT-2.1: ConsoleSession separates state from rendering
 - [x] AT-2.2: `board` messages follow the protocol
-- [ ] AT-2.3: Stage changes become events, not animations
+- [x] AT-2.3: Stage changes become events, not animations
 - [ ] AT-2.4: Resize changes the page size
 - [ ] AT-2.5: Protocol errors never crash the console
 - [x] AT-3.1: `renderer/` Cargo crate `fun-ci-renderer`

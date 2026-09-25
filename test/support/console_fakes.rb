@@ -7,7 +7,8 @@ require "json"
 # as the JSON the renderer would read.
 module ConsoleFakes
   class BoardData
-    attr_reader :cancelled, :runs
+    attr_reader :cancelled
+    attr_accessor :runs
 
     def initialize(runs)
       @runs = runs
@@ -32,5 +33,11 @@ module ConsoleFakes
   def self.run_row(id, status: "completed")
     { id: id, commit_hash: "a" * 40, branch: "main", status: status, project_path: nil,
       created_at: "2026-09-25T10:00:00Z", updated_at: "2026-09-25T10:01:00Z", stages: [] }
+  end
+
+  # A run whose `fast` stage has `status`.
+  def self.fast_stage(id, status)
+    run_row(id, status: "running").merge(stages: [{ stage: "fast", status: status, duration: nil,
+                                                    started_at: "2026-09-25T10:00:00Z" }])
   end
 end
