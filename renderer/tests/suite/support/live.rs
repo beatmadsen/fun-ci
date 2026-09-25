@@ -69,8 +69,14 @@ pub fn live(inputs: Vec<Input>) -> Outcome {
 
 /// Runs `inputs` (after `hello`) through a live session on a terminal of `size`.
 pub fn live_on(size: (u16, u16), inputs: Vec<Input>) -> Outcome {
+    converse(size, [line(HELLO)].into_iter().chain(inputs).collect())
+}
+
+/// Runs exactly `inputs`, `hello` included, through a live session on a
+/// terminal of `size`.
+pub fn converse(size: (u16, u16), inputs: VecDeque<Input>) -> Outcome {
     let (clock, waits) = (Rc::new(Cell::new(5_000)), Rc::new(RefCell::new(Vec::new())));
-    let script = Script { inputs: [line(HELLO)].into_iter().chain(inputs).collect(), clock: clock.clone(), waits: waits.clone(), ended: false };
+    let script = Script { inputs, clock: clock.clone(), waits: waits.clone(), ended: false };
     let (mut output, mut terminal) = (Vec::new(), FakeTerminal::sized(size.0, size.1));
     let console = Console::new(&Library::builtin(), 0, (80, 24));
     run_live(Session { inputs: script, output: &mut output, clock: ScriptClock(clock), console }, &mut terminal);

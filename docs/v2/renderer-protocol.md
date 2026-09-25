@@ -222,3 +222,8 @@ Each line is an object with exactly one key:
 The Ruby replay (`test/acceptance/test_contract_fixtures.rb`) feeds in the
 `renderer` lines and compares the whole conversation, both directions in
 order, with the fixture.
+The Rust side (`renderer/tests/suite/contract_fixtures.rs`) feeds a live
+session the `ruby` lines, and the keys and sizes that make the renderer write
+its lines (a `key` becomes the bytes a terminal sends for it, `ready` sets the
+terminal's size), and compares what it writes with the `renderer` lines. A
+new fixture has to be named there too, or that suite fails.

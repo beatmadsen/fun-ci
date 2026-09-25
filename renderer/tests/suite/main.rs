@@ -10,6 +10,7 @@ mod binary_handshake;
 mod board_layout;
 mod cancel_prompt;
 mod cli_options;
+mod contract_fixtures;
 mod differential;
 mod effects;
 mod format;
