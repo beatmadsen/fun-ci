@@ -17,6 +17,8 @@ mod ripple;
 mod rocket;
 mod running;
 mod sky;
+mod stonework;
+mod storm;
 mod sweep;
 mod tick;
 mod warning;

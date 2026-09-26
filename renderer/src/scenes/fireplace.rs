@@ -1,21 +1,24 @@
-//! Quiet: a fire in a rural stone fireplace. Flames lick up from two crossed
-//! logs, embers glow and the odd spark drifts up, and the firelight flickers
-//! over rough stones set in uneven courses on a dark timber wall.
+//! Quiet: a fire in a medieval stone hearth. Flames lick up from logs under a
+//! pointed arch of rough fieldstones, a stone hood rises into the chimney,
+//! and through a small window the storm rages: rain slants past and lightning
+//! now and then lights the room.
 
 use crate::art::math::Portable;
+use super::stonework::stone;
+use super::storm::{in_window, lightning, outside, rain};
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
-use crate::art::light::{glow, haze, square};
+use crate::art::light::{glow, haze};
 use crate::art::noise::{dice, fbm, value};
 use crate::art::{Shade, add, float, mix, scale, seconds, smoothstep};
 
-const TIMBER: Shade = [0.06, 0.032, 0.018];
-const BEAM: Shade = [0.08, 0.045, 0.022];
-const STONE: Shade = [0.16, 0.15, 0.14];
-const MORTAR: Shade = [0.05, 0.045, 0.04];
+const PLASTER: Shade = [0.055, 0.04, 0.03];
 const SOOT: Shade = [0.012, 0.008, 0.006];
 const LOG: Shade = [0.09, 0.045, 0.02];
+const FIRELIGHT: Shade = [0.55, 0.24, 0.07];
 const SPARKS: u64 = 6;
+/// The window's size across and down, in pixels.
+const WINDOW: (f64, f64) = (18.0, 30.0);
 
 #[derive(Debug)]
 pub struct Fireplace;
@@ -35,46 +38,73 @@ impl Scene for Fireplace {
 
     fn paint(&self, canvas: &mut Canvas, t_ms: u64) {
         let t = seconds(t_ms);
-        let (width, height) = canvas.size();
-        let hearth = Hearth { centre: width * 0.5, floor: height - 10.0, flicker: flicker(t) };
+        let hearth = Hearth::new(canvas, t);
         canvas.map(|x, y, _| hearth.wall(x, y));
-        mantel(canvas, &hearth);
+        rain(canvas, (hearth.window, WINDOW), t);
         logs(canvas, &hearth);
         canvas.map(|x, y, pixel| hearth.fire(x, y, t).map_or(pixel, |light| add(pixel, light)));
         (0..SPARKS).for_each(|i| spark(canvas, &hearth, i, t));
+        canvas.map(|x, y, pixel| add(pixel, hearth.lightning_at(x, y)));
     }
 }
 
-/// How bright the fire burns at `t`: a restless flicker around a steady glow.
-fn flicker(t: f64) -> f64 {
-    0.85 + 0.1 * (t * 7.3).sine() + 0.08 * (value(t * 3.1, 0.5, 71) - 0.5)
-}
-
-/// The fireplace: its opening centred at `centre`, standing on `floor`.
+/// The hearth: its arch centred at `centre`, standing on `floor`, with the
+/// window beside it and the fire's flicker and the lightning's flash of the moment.
 struct Hearth {
     centre: f64,
     floor: f64,
-    flicker: f64,
+    window: (f64, f64),
+    light: (f64, f64),
 }
 
 impl Hearth {
     const HALF_WIDTH: f64 = 30.0;
-    const HEIGHT: f64 = 52.0;
-    const SURROUND: f64 = 26.0;
+    const SPRING: f64 = 24.0;
 
-    /// Whether (x, y) lies inside the opening: straight sides under a round arch.
-    fn inside(&self, x: f64, y: f64) -> bool {
-        let dx = (x - self.centre).abs();
-        let spring = self.floor - Self::HEIGHT + Self::HALF_WIDTH;
-        dx < Self::HALF_WIDTH && y < self.floor && (y > spring || dx.hypotenuse(spring - y) < Self::HALF_WIDTH)
+    fn new(canvas: &Canvas, t: f64) -> Self {
+        let (width, height) = canvas.size();
+        let flicker = 0.85 + 0.1 * (t * 7.3).sine() + 0.08 * (value(t * 3.1, 0.5, 71) - 0.5);
+        Self { centre: width * 0.45, floor: height - 8.0, window: (width * 0.84, 34.0), light: (flicker, lightning(t)) }
     }
 
-    /// The wall: stones around the opening, timber beyond, all lit by the fire.
+    fn flicker(&self) -> f64 {
+        self.light.0
+    }
+
+    /// Whether (x, y) lies in the opening: straight jambs under a pointed arch.
+    fn inside(&self, x: f64, y: f64) -> bool {
+        let (spring, k) = (self.floor - Self::SPRING, Self::HALF_WIDTH * 0.5);
+        let arc = |cx: f64| (x - cx).hypotenuse(y - spring) < Self::HALF_WIDTH + k;
+        (x - self.centre).abs() < Self::HALF_WIDTH && y < self.floor && (y > spring || arc(self.centre - k) && arc(self.centre + k))
+    }
+
+    /// Whether (x, y) lies in the stonework: a hood that narrows as it rises
+    /// into the chimney, its edge as rough as the stones.
+    fn masonry(&self, x: f64, y: f64) -> bool {
+        let reach = 34.0 + 30.0 * smoothstep(0.0, self.floor, y) + 5.0 * value(y / 9.0, 1.0, 80);
+        (x - self.centre).abs() < reach || y > self.floor
+    }
+
+    /// The wall at (x, y), lit by the fire.
     fn wall(&self, x: f64, y: f64) -> Shade {
-        let near = (x - self.centre).abs() < Self::HALF_WIDTH + Self::SURROUND && y > self.floor - Self::HEIGHT - 18.0;
-        let base = if self.inside(x, y) { SOOT } else if near { stone(x, y) } else { plank(x) };
         let reach = (x - self.centre).hypotenuse((y - self.floor + 20.0) * 1.3);
-        add(base, scale([0.55, 0.24, 0.07], self.flicker * 0.7 * (-reach / 55.0).exponential()))
+        add(self.surface(x, y), scale(FIRELIGHT, self.flicker() * 0.7 * (-reach / 55.0).exponential()))
+    }
+
+    /// What the wall is at (x, y): soot in the opening, the storm in the
+    /// window, stones in the hood, hearth and window frame, plaster beyond.
+    fn surface(&self, x: f64, y: f64) -> Shade {
+        if self.inside(x, y) { return SOOT; }
+        if in_window((x, y), self.window, WINDOW) { return outside(y, self.light.1, self.floor); }
+        let frame = in_window((x, y), self.window, (WINDOW.0 + 10.0, WINDOW.1 + 10.0));
+        if self.masonry(x, y) || frame { return stone(x, y, 81); }
+        scale(PLASTER, 0.8 + 0.4 * fbm(x / 20.0, y / 14.0, 82))
+    }
+
+    /// The lightning's cold light at (x, y), falling in through the window.
+    fn lightning_at(&self, x: f64, y: f64) -> Shade {
+        let from_window = (x - self.window.0).hypotenuse(y - self.window.1);
+        scale([0.22, 0.25, 0.34], self.light.1 * (-from_window / 90.0).exponential())
     }
 
     /// The flames' light at (x, y), rising from the logs; none outside them.
@@ -84,40 +114,12 @@ impl Hearth {
             return None;
         }
         let tongue = (fbm(x / 5.0, y / 10.0 + t * 2.6, 73) + 0.12) * (1.0 - across * across);
-        let heat = smoothstep(up - 0.1, up + 0.3, tongue * self.flicker);
+        let heat = smoothstep(up - 0.1, up + 0.3, tongue * self.flicker());
         (heat > 0.02).then(|| flame(heat))
     }
 }
 
-/// Upright timber planks, each a little different, with dark seams between.
-fn plank(x: f64) -> Shade {
-    let board = (x / 14.0).floor();
-    let seam = if x.rem_euclid(14.0) < 1.0 { 0.4 } else { 1.0 };
-    scale(TIMBER, seam * (0.8 + 0.4 * dice(board.to_bits(), 79)))
-}
-
-/// The timber mantel beam over the stones, its underside catching the light.
-fn mantel(canvas: &mut Canvas, hearth: &Hearth) {
-    let (left, top) = (hearth.centre - Hearth::HALF_WIDTH - Hearth::SURROUND - 6.0, hearth.floor - Hearth::HEIGHT - 24.0);
-    for column in 0..14_u32 {
-        square(canvas, (left + f64::from(column) * 8.0, top), (8.0, 1.0), BEAM);
-    }
-    haze(canvas, (hearth.centre, top + 8.0), 20.0, (scale([0.5, 0.22, 0.06], hearth.flicker), 0.25));
-}
-
-/// A rough stone at (x, y): courses of uneven blocks, each its own shade, in mortar.
-fn stone(x: f64, y: f64) -> Shade {
-    let course = (y / 10.0).floor();
-    let offset = if course.rem_euclid(2.0) < 1.0 { 0.0 } else { 9.0 };
-    let (column, along, down) = (((x + offset) / 18.0).floor(), (x + offset).rem_euclid(18.0), y.rem_euclid(10.0));
-    if along < 1.5 || down < 1.5 {
-        return MORTAR;
-    }
-    let block = dice(column.to_bits() ^ course.to_bits(), 74);
-    scale(STONE, 0.7 + 0.5 * block + 0.15 * (value(x / 3.0, y / 3.0, 75) - 0.5))
-}
-
-/// The flame's colour for `heat`, from deep red at its edge to a pale core.
+/// The flame's colour for `heat`, from deep red at its edge to a warm core.
 fn flame(heat: f64) -> Shade {
     let ember = mix([0.45, 0.05, 0.01], [1.0, 0.36, 0.05], smoothstep(0.0, 0.7, heat));
     mix(ember, [1.2, 0.8, 0.3], smoothstep(0.75, 1.0, heat))
@@ -130,7 +132,7 @@ fn logs(canvas: &mut Canvas, hearth: &Hearth) {
         let along = f64::from(step) * 4.0 - 16.0;
         haze(canvas, (hearth.centre + along, base - along.abs() * 0.12), 2.2, (LOG, 1.0));
     }
-    glow(canvas, (hearth.centre, base + 3.0), 9.0, scale([0.9, 0.28, 0.05], 0.55 * hearth.flicker));
+    glow(canvas, (hearth.centre, base + 3.0), 9.0, scale([0.9, 0.28, 0.05], 0.55 * hearth.flicker()));
 }
 
 /// Spark `i`: every few seconds it leaves the fire, drifts up and dies.

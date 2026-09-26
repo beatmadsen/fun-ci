@@ -17,6 +17,7 @@ mod clocks;
 mod contract_fixtures;
 mod effects;
 mod film;
+mod fireplace;
 mod format;
 mod grid_difference;
 mod handshake;

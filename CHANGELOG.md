@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The starry night is back, meaning "nothing has happened for a while": five
   minutes after the latest run finished, the header leaves the pass or
   failure screen for a quiet scene, the starry night or one of two new ones
-  (an aurora, fireflies, a fire in a stone fireplace), with a small lamp in the corner that stays green
+  (an aurora, fireflies, a fire in a medieval stone hearth with lightning and rain at the window), with a small lamp in the corner that stays green
   after a pass and flickers red after a failure.
 - The streak is back: the header's top right says how many runs in a row
   have passed ("7 in a row!"), or "streak broken" after a failure. It went
