@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"island\")"
+---
+ 60 cols at    0 ms: 77dd9512
+ 60 cols at  150 ms: fb0ab3ba
+ 60 cols at  400 ms: a0a02109
+ 60 cols at  900 ms: bd1809f6
+ 60 cols at 1700 ms: 245b32d2
+ 60 cols at 2600 ms: ac10cafa
+ 60 cols at 3500 ms: e246710a
+ 60 cols at 3900 ms: 14868b4b
+ 60 cols at 9300 ms: b729d701
+200 cols at  900 ms: 86b2c3ab

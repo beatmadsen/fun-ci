@@ -113,3 +113,8 @@ fn should_keep_the_quiet_scenes_out_of_the_milestone_pools() {
 fn should_offer_a_fireplace_among_the_quiet_scenes() {
     assert!(Cast::quiet_pool().contains(&"fireplace"), "{:?}", Cast::quiet_pool());
 }
+
+#[test]
+fn should_offer_a_moonlit_island_among_the_quiet_scenes() {
+    assert!(Cast::quiet_pool().contains(&"island"), "{:?}", Cast::quiet_pool());
+}

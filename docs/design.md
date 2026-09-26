@@ -149,7 +149,7 @@ milestone, the header plays a scene for it (AT-7.3):
   pulsing hazard sign for a failure (AT-7.5).
 - Five minutes after that run finished (or at once, if no run has), the header
   goes quiet: it shows a quiet scene picked at random, the starry night, an
-  aurora, fireflies or a fire in a medieval stone hearth while a storm rages outside, held until a run starts. A small lamp in the lower left
+  aurora, fireflies, a fire in a medieval stone hearth while a storm rages outside, or a moonlit island with a palm, held until a run starts. A small lamp in the lower left
   corner keeps the latest outcome in view: steady green after a pass, a slow
   red flicker after a failure, none before any run has finished (AT-7.7). The
   quiet state means "nothing has happened for a while"; the lamp answers "was
@@ -164,7 +164,7 @@ The pools today:
 | fast passed | a lightning strike and a neon tick (`flash`), a very happy YAY (`yay`) |
 | passed | fireworks (`success`), a trophy (`celebrate`), dancing leprechauns (`leprechauns`) |
 | failed | the explosion, which shakes (`explosion`) |
-| quiet (nothing for five minutes) | the starry night (`idle`), an aurora (`aurora`), fireflies (`fireflies`), a fire in a medieval stone hearth with a storm at the window (`fireplace`) |
+| quiet (nothing for five minutes) | the starry night (`idle`), an aurora (`aurora`), fireflies (`fireflies`), a fire in a medieval stone hearth with a storm at the window (`fireplace`), a castaway's island by moonlight (`island`) |
 
 Lint's scenes are teal and move across, build's are amber and stack or turn,
 so the two small ones can be told apart without reading.

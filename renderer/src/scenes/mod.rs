@@ -11,6 +11,7 @@ mod fireworks;
 mod flash;
 mod gears;
 mod idle;
+mod island;
 mod lettering;
 mod leprechauns;
 mod ripple;
@@ -27,7 +28,8 @@ mod yay;
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 17] = [
+pub static ALL: [&dyn Scene; 18] = [
+    &island::Island,
     &aurora::Aurora,
     &fireflies::Fireflies,
     &fireplace::Fireplace,
