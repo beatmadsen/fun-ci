@@ -43,6 +43,14 @@ class TestRunStatus < Minitest::Test
     assert_equal "failed", run_status
   end
 
+  def test_should_keep_a_completed_run_completed_when_a_stage_fails_afterwards
+    end_stages(lint: "completed", build: "completed", slow: "completed", fast: "completed")
+
+    end_stages(fast: "failed")
+
+    assert_equal "completed", run_status
+  end
+
   def test_should_keep_a_cancelled_run_cancelled_when_a_stage_fails
     job_id = @recorder.start_stage("lint")
     FunCi::Persistence::PipelineRun.update_status(@db, @recorder.pipeline_run_id, "cancelled")

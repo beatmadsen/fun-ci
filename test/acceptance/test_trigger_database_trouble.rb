@@ -6,6 +6,7 @@ require_relative "../support/troubled_db"
 # AT-8.2 and AT-8.4: a database that can't take the pipeline's writes doesn't
 # stop the pipeline, and fun-ci says so once.
 class TestTriggerDatabaseTrouble < Minitest::Test
+  STAGE_SCRIPTS = %w[lint.sh build.sh fast.sh slow.sh].freeze
   def teardown
     @client.close
   end
@@ -13,7 +14,19 @@ class TestTriggerDatabaseTrouble < Minitest::Test
   def test_should_still_run_every_stage_when_the_database_stays_busy
     trigger_over(SQLite3::BusyException)
 
-    assert(%w[lint.sh build.sh fast.sh slow.sh].all? { |script| @client.ran?(script) })
+    assert_equal STAGE_SCRIPTS, scripts_run
+  end
+
+  def test_should_exit_zero_for_a_passing_pipeline_when_the_database_stays_busy
+    trigger_over(SQLite3::BusyException)
+
+    assert_equal 0, @client.exit_code
+  end
+
+  def test_should_exit_zero_for_a_passing_pipeline_when_the_database_cannot_be_written
+    trigger_over(SQLite3::FullException)
+
+    assert_equal 0, @client.exit_code
   end
 
   def test_should_exit_with_the_pipeline_s_own_code_when_the_database_stays_busy
@@ -37,10 +50,12 @@ class TestTriggerDatabaseTrouble < Minitest::Test
   def test_should_still_run_every_stage_when_the_database_cannot_be_written
     trigger_over(SQLite3::FullException)
 
-    assert(%w[lint.sh build.sh fast.sh slow.sh].all? { |script| @client.ran?(script) })
+    assert_equal STAGE_SCRIPTS, scripts_run
   end
 
   private
+
+  def scripts_run = STAGE_SCRIPTS.select { |script| @client.ran?(script) }
 
   def trigger_over(error, failures: {})
     @client = TriggerCliClient.open(command_runner: script_simulating_runner(failures: failures),

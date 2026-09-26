@@ -13,7 +13,7 @@ class TestTriggerCancelsStaleRuns < Minitest::Test
     @client.close
   end
 
-  def test_should_cancel_the_unfinished_run_on_the_same_branch
+  def test_should_cancel_the_unfinished_run_on_the_same_branch_when_a_newer_commit_triggers
     older = unfinished_run(branch: "main")
 
     @client.trigger(commit_hash: "abc1234", branch: "main")
@@ -21,7 +21,7 @@ class TestTriggerCancelsStaleRuns < Minitest::Test
     assert_equal "cancelled", FunCi::Persistence::PipelineRun.find(@client.db, older)[:status]
   end
 
-  def test_should_say_which_run_it_cancelled_for_which
+  def test_should_say_which_run_it_cancelled_for_which_when_it_cancels_one
     unfinished_run(branch: "main")
 
     @client.trigger(commit_hash: "abc1234", branch: "main")
@@ -29,7 +29,7 @@ class TestTriggerCancelsStaleRuns < Minitest::Test
     assert_includes @client.stdout, "Cancelled stale pipeline for old5678. Starting fresh for abc1234."
   end
 
-  def test_should_leave_an_unfinished_run_on_another_branch_alone
+  def test_should_leave_an_unfinished_run_alone_when_it_is_on_another_branch
     other = unfinished_run(branch: "feature")
 
     @client.trigger(commit_hash: "abc1234", branch: "main")

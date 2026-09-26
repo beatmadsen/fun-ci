@@ -71,6 +71,13 @@ fn should_light_less_than_half_the_header_in_a_lint_or_build_scene() {
 }
 
 #[test]
+fn should_light_less_of_the_header_in_lint_and_build_scenes_than_in_any_fast_suite_scene() {
+    let most = |milestones: &[&str]| milestones.iter().flat_map(|m| pool(m)).map(|name| most_lit(name)).collect::<Vec<f64>>();
+    let (small, fast) = (most(&["lint_passed", "build_passed"]), most(&["fast_passed"]));
+    assert!(small.iter().copied().fold(0.0, f64::max) < fast.iter().copied().fold(1.0, f64::min), "{small:?} vs {fast:?}");
+}
+
+#[test]
 fn should_pick_a_milestone_scene_from_its_own_pool() {
     let mut cast = Cast::new(Library::builtin(), 7);
     let picks: Vec<&str> = (0..20).map(|_| cast.for_milestone("build_passed").unwrap().name()).collect();

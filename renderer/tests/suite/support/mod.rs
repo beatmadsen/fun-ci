@@ -4,6 +4,7 @@
 pub mod boards;
 pub mod input;
 pub mod live;
+pub mod plain_scenes;
 pub mod pty;
 pub mod renderer;
 pub mod shades;

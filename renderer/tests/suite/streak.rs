@@ -27,7 +27,8 @@ fn should_say_the_streak_is_broken_when_it_is_zero() {
 
 #[test]
 fn should_show_no_streak_before_there_is_one() {
-    assert!(!caption_row(&[Value::Null]).contains("row"));
+    let row = caption_row(&[Value::Null]);
+    assert!(!row.contains("row") && !row.contains("streak"), "{row}");
 }
 
 #[test]

@@ -30,7 +30,7 @@ class TestRunStatusInAnyOrder < Minitest::Test
   def test_should_not_count_as_passed_while_the_fast_suite_runs_after_the_slow_suite_passed
     trigger(runner: noting_status_when_fast_runs, launcher: SYNC_LAUNCHER)
 
-    assert_equal ["running"], @seen
+    assert_equal [%w[running completed]], @seen, "[run, slow stage] when the fast suite ran"
   end
 
   def test_should_pass_once_the_fast_suite_passes_after_the_slow_suite_passed
@@ -49,10 +49,12 @@ class TestRunStatusInAnyOrder < Minitest::Test
   def noting_status_when_fast_runs
     @seen = []
     lambda do |cmd|
-      @seen << run_status if cmd.include?("fast.sh")
+      @seen << [run_status, slow_status] if cmd.include?("fast.sh")
       PASS
     end
   end
 
-  def run_status = @client.pipeline_runs_for(commit_hash: "abc1234").first[:status]
+  def the_run = @client.pipeline_runs_for(commit_hash: "abc1234").first
+  def run_status = the_run[:status]
+  def slow_status = @client.stage_jobs_for(pipeline_run_id: the_run[:id]).find { |job| job[:stage] == "slow" }[:status]
 end

@@ -71,20 +71,20 @@ class TestStageRunnerDefaults < Minitest::Test
     assert_includes output_of_failing("build"), "Build failed."
   end
 
-  def test_tells_the_developer_to_fix_what_the_linter_reported_when_lint_fails
-    assert_includes output_of_failing("lint"), "Fix what the linter reported above, then try again."
+  def test_should_name_the_next_step_right_after_saying_which_stage_failed
+    assert_equal ["Build failed.", "Fix the build errors above, then try again."], last_lines_of_failing("build")
   end
 
-  def test_tells_the_developer_to_fix_the_build_errors_when_the_build_fails
-    assert_includes output_of_failing("build"), "Fix the build errors above, then try again."
+  def test_should_tell_the_developer_to_fix_what_the_linter_reported_when_lint_fails
+    assert_equal "Fix what the linter reported above, then try again.", last_lines_of_failing("lint").last
   end
 
-  def test_tells_the_developer_to_fix_the_failing_tests_when_the_fast_suite_fails
-    assert_includes output_of_failing("fast"), "Fix the failing tests above, then try again."
+  def test_should_tell_the_developer_to_fix_the_failing_tests_when_the_fast_suite_fails
+    assert_equal "Fix the failing tests above, then try again.", last_lines_of_failing("fast").last
   end
 
-  def test_tells_the_developer_to_fix_the_failing_tests_when_the_slow_suite_fails
-    assert_includes output_of_failing("slow"), "Fix the failing tests above, then try again."
+  def test_should_tell_the_developer_to_fix_the_failing_tests_when_the_slow_suite_fails
+    assert_equal "Fix the failing tests above, then try again.", last_lines_of_failing("slow").last
   end
 
   def test_shows_what_a_failing_script_printed
@@ -108,6 +108,8 @@ class TestStageRunnerDefaults < Minitest::Test
   end
 
   def failing_answer = ["undefined method `x'", FakeStatus.new(false, 1)]
+
+  def last_lines_of_failing(stage) = output_of_failing(stage).lines.last(2).map(&:chomp)
 
   def output_of_failing(stage)
     stdout = StringIO.new

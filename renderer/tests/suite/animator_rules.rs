@@ -24,8 +24,8 @@ cases! {
     the_stage_that_finishes_a_run_celebrates: Kind::for_event("stage_passed", "passed", "passed") => Some(Kind::Success);
     a_stage_that_passes_mid_run_flashes_green: Kind::for_event("stage_passed", "passed", "running") => Some(Kind::StagePass);
     a_run_event_has_no_stage_effect: Kind::for_event("run_passed", "passed", "passed") => None;
-    pinning_a_scene_leaves_the_other_pools_random: picked(&mut pinned("explosion"), "run_passed") => "success";
-    an_unknown_pin_is_ignored: picked(&mut pinned("disco"), "run_passed") => "success";
+    pinning_a_scene_leaves_the_other_pools_to_pick_from: Cast::pool("run_passed").contains(&picked(&mut pinned("explosion"), "run_passed").as_str()) => true;
+    an_unknown_pin_is_ignored: Cast::pool("run_passed").contains(&picked(&mut pinned("disco"), "run_passed").as_str()) => true;
     strip_removes_sgr_escapes: strip("\u{1b}[1;31mBOOM\u{1b}[0m!") => "BOOM!";
     strip_removes_other_csi_escapes: strip("a\u{1b}[2Kb") => "ab";
     strip_keeps_an_escape_that_is_not_csi: strip("a\u{1b}Xb") => "a\u{1b}Xb";

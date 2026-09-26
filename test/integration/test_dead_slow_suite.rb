@@ -80,6 +80,14 @@ class TestDeadSlowSuite < Minitest::Test
     assert_equal "running", FunCi::Persistence::StageJob.find(@db, @slow)[:status]
   end
 
+  def test_should_leave_a_slow_stage_running_before_its_process_is_recorded
+    FunCi::Persistence::PipelineRun.store_pid(@db, @run_id, nil)
+
+    poll(answering: Errno::ESRCH)
+
+    assert_equal "running", FunCi::Persistence::StageJob.find(@db, @slow)[:status]
+  end
+
   def test_should_count_a_process_it_may_not_signal_as_alive
     poll(answering: Errno::EPERM)
 
