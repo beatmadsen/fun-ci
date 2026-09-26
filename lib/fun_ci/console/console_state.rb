@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require_relative "run_message"
-require_relative "stage_events"
+require_relative "console_events"
 
 module FunCi
   module Console
     # What the console shows: the page of runs BoardData reads that the View
     # puts on screen, and the clock's time, as a protocol `board` message,
-    # after an `event` for each stage that changed since the last one.
+    # after the `event`s for what changed since the last one.
     class ConsoleState
       KEYS = { "up" => :up, "down" => :down, "esc" => :escape, "ctrl_c" => "q", "enter" => :enter }.freeze
 
@@ -15,7 +15,7 @@ module FunCi
         @board_data = board_data
         @view = view
         @clock = clock
-        @events = StageEvents.new
+        @events = ConsoleEvents.new
       end
 
       # :quit when the key ends the session.

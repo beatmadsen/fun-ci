@@ -12,7 +12,7 @@ class TestRunStatusInAnyOrder < Minitest::Test
   end
 
   PASS = ["", FakeStatus.new(true, 0)].freeze
-  FAIL = ["", FakeStatus.new(false, 1)].freeze
+  PASSING = ->(_cmd) { PASS }
 
   def teardown
     @client.close
@@ -20,7 +20,7 @@ class TestRunStatusInAnyOrder < Minitest::Test
 
   def test_should_stay_failed_when_the_slow_suite_passes_after_the_fast_suite_failed
     held = HeldSlowSuite.new
-    trigger(runner: ->(cmd) { cmd.include?("fast.sh") ? FAIL : PASS }, launcher: held.launcher)
+    trigger(runner: failing_script_runner("fast.sh"), launcher: held.launcher)
 
     held.release
 
@@ -34,7 +34,7 @@ class TestRunStatusInAnyOrder < Minitest::Test
   end
 
   def test_should_pass_once_the_fast_suite_passes_after_the_slow_suite_passed
-    trigger(runner: ->(_cmd) { PASS }, launcher: SYNC_LAUNCHER)
+    trigger(runner: PASSING, launcher: SYNC_LAUNCHER)
 
     assert_equal "completed", run_status
   end

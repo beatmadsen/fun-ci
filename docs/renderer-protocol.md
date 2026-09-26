@@ -104,9 +104,18 @@ The full state to show. Always complete — never a diff.
 ### `event`
 `{"t":"event","name":"<name>","run_id":42,"stage":"fast"}`
 
-Names: `stage_failed`, `stage_passed`, `run_passed`, `run_failed`,
-`running_started`, `running_stopped`. The renderer chooses the animation.
-`run_id`/`stage` are present when meaningful.
+Two kinds, both with `run_id`. The renderer chooses the animation.
+
+- A stage changed: `stage_passed`, `stage_failed` (failed or timed out), with
+  `stage`. They drive the effects on that stage's column.
+- A run reached a milestone: `lint_passed`, `build_passed`, `fast_passed`,
+  `run_passed`, `run_failed`, without `stage`. They drive the header. Ruby
+  sends one per milestone, in the order the run reached them (lint and build by
+  when they finished), none once the run has failed, and none for a cancelled
+  run (`design.md`, A run's states).
+
+Stage events come before milestone events when both happened since the last
+`board`.
 
 ### `quit`
 `{"t":"quit"}`
