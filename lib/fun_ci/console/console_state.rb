@@ -25,6 +25,7 @@ module FunCi
       def resize(rows) = @board_data.resize(@view.resize(rows))
 
       def updates
+        @board_data.record_dead_slow_suites
         runs = @board_data.runs
         [*@events.since_last(runs), board(runs)]
       end

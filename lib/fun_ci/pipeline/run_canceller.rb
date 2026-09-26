@@ -2,6 +2,7 @@
 
 require_relative "../persistence/active_runs"
 require_relative "../persistence/run_status"
+require_relative "../persistence/write_trouble"
 require_relative "slot_lock"
 
 module FunCi
@@ -31,6 +32,8 @@ module FunCi
           Persistence::ActiveRuns.slow_suite_died(db, job_id)
           Persistence::RunStatus.settle(db, run_id)
         end
+      rescue SQLite3::BusyException, *Persistence::WriteTrouble::UNWRITABLE
+        nil
       end
 
       def stop(run)

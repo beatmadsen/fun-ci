@@ -4,6 +4,7 @@ require_relative "../test_helper"
 require "fun_ci/persistence/database"
 require "fun_ci/console/board_data"
 require "fun_ci/pipeline/run_canceller"
+require "delegate"
 
 # AT-8.3: a slow suite whose forked process died without finishing is
 # recorded failed, and its run with it, the next time the console polls.
@@ -12,6 +13,21 @@ class TestDeadSlowSuite < Minitest::Test
   include PipelineTestHelpers
 
   SLOW_SUITE_PID = 4242
+  DEAD = ->(_signal, _pid) { raise Errno::ESRCH }
+
+  # The test's database, refusing every write with `error`: locked past its busy timeout, a full disk.
+  class RefusingWrites < SimpleDelegator
+    def initialize(db, error)
+      super(db)
+      @error = error
+    end
+
+    def execute(sql, *)
+      raise @error, "refused" if sql.start_with?("UPDATE")
+
+      super
+    end
+  end
 
   def setup
     setup_test_db
@@ -43,11 +59,19 @@ class TestDeadSlowSuite < Minitest::Test
     end
 
     # When the console polls
-    FunCi::Console::BoardData.new(@db, run_canceller: canceller(finishing)).runs
+    poll_with(finishing)
 
     # Then the pass stands
     assert_equal "completed", FunCi::Persistence::StageJob.find(@db, @slow)[:status],
                  "a result recorded before the write must not be overwritten"
+  end
+
+  def test_should_still_show_the_runs_when_the_database_stays_busy
+    assert_equal ["running"], statuses_polled_over(SQLite3::BusyException), "a busy database must not break the poll"
+  end
+
+  def test_should_still_show_the_runs_when_the_database_cannot_be_written
+    assert_equal ["running"], statuses_polled_over(SQLite3::FullException), "a full disk must not break the poll"
   end
 
   def test_should_leave_the_slow_stage_running_while_its_process_lives
@@ -64,7 +88,7 @@ class TestDeadSlowSuite < Minitest::Test
 
   def test_should_ask_only_whether_the_process_exists
     signals = []
-    FunCi::Console::BoardData.new(@db, run_canceller: canceller(->(*args) { signals << args })).runs
+    poll_with(->(*args) { signals << args })
 
     assert_equal [[0, SLOW_SUITE_PID]], signals
   end
@@ -73,8 +97,19 @@ class TestDeadSlowSuite < Minitest::Test
 
   # The console's runs, where probing the slow suite's process raises `error` (nil: it exists).
   def poll(answering:)
-    probe = ->(_signal, _pid) { answering && raise(answering) }
-    FunCi::Console::BoardData.new(@db, run_canceller: canceller(probe)).runs
+    poll_with(->(_signal, _pid) { answering && raise(answering) })
+  end
+
+  # The runs a console poll shows, recording dead slow suites first as the console does.
+  def poll_with(killer, db: @db)
+    board = FunCi::Console::BoardData.new(db, run_canceller: canceller(killer))
+    board.record_dead_slow_suites
+    board.runs
+  end
+
+  # The runs' statuses a poll shows over a database refusing writes with `error`, a slow suite having died.
+  def statuses_polled_over(error)
+    poll_with(DEAD, db: RefusingWrites.new(@db, error)).map { |run| run[:status] }
   end
 
   def canceller(killer) = FunCi::Pipeline::RunCanceller.new(killer: killer)

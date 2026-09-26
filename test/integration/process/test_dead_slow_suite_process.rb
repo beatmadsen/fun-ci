@@ -24,16 +24,22 @@ class TestDeadSlowSuiteProcess < Minitest::Test
   def test_should_show_a_run_failed_once_its_slow_suite_s_process_has_exited
     FunCi::Persistence::PipelineRun.store_pid(@db, @run_id, exited_pid)
 
-    assert_equal "failed", FunCi::Console::BoardData.new(@db).runs.first[:status]
+    assert_equal "failed", polled_status
   end
 
   def test_should_leave_a_run_running_while_its_slow_suite_s_process_lives
     FunCi::Persistence::PipelineRun.store_pid(@db, @run_id, Process.pid)
 
-    assert_equal "running", FunCi::Console::BoardData.new(@db).runs.first[:status]
+    assert_equal "running", polled_status
   end
 
   private
+
+  def polled_status
+    board = FunCi::Console::BoardData.new(@db)
+    board.record_dead_slow_suites
+    board.runs.first[:status]
+  end
 
   def exited_pid
     pid = Process.spawn("true")

@@ -24,6 +24,14 @@ class TestConsoleSessionPolls < Minitest::Test
     assert_equal([5], @port.sent.last["runs"].map { |run| run["id"] })
   end
 
+  def test_should_look_for_dead_slow_suites_on_every_refresh
+    checks_so_far = @board_data.dead_checks
+
+    @session.refresh
+
+    assert_equal checks_so_far + 1, @board_data.dead_checks, "each poll records slow suites that died (AT-8.3)"
+  end
+
   def test_should_send_a_stage_s_event_before_the_board_on_refresh
     @board_data.runs = [ConsoleFakes.fast_stage(2, "failed")]
     @session.refresh

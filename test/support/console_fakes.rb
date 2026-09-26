@@ -3,23 +3,26 @@
 require "json"
 
 # Stand-ins for ConsoleSession's collaborators: a BoardData that serves
-# fixed runs and records cancels and pages loaded, and a renderer port that keeps each message
-# as the JSON the renderer would read.
+# fixed runs and counts cancels, pages loaded and checks for dead slow
+# suites, and a renderer port that keeps each message as the JSON the
+# renderer would read.
 module ConsoleFakes
   class BoardData
-    attr_reader :cancelled, :loads
+    attr_reader :cancelled, :loads, :dead_checks
     attr_accessor :runs
 
     def initialize(runs)
       @runs = runs
       @cancelled = []
       @loads = 0
+      @dead_checks = 0
     end
 
     def streak = 3
     def load_more = @loads += 1
     def resize(_page_size) = nil
     def more? = false
+    def record_dead_slow_suites = @dead_checks += 1
     def cancel_run(id) = @cancelled << id
   end
 

@@ -32,9 +32,10 @@ module FunCi
         Persistence::PipelineRun.recent(@db, limit: @limit + 1).size > @limit
       end
 
-      # The runs on the board, after recording any slow suite that died failed.
+      # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
+      def record_dead_slow_suites = @run_canceller.record_dead(@db)
+
       def runs
-        @run_canceller.record_dead(@db)
         pipeline_runs = Persistence::PipelineRun.recent(@db, limit: @limit)
         pipeline_runs.map { |run| enrich_with_stages(run) }
       end
