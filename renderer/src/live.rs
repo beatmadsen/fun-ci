@@ -12,11 +12,6 @@ use crate::protocol::{Inbound, Outbound, parse};
 use crate::session::{EXIT_OK, Entered, Replies};
 use crate::terminal::Terminal;
 
-/// Frame interval while anything animates or runs.
-const BUSY_MS: u64 = 100;
-/// Frame interval otherwise, for relative times.
-const IDLE_MS: u64 = 1000;
-
 /// The console on show, the clock it is drawn by, the board time the clock
 /// was set to, and when the last frame was drawn.
 pub struct Live<C: Clock> {
@@ -95,19 +90,22 @@ impl<C: Clock> Live<C> {
 
     fn draw<T: Terminal>(&mut self, terminal: &mut T) {
         let wall_ms = self.clock.now_ms();
-        let since = i64::try_from(wall_ms.saturating_sub(self.anchor.wall_ms)).unwrap_or(i64::MAX);
-        let at = Moment { board_ms: self.anchor.board_ms.saturating_add(since), play_ms: wall_ms };
-        let (bytes, _) = self.console.frame(at);
+        let (bytes, _) = self.console.frame(self.moment(wall_ms));
         if let Err(error) = terminal.draw(&bytes) {
             eprintln!("fun-ci-renderer: could not draw on the terminal: {error}");
         }
         self.last_frame = Some(wall_ms);
     }
 
+    /// The board's clock moved on by the wall time since the board arrived.
+    fn moment(&self, wall_ms: u64) -> Moment {
+        let since = i64::try_from(wall_ms.saturating_sub(self.anchor.wall_ms)).unwrap_or(i64::MAX);
+        Moment { board_ms: self.anchor.board_ms.saturating_add(since), play_ms: wall_ms }
+    }
+
     /// How long until the next frame is due; none before the first board.
     fn wait(&self) -> Option<Duration> {
-        let interval = if self.console.busy() { BUSY_MS } else { IDLE_MS };
-        let due = self.last_frame? + interval;
+        let due = self.last_frame? + self.console.frame_ms();
         Some(Duration::from_millis(due.saturating_sub(self.clock.now_ms())))
     }
 }

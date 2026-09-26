@@ -205,7 +205,7 @@ is possible.
 - 3.3 Headless mode writes `frames.jsonl`, `frames/NNNN.png`, `sheet.png`, `frames.cast`, `stats.json` (fields in `renderer-protocol.md`). The PNGs decode at the expected pixel size for the grid and font.
 - 3.4 Differential tests: for every scenario, the `vt100` cell grid of the Rust output equals that of `contract/golden/<scenario>.bytes`, frame by frame.
 - 3.5 Contract fixtures: the Rust suite accepts every fixture's Ruby→renderer lines and emits its renderer→Ruby lines.
-- 3.6 Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in).
+- 3.6 Animations load from `renderer/animations/*.json` (converted from the Ruby modules by a one-off script, checked in). Superseded after 2.0.0: the header's animations are scenes in code (architecture.md, "Animations as scenes").
 - 3.7 Terminal is restored on EOF, `quit`, panic and SIGTERM.
 - 3.7b The cancel prompt names the run's branch and short SHA (`Cancel feat/search (d4e5f67)? y / n`), as the original feature spec asked. The 1.x prompt is generic, and the renderer has what it needs from `cursor` and `runs`.
 - 3.8 `rake contract:binary`: Ruby drives the real binary through a pty for the `happy-7` fixture. In the gate.

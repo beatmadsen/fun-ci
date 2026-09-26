@@ -3,20 +3,7 @@ source: tests/suite/snapshots.rs
 expression: "render(& frames(\"happy-7\"))"
 ---
 frame 0001 at 120x40
-  |                                      *                  .                         .
-  |
-  |                                           .                       *
-  |                                                       .                          .
-  |
-  |                                    .              .                  *
-  |
-  |                                                .                                    .
-  |                                                            .         .
-  |
-  |                                         *                    .
-  |                                                    .                       .
-  |
-  |                                     .                              .
+  header 909ca60f
   |> d699a82  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 40s  PASSED  just now
   |
   |  f7cf32d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 44s  PASSED  5m ago
@@ -43,35 +30,21 @@ frame 0001 at 120x40
   |
   |
   |
-  :......................................a..................b.........................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccccc
   :
-  :...........................................b.......................a
-  :.......................................................a..........................b
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :....................................b..............b..................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..ccccccc
   :
-  :................................................a....................................b
-  :............................................................b.........a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :.........................................a....................b
-  :....................................................b.......................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :.....................................b..............................b
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeeee
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaaa..bbbbbb..cccccc
   :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaaa..bbbbbb..ccccccc
   :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeeee
-  :
-  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :cccccccccccccccccccccccccccccc
   :
   :
   :
@@ -84,20 +57,7 @@ frame 0001 at 120x40
   :
   :
 frame 0002 at 120x40
-  |                                      *                  .                         .
-  |
-  |                                           .                       *
-  |                                                       .                          .
-  |
-  |                                    .              .                  *
-  |
-  |                                                .                                    .
-  |                                                            .         .
-  |
-  |                                         *                    .
-  |                                                    .                       .
-  |
-  |                                     .                              .
+  header 10809b1a
   |> d699a82  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 40s  PASSED  just now
   |
   |  f7cf32d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 44s  PASSED  5m ago
@@ -124,35 +84,21 @@ frame 0002 at 120x40
   |
   |
   |
-  :......................................a..................b.........................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccccc
   :
-  :...........................................b.......................a
-  :.......................................................a..........................b
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :....................................b..............b..................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..ccccccc
   :
-  :................................................a....................................b
-  :............................................................b.........a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :.........................................a....................b
-  :....................................................b.......................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :.....................................b..............................b
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeeee
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaaa..bbbbbb..cccccc
   :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaaa..bbbbbb..ccccccc
   :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeeee
-  :
-  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :cccccccccccccccccccccccccccccc
   :
   :
   :
@@ -165,20 +111,7 @@ frame 0002 at 120x40
   :
   :
 frame 0003 at 120x40
-  |                                      *                  .                         .
-  |
-  |                                           .                       *
-  |                                                       .                          .
-  |
-  |                                    .              .                  *
-  |
-  |                                                .                                    .
-  |                                                            .         .
-  |
-  |                                         *                    .
-  |                                                    .                       .
-  |
-  |                                     .                              .
+  header b0f5f1f8
   |> d699a82  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 40s  PASSED  just now
   |
   |  f7cf32d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 44s  PASSED  5m ago
@@ -205,35 +138,21 @@ frame 0003 at 120x40
   |
   |
   |
-  :......................................a..................b.........................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccccc
   :
-  :...........................................b.......................a
-  :.......................................................a..........................b
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :....................................b..............b..................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..ccccccc
   :
-  :................................................a....................................b
-  :............................................................b.........a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :.........................................a....................b
-  :....................................................b.......................a
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..bbbbbb..cccccc
   :
-  :.....................................b..............................b
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeeee
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaaa..bbbbbb..cccccc
   :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
+  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaaa..bbbbbb..ccccccc
   :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..cccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeee
-  :
-  :.................ccccccccc..cccccccccc..ccccccccc..ccccccccc..dddddd..eeeeeee
-  :
-  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :cccccccccccccccccccccccccccccc
   :
   :
   :
@@ -246,8 +165,6 @@ frame 0003 at 120x40
   :
   :
 legend
-a = fg Idx(6), bg Default, []
-b = fg Idx(6), bg Default, ["dim"]
-c = fg Idx(2), bg Default, []
-d = fg Idx(2), bg Default, ["bold"]
-e = fg Default, bg Default, ["dim"]
+a = fg Idx(2), bg Default, []
+b = fg Idx(2), bg Default, ["bold"]
+c = fg Default, bg Default, ["dim"]

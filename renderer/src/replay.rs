@@ -1,6 +1,7 @@
 //! Headless replay of a scenario: one frame per `tick`.
 
 use crate::animation::Library;
+use crate::art::output::Depth;
 use crate::console::{Console, Moment};
 use crate::model::Board;
 use crate::protocol::Inbound;
@@ -16,11 +17,12 @@ pub struct TickFrame {
 }
 
 /// Draws a scenario on a terminal of `size` (cols, rows) until its first
-/// `resize`, returning one frame per `tick`. Frame 1 includes the initial
-/// screen clear.
+/// `resize`, in `depth`'s colours, returning one frame per `tick`. Frame 1
+/// includes the initial screen clear.
 #[must_use]
-pub fn replay(messages: &[Inbound], library: &Library, size: (u16, u16)) -> Vec<TickFrame> {
+pub fn replay(messages: &[Inbound], library: &Library, size: (u16, u16), depth: Depth) -> Vec<TickFrame> {
     let mut replay = Replay { console: Console::new(library, 0, size), clock: Clock::default() };
+    replay.console.set_depth(depth);
     replay.console.clear();
     messages.iter().filter_map(|message| replay.apply(message)).collect()
 }

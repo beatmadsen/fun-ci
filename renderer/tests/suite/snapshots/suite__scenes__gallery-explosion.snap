@@ -1,0 +1,12 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"explosion\")"
+---
+ 60 cols at    0 ms: 506ba6eb
+ 60 cols at  150 ms: 6f83f305
+ 60 cols at  400 ms: c6d8a6c6
+ 60 cols at  900 ms: 5a16ed00
+ 60 cols at 1700 ms: 509227cc
+ 60 cols at 2600 ms: 069543e1
+ 60 cols at 3500 ms: 7d053af0
+200 cols at  900 ms: 172ff8ee

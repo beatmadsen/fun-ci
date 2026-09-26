@@ -102,10 +102,13 @@ fn stats_has_an_entry_per_frame() {
     assert_eq!(stats["frames"].as_array().unwrap().len(), 15);
 }
 
+/// The explosion lasts 3200 ms; the scenario ticks every 100 ms.
+const EXPLOSION_TICKS: u64 = 32;
+
 #[test]
-fn stats_counts_the_frames_each_animation_showed() {
+fn should_count_a_frame_for_each_tick_the_explosion_showed_for() {
     let stats = json(&headless("fail-explosion").path().join("stats.json"));
-    assert_eq!(stats["animations"]["explosion"], 10);
+    assert_eq!(stats["animations"]["explosion"], EXPLOSION_TICKS);
 }
 
 #[test]

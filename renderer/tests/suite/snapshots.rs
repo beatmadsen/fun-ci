@@ -4,6 +4,7 @@
 //! accepted on review with `cargo insta review`.
 
 use fun_ci_renderer::animation::Library;
+use fun_ci_renderer::art::output::Depth;
 use fun_ci_renderer::grid::{Emulator, Grid};
 use fun_ci_renderer::replay::replay;
 use fun_ci_renderer::scenario;
@@ -15,7 +16,7 @@ fn frames(name: &str) -> Vec<Grid> {
     let messages = scenario::load(&contract_dir().join("scenarios").join(format!("{name}.jsonl"))).unwrap();
     let sizes = scenario::tick_sizes(&messages);
     let mut emulator = Emulator::new(sizes[0]);
-    let drawn = replay(&messages, &Library::builtin(), (80, 24));
+    let drawn = replay(&messages, &Library::builtin(), (80, 24), Depth::TrueColour);
     drawn.iter().zip(&sizes).map(|(frame, &size)| {
         emulator.feed(size, &frame.bytes);
         emulator.grid()

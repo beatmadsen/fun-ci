@@ -34,17 +34,22 @@ Ruby                                  renderer
 - If `hello.v` isn't supported, the renderer replies `error{code:"version"}`,
   restores the terminal and exits 2.
 - Ruby sends `board` whenever its data changes and at least every 5 s. The
-  renderer redraws on its own clock (10 fps while anything animates or runs,
-  otherwise once a second for relative times) using the latest `board`.
+  renderer redraws on its own clock using the latest `board`: 10 fps while
+  anything animates or runs, otherwise as often as the header's scene asks
+  (the idle night sky, 4 fps; a scene that keeps still, once a second).
   "Animates" means an event's animation (in the header or over a stage) is
-  playing or queued; the looping idle and running header animations do not
-  count by themselves, so an idle board with nothing running twinkles once a
-  second. The next frame is due that interval after the last one drawn.
-- A header animation shows the frame its `frame_ms` makes due, counted from
-  when it started on a clock that only moves forward (wall time live, the sum
-  of ticks headless), not one frame per draw. So an animation plays at the
-  speed it was authored at whatever the draw rate, and the idle animation is
-  authored at 1000 ms a frame to match the once-a-second draws.
+  playing or queued; the looping idle and running scenes do not count by
+  themselves. The next frame is due that interval after the last one drawn.
+- The header is a scene painted afresh for each frame over the terminal's
+  full width, as it is at the time since it started on a clock that only
+  moves forward (wall time live, the sum of ticks headless), so it moves at
+  the same speed whatever the draw rate. Each cell is drawn as the quadrant
+  or lower-block glyph, or up to three braille dots, and the two colours that
+  come closest to the 4x8 pixels it covers. Only the header cells that
+  changed since the last frame are drawn again.
+- The renderer draws the header in 24-bit colour when `COLORTERM` is
+  `truecolor` or `24bit`, otherwise in the nearest of xterm's 256 colours;
+  `--colours 24bit|256` overrides that.
 - Nothing is drawn before the first `board`. Each `board` is drawn at once,
   and its `now` sets the renderer's clock, which then advances with wall
   time until the next `board`.
@@ -172,7 +177,9 @@ The details, which `renderer/tests/headless.rs` and `headless_measures.rs` pin:
   with colours `"default"`, `{"idx":N}` or `{"rgb":[r,g,b]}` and attrs a list
   of `bold`, `dim`, `italic`, `underline`, `inverse`.
 - PNG cells are 8x16 pixels: the MIT-licensed `font8x8` bitmap font compiled
-  into the binary, each row doubled; braille (the spinner) is drawn as dots.
+  into the binary, each row doubled, block and quadrant glyphs included;
+  braille (the spinner, and fine points of light in the header) is drawn as dots.
+  Headless frames are in 24-bit colour unless `--colours 256` is given.
   Colours are the xterm 256-colour palette, default foreground `#e5e5e5` on
   black; bold brightens colours 0-7 to 8-15, dim takes the foreground to 5/8.
 - `sheet.png` tiles every frame at half size, `ceil(sqrt(n))` across.
@@ -204,8 +211,11 @@ Ruby capture tool (AT-2.6) and `--headless --scenario` (AT-3.3, AT-3.4).
   be compared frame by frame.
 
 What the renderer draws for each scenario is held as a snapshot, frame by frame,
-in `renderer/tests/suite/snapshots/` (`snapshots.rs`): each frame's characters,
-then a letter per cell for its style, with a legend.
+in `renderer/tests/suite/snapshots/` (`snapshots.rs`): each frame's header
+rows as one digest of their cells (the header is a picture, reviewed as the
+headless PNGs), then the rows below it as characters, then a letter per cell
+for its style, with a legend. Each scene also has a gallery snapshot
+(`scenes.rs`): digests of its cells at fixed moments.
 
 ## Contract fixtures
 

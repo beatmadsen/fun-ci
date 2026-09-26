@@ -1,0 +1,12 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"idle\")"
+---
+ 60 cols at    0 ms: 4f31ea32
+ 60 cols at  150 ms: 03b42a15
+ 60 cols at  400 ms: 22c29bae
+ 60 cols at  900 ms: ea4353cb
+ 60 cols at 1700 ms: b99dcc42
+ 60 cols at 2600 ms: 77dc7f5a
+ 60 cols at 3500 ms: 489995df
+200 cols at  900 ms: a9497e4e

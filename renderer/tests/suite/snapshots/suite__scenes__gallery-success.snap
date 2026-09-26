@@ -1,0 +1,12 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"success\")"
+---
+ 60 cols at    0 ms: 79af93d9
+ 60 cols at  150 ms: a843288e
+ 60 cols at  400 ms: dbf28333
+ 60 cols at  900 ms: c6bb66fc
+ 60 cols at 1700 ms: 23a463a2
+ 60 cols at 2600 ms: 3ae62a01
+ 60 cols at 3500 ms: b58ec95e
+200 cols at  900 ms: bd41c805

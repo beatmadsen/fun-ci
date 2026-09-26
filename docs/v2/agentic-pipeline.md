@@ -118,8 +118,8 @@ suggestion.
 
 Takes the highest-impact open finding and works it like a tuner:
 
-1. Name the parameters in the animation's JSON that bear on the finding
-   (speed, frame count, colour ramp, easing, density).
+1. Name the parameters in the scene's code (`renderer/src/scenes/`) that
+   bear on the finding (speed, length, colour ramp, easing, density).
 2. Change one parameter at a time, render a small sweep of candidates, and
    compare them as labelled images against the finding and the rubric.
 3. Use `stats.json` to explain the difference, not only to pick a winner.
@@ -127,8 +127,9 @@ Takes the highest-impact open finding and works it like a tuner:
    curve, no depth, a transition that doesn't exist), stop tuning: mark the
    finding `needs-design` with what is missing.
 
-Edits are small changes to `renderer/animations/*.json`, leaving unrelated
-values alone, or renderer code when the finding is a mechanism. The objective
+Edits are small changes to a scene's constants, leaving unrelated values
+alone, or new painting code in `renderer/src/art/` when the finding is a
+mechanism. The objective
 gates run, and the commit carries `*.snap.new` files with the finding marked
 `awaiting-approval`.
 

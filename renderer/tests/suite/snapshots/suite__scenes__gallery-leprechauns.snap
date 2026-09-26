@@ -1,0 +1,12 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"leprechauns\")"
+---
+ 60 cols at    0 ms: 26e2cafc
+ 60 cols at  150 ms: 6cd4b013
+ 60 cols at  400 ms: 3722e7a9
+ 60 cols at  900 ms: 42bf90ee
+ 60 cols at 1700 ms: f25a82ce
+ 60 cols at 2600 ms: 3d06d576
+ 60 cols at 3500 ms: a1d916fd
+200 cols at  900 ms: 14766d5f

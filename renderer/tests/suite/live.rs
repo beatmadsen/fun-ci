@@ -1,6 +1,6 @@
 //! AT-3.8 prep: the live session draws `board`s on the terminal on its own
-//! clock, plays the animations `event`s call for, and tells Ruby about keys
-//! and terminal resizes (renderer-protocol.md).
+//! clock, plays the animations `event`s call for, and tells Ruby about
+//! terminal resizes (renderer-protocol.md); keys are in `live_keys`.
 
 use std::time::Duration;
 
@@ -86,8 +86,8 @@ fn a_running_run_is_redrawn_ten_times_a_second() {
 }
 
 #[test]
-fn an_idle_board_is_redrawn_once_a_second() {
-    assert_eq!(last_wait(vec![line(&idle_board())]), Some(Duration::from_millis(1000)));
+fn should_redraw_an_idle_board_at_the_idle_scenes_frame_rate() {
+    assert_eq!(last_wait(vec![line(&idle_board())]), Some(Duration::from_millis(250)));
 }
 
 #[test]
@@ -106,7 +106,8 @@ fn live_frames_are_the_headless_frames_for_the_same_state_and_clock() {
 
 #[test]
 fn the_clock_advances_from_the_boards_now_with_wall_time() {
-    let frames = live(vec![line(&board_aged(1_790_000_000, 59)), Input::FrameDue]).frames;
+    let a_second_of_idle_frames = [Input::FrameDue, Input::FrameDue, Input::FrameDue, Input::FrameDue];
+    let frames = live([vec![line(&board_aged(1_790_000_000, 59))], a_second_of_idle_frames.to_vec()].concat()).frames;
     assert!(screen_text(&frames).contains("1m ago"));
 }
 
@@ -115,24 +116,6 @@ fn a_new_board_sets_the_clock_to_its_now() {
     let aged = board_aged(1_790_000_000, 59);
     let frames = live(vec![line(&aged), Input::FrameDue, line(&aged)]).frames;
     assert!(screen_text(&frames).contains("just now"));
-}
-
-#[test]
-fn a_key_is_sent_to_ruby() {
-    assert_eq!(replies_after_ready(vec![Input::Keys(b"j".to_vec())]), [json!({"t":"key","key":"j"})]);
-}
-
-#[test]
-fn every_key_in_one_read_is_sent_in_order() {
-    let replies = replies_after_ready(vec![Input::Keys(b"\x1b[Aq".to_vec())]);
-    assert_eq!(replies, [json!({"t":"key","key":"up"}), json!({"t":"key","key":"q"})]);
-}
-
-#[test]
-fn ctrl_c_is_sent_as_a_key_and_does_not_end_the_session() {
-    let replies = replies_after_ready(vec![Input::Keys(b"\x03".to_vec()), line("not json")]);
-    assert_eq!(replies[0], json!({"t":"key","key":"ctrl_c"}));
-    assert_eq!(replies.len(), 2);
 }
 
 #[test]

@@ -1,10 +1,13 @@
 //! A scenario's frames as text a reviewer can read in a diff: each frame's
 //! characters, then the same grid with a letter per cell for its style (`.`
 //! for the terminal's default), and at the end a legend for the letters.
-//! Trailing blanks in the default style are left off.
+//! Trailing blanks in the default style are left off. The header's rows, a
+//! picture in 24-bit colour, are one digest of their cells per frame instead:
+//! the frames themselves are reviewed as headless PNGs.
 
 use std::fmt::Write;
 
+use fun_ci_renderer::animator::HEADER_HEIGHT;
 use fun_ci_renderer::grid::{Cell, Colour, Grid};
 
 const LETTERS: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -41,15 +44,26 @@ pub fn render(frames: &[Grid]) -> String {
     let mut out = String::new();
     for (index, grid) in frames.iter().enumerate() {
         writeln!(out, "frame {:04} at {}x{}", index + 1, grid.cols, grid.rows).unwrap();
-        grid.cells.iter().for_each(|row| writeln!(out, "  |{}", text(row).trim_end()).unwrap());
-        for row in &grid.cells {
-            let letters: String = row.iter().map(|cell| styles.letter(cell)).collect();
-            writeln!(out, "  :{}", letters.trim_end_matches('.')).unwrap();
-        }
+        let (header, body) = grid.cells.split_at(HEADER_HEIGHT.min(grid.cells.len()));
+        writeln!(out, "  header {}", digest(header)).unwrap();
+        out += &body_text(body, &mut styles);
     }
     out + "legend\n" + &styles.legend()
 }
 
+/// The rows below the header: their characters, then a letter per cell style.
+fn body_text(body: &[Vec<Cell>], styles: &mut Styles) -> String {
+    let characters = body.iter().map(|row| format!("  |{}\n", text(row).trim_end()));
+    let letters = |row: &Vec<Cell>| format!("  :{}\n", row.iter().map(|cell| styles.letter(cell)).collect::<String>().trim_end_matches('.'));
+    characters.collect::<String>() + &body.iter().map(letters).collect::<String>()
+}
+
 fn text(row: &[Cell]) -> String {
     row.iter().map(|cell| if cell.text.is_empty() { " " } else { &cell.text }).collect()
+}
+
+/// A CRC-32 of every cell of `rows`: text, colours and attributes.
+#[must_use]
+pub fn digest(rows: &[Vec<Cell>]) -> String {
+    format!("{:08x}", crc32fast::hash(serde_json::to_string(rows).unwrap().as_bytes()))
 }

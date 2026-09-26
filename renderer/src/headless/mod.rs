@@ -27,7 +27,7 @@ use raster::Image;
 /// # Errors
 /// When the scenario cannot be read or an output cannot be written.
 pub fn run(headless: &Headless, library: &Library) -> Result<(), String> {
-    let frames = replay(&scenario::load(&headless.scenario)?, library, headless.size);
+    let frames = replay(&scenario::load(&headless.scenario)?, library, headless.size, headless.depth);
     let grids = emulate(&frames);
     let images: Vec<Image> = grids.iter().map(raster::render).collect();
     let out = Output::create(&headless.out)?;

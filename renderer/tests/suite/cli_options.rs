@@ -1,8 +1,8 @@
-//! The command line: `--animations <dir>` and refusal of anything unknown.
+//! The command line: colour depth, sizes, paths, and refusal of anything unknown.
 
-use std::fs;
 use std::path::PathBuf;
 
+use fun_ci_renderer::art::output::Depth;
 use fun_ci_renderer::cli::Options;
 
 use crate::support::renderer::{Renderer, binary};
@@ -12,13 +12,34 @@ fn parse(args: &[&str]) -> Result<Options, String> {
 }
 
 #[test]
-fn animations_names_a_directory() {
-    assert_eq!(parse(&["--animations", "anim"]).unwrap().paths.animations, Some(PathBuf::from("anim")));
+fn should_draw_in_24_bit_colour_when_colorterm_says_truecolor() {
+    assert_eq!(parse(&[]).unwrap().depth(Some("truecolor")), Depth::TrueColour);
 }
 
 #[test]
-fn no_arguments_mean_the_embedded_animations() {
-    assert_eq!(parse(&[]).unwrap().paths.animations, None);
+fn should_draw_in_24_bit_colour_when_colorterm_says_24bit() {
+    assert_eq!(parse(&[]).unwrap().depth(Some("24bit")), Depth::TrueColour);
+}
+
+#[test]
+fn should_fall_back_to_256_colours_when_colorterm_is_unset() {
+    assert_eq!(parse(&[]).unwrap().depth(None), Depth::Xterm256);
+}
+
+#[test]
+fn should_draw_in_the_colours_asked_for_when_colours_overrides_colorterm() {
+    assert_eq!(parse(&["--colours", "256"]).unwrap().depth(Some("truecolor")), Depth::Xterm256);
+}
+
+#[test]
+fn should_refuse_a_colour_depth_when_it_is_neither_24bit_nor_256() {
+    assert!(parse(&["--colours", "16"]).is_err());
+}
+
+#[test]
+fn should_draw_headless_frames_in_24_bit_colour_when_no_depth_is_asked_for() {
+    let options = parse(&["--headless", "--scenario", "s.jsonl", "--out", "o"]).unwrap();
+    assert_eq!(options.headless().unwrap().unwrap().depth, Depth::TrueColour);
 }
 
 #[test]
@@ -28,7 +49,7 @@ fn an_unknown_option_is_refused() {
 
 #[test]
 fn an_option_without_its_value_is_refused() {
-    assert!(parse(&["--animations"]).is_err());
+    assert!(parse(&["--colours"]).is_err());
 }
 
 #[test]
@@ -73,18 +94,7 @@ fn tty_names_the_terminal_to_draw_on() {
 }
 
 #[test]
-fn the_library_takes_animations_from_the_named_directory() {
-    let dir = tempfile::tempdir().unwrap();
-    let json = fs::read_to_string("animations/explosion.json").unwrap().replace("\"explosion\"", "\"boom\"");
-    fs::write(dir.path().join("boom.json"), json).unwrap();
-    let options = parse(&["--animations", dir.path().to_str().unwrap()]).unwrap();
-    assert!(options.library().unwrap().get("boom").is_some());
-}
-
-#[test]
-fn the_binary_refuses_an_animations_directory_it_cannot_read() {
-    let dir = tempfile::tempdir().unwrap();
-    let missing = dir.path().join("missing");
-    let mut renderer = Renderer::start(binary().args(["--animations", missing.to_str().unwrap()]));
+fn should_exit_with_a_usage_error_when_the_binary_is_given_an_unknown_colour_depth() {
+    let mut renderer = Renderer::start(binary().args(["--colours", "16"]));
     assert_eq!(renderer.wait().code(), Some(64));
 }

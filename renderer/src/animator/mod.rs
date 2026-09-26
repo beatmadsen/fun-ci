@@ -4,6 +4,7 @@
 mod cast;
 mod draw;
 mod effect;
+pub mod film;
 mod footer;
 mod header;
 mod overlay;
@@ -14,6 +15,7 @@ pub use cast::{Cast, seed_at};
 pub use effect::{Effect, Kind};
 pub use header::HEADER_HEIGHT;
 
+use crate::art::output::Depth;
 use crate::model::{Event, Run, Stage};
 use crate::screen::Screen;
 use header::Header;
@@ -33,6 +35,11 @@ impl Animator {
         Self { effects: Vec::new(), header: Header::new(cast.idle()), pending: Vec::new(), cast }
     }
 
+    /// Draws the header in `depth`'s colours from the next frame.
+    pub fn set_depth(&mut self, depth: Depth) {
+        self.header.set_depth(depth);
+    }
+
     /// Takes an event into account at the next frame, against that frame's runs.
     pub fn queue(&mut self, event: Event) {
         self.pending.push(event);
@@ -43,6 +50,12 @@ impl Animator {
     #[must_use]
     pub fn animating(&self) -> bool {
         !self.pending.is_empty() || !self.effects.is_empty() || self.header.playing_event()
+    }
+
+    /// How often the header needs drawing when nothing else moves, in milliseconds.
+    #[must_use]
+    pub fn frame_ms(&self) -> u64 {
+        self.header.frame_ms()
     }
 
     /// Draws this frame's animations over the board as of `play_ms`, then
@@ -78,23 +91,23 @@ impl Animator {
         self.effects.retain(|effect| !effect.is_for(kind, run_id, stage));
         self.effects.push(Effect::new(kind, run_id, stage));
         match kind {
-            Kind::Failure => self.header.trigger(&self.cast.failure()),
-            Kind::Success => self.header.trigger(&self.cast.success()),
+            Kind::Failure => self.header.trigger(self.cast.failure()),
+            Kind::Success => self.header.trigger(self.cast.success()),
             Kind::Timeout | Kind::StagePass => {}
         }
     }
 
     fn follow_running(&mut self, runs: &[Run]) {
         if runs.iter().any(|run| run.status() == "running") {
-            self.header.start_running(&self.cast.running());
+            self.header.start_running(self.cast.running());
         } else {
             self.header.stop_running();
         }
     }
 
-    fn draw(&self, screen: &mut Screen, runs: &[Run]) {
+    fn draw(&mut self, screen: &mut Screen, runs: &[Run]) {
         screen.save_cursor();
-        draw::header(screen, &self.header);
+        self.header.draw(screen);
         draw::stages(screen, &self.effects, runs);
         draw::footer(screen, &self.effects, runs);
         screen.restore_cursor();

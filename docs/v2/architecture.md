@@ -19,16 +19,16 @@ what would make us change it.
 | `KeyHandler` state: cursor, confirm, cancel | Layout, colour, truncation, header/footer/empty state |
 | `StreakCounter`, `StageChangeDetector` (they decide *events*) | Formatting of durations, relative times, hashes |
 | Cancelling runs, the refresh/poll policy | Spinner, every animation, frame timing |
-| Spawning and supervising the renderer | Animation data loading (`animations/*.json`) |
+| Spawning and supervising the renderer | The header's scenes and how they are painted |
 
 Rule of thumb: Ruby decides **what is true**; Rust decides **how it looks**.
 Ruby never emits an ANSI escape once 2.0 ships.
 
-**Decision — one tick, one frame.** The 1.x console draws a frame every
-100 ms while animating, and its animations advance per frame, not per
-millisecond. Scenarios therefore draw on `tick` only; `board` just replaces
-state. *Revisit if* the Rust renderer moves animations to wall-clock time,
-at which point the differential tests need a frame-to-time mapping.
+**Decision — one tick, one frame.** Scenarios draw on `tick` only; `board`
+just replaces state. The header's scenes play on a clock that only moves
+forward, which in a scenario is the sum of its ticks, so a scenario still
+maps one tick to one frame and the time of each frame is known.
+*Revisit if* a scenario needs frames drawn between ticks.
 
 **Decision — formatting lives in Rust.** Ruby sends raw values (epoch seconds,
 milliseconds, full SHAs). "2m ago" must keep ticking between Ruby pushes, and
@@ -52,22 +52,36 @@ isolation, a renderer that runs and is tested headless on its own, and no C
 toolchain at install time. *Revisit if* the per-frame JSON cost ever shows up
 in a profile (it won't at 10 fps and ≤200 rows).
 
-## Animations as data
+## Animations as scenes
 
-Today each animation is a Ruby module full of ANSI strings. In 2.0 each is a
-JSON file (`renderer/animations/<name>.json`): frames as lines of text plus a
-style map, a frame duration, a loop flag, and an anchor. The renderer embeds
-them at build time (`include_str!`) and can also load a directory at runtime
-with `--animations <dir>` — that's what lets the polishing agents iterate
-without a recompile.
+In 1.x each animation was a Ruby module of ANSI strings, and 2.0 first carried
+them over as JSON frames of text. The header's animations are now scenes:
+Rust code in `renderer/src/scenes/` that paints a picture of light on a pixel
+canvas for any moment and any width (`renderer/src/art/`: glows, streaks,
+noise, sprites, a tone curve), which is then encoded as terminal cells. Each
+cell covers 4x8 pixels and is drawn as whichever quadrant or lower-block glyph,
+or up to three braille dots, in two colours, comes closest to them, in 24-bit
+colour where the terminal has it.
+
+**Decision: scenes in code, not frames as data.** Frames of text limit an
+animation to one glyph and colour per cell and one width. Painting in pixels
+gives gradients, soft light, anti-aliased shapes and particles, and a scene
+fills the header at any width. The cost is that iterating on a scene means a
+rebuild (seconds), not an edit to a data file.
+*Revisit if* scenes need editing by people who do not write Rust.
+
+**Decision: portable maths.** Scene code calls `art::math::Portable` (the
+`libm` crate) instead of `f64::sin` and friends, which call the platform's
+maths library and differ in the last bit between macOS and Linux; one such
+difference tips a cell to another glyph, and a snapshot recorded on one
+platform fails on the other. `tests/suite/portable_maths.rs` holds the rule.
+*Revisit if* the snapshots stop pinning the header's cells.
 
 **Decision: visual review uses ordered PNG frames.** The polish loop's
 evaluator is a vision model, and Claude reads only the first frame of an
 animated image, so headless mode renders each frame to PNG and the evaluator
 reads them in order. Measurements in `stats.json` sit beside the images to
-explain what looks wrong. Background in `research/llm-tui-iteration.md`, which
-also found the animations-as-data pattern (a fixed renderer consuming
-model-edited scene data) in use elsewhere.
+explain what looks wrong. Background in `research/llm-tui-iteration.md`.
 *Revisit if* the evaluator moves to a model that takes video at every frame.
 
 ## Distribution

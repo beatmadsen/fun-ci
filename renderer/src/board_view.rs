@@ -45,6 +45,12 @@ impl BoardView {
         &mut self.animator
     }
 
+    /// How often the header needs drawing when nothing else moves, in milliseconds.
+    #[must_use]
+    pub fn frame_ms(&self) -> u64 {
+        self.animator.frame_ms()
+    }
+
     #[must_use]
     pub fn animating(&self) -> bool {
         self.animator.animating()

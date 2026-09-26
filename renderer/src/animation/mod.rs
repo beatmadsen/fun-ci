@@ -1,90 +1,44 @@
-//! Animations as data (`renderer/animations/*.json`).
+//! Header animations as scenes: pictures painted afresh for each frame from
+//! the time since the scene started, at whatever size the header has.
 
-mod file;
 mod library;
-mod style;
 
-use serde::Deserialize;
+use std::fmt::Debug;
+
+use crate::art::canvas::Canvas;
 
 pub use library::Library;
-pub use style::Style;
 
-/// How an animation plays: frame duration, whether it loops, where it sits.
-#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
-pub struct Playback {
-    pub frame_ms: u32,
-    #[serde(rename = "loop")]
-    pub looped: bool,
-    pub anchor: String,
-}
+/// Something the header can show.
+pub trait Scene: Debug + Sync {
+    /// The name events and scenarios choose it by.
+    fn name(&self) -> &'static str;
 
-/// One line of an animation frame, ready to write to a terminal.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct StyledLine {
-    ansi: String,
-    width: usize,
-}
+    /// How long it plays, in milliseconds; none for a scene that loops.
+    fn length_ms(&self) -> Option<u64>;
 
-impl StyledLine {
-    #[must_use]
-    pub fn new(ansi: String, width: usize) -> Self {
-        Self { ansi, width }
-    }
+    /// Paints the scene as it is `t_ms` after it started over the whole canvas.
+    fn paint(&self, canvas: &mut Canvas, t_ms: u64);
 
-    /// The line with its SGR escapes; it starts and ends in the default style.
-    #[must_use]
-    pub fn ansi(&self) -> &str {
-        &self.ansi
-    }
-
-    /// Columns the line covers.
-    #[must_use]
-    pub fn width(&self) -> usize {
-        self.width
+    /// How often it needs drawing when nothing else on screen moves, in
+    /// milliseconds; once a second for a scene that keeps still.
+    fn frame_ms(&self) -> u64 {
+        1000
     }
 }
 
-/// The lines of one frame, top to bottom.
-pub type Frame = Vec<StyledLine>;
+/// A black header, for a name the library lacks.
+#[derive(Debug)]
+pub struct Blank(pub &'static str);
 
-/// A named sequence of frames.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct Animation {
-    name: String,
-    playback: Playback,
-    frames: Vec<Frame>,
-}
-
-impl Animation {
-    /// Reads one animation file.
-    ///
-    /// # Errors
-    /// When the JSON is malformed, or a style mask does not fit its text.
-    pub fn from_json(json: &str) -> Result<Self, String> {
-        let parsed: file::AnimationFile = serde_json::from_str(json).map_err(|e| e.to_string())?;
-        let frames = parsed.art.frames()?;
-        Ok(Self { name: parsed.name, playback: parsed.playback, frames })
+impl Scene for Blank {
+    fn name(&self) -> &'static str {
+        self.0
     }
 
-    /// An animation with no frames, for a name the library lacks.
-    #[must_use]
-    pub fn blank(name: &str) -> Self {
-        let playback = Playback { frame_ms: 100, looped: true, anchor: "header".to_string() };
-        Self { name: name.to_string(), playback, frames: Vec::new() }
+    fn length_ms(&self) -> Option<u64> {
+        None
     }
 
-    #[must_use]
-    pub fn name(&self) -> &str {
-        &self.name
-    }
-
-    #[must_use]
-    pub fn playback(&self) -> &Playback {
-        &self.playback
-    }
-
-    #[must_use]
-    pub fn frames(&self) -> &[Frame] {
-        &self.frames
-    }
+    fn paint(&self, _canvas: &mut Canvas, _t_ms: u64) {}
 }

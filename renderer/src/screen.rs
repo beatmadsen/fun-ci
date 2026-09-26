@@ -6,12 +6,13 @@ pub struct Screen {
     out: Vec<u8>,
     width: u16,
     height: Option<u16>,
+    clears: u64,
 }
 
 impl Screen {
     #[must_use]
     pub fn new(width: u16) -> Self {
-        Self { out: Vec::new(), width, height: None }
+        Self { out: Vec::new(), width, height: None, clears: 0 }
     }
 
     #[must_use]
@@ -47,6 +48,13 @@ impl Screen {
 
     pub fn clear(&mut self) {
         self.print("\u{1b}[2J\u{1b}[H");
+        self.clears += 1;
+    }
+
+    /// How many times the screen has been cleared.
+    #[must_use]
+    pub fn clears(&self) -> u64 {
+        self.clears
     }
 
     pub fn home(&mut self) {

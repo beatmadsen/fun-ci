@@ -1,0 +1,12 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"running\")"
+---
+ 60 cols at    0 ms: d461cff1
+ 60 cols at  150 ms: c608c5cb
+ 60 cols at  400 ms: eb5837fc
+ 60 cols at  900 ms: c67ada0e
+ 60 cols at 1700 ms: 334aeab6
+ 60 cols at 2600 ms: 04506dc8
+ 60 cols at 3500 ms: 5200dcd0
+200 cols at  900 ms: c52c17a0

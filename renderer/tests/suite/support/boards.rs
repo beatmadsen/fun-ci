@@ -2,6 +2,7 @@
 //! 80x24 screen.
 
 use fun_ci_renderer::animation::Library;
+use fun_ci_renderer::art::output::Depth;
 use fun_ci_renderer::grid::Grid;
 use fun_ci_renderer::headless::emulate;
 use fun_ci_renderer::protocol::{Inbound, parse};
@@ -32,7 +33,7 @@ pub fn then_ticks(lines: &[String], ticks: usize) -> Vec<String> {
 
 pub fn frames(lines: &[String]) -> Vec<TickFrame> {
     let messages: Vec<Inbound> = lines.iter().map(|line| parse(line).unwrap()).collect();
-    replay(&messages, &Library::builtin(), (80, 24))
+    replay(&messages, &Library::builtin(), (80, 24), Depth::TrueColour)
 }
 
 /// The screen after the last of `lines`.

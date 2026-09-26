@@ -1,6 +1,7 @@
 //! AT-3.7b: the cancel prompt names the run it would cancel.
 
 use fun_ci_renderer::animation::Library;
+use fun_ci_renderer::art::output::Depth;
 use fun_ci_renderer::grid::Emulator;
 use fun_ci_renderer::protocol::parse;
 use fun_ci_renderer::replay::replay;
@@ -12,7 +13,7 @@ const RUN: &str = r#"{"id":1,"sha":"d4e5f67a3f7c01e9b2d4c6f8a1b3c5d7e9f0a2b4","b
 fn footer(cursor: &str, confirming: bool) -> String {
     let board = format!(r#"{{"t":"board","now":1790000000,"cursor":{cursor},"confirming":{confirming},"runs":[{RUN}]}}"#);
     let messages = [parse(&board.replace('\n', "")).unwrap(), parse(r#"{"t":"tick","ms":100}"#).unwrap()];
-    let frame = &replay(&messages, &Library::builtin(), (80, 24))[0];
+    let frame = &replay(&messages, &Library::builtin(), (80, 24), Depth::TrueColour)[0];
     let mut terminal = Emulator::new(frame.size);
     terminal.feed(frame.size, &frame.bytes);
     terminal.grid().text().lines().nth(16).unwrap().trim_end().to_string()

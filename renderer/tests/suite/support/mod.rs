@@ -6,6 +6,7 @@ pub mod input;
 pub mod live;
 pub mod pty;
 pub mod renderer;
+pub mod shades;
 pub mod snapshot;
 
 use std::io;

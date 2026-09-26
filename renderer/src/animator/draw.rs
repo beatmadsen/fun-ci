@@ -2,17 +2,10 @@
 
 use super::effect::Effect;
 use super::footer::footer_overlay;
-use super::header::{HEADER_HEIGHT, Header};
+use super::header::HEADER_HEIGHT;
 use super::overlay::{stage_column, stage_overlay, stage_text};
 use crate::model::Run;
 use crate::screen::Screen;
-
-/// The header animation's lines, from the top row.
-pub fn header(screen: &mut Screen, header: &Header) {
-    for (i, line) in header.lines(screen.width()).iter().enumerate() {
-        screen.write_at(1 + i, 1, line);
-    }
-}
 
 /// Each effect over its stage's text, on its run's row.
 pub fn stages(screen: &mut Screen, effects: &[Effect], runs: &[Run]) {

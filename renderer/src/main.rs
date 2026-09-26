@@ -11,6 +11,7 @@ use signal_hook::iterator::Signals;
 
 use fun_ci_renderer::animation::Library;
 use fun_ci_renderer::animator::seed_at;
+use fun_ci_renderer::art::output::Depth;
 use fun_ci_renderer::cli::{EXIT_USAGE, Headless, Options};
 use fun_ci_renderer::console::Console;
 use fun_ci_renderer::headless;
@@ -23,23 +24,28 @@ fn main() {
 }
 
 fn run(args: impl Iterator<Item = String>) -> i32 {
-    match Options::parse(args).and_then(|options| Ok((options.library()?, options.headless()?, options.tty()))) {
-        Ok((library, Some(run), _)) => replay(&run, &library),
-        Ok((library, None, tty)) => live(tty, &library),
+    match Options::parse(args).and_then(|options| Ok((options.headless()?, options))) {
+        Ok((Some(run), _)) => replay(&run, &Library::builtin()),
+        Ok((None, options)) => live(options.tty(), options.depth(env::var("COLORTERM").ok().as_deref())),
         Err(message) => usage(&message),
     }
 }
 
-fn live(tty: PathBuf, library: &Library) -> i32 {
+fn live(tty: PathBuf, depth: Depth) -> i32 {
     match Signals::new([SIGTERM, SIGHUP, SIGINT]) {
         Ok(signals) => drop(thread::spawn(move || listen(signals))),
         Err(error) => eprintln!("fun-ci-renderer: signals will not restore the terminal: {error}"),
     }
     let (sender, receiver) = mpsc::channel();
     read_lines(BufReader::new(io::stdin()), sender.clone());
-    let console = Console::new(library, seed_at(SystemTime::now()), (80, 24));
-    let session = Session { inputs: ChannelInputs::new(receiver), output: io::stdout().lock(), clock: WallClock::start(), console };
+    let session = Session { inputs: ChannelInputs::new(receiver), output: io::stdout().lock(), clock: WallClock::start(), console: console(depth) };
     run_live(session, &mut LiveTty::new(tty, sender))
+}
+
+fn console(depth: Depth) -> Console {
+    let mut console = Console::new(&Library::builtin(), seed_at(SystemTime::now()), (80, 24));
+    console.set_depth(depth);
+    console
 }
 
 fn listen(mut signals: Signals) {

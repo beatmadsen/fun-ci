@@ -1,0 +1,12 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"yay\")"
+---
+ 60 cols at    0 ms: 7740102c
+ 60 cols at  150 ms: 38c7c082
+ 60 cols at  400 ms: 32fa4d0d
+ 60 cols at  900 ms: df0bf000
+ 60 cols at 1700 ms: d7581dfe
+ 60 cols at 2600 ms: f919a388
+ 60 cols at 3500 ms: 3fa5d98a
+200 cols at  900 ms: da7a6524

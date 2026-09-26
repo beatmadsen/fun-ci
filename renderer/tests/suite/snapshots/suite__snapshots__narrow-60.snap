@@ -3,20 +3,7 @@ source: tests/suite/snapshots.rs
 expression: "render(& frames(\"narrow-60\"))"
 ---
 frame 0001 at 60x30
-  |                 .                    *            .
-  |        .                        .
-  |                            .                       .
-  |     .                                    .
-  |                           /\
-  |                          /  \
-  |                  ~      | oo |              *
-  |                ===~     |    |====>
-  |                  ~      |FUN!|
-  |                          \  /
-  |                           \/             .
-  |      .                                         .
-  |                 .           .
-  |                                         .
+  header 9ac31e17
   |>   d54ede8  main  Scheduled...  just now
   |
   |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
@@ -33,51 +20,24 @@ frame 0001 at 60x30
   |
   |  Cancel main (d54ede8)? y / n
   |
-  :.................a....................b............a
-  :........b........................a
-  :............................c.......................a
-  :.....a....................................c
-  :...........................dd
-  :..........................dddd
-  :..................e......ddbbdd..............b
-  :................fghh.....ddddddddddd
-  :..................e......dbbbbd
-  :..........................dddd
-  :...........................dd.............a
-  :......c.........................................b
-  :.................a...........c
-  :.........................................a
-  :..iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
-  :......................jjjjjjjjj..kkkkkkkkkkkkkkk..iiiiiii..i
-  :iiiiii..kkkkkk..iiiiii
+  :......................bbbbbbbbb..ccccccccccccccc..aaaaaaa..a
+  :aaaaaa..cccccc..aaaaaa
   :
-  :.................jjjjjjjjj..jjjjjjjjjj..ffffffffffffffff..ii
-  :iiiii..fffffffff..iiiiiii
+  :.................bbbbbbbbb..bbbbbbbbbb..dddddddddddddddd..aa
+  :aaaaa..ddddddddd..aaaaaaa
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-  :iiiiiiiiiiiiiiiiii
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :aaaaaaaaaaaaaaaaaa
   :
-  :.................jjjjjjjjj..jjjjjjjjjj..jjjjjjjjj..jjjjjjjjj
-  :..llllll..iiiiiii
+  :.................bbbbbbbbb..bbbbbbbbbb..bbbbbbbbb..bbbbbbbbb
+  :..eeeeee..aaaaaaa
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
 frame 0002 at 60x30
-  |                 .                    *            .
-  |        .                        .
-  |                            .                       .
-  |     .                                    .
-  |                           /\
-  |                          /  \
-  |                  ~      | oo |              *
-  |                ===~     |    |====>
-  |                  ~      |FUN!|
-  |                          \  /
-  |                           \/             .
-  |      .                                         .
-  |                 .           .
-  |                                         .
+  header 5151c2e3
   |>   d54ede8  main  Scheduled...  just now
   |
   |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
@@ -94,51 +54,24 @@ frame 0002 at 60x30
   |
   |  Cancel main (d54ede8)? y / n
   |
-  :.................a....................b............a
-  :........b........................a
-  :............................c.......................a
-  :.....a....................................c
-  :...........................dd
-  :..........................dddd
-  :..................e......ddbbdd..............b
-  :................fghh.....ddddddddddd
-  :..................e......dbbbbd
-  :..........................dddd
-  :...........................dd.............a
-  :......c.........................................b
-  :.................a...........c
-  :.........................................a
-  :..iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
-  :......................jjjjjjjjj..kkkkkkkkkkkkkkk..iiiiiii..i
-  :iiiiii..kkkkkk..iiiiii
+  :......................bbbbbbbbb..ccccccccccccccc..aaaaaaa..a
+  :aaaaaa..cccccc..aaaaaa
   :
-  :.................jjjjjjjjj..jjjjjjjjjj..ffffffffffffffff..ii
-  :iiiii..fffffffff..iiiiiii
+  :.................bbbbbbbbb..bbbbbbbbbb..dddddddddddddddd..aa
+  :aaaaa..ddddddddd..aaaaaaa
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-  :iiiiiiiiiiiiiiiiii
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :aaaaaaaaaaaaaaaaaa
   :
-  :.................jjjjjjjjj..jjjjjjjjjj..jjjjjjjjj..jjjjjjjjj
-  :..llllll..iiiiiii
+  :.................bbbbbbbbb..bbbbbbbbbb..bbbbbbbbb..bbbbbbbbb
+  :..eeeeee..aaaaaaa
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
 frame 0003 at 60x30
-  |                 .                    *            .
-  |        .                        .
-  |                            .                       .
-  |     .                                    .
-  |                           /\
-  |                          /  \
-  |                  ~      | oo |              *
-  |                ===~     |    |====>
-  |                  ~      |FUN!|
-  |                          \  /
-  |                           \/             .
-  |      .                                         .
-  |                 .           .
-  |                                         .
+  header ba97ae7f
   |>   d54ede8  main  Scheduled...  just now
   |
   |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
@@ -155,46 +88,25 @@ frame 0003 at 60x30
   |
   |  Cancel main (d54ede8)? y / n
   |
-  :.................a....................b............a
-  :........b........................a
-  :............................c.......................a
-  :.....a....................................c
-  :...........................dd
-  :..........................dddd
-  :..................e......ddbbdd..............b
-  :................fghh.....ddddddddddd
-  :..................e......dbbbbd
-  :..........................dddd
-  :...........................dd.............a
-  :......c.........................................b
-  :.................a...........c
-  :.........................................a
-  :..iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
-  :......................jjjjjjjjj..kkkkkkkkkkkkkkk..iiiiiii..i
-  :iiiiii..kkkkkk..iiiiii
+  :......................bbbbbbbbb..ccccccccccccccc..aaaaaaa..a
+  :aaaaaa..cccccc..aaaaaa
   :
-  :.................jjjjjjjjj..jjjjjjjjjj..ffffffffffffffff..ii
-  :iiiii..fffffffff..iiiiiii
+  :.................bbbbbbbbb..bbbbbbbbbb..dddddddddddddddd..aa
+  :aaaaa..ddddddddd..aaaaaaa
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-  :iiiiiiiiiiiiiiiiii
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :aaaaaaaaaaaaaaaaaa
   :
-  :.................jjjjjjjjj..jjjjjjjjjj..jjjjjjjjj..jjjjjjjjj
-  :..llllll..iiiiiii
+  :.................bbbbbbbbb..bbbbbbbbbb..bbbbbbbbb..bbbbbbbbb
+  :..eeeeee..aaaaaaa
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
 legend
-a = fg Idx(6), bg Default, ["dim"]
-b = fg Idx(6), bg Default, ["bold"]
-c = fg Idx(6), bg Default, []
-d = fg Idx(7), bg Default, ["bold"]
-e = fg Idx(208), bg Default, []
-f = fg Idx(3), bg Default, ["bold"]
-g = fg Idx(208), bg Default, ["bold"]
-h = fg Idx(3), bg Default, ["dim"]
-i = fg Default, bg Default, ["dim"]
-j = fg Idx(2), bg Default, []
-k = fg Idx(1), bg Default, ["bold"]
-l = fg Idx(2), bg Default, ["bold"]
+a = fg Default, bg Default, ["dim"]
+b = fg Idx(2), bg Default, []
+c = fg Idx(1), bg Default, ["bold"]
+d = fg Idx(3), bg Default, ["bold"]
+e = fg Idx(2), bg Default, ["bold"]

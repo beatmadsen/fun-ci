@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- The console's animations are redrawn as pictures rather than ASCII art:
+  soft light, gradients and particles in 24-bit colour, filling the whole
+  width of the header. The idle sky, the rocket, the explosion and the five
+  celebrations keep their themes. Terminals without `COLORTERM=truecolor`
+  get the nearest of 256 colours. Only the parts of the picture that change
+  are sent to the terminal.
+- An idle console now redraws four times a second, so the night sky moves
+  smoothly; it used to redraw once a second.
+
+### Removed
+- `fun-ci-renderer --animations <dir>`, which loaded animation frames from
+  JSON files. The animations are code in the renderer now.
+
+### Added
+- `fun-ci-renderer --colours 24bit|256` chooses the colours to draw in.
+
 ## [2.0.0] - 2026-09-25
 
 ### Added

@@ -4,6 +4,7 @@
 pub mod animation;
 pub mod animator;
 pub mod ansi;
+pub mod art;
 pub mod board_view;
 pub mod cli;
 pub mod console;
@@ -19,6 +20,7 @@ pub mod protocol;
 pub mod replay;
 pub mod row;
 pub mod scenario;
+pub mod scenes;
 pub mod screen;
 pub mod session;
 pub mod spinner;

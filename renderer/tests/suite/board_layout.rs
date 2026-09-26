@@ -2,6 +2,7 @@
 //! terminal height, and effects on two stages at once.
 
 use fun_ci_renderer::animation::Library;
+use fun_ci_renderer::art::output::Depth;
 use fun_ci_renderer::grid::Grid;
 use fun_ci_renderer::headless::emulate;
 use fun_ci_renderer::protocol::{Inbound, parse};
@@ -28,7 +29,7 @@ fn event(stage: &str) -> String {
 /// The screen after the last of `lines`, drawn on an 80x24 terminal.
 fn last_screen(lines: &[String]) -> Grid {
     let messages: Vec<Inbound> = lines.iter().map(|line| parse(line).unwrap()).collect();
-    emulate(&replay(&messages, &Library::builtin(), (80, 24))).pop().unwrap()
+    emulate(&replay(&messages, &Library::builtin(), (80, 24), Depth::TrueColour)).pop().unwrap()
 }
 
 fn six_runs_on_24_rows() -> String {
@@ -38,7 +39,7 @@ fn six_runs_on_24_rows() -> String {
 
 #[test]
 fn the_first_frame_starts_by_clearing_the_screen() {
-    let frames = replay(&[parse(TICK).unwrap()], &Library::builtin(), (80, 24));
+    let frames = replay(&[parse(TICK).unwrap()], &Library::builtin(), (80, 24), Depth::TrueColour);
     assert!(frames[0].bytes.starts_with(b"\x1b[2J\x1b[H"));
 }
 

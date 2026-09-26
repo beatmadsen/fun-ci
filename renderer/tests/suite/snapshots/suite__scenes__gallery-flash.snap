@@ -1,0 +1,12 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"flash\")"
+---
+ 60 cols at    0 ms: c8687207
+ 60 cols at  150 ms: f740e9b0
+ 60 cols at  400 ms: 2272b2ac
+ 60 cols at  900 ms: 738a98e8
+ 60 cols at 1700 ms: c9c8b4a3
+ 60 cols at 2600 ms: 6bb01b29
+ 60 cols at 3500 ms: ce868cb9
+200 cols at  900 ms: 3f10625f
