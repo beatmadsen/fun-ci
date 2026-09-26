@@ -64,7 +64,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-7.4: Header scenes queue and each plays to its end
 - [x] AT-7.5: The header rests on the latest outcome
 - [x] AT-7.6: The streak is on the screen
-- [ ] AT-7.7: The header goes quiet when nothing has run for a while
+- [x] AT-7.7: The header goes quiet when nothing has run for a while
 - [x] AT-8.1: A failed stage names the next step
 - [x] AT-8.2: A busy database doesn't stop the pipeline, and says so
 - [x] AT-8.3: A slow suite that dies is recorded failed

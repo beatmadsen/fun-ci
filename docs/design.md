@@ -129,8 +129,8 @@ per run, newest first:
 Animations do both of fun-ci's jobs: they report what happened at a glance, and
 they are the fun. Everything an animation reports is also in the rows' text.
 
-**The header** is a picture painted in light: a night sky over the hills when
-nothing is happening, and a rocket while a run is running. When a run reaches a
+**The header** is a picture painted in light: a rocket while a run is running,
+and a quiet scene when nothing has happened for a while. When a run reaches a
 milestone, the header plays a scene for it (AT-7.3):
 
 - Each milestone has its own pool of scenes, and the scene is picked from that
@@ -145,8 +145,15 @@ milestone, the header plays a scene for it (AT-7.3):
 - Scenes queue and each plays to its end (AT-7.4). They may be long; this is
   fun CI, and commits rarely come more than one every few minutes.
 - When the queue is empty and nothing is running, the header rests on the
-  outcome of the latest finished run, calm for a pass and with a warning in view
-  for a failure, until the next run starts (AT-7.5).
+  outcome of the latest finished run: a calm dusk with a tick for a pass, a
+  pulsing hazard sign for a failure (AT-7.5).
+- Five minutes after that run finished (or at once, if no run has), the header
+  goes quiet: it shows a quiet scene picked at random, the starry night, an
+  aurora or fireflies, held until a run starts. A small lamp in the lower left
+  corner keeps the latest outcome in view: steady green after a pass, a slow
+  red flicker after a failure, none before any run has finished (AT-7.7). The
+  quiet state means "nothing has happened for a while"; the lamp answers "was
+  the last one fine?".
 
 The pools today:
 
@@ -157,6 +164,7 @@ The pools today:
 | fast passed | a lightning strike and a neon tick (`flash`), a very happy YAY (`yay`) |
 | passed | fireworks (`success`), a trophy (`celebrate`), dancing leprechauns (`leprechauns`) |
 | failed | the explosion, which shakes (`explosion`) |
+| quiet (nothing for five minutes) | the starry night (`idle`), an aurora (`aurora`), fireflies (`fireflies`) |
 
 Lint's scenes are teal and move across, build's are amber and stack or turn,
 so the two small ones can be told apart without reading.

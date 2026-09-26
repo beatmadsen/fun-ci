@@ -30,6 +30,7 @@ mod header_scenes;
 mod headless;
 mod headless_measures;
 mod keys;
+mod lamp;
 mod live;
 mod live_binary;
 mod live_keys;

@@ -22,6 +22,14 @@ pub enum Resting {
     Quiet(Option<Outcome>),
 }
 
+impl Resting {
+    /// The lamp a quiet scene shows; none for any other resting scene.
+    #[must_use]
+    pub fn lamp(self) -> Option<Outcome> {
+        if let Resting::Quiet(lamp) = self { lamp } else { None }
+    }
+}
+
 /// What to rest on, given `runs` (newest first) as of `now_ms`.
 #[must_use]
 pub fn resting(runs: &[Run], now_ms: i64) -> Resting {

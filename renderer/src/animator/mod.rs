@@ -9,6 +9,7 @@ mod effect;
 pub mod film;
 mod footer;
 mod header;
+mod lamp;
 mod overlay;
 mod queue;
 mod resting;
@@ -18,6 +19,7 @@ use std::mem;
 pub use cast::{Cast, MILESTONES, seed_at};
 pub use effect::{Effect, Kind};
 pub use header::HEADER_HEIGHT;
+pub use lamp::{LAMP_AT, lamp};
 pub use resting::{Outcome, Resting, resting};
 
 use crate::animation::Scene;
@@ -103,9 +105,10 @@ impl Animator {
     /// or a quiet scene once nothing has happened for a while.
     fn follow_runs(&mut self, runs: &[Run], now_ms: i64) {
         let running = runs.iter().any(|run| run.status() == "running");
-        let rest = self.resting_scene(resting(runs, now_ms), running);
+        let resting = resting(runs, now_ms);
+        let rest = self.resting_scene(resting, running);
         let rocket = running.then(|| self.cast.running());
-        self.header.follow(rocket, rest);
+        self.header.follow(rocket, rest, resting.lamp());
     }
 
     fn resting_scene(&mut self, resting: Resting, running: bool) -> &'static dyn Scene {

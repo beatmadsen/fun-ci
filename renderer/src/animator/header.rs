@@ -4,12 +4,15 @@
 
 use super::backdrop::Backdrop;
 use super::caption::{caption, stamp};
+use super::lamp::lamp;
+use super::resting::Outcome;
 use super::film::Film;
 use super::queue::SceneQueue;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::cells::{CELL_PIXELS, encode};
 use crate::art::output::Depth;
+use crate::art::seconds;
 use crate::screen::Screen;
 
 /// Rows the header occupies.
@@ -64,10 +67,10 @@ impl Header {
         self.film = Film::new(depth);
     }
 
-    /// Shows the `running` scene while there is one, else rests on `rest`,
-    /// whenever no event scene plays.
-    pub fn follow(&mut self, running: Option<&'static dyn Scene>, rest: &'static dyn Scene) {
-        self.backdrop.follow(running, rest);
+    /// Shows the `running` scene while there is one, else rests on `rest`
+    /// under the `lamp` for the latest outcome, whenever no event scene plays.
+    pub fn follow(&mut self, running: Option<&'static dyn Scene>, rest: &'static dyn Scene, lamp: Option<Outcome>) {
+        self.backdrop.follow(running, rest, lamp);
     }
 
     /// Queues `scene` to play once over the idle and running scenes.
@@ -84,15 +87,23 @@ impl Header {
     /// Paints the scene showing, writes `streak` over it, and draws the
     /// cells that changed.
     pub fn draw(&mut self, screen: &mut Screen, streak: Option<u32>) {
-        let active = self.active();
         let mut canvas = Canvas::new(usize::from(screen.width()) * CELL_PIXELS.0, HEADER_HEIGHT * CELL_PIXELS.1);
-        active.scene.paint(&mut canvas, active.elapsed_ms);
+        self.paint(&mut canvas);
         canvas.tone();
         let mut cells = encode(&canvas);
         if let Some(words) = caption(streak) {
             stamp(&mut cells, &words);
         }
         self.film.project(cells, screen);
+    }
+
+    /// Paints the scene showing, and the lamp over a resting one.
+    fn paint(&self, canvas: &mut Canvas) {
+        let active = self.active();
+        active.scene.paint(canvas, active.elapsed_ms);
+        if let Some(outcome) = self.backdrop.lamp().filter(|_| self.queue.playing().is_none()) {
+            lamp(canvas, outcome, seconds(active.elapsed_ms));
+        }
     }
 
     /// Whether an event scene is playing or waiting to.
