@@ -118,3 +118,8 @@ fn should_offer_a_fireplace_among_the_quiet_scenes() {
 fn should_offer_a_moonlit_island_among_the_quiet_scenes() {
     assert!(Cast::quiet_pool().contains(&"island"), "{:?}", Cast::quiet_pool());
 }
+
+#[test]
+fn should_settle_a_spirit_level_when_lint_passes() {
+    assert!(pool("lint_passed").contains(&"level"), "{:?}", pool("lint_passed"));
+}

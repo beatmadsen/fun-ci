@@ -9,7 +9,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 /// them, with its scenes: small ones for lint and build, bigger for the fast
 /// suite, the biggest for a passing run.
 const POOLS: [(&str, &[&str]); 5] = [
-    ("lint_passed", &["sweep", "ripple"]),
+    ("lint_passed", &["sweep", "ripple", "level"]),
     ("build_passed", &["bricks", "gears"]),
     ("fast_passed", &["flash", "yay"]),
     ("run_passed", &["success", "celebrate", "leprechauns"]),

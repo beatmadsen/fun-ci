@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"level\")"
+---
+ 60 cols at    0 ms: ba83e31c
+ 60 cols at  150 ms: 5ef44d7a
+ 60 cols at  400 ms: e4485018
+ 60 cols at  900 ms: dc881c80
+ 60 cols at 1700 ms: fdbb6b49
+ 60 cols at 2600 ms: 9b8a267e
+ 60 cols at 3500 ms: 9b8a267e
+ 60 cols at 3900 ms: 9b8a267e
+ 60 cols at 9300 ms: 9b8a267e
+200 cols at  900 ms: 757771e6
