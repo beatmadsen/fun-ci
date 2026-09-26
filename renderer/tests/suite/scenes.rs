@@ -38,7 +38,7 @@ fn gallery(name: &str) -> String {
 fn should_hold_every_scene_the_events_and_scenarios_name() {
     let names = [
         "anvil", "aurora", "bricks", "calm", "celebrate", "explosion", "fireflies", "fireplace", "flash", "gears", "idle", "island", "leprechauns", "level", "ripple",
-        "running", "success", "sweep", "warning", "yay",
+        "running", "success", "sweep", "warning", "warp", "yay",
     ];
     assert_eq!(Library::builtin().names(), names);
 }
@@ -63,6 +63,7 @@ cases! {
     should_play_the_trophy_for_four_seconds: scene("celebrate").length_ms() => Some(4000);
     should_play_the_storm_for_three_point_six_seconds: scene("flash").length_ms() => Some(3600);
     should_play_the_leprechauns_for_four_point_four_seconds: scene("leprechauns").length_ms() => Some(4400);
+    should_play_the_warp_for_three_point_five_seconds: scene("warp").length_ms() => Some(3500);
     should_play_yay_for_three_point_eight_seconds: scene("yay").length_ms() => Some(3800);
     should_play_the_level_for_two_point_four_seconds: scene("level").length_ms() => Some(2400);
     should_play_the_sweep_for_two_point_four_seconds: scene("sweep").length_ms() => Some(2400);
@@ -100,5 +101,6 @@ galleries! {
     should_paint_the_island_as_reviewed: "island";
     should_paint_the_level_as_reviewed: "level";
     should_paint_the_anvil_as_reviewed: "anvil";
+    should_paint_the_warp_as_reviewed: "warp";
     should_paint_the_warning_as_reviewed: "warning";
 }

@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"warp\")"
+---
+ 60 cols at    0 ms: 17685355
+ 60 cols at  150 ms: cbb63020
+ 60 cols at  400 ms: f780ffe9
+ 60 cols at  900 ms: 92ba2f8e
+ 60 cols at 1700 ms: d8868170
+ 60 cols at 2600 ms: 0dda4391
+ 60 cols at 3500 ms: 7d86d8e7
+ 60 cols at 3900 ms: e2f5db89
+ 60 cols at 9300 ms: 63bb04f7
+200 cols at  900 ms: 3fb93f2e

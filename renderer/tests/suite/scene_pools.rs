@@ -128,3 +128,8 @@ fn should_settle_a_spirit_level_when_lint_passes() {
 fn should_ring_an_anvil_when_the_build_passes() {
     assert!(pool("build_passed").contains(&"anvil"), "{:?}", pool("build_passed"));
 }
+
+#[test]
+fn should_jump_to_warp_speed_when_the_fast_suite_passes() {
+    assert!(pool("fast_passed").contains(&"warp"), "{:?}", pool("fast_passed"));
+}

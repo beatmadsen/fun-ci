@@ -25,12 +25,14 @@ mod storm;
 mod sweep;
 mod tick;
 mod warning;
+mod warp;
 mod yay;
 
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 20] = [
+pub static ALL: [&dyn Scene; 21] = [
+    &warp::Warp,
     &anvil::Anvil,
     &level::Level,
     &island::Island,
