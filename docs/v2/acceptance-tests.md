@@ -232,3 +232,99 @@ is possible.
 - 6.3 `ralph/polish/` evaluator prompt: reads ordered PNG frames (never a GIF), the contact sheet, `stats.json` and the rubric; every finding names a scenario and a frame range or region.
 - 6.4 Iterator prompt: one-parameter sweeps rendered as labelled candidates, edits limited to the values the finding concerns, `needs-design` when no parameter can fix it.
 - 6.5 `rake polish:approve`, run by a human after viewing the change in a real terminal.
+
+## 7. Glanceable milestones
+
+The console sits on a second screen, in the corner of the developer's eye.
+Without reading a line of text they should be able to follow a run: "lint
+worked, build worked, there goes the fast suite, that worked too", or "not
+everything passed, I'll look closer". The header's animations carry that. Each
+milestone a run reaches plays its own kind of scene, the scenes grow bigger as
+the run gets further, and the header settles on the outcome once they are done.
+This is *fun* CI, so the scenes may be long; they queue rather than cut each
+other short.
+
+A run's milestones are `lint passed`, `build passed`, `fast passed` and
+`passed` (the slow suite passed as well), or `failed`. Lint and build run in
+parallel, so their milestones come in either order. The rest come in the order
+listed. This section replaces the priority rules of `docs/animation-design.md`
+(§5.3, §11.1, §11.2), where a failure cut a success short.
+
+### 7.1 A run's status is worked out from its stages, in any order
+**Given** a run whose stages finish in any order, including the forked slow
+suite finishing before or after the fast suite
+**Then** the run's status follows from its stages' statuses alone: `failed`
+once any stage has failed or timed out; `completed` once lint, build, fast and
+slow have all passed; otherwise `running`
+**And** `failed` and `cancelled` are final: nothing written later changes them
+**And** the status is written in one statement that reads the stage rows, so
+the foreground pipeline and the slow suite's process cannot overwrite each
+other's verdict.
+*Bites:* fast fails, then slow passes. Today the run ends `completed` and the
+console shows it PASSED. The test goes red on today's code for that reason.
+*Note:* the console, the streak counter, cancelling and the stale-run canceller
+all read this status, so none of them needs changing. A slow suite that passes
+while fast is still running no longer shows the run as passed for a moment.
+
+### 7.2 Each milestone becomes one event, in the order it was reached
+**Given** two polls of the runs
+**When** a run has reached milestones between them
+**Then** Ruby sends one event per new milestone, `lint_passed`, `build_passed`,
+`fast_passed`, `run_passed` or `run_failed`, each with `run_id`, in the order
+the milestones were reached: lint and build by the time their stage finished
+(lint first on a tie), fast before `run_passed`, and any milestones reached
+before a failure ahead of `run_failed`
+**And** a run sends `run_failed` once, however many of its stages fail
+**And** a cancelled run sends nothing, and the first poll after the console
+starts sends nothing (there is no earlier poll to compare with)
+**And** `stage_passed` and `stage_failed` keep coming as they do now; they drive
+the effects on a stage's column, which show *which* stage failed, while the new
+events drive the header
+**And** `renderer-protocol.md` lists the new names.
+*Bites:* a board where lint passes and build fails in the same poll sends
+`lint_passed` then `run_failed`; a second board where fast also shows failed
+sends no second `run_failed`.
+
+### 7.3 Every milestone has its own pool of scenes
+**Given** the scene library
+**Then** each of `lint passed`, `build passed`, `fast passed`, `passed` and
+`failed` has a pool of scenes, and the renderer picks from the event's pool at
+random
+**And** the success pools share no scene, so a scene tells the viewer which
+milestone it stands for
+**And** every success pool has at least two scenes
+**And** the scenes grow along the path: lint's and build's are the smallest,
+fast's are bigger, and the run's `passed` scenes are the biggest
+**And** each can be told apart from the corner of the eye by motion, size and
+colour, never by its lettering alone, and never by red against green alone
+(about one man in twelve can't tell them apart well)
+**And** failure moves differently from every success (a shake or a flash
+against a calm rise), so "look closer" reads even when the colour doesn't.
+*Note:* which scene goes into which pool, and the new scenes the pools need,
+are decided by looking at rendered frames, not in this file. A scenario per
+pool pins its scenes in the snapshots.
+
+### 7.4 Header scenes queue and each plays to its end
+**Given** events that call for header scenes, arriving faster than the scenes
+play
+**Then** the renderer queues them and plays each one to its end, in the order
+the events arrived, whichever run they belong to
+**And** no scene cuts another short: the priority that let a failure take over
+from a success goes
+**And** the looping `running` scene plays only while the queue is empty and a
+run is running.
+*Bites:* a scenario whose board brings `lint_passed`, `build_passed` and
+`fast_passed` in one poll draws the three scenes in that order, each for its
+full length, in the headless frames.
+
+### 7.5 The header rests on the latest outcome
+**Given** the queue is empty and no run is running
+**Then** the header holds a resting scene for the most recent run that finished
+`passed` or `failed` (cancelled runs are skipped): a calm one for `passed`, and
+for `failed` one that keeps a warning in view, so a glance a minute after the
+scenes played still tells the viewer how it went
+**And** it holds until the next run starts, when the `running` scene takes over
+**And** with no finished run to show, the header shows the idle night scene as
+it does now.
+*Bites:* a scenario ending on a failed run shows the failed resting scene in
+its last frames; the same scenario ending on a passed run shows the calm one.

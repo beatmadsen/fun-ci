@@ -70,6 +70,18 @@ fills the header at any width. The cost is that iterating on a scene means a
 rebuild (seconds), not an edit to a data file.
 *Revisit if* scenes need editing by people who do not write Rust.
 
+**Decision: the header follows the run's milestones.** The console is
+meant to be read from the corner of the eye, so the header plays one scene per
+milestone a run reaches (lint passed, build passed, fast passed, passed, or
+failed), each milestone drawing from its own pool, and queues them so none cuts
+another short. Ruby works out the milestones from the stage rows and sends them
+as events; the renderer picks, queues and plays the scenes. A run's status is
+derived from its stages in one write, so the order in which the foreground
+pipeline and the forked slow suite finish cannot change the verdict.
+Requirements in `acceptance-tests.md` §7.
+*Revisit if* the queue falls so far behind that a scene is taken for a later
+run's.
+
 **Decision: portable maths.** Scene code calls `art::math::Portable` (the
 `libm` crate) instead of `f64::sin` and friends, which call the platform's
 maths library and differ in the last bit between macOS and Linux; one such
