@@ -19,13 +19,7 @@ const EMPTY_STATE: [&str; 7] = [
     "",
 ];
 
-/// When a frame is drawn: the board's clock, for relative times, and a clock
-/// that only moves forward, for animations.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct Moment {
-    pub board_ms: i64,
-    pub play_ms: u64,
-}
+pub use crate::model::Moment;
 
 /// Draws boards into a frame buffer.
 #[derive(Debug)]
@@ -77,7 +71,7 @@ impl BoardView {
         self.screen.write_at(HEADER_HEIGHT + 1, 1, "");
         self.render_body(board, at.board_ms, rows);
         self.screen.clear_below();
-        self.animator.render(&mut self.screen, board, at.play_ms)
+        self.animator.render(&mut self.screen, board, at)
     }
 
     /// The bytes drawn since the last take.

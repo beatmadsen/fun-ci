@@ -11,15 +11,18 @@ mod footer;
 mod header;
 mod overlay;
 mod queue;
+mod resting;
 
 use std::mem;
 
 pub use cast::{Cast, MILESTONES, seed_at};
 pub use effect::{Effect, Kind};
 pub use header::HEADER_HEIGHT;
+pub use resting::{Outcome, Resting, resting};
 
+use crate::animation::Scene;
 use crate::art::output::Depth;
-use crate::model::{Board, Event, Run, Stage};
+use crate::model::{Board, Event, Moment, Run, Stage};
 use crate::screen::Screen;
 use header::Header;
 
@@ -61,13 +64,13 @@ impl Animator {
         self.header.frame_ms()
     }
 
-    /// Draws this frame's animations over `board` as of `play_ms`, then
-    /// advances the stage effects. Returns the name of the header animation drawn.
-    pub fn render(&mut self, screen: &mut Screen, board: &Board, play_ms: u64) -> String {
+    /// Draws this frame's animations over `board` as of `at`, then advances
+    /// the stage effects. Returns the name of the header animation drawn.
+    pub fn render(&mut self, screen: &mut Screen, board: &Board, at: Moment) -> String {
         let runs = &board.runs;
         self.take_events(runs);
-        self.follow_runs(runs);
-        self.header.seek(play_ms);
+        self.follow_runs(runs, at.board_ms);
+        self.header.seek(at.play_ms);
         let showing = self.header.showing().to_string();
         self.draw(screen, board);
         self.advance();
@@ -96,11 +99,24 @@ impl Animator {
         self.effects.push(Effect::new(kind, run_id, stage));
     }
 
-    /// Shows the rocket while a run runs, and rests on the latest outcome.
-    fn follow_runs(&mut self, runs: &[Run]) {
-        let running = runs.iter().any(|run| run.status() == "running").then(|| self.cast.running());
-        let rest = latest_outcome(runs).map(|status| self.cast.rest(status));
-        self.header.follow(running, rest);
+    /// Shows the rocket while a run runs, and rests on the latest outcome,
+    /// or a quiet scene once nothing has happened for a while.
+    fn follow_runs(&mut self, runs: &[Run], now_ms: i64) {
+        let running = runs.iter().any(|run| run.status() == "running");
+        let rest = self.resting_scene(resting(runs, now_ms), running);
+        let rocket = running.then(|| self.cast.running());
+        self.header.follow(rocket, rest);
+    }
+
+    fn resting_scene(&mut self, resting: Resting, running: bool) -> &'static dyn Scene {
+        if running || !matches!(resting, Resting::Quiet(_)) {
+            self.cast.wake();
+        }
+        match resting {
+            Resting::Calm => self.cast.rest("passed"),
+            Resting::Warning => self.cast.rest("failed"),
+            Resting::Quiet(_) => self.cast.quiet(),
+        }
     }
 
     fn draw(&mut self, screen: &mut Screen, board: &Board) {
@@ -115,11 +131,6 @@ impl Animator {
         self.effects.iter_mut().for_each(|effect| effect.frame += 1);
         self.effects.retain(|effect| !effect.finished());
     }
-}
-
-/// The status of the newest run that passed or failed; runs come newest first.
-fn latest_outcome(runs: &[Run]) -> Option<&str> {
-    runs.iter().map(Run::status).find(|status| matches!(*status, "passed" | "failed" | "timeout"))
 }
 
 fn target<'r>(event: &Event, runs: &'r [Run]) -> Option<(&'r Run, &'r Stage)> {

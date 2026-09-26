@@ -25,6 +25,8 @@ pub const MILESTONES: [&str; POOLS.len()] = {
     }
     names
 };
+/// The quiet scenes: the header shows one when nothing has happened for a while.
+const QUIET: [&str; 3] = ["idle", "aurora", "fireflies"];
 static MISSING: Blank = Blank("blank");
 
 /// The scene library plus the current choices.
@@ -33,13 +35,14 @@ pub struct Cast {
     library: Library,
     pins: Vec<&'static str>,
     seed: u64,
+    quiet: Option<&'static str>,
 }
 
 impl Cast {
     /// `seed` drives the random choice of unpinned scenes.
     #[must_use]
     pub fn new(library: Library, seed: u64) -> Self {
-        Self { library, pins: Vec::new(), seed }
+        Self { library, pins: Vec::new(), seed, quiet: None }
     }
 
     /// The scenes `milestone` picks from; none for anything else.
@@ -61,6 +64,19 @@ impl Cast {
         let pinned = self.pins.iter().copied().find(|pinned| pool.contains(pinned));
         let name = pinned.or_else(|| (!pool.is_empty()).then(|| self.random(pool)))?;
         Some(self.named(name))
+    }
+
+    /// A quiet scene: the one picked before, or a new pick.
+    pub fn quiet(&mut self) -> &'static dyn Scene {
+        let picked = self.quiet;
+        let name = picked.unwrap_or_else(|| self.random(&QUIET));
+        self.quiet = Some(name);
+        self.named(name)
+    }
+
+    /// Ends the quiet spell, so the next one picks its scene afresh.
+    pub fn wake(&mut self) {
+        self.quiet = None;
     }
 
     #[must_use]

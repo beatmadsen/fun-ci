@@ -64,3 +64,27 @@ fn an_event_waiting_to_be_played_counts_as_animating() {
 fn nothing_queued_or_playing_is_not_animating() {
     assert!(!Animator::new(Cast::new(Library::builtin(), 1)).animating());
 }
+
+#[test]
+fn the_quiet_scene_picked_holds_from_frame_to_frame() {
+    let mut cast = Cast::new(Library::builtin(), 5);
+    let mut names: Vec<&str> = (0..20).map(|_| cast.quiet().name()).collect();
+    names.dedup();
+    assert_eq!(names.len(), 1, "{names:?}");
+}
+
+/// The scene one quiet spell shows, ending the spell.
+fn quiet_spell(cast: &mut Cast) -> &'static str {
+    let name = cast.quiet().name();
+    cast.wake();
+    name
+}
+
+#[test]
+fn each_quiet_spell_picks_its_scene_afresh() {
+    let mut cast = Cast::new(Library::builtin(), 5);
+    let mut names: Vec<&str> = (0..10).map(|_| quiet_spell(&mut cast)).collect();
+    names.sort_unstable();
+    names.dedup();
+    assert!(names.len() > 1, "{names:?}");
+}

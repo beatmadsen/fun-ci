@@ -64,9 +64,9 @@ impl Header {
         self.film = Film::new(depth);
     }
 
-    /// Shows the `running` scene while there is one, else rests on `rest`
-    /// while there is one, whenever no event scene plays.
-    pub fn follow(&mut self, running: Option<&'static dyn Scene>, rest: Option<&'static dyn Scene>) {
+    /// Shows the `running` scene while there is one, else rests on `rest`,
+    /// whenever no event scene plays.
+    pub fn follow(&mut self, running: Option<&'static dyn Scene>, rest: &'static dyn Scene) {
         self.backdrop.follow(running, rest);
     }
 

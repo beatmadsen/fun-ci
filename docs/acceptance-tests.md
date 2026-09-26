@@ -334,6 +334,23 @@ and says the streak is broken after a failure, without alarm
 the header became a picture. Where it sits in a painted header is decided by
 looking at rendered frames.
 
+### 7.7 The header goes quiet when nothing has run for a while
+**Given** the latest run that passed or failed finished five minutes ago or
+more, or no run has finished at all, and none is running
+**Then** the header shows a quiet scene instead of the calm or warning
+resting scene: one picked at random from the quiet pool (the starry night and
+others as calm as it), and the pick holds until a run starts
+**And** over the quiet scene sits a small lamp showing how the latest run
+ended: steady green after a pass, flickering slowly red after a failure, and
+no lamp when no run has finished
+**And** the five minutes count from the run's last status change, on the
+renderer's clock, so a console opened long after a run goes quiet at once.
+*Bites:* a board whose run finished 299 s ago rests on the calm scene; at
+300 s it shows a quiet scene.
+*Note:* the quiet state means "nothing has happened for a while", and the
+lamp keeps the answer to "was the last one fine?" in view without a scene of
+its own.
+
 ## 8. Failure modes the 1.x specification promised
 
 ### 8.1 A failed stage names the next step

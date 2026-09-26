@@ -6,8 +6,16 @@ use serde_json::{Value, json};
 use crate::support::boards::{board, run, then_ticks};
 use crate::support::plain_scenes::{Plain, showing};
 
-static SCENES: [Plain; 5] =
-    [Plain("idle", None), Plain("running", None), Plain("calm", None), Plain("warning", None), Plain("success", Some(300))];
+static SCENES: [Plain; 7] = [
+    Plain("idle", None),
+    Plain("aurora", None),
+    Plain("fireflies", None),
+    Plain("running", None),
+    Plain("calm", None),
+    Plain("warning", None),
+    Plain("success", Some(300)),
+];
+const QUIET: [&str; 3] = ["idle", "aurora", "fireflies"];
 
 fn shown(runs: &[Value], events: &[String], count: usize) -> Vec<String> {
     showing(&SCENES, &then_ticks(&[&[board(runs)], events].concat(), count))
@@ -19,6 +27,13 @@ fn resting_on(runs: &[Value]) -> String {
 
 fn finished(id: u64, status: &str) -> Value {
     run(id, status, &[])
+}
+
+/// A run that ended with `status` `ago` seconds before the board's clock.
+fn finished_ago(status: &str, ago: i64) -> Value {
+    let mut ended = finished(1, status);
+    ended["updated_at"] = Value::from(1_790_000_000 - ago);
+    ended
 }
 
 #[test]
@@ -39,6 +54,12 @@ fn should_rest_on_the_latest_finished_run() {
 #[test]
 fn should_rest_calm_when_the_latest_finished_run_passed_after_an_older_one_failed() {
     assert_eq!(resting_on(&[finished(3, "passed"), finished(2, "failed")]), "calm");
+}
+
+#[test]
+fn should_rest_on_a_quiet_scene_five_minutes_after_the_latest_run_ended() {
+    let scene = resting_on(&[finished_ago("passed", 300)]);
+    assert!(QUIET.contains(&scene.as_str()), "{scene}");
 }
 
 #[test]

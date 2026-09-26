@@ -88,3 +88,11 @@ impl Run {
         self.stages.iter().find(|s| s.stage == name)
     }
 }
+
+/// When a frame is drawn: the board's clock, for relative times, and a clock
+/// that only moves forward, for animations.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Moment {
+    pub board_ms: i64,
+    pub play_ms: u64,
+}
