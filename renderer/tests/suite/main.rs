@@ -37,6 +37,7 @@ mod rows;
 mod seed;
 mod snapshot_text;
 mod snapshots;
+mod scene_pools;
 mod scenes;
 mod screen_bytes;
 mod terminal_restore;

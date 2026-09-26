@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"sweep\")"
+---
+ 60 cols at    0 ms: 3418f794
+ 60 cols at  150 ms: 9683cdb1
+ 60 cols at  400 ms: 3578bc60
+ 60 cols at  900 ms: 5e5eee64
+ 60 cols at 1700 ms: 2cc89dad
+ 60 cols at 2600 ms: 0bb94c2c
+ 60 cols at 3500 ms: 0bb94c2c
+ 60 cols at 3900 ms: 0bb94c2c
+ 60 cols at 9300 ms: 0bb94c2c
+200 cols at  900 ms: a3b9cb75

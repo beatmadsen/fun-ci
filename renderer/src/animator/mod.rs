@@ -12,7 +12,7 @@ mod queue;
 
 use std::mem;
 
-pub use cast::{Cast, seed_at};
+pub use cast::{Cast, MILESTONES, seed_at};
 pub use effect::{Effect, Kind};
 pub use header::HEADER_HEIGHT;
 

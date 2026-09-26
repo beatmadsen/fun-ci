@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"bricks\")"
+---
+ 60 cols at    0 ms: 235cecbb
+ 60 cols at  150 ms: 235cecbb
+ 60 cols at  400 ms: 6f71779b
+ 60 cols at  900 ms: c4a90b33
+ 60 cols at 1700 ms: 6dd3b0e0
+ 60 cols at 2600 ms: 972d80cb
+ 60 cols at 3500 ms: 235cecbb
+ 60 cols at 3900 ms: 235cecbb
+ 60 cols at 9300 ms: 235cecbb
+200 cols at  900 ms: a12cd1b3

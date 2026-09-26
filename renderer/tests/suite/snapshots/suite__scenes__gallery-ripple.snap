@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"ripple\")"
+---
+ 60 cols at    0 ms: a958cfc8
+ 60 cols at  150 ms: c49729af
+ 60 cols at  400 ms: e1f6ea3d
+ 60 cols at  900 ms: 0f0af1d8
+ 60 cols at 1700 ms: 2d34c0d9
+ 60 cols at 2600 ms: a958cfc8
+ 60 cols at 3500 ms: a958cfc8
+ 60 cols at 3900 ms: a958cfc8
+ 60 cols at 9300 ms: a958cfc8
+200 cols at  900 ms: 8e34412f

@@ -34,8 +34,8 @@ static SCENES: [Plain; 6] = [
     Plain("idle", None),
     Plain("running", None),
     Plain("explosion", LENGTH),
-    Plain("celebrate", LENGTH),
-    Plain("yay", LENGTH),
+    Plain("sweep", LENGTH),
+    Plain("bricks", LENGTH),
     Plain("flash", LENGTH),
 ];
 
@@ -61,7 +61,7 @@ fn failed() -> Value {
 }
 
 fn three_milestones() -> Vec<String> {
-    vec![milestone("lint_passed", "celebrate"), milestone("build_passed", "yay"), milestone("fast_passed", "flash")]
+    vec![milestone("lint_passed", "sweep"), milestone("build_passed", "bricks"), milestone("fast_passed", "flash")]
 }
 
 #[test]
@@ -77,25 +77,25 @@ fn should_leave_the_header_alone_when_only_a_stage_fails() {
 #[test]
 fn should_play_queued_scenes_in_the_order_their_events_arrived() {
     let frames = after(&[run(1, "passed", &[])], &three_milestones(), 9);
-    assert_eq!([&frames[0], &frames[3], &frames[6]], ["celebrate", "yay", "flash"]);
+    assert_eq!([&frames[0], &frames[3], &frames[6]], ["sweep", "bricks", "flash"]);
 }
 
 #[test]
 fn should_play_each_queued_scene_for_its_full_length() {
-    assert_eq!(after(&[run(1, "passed", &[])], &three_milestones(), 3), ["celebrate"; 3]);
+    assert_eq!(after(&[run(1, "passed", &[])], &three_milestones(), 3), ["sweep"; 3]);
 }
 
 #[test]
 fn should_not_cut_a_celebration_short_when_the_run_fails() {
-    let events = [milestone("lint_passed", "celebrate"), milestone("run_failed", "explosion")];
-    assert_eq!(after(&[failed()], &events, 4)[2..], ["celebrate", "explosion"]);
+    let events = [milestone("lint_passed", "sweep"), milestone("run_failed", "explosion")];
+    assert_eq!(after(&[failed()], &events, 4)[2..], ["sweep", "explosion"]);
 }
 
 #[test]
 fn should_show_the_running_scene_only_once_the_queue_is_empty() {
     let running = run(1, "running", &[("fast", "running")]);
-    let frames = after(&[running], &[milestone("lint_passed", "celebrate")], 4);
-    assert_eq!([&frames[0], &frames[3]], ["celebrate", "running"]);
+    let frames = after(&[running], &[milestone("lint_passed", "sweep")], 4);
+    assert_eq!([&frames[0], &frames[3]], ["sweep", "running"]);
 }
 
 #[test]

@@ -24,25 +24,33 @@ cases! {
     the_stage_that_finishes_a_run_celebrates: Kind::for_event("stage_passed", "passed", "passed") => Some(Kind::Success);
     a_stage_that_passes_mid_run_flashes_green: Kind::for_event("stage_passed", "passed", "running") => Some(Kind::StagePass);
     a_run_event_has_no_stage_effect: Kind::for_event("run_passed", "passed", "passed") => None;
-    a_pinned_success_animation_is_played: pinned("yay").success().name().to_string() => "yay";
-    pinning_a_failure_leaves_the_success_choice_random: pinned("explosion").success().name().to_string() => "success";
-    an_unknown_pin_is_ignored: pinned("disco").success().name().to_string() => "success";
+    pinning_a_scene_leaves_the_other_pools_random: picked(&mut pinned("explosion"), "run_passed") => "success";
+    an_unknown_pin_is_ignored: picked(&mut pinned("disco"), "run_passed") => "success";
     strip_removes_sgr_escapes: strip("\u{1b}[1;31mBOOM\u{1b}[0m!") => "BOOM!";
     strip_removes_other_csi_escapes: strip("a\u{1b}[2Kb") => "ab";
     strip_keeps_an_escape_that_is_not_csi: strip("a\u{1b}Xb") => "a\u{1b}Xb";
 }
 
-#[test]
-fn an_unpinned_success_animation_is_chosen_by_the_seed() {
-    let mut cast = Cast::new(Library::builtin(), 1);
-    assert_eq!(cast.success().name(), "celebrate");
+fn picked(cast: &mut Cast, milestone: &str) -> String {
+    cast.for_milestone(milestone).unwrap().name().to_string()
+}
+
+fn picks(seed: u64, count: usize) -> Vec<String> {
+    let mut cast = Cast::new(Library::builtin(), seed);
+    (0..count).map(|_| picked(&mut cast, "run_passed")).collect()
 }
 
 #[test]
-fn unpinned_success_animations_follow_the_xorshift_sequence_of_the_seed() {
-    let mut cast = Cast::new(Library::builtin(), 1);
-    let picks = [(); 5].map(|()| cast.success().name().to_string());
-    assert_eq!(picks, ["celebrate", "success", "flash", "success", "leprechauns"]);
+fn the_same_seed_picks_the_same_scenes() {
+    assert_eq!(picks(5, 10), picks(5, 10));
+}
+
+#[test]
+fn enough_picks_reach_every_scene_of_a_pool() {
+    let mut seen = picks(5, 30);
+    seen.sort();
+    seen.dedup();
+    assert_eq!(seen, ["celebrate", "leprechauns", "success"]);
 }
 
 #[test]

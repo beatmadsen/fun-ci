@@ -147,11 +147,18 @@ milestone, the header plays a scene for it (AT-7.3):
   outcome of the latest finished run, calm for a pass and with a warning in view
   for a failure, until the next run starts (AT-7.5).
 
-The scenes that exist are the explosion (failure) and five celebrations:
-fireworks, a trophy, a lightning strike, dancing leprechauns and a very happy
-YAY. Today one celebration is picked at random when a run passes, and a failure
-cuts a celebration short; which scene belongs to which milestone is still to be
-decided by looking at them.
+The pools today:
+
+| Milestone | Scenes |
+|---|---|
+| lint passed | a teal comet sweeping a line clean (`sweep`), teal rings spreading from a tick (`ripple`) |
+| build passed | amber blocks stacking into a pyramid (`bricks`), two amber gears turning (`gears`) |
+| fast passed | a lightning strike and a neon tick (`flash`), a very happy YAY (`yay`) |
+| passed | fireworks (`success`), a trophy (`celebrate`), dancing leprechauns (`leprechauns`) |
+| failed | the explosion, which shakes (`explosion`) |
+
+Lint's scenes are teal and move across, build's are amber and stack or turn,
+so the two small ones can be told apart without reading.
 
 **Stage effects** play over a single stage's column and show *which* stage it
 was: a failed stage is flanked by blasts, a timed-out one pulses yellow, and a

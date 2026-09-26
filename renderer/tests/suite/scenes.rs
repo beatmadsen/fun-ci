@@ -36,7 +36,8 @@ fn gallery(name: &str) -> String {
 
 #[test]
 fn should_hold_every_scene_the_events_and_scenarios_name() {
-    assert_eq!(Library::builtin().names(), ["celebrate", "explosion", "flash", "idle", "leprechauns", "running", "success", "yay"]);
+    let names = ["bricks", "celebrate", "explosion", "flash", "gears", "idle", "leprechauns", "ripple", "running", "success", "sweep", "yay"];
+    assert_eq!(Library::builtin().names(), names);
 }
 
 cases! {
@@ -48,6 +49,10 @@ cases! {
     should_play_the_storm_for_three_point_six_seconds: scene("flash").length_ms() => Some(3600);
     should_play_the_leprechauns_for_four_point_four_seconds: scene("leprechauns").length_ms() => Some(4400);
     should_play_yay_for_three_point_eight_seconds: scene("yay").length_ms() => Some(3800);
+    should_play_the_sweep_for_two_point_four_seconds: scene("sweep").length_ms() => Some(2400);
+    should_play_the_ripple_for_two_point_six_seconds: scene("ripple").length_ms() => Some(2600);
+    should_play_the_bricks_for_two_point_eight_seconds: scene("bricks").length_ms() => Some(2800);
+    should_play_the_gears_for_three_seconds: scene("gears").length_ms() => Some(3000);
     should_draw_the_idle_scene_four_times_a_second: scene("idle").frame_ms() => 250;
     should_draw_a_scene_that_says_nothing_once_a_second: scene("explosion").frame_ms() => 1000;
 }
@@ -67,4 +72,8 @@ galleries! {
     should_paint_the_storm_as_reviewed: "flash";
     should_paint_the_leprechauns_as_reviewed: "leprechauns";
     should_paint_yay_as_reviewed: "yay";
+    should_paint_the_sweep_as_reviewed: "sweep";
+    should_paint_the_ripple_as_reviewed: "ripple";
+    should_paint_the_bricks_as_reviewed: "bricks";
+    should_paint_the_gears_as_reviewed: "gears";
 }

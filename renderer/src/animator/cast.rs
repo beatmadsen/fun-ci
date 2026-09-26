@@ -1,24 +1,28 @@
-//! Which scene plays for which occasion. A scenario (or a test) may pin the
-//! choice; otherwise success scenes are picked at random.
+//! Which scene plays for which occasion. Each milestone has its own pool of
+//! scenes (acceptance-tests.md, AT-7.3), and a scene is picked from the pool
+//! at random unless a scenario (or a test) pins one.
 
 use crate::animation::{Blank, Library, Scene};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-const FAILURES: [&str; 1] = ["explosion"];
-const SUCCESSES: [&str; 5] = ["success", "celebrate", "flash", "leprechauns", "yay"];
+/// The milestones that call for a header scene, in the order a run reaches them.
+pub const MILESTONES: [&str; 5] = ["lint_passed", "build_passed", "fast_passed", "run_passed", "run_failed"];
+/// Each milestone's scenes, by `MILESTONES` index: small ones for lint and
+/// build, bigger for the fast suite, the biggest for a passing run.
+const POOLS: [&[&str]; 5] = [
+    &["sweep", "ripple"],
+    &["bricks", "gears"],
+    &["flash", "yay"],
+    &["success", "celebrate", "leprechauns"],
+    &["explosion"],
+];
 static MISSING: Blank = Blank("blank");
-
-#[derive(Debug, Clone, Default)]
-struct Pins {
-    failure: Option<&'static str>,
-    success: Option<&'static str>,
-}
 
 /// The scene library plus the current choices.
 #[derive(Debug, Clone)]
 pub struct Cast {
     library: Library,
-    pins: Pins,
+    pins: [Option<&'static str>; 5],
     seed: u64,
 }
 
@@ -26,17 +30,29 @@ impl Cast {
     /// `seed` drives the random choice of unpinned scenes.
     #[must_use]
     pub fn new(library: Library, seed: u64) -> Self {
-        Self { library, pins: Pins::default(), seed }
+        Self { library, pins: [None; 5], seed }
     }
 
-    /// Makes `name` the failure or success scene from now on; a name that is
-    /// neither is ignored.
+    /// The scenes `milestone` picks from; none for anything else.
+    #[must_use]
+    pub fn pool(milestone: &str) -> &'static [&'static str] {
+        MILESTONES.iter().position(|m| *m == milestone).map_or(&[], |index| POOLS[index])
+    }
+
+    /// Makes `name` its pool's scene from now on; a name in no pool is ignored.
     pub fn pin(&mut self, name: &str) {
-        if let Some(failure) = FAILURES.iter().find(|n| **n == name) {
-            self.pins.failure = Some(failure);
-        } else if let Some(success) = SUCCESSES.iter().find(|n| **n == name) {
-            self.pins.success = Some(success);
+        for (pin, pool) in self.pins.iter_mut().zip(POOLS) {
+            if let Some(found) = pool.iter().find(|n| **n == name) {
+                *pin = Some(found);
+            }
         }
+    }
+
+    /// The scene a milestone event calls for, or none for any other event.
+    pub fn for_milestone(&mut self, event: &str) -> Option<&'static dyn Scene> {
+        let index = MILESTONES.iter().position(|m| *m == event)?;
+        let name = self.pins[index].unwrap_or_else(|| self.random(POOLS[index]));
+        Some(self.named(name))
     }
 
     #[must_use]
@@ -47,25 +63,6 @@ impl Cast {
     #[must_use]
     pub fn running(&self) -> &'static dyn Scene {
         self.named("running")
-    }
-
-    /// The scene a milestone event calls for, or none for any other event.
-    pub fn for_milestone(&mut self, event: &str) -> Option<&'static dyn Scene> {
-        match event {
-            "run_failed" => Some(self.failure()),
-            "lint_passed" | "build_passed" | "fast_passed" | "run_passed" => Some(self.success()),
-            _ => None,
-        }
-    }
-
-    pub fn failure(&mut self) -> &'static dyn Scene {
-        let name = self.pins.failure.unwrap_or_else(|| self.random(&FAILURES));
-        self.named(name)
-    }
-
-    pub fn success(&mut self) -> &'static dyn Scene {
-        let name = self.pins.success.unwrap_or_else(|| self.random(&SUCCESSES));
-        self.named(name)
     }
 
     fn random(&mut self, names: &[&'static str]) -> &'static str {

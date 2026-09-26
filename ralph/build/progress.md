@@ -60,7 +60,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] R3: KeyHandler, BoardData, StageChangeDetector and StreakCounter move from tui/ to console/, which keeps them, and meet the limits; StageJob.for_run holds BoardData's SQL
 - [x] AT-7.1: A run's status is worked out from its stages, in any order
 - [x] AT-7.2: Each milestone becomes one event, in the order it was reached
-- [ ] AT-7.3: Every milestone has its own pool of scenes
+- [x] AT-7.3: Every milestone has its own pool of scenes
 - [x] AT-7.4: Header scenes queue and each plays to its end
 - [ ] AT-7.5: The header rests on the latest outcome
 - [ ] AT-7.6: The streak is on the screen

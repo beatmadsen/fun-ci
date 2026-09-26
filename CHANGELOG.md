@@ -11,7 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The console's header plays a scene each time a run passes a milestone:
   lint, build, the fast suite, and the whole run. The scenes queue and each
   plays to its end, so a failure no longer cuts a celebration short, and a run
-  gets one explosion however many of its stages fail.
+  gets one explosion however many of its stages fail. Each milestone has
+  scenes of its own, so you can tell which one it was without reading: a teal
+  sweep or ripple for lint, amber blocks or gears for the build (both new),
+  the lightning strike or YAY for the fast suite, and fireworks, the trophy
+  or the leprechauns when the whole run passes.
 - The console's animations are redrawn as pictures rather than ASCII art:
   soft light, gradients and particles in 24-bit colour, filling the whole
   width of the header. The idle sky, the rocket, the explosion and the five
