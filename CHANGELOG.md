@@ -19,10 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - When the scenes are done and nothing is running, the header rests on how
   the latest run went: a calm dusk with a tick after a pass, and a pulsing
   hazard sign after a failure, so a glance a minute later still tells you.
+- Each kind of scene has a new one to pick from: a spirit level settling
+  true when lint passes, a hammer ringing on an anvil when the build does, a
+  jump to warp speed for the fast suite, a sunrise for a passing run, and
+  shattering glass for a failure.
 - The starry night is back, meaning "nothing has happened for a while": five
   minutes after the latest run finished, the header leaves the pass or
   failure screen for a quiet scene, the starry night or one of two new ones
-  (an aurora, fireflies, a fire in a medieval stone hearth with lightning and rain at the window, a moonlit castaway's island with a palm), with a small lamp in the corner that stays green
+  (an aurora, fireflies, a fire in a medieval stone hearth with lightning and rain at the window, a moonlit castaway's island with a palm, snowfall over pines), with a small lamp in the corner that stays green
   after a pass and flickers red after a failure.
 - The streak is back: the header's top right says how many runs in a row
   have passed ("7 in a row!"), or "streak broken" after a failure. It went

@@ -6,8 +6,9 @@ use serde_json::{Value, json};
 use crate::support::boards::{board, run, then_ticks};
 use crate::support::plain_scenes::{Plain, showing};
 
-static SCENES: [Plain; 9] = [
+static SCENES: [Plain; 10] = [
     Plain("idle", None),
+    Plain("snowfall", None),
     Plain("island", None),
     Plain("fireplace", None),
     Plain("aurora", None),
@@ -17,7 +18,7 @@ static SCENES: [Plain; 9] = [
     Plain("warning", None),
     Plain("success", Some(300)),
 ];
-const QUIET: [&str; 5] = ["idle", "aurora", "fireflies", "fireplace", "island"];
+const QUIET: [&str; 6] = ["idle", "aurora", "fireflies", "fireplace", "island", "snowfall"];
 
 fn shown(runs: &[Value], events: &[String], count: usize) -> Vec<String> {
     showing(&SCENES, &then_ticks(&[&[board(runs)], events].concat(), count))

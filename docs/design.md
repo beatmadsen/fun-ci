@@ -159,14 +159,14 @@ The pools today:
 
 | Milestone | Scenes |
 |---|---|
-| lint passed | a teal comet sweeping a line clean (`sweep`), teal rings spreading from a tick (`ripple`) |
-| build passed | amber blocks stacking into a pyramid (`bricks`), two amber gears turning (`gears`) |
-| fast passed | a lightning strike and a neon tick (`flash`), a very happy YAY (`yay`) |
-| passed | fireworks (`success`), a trophy (`celebrate`), dancing leprechauns (`leprechauns`) |
-| failed | the explosion, which shakes (`explosion`) |
-| quiet (nothing for five minutes) | the starry night (`idle`), an aurora (`aurora`), fireflies (`fireflies`), a fire in a medieval stone hearth with a storm at the window (`fireplace`), a castaway's island by moonlight (`island`) |
+| lint passed | a teal comet sweeping a line clean (`sweep`), teal rings spreading from a tick (`ripple`), a spirit level settling true (`level`) |
+| build passed | amber blocks stacking into a pyramid (`bricks`), two amber gears turning (`gears`), a hammer ringing on an anvil (`anvil`) |
+| fast passed | a lightning strike and a neon tick (`flash`), a very happy YAY (`yay`), a jump to warp speed (`warp`) |
+| passed | fireworks (`success`), a trophy (`celebrate`), dancing leprechauns (`leprechauns`), a sunrise over the hills (`sunrise`) |
+| failed | the explosion (`explosion`) and shattering glass (`shatter`), both of which shake |
+| quiet (nothing for five minutes) | the starry night (`idle`), an aurora (`aurora`), fireflies (`fireflies`), a fire in a medieval stone hearth with a storm at the window (`fireplace`), a castaway's island by moonlight (`island`), snow falling on a pine forest (`snowfall`) |
 
-Lint's scenes are teal and move across, build's are amber and stack or turn,
+Lint's scenes are teal and move across or settle, build's are amber and stack, turn or strike,
 so the two small ones can be told apart without reading.
 
 **Stage effects** play over a single stage's column and show *which* stage it

@@ -21,6 +21,7 @@ mod rocket;
 mod running;
 mod shatter;
 mod sky;
+mod snowfall;
 mod stonework;
 mod storm;
 mod sunrise;
@@ -33,7 +34,8 @@ mod yay;
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 23] = [
+pub static ALL: [&dyn Scene; 24] = [
+    &snowfall::Snowfall,
     &shatter::Shatter,
     &sunrise::Sunrise,
     &warp::Warp,

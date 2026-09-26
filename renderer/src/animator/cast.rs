@@ -26,7 +26,7 @@ pub const MILESTONES: [&str; POOLS.len()] = {
     names
 };
 /// The quiet scenes: the header shows one when nothing has happened for a while.
-const QUIET: [&str; 5] = ["idle", "aurora", "fireflies", "fireplace", "island"];
+const QUIET: [&str; 6] = ["idle", "aurora", "fireflies", "fireplace", "island", "snowfall"];
 static MISSING: Blank = Blank("blank");
 
 /// The scene library plus the current choices.

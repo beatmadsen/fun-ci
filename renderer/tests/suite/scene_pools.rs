@@ -143,3 +143,8 @@ fn should_bring_up_the_sun_when_the_whole_run_passes() {
 fn should_shatter_like_glass_when_a_run_fails() {
     assert!(pool("run_failed").contains(&"shatter"), "{:?}", pool("run_failed"));
 }
+
+#[test]
+fn should_offer_a_snowfall_among_the_quiet_scenes() {
+    assert!(Cast::quiet_pool().contains(&"snowfall"), "{:?}", Cast::quiet_pool());
+}

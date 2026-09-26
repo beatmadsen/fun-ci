@@ -38,7 +38,7 @@ fn gallery(name: &str) -> String {
 fn should_hold_every_scene_the_events_and_scenarios_name() {
     let names = [
         "anvil", "aurora", "bricks", "calm", "celebrate", "explosion", "fireflies", "fireplace", "flash", "gears", "idle", "island", "leprechauns", "level", "ripple",
-        "running", "shatter", "success", "sunrise", "sweep", "warning", "warp", "yay",
+        "running", "shatter", "snowfall", "success", "sunrise", "sweep", "warning", "warp", "yay",
     ];
     assert_eq!(Library::builtin().names(), names);
 }
@@ -50,6 +50,8 @@ cases! {
     should_loop_the_fireflies: scene("fireflies").length_ms() => None;
     should_loop_the_fireplace: scene("fireplace").length_ms() => None;
     should_loop_the_island: scene("island").length_ms() => None;
+    should_loop_the_snowfall: scene("snowfall").length_ms() => None;
+    should_draw_the_snowfall_four_times_a_second: scene("snowfall").frame_ms() => 250;
     should_draw_the_island_four_times_a_second: scene("island").frame_ms() => 250;
     should_draw_the_fireplace_often_enough_for_its_flames_to_flicker: scene("fireplace").frame_ms() => 150;
     should_draw_the_aurora_four_times_a_second: scene("aurora").frame_ms() => 250;
@@ -106,5 +108,6 @@ galleries! {
     should_paint_the_warp_as_reviewed: "warp";
     should_paint_the_sunrise_as_reviewed: "sunrise";
     should_paint_the_shatter_as_reviewed: "shatter";
+    should_paint_the_snowfall_as_reviewed: "snowfall";
     should_paint_the_warning_as_reviewed: "warning";
 }
