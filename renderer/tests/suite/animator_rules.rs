@@ -50,7 +50,7 @@ fn enough_picks_reach_every_scene_of_a_pool() {
     let mut seen = picks(5, 30);
     seen.sort();
     seen.dedup();
-    assert_eq!(seen, ["celebrate", "leprechauns", "success"]);
+    assert_eq!(seen, ["celebrate", "leprechauns", "success", "sunrise"]);
 }
 
 #[test]
@@ -116,9 +116,9 @@ fn pinning_another_scene_of_the_same_pool_replaces_the_first_pin() {
 
 #[test]
 fn random_picks_spread_evenly_across_a_pool() {
-    let picks = picks(5, 300);
-    let fewest = ["success", "celebrate", "leprechauns"].map(|name| picks.iter().filter(|pick| *pick == name).count());
-    assert!(fewest.iter().all(|count| *count >= 60), "{fewest:?}");
+    let picks = picks(5, 400);
+    let counts = ["success", "celebrate", "leprechauns", "sunrise"].map(|name| picks.iter().filter(|pick| *pick == name).count());
+    assert!(counts.iter().all(|count| *count >= 70), "{counts:?}");
 }
 
 #[test]

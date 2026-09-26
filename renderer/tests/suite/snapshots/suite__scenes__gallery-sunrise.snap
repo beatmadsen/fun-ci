@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"sunrise\")"
+---
+ 60 cols at    0 ms: 0c9cdba2
+ 60 cols at  150 ms: e1824068
+ 60 cols at  400 ms: bdab811b
+ 60 cols at  900 ms: 16eaa8c4
+ 60 cols at 1700 ms: 92d8064b
+ 60 cols at 2600 ms: 82ef014c
+ 60 cols at 3500 ms: 9ccb4521
+ 60 cols at 3900 ms: f2d87052
+ 60 cols at 9300 ms: 92e4195e
+200 cols at  900 ms: 8a0638f6

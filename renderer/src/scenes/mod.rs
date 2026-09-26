@@ -22,6 +22,7 @@ mod running;
 mod sky;
 mod stonework;
 mod storm;
+mod sunrise;
 mod sweep;
 mod tick;
 mod warning;
@@ -31,7 +32,8 @@ mod yay;
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 21] = [
+pub static ALL: [&dyn Scene; 22] = [
+    &sunrise::Sunrise,
     &warp::Warp,
     &anvil::Anvil,
     &level::Level,

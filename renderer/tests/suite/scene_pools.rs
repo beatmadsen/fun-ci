@@ -133,3 +133,8 @@ fn should_ring_an_anvil_when_the_build_passes() {
 fn should_jump_to_warp_speed_when_the_fast_suite_passes() {
     assert!(pool("fast_passed").contains(&"warp"), "{:?}", pool("fast_passed"));
 }
+
+#[test]
+fn should_bring_up_the_sun_when_the_whole_run_passes() {
+    assert!(pool("run_passed").contains(&"sunrise"), "{:?}", pool("run_passed"));
+}
