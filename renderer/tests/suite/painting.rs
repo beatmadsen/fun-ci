@@ -1,8 +1,8 @@
-//! The tools scenes paint with: glows, streaks, discs, squares, sprites,
+//! The tools scenes paint with: glows, streaks, squares, sprites,
 //! noise and the tone curve.
 
 use fun_ci_renderer::art::canvas::Canvas;
-use fun_ci_renderer::art::light::{disc, glow, square, streak};
+use fun_ci_renderer::art::light::{glow, square, streak};
 use fun_ci_renderer::art::noise::{dice, fbm, value};
 use fun_ci_renderer::art::sprite::Sprite;
 
@@ -55,20 +55,6 @@ fn should_light_the_middle_of_a_streak_fully() {
     let mut canvas = canvas();
     streak(&mut canvas, ((1.5, 4.5), (7.5, 4.5)), 1.0, RED);
     assert_eq!(rgb(canvas.get(4, 4)), [255, 0, 0]);
-}
-
-#[test]
-fn should_cover_the_centre_of_a_disc() {
-    let mut canvas = canvas();
-    disc(&mut canvas, (4.5, 4.5), 2.0, RED);
-    assert_eq!(rgb(canvas.get(4, 4)), [255, 0, 0]);
-}
-
-#[test]
-fn should_cover_half_a_pixel_whose_centre_is_on_a_discs_edge() {
-    let mut canvas = canvas();
-    disc(&mut canvas, (0.5, 4.5), 3.0, RED);
-    assert_eq!(rgb(canvas.get(3, 4)), [128, 0, 0]);
 }
 
 #[test]

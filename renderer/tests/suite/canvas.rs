@@ -1,4 +1,4 @@
-//! Painting on a canvas.
+//! A canvas starts black and takes light only on its own pixels.
 
 use fun_ci_renderer::art::canvas::Canvas;
 
@@ -12,22 +12,36 @@ fn should_start_black() {
 }
 
 #[test]
-fn should_paint_the_last_pixel_of_a_rectangle() {
-    let mut canvas = Canvas::new(4, 4);
-    canvas.fill_rect((1, 1), (2, 2), RED);
-    assert_eq!(rgb(canvas.get(2, 2)), [255, 0, 0]);
-}
-
-#[test]
-fn should_leave_the_pixel_past_a_rectangle_alone() {
-    let mut canvas = Canvas::new(4, 4);
-    canvas.fill_rect((1, 1), (2, 2), RED);
-    assert_eq!(rgb(canvas.get(3, 2)), [0, 0, 0]);
-}
-
-#[test]
-fn should_clip_a_rectangle_when_it_runs_off_the_canvas() {
+fn should_add_light_to_the_pixel_it_is_given() {
     let mut canvas = Canvas::new(2, 2);
-    canvas.fill_rect((1, 1), (5, 5), RED);
-    assert_eq!(rgb(canvas.get(1, 1)), [255, 0, 0]);
+    canvas.add((1, 0), RED);
+    assert_eq!(rgb(canvas.get(1, 0)), [255, 0, 0]);
+}
+
+#[test]
+fn should_not_wrap_light_added_just_past_the_right_edge_onto_the_next_row() {
+    let mut canvas = Canvas::new(2, 2);
+    canvas.add((2, 0), RED);
+    assert_eq!(rgb(canvas.get(0, 1)), [0, 0, 0]);
+}
+
+#[test]
+fn should_ignore_light_added_just_below_the_bottom_edge() {
+    let mut canvas = Canvas::new(2, 2);
+    canvas.add((0, 2), RED);
+    assert_eq!(canvas, Canvas::new(2, 2));
+}
+
+#[test]
+fn should_ignore_light_added_far_past_the_right_edge_of_the_top_row() {
+    let mut canvas = Canvas::new(2, 2);
+    canvas.add((5, 0), RED);
+    assert_eq!(canvas, Canvas::new(2, 2));
+}
+
+#[test]
+fn should_not_wrap_a_cover_just_past_the_right_edge_onto_the_next_row() {
+    let mut canvas = Canvas::new(2, 2);
+    canvas.cover((2, 0), RED, 1.0);
+    assert_eq!(rgb(canvas.get(0, 1)), [0, 0, 0]);
 }

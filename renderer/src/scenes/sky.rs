@@ -14,19 +14,20 @@ const DUSK: u32 = 0x9a_4a_52;
 const FAR_HILL: u32 = 0x14_10_2c;
 const RIM: [f64; 3] = [0.20, 0.16, 0.26];
 const NEAR_HILL: u32 = 0x07_07_14;
+/// The most stars a sky holds, however wide the terminal.
+const MAX_STARS: usize = 1200;
 const BLUE_STAR: Shade = [0.72, 0.82, 1.0];
 const WARM_STAR: Shade = [1.0, 0.86, 0.68];
 
-/// Paints the sky over the whole canvas, nebulae `drift` pixels a second
-/// further left for each second of `t`.
-pub fn sky(canvas: &mut Canvas, t: f64, drift: f64) {
+/// Paints the sky over the whole canvas.
+pub fn sky(canvas: &mut Canvas) {
     let height = canvas.size().1;
-    canvas.map(|x, y, _| add(gradient(y / height), nebula(x + drift * t, y)));
+    canvas.map(|x, y, _| add(gradient(y / height), nebula(x, y)));
 }
 
 /// Adds the stars, one for every `area` pixels, `drift` pixels a second further left.
 pub fn stars(canvas: &mut Canvas, t: f64, (area, drift): (usize, f64)) {
-    let count = canvas.width() * canvas.height() / area;
+    let count = (canvas.width() * canvas.height() / area).min(MAX_STARS);
     for i in 0..u64::try_from(count).unwrap_or(0) {
         star(canvas, i, t, drift);
     }

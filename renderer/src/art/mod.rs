@@ -31,8 +31,9 @@ pub fn seconds(t_ms: u64) -> f64 {
 #[must_use]
 pub fn index_past(v: f64, len: usize) -> usize {
     let (mut lo, mut hi) = (0, len);
-    while lo < hi {
+    for _ in 0..=usize::BITS {
         let mid = usize::midpoint(lo, hi);
+        if lo == hi { break }
         if float(mid) <= v { lo = mid + 1 } else { hi = mid }
     }
     lo

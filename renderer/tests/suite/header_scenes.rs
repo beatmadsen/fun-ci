@@ -29,7 +29,7 @@ impl Scene for Turns {
     }
 
     fn paint(&self, canvas: &mut Canvas, t_ms: u64) {
-        canvas.fill(|_, _| if t_ms < 200 { [0.5, 0.0, 0.0] } else { [0.0, 0.0, 0.5] });
+        canvas.map(|_, _, _| if t_ms < 200 { [0.5, 0.0, 0.0] } else { [0.0, 0.0, 0.5] });
     }
 }
 
@@ -47,7 +47,7 @@ impl Scene for Blinding {
     }
 
     fn paint(&self, canvas: &mut Canvas, _t_ms: u64) {
-        canvas.fill(|_, _| [2.0, 0.0, 0.0]);
+        canvas.map(|_, _, _| [2.0, 0.0, 0.0]);
     }
 }
 

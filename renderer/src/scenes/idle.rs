@@ -36,7 +36,7 @@ impl Scene for Idle {
 
     fn paint(&self, canvas: &mut Canvas, t_ms: u64) {
         let t = seconds(t_ms);
-        sky(canvas, t, 0.0);
+        sky(canvas);
         stars(canvas, t, (260, 0.0));
         falling_star(canvas, t);
         moon(canvas);

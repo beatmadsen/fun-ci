@@ -42,28 +42,11 @@ impl Canvas {
         self.pixels[y * self.width + x]
     }
 
-    /// Sets every pixel to `shade(x, y)`.
-    pub fn fill(&mut self, shade: impl Fn(usize, usize) -> Shade) {
-        let width = self.width;
-        for (i, pixel) in self.pixels.iter_mut().enumerate() {
-            *pixel = shade(i % width, i / width);
-        }
-    }
-
     /// Replaces every pixel with `shade(x, y, pixel)`, (x, y) its centre.
     pub fn map(&mut self, shade: impl Fn(f64, f64, Shade) -> Shade) {
         let width = self.width;
         for (i, pixel) in self.pixels.iter_mut().enumerate() {
             *pixel = shade(float(i % width) + 0.5, float(i / width) + 0.5, *pixel);
-        }
-    }
-
-    /// Paints the `size` (width, height) rectangle from `corner` in `shade`,
-    /// clipped to the canvas.
-    pub fn fill_rect(&mut self, corner: (usize, usize), size: (usize, usize), shade: Shade) {
-        let (right, bottom) = ((corner.0 + size.0).min(self.width), (corner.1 + size.1).min(self.height));
-        for y in (corner.1..bottom).filter(|_| corner.0 < right) {
-            self.pixels[y * self.width + corner.0..y * self.width + right].fill(shade);
         }
     }
 

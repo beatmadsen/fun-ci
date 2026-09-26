@@ -12,7 +12,10 @@ macro_rules! cases {
     };
 }
 
-const MOMENTS_MS: [u64; 7] = [0, 150, 400, 900, 1700, 2600, 3500];
+/// Moments to paint each scene at: through the event scenes' lengths, then
+/// in the rocket pilot's blink (3.85-4 s) and during the idle sky's second
+/// falling star (9-9.9 s).
+const MOMENTS_MS: [u64; 9] = [0, 150, 400, 900, 1700, 2600, 3500, 3900, 9300];
 
 fn scene(name: &str) -> &'static dyn Scene {
     Library::builtin().get(name).unwrap()

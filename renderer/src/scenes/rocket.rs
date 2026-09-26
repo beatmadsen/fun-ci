@@ -64,8 +64,9 @@ fn porthole((u, v): (f64, f64), blink: bool) -> (Shade, f64) {
 fn pilot((u, v): (f64, f64), glass: Shade, blink: bool) -> Shade {
     let face = (u.hypotenuse(v + -1.8) - 3.4).clamp(-0.5, 0.5) + 0.5;
     let skin = mix([1.0, 0.8, 0.62], glass, face);
-    let eye = |x: f64| if blink { ((v + 1.2).abs() * 3.0).min((u - x).abs() * 1.2) } else { (u - x).hypotenuse(v + 1.2) * 1.4 };
-    let eyes = (eye(-1.3).min(eye(1.3)) - 0.6).clamp(0.0, 1.0);
+    let across = u.abs() - 1.3;
+    let eye = if blink { ((v + 1.2).abs() * 3.0).min(across.abs() * 1.2) } else { across.hypotenuse(v + 1.2) * 1.4 };
+    let eyes = (eye - 0.6).clamp(0.0, 1.0);
     let shine = (-((u + 2.2).hypotenuse(v + 3.0) / 1.3).powi(2)).exponential() * 0.5;
     add(mix([0.08, 0.06, 0.1], skin, eyes), [shine; 3])
 }

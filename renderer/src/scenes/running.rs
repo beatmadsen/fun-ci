@@ -36,7 +36,7 @@ impl Scene for Running {
 
 /// Space streaming past: sky, a far planet, stars and speed lines.
 fn space(canvas: &mut Canvas, t: f64) {
-    sky(canvas, t, 0.0);
+    sky(canvas);
     planet(canvas, t);
     stars(canvas, t, (420, 22.0));
     speed_lines(canvas, t);

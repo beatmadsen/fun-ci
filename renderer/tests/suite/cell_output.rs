@@ -36,6 +36,16 @@ fn should_use_the_nearest_colour_of_the_xterm_cube_when_limited_to_256() {
 }
 
 #[test]
+fn should_step_green_by_six_in_the_xterm_cube_when_limited_to_256() {
+    assert_eq!(sgr_line(&[space([0, 255, 0])], Depth::Xterm256), "\u{1b}[48;5;46m \u{1b}[0m");
+}
+
+#[test]
+fn should_keep_the_cube_colour_when_the_nearest_grey_is_just_as_close() {
+    assert_eq!(sgr_line(&[space([2, 0, 10])], Depth::Xterm256), "\u{1b}[48;5;16m \u{1b}[0m");
+}
+
+#[test]
 fn should_use_the_nearest_grey_when_it_is_closer_than_the_cube() {
     assert_eq!(sgr_line(&[space([128, 128, 128])], Depth::Xterm256), "\u{1b}[48;5;244m \u{1b}[0m");
 }

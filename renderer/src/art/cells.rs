@@ -118,9 +118,9 @@ fn fit(samples: &Samples, glyph: char, mask: &Mask) -> Fit {
 /// (background, foreground) for one channel `values` under `mask`.
 fn regress(mask: &Mask, values: &[f64; 8]) -> (f64, f64) {
     let (mean_mask, mean_value) = (mask.iter().sum::<f64>() / 8.0, values.iter().sum::<f64>() / 8.0);
-    let spread: f64 = mask.iter().map(|m| (m - mean_mask) * (m - mean_mask)).sum();
+    let spread: f64 = mask.iter().map(|m| (m - mean_mask).powi(2)).sum();
     let together: f64 = mask.iter().zip(values).map(|(m, v)| (m - mean_mask) * (v - mean_value)).sum();
-    let step = if spread > f64::EPSILON { together / spread } else { 0.0 };
+    let step = if spread > 0.0 { together / spread } else { 0.0 };
     let bg = (mean_value - step * mean_mask).clamp(0.0, 1.0);
     (bg, (bg + step).clamp(0.0, 1.0))
 }

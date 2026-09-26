@@ -13,12 +13,6 @@ pub struct Sprite<'a> {
 }
 
 impl Sprite<'_> {
-    /// Its size in sprite pixels, (width, height).
-    #[must_use]
-    pub fn size(&self) -> (usize, usize) {
-        (self.rows.iter().map(|row| row.chars().count()).max().unwrap_or(0), self.rows.len())
-    }
-
     /// Stamps it with its top left at `corner`, each sprite pixel `pixel` wide.
     pub fn stamp(&self, canvas: &mut Canvas, corner: (f64, f64), pixel: f64) {
         for (y, row) in self.rows.iter().enumerate() {

@@ -1,5 +1,5 @@
 //! Light and shapes painted at fractional positions: soft glows, streaks,
-//! anti-aliased discs and squares. Pixel (x, y) is lit at its centre,
+//! haze and anti-aliased squares. Pixel (x, y) is lit at its centre,
 //! (x + 0.5, y + 0.5).
 
 use super::math::Portable;
@@ -35,15 +35,6 @@ pub fn haze(canvas: &mut Canvas, centre: (f64, f64), radius: f64, (shade, opacit
     for (x, y) in near(canvas, (centre.0 - reach, centre.1 - reach), (centre.0 + reach, centre.1 + reach)) {
         let d = distance(centre, pixel_centre(x, y));
         canvas.cover((x, y), shade, opacity * falloff(d, radius));
-    }
-}
-
-/// Covers a disc of `radius` around `centre` in `shade`, its edge anti-aliased.
-pub fn disc(canvas: &mut Canvas, centre: (f64, f64), radius: f64, shade: Shade) {
-    let reach = radius + 1.0;
-    for (x, y) in near(canvas, (centre.0 - reach, centre.1 - reach), (centre.0 + reach, centre.1 + reach)) {
-        let coverage = radius - distance(centre, pixel_centre(x, y)) + 0.5;
-        canvas.cover((x, y), shade, coverage);
     }
 }
 
