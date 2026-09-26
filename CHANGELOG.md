@@ -37,6 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - `fun-ci-renderer --colours 24bit|256` chooses the colours to draw in.
+- When a stage fails, `fun-ci trigger` says what to do next, such as "Fix the
+  failing tests above, then try again."
 
 ### Fixed
 - A run whose fast suite failed no longer ends up PASSED when its slow suite

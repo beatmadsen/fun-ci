@@ -175,7 +175,7 @@ digging into internals: the cause obvious, the next step clear.
 
 | Situation | What the developer sees | Exit code |
 |---|---|---|
-| A stage fails | The script's output, then `Fast suite failed.` (or `Lint`, `Build`) | non-zero |
+| A stage fails | The script's output, `Fast suite failed.` (or `Lint`, `Build`), and what to do next: `Fix the failing tests above, then try again.` | non-zero |
 | A stage overruns its budget | `Fast suite killed -- exceeded 10s time budget.` and advice on what to do | non-zero |
 | fun-ci isn't installed | The hook says so and how to install it; the commit or push goes ahead | 0 |
 | No `.fun-ci/`, or a script missing or not executable | `fun-ci: ...` naming the problem, then `Commit will proceed without CI.` | 0 |

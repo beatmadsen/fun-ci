@@ -71,6 +71,22 @@ class TestStageRunnerDefaults < Minitest::Test
     assert_includes output_of_failing("build"), "Build failed."
   end
 
+  def test_tells_the_developer_to_fix_what_the_linter_reported_when_lint_fails
+    assert_includes output_of_failing("lint"), "Fix what the linter reported above, then try again."
+  end
+
+  def test_tells_the_developer_to_fix_the_build_errors_when_the_build_fails
+    assert_includes output_of_failing("build"), "Fix the build errors above, then try again."
+  end
+
+  def test_tells_the_developer_to_fix_the_failing_tests_when_the_fast_suite_fails
+    assert_includes output_of_failing("fast"), "Fix the failing tests above, then try again."
+  end
+
+  def test_tells_the_developer_to_fix_the_failing_tests_when_the_slow_suite_fails
+    assert_includes output_of_failing("slow"), "Fix the failing tests above, then try again."
+  end
+
   def test_shows_what_a_failing_script_printed
     assert_includes output_of_failing("build"), "undefined method"
   end

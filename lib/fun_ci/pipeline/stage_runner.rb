@@ -12,6 +12,12 @@ module FunCi
         "fast" => "Your fast tests have gotten too slow. Split or speed them up.",
         "slow" => "Pare down integration tests, parallelise, or raise the budget."
       }.freeze
+      NEXT_STEPS = {
+        "lint" => "Fix what the linter reported above, then try again.",
+        "build" => "Fix the build errors above, then try again.",
+        "fast" => "Fix the failing tests above, then try again.",
+        "slow" => "Fix the failing tests above, then try again."
+      }.freeze
 
       def initialize(commit_hash:, stdout:, seams: Seams.new, dir: Dir.pwd)
         @commit_hash = commit_hash
@@ -49,6 +55,7 @@ module FunCi
       def report_failure(stage, output)
         @stdout.puts output unless output.empty?
         @stdout.puts "#{label(stage)} failed."
+        @stdout.puts NEXT_STEPS[stage]
         "failed"
       end
 
