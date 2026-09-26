@@ -16,6 +16,6 @@ cargo install fun-ci-renderer
 the gem, then on your `PATH`.
 
 It speaks JSON Lines with the gem over stdin and stdout
-([protocol](https://github.com/beatmadsen/fun-ci/blob/main/docs/v2/renderer-protocol.md))
+([protocol](https://github.com/beatmadsen/fun-ci/blob/main/docs/renderer-protocol.md))
 and draws on `/dev/tty`. `--headless` replays a scenario into PNG frames, a
 contact sheet, an asciicast and measurements instead of drawing on a terminal.

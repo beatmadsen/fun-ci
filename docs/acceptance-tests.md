@@ -1,9 +1,12 @@
-# fun-ci 2.0 — Acceptance tests
+# fun-ci acceptance tests
 
-Numbered like agent-tome's. The build loop implements them in order, one per
-iteration. Sections 0–2 are fully specified; 3–5 are specified far enough to
-start and will be refined as earlier sections land (each refinement is its own
-commit to this file).
+The requirements, as acceptance tests, numbered like agent-tome's. The build
+loop implements them one per iteration, in the order of
+`ralph/build/progress.md`, which also says which are done. §0 to §5 are built;
+they stay here because the tests that hold them cite them by number. §6 to §8
+are to build. An outline item is refined into full Given/When/Then before it is
+built, as its own commit to this file. What fun-ci is for is in
+[`design.md`](design.md).
 
 Where a test says "the gate", it means `bundle exec rake` (default task).
 
@@ -225,30 +228,22 @@ is possible.
 - 5.3b Ruby `tui/` rendering classes and `animations/` are deleted, once 5.2 and 5.3 leave nothing that drives them (the golden corpus capture and the Cucumber features do until then).
 - 5.4 README, CHANGELOG, version 2.0.0.
 
-## 6. Polish loop (outline; see agentic-pipeline.md)
+## 6. Polish loop (outline; see architecture.md, "Building fun-ci with agents")
 
 - 6.1 Objective visual gates from `stats.json` and `frames/` in `rake`, including "consecutive animation frames differ" and "every PNG decodes at the expected size". Bites shown for each.
-- 6.2 `docs/v2/tui-rubric.md`, separating state feedback from decoration, with optional reference screenshots in `docs/v2/tui-references/`.
+- 6.2 `docs/tui-rubric.md`, derived from `design.md` and separating state feedback from decoration, with optional reference screenshots in `docs/tui-references/`.
 - 6.3 `ralph/polish/` evaluator prompt: reads ordered PNG frames (never a GIF), the contact sheet, `stats.json` and the rubric; every finding names a scenario and a frame range or region.
 - 6.4 Iterator prompt: one-parameter sweeps rendered as labelled candidates, edits limited to the values the finding concerns, `needs-design` when no parameter can fix it.
 - 6.5 `rake polish:approve`, run by a human after viewing the change in a real terminal.
 
 ## 7. Glanceable milestones
 
-The console sits on a second screen, in the corner of the developer's eye.
-Without reading a line of text they should be able to follow a run: "lint
-worked, build worked, there goes the fast suite, that worked too", or "not
-everything passed, I'll look closer". The header's animations carry that. Each
-milestone a run reaches plays its own kind of scene, the scenes grow bigger as
-the run gets further, and the header settles on the outcome once they are done.
-This is *fun* CI, so the scenes may be long; they queue rather than cut each
-other short.
-
-A run's milestones are `lint passed`, `build passed`, `fast passed` and
-`passed` (the slow suite passed as well), or `failed`. Lint and build run in
-parallel, so their milestones come in either order. The rest come in the order
-listed. This section replaces the priority rules of `docs/animation-design.md`
-(§5.3, §11.1, §11.2), where a failure cut a success short.
+The header's animations carry fun-ci's first goal, all is well at a glance,
+and its second, fun (`design.md`, Goals and Animations). A run's milestones are
+`lint passed`, `build passed`, `fast passed` and `passed` (the slow suite
+passed as well), or `failed`. Lint and build run in parallel, so their
+milestones come in either order; the rest come in the order listed. This
+section replaces the rule under which a failure cut a celebration short.
 
 ### 7.1 A run's status is worked out from its stages, in any order
 **Given** a run whose stages finish in any order, including the forked slow
@@ -328,3 +323,24 @@ scenes played still tells the viewer how it went
 it does now.
 *Bites:* a scenario ending on a failed run shows the failed resting scene in
 its last frames; the same scenario ending on a passed run shows the calm one.
+
+### 7.6 The streak is on the screen
+**Given** consecutive passed runs
+**Then** the console shows the streak, as the 1.x header did ("7 in a row!"),
+and says the streak is broken after a failure, without alarm
+**And** a running run neither breaks nor extends it.
+*Note:* Ruby sends `streak` with every `board`, but nothing has drawn it since
+the header became a picture. Where it sits in a painted header is decided by
+looking at rendered frames.
+
+## 8. Failure modes the 1.x specification promised (outline)
+
+- 8.1 A stage script's output reaches the developer on a pre-push failure, with
+  one line naming the next step (`Fast suite failed. Your push is blocked until
+  the tests pass.`).
+- 8.2 When the database stays locked past the busy timeout, the pipeline still
+  runs and fun-ci says the result could not be recorded, and how to re-trigger.
+- 8.3 When the background slow suite's process dies without finishing, its
+  stage and the run are recorded failed and the console shows them failed.
+- 8.4 When the database cannot be written (a full disk), fun-ci says so and
+  where the database is.

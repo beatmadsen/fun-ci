@@ -67,7 +67,7 @@ fun-ci prune                                          # Remove fun-ci's worktree
 - Minitest, run in parallel processes by ActiveSupport's executor (serially under `MUTATION_TESTING`); RuboCop; mutineer for the mutation lane (Ruby >= 3.4 only).
 - Prism, in tests, to read Ruby sources for the code-limit and call scans.
 - Rust pinned to one release in `renderer/rust-toolchain.toml` (the root `rust-toolchain.toml` links to it); raise it on purpose, with the gate green on the new release.
-- 2.0 adds a Rust renderer (`fun-ci-renderer`) that Ruby drives over JSON Lines; `docs/v2/architecture.md` decides the boundary: Ruby decides what is true, Rust decides how it looks.
+- 2.0 adds a Rust renderer (`fun-ci-renderer`) that Ruby drives over JSON Lines; `docs/architecture.md` decides the boundary: Ruby decides what is true, Rust decides how it looks.
 
 ## Layout
 
@@ -78,7 +78,7 @@ Fun-CI is an opinionated, local-first CI for a project's own machine: a four-sta
 - `lib/fun_ci/persistence/` -- `Database` (connection and migration), `PipelineRun` and `StageJob` (row access), `DbRecorder`/`NullRecorder` (what a pipeline records).
 - `lib/fun_ci/setup/` -- `init`, `install-hooks`, `check`: `Installer`, `ProjectDetector`, `TemplateWriter`, `HookWriter`, `SetupChecker`, `ProjectConfig`.
 - `lib/fun_ci/console/` -- the 2.0 console's Ruby half, which decides what is true. `fun-ci console` runs `Launcher`, which starts the renderer and runs a `ConsoleLoop` (renderer lines to the session, a poll after each quiet second): `ConsoleSession` answers the renderer's lines with protocol messages through a port (`RendererProcess` for the real binary, found by `RendererLookup`); `ConsoleState` builds each `board` from `BoardData` (SQLite reads, paging), the `View` (a `KeyHandler`'s cursor and one page of runs) and `StageEvents` (`StageChangeDetector`'s changes as `event`s); `ConsoleLog` takes what the renderer gets wrong.
-- `contract/` -- renderer scenarios, contract fixtures, the binary lane (`binary/`) and, until 5.3b, the tool that converts the Ruby animations to JSON (`capture/`). `docs/v2/` -- the 2.0 architecture, renderer protocol and backlog (`acceptance-tests.md`, worked in the order of `ralph/build/progress.md`). `ralph/` -- the agent build loop (`docs/v2/agentic-pipeline.md`).
+- `contract/` -- renderer scenarios, contract fixtures and the binary lane (`binary/`). `docs/` -- `design.md` (the two goals, and what the developer sees), `architecture.md` (decisions, and the agent loops), `renderer-protocol.md`, and `acceptance-tests.md` (the requirements, worked in the order of `ralph/build/progress.md`). `ralph/` -- the agent build loop.
 - `test/unit/` (one class, in memory), `test/acceptance/` (a user-facing command or flow), `test/integration/` (SQLite, filesystem), `test/policy/` (checks on the repository itself: lanes, limits, CLAUDE.md, CI), `test/integration/process/` (real processes and git), `test/integration/process/end_to_end/` (whole pipelines with real git and stage scripts; slow, and left out of the mutation lane), `test/support/` (guards, scanners, test kits).
 
 Seams tests use in place of the real thing:

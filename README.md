@@ -2,6 +2,8 @@
 
 Opinionated local CI that checks your code before it leaves your machine. Runs a four-stage pipeline on every commit with strict time budgets, so your feedback loop stays fast.
 
+Fun-CI has two goals. It should be extremely easy to tell whether all is well: the console is meant to sit on a second screen, where colour and motion tell you at a glance what passed and what didn't, without reading a line. And it should be fun: a pass gets a celebration, a failure gets an explosion. The design behind both is in [docs/design.md](docs/design.md).
+
 ## How It Works
 
 Fun-CI hooks into git and runs your pipeline locally:
@@ -104,6 +106,8 @@ If a stage exceeds its budget, it is killed and reported as timed out.
 bundle install
 bundle exec rake   # the gate: tests, the renderer's tests, the binary contract, rubocop, clippy
 ```
+
+How it is built is in [docs/architecture.md](docs/architecture.md), and the requirements still to build are in [docs/acceptance-tests.md](docs/acceptance-tests.md).
 
 The renderer is written in Rust. Install Rust with [rustup](https://rustup.rs), which picks up the version the repository pins in `rust-toolchain.toml`.
 

@@ -1,14 +1,21 @@
-# fun-ci 2.0 — Architecture and Decisions
+# fun-ci architecture and decisions
 
-Status: accepted as the working plan. Decisions can be revisited; each one says
-what would make us change it.
+How fun-ci is built and why: the split between the gem and the renderer, how
+the renderer draws, how it is distributed, how pipelines are isolated, the
+quality standards, and the agents that build and polish it. Each decision says
+what would make us revisit it. What fun-ci is for, and what the developer
+sees, is in [`design.md`](design.md).
 
-## Goals
+## Engineering goals
 
-1. Ruby orchestrates, Rust renders the TUI. **Only rendering moves to Rust.**
+These serve the product goals in `design.md` (all is well at a glance, and
+fun).
+
+1. Ruby orchestrates, Rust renders the console. **Only rendering is in Rust.**
 2. intent-record's test and code-quality standards apply to the whole repo.
-3. An agentic pipeline evaluates and iterates on the TUI and its animations.
-4. Worktree isolation per commit — both for the pipelines fun-ci runs and for
+3. Agents build fun-ci from acceptance tests, and evaluate and iterate on the
+   console and its animations.
+4. Worktree isolation per commit, both for the pipelines fun-ci runs and for
    the agents that build fun-ci.
 
 ## The boundary
@@ -17,12 +24,12 @@ what would make us change it.
 |---|---|
 | `BoardData` (SQLite reads, paging) | Terminal ownership: raw mode, alt screen, resize, key reading |
 | `KeyHandler` state: cursor, confirm, cancel | Layout, colour, truncation, header/footer/empty state |
-| `StreakCounter`, `StageChangeDetector` (they decide *events*) | Formatting of durations, relative times, hashes |
+| `StreakCounter`, `StageChangeDetector`, a run's milestones (they decide *events*) | Formatting of durations, relative times, hashes |
 | Cancelling runs, the refresh/poll policy | Spinner, every animation, frame timing |
-| Spawning and supervising the renderer | The header's scenes and how they are painted |
+| Spawning and supervising the renderer | The header's scenes, which one plays, their queue, and how they are painted |
 
 Rule of thumb: Ruby decides **what is true**; Rust decides **how it looks**.
-Ruby never emits an ANSI escape once 2.0 ships.
+Ruby never emits an ANSI escape.
 
 **Decision — one tick, one frame.** Scenarios draw on `tick` only; `board`
 just replaces state. The header's scenes play on a clock that only moves
@@ -89,13 +96,6 @@ difference tips a cell to another glyph, and a snapshot recorded on one
 platform fails on the other. `tests/suite/portable_maths.rs` holds the rule.
 *Revisit if* the snapshots stop pinning the header's cells.
 
-**Decision: visual review uses ordered PNG frames.** The polish loop's
-evaluator is a vision model, and Claude reads only the first frame of an
-animated image, so headless mode renders each frame to PNG and the evaluator
-reads them in order. Measurements in `stats.json` sit beside the images to
-explain what looks wrong. Background in `research/llm-tui-iteration.md`.
-*Revisit if* the evaluator moves to a model that takes video at every frame.
-
 ## Distribution
 
 **Decision — precompiled platform gems** (the tailwindcss-ruby pattern), built
@@ -111,9 +111,10 @@ Renderer lookup order: `FUN_CI_RENDERER` → bundled `libexec/` → `PATH`.
 The renderer reports its protocol version in `ready`; a mismatch is a clear
 error, never a garbled screen.
 
-CI installs every built platform gem into an empty `GEM_HOME` and runs
-`fun-ci console --headless --scenario empty` against it (lesson from
-agent-tome / agent-chat: whatever no clean install checks, drifts).
+CI installs every built platform gem into an empty `GEM_HOME`, finds the
+renderer through the gem's own lookup, and has it draw a frame headless
+(`script/smoke-platform-gem.sh`; lesson from agent-tome and agent-chat:
+whatever no clean install checks, drifts).
 
 ## Worktree isolation for pipelines
 
@@ -140,17 +141,12 @@ same problem if you switch branches while it runs.
 
 *Revisit if* per-slot caches turn out to go stale in ways `build.sh` can't fix.
 
-## Worktree isolation for agents
-
-Agents building fun-ci run one iteration per throwaway worktree; the gate runs
-again *outside* the agent's control, and only a green iteration fast-forwards
-the integration branch. See [`agentic-pipeline.md`](agentic-pipeline.md).
-
 ## Quality standards (from intent-record)
 
-- `rake` (default) = Ruby tests → Rust tests (`cargo test`) → rubocop → clippy.
-  Mutation lanes (`rake mutation`, `rake mutation:rust`) run in CI, not on
-  every commit. All must be green before a commit.
+- `rake` (default) is the gate: the Ruby tests, the Rust tests, the binary
+  contract, RuboCop and Clippy; CLAUDE.md lists the lanes and a test holds the
+  list. The mutation lanes (`rake mutation`, `rake mutation:rust`) run in CI,
+  not on every commit.
 - RuboCop: `Metrics/MethodLength` 7, `Metrics/BlockNesting` 2 (count blocks),
   `Metrics/ParameterLists` 4. Existing fun-ci limits stay: 150 lines per file,
   4 instance variables per class.
@@ -158,7 +154,9 @@ the integration branch. See [`agentic-pipeline.md`](agentic-pipeline.md).
   `too-many-arguments-threshold = 4`, `cognitive-complexity-threshold = 10`.
 - Mutation: mutineer ≥ 90 (Ruby), cargo-mutants ≥ 90 % caught (Rust, computed
   from `mutants.out/outcomes.json`).
-- CI matrix: Ruby 3.2, 3.3, 3.4, 4.0 × stable Rust.
+- CI matrix: Ruby 3.2, 3.3, 3.4, 4.0, with the Rust release pinned in
+  `renderer/rust-toolchain.toml` everywhere, so Clippy says the same on every
+  machine.
 - Every new gate lands with a commit that shows it bites (deliberate violation,
   gate fails, violation reverted).
 - Tests are deterministic: injected clocks and runners, no sleeps, no polling.
@@ -174,28 +172,92 @@ the integration branch. See [`agentic-pipeline.md`](agentic-pipeline.md).
 - Gemspec publishing metadata is pinned by a test (already true); `spec.files`
   comes from `git ls-files`.
 
-## Migrating the renderer: differential first
+## Visual changes are reviewed snapshot diffs
 
-The Ruby renderer is the oracle until the Rust one reaches parity:
+The Rust renderer reached parity with the Ruby one by replaying the same
+scenarios through both and comparing cell grids (text, colour and attributes)
+through the `vt100` crate; then the Ruby renderer was deleted. Since then the
+scenarios in `contract/scenarios/` are `insta` snapshots owned by the Rust
+suite, and a visual change is a snapshot diff a human reviews in the headless
+PNGs and accepts on purpose.
+*Revisit if* snapshots churn so often that review stops being real.
 
-1. Scenario files (`contract/scenarios/*.jsonl`) describe board states, events
-   and ticks **in protocol v1 messages** plus the headless-only `tick` and
-   `resize` (format in `renderer-protocol.md`). The Rust headless mode replays
-   the same files, so there is one scenario format, not two.
-2. A Ruby capture tool drives today's `BoardRenderer` and `AnimationRenderer`,
-   wired as `fun-ci console` wires them, with the scenario clock, and records
-   the bytes of each frame → `contract/golden/<scenario>/NNNN.bytes`. A test in
-   the gate re-captures and compares, so the golden corpus also guards the Ruby
-   renderer against drift while §0 refactors it.
-3. The Rust test suite feeds both the golden bytes and its own output through
-   the `vt100` crate and compares **cell grids** (text + colour + attributes),
-   not bytes, so the Rust side is free to emit fewer, smarter escapes.
-4. When every scenario matches, the Ruby renderer is deleted and the golden
-   files become `insta` snapshots owned by Rust. From then on visual changes
-   are deliberate snapshot updates approved by a human.
+## Building fun-ci with agents
 
-## Breaking changes in 2.0
+Two loops share one mechanism:
 
-- `fun-ci-trigger` and `fun-ci-tui` executables are removed.
-- The pre-commit hook becomes post-commit.
-- Ruby ≥ 3.2 stays; Rust is only needed to build from source.
+| Loop | Goal | Unit of work | Input | Stop |
+|---|---|---|---|---|
+| **build** (`ralph/build/`) | Implement the acceptance tests | One acceptance test (`AT-x.y`) | `acceptance-tests.md`, `ralph/build/progress.md` | `ralph/build/DONE` |
+| **polish** (`ralph/polish/`, planned in §6 of the acceptance tests) | Make the console and animations good | One finding | Headless renders and a rubric | No open findings above threshold, or an iteration budget |
+
+Both run under Ralphify with `ralph/agent-in-worktree.sh` as the agent command.
+
+### One iteration, one worktree
+
+`ralph/agent-in-worktree.sh` receives the rendered prompt on stdin and:
+
+1. Creates `../<repo>.ralph/iter-<n>` as a new worktree on a fresh branch
+   `ralph/iter-<n>`, starting from the integration branch (`RALPH_BASE`,
+   default: the branch checked out in the main worktree).
+2. Runs the agent (`RALPH_AGENT`, default
+   `claude -p --dangerously-skip-permissions`) inside that worktree with the
+   prompt on stdin.
+3. Refuses the iteration unless the agent made exactly one commit.
+4. Runs the gate itself (`RALPH_GATE`, default `bundle exec rake`) inside the
+   worktree. The agent's own claim that tests pass is not trusted.
+5. Green: `git merge --ff-only` into the integration branch. Red or no commit:
+   the branch is kept as `ralph/rejected/iter-<n>` and nothing lands.
+6. Removes the worktree and appends one line to `ralph/log.tsv`
+   (`iteration  verdict  sha  subject`).
+
+The agent can wreck its worktree without touching the integration branch,
+every commit on it passed a gate the agent didn't run, and `ralph/rejected/*`
+shows where the loop struggles.
+
+A worktree isolates git state; it is not a security sandbox. The agent runs
+with skip-permissions, so the loop runs in Docker:
+
+    ralph/docker/run.sh -n 5 -t 900
+
+The container gets the host repo read-only, clones `main`, runs the loop on the
+clone as a non-root user, and hands back a git bundle. It has no git
+credentials, so it can't push. `run.sh` fetches the result into
+`ralph/incoming` (and any `ralph/rejected/*` branches) without touching `main`;
+a human reviews and runs `git merge --ff-only ralph/incoming`, rebasing first if
+`main` moved. The container still has outbound network, and its commits are
+unsigned. It needs a Claude Code token from `claude setup-token` in
+`~/.config/fun-ci-ralph/oauth-token`.
+
+The build loop's rules are in `ralph/build/RALPH.md`, the prompt each
+iteration gets: the next unchecked item in `progress.md`, acceptance test red
+first, exactly one commit, and after every ten items one refactor iteration
+with no new behaviour.
+
+### The polish loop
+
+**Decision: the evaluator sees ordered PNG frames, never a GIF.** Claude's
+vision input uses only the first frame of an animated image, so a GIF would let
+the evaluator judge motion it never saw. Headless mode renders every frame of a
+scenario to PNG, with a contact sheet, the cell grid per frame
+(`frames.jsonl`) and measurements (`stats.json`: luminance, dark space, hue
+spread, cells changed and bytes per frame) that explain what looks wrong.
+Background in [`research/llm-tui-iteration.md`](research/llm-tui-iteration.md).
+*Revisit if* the evaluator moves to a model that takes video at every frame.
+
+- **Objective gates** in `rake`, from every scenario at 60, 80, 120 and 200
+  columns: nothing wider than the terminal, one-shot animations end within
+  their frame count, consecutive frames differ, bytes per frame within budget,
+  the rows and footer never overdrawn by an animation, every PNG decodes at the
+  expected size.
+- **The evaluator** reads those inputs and a rubric, and writes findings, one
+  per item, each tied to a scenario and a frame range or region. It never
+  edits. The rubric follows the two goals: an animation that reports state
+  must read at a glance, and decoration must never hide status.
+- **The iterator** takes the highest-impact finding and tunes like a sweep:
+  name the parameters in the scene's code that bear on it, change one at a
+  time, compare labelled candidates, and mark the finding `needs-design` when
+  no parameter can fix it because a mechanism is missing.
+- **A human approves** every snapshot change after watching it in a real
+  terminal, since headless output can't show how the terminal's font and
+  repaint behave. The loop can propose aesthetics; it can't approve its own.

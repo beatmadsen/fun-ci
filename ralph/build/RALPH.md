@@ -13,14 +13,17 @@ commands:
   - name: recent_commits
     run: git log --oneline -10
     timeout: 5
+  - name: design
+    run: cat docs/design.md
+    timeout: 5
   - name: architecture
-    run: cat docs/v2/architecture.md
+    run: cat docs/architecture.md
     timeout: 5
   - name: protocol
-    run: cat docs/v2/renderer-protocol.md
+    run: cat docs/renderer-protocol.md
     timeout: 5
   - name: acceptance_tests
-    run: cat docs/v2/acceptance-tests.md
+    run: cat docs/acceptance-tests.md
     timeout: 5
   - name: gate
     run: bash -c 'set -o pipefail; bundle exec rake 2>&1 | tail -60; echo "gate exit status $?"'
@@ -40,6 +43,9 @@ are already inside it. Relative paths only.
 **If the output above says `ALL_DONE`, output "Nothing to do." and exit.**
 
 ## Context
+
+### Goals and design
+{{ commands.design }}
 
 ### Architecture and decisions
 {{ commands.architecture }}
@@ -77,7 +83,7 @@ if you make zero or several commits, leave uncommitted changes, or if
 3. Otherwise take the **first unchecked** item. If the last iteration on the
    same item was rejected, read its reason in the log and do something
    different. If an outline item (§3–§6) is too vague to test, your one commit
-   is to refine its acceptance test in `docs/v2/acceptance-tests.md` (and
+   is to refine its acceptance test in `docs/acceptance-tests.md` (and
    split it in progress.md if needed) — no code.
 4. ATDD: acceptance test first and see it fail for the right reason; unit tests
    for non-trivial inner code; make it pass; refactor within the limits.

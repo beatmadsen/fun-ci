@@ -1,5 +1,5 @@
 //! The fun-ci console renderer: Ruby decides what is true, this crate decides
-//! how it looks. See `docs/v2/architecture.md`.
+//! how it looks. See `docs/architecture.md`.
 
 pub mod animation;
 pub mod animator;
@@ -27,7 +27,7 @@ pub mod spinner;
 pub mod terminal;
 pub mod tty;
 
-/// The renderer protocol version this build speaks (`docs/v2/renderer-protocol.md`).
+/// The renderer protocol version this build speaks (`docs/renderer-protocol.md`).
 pub const PROTOCOL_VERSION: u64 = 1;
 
 /// Whether a `hello` naming `version` can be answered with `ready`.

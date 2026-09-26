@@ -1,4 +1,4 @@
-//! Protocol v1 messages (`docs/v2/renderer-protocol.md`).
+//! Protocol v1 messages (`docs/renderer-protocol.md`).
 
 use serde::Deserialize;
 use serde_json::{Value, json};

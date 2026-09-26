@@ -1,4 +1,4 @@
-# The gems fun-ci is installed as (docs/v2/architecture.md, Distribution): a
+# The gems fun-ci is installed as (docs/architecture.md, Distribution): a
 # platform gem per target with the renderer in libexec/, and the plain gem,
 # whose console asks for a renderer. Each is installed into an empty GEM_HOME
 # and run (script/smoke-platform-gem.sh). Nothing here publishes.

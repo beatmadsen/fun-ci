@@ -51,7 +51,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-5.3b: Ruby `tui/` rendering and `animations/` are deleted
 - [x] AT-5.4: README, CHANGELOG, version 2.0.0
 - [ ] AT-6.1: Objective visual gates from `stats.json` and `frames/` in `rake`
-- [ ] AT-6.2: TUI rubric (`docs/v2/tui-rubric.md`)
+- [ ] AT-6.2: TUI rubric (`docs/tui-rubric.md`)
 - [ ] AT-6.3: Polish evaluator prompt
 - [ ] AT-6.4: Polish iterator prompt
 - [ ] AT-6.5: `rake polish:approve` after review in a real terminal
@@ -63,3 +63,8 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [ ] AT-7.3: Every milestone has its own pool of scenes
 - [ ] AT-7.4: Header scenes queue and each plays to its end
 - [ ] AT-7.5: The header rests on the latest outcome
+- [ ] AT-7.6: The streak is on the screen
+- [ ] AT-8.1: A pre-push failure names the next step
+- [ ] AT-8.2: A locked database doesn't stop the pipeline, and says so
+- [ ] AT-8.3: A slow suite that dies is recorded failed
+- [ ] AT-8.4: An unwritable database is reported with its path
