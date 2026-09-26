@@ -4,7 +4,7 @@
 use std::io::Write;
 use std::time::Duration;
 
-use crate::console::Console;
+use crate::console::{Console, Moment};
 use crate::inputs::{Clock, Input, Inputs};
 use crate::keys;
 use crate::model::Board;
@@ -96,7 +96,8 @@ impl<C: Clock> Live<C> {
     fn draw<T: Terminal>(&mut self, terminal: &mut T) {
         let wall_ms = self.clock.now_ms();
         let since = i64::try_from(wall_ms.saturating_sub(self.anchor.wall_ms)).unwrap_or(i64::MAX);
-        let (bytes, _) = self.console.frame(self.anchor.board_ms.saturating_add(since));
+        let at = Moment { board_ms: self.anchor.board_ms.saturating_add(since), play_ms: wall_ms };
+        let (bytes, _) = self.console.frame(at);
         if let Err(error) = terminal.draw(&bytes) {
             eprintln!("fun-ci-renderer: could not draw on the terminal: {error}");
         }

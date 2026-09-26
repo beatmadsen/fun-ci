@@ -7,17 +7,18 @@ use crate::animation::Animation;
 pub const HEADER_HEIGHT: usize = 14;
 const ERASE_LINE: &str = "\u{1b}[K";
 
-/// One animation and how far it has played.
+/// One animation, when it started, and the frame it is on.
 #[derive(Debug, Clone)]
 pub struct Player {
     animation: Animation,
+    started_ms: Option<u64>,
     frame: usize,
 }
 
 impl Player {
     #[must_use]
     pub fn new(animation: Animation) -> Self {
-        Self { animation, frame: 0 }
+        Self { animation, started_ms: None, frame: 0 }
     }
 
     #[must_use]
@@ -37,8 +38,11 @@ impl Player {
         frames.get(index).map(|frame| frame.iter().map(centre).collect()).unwrap_or_default()
     }
 
-    pub fn advance(&mut self) {
-        self.frame += 1;
+    /// Moves to the frame due at `play_ms`; the first call starts the animation.
+    pub fn seek(&mut self, play_ms: u64) {
+        let started = *self.started_ms.get_or_insert(play_ms);
+        let frame_ms = u64::from(self.animation.playback().frame_ms.max(1));
+        self.frame = usize::try_from(play_ms.saturating_sub(started) / frame_ms).unwrap_or(usize::MAX);
     }
 }
 
@@ -79,9 +83,10 @@ impl Header {
         [blank(spare / 2), lines, blank(spare - spare / 2)].concat()
     }
 
-    pub fn advance(&mut self) {
-        self.idle.advance();
-        self.running.iter_mut().chain(self.event.iter_mut()).for_each(Player::advance);
+    /// Moves every animation to the frame due at `play_ms`.
+    pub fn seek(&mut self, play_ms: u64) {
+        self.idle.seek(play_ms);
+        self.running.iter_mut().chain(self.event.iter_mut()).for_each(|player| player.seek(play_ms));
     }
 
     /// Whether an event animation is still playing.

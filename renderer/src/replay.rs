@@ -1,7 +1,7 @@
 //! Headless replay of a scenario: one frame per `tick`.
 
 use crate::animation::Library;
-use crate::console::Console;
+use crate::console::{Console, Moment};
 use crate::model::Board;
 use crate::protocol::Inbound;
 
@@ -62,7 +62,8 @@ impl Replay {
     fn tick(&mut self, ms: u64) -> TickFrame {
         self.clock.now_ms += i64::try_from(ms).unwrap_or(i64::MAX);
         self.clock.elapsed_ms += ms;
-        let (bytes, showing) = self.console.frame(self.clock.now_ms);
+        let at = Moment { board_ms: self.clock.now_ms, play_ms: self.clock.elapsed_ms };
+        let (bytes, showing) = self.console.frame(at);
         TickFrame { size: self.console.size(), elapsed_ms: self.clock.elapsed_ms, bytes, showing }
     }
 }

@@ -3,6 +3,7 @@
 
 use crate::animation::Library;
 use crate::animator::{Animator, Cast};
+pub use crate::board_view::Moment;
 use crate::board_view::BoardView;
 use crate::model::{Board, Event};
 
@@ -53,11 +54,11 @@ impl Console {
         self.view.animating() || self.board.runs.iter().any(|run| run.status() == "running")
     }
 
-    /// Draws one frame as of `now_ms`: the bytes, and the header animation shown.
-    pub fn frame(&mut self, now_ms: i64) -> (Vec<u8>, String) {
+    /// Draws one frame as of `at`: the bytes, and the header animation shown.
+    pub fn frame(&mut self, at: Moment) -> (Vec<u8>, String) {
         self.view.begin_frame();
         self.view.resize(self.size.0);
-        let showing = self.view.render(&self.board, now_ms, self.size.1);
+        let showing = self.view.render(&self.board, at, self.size.1);
         (self.view.take(), showing)
     }
 }

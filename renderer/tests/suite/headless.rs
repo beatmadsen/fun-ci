@@ -105,7 +105,7 @@ fn stats_has_an_entry_per_frame() {
 #[test]
 fn stats_counts_the_frames_each_animation_showed() {
     let stats = json(&headless("fail-explosion").path().join("stats.json"));
-    assert_eq!(stats["animations"]["explosion"], 8);
+    assert_eq!(stats["animations"]["explosion"], 10);
 }
 
 #[test]

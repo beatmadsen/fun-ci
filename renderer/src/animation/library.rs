@@ -59,7 +59,8 @@ impl Library {
         self.animations.keys().map(String::as_str).collect()
     }
 
-    fn insert(&mut self, animation: Animation) {
+    /// Adds `animation`, replacing any of the same name.
+    pub fn insert(&mut self, animation: Animation) {
         self.animations.insert(animation.name().to_string(), animation);
     }
 }

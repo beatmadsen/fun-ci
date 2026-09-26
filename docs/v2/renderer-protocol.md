@@ -40,6 +40,11 @@ Ruby                                  renderer
   playing or queued; the looping idle and running header animations do not
   count by themselves, so an idle board with nothing running twinkles once a
   second. The next frame is due that interval after the last one drawn.
+- A header animation shows the frame its `frame_ms` makes due, counted from
+  when it started on a clock that only moves forward (wall time live, the sum
+  of ticks headless), not one frame per draw. So an animation plays at the
+  speed it was authored at whatever the draw rate, and the idle animation is
+  authored at 1000 ms a frame to match the once-a-second draws.
 - Nothing is drawn before the first `board`. Each `board` is drawn at once,
   and its `now` sets the renderer's clock, which then advances with wall
   time until the next `board`.

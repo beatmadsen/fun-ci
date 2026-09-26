@@ -19,6 +19,14 @@ const EMPTY_STATE: [&str; 7] = [
     "",
 ];
 
+/// When a frame is drawn: the board's clock, for relative times, and a clock
+/// that only moves forward, for animations.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Moment {
+    pub board_ms: i64,
+    pub play_ms: u64,
+}
+
 /// Draws boards into a frame buffer.
 #[derive(Debug)]
 pub struct BoardView {
@@ -56,14 +64,14 @@ impl BoardView {
         self.screen.set_width(cols);
     }
 
-    /// Draws `board` as of `now_ms` on a terminal `rows` high, returning the
+    /// Draws `board` as of `at` on a terminal `rows` high, returning the
     /// name of the header animation drawn.
-    pub fn render(&mut self, board: &Board, now_ms: i64, rows: u16) -> String {
+    pub fn render(&mut self, board: &Board, at: Moment, rows: u16) -> String {
         self.screen.set_height(rows);
         self.screen.write_at(HEADER_HEIGHT + 1, 1, "");
-        self.render_body(board, now_ms, rows);
+        self.render_body(board, at.board_ms, rows);
         self.screen.clear_below();
-        self.animator.render(&mut self.screen, &board.runs)
+        self.animator.render(&mut self.screen, &board.runs, at.play_ms)
     }
 
     /// The bytes drawn since the last take.

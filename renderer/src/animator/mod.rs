@@ -45,11 +45,12 @@ impl Animator {
         !self.pending.is_empty() || !self.effects.is_empty() || self.header.playing_event()
     }
 
-    /// Draws this frame's animations over the board, then advances them.
-    /// Returns the name of the header animation drawn.
-    pub fn render(&mut self, screen: &mut Screen, runs: &[Run]) -> String {
+    /// Draws this frame's animations over the board as of `play_ms`, then
+    /// advances the stage effects. Returns the name of the header animation drawn.
+    pub fn render(&mut self, screen: &mut Screen, runs: &[Run], play_ms: u64) -> String {
         self.take_events(runs);
         self.follow_running(runs);
+        self.header.seek(play_ms);
         let showing = self.header.showing().to_string();
         self.draw(screen, runs);
         self.advance();
@@ -102,7 +103,6 @@ impl Animator {
     fn advance(&mut self) {
         self.effects.iter_mut().for_each(|effect| effect.frame += 1);
         self.effects.retain(|effect| !effect.finished());
-        self.header.advance();
     }
 }
 

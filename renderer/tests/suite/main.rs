@@ -18,6 +18,7 @@ mod format;
 mod grid_difference;
 mod handshake;
 mod pictures;
+mod playback;
 mod headless;
 mod headless_measures;
 mod keys;
