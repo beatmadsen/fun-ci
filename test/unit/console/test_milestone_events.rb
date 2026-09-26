@@ -69,6 +69,17 @@ class TestMilestoneEvents < Minitest::Test
     assert_equal %w[lint_passed], names(a_run(lint: done))
   end
 
+  def test_should_not_replay_the_milestones_of_an_older_run_brought_onto_the_page
+    # Given a board showing run 5
+    @events.since_last([a_run(lint: is("running")).merge(id: 5)])
+
+    # When paging brings the older run 3, long finished, onto the board
+    older = a_run(status: "completed", lint: done(1), build: done(2), fast: done(3), slow: done(4))
+
+    # Then it sends nothing
+    assert_empty names(a_run(lint: is("running")).merge(id: 5), older), "an older run is history, not news"
+  end
+
   def test_should_send_nothing_for_a_cancelled_run
     names(a_run(lint: is("running")))
 
