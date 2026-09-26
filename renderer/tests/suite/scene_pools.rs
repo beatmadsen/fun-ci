@@ -123,3 +123,8 @@ fn should_offer_a_moonlit_island_among_the_quiet_scenes() {
 fn should_settle_a_spirit_level_when_lint_passes() {
     assert!(pool("lint_passed").contains(&"level"), "{:?}", pool("lint_passed"));
 }
+
+#[test]
+fn should_ring_an_anvil_when_the_build_passes() {
+    assert!(pool("build_passed").contains(&"anvil"), "{:?}", pool("build_passed"));
+}

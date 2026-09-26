@@ -10,7 +10,7 @@ use std::time::{SystemTime, UNIX_EPOCH};
 /// suite, the biggest for a passing run.
 const POOLS: [(&str, &[&str]); 5] = [
     ("lint_passed", &["sweep", "ripple", "level"]),
-    ("build_passed", &["bricks", "gears"]),
+    ("build_passed", &["bricks", "gears", "anvil"]),
     ("fast_passed", &["flash", "yay"]),
     ("run_passed", &["success", "celebrate", "leprechauns"]),
     ("run_failed", &["explosion"]),

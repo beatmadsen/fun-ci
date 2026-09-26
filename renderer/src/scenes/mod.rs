@@ -1,5 +1,6 @@
 //! The header's scenes.
 
+mod anvil;
 mod aurora;
 mod bricks;
 mod calm;
@@ -29,7 +30,8 @@ mod yay;
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 19] = [
+pub static ALL: [&dyn Scene; 20] = [
+    &anvil::Anvil,
     &level::Level,
     &island::Island,
     &aurora::Aurora,
