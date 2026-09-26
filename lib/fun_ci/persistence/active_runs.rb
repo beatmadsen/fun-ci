@@ -20,6 +20,15 @@ module FunCi
       # The run with this id, when it has not finished; none otherwise.
       def self.with_id(db, id) = where(db, "id = ?", id)
 
+      # [job id, run id, pid] for each slow stage still running, pid being the
+      # forked process that runs it.
+      def self.slow_suites(db)
+        db.execute("SELECT stage_jobs.id, pipeline_runs.id, pipeline_runs.pid FROM stage_jobs " \
+                   "JOIN pipeline_runs ON pipeline_runs.id = stage_jobs.pipeline_run_id " \
+                   "WHERE stage_jobs.stage = 'slow' AND stage_jobs.status = 'running' " \
+                   "AND pipeline_runs.pid IS NOT NULL")
+      end
+
       def self.cancelled(db, run)
         db.execute("UPDATE stage_jobs SET status = 'cancelled', completed_at = ? " \
                    "WHERE pipeline_run_id = ? AND #{ACTIVE}", [Time.now.utc.iso8601, run.id])

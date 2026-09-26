@@ -41,6 +41,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failing tests above, then try again."
 
 ### Fixed
+- A slow suite whose process dies without finishing no longer leaves its run
+  RUNNING for ever: the console records it failed on its next poll.
 - A database that stays busy, or can't be written because the disk is full,
   no longer stops `fun-ci trigger`: the stages still run, the exit code is
   theirs, and fun-ci says once that the run wasn't recorded (naming the

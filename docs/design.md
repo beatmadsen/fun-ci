@@ -186,4 +186,5 @@ digging into internals: the cause obvious, the next step clear.
 | The database can't be written (a full disk, a read-only file) | The stages run on unrecorded, and fun-ci says once where the database is and to check the disk | the pipeline's own |
 
 The slow suite runs in the background, so its failures and timeouts show only
-on the console.
+on the console. If its process dies without finishing, the console notices on
+its next poll and shows the slow stage, and the run, failed.

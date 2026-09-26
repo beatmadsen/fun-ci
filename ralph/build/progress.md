@@ -66,5 +66,5 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-7.6: The streak is on the screen
 - [x] AT-8.1: A failed stage names the next step
 - [x] AT-8.2: A busy database doesn't stop the pipeline, and says so
-- [ ] AT-8.3: A slow suite that dies is recorded failed
+- [x] AT-8.3: A slow suite that dies is recorded failed
 - [x] AT-8.4: An unwritable database is reported with its path

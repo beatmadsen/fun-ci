@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../persistence/active_runs"
+require_relative "../persistence/run_status"
 require_relative "slot_lock"
 
 module FunCi
@@ -22,6 +23,16 @@ module FunCi
         Persistence::ActiveRuns.cancelled(db, run)
       end
 
+      # Records failed each slow stage whose forked process is gone without
+      # having recorded its result (acceptance-tests.md, AT-8.3), and settles
+      # its run.
+      def record_dead(db)
+        Persistence::ActiveRuns.slow_suites(db).reject { |_, _, pid| exists?(pid) }.each do |job_id, run_id, _|
+          Persistence::StageJob.update_status(db, job_id, "failed")
+          Persistence::RunStatus.settle(db, run_id)
+        end
+      end
+
       def stop(run)
         return unless alive?(run)
 
@@ -31,6 +42,16 @@ module FunCi
       private
 
       def alive?(run) = run.slot_lock.nil? || @slot_held.call(run.slot_lock)
+
+      # Whether a process with this pid exists; one this user may not signal does.
+      def exists?(pid)
+        @killer.call(0, pid)
+        true
+      rescue Errno::ESRCH
+        false
+      rescue Errno::EPERM
+        true
+      end
 
       def kill(pid)
         @killer.call("KILL", pid)
