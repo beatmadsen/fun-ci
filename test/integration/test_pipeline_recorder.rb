@@ -76,13 +76,12 @@ class TestDbRecorderForBackground < Minitest::Test
     FileUtils.remove_entry(@dir)
   end
 
-  def test_should_record_results_via_background_recorder
+  def test_should_record_the_slow_suite_result_via_background_recorder
     job_id, pipeline_run_id = start_slow_stage_in_parent
     bg_recorder = FunCi::Persistence::DbRecorder.for_background(@db_path, pipeline_run_id)
     bg_recorder.end_stage(job_id, "completed")
-    bg_recorder.complete_run
     bg_recorder.close
-    assert_equal "completed", persisted_run_status, "Background recorder should record pipeline completion"
+    assert_equal "completed", persisted_job_status(job_id)
   end
 
   private
@@ -99,26 +98,8 @@ class TestDbRecorderForBackground < Minitest::Test
     FunCi::Persistence::Database.connection(@db_path).tap { |db| FunCi::Persistence::Database.migrate!(db) }
   end
 
-  def persisted_run_status
+  def persisted_job_status(job_id)
     @verify_db = FunCi::Persistence::Database.connection(@db_path)
-    FunCi::Persistence::PipelineRun.find_by_commit(@verify_db, "abc1234").first[:status]
-  end
-end
-
-class TestDbRecorderTerminalStatus < Minitest::Test
-  include DbRecorderTestSetup
-
-  def test_should_mark_pipeline_run_completed
-    create_run
-    @recorder.start_stage("build")
-    @recorder.complete_run
-    assert_equal "completed", run_status, "Pipeline run should be completed"
-  end
-
-  def test_should_mark_pipeline_run_failed
-    create_run
-    @recorder.start_stage("build")
-    @recorder.fail_run
-    assert_equal "failed", run_status, "Pipeline run should be failed"
+    FunCi::Persistence::StageJob.find(@verify_db, job_id)[:status]
   end
 end

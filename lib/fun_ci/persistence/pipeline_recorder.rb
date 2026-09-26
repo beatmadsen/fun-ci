@@ -2,6 +2,7 @@
 
 require_relative "pipeline_run"
 require_relative "stage_job"
+require_relative "run_status"
 
 module FunCi
   module Persistence
@@ -12,8 +13,6 @@ module FunCi
       def stage_process(_job_id, _pid) = nil
       def slot_taken(_lock_file) = nil
       def foreground_done = nil
-      def complete_run = nil
-      def fail_run = nil
       def db = nil
       def db_path = nil
       def pipeline_run_id = nil
@@ -70,16 +69,10 @@ module FunCi
       end
 
       # Without a run there is no job and no row to update, so these write nothing.
+      # Records the stage's outcome, then settles the run's status from its stages.
       def end_stage(job_id, status)
         StageJob.update_status(@db, job_id, status)
-      end
-
-      def complete_run
-        PipelineRun.update_status(@db, @pipeline_run_id, "completed")
-      end
-
-      def fail_run
-        PipelineRun.update_status(@db, @pipeline_run_id, "failed")
+        RunStatus.settle(@db, @pipeline_run_id)
       end
 
       private

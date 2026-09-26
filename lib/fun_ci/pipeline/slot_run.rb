@@ -22,11 +22,11 @@ module FunCi
 
       def run(config)
         recorder.slot_taken(@slot.lock_file) if @slot.lock_file
-        return released(fail_run) unless phase_one_passed?(config)
+        return released(1) unless phase_one_passed?(config)
 
         launch_slow_suite(config)
         progress.slow_launched
-        released(fast_passed?(config) ? 0 : fail_run)
+        released(fast_passed?(config) ? 0 : 1)
       end
 
       private
@@ -53,11 +53,6 @@ module FunCi
         passed = stage_runner.passes?(config, "fast")
         progress.fast_result(passed)
         passed
-      end
-
-      def fail_run
-        recorder.fail_run
-        1
       end
 
       def launch_slow_suite(config)

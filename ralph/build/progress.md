@@ -58,7 +58,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] R1: One ProbeSuite helper replaces the guard tests' own probe runners; CallScanner.scan replaces two hand-rolled source scans
 - [x] R2: RunCanceller#cancel is the one stop-and-record the stale canceller and the console share; one Descendants helper waits for a command and everything it started
 - [x] R3: KeyHandler, BoardData, StageChangeDetector and StreakCounter move from tui/ to console/, which keeps them, and meet the limits; StageJob.for_run holds BoardData's SQL
-- [ ] AT-7.1: A run's status is worked out from its stages, in any order
+- [x] AT-7.1: A run's status is worked out from its stages, in any order
 - [ ] AT-7.2: Each milestone becomes one event, in the order it was reached
 - [ ] AT-7.3: Every milestone has its own pool of scenes
 - [ ] AT-7.4: Header scenes queue and each plays to its end

@@ -76,12 +76,11 @@ A stage is `scheduled`, `running`, then `completed`, `failed`, `timed_out` or
 `cancelled`. The console calls them Scheduled, RUNNING, PASSED, FAILED, TIMED
 OUT and CANCELLED.
 
-A run's status follows from its stages alone (AT-7.1): `failed` once any stage
+A run's status follows from its stages alone: `failed` once any stage
 has failed or timed out, `completed` once all four have passed, and `running`
-until then. `failed` and `cancelled` are final. Until AT-7.1 is built, the
-foreground pipeline and the background slow suite each write the run's status
-and the later write wins, so a slow suite that passes after the fast suite
-failed leaves the run PASSED.
+until then. `failed` and `cancelled` are final. The status is settled in one
+database statement each time a stage ends, so the order in which the
+foreground pipeline and the background slow suite finish can't change it.
 
 Along the way a run reaches **milestones**, each of which the developer should
 see happen: `lint passed` and `build passed` (in either order), `fast passed`,

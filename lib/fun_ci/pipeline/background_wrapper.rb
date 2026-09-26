@@ -9,17 +9,11 @@ module FunCi
         @executor = executor
       end
 
-      OUTCOMES = {
-        timed_out: ["timed_out", :fail_run],
-        passed: ["completed", :complete_run],
-        failed: ["failed", :fail_run]
-      }.freeze
+      OUTCOMES = { timed_out: "timed_out", passed: "completed", failed: "failed" }.freeze
 
       def run
         _output, status, timed_out = @executor.call { |pid| @recorder.stage_process(@job_id, pid) }
-        stage_status, run_action = OUTCOMES.fetch(outcome(status, timed_out))
-        @recorder.end_stage(@job_id, stage_status)
-        @recorder.public_send(run_action)
+        @recorder.end_stage(@job_id, OUTCOMES.fetch(outcome(status, timed_out)))
       end
 
       private

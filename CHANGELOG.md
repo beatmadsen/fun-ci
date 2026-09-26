@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `fun-ci-renderer --colours 24bit|256` chooses the colours to draw in.
 
 ### Fixed
+- A run whose fast suite failed no longer ends up PASSED when its slow suite
+  passes afterwards, and a run no longer shows PASSED for a moment when the
+  slow suite finishes before the fast suite. A run's status now follows from
+  all four stages, whichever finishes first.
 - The git hooks no longer block a push when fun-ci isn't installed. The
   pre-push hook failed with "fun-ci: command not found" and stopped the push;
   now it says fun-ci is missing, how to install it, and lets the push go
