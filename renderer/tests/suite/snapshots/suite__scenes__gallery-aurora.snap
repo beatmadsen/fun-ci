@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"aurora\")"
+---
+ 60 cols at    0 ms: f18312bd
+ 60 cols at  150 ms: a1e5584d
+ 60 cols at  400 ms: 94c56936
+ 60 cols at  900 ms: 38441f25
+ 60 cols at 1700 ms: 3f338128
+ 60 cols at 2600 ms: 64b50450
+ 60 cols at 3500 ms: 7bd966b3
+ 60 cols at 3900 ms: 4757b090
+ 60 cols at 9300 ms: 1977b445
+200 cols at  900 ms: f2b43c8a

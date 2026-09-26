@@ -51,9 +51,16 @@ impl Cast {
         POOLS.iter().find(|(name, _)| *name == milestone).map_or(&[], |(_, pool)| *pool)
     }
 
+    /// The quiet scenes, one of which shows when nothing has happened for a while.
+    #[must_use]
+    pub fn quiet_pool() -> &'static [&'static str] {
+        &QUIET
+    }
+
     /// Makes `name` its pool's scene from now on; a name in no pool is ignored.
     pub fn pin(&mut self, name: &str) {
-        let Some(pool) = POOLS.iter().map(|(_, pool)| *pool).find(|pool| pool.contains(&name)) else { return };
+        let pools = POOLS.iter().map(|(_, pool)| *pool).chain([&QUIET[..]]);
+        let Some(pool) = pools.into_iter().find(|pool| pool.contains(&name)) else { return };
         self.pins.retain(|pinned| !pool.contains(pinned));
         self.pins.extend(pool.iter().find(|scene| **scene == name));
     }
@@ -68,7 +75,7 @@ impl Cast {
 
     /// A quiet scene: the one picked before, or a new pick.
     pub fn quiet(&mut self) -> &'static dyn Scene {
-        let picked = self.quiet;
+        let picked = self.pins.iter().copied().find(|pinned| QUIET.contains(pinned)).or(self.quiet);
         let name = picked.unwrap_or_else(|| self.random(&QUIET));
         self.quiet = Some(name);
         self.named(name)

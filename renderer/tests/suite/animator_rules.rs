@@ -88,3 +88,9 @@ fn each_quiet_spell_picks_its_scene_afresh() {
     names.dedup();
     assert!(names.len() > 1, "{names:?}");
 }
+
+#[test]
+fn a_pinned_quiet_scene_is_the_one_the_quiet_spell_shows() {
+    let mut cast = pinned("fireflies");
+    assert_eq!(cast.quiet().name(), "fireflies");
+}

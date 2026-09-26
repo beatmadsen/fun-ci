@@ -90,3 +90,21 @@ fn should_pin_the_pool_a_pinned_scene_belongs_to() {
     cast.pin("yay");
     assert_eq!(cast.for_milestone("fast_passed").unwrap().name(), "yay");
 }
+
+#[test]
+fn should_find_every_quiet_scene_in_the_library() {
+    let library = Library::builtin();
+    let missing: Vec<&&str> = Cast::quiet_pool().iter().filter(|name| library.get(name).is_none()).collect();
+    assert!(missing.is_empty(), "missing {missing:?}");
+}
+
+#[test]
+fn should_loop_every_quiet_scene() {
+    let library = Library::builtin();
+    assert!(Cast::quiet_pool().iter().all(|name| library.get(name).is_some_and(|scene| scene.length_ms().is_none())));
+}
+
+#[test]
+fn should_keep_the_quiet_scenes_out_of_the_milestone_pools() {
+    assert!(MILESTONES.iter().flat_map(|milestone| pool(milestone)).all(|name| !Cast::quiet_pool().contains(name)));
+}

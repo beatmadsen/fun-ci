@@ -36,13 +36,20 @@ fn gallery(name: &str) -> String {
 
 #[test]
 fn should_hold_every_scene_the_events_and_scenarios_name() {
-    let names = ["bricks", "calm", "celebrate", "explosion", "flash", "gears", "idle", "leprechauns", "ripple", "running", "success", "sweep", "warning", "yay"];
+    let names = [
+        "aurora", "bricks", "calm", "celebrate", "explosion", "fireflies", "flash", "gears", "idle", "leprechauns", "ripple",
+        "running", "success", "sweep", "warning", "yay",
+    ];
     assert_eq!(Library::builtin().names(), names);
 }
 
 cases! {
     should_loop_the_idle_scene: scene("idle").length_ms() => None;
     should_loop_the_running_scene: scene("running").length_ms() => None;
+    should_loop_the_aurora: scene("aurora").length_ms() => None;
+    should_loop_the_fireflies: scene("fireflies").length_ms() => None;
+    should_draw_the_aurora_four_times_a_second: scene("aurora").frame_ms() => 250;
+    should_draw_the_fireflies_four_times_a_second: scene("fireflies").frame_ms() => 250;
     should_loop_the_calm_resting_scene: scene("calm").length_ms() => None;
     should_loop_the_warning_resting_scene: scene("warning").length_ms() => None;
     should_draw_the_calm_scene_four_times_a_second: scene("calm").frame_ms() => 250;
@@ -81,5 +88,7 @@ galleries! {
     should_paint_the_bricks_as_reviewed: "bricks";
     should_paint_the_gears_as_reviewed: "gears";
     should_paint_the_calm_dusk_as_reviewed: "calm";
+    should_paint_the_aurora_as_reviewed: "aurora";
+    should_paint_the_fireflies_as_reviewed: "fireflies";
     should_paint_the_warning_as_reviewed: "warning";
 }
