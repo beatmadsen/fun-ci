@@ -94,3 +94,38 @@ fn a_pinned_quiet_scene_is_the_one_the_quiet_spell_shows() {
     let mut cast = pinned("fireflies");
     assert_eq!(cast.quiet().name(), "fireflies");
 }
+
+#[test]
+fn the_milestones_are_named_in_the_order_a_run_reaches_them() {
+    assert_eq!(fun_ci_renderer::animator::MILESTONES, ["lint_passed", "build_passed", "fast_passed", "run_passed", "run_failed"]);
+}
+
+#[test]
+fn a_pinned_scene_is_every_pick_its_pool_makes() {
+    let mut cast = pinned("yay");
+    let picks: Vec<String> = (0..20).map(|_| picked(&mut cast, "fast_passed")).collect();
+    assert_eq!(picks, vec!["yay"; 20]);
+}
+
+#[test]
+fn pinning_another_scene_of_the_same_pool_replaces_the_first_pin() {
+    let mut cast = pinned("flash");
+    cast.pin("yay");
+    assert_eq!(picked(&mut cast, "fast_passed"), "yay");
+}
+
+#[test]
+fn random_picks_spread_evenly_across_a_pool() {
+    let picks = picks(5, 300);
+    let fewest = ["success", "celebrate", "leprechauns"].map(|name| picks.iter().filter(|pick| *pick == name).count());
+    assert!(fewest.iter().all(|count| *count >= 60), "{fewest:?}");
+}
+
+#[test]
+fn the_header_keeps_animating_while_a_queued_scene_plays() {
+    let mut animator = Animator::new(Cast::new(Library::builtin(), 1));
+    animator.queue(Event { name: "run_passed".into(), run_id: Some(1), stage: None, animation: Some("success".into()) });
+    let mut screen = fun_ci_renderer::screen::Screen::new(80);
+    animator.render(&mut screen, &fun_ci_renderer::model::Board::default(), fun_ci_renderer::model::Moment { board_ms: 0, play_ms: 0 });
+    assert!(animator.animating(), "the fireworks are still playing");
+}
