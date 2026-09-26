@@ -110,8 +110,8 @@ Two kinds, both with `run_id`. The renderer chooses the animation.
   `stage`. They drive the effects on that stage's column.
 - A run reached a milestone: `lint_passed`, `build_passed`, `fast_passed`,
   `run_passed`, `run_failed`, without `stage`. They drive the header. Ruby
-  sends one per milestone, in the order the run reached them (lint and build by
-  when they finished), none once the run has failed, and none for a cancelled
+  sends one per milestone, in the order the run reached them (lint and build in
+  the order their stages finished), none once the run has failed, and none for a cancelled
   run (`design.md`, A run's states).
 
 Stage events come before milestone events when both happened since the last

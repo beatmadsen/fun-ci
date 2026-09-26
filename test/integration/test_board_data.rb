@@ -43,13 +43,13 @@ class TestBoardData < Minitest::Test
     refute_includes durations, nil
   end
 
-  # The milestones' order comes from when each stage finished.
-  def test_should_give_each_stage_the_time_it_finished
+  # The milestones' order comes from the order the stages finished in.
+  def test_should_give_each_stage_the_order_it_finished_in
     create_completed_run("abc1234", "main")
     run = FunCi::Console::BoardData.new(@db).runs[0]
-    recorded = FunCi::Persistence::StageJob.for_run(@db, run[:id]).first[:completed_at]
+    recorded = FunCi::Persistence::StageJob.for_run(@db, run[:id]).last[:finished_order]
 
-    assert_equal recorded, run[:stages].first[:completed_at]
+    assert_equal recorded, run[:stages].last[:finished_order]
   end
 
   def test_should_return_runs_in_reverse_chronological_order

@@ -266,8 +266,9 @@ while fast is still running no longer shows the run as passed for a moment.
 **When** a run has reached milestones between them
 **Then** Ruby sends one event per new milestone, `lint_passed`, `build_passed`,
 `fast_passed`, `run_passed` or `run_failed`, each with `run_id`, in the order
-the milestones were reached: lint and build by the time their stage finished
-(lint first on a tie), fast before `run_passed`, and any milestones reached
+the milestones were reached: lint and build in the order their stages
+finished, which is recorded as each stage ends, not read off timestamps
+(which tie within a second), fast before `run_passed`, and any milestones reached
 before a failure ahead of `run_failed`
 **And** a run sends `run_failed` once, however many of its stages fail
 **And** a cancelled run sends nothing, and the first poll after the console

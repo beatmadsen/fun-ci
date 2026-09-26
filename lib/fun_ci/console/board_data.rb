@@ -58,7 +58,7 @@ module FunCi
 
       def stage(job)
         { stage: job[:stage], status: job[:status], duration: Persistence::StageJob.elapsed_duration(job),
-          started_at: job[:started_at], completed_at: job[:completed_at] }
+          started_at: job[:started_at], finished_order: job[:finished_order] }
       end
     end
   end
