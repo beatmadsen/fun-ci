@@ -333,14 +333,40 @@ and says the streak is broken after a failure, without alarm
 the header became a picture. Where it sits in a painted header is decided by
 looking at rendered frames.
 
-## 8. Failure modes the 1.x specification promised (outline)
+## 8. Failure modes the 1.x specification promised
 
-- 8.1 A stage script's output reaches the developer on a pre-push failure, with
-  one line naming the next step (`Fast suite failed. Your push is blocked until
-  the tests pass.`).
-- 8.2 When the database stays locked past the busy timeout, the pipeline still
-  runs and fun-ci says the result could not be recorded, and how to re-trigger.
-- 8.3 When the background slow suite's process dies without finishing, its
-  stage and the run are recorded failed and the console shows them failed.
-- 8.4 When the database cannot be written (a full disk), fun-ci says so and
-  where the database is.
+### 8.1 A failed stage names the next step
+**Given** a stage script that fails
+**When** `fun-ci trigger` runs
+**Then** after the script's output and `<Stage> failed.` comes one line saying
+what to do next: fix what the linter reported (lint), fix the build errors
+(build), or fix the failing tests (fast, slow), then try again.
+*Bites:* the line is missing today.
+
+### 8.2 A busy database doesn't stop the pipeline, and says so
+**Given** a database that stays locked past its busy timeout while a pipeline
+records its stages
+**When** `fun-ci trigger` runs
+**Then** every stage still runs and the exit code is the pipeline's own
+**And** fun-ci says once that the result could not be recorded, and that
+triggering again will record it.
+*Bites:* today the busy error ends the trigger.
+
+### 8.3 A slow suite that dies is recorded failed
+**Given** a run whose slow stage is `running` and whose forked slow-suite
+process no longer exists
+**When** the console next polls
+**Then** the slow stage is recorded `failed`, and the run with it (AT-7.1),
+so the console shows it failed instead of running.
+**And** a slow stage whose process is still alive is left running.
+*Note:* the check is on the forked process, not the slot lock: the slot is
+released just before the slow suite's result is recorded, and a lock check
+would fail a run that passed in that moment.
+
+### 8.4 An unwritable database is reported with its path
+**Given** a database that cannot be written (a full disk, a read-only file)
+while a pipeline records its stages
+**When** `fun-ci trigger` runs
+**Then** every stage still runs and the exit code is the pipeline's own
+**And** fun-ci says once that it can't write to the database, names its path,
+and suggests checking the disk.
