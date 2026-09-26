@@ -24,6 +24,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `fun-ci-renderer --colours 24bit|256` chooses the colours to draw in.
 
+### Fixed
+- The git hooks no longer block a push when fun-ci isn't installed. The
+  pre-push hook failed with "fun-ci: command not found" and stopped the push;
+  now it says fun-ci is missing, how to install it, and lets the push go
+  ahead. Run `fun-ci install-hooks` again to update hooks you already have.
+
 ## [2.0.0] - 2026-09-25
 
 ### Added

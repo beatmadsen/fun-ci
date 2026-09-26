@@ -170,6 +170,7 @@ digging into internals: the cause obvious, the next step clear.
 |---|---|---|
 | A stage fails | The script's output, then `Fast suite failed.` (or `Lint`, `Build`) | non-zero |
 | A stage overruns its budget | `Fast suite killed -- exceeded 10s time budget.` and advice on what to do | non-zero |
+| fun-ci isn't installed | The hook says so and how to install it; the commit or push goes ahead | 0 |
 | No `.fun-ci/`, or a script missing or not executable | `fun-ci: ...` naming the problem, then `Commit will proceed without CI.` | 0 |
 | The commit doesn't exist | `fun-ci: commit <sha> not found in this repository.` | non-zero |
 | The commit or branch is missing | `fun-ci: commit hash and branch name are required.` and the usage | non-zero |
