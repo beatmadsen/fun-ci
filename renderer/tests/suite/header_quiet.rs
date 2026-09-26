@@ -6,7 +6,7 @@ use serde_json::{Value, json};
 use crate::support::boards::{board, frames, last_screen, run, then_ticks};
 
 const NOW: i64 = 1_790_000_000;
-const QUIET: [&str; 3] = ["idle", "aurora", "fireflies"];
+const QUIET: [&str; 4] = ["idle", "aurora", "fireflies", "fireplace"];
 
 /// A run that ended with `status`, `ago` seconds before the board's clock.
 fn ended(status: &str, ago: i64) -> Value {

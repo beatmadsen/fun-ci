@@ -108,3 +108,8 @@ fn should_loop_every_quiet_scene() {
 fn should_keep_the_quiet_scenes_out_of_the_milestone_pools() {
     assert!(MILESTONES.iter().flat_map(|milestone| pool(milestone)).all(|name| !Cast::quiet_pool().contains(name)));
 }
+
+#[test]
+fn should_offer_a_fireplace_among_the_quiet_scenes() {
+    assert!(Cast::quiet_pool().contains(&"fireplace"), "{:?}", Cast::quiet_pool());
+}

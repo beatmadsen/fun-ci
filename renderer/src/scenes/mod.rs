@@ -6,6 +6,7 @@ mod calm;
 mod celebrate;
 mod explosion;
 mod fireflies;
+mod fireplace;
 mod fireworks;
 mod flash;
 mod gears;
@@ -24,9 +25,10 @@ mod yay;
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 16] = [
+pub static ALL: [&dyn Scene; 17] = [
     &aurora::Aurora,
     &fireflies::Fireflies,
+    &fireplace::Fireplace,
     &bricks::Bricks,
     &calm::Calm,
     &warning::Warning,

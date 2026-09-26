@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"fireplace\")"
+---
+ 60 cols at    0 ms: f563dd08
+ 60 cols at  150 ms: 3bbd6ffc
+ 60 cols at  400 ms: b7bccb2a
+ 60 cols at  900 ms: 76022330
+ 60 cols at 1700 ms: 4cfd00f9
+ 60 cols at 2600 ms: 2ff4bd3a
+ 60 cols at 3500 ms: 08287d27
+ 60 cols at 3900 ms: 4c629440
+ 60 cols at 9300 ms: fcfd71b2
+200 cols at  900 ms: 3ea61357

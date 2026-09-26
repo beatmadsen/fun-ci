@@ -37,7 +37,7 @@ fn gallery(name: &str) -> String {
 #[test]
 fn should_hold_every_scene_the_events_and_scenarios_name() {
     let names = [
-        "aurora", "bricks", "calm", "celebrate", "explosion", "fireflies", "flash", "gears", "idle", "leprechauns", "ripple",
+        "aurora", "bricks", "calm", "celebrate", "explosion", "fireflies", "fireplace", "flash", "gears", "idle", "leprechauns", "ripple",
         "running", "success", "sweep", "warning", "yay",
     ];
     assert_eq!(Library::builtin().names(), names);
@@ -48,6 +48,8 @@ cases! {
     should_loop_the_running_scene: scene("running").length_ms() => None;
     should_loop_the_aurora: scene("aurora").length_ms() => None;
     should_loop_the_fireflies: scene("fireflies").length_ms() => None;
+    should_loop_the_fireplace: scene("fireplace").length_ms() => None;
+    should_draw_the_fireplace_often_enough_for_its_flames_to_flicker: scene("fireplace").frame_ms() => 150;
     should_draw_the_aurora_four_times_a_second: scene("aurora").frame_ms() => 250;
     should_draw_the_fireflies_four_times_a_second: scene("fireflies").frame_ms() => 250;
     should_loop_the_calm_resting_scene: scene("calm").length_ms() => None;
@@ -90,5 +92,6 @@ galleries! {
     should_paint_the_calm_dusk_as_reviewed: "calm";
     should_paint_the_aurora_as_reviewed: "aurora";
     should_paint_the_fireflies_as_reviewed: "fireflies";
+    should_paint_the_fireplace_as_reviewed: "fireplace";
     should_paint_the_warning_as_reviewed: "warning";
 }
