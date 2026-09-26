@@ -1,6 +1,7 @@
 //! The header's scenes.
 
 mod bricks;
+mod calm;
 mod celebrate;
 mod explosion;
 mod fireworks;
@@ -15,13 +16,16 @@ mod running;
 mod sky;
 mod sweep;
 mod tick;
+mod warning;
 mod yay;
 
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 12] = [
+pub static ALL: [&dyn Scene; 14] = [
     &bricks::Bricks,
+    &calm::Calm,
+    &warning::Warning,
     &gears::Gears,
     &ripple::Ripple,
     &sweep::Sweep,

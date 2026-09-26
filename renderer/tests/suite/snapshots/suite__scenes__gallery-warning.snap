@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"warning\")"
+---
+ 60 cols at    0 ms: 4ebf8941
+ 60 cols at  150 ms: 3ff3e725
+ 60 cols at  400 ms: 139dd948
+ 60 cols at  900 ms: 8227c082
+ 60 cols at 1700 ms: f65f1691
+ 60 cols at 2600 ms: 139dd948
+ 60 cols at 3500 ms: 5f94cb09
+ 60 cols at 3900 ms: 9438d30a
+ 60 cols at 9300 ms: f65f1691
+200 cols at  900 ms: 326e175a

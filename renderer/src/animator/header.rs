@@ -1,7 +1,8 @@
-//! The animated header: a scene over the full width of the terminal. The idle
-//! scene loops, the running scene loops while anything runs, and the event
-//! scenes queued play over both, one after another.
+//! The animated header: a scene over the full width of the terminal. The
+//! event scenes queued play one after another over the backdrop: the running,
+//! resting or idle scene.
 
+use super::backdrop::Backdrop;
 use super::film::Film;
 use super::queue::SceneQueue;
 use crate::animation::Scene;
@@ -28,6 +29,11 @@ impl Player {
     }
 
     #[must_use]
+    pub fn name(&self) -> &'static str {
+        self.scene.name()
+    }
+
+    #[must_use]
     pub fn finished(&self) -> bool {
         self.scene.length_ms().is_some_and(|length| self.elapsed_ms >= length)
     }
@@ -42,8 +48,7 @@ impl Player {
 /// Which scene shows, all of them moving on together, and what is on screen.
 #[derive(Debug, Clone)]
 pub struct Header {
-    idle: Player,
-    running: Option<Player>,
+    backdrop: Backdrop,
     queue: SceneQueue,
     film: Film,
 }
@@ -51,20 +56,16 @@ pub struct Header {
 impl Header {
     #[must_use]
     pub fn new(idle: &'static dyn Scene) -> Self {
-        Self { idle: Player::new(idle), running: None, queue: SceneQueue::default(), film: Film::new(Depth::TrueColour) }
+        Self { backdrop: Backdrop::new(idle), queue: SceneQueue::default(), film: Film::new(Depth::TrueColour) }
     }
 
     pub fn set_depth(&mut self, depth: Depth) {
         self.film = Film::new(depth);
     }
 
-    /// Shows `rocket` from its start, unless it is already showing.
-    pub fn start_running(&mut self, rocket: &'static dyn Scene) {
-        self.running.get_or_insert_with(|| Player::new(rocket));
-    }
-
-    pub fn stop_running(&mut self) {
-        self.running = None;
+    /// What shows when no event scene plays.
+    pub fn backdrop(&mut self) -> &mut Backdrop {
+        &mut self.backdrop
     }
 
     /// Queues `scene` to play once over the idle and running scenes.
@@ -74,8 +75,7 @@ impl Header {
 
     /// Moves every scene to `play_ms`.
     pub fn seek(&mut self, play_ms: u64) {
-        self.idle.seek(play_ms);
-        self.running.iter_mut().for_each(|player| player.seek(play_ms));
+        self.backdrop.seek(play_ms);
         self.queue.seek(play_ms);
     }
 
@@ -107,6 +107,6 @@ impl Header {
     }
 
     fn active(&self) -> &Player {
-        self.queue.playing().or(self.running.as_ref()).unwrap_or(&self.idle)
+        self.queue.playing().unwrap_or_else(|| self.backdrop.showing())
     }
 }

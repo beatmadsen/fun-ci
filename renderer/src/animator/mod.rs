@@ -1,6 +1,7 @@
 //! Everything that moves: the header animations and the effects over stages
 //! and the footer, driven by the events Ruby sends.
 
+mod backdrop;
 mod cast;
 mod draw;
 mod effect;
@@ -63,7 +64,7 @@ impl Animator {
     /// advances the stage effects. Returns the name of the header animation drawn.
     pub fn render(&mut self, screen: &mut Screen, runs: &[Run], play_ms: u64) -> String {
         self.take_events(runs);
-        self.follow_running(runs);
+        self.follow_runs(runs);
         self.header.seek(play_ms);
         let showing = self.header.showing().to_string();
         self.draw(screen, runs);
@@ -93,11 +94,18 @@ impl Animator {
         self.effects.push(Effect::new(kind, run_id, stage));
     }
 
-    fn follow_running(&mut self, runs: &[Run]) {
+    /// Shows the rocket while a run runs, and rests on the latest outcome.
+    fn follow_runs(&mut self, runs: &[Run]) {
+        let (rocket, rest) = (self.cast.running(), latest_outcome(runs).map(|status| self.cast.rest(status)));
+        let backdrop = self.header.backdrop();
         if runs.iter().any(|run| run.status() == "running") {
-            self.header.start_running(self.cast.running());
+            backdrop.start_running(rocket);
         } else {
-            self.header.stop_running();
+            backdrop.stop_running();
+        }
+        match rest {
+            Some(scene) => backdrop.rest_on(scene),
+            None => backdrop.stop_resting(),
         }
     }
 
@@ -113,6 +121,11 @@ impl Animator {
         self.effects.iter_mut().for_each(|effect| effect.frame += 1);
         self.effects.retain(|effect| !effect.finished());
     }
+}
+
+/// The status of the newest run that passed or failed; runs come newest first.
+fn latest_outcome(runs: &[Run]) -> Option<&str> {
+    runs.iter().map(Run::status).find(|status| matches!(*status, "passed" | "failed" | "timeout"))
 }
 
 fn target<'r>(event: &Event, runs: &'r [Run]) -> Option<(&'r Run, &'r Stage)> {

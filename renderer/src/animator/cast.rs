@@ -60,6 +60,13 @@ impl Cast {
         self.named("idle")
     }
 
+    /// The scene the header rests on after a run ends with `status`: calm
+    /// for a pass, a warning for anything else.
+    #[must_use]
+    pub fn rest(&self, status: &str) -> &'static dyn Scene {
+        self.named(if status == "passed" { "calm" } else { "warning" })
+    }
+
     #[must_use]
     pub fn running(&self) -> &'static dyn Scene {
         self.named("running")

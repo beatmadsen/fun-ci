@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   sweep or ripple for lint, amber blocks or gears for the build (both new),
   the lightning strike or YAY for the fast suite, and fireworks, the trophy
   or the leprechauns when the whole run passes.
+- When the scenes are done and nothing is running, the header rests on how
+  the latest run went: a calm dusk with a tick after a pass, and a pulsing
+  hazard sign after a failure, so a glance a minute later still tells you.
 - The console's animations are redrawn as pictures rather than ASCII art:
   soft light, gradients and particles in 24-bit colour, filling the whole
   width of the header. The idle sky, the rocket, the explosion and the five

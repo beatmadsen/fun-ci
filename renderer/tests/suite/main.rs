@@ -24,6 +24,7 @@ mod painting;
 mod pictures;
 mod portable_maths;
 mod header_queue;
+mod header_rest;
 mod header_scenes;
 mod headless;
 mod headless_measures;

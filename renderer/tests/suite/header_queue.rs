@@ -71,7 +71,7 @@ fn should_play_the_failure_scene_when_the_run_fails() {
 
 #[test]
 fn should_leave_the_header_alone_when_only_a_stage_fails() {
-    assert_eq!(after(&[failed()], &[event("stage_failed", 1, "fast")], 1)[0], "idle");
+    assert_eq!(after(&[failed()], &[event("stage_failed", 1, "fast")], 1), after(&[failed()], &[], 1));
 }
 
 #[test]
@@ -96,9 +96,4 @@ fn should_show_the_running_scene_only_once_the_queue_is_empty() {
     let running = run(1, "running", &[("fast", "running")]);
     let frames = after(&[running], &[milestone("lint_passed", "sweep")], 4);
     assert_eq!([&frames[0], &frames[3]], ["sweep", "running"]);
-}
-
-#[test]
-fn should_go_back_to_idle_when_the_last_queued_scene_has_played() {
-    assert_eq!(after(&[run(1, "passed", &[])], &three_milestones(), 10)[9], "idle");
 }
