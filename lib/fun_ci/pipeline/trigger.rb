@@ -68,6 +68,7 @@ module FunCi
       end
 
       def start_run
+        recorder.report_trouble_to(@io.stdout)
         cancel_stale_pipelines
         recorder.create_run(commit_hash: @commit.sha, branch: @commit.branch, project_path: @project)
       end
@@ -81,8 +82,10 @@ module FunCi
       def cancel_stale_pipelines
         return unless recorder.db
 
-        StalePipelineCanceller.new(db: recorder.db, branch: @commit.branch, stdout: @io.stdout)
-                              .cancel(new_commit_hash: @commit.sha)
+        recorder.tolerating do
+          StalePipelineCanceller.new(db: recorder.db, branch: @commit.branch, stdout: @io.stdout)
+                                .cancel(new_commit_hash: @commit.sha)
+        end
       end
     end
   end

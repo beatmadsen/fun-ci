@@ -22,8 +22,8 @@ module FunCi
         pid = fork { run_in_child(db_path, pipeline_run_id, job_id, executor) }
         @slot.release
         Process.detach(pid)
-        reopened = Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
-        Persistence::PipelineRun.store_pid(reopened.db, pipeline_run_id, pid)
+        reopened = Persistence::DbRecorder.for_background(db_path, pipeline_run_id, trouble: @recorder.trouble)
+        reopened.tolerating { Persistence::PipelineRun.store_pid(reopened.db, pipeline_run_id, pid) }
         reopened
       end
 
@@ -34,7 +34,7 @@ module FunCi
       def run_in_child(db_path, pipeline_run_id, job_id, executor)
         @slot.release
         recorder = Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
-        Persistence::PipelineRun.store_pid(recorder.db, pipeline_run_id, Process.pid)
+        recorder.tolerating { Persistence::PipelineRun.store_pid(recorder.db, pipeline_run_id, Process.pid) }
         BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
         recorder.close
       end

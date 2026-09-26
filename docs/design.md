@@ -182,7 +182,8 @@ digging into internals: the cause obvious, the next step clear.
 | The commit doesn't exist | `fun-ci: commit <sha> not found in this repository.` | non-zero |
 | The commit or branch is missing | `fun-ci: commit hash and branch name are required.` and the usage | non-zero |
 | A newer commit on the same branch | `Cancelled stale pipeline for <old>. Starting fresh for <new>.` | carries on |
-| The database is busy | fun-ci waits for it, for up to 5 seconds | carries on |
+| The database is busy | fun-ci waits for it, for up to 5 seconds; if it stays busy, the stages run on unrecorded and fun-ci says once to trigger again | the pipeline's own |
+| The database can't be written (a full disk, a read-only file) | The stages run on unrecorded, and fun-ci says once where the database is and to check the disk | the pipeline's own |
 
 The slow suite runs in the background, so its failures and timeouts show only
 on the console.

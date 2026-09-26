@@ -41,6 +41,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failing tests above, then try again."
 
 ### Fixed
+- A database that stays busy, or can't be written because the disk is full,
+  no longer stops `fun-ci trigger`: the stages still run, the exit code is
+  theirs, and fun-ci says once that the run wasn't recorded (naming the
+  database when it can't write to it).
 - A run whose fast suite failed no longer ends up PASSED when its slow suite
   passes afterwards, and a run no longer shows PASSED for a moment when the
   slow suite finishes before the fast suite. A run's status now follows from
