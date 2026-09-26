@@ -19,24 +19,13 @@ impl Backdrop {
         Self { idle: Player::new(idle), running: None, rest: None }
     }
 
-    /// Shows `rocket` from its start, unless it is already showing.
-    pub fn start_running(&mut self, rocket: &'static dyn Scene) {
-        self.running.get_or_insert_with(|| Player::new(rocket));
-    }
-
-    pub fn stop_running(&mut self) {
-        self.running = None;
-    }
-
-    /// Rests on `scene`, from its start unless it is the one resting already.
-    pub fn rest_on(&mut self, scene: &'static dyn Scene) {
-        if self.rest.as_ref().is_none_or(|player| player.name() != scene.name()) {
-            self.rest = Some(Player::new(scene));
-        }
-    }
-
-    pub fn stop_resting(&mut self) {
-        self.rest = None;
+    /// Shows the `running` scene while there is one, from its start unless it
+    /// already shows, and rests on `rest` while there is one, from its start
+    /// unless it is the one resting already.
+    pub fn follow(&mut self, running: Option<&'static dyn Scene>, rest: Option<&'static dyn Scene>) {
+        self.running = running.map(|scene| self.running.take().unwrap_or_else(|| Player::new(scene)));
+        let same = |player: &Player| rest.is_some_and(|scene| player.name() == scene.name());
+        self.rest = rest.map(|scene| self.rest.take().filter(same).unwrap_or_else(|| Player::new(scene)));
     }
 
     pub fn seek(&mut self, play_ms: u64) {

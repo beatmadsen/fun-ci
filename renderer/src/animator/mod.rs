@@ -98,17 +98,9 @@ impl Animator {
 
     /// Shows the rocket while a run runs, and rests on the latest outcome.
     fn follow_runs(&mut self, runs: &[Run]) {
-        let (rocket, rest) = (self.cast.running(), latest_outcome(runs).map(|status| self.cast.rest(status)));
-        let backdrop = self.header.backdrop();
-        if runs.iter().any(|run| run.status() == "running") {
-            backdrop.start_running(rocket);
-        } else {
-            backdrop.stop_running();
-        }
-        match rest {
-            Some(scene) => backdrop.rest_on(scene),
-            None => backdrop.stop_resting(),
-        }
+        let running = runs.iter().any(|run| run.status() == "running").then(|| self.cast.running());
+        let rest = latest_outcome(runs).map(|status| self.cast.rest(status));
+        self.header.follow(running, rest);
     }
 
     fn draw(&mut self, screen: &mut Screen, board: &Board) {

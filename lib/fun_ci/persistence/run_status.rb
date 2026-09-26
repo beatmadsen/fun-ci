@@ -11,11 +11,11 @@ module FunCi
     # can't overwrite each other's verdict; failed, completed and cancelled
     # runs are never touched again.
     module RunStatus
-      STAGES = "pipeline_runs.id = stage_jobs.pipeline_run_id"
+      OF_RUN = "pipeline_runs.id = stage_jobs.pipeline_run_id"
       DERIVED = <<~SQL.freeze
         CASE
-          WHEN EXISTS (SELECT 1 FROM stage_jobs WHERE #{STAGES} AND status IN ('failed', 'timed_out')) THEN 'failed'
-          WHEN (SELECT COUNT(DISTINCT stage) FROM stage_jobs WHERE #{STAGES} AND status = 'completed'
+          WHEN EXISTS (SELECT 1 FROM stage_jobs WHERE #{OF_RUN} AND status IN ('failed', 'timed_out')) THEN 'failed'
+          WHEN (SELECT COUNT(DISTINCT stage) FROM stage_jobs WHERE #{OF_RUN} AND status = 'completed'
                 AND stage IN ('lint', 'build', 'fast', 'slow')) = 4 THEN 'completed'
           ELSE status
         END

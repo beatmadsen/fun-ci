@@ -86,7 +86,6 @@ module FunCi
         end
       end
 
-      # Without a run there is no job and no row to update, so these write nothing.
       # Records the stage's outcome, then settles the run's status from its stages.
       def end_stage(job_id, status)
         tolerating do

@@ -64,9 +64,10 @@ impl Header {
         self.film = Film::new(depth);
     }
 
-    /// What shows when no event scene plays.
-    pub fn backdrop(&mut self) -> &mut Backdrop {
-        &mut self.backdrop
+    /// Shows the `running` scene while there is one, else rests on `rest`
+    /// while there is one, whenever no event scene plays.
+    pub fn follow(&mut self, running: Option<&'static dyn Scene>, rest: Option<&'static dyn Scene>) {
+        self.backdrop.follow(running, rest);
     }
 
     /// Queues `scene` to play once over the idle and running scenes.

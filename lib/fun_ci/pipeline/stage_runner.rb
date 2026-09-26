@@ -12,11 +12,12 @@ module FunCi
         "fast" => "Your fast tests have gotten too slow. Split or speed them up.",
         "slow" => "Pare down integration tests, parallelise, or raise the budget."
       }.freeze
+      FIX_TESTS = "Fix the failing tests above, then try again."
       NEXT_STEPS = {
         "lint" => "Fix what the linter reported above, then try again.",
         "build" => "Fix the build errors above, then try again.",
-        "fast" => "Fix the failing tests above, then try again.",
-        "slow" => "Fix the failing tests above, then try again."
+        "fast" => FIX_TESTS,
+        "slow" => FIX_TESTS
       }.freeze
 
       def initialize(commit_hash:, stdout:, seams: Seams.new, dir: Dir.pwd)

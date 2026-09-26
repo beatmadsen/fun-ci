@@ -5,24 +5,33 @@
 use crate::animation::{Blank, Library, Scene};
 use std::time::{SystemTime, UNIX_EPOCH};
 
-/// The milestones that call for a header scene, in the order a run reaches them.
-pub const MILESTONES: [&str; 5] = ["lint_passed", "build_passed", "fast_passed", "run_passed", "run_failed"];
-/// Each milestone's scenes, by `MILESTONES` index: small ones for lint and
-/// build, bigger for the fast suite, the biggest for a passing run.
-const POOLS: [&[&str]; 5] = [
-    &["sweep", "ripple"],
-    &["bricks", "gears"],
-    &["flash", "yay"],
-    &["success", "celebrate", "leprechauns"],
-    &["explosion"],
+/// Each milestone that calls for a header scene, in the order a run reaches
+/// them, with its scenes: small ones for lint and build, bigger for the fast
+/// suite, the biggest for a passing run.
+const POOLS: [(&str, &[&str]); 5] = [
+    ("lint_passed", &["sweep", "ripple"]),
+    ("build_passed", &["bricks", "gears"]),
+    ("fast_passed", &["flash", "yay"]),
+    ("run_passed", &["success", "celebrate", "leprechauns"]),
+    ("run_failed", &["explosion"]),
 ];
+/// The milestones, as `POOLS` names them.
+pub const MILESTONES: [&str; POOLS.len()] = {
+    let mut names = [""; POOLS.len()];
+    let mut i = 0;
+    while i < POOLS.len() {
+        names[i] = POOLS[i].0;
+        i += 1;
+    }
+    names
+};
 static MISSING: Blank = Blank("blank");
 
 /// The scene library plus the current choices.
 #[derive(Debug, Clone)]
 pub struct Cast {
     library: Library,
-    pins: [Option<&'static str>; 5],
+    pins: Vec<&'static str>,
     seed: u64,
 }
 
@@ -30,28 +39,27 @@ impl Cast {
     /// `seed` drives the random choice of unpinned scenes.
     #[must_use]
     pub fn new(library: Library, seed: u64) -> Self {
-        Self { library, pins: [None; 5], seed }
+        Self { library, pins: Vec::new(), seed }
     }
 
     /// The scenes `milestone` picks from; none for anything else.
     #[must_use]
     pub fn pool(milestone: &str) -> &'static [&'static str] {
-        MILESTONES.iter().position(|m| *m == milestone).map_or(&[], |index| POOLS[index])
+        POOLS.iter().find(|(name, _)| *name == milestone).map_or(&[], |(_, pool)| *pool)
     }
 
     /// Makes `name` its pool's scene from now on; a name in no pool is ignored.
     pub fn pin(&mut self, name: &str) {
-        for (pin, pool) in self.pins.iter_mut().zip(POOLS) {
-            if let Some(found) = pool.iter().find(|n| **n == name) {
-                *pin = Some(found);
-            }
-        }
+        let Some(pool) = POOLS.iter().map(|(_, pool)| *pool).find(|pool| pool.contains(&name)) else { return };
+        self.pins.retain(|pinned| !pool.contains(pinned));
+        self.pins.extend(pool.iter().find(|scene| **scene == name));
     }
 
     /// The scene a milestone event calls for, or none for any other event.
     pub fn for_milestone(&mut self, event: &str) -> Option<&'static dyn Scene> {
-        let index = MILESTONES.iter().position(|m| *m == event)?;
-        let name = self.pins[index].unwrap_or_else(|| self.random(POOLS[index]));
+        let pool = Self::pool(event);
+        let pinned = self.pins.iter().copied().find(|pinned| pool.contains(pinned));
+        let name = pinned.or_else(|| (!pool.is_empty()).then(|| self.random(pool)))?;
         Some(self.named(name))
     }
 
