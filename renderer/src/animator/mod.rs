@@ -8,6 +8,7 @@ pub mod film;
 mod footer;
 mod header;
 mod overlay;
+mod queue;
 
 use std::mem;
 
@@ -71,16 +72,16 @@ impl Animator {
     }
 
     fn take_events(&mut self, runs: &[Run]) {
-        let events = mem::take(&mut self.pending);
-        for name in events.iter().filter_map(|e| e.animation.as_deref()) {
-            self.cast.pin(name);
-        }
-        for event in &events {
+        for event in &mem::take(&mut self.pending) {
             self.apply(event, runs);
         }
     }
 
     fn apply(&mut self, event: &Event, runs: &[Run]) {
+        event.animation.iter().for_each(|name| self.cast.pin(name));
+        if let Some(scene) = self.cast.for_milestone(&event.name) {
+            self.header.trigger(scene);
+        }
         let Some((run, stage)) = target(event, runs) else { return };
         if let Some(kind) = Kind::for_event(&event.name, &stage.status, run.status()) {
             self.add(kind, run.id, &stage.stage);
@@ -90,11 +91,6 @@ impl Animator {
     fn add(&mut self, kind: Kind, run_id: u64, stage: &str) {
         self.effects.retain(|effect| !effect.is_for(kind, run_id, stage));
         self.effects.push(Effect::new(kind, run_id, stage));
-        match kind {
-            Kind::Failure => self.header.trigger(self.cast.failure()),
-            Kind::Success => self.header.trigger(self.cast.success()),
-            Kind::Timeout | Kind::StagePass => {}
-        }
     }
 
     fn follow_running(&mut self, runs: &[Run]) {

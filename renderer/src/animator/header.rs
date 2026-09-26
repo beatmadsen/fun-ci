@@ -1,8 +1,9 @@
 //! The animated header: a scene over the full width of the terminal. The idle
-//! scene loops, the running scene loops while anything runs, and an event's
-//! scene plays once over both.
+//! scene loops, the running scene loops while anything runs, and the event
+//! scenes queued play over both, one after another.
 
 use super::film::Film;
+use super::queue::SceneQueue;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::cells::{CELL_PIXELS, encode};
@@ -43,14 +44,14 @@ impl Player {
 pub struct Header {
     idle: Player,
     running: Option<Player>,
-    event: Option<Player>,
+    queue: SceneQueue,
     film: Film,
 }
 
 impl Header {
     #[must_use]
     pub fn new(idle: &'static dyn Scene) -> Self {
-        Self { idle: Player::new(idle), running: None, event: None, film: Film::new(Depth::TrueColour) }
+        Self { idle: Player::new(idle), running: None, queue: SceneQueue::default(), film: Film::new(Depth::TrueColour) }
     }
 
     pub fn set_depth(&mut self, depth: Depth) {
@@ -66,15 +67,16 @@ impl Header {
         self.running = None;
     }
 
-    /// Plays `scene` once over the idle and running scenes.
+    /// Queues `scene` to play once over the idle and running scenes.
     pub fn trigger(&mut self, scene: &'static dyn Scene) {
-        self.event = Some(Player::new(scene));
+        self.queue.push(scene);
     }
 
     /// Moves every scene to `play_ms`.
     pub fn seek(&mut self, play_ms: u64) {
         self.idle.seek(play_ms);
-        self.running.iter_mut().chain(self.event.iter_mut()).for_each(|player| player.seek(play_ms));
+        self.running.iter_mut().for_each(|player| player.seek(play_ms));
+        self.queue.seek(play_ms);
     }
 
     /// Paints the scene showing and draws the cells that changed.
@@ -86,10 +88,10 @@ impl Header {
         self.film.project(encode(&canvas), screen);
     }
 
-    /// Whether an event scene is still playing.
+    /// Whether an event scene is playing or waiting to.
     #[must_use]
     pub fn playing_event(&self) -> bool {
-        self.event.as_ref().is_some_and(|player| !player.finished())
+        self.queue.busy()
     }
 
     /// How often the scene showing needs drawing when nothing else moves.
@@ -105,7 +107,6 @@ impl Header {
     }
 
     fn active(&self) -> &Player {
-        let event = self.event.as_ref().filter(|_| self.playing_event());
-        event.or(self.running.as_ref()).unwrap_or(&self.idle)
+        self.queue.playing().or(self.running.as_ref()).unwrap_or(&self.idle)
     }
 }

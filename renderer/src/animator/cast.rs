@@ -49,6 +49,15 @@ impl Cast {
         self.named("running")
     }
 
+    /// The scene a milestone event calls for, or none for any other event.
+    pub fn for_milestone(&mut self, event: &str) -> Option<&'static dyn Scene> {
+        match event {
+            "run_failed" => Some(self.failure()),
+            "lint_passed" | "build_passed" | "fast_passed" | "run_passed" => Some(self.success()),
+            _ => None,
+        }
+    }
+
     pub fn failure(&mut self) -> &'static dyn Scene {
         let name = self.pins.failure.unwrap_or_else(|| self.random(&FAILURES));
         self.named(name)

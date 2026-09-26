@@ -72,12 +72,6 @@ fn screen(lines: &[String]) -> Grid {
     emulate(&frames(lines, Depth::TrueColour)).pop().unwrap()
 }
 
-fn failure_then(ticks: usize) -> Vec<String> {
-    let failed = board(&[run(1, "failed", &[("fast", "failed")])]);
-    let event = json!({"t": "event", "name": "stage_failed", "run_id": 1, "stage": "fast"}).to_string();
-    [vec![failed, event], vec![TICK.to_string(); ticks]].concat()
-}
-
 #[test]
 fn should_paint_the_header_to_its_bottom_right_cell_when_a_scene_shows() {
     assert_eq!(screen(&idle_then(1)).cells[13][79].bg, RED);
@@ -102,16 +96,6 @@ fn should_show_a_scene_as_it_is_now_when_enough_time_has_passed_since_it_started
 fn should_draw_the_whole_header_again_when_the_terminal_was_resized() {
     let lines = [idle_then(1), vec![json!({"t": "resize", "cols": 90, "rows": 24}).to_string(), TICK.to_string()]].concat();
     assert_eq!(screen(&lines).cells[0][89].bg, RED);
-}
-
-#[test]
-fn should_play_the_failure_scene_when_a_stage_fails() {
-    assert_eq!(frames(&failure_then(1), Depth::TrueColour)[0].showing, "explosion");
-}
-
-#[test]
-fn should_return_to_the_idle_scene_when_the_failure_scene_has_played_its_length() {
-    assert_eq!(frames(&failure_then(5), Depth::TrueColour)[4].showing, "idle");
 }
 
 #[test]
