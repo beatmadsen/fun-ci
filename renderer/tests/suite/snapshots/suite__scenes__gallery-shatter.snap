@@ -1,0 +1,14 @@
+---
+source: tests/suite/scenes.rs
+expression: "gallery(\"shatter\")"
+---
+ 60 cols at    0 ms: 0c7f07db
+ 60 cols at  150 ms: 691f5d7b
+ 60 cols at  400 ms: 3ff13d5c
+ 60 cols at  900 ms: b6f2694c
+ 60 cols at 1700 ms: 66816e11
+ 60 cols at 2600 ms: 986f2876
+ 60 cols at 3500 ms: 8089061b
+ 60 cols at 3900 ms: 8089061b
+ 60 cols at 9300 ms: 8089061b
+200 cols at  900 ms: cba3b8a6

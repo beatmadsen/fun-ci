@@ -138,3 +138,8 @@ fn should_jump_to_warp_speed_when_the_fast_suite_passes() {
 fn should_bring_up_the_sun_when_the_whole_run_passes() {
     assert!(pool("run_passed").contains(&"sunrise"), "{:?}", pool("run_passed"));
 }
+
+#[test]
+fn should_shatter_like_glass_when_a_run_fails() {
+    assert!(pool("run_failed").contains(&"shatter"), "{:?}", pool("run_failed"));
+}

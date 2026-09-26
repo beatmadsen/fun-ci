@@ -13,7 +13,7 @@ const POOLS: [(&str, &[&str]); 5] = [
     ("build_passed", &["bricks", "gears", "anvil"]),
     ("fast_passed", &["flash", "yay", "warp"]),
     ("run_passed", &["success", "celebrate", "leprechauns", "sunrise"]),
-    ("run_failed", &["explosion"]),
+    ("run_failed", &["explosion", "shatter"]),
 ];
 /// The milestones, as `POOLS` names them.
 pub const MILESTONES: [&str; POOLS.len()] = {

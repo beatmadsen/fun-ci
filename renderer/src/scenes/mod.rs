@@ -19,6 +19,7 @@ mod level;
 mod ripple;
 mod rocket;
 mod running;
+mod shatter;
 mod sky;
 mod stonework;
 mod storm;
@@ -32,7 +33,8 @@ mod yay;
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 22] = [
+pub static ALL: [&dyn Scene; 23] = [
+    &shatter::Shatter,
     &sunrise::Sunrise,
     &warp::Warp,
     &anvil::Anvil,
