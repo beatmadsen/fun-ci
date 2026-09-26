@@ -2,6 +2,7 @@
 //! and the footer, driven by the events Ruby sends.
 
 mod backdrop;
+mod caption;
 mod cast;
 mod draw;
 mod effect;
@@ -18,7 +19,7 @@ pub use effect::{Effect, Kind};
 pub use header::HEADER_HEIGHT;
 
 use crate::art::output::Depth;
-use crate::model::{Event, Run, Stage};
+use crate::model::{Board, Event, Run, Stage};
 use crate::screen::Screen;
 use header::Header;
 
@@ -60,14 +61,15 @@ impl Animator {
         self.header.frame_ms()
     }
 
-    /// Draws this frame's animations over the board as of `play_ms`, then
+    /// Draws this frame's animations over `board` as of `play_ms`, then
     /// advances the stage effects. Returns the name of the header animation drawn.
-    pub fn render(&mut self, screen: &mut Screen, runs: &[Run], play_ms: u64) -> String {
+    pub fn render(&mut self, screen: &mut Screen, board: &Board, play_ms: u64) -> String {
+        let runs = &board.runs;
         self.take_events(runs);
         self.follow_runs(runs);
         self.header.seek(play_ms);
         let showing = self.header.showing().to_string();
-        self.draw(screen, runs);
+        self.draw(screen, board);
         self.advance();
         showing
     }
@@ -109,11 +111,11 @@ impl Animator {
         }
     }
 
-    fn draw(&mut self, screen: &mut Screen, runs: &[Run]) {
+    fn draw(&mut self, screen: &mut Screen, board: &Board) {
         screen.save_cursor();
-        self.header.draw(screen);
-        draw::stages(screen, &self.effects, runs);
-        draw::footer(screen, &self.effects, runs);
+        self.header.draw(screen, board.streak);
+        draw::stages(screen, &self.effects, &board.runs);
+        draw::footer(screen, &self.effects, &board.runs);
         screen.restore_cursor();
     }
 

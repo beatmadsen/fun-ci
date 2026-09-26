@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - When the scenes are done and nothing is running, the header rests on how
   the latest run went: a calm dusk with a tick after a pass, and a pulsing
   hazard sign after a failure, so a glance a minute later still tells you.
+- The streak is back: the header's top right says how many runs in a row
+  have passed ("7 in a row!"), or "streak broken" after a failure. It went
+  missing when the header became a picture.
 - The console's animations are redrawn as pictures rather than ASCII art:
   soft light, gradients and particles in 24-bit colour, filling the whole
   width of the header. The idle sky, the rocket, the explosion and the five

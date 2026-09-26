@@ -77,7 +77,7 @@ impl BoardView {
         self.screen.write_at(HEADER_HEIGHT + 1, 1, "");
         self.render_body(board, at.board_ms, rows);
         self.screen.clear_below();
-        self.animator.render(&mut self.screen, &board.runs, at.play_ms)
+        self.animator.render(&mut self.screen, board, at.play_ms)
     }
 
     /// The bytes drawn since the last take.

@@ -120,8 +120,9 @@ per run, newest first:
   says `No runs yet.`
 - It works from 60 columns wide up.
 - The streak counts consecutive passed runs; a running run neither breaks nor
-  extends it. Ruby sends it with every board, but nothing has drawn it since
-  the header became a picture (AT-7.6).
+  extends it. It sits at the top right of the header, `7 in a row!` in green,
+  or `streak broken` in plain white after a failure, since the header shouldn't
+  alarm; the rows do that.
 
 ## Animations
 

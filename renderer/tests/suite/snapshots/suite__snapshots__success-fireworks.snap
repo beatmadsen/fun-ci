@@ -3,7 +3,7 @@ source: tests/suite/snapshots.rs
 expression: "render(& frames(\"success-fireworks\"))"
 ---
 frame 0001 at 100x30
-  header 827f551b
+  header 6d42ba03
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠁ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -37,7 +37,7 @@ frame 0001 at 100x30
   :
   :
 frame 0002 at 100x30
-  header b10481d3
+  header b6775f15
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠃ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -71,7 +71,7 @@ frame 0002 at 100x30
   :
   :
 frame 0003 at 100x30
-  header 843d66ce
+  header 522ec8cf
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠇ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -105,7 +105,7 @@ frame 0003 at 100x30
   :
   :
 frame 0004 at 100x30
-  header 75d8661e
+  header accf857c
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠏ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -139,7 +139,7 @@ frame 0004 at 100x30
   :
   :
 frame 0005 at 100x30
-  header 96a36b8f
+  header 133b76df
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠟ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -173,7 +173,7 @@ frame 0005 at 100x30
   :
   :
 frame 0006 at 100x30
-  header e2e0d2ef
+  header bec183d0
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠿ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -207,7 +207,7 @@ frame 0006 at 100x30
   :
   :
 frame 0007 at 100x30
-  header 8f54fcdb
+  header 63feebb7
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⡿ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -241,7 +241,7 @@ frame 0007 at 100x30
   :
   :
 frame 0008 at 100x30
-  header 77b76791
+  header 49873264
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠀ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -275,7 +275,7 @@ frame 0008 at 100x30
   :
   :
 frame 0009 at 100x30
-  header 406346d0
+  header 6ed725d1
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠁ 2s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -309,7 +309,7 @@ frame 0009 at 100x30
   :
   :
 frame 0010 at 100x30
-  header a6878f1f
+  header 67709551
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠃ 3s  Slow --  RUNNING  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -343,7 +343,7 @@ frame 0010 at 100x30
   :
   :
 frame 0011 at 100x30
-  header 67d4f5c8
+  header 1f11c1bb
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -377,7 +377,7 @@ frame 0011 at 100x30
   :
   :
 frame 0012 at 100x30
-  header 9e37d4d3
+  header 43b97117
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -411,7 +411,7 @@ frame 0012 at 100x30
   :
   :
 frame 0013 at 100x30
-  header f16e2f89
+  header dbc091ef
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -445,7 +445,7 @@ frame 0013 at 100x30
   :
   :
 frame 0014 at 100x30
-  header 76ed0752
+  header 7eb304c0
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -479,7 +479,7 @@ frame 0014 at 100x30
   :
   :
 frame 0015 at 100x30
-  header 018811d0
+  header 87813dc7
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -513,7 +513,7 @@ frame 0015 at 100x30
   :
   :
 frame 0016 at 100x30
-  header e9a4e738
+  header a9a2b691
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -547,7 +547,7 @@ frame 0016 at 100x30
   :
   :
 frame 0017 at 100x30
-  header 14a37645
+  header ee53a827
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -581,7 +581,7 @@ frame 0017 at 100x30
   :
   :
 frame 0018 at 100x30
-  header 23c609d6
+  header 697bb9d7
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -615,7 +615,7 @@ frame 0018 at 100x30
   :
   :
 frame 0019 at 100x30
-  header d553ec9d
+  header 9c511181
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -649,7 +649,7 @@ frame 0019 at 100x30
   :
   :
 frame 0020 at 100x30
-  header ab6f036c
+  header 66a2957f
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -683,7 +683,7 @@ frame 0020 at 100x30
   :
   :
 frame 0021 at 100x30
-  header d9efacfe
+  header f33e431f
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -717,7 +717,7 @@ frame 0021 at 100x30
   :
   :
 frame 0022 at 100x30
-  header 9a93efb9
+  header 28a33449
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -751,7 +751,7 @@ frame 0022 at 100x30
   :
   :
 frame 0023 at 100x30
-  header 137ee74d
+  header 7a2d0e44
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -785,7 +785,7 @@ frame 0023 at 100x30
   :
   :
 frame 0024 at 100x30
-  header 39398d2b
+  header 661e6e33
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -819,7 +819,7 @@ frame 0024 at 100x30
   :
   :
 frame 0025 at 100x30
-  header d5540a4f
+  header e1c1b72e
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -853,7 +853,7 @@ frame 0025 at 100x30
   :
   :
 frame 0026 at 100x30
-  header bac13e42
+  header a510edb6
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -887,7 +887,7 @@ frame 0026 at 100x30
   :
   :
 frame 0027 at 100x30
-  header 78931060
+  header df828d63
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -921,7 +921,7 @@ frame 0027 at 100x30
   :
   :
 frame 0028 at 100x30
-  header 86bbf1b3
+  header f94d4cad
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -955,7 +955,7 @@ frame 0028 at 100x30
   :
   :
 frame 0029 at 100x30
-  header f1883ac7
+  header fd4c6a33
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -989,7 +989,7 @@ frame 0029 at 100x30
   :
   :
 frame 0030 at 100x30
-  header e43e1525
+  header f0374c0d
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1023,7 +1023,7 @@ frame 0030 at 100x30
   :
   :
 frame 0031 at 100x30
-  header 99127963
+  header 48fe7cec
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1057,7 +1057,7 @@ frame 0031 at 100x30
   :
   :
 frame 0032 at 100x30
-  header f61932e3
+  header 821fce66
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1091,7 +1091,7 @@ frame 0032 at 100x30
   :
   :
 frame 0033 at 100x30
-  header 207d9ccf
+  header 306525c5
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1125,7 +1125,7 @@ frame 0033 at 100x30
   :
   :
 frame 0034 at 100x30
-  header 35f21f76
+  header b0c7f364
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1159,7 +1159,7 @@ frame 0034 at 100x30
   :
   :
 frame 0035 at 100x30
-  header 904958d0
+  header 6317c1ba
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1193,7 +1193,7 @@ frame 0035 at 100x30
   :
   :
 frame 0036 at 100x30
-  header 19a40dca
+  header 3bfc828c
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1227,7 +1227,7 @@ frame 0036 at 100x30
   :
   :
 frame 0037 at 100x30
-  header 82b900be
+  header 43b2bf11
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1261,7 +1261,7 @@ frame 0037 at 100x30
   :
   :
 frame 0038 at 100x30
-  header c7017e9a
+  header 046006d8
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1295,7 +1295,7 @@ frame 0038 at 100x30
   :
   :
 frame 0039 at 100x30
-  header f1ecd437
+  header 2c7acb03
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1329,7 +1329,7 @@ frame 0039 at 100x30
   :
   :
 frame 0040 at 100x30
-  header 27026995
+  header 8410ecb6
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1363,7 +1363,7 @@ frame 0040 at 100x30
   :
   :
 frame 0041 at 100x30
-  header ac68e97e
+  header a4270a0b
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1397,7 +1397,7 @@ frame 0041 at 100x30
   :
   :
 frame 0042 at 100x30
-  header 13663d25
+  header d7acb8da
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1431,7 +1431,7 @@ frame 0042 at 100x30
   :
   :
 frame 0043 at 100x30
-  header b033cdd0
+  header b00fa3e2
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1465,7 +1465,7 @@ frame 0043 at 100x30
   :
   :
 frame 0044 at 100x30
-  header 9fed5801
+  header 25b6717a
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1499,7 +1499,7 @@ frame 0044 at 100x30
   :
   :
 frame 0045 at 100x30
-  header 216ed589
+  header b8d0d3fb
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1533,7 +1533,7 @@ frame 0045 at 100x30
   :
   :
 frame 0046 at 100x30
-  header 2c47bc65
+  header 7cb5beeb
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1567,7 +1567,7 @@ frame 0046 at 100x30
   :
   :
 frame 0047 at 100x30
-  header eb229622
+  header e41cc2f8
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1601,7 +1601,7 @@ frame 0047 at 100x30
   :
   :
 frame 0048 at 100x30
-  header c7159b8d
+  header d596bd16
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1635,7 +1635,7 @@ frame 0048 at 100x30
   :
   :
 frame 0049 at 100x30
-  header 9ce3bee4
+  header 8405b347
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1669,7 +1669,7 @@ frame 0049 at 100x30
   :
   :
 frame 0050 at 100x30
-  header a67ec2b1
+  header 6972f3c5
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1703,7 +1703,7 @@ frame 0050 at 100x30
   :
   :
 frame 0051 at 100x30
-  header ab67cca6
+  header 80f49b90
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1737,7 +1737,7 @@ frame 0051 at 100x30
   :
   :
 frame 0052 at 100x30
-  header 2f42157a
+  header 55e4dfe7
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1771,7 +1771,7 @@ frame 0052 at 100x30
   :
   :
 frame 0053 at 100x30
-  header 99037b8e
+  header 2b8485b9
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1805,7 +1805,7 @@ frame 0053 at 100x30
   :
   :
 frame 0054 at 100x30
-  header 4de91504
+  header ff6eeb33
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
@@ -1839,7 +1839,7 @@ frame 0054 at 100x30
   :
   :
 frame 0055 at 100x30
-  header 80ce5269
+  header 3249ac5e
   |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast 2.5s  Slow --  PASSED  just now
   |
   |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago

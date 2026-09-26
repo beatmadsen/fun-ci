@@ -38,6 +38,7 @@ mod rows;
 mod seed;
 mod snapshot_text;
 mod snapshots;
+mod streak;
 mod scene_pools;
 mod scenes;
 mod screen_bytes;

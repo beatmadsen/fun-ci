@@ -3,6 +3,7 @@
 //! resting or idle scene.
 
 use super::backdrop::Backdrop;
+use super::caption::{caption, stamp};
 use super::film::Film;
 use super::queue::SceneQueue;
 use crate::animation::Scene;
@@ -79,13 +80,18 @@ impl Header {
         self.queue.seek(play_ms);
     }
 
-    /// Paints the scene showing and draws the cells that changed.
-    pub fn draw(&mut self, screen: &mut Screen) {
+    /// Paints the scene showing, writes `streak` over it, and draws the
+    /// cells that changed.
+    pub fn draw(&mut self, screen: &mut Screen, streak: Option<u32>) {
         let active = self.active();
         let mut canvas = Canvas::new(usize::from(screen.width()) * CELL_PIXELS.0, HEADER_HEIGHT * CELL_PIXELS.1);
         active.scene.paint(&mut canvas, active.elapsed_ms);
         canvas.tone();
-        self.film.project(encode(&canvas), screen);
+        let mut cells = encode(&canvas);
+        if let Some(words) = caption(streak) {
+            stamp(&mut cells, &words);
+        }
+        self.film.project(cells, screen);
     }
 
     /// Whether an event scene is playing or waiting to.
