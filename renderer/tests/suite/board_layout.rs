@@ -28,8 +28,13 @@ fn event(stage: &str) -> String {
 
 /// The screen after the last of `lines`, drawn on an 80x24 terminal.
 fn last_screen(lines: &[String]) -> Grid {
+    last_screen_on(lines, (80, 24))
+}
+
+/// The screen after the last of `lines`, drawn on a terminal of `size`.
+fn last_screen_on(lines: &[String], size: (u16, u16)) -> Grid {
     let messages: Vec<Inbound> = lines.iter().map(|line| parse(line).unwrap()).collect();
-    emulate(&replay(&messages, &Library::builtin(), (80, 24), Depth::TrueColour)).pop().unwrap()
+    emulate(&replay(&messages, &Library::builtin(), size, Depth::TrueColour)).pop().unwrap()
 }
 
 fn six_runs_on_24_rows() -> String {
@@ -66,4 +71,17 @@ fn two_stages_passing() -> Vec<String> {
 fn a_stage_effect_keeps_playing_when_another_stage_starts_one() {
     let lint = &last_screen(&two_stages_passing()).cells[14][15];
     assert_eq!((lint.text.as_str(), lint.attrs.clone()), ("L", vec!["bold"]));
+}
+
+#[test]
+fn should_keep_the_empty_state_below_the_header_when_the_terminal_is_too_short_for_all_of_it() {
+    let screen = last_screen_on(&[board(&[]), TICK.into()], (80, 18));
+    assert!(screen.text().lines().nth(16).unwrap().contains("No runs yet."));
+}
+
+#[test]
+fn should_not_write_the_footer_when_its_newline_would_scroll_the_screen() {
+    let messages: Vec<Inbound> = [board(&[run(1, "passed", "passed")]), TICK.into()].iter().map(|line| parse(line).unwrap()).collect();
+    let frame = replay(&messages, &Library::builtin(), (80, 15), Depth::TrueColour).pop().unwrap();
+    assert!(!String::from_utf8(frame.bytes).unwrap().contains("q quit"));
 }

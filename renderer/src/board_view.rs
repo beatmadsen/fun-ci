@@ -87,17 +87,20 @@ impl BoardView {
 
     fn render_body(&mut self, board: &Board, now_ms: i64, rows: u16) {
         if board.runs.is_empty() {
-            self.render_empty();
+            self.render_empty(rows);
         } else {
             self.render_rows(board, now_ms, rows);
         }
     }
 
-    fn render_empty(&mut self) {
-        for line in EMPTY_STATE {
+    /// The empty state's lines, as many as fit below the header without the
+    /// last newline scrolling the screen.
+    fn render_empty(&mut self, rows: u16) {
+        let quit = paint(DIM, "  q quit");
+        let fitting = usize::from(rows).saturating_sub(HEADER_HEIGHT + 1);
+        for line in EMPTY_STATE.iter().copied().chain([quit.as_str()]).take(fitting) {
             self.screen.println(line);
         }
-        self.screen.println(&paint(DIM, "  q quit"));
     }
 
     fn render_rows(&mut self, board: &Board, now_ms: i64, rows: u16) {
@@ -106,7 +109,14 @@ impl BoardView {
         if !lines.is_empty() {
             self.screen.println("");
         }
-        self.screen.println(&paint(DIM, &footer(board)));
+        self.render_footer(board, rows);
+    }
+
+    /// The footer, unless its newline would scroll a screen with no row left below it.
+    fn render_footer(&mut self, board: &Board, rows: u16) {
+        if usize::from(rows) > HEADER_HEIGHT + 1 {
+            self.screen.println(&paint(DIM, &footer(board)));
+        }
     }
 
     fn lines(&self, board: &Board, now_ms: i64, rows: u16) -> Vec<String> {
