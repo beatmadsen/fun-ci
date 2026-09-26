@@ -29,6 +29,12 @@ module FunCi
                    "AND pipeline_runs.pid IS NOT NULL")
       end
 
+      # Records the slow stage failed, unless its result was recorded meanwhile.
+      def self.slow_suite_died(db, job_id)
+        db.execute("UPDATE stage_jobs SET status = 'failed', completed_at = ? WHERE id = ? AND status = 'running'",
+                   [Time.now.utc.iso8601, job_id])
+      end
+
       def self.cancelled(db, run)
         db.execute("UPDATE stage_jobs SET status = 'cancelled', completed_at = ? " \
                    "WHERE pipeline_run_id = ? AND #{ACTIVE}", [Time.now.utc.iso8601, run.id])

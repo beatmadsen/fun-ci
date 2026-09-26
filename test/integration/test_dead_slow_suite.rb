@@ -35,6 +35,21 @@ class TestDeadSlowSuite < Minitest::Test
     assert_equal "failed", poll(answering: Errno::ESRCH).first[:status]
   end
 
+  def test_should_keep_the_result_a_slow_suite_recorded_just_before_it_exited
+    # Given a slow suite that records its pass, then exits, while the console checks on it
+    finishing = lambda do |_signal, _pid|
+      FunCi::Persistence::StageJob.update_status(@db, @slow, "completed")
+      raise Errno::ESRCH
+    end
+
+    # When the console polls
+    FunCi::Console::BoardData.new(@db, run_canceller: canceller(finishing)).runs
+
+    # Then the pass stands
+    assert_equal "completed", FunCi::Persistence::StageJob.find(@db, @slow)[:status],
+                 "a result recorded before the write must not be overwritten"
+  end
+
   def test_should_leave_the_slow_stage_running_while_its_process_lives
     poll(answering: nil)
 

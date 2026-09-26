@@ -28,7 +28,7 @@ module FunCi
       # its run.
       def record_dead(db)
         Persistence::ActiveRuns.slow_suites(db).reject { |_, _, pid| exists?(pid) }.each do |job_id, run_id, _|
-          Persistence::StageJob.update_status(db, job_id, "failed")
+          Persistence::ActiveRuns.slow_suite_died(db, job_id)
           Persistence::RunStatus.settle(db, run_id)
         end
       end
