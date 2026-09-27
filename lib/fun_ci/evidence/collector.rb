@@ -38,7 +38,7 @@ module FunCi
 
       def context(output)
         Context.new(stage: @sources.stage, output: output, worktree: Worktree.new(@sources.worktree),
-                    deadline: Deadline.after(@clock, @settings.budget))
+                    deadline: Deadline.after(@clock, @settings.budget), watched: @sources.watched)
       end
 
       def configured = @settings.entries(@sources.stage).map { |raw| [raw, "configured"] }

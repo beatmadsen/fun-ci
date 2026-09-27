@@ -40,6 +40,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Presets pick out a tool's failures from a stage's output: `use: section`
   with `preset: rspec`, `minitest`, `gradle` or `maven`. Each is checked
   against the recorded output of a real failing run of its tool.
+- `use: log-file` keeps what a stage wrote to the log files under a glob
+  (`path: log/test.log`), and only that: a worktree slot's log still holding
+  a previous run's lines is read from where it stood when the stage started,
+  or from its start when it was rotated. `grep:`, `start:` and `lines:`
+  narrow it down.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

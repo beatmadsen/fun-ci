@@ -39,6 +39,13 @@ module FunCi
       # The raw entries for `stage`: those for every stage, then its own.
       def entries(stage) = stage_list("all") + stage_list(stage)
 
+      # The globs whose files are stamped when the stage starts, so what it
+      # wrote to them can be told from what was there before.
+      def watched(stage)
+        entries(stage).select { |raw| raw.is_a?(Hash) && raw["use"] == "log-file" }.map { |raw| raw["path"] }
+                      .grep(String)
+      end
+
       def errors = SettingsCheck.new(@raw).errors
 
       private

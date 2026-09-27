@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "stage_end"
-require_relative "../evidence/collector"
+require_relative "../evidence/start"
 
 module FunCi
   module Pipeline
@@ -17,9 +17,10 @@ module FunCi
       # Answers [the outcome recorded, what the stage printed].
       def run(stage, command, recorder, job_id)
         with_stage_dir do |stage_dir|
+          collector = collector(stage, stage_dir)
           output, status, timed_out = execute(stage, command, stage_dir) { |pid| recorder.stage_process(job_id, pid) }
           finished = StageEnd::Finished.new(output: output, status: status, timed_out: timed_out)
-          [StageEnd.new(recorder, job_id, collector(stage, stage_dir)).record(finished), output]
+          [StageEnd.new(recorder, job_id, collector).record(finished), output]
         end
       end
 
@@ -41,12 +42,11 @@ module FunCi
         stage_dir&.remove
       end
 
-      # What to collect is read from the worktree, so it is the commit's own.
+      # Made before the stage runs, which is when its watched files are stamped.
       def collector(stage, stage_dir)
         sources = Evidence::Sources.new(stage: stage, worktree: @dir, reports: stage_dir,
                                         environment: @seams.environment.merge(stage_dir.env))
-        settings = Evidence::Settings.load(File.join(@dir, ".fun-ci", "config"))
-        Evidence::Collector.new(sources, settings: settings, clock: @seams.clock)
+        Evidence::Start.collector(sources, @seams.clock)
       end
     end
   end

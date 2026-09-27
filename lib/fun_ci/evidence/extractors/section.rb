@@ -23,10 +23,11 @@ module FunCi
           @options = options
         end
 
-        def extract(context)
-          source = Source.for(context, @options["path"])
+        def extract(context) = found_in(Source.for(context, @options["path"]), context.deadline)
+
+        def found_in(source, deadline)
           walk = new_walk
-          truncated = LineScan.cut_short?(source.lines, context.deadline) { |line, index| walk.step(line, index) }
+          truncated = LineScan.cut_short?(source.lines, deadline) { |line, index| walk.step(line, index) }
           Findings.new(excerpts: walk.finish(source.lines).map { |found| excerpt(source, found, truncated) })
         end
 

@@ -25,6 +25,12 @@ class TestEvidenceSettings < Minitest::Test
     assert_empty SETTINGS.new({ "stages" => { "fast" => [{ "use" => "b" }] } }).entries("slow")
   end
 
+  def test_should_watch_the_files_under_each_log_file_entry_s_path
+    raw = { "stages" => { "fast" => [{ "use" => "log-file", "path" => "log/*.log" }, { "use" => "grep" }] } }
+
+    assert_equal ["log/*.log"], SETTINGS.new(raw).watched("fast")
+  end
+
   def test_should_detect_presets_by_default
     assert SETTINGS.new(nil).detect?
   end

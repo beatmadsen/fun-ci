@@ -20,9 +20,10 @@ module FunCi
           @options = options
         end
 
-        def extract(context)
-          source = Source.for(context, @options["path"])
-          hits, truncated = matches(source.lines, context.deadline)
+        def extract(context) = found_in(Source.for(context, @options["path"]), context.deadline)
+
+        def found_in(source, deadline)
+          hits, truncated = matches(source.lines, deadline)
           ranges = LineRanges.around(hits, @options.fetch("context", 0), source.lines.size)
           Findings.new(excerpts: ranges.map { |range| excerpt(source, range, truncated) })
         end

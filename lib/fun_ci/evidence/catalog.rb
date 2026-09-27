@@ -4,6 +4,7 @@ require_relative "option_check"
 require_relative "presets"
 require_relative "extractors/grep"
 require_relative "extractors/section"
+require_relative "extractors/log_file"
 
 module FunCi
   module Evidence
@@ -16,7 +17,8 @@ module FunCi
       # name: what the evidence credits (`grep`, `section:rspec`); on: nil, or "overrun".
       Entry = Data.define(:name, :extractor, :on)
 
-      BUILT_INS = { "grep" => Extractors::Grep, "section" => Extractors::Section }.freeze
+      BUILT_INS = { "grep" => Extractors::Grep, "section" => Extractors::Section,
+                    "log-file" => Extractors::LogFile }.freeze
       SHARED = %w[use on preset].freeze
 
       def self.entry(raw)
