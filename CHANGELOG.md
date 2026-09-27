@@ -50,6 +50,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failing tests above, then try again."
 
 ### Fixed
+- A commit on a branch cancelled every unfinished run on a branch of that
+  name, in every project, because all projects share one database. A commit
+  on `main` in one project stopped another project's pipeline on `main`. It
+  now cancels only its own project's runs.
 - A slow suite whose process dies without finishing no longer leaves its run
   RUNNING for ever: the console records it failed on its next poll.
 - A database that stays busy, or can't be written because the disk is full,

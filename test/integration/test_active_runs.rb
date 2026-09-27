@@ -11,6 +11,8 @@ class TestActiveRuns < Minitest::Test
 
   RUN = FunCi::Persistence::PipelineRun
   JOB = FunCi::Persistence::StageJob
+  BRANCH = FunCi::Persistence::Branch
+  PROJECT = "/project"
 
   def setup = setup_test_db
   def teardown = teardown_test_db
@@ -34,7 +36,7 @@ class TestActiveRuns < Minitest::Test
   end
 
   def test_should_count_a_run_waiting_for_a_slot_as_active
-    RUN.store_trigger_pid(@db, RUN.create(@db, commit_hash: "abc1234", branch: "main"), 100)
+    RUN.store_trigger_pid(@db, RUN.create(@db, commit_hash: "abc1234", branch: "main", project_path: PROJECT), 100)
 
     assert_equal [[100]], active.map(&:processes)
   end
@@ -49,7 +51,13 @@ class TestActiveRuns < Minitest::Test
   def test_should_leave_out_runs_on_other_branches
     running_run
 
-    assert_empty FunCi::Persistence::ActiveRuns.on_branch(@db, "feature")
+    assert_empty FunCi::Persistence::ActiveRuns.on_branch(@db, BRANCH.new(project: PROJECT, name: "feature"))
+  end
+
+  def test_should_leave_out_runs_of_other_projects_on_a_branch_of_the_same_name
+    running_run
+
+    assert_empty FunCi::Persistence::ActiveRuns.on_branch(@db, BRANCH.new(project: "/other-project", name: "main"))
   end
 
   def test_should_find_an_unfinished_run_by_its_id
@@ -81,7 +89,7 @@ class TestActiveRuns < Minitest::Test
 
   private
 
-  def active = FunCi::Persistence::ActiveRuns.on_branch(@db, "main")
+  def active = FunCi::Persistence::ActiveRuns.on_branch(@db, BRANCH.new(project: PROJECT, name: "main"))
 
   def job_statuses(run_id)
     @db.execute("SELECT status FROM stage_jobs WHERE pipeline_run_id = ? ORDER BY id", [run_id]).flatten
@@ -89,7 +97,7 @@ class TestActiveRuns < Minitest::Test
 
   # Lint finished; fast is running in process group 300.
   def running_run
-    run_id = RUN.create(@db, commit_hash: "abc1234", branch: "main")
+    run_id = RUN.create(@db, commit_hash: "abc1234", branch: "main", project_path: PROJECT)
     RUN.update_status(@db, run_id, "running")
     RUN.store_trigger_pid(@db, run_id, 100)
     RUN.store_pid(@db, run_id, 200)

@@ -59,7 +59,7 @@ class TestStalePipelineCanceller < Minitest::Test
   private
 
   def active_run(sha, branch: "main")
-    RUN.create(@db, commit_hash: sha, branch: branch).tap do |id|
+    RUN.create(@db, commit_hash: sha, branch: branch, project_path: "/project").tap do |id|
       RUN.update_status(@db, id, "running")
       RUN.store_trigger_pid(@db, id, 100)
     end
@@ -67,7 +67,8 @@ class TestStalePipelineCanceller < Minitest::Test
 
   def cancel
     canceller = FunCi::Pipeline::RunCanceller.new(killer: ->(signal, pid) { @signals << [signal, pid] })
-    FunCi::Pipeline::StalePipelineCanceller.new(db: @db, branch: "main", stdout: @stdout, run_canceller: canceller)
+    main = FunCi::Persistence::Branch.new(project: "/project", name: "main")
+    FunCi::Pipeline::StalePipelineCanceller.new(db: @db, branch: main, stdout: @stdout, run_canceller: canceller)
                                            .cancel(new_commit_hash: "def5678")
   end
 end

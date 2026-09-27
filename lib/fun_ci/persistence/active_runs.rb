@@ -11,11 +11,15 @@ module FunCi
     # the lock of the worktree slot it holds (nil while it waits for one).
     ActiveRun = Data.define(:id, :commit_hash, :processes, :stage_groups, :slot_lock)
 
+    # A branch of one project. Every project records its runs in the same
+    # database, and two projects can each have a main.
+    Branch = Data.define(:project, :name)
+
     # Runs waiting for a slot or running, and recording one as cancelled.
     module ActiveRuns
       ACTIVE = "status IN ('scheduled', 'running')"
 
-      def self.on_branch(db, branch) = where(db, "branch = ?", branch)
+      def self.on_branch(db, branch) = where(db, "project_path = ? AND branch = ?", branch.project, branch.name)
 
       # The run with this id, when it has not finished; none otherwise.
       def self.with_id(db, id) = where(db, "id = ?", id)
@@ -41,9 +45,9 @@ module FunCi
         PipelineRun.update_status(db, run.id, "cancelled")
       end
 
-      def self.where(db, clause, value)
+      def self.where(db, clause, *values)
         db.execute("SELECT id, commit_hash, trigger_pid, pid, slot_lock FROM pipeline_runs " \
-                   "WHERE #{clause} AND #{ACTIVE} ORDER BY id", [value]).map { |row| active_run(db, row) }
+                   "WHERE #{clause} AND #{ACTIVE} ORDER BY id", values).map { |row| active_run(db, row) }
       end
       private_class_method :where
 

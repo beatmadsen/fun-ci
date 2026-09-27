@@ -45,6 +45,7 @@ module FunCi
       def known_commit? = @commit.sha == NULL_SHA || @seams.commit_validator.call(@commit.sha)
 
       def workspace = @seams.workspace || Workspaces.for(@project, @commit.sha)
+      def branch = Persistence::Branch.new(project: @project, name: @commit.branch)
 
       # The scripts come from the commit when it has them, so they match the
       # code they test; a project that keeps .fun-ci/ out of git uses its own.
@@ -83,7 +84,7 @@ module FunCi
         return unless recorder.db
 
         recorder.tolerating do
-          StalePipelineCanceller.new(db: recorder.db, branch: @commit.branch, stdout: @io.stdout)
+          StalePipelineCanceller.new(db: recorder.db, branch: branch, stdout: @io.stdout)
                                 .cancel(new_commit_hash: @commit.sha)
         end
       end

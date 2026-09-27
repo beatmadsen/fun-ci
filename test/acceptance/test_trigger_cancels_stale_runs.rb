@@ -37,10 +37,19 @@ class TestTriggerCancelsStaleRuns < Minitest::Test
     assert_equal "running", FunCi::Persistence::PipelineRun.find(@client.db, other)[:status]
   end
 
+  def test_should_leave_an_unfinished_run_alone_when_it_belongs_to_another_project
+    other = unfinished_run(branch: "main", project: "/elsewhere/other-project")
+
+    @client.trigger(commit_hash: "abc1234", branch: "main")
+
+    assert_equal "running", FunCi::Persistence::PipelineRun.find(@client.db, other)[:status]
+  end
+
   private
 
-  def unfinished_run(branch:)
-    id = FunCi::Persistence::PipelineRun.create(@client.db, commit_hash: "old5678", branch: branch)
+  def unfinished_run(branch:, project: @client.project_dir)
+    id = FunCi::Persistence::PipelineRun.create(@client.db, commit_hash: "old5678", branch: branch,
+                                                            project_path: project)
     FunCi::Persistence::PipelineRun.update_status(@client.db, id, "running")
     id
   end
