@@ -68,6 +68,7 @@ fun-ci wait [commit]                            Wait until that verdict is decid
 fun-ci runs                                     This project's recent runs, newest first
 fun-ci events [--follow]                        The runs' events as JSON lines
 fun-ci why [commit] [stage]                     Everything kept about why a stage failed
+fun-ci extract <stage> --output <file>          Try a stage's extractors on a saved output
 ```
 
 ## For Coding Agents

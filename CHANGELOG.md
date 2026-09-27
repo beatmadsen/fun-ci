@@ -68,6 +68,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a bad exit, bad JSON or more than 256 KB of output is recorded as a
   problem. `fun-ci check` reports a `run:` script that is missing or can't be
   run. The documents are pinned in `contract/evidence/`.
+- `fun-ci extract STAGE --output FILE` runs a stage's extractors against a
+  saved output (`fun-ci why --raw > FILE` saves one), with the current
+  directory as the worktree, and prints what `why` would print, so an
+  extractor can be written and tried without making a commit. It touches no
+  database.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

@@ -14,7 +14,8 @@ module FunCi
       "init" => :run_init,
       "install-hooks" => :run_install_hooks,
       "check" => :run_check,
-      "prune" => :run_prune
+      "prune" => :run_prune,
+      "extract" => :run_extract
     }.freeze
     AGENT_COMMANDS = %w[status runs wait events why].freeze
 
@@ -32,8 +33,8 @@ module FunCi
 
     def run(args)
       subcommand = args.first
-      return help(0) if %w[-h --help].include?(subcommand)
-      return version if subcommand == "--version"
+      return CliHelp.help(@io.stdout) if %w[-h --help].include?(subcommand)
+      return CliHelp.version(@io.stdout) if subcommand == "--version"
 
       return unknown_command(subcommand) unless ROUTES.key?(subcommand) || AGENT_COMMANDS.include?(subcommand)
 
@@ -92,6 +93,11 @@ module FunCi
     def run_check(args) = setup_commands.check(args)
     def setup_commands = Setup::Commands.new(Dir.pwd, @io.stdout)
 
+    def run_extract(args)
+      require_relative "evidence/extract_command"
+      Evidence::ExtractCommand.new(Dir.pwd, @io).run(args)
+    end
+
     def run_prune(_args)
       require_relative "pipeline/worktree_prune"
       removed = Pipeline::WorktreePrune.new(Pipeline::Worktrees.new(Dir.pwd)).run
@@ -108,16 +114,6 @@ module FunCi
       db = Persistence::Database.connection(db_path)
       Persistence::Database.migrate!(db)
       db
-    end
-
-    def help(exit_code)
-      @io.stdout.puts CliHelp::TEXT
-      exit_code
-    end
-
-    def version
-      @io.stdout.puts "fun-ci #{FunCi::VERSION}"
-      0
     end
 
     def unknown_command(subcommand)

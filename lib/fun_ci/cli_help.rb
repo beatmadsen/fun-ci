@@ -1,7 +1,18 @@
 # frozen_string_literal: true
 
 module FunCi
+  # What `fun-ci --help` and `fun-ci --version` print; each answers the exit code.
   module CliHelp
+    def self.help(out)
+      out.puts TEXT
+      0
+    end
+
+    def self.version(out)
+      out.puts "fun-ci #{FunCi::VERSION}"
+      0
+    end
+
     TEXT = <<~HELP
       fun-ci - Opinionated, local-first CI for your projects
 
@@ -20,6 +31,7 @@ module FunCi
         wait           Wait for a commit's verdict, then exit with it as status does
         events         Print this project's runs' events as JSON lines
         why            Print everything kept about why a commit's stage failed
+        extract        Try a stage's evidence extractors on a saved output
 
       Options:
         -h, --help     Show this help message

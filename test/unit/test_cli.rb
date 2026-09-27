@@ -69,6 +69,11 @@ class TestCliRouting < Minitest::Test
     assert_equal ["HEAD", "--json"], routed
   end
 
+  def test_routes_extract_subcommand_with_its_arguments
+    routed, = route(["extract", "fast", "--output", "run.log"], "extract")
+    assert_equal ["fast", "--output", "run.log"], routed
+  end
+
   def test_returns_handler_exit_code
     handlers = { "check" => ->(_args) { 1 } }
     exit_code = FunCi::Cli.run(["check"], handlers: handlers)

@@ -65,6 +65,7 @@ fun-ci wait [REV] [--need LEVEL] [--within 30s] [--follow-branch]  # Block until
 fun-ci runs [-n 10] [--branch NAME] [--json]          # The project's recent runs, newest first
 fun-ci events [--follow] [--only failures]            # The runs' events as JSON lines
 fun-ci why [REV] [STAGE] [--need LEVEL] [--json] [--raw]  # Everything kept about why a stage failed; --raw, its output
+fun-ci extract STAGE --output FILE [--reports DIR] [--exit N | --timed-out] [--json]  # Try a stage's extractors on a saved output
 ```
 
 ## Stack

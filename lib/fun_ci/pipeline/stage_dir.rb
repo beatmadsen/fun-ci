@@ -2,7 +2,7 @@
 
 require "tmpdir"
 require "fileutils"
-require_relative "test_report"
+require_relative "report_reader"
 require_relative "output_window"
 require_relative "../persistence/state_dir"
 
@@ -14,8 +14,6 @@ module FunCi
     # and fun-ci's JSON (*.json), and the window its output is written to,
     # unmasked, until the stage is recorded (AT-10.6).
     class StageDir
-      READERS = { ".xml" => TestReport.method(:junit), ".json" => TestReport.method(:json) }.freeze
-
       def self.default_root = File.join(Persistence::StateDir.path(ENV), "stages")
 
       # Removes the directories of processes that died before removing their own.
@@ -51,18 +49,8 @@ module FunCi
       def env = { "FUN_CI_REPORT" => reports_path }
       def window(sizes = OutputWindow::REAL) = OutputWindow.in(@path, sizes)
 
-      def failures
-        Dir.children(reports_path).sort.flat_map { |name| read(name) || [] }
-      end
-
+      def failures = ReportReader.failures(reports_path)
       def remove = FileUtils.rm_rf(@path)
-
-      private
-
-      def read(name)
-        reader = READERS[File.extname(name)]
-        reader&.call(File.read(File.join(reports_path, name)))
-      end
     end
   end
 end
