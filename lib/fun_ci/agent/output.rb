@@ -3,6 +3,7 @@
 require "json"
 require_relative "status_text"
 require_relative "why_text"
+require_relative "why_json"
 require_relative "status_json"
 require_relative "runs_text"
 require_relative "exit_code"
@@ -25,6 +26,7 @@ module FunCi
       # Everything kept about the stage named, or says no stage decided the verdict.
       def why(report, stage_name)
         stage = report.stages.find { |candidate| candidate.name == stage_name }
+        return print_json(WhyJson.document(report, stage)) if @json
         return print_lines([StatusText.header(report), NO_STAGE]) unless stage
 
         print_lines(WhyText.lines(report, stage))
