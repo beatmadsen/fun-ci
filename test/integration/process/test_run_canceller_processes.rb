@@ -53,7 +53,7 @@ class TestRunCancellerProcesses < Minitest::Test
   # A stage whose script starts a child, in a process group of its own, as ProcessRunner starts one.
   def start_stage_group(recorder)
     started = File.join(@dir, "started").tap { |fifo| File.mkfifo(fifo) }
-    pid = Process.spawn("sh", "-c", "sleep 30 & echo $! > #{started}; wait", pgroup: true)
+    pid = Process.spawn("sh", "-c", "sleep 30 & echo $! > #{started}; wait", pgroup: true, %i[out err] => File::NULL)
     recorder.stage_process(recorder.start_stage("fast"), pid)
     [pid, Fifo.read(started).to_i]
   end
