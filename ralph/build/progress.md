@@ -69,7 +69,7 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-8.2: A busy database doesn't stop the pipeline, and says so
 - [x] AT-8.3: A slow suite that dies is recorded failed
 - [x] AT-8.4: An unwritable database is reported with its path
-- [ ] AT-9.1: The database lives in a per-user state directory
+- [x] AT-9.1: The database lives in a per-user state directory
 - [ ] AT-9.2: `fun-ci status` says where a commit's run stands
 - [ ] AT-9.3: `fun-ci status --json` gives the same facts to a program
 - [ ] AT-9.4: `fun-ci runs` lists the project's recent runs

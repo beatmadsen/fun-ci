@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "fileutils"
-require "tmpdir"
 require_relative "../fun_ci"
 require_relative "cli_help"
 require_relative "pipeline/trigger_params"
+require_relative "persistence/state_dir"
 require_relative "setup/installer"
 require_relative "setup/hook_writer"
 require_relative "setup/setup_checker"
@@ -21,7 +21,7 @@ module FunCi
       "prune" => :run_prune
     }.freeze
 
-    def self.default_db_dir = File.join(Dir.tmpdir, "fun-ci")
+    def self.default_db_dir = Persistence::StateDir.path(ENV)
 
     def self.run(args, io: Pipeline::Io.new, handlers: {}, db_dir: default_db_dir)
       new(io: io, handlers: handlers, db_dir: db_dir).run(args)

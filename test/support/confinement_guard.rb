@@ -6,9 +6,9 @@ require_relative "confinement_hooks"
 
 # Tests touch only a temp root private to this run. Its name is short because
 # the parallel executor puts a Unix socket in it, and socket paths are capped
-# at 104 bytes. TMPDIR points at it, so
-# code that writes under Dir.tmpdir (fun-ci's own database lives there)
-# writes into the sandbox too. A file write, a SQLite database or a git
+# at 104 bytes. TMPDIR points at it, and XDG_STATE_HOME at a directory in it,
+# so code that writes under Dir.tmpdir, and fun-ci's own database, land in
+# the sandbox too, in this process and every child. A file write, a SQLite database or a git
 # command outside it raises and fails the test that did it, naming the path.
 module ConfinementGuard
   class Escape < SecurityError; end
@@ -24,6 +24,7 @@ module ConfinementGuard
       Dir.mkdir(short, 0o700)
       @root = File.realpath(short)
       ENV["TMPDIR"] = short
+      ENV["XDG_STATE_HOME"] = File.join(short, "state")
       ConfinementHooks.install
     end
 

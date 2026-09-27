@@ -37,7 +37,7 @@ module BlockedRun
 
   # Starts the run and returns once a stage script has said it started.
   def start_blocked_run(sha)
-    Descendants.spawn({ "TMPDIR" => @tmp }, RbConfig.ruby, FUN_CI, "trigger", sha, "main",
+    Descendants.spawn({ "TMPDIR" => @tmp, "XDG_STATE_HOME" => @tmp }, RbConfig.ruby, FUN_CI, "trigger", sha, "main",
                       chdir: @project.dir, %i[out err] => File::NULL).tap { File.read(started) }
   end
 

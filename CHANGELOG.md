@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- fun-ci keeps its database in `$XDG_STATE_HOME/fun-ci/`, or
+  `~/.local/state/fun-ci/` without it, instead of under `$TMPDIR`. Every
+  process of a user now finds the same database, including an agent in a
+  sandbox with a `TMPDIR` of its own. Runs recorded under `$TMPDIR` before
+  are not carried over.
 - The console's header plays a scene each time a run passes a milestone:
   lint, build, the fast suite, and the whole run. The scenes queue and each
   plays to its end, so a failure no longer cuts a celebration short, and a run
