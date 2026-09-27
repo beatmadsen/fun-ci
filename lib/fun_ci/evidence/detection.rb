@@ -3,6 +3,7 @@
 require_relative "presets"
 require_relative "line_scan"
 require_relative "patterns"
+require_relative "source"
 
 module FunCi
   module Evidence
@@ -10,11 +11,15 @@ module FunCi
     # When it starts, the candidates: presets any of whose marker files the
     # worktree has (a marker may also name a text the file must hold), and
     # presets without markers. When it fails, of the candidates with an
-    # output signature, those whose signature matched a line; the output is
-    # read once, against the signatures joined.
+    # output signature, those whose signature matched a line of the output's
+    # last megabyte, where tools print their summaries: each signature costs
+    # a read, and over the whole window with every preset a candidate that
+    # was most of the budget (script/bench_detection.rb). The part is read
+    # once, against the signatures joined.
     module Detection
       # because: why it was chosen, such as "file Gemfile", or nil.
       Found = Data.define(:preset, :because)
+      SCAN_BYTES = 1_048_576
 
       def self.candidates(worktree, presets)
         presets.filter_map do |preset|
@@ -25,8 +30,9 @@ module FunCi
         end
       end
 
-      def self.chosen(lines, candidates, deadline)
-        seen = SignatureScan.new(candidates.map(&:preset)).seen(lines, deadline)
+      def self.chosen(output, candidates, deadline, scan_bytes: SCAN_BYTES)
+        last_part = output.byteslice([output.bytesize - scan_bytes, 0].max..)
+        seen = SignatureScan.new(candidates.map(&:preset)).seen(Source.of("output", last_part).lines, deadline)
         candidates.filter_map { |found| chose(found, seen) }
       end
 

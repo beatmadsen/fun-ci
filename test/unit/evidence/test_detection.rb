@@ -47,6 +47,12 @@ class TestDetection < Minitest::Test
     assert_empty chosen("x\ny\n", [RSPEC])
   end
 
+  def test_should_look_for_signatures_in_the_output_s_last_part_only
+    output = "rspec ./spec/a_spec.rb:4\n#{"#{"x" * 99}\n" * 3}"
+
+    assert_empty FunCi::Evidence::Detection.chosen(output, found({ "Gemfile" => "" }, [RSPEC]), NEVER, scan_bytes: 150)
+  end
+
   def test_should_choose_a_candidate_without_a_signature_on_its_markers_alone
     assert_equal [["gradle", "file build.gradle"]], chosen("x\n", [GRADLE], files: { "build.gradle" => "" })
   end
@@ -73,7 +79,7 @@ class TestDetection < Minitest::Test
   def candidates(files, presets) = found(files, presets).map { |found| [found.preset.name, found.because] }
 
   def chosen(output, presets, files: { "Gemfile" => "" })
-    FunCi::Evidence::Detection.chosen(output.lines(chomp: true), found(files, presets), NEVER)
+    FunCi::Evidence::Detection.chosen(output, found(files, presets), NEVER)
                               .map { |found| [found.preset.name, found.because] }
   end
 

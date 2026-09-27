@@ -61,7 +61,7 @@ module FunCi
 
       # The candidates' presets whose signatures the output matched, or that have none.
       def detected(output, deadline)
-        Detection.chosen(Source.of("output", output).lines, @sources.candidates, deadline).map do |found|
+        Detection.chosen(output, @sources.candidates, deadline).map do |found|
           [{ "use" => found.preset.use, "preset" => found.preset.name }, found.because]
         end
       end
