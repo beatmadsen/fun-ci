@@ -33,6 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   context, in the output or in a log file. Each stage's entries run when it
   fails, the slow suite's too, within a budget of 2 seconds (`budget:`), and
   `mask:` adds patterns to mask.
+- `fun-ci check` reports a mistake under `evidence:` (an unknown extractor,
+  an option it doesn't take, a pattern that doesn't compile). A mistake never
+  stops a pipeline: the entry is left out and `fun-ci why` names it as a
+  problem.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

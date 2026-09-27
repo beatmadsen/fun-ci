@@ -44,6 +44,19 @@ class TestWhyText < Minitest::Test
     assert_equal "Lines matching ERROR (output:3), from grep:", lines(stage("failed", kept: { evidence: evidence }))[3]
   end
 
+  def test_should_print_the_problems_each_naming_its_entry
+    evidence = '{"problems":[{"extractor":"nosuch","message":"unknown extractor \'nosuch\'"}]}'
+
+    assert_equal ["", "Problems collecting the evidence:", "  nosuch: unknown extractor 'nosuch'"],
+                 lines(stage("failed", kept: { evidence: evidence })).drop(2)
+  end
+
+  def test_should_print_the_facts
+    evidence = '{"facts":[{"name":"alongside","value":"slow","extractor":"fun-ci"}]}'
+
+    assert_equal ["", "Facts:", "  alongside: slow"], lines(stage("failed", kept: { evidence: evidence })).drop(2)
+  end
+
   def test_should_say_the_evidence_of_a_failed_stage_was_pruned
     assert_equal ["Its evidence is no longer kept: fun-ci keeps it for a project's 50 newest runs."],
                  lines(stage("failed", kept: { pruned: true })).drop(2)

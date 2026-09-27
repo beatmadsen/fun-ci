@@ -6,7 +6,7 @@ require "stringio"
 
 # `fun-ci check`: report what ProjectConfig found wrong, or that all is well.
 class TestSetupChecker < Minitest::Test
-  Config = Struct.new(:validate)
+  Config = Struct.new(:validate, :evidence_errors)
   Hooks = Struct.new(:warnings)
   PROBLEMS = [".fun-ci/lint.sh is not found", ".fun-ci/fast.sh is not executable"].freeze
 
@@ -40,10 +40,17 @@ class TestSetupChecker < Minitest::Test
     assert_equal "All OK. The project is configured.\nWarning: hook calls fun-ci\n", @stdout.string
   end
 
+  def test_should_list_a_mistake_in_the_evidence_configuration_as_a_problem
+    check([], evidence: ["evidence.stages.fast: unknown extractor 'nosuch'"])
+
+    assert_equal "evidence.stages.fast: unknown extractor 'nosuch'\n", @stdout.string
+  end
+
   private
 
-  def check(problems, warnings: [])
+  def check(problems, warnings: [], evidence: [])
     @stdout = StringIO.new
-    FunCi::Setup::SetupChecker.new(config: Config.new(problems), hooks: Hooks.new(warnings), stdout: @stdout).run
+    FunCi::Setup::SetupChecker.new(config: Config.new(problems, evidence), hooks: Hooks.new(warnings),
+                                   stdout: @stdout).run
   end
 end

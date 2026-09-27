@@ -18,7 +18,7 @@ module FunCi
 
       # Warnings are printed but don't fail the check.
       def run
-        errors = @config.validate
+        errors = @config.validate + @config.evidence_errors
         @stdout.puts(errors.empty? ? "All OK. The project is configured." : errors)
         @hooks.warnings.each { |warning| @stdout.puts "Warning: #{warning}" }
         errors.empty? ? 0 : 1

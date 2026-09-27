@@ -2,11 +2,24 @@
 
 module FunCi
   module Agent
-    # A stage's evidence as text: its failures, each with its whole message,
-    # then each excerpt under its title, each naming the extractor that found it.
+    # A stage's evidence as text: its facts, its failures, each with its whole
+    # message, each excerpt under its title, each naming the extractor that
+    # found it, then the problems extractors had.
     module EvidenceText
       def self.lines(document)
-        failures(document.failures) + document.excerpts.flat_map { |excerpt| excerpt(excerpt) }
+        facts(document.facts) + failures(document.failures) +
+          document.excerpts.flat_map { |excerpt| excerpt(excerpt) } + problems(document.problems)
+      end
+
+      def self.facts(facts)
+        facts.empty? ? [] : ["", "Facts:", *facts.map { |fact| "  #{fact[:name]}: #{fact[:value]}" }]
+      end
+
+      def self.problems(problems)
+        return [] if problems.empty?
+
+        lines = problems.map { |problem| "  #{problem[:extractor]}: #{problem[:message]}" }
+        ["", "Problems collecting the evidence:", *lines]
       end
 
       def self.failures(failures)
@@ -24,7 +37,7 @@ module FunCi
         place = excerpt[:location] == "output" ? "" : " (#{excerpt[:location]})"
         ["", "#{excerpt[:title]}#{place}, from #{excerpt[:extractor]}:", *excerpt[:lines].map { |line| "  #{line}" }]
       end
-      private_class_method :failures, :failure, :excerpt
+      private_class_method :facts, :problems, :failures, :failure, :excerpt
     end
   end
 end

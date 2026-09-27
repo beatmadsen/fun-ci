@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "settings"
+require_relative "../evidence/settings"
 
 module FunCi
   module Setup
@@ -21,6 +22,10 @@ module FunCi
 
         REQUIRED_SCRIPTS.flat_map { |script| script_errors(script) } + settings.errors
       end
+
+      # Mistakes in the `evidence` key, which `fun-ci check` reports but which
+      # never stop a pipeline: the entry with the mistake is left out instead.
+      def evidence_errors = Evidence::Settings.load(File.join(@fun_ci_dir, "config")).errors
 
       def worktree_slots = settings.worktree_slots
 
