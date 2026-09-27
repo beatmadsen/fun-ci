@@ -47,7 +47,9 @@ already uses.
 3. A project whose failures don't fit the built-in extractors can fix that in
    its own repository, with a line of config or a script, and try the change
    without making a commit.
-4. With no configuration, fun-ci behaves as it does today.
+4. With no configuration, fun-ci finds the built-in extractors that apply to
+   the project and the failure, and runs only those, so shipping extractors
+   for many stacks costs a project nothing for the stacks it doesn't use.
 
 Not goals: keeping build artefacts (screenshots, coverage, binaries), which the
 Local principle in `design.md` rules out; reading anything from uncommitted
@@ -79,6 +81,9 @@ the stage started.
 ## How it fits together
 
 ```
+stage starts: presets whose marker files exist become candidates,
+              and their watched files' sizes are noted
+        |
 stage fails or overruns
         |
         |  (overrun only) overrun extractors run before the kill
@@ -86,7 +91,10 @@ stage fails or overruns
   the stage's directory: output spool, reports, watched files' start sizes
         |
         v
-  extractors, in the order configured for the stage, within the budget
+  one scan of the output for the candidates' signatures
+        |
+        v
+  the configured extractors, then the detected ones, within the budget
         |
         v
   one evidence document: facts, failures, excerpts, problems
@@ -138,6 +146,45 @@ common appenders (`logstash`, `ecs`, `pino`, `structlog`). Every preset is
 pinned by the recorded output of a real failing run of that tool, which its
 unit test reads; a preset without such a fixture is not shipped.
 
+### Choosing which run
+
+fun-ci is meant to ship presets for most popular stacks, so it can't run them
+all on every failure: each reads the whole output, and some walk files or
+parse every line as JSON. So each preset also says when it applies, and only
+those that apply run in full. It says so with either or both of:
+
+- **Marker files**, any of which must exist in the worktree: `Gemfile` for
+  `rspec` and the Rails `log/test.log` preset, `build.gradle` or
+  `build.gradle.kts` for `gradle`, `pom.xml` for `maven`, `go.mod`, `Cargo.toml`,
+  `pyproject.toml` or `setup.cfg`, or a `package.json` whose dependencies name
+  `jest`. They are checked when the stage starts, at the commit being tested,
+  which is also when the files a candidate watches have their sizes noted. A
+  preset without markers is always a candidate.
+- **An output signature**, a pattern only that tool prints, such as rspec's
+  rerun lines (`rspec ./spec/...`) or pytest's `short test summary info`. When
+  the stage fails, the signatures of all candidates are joined into one
+  pattern and the output is scanned once, so the cost of choosing grows with
+  the output, not with the number of presets. A candidate with a signature
+  runs only if it was seen; one without runs on its markers alone.
+
+`output-tail` and `test-reports` always run, since they are cheap and apply to
+any stack, and so does `process-tree` for an overrun. A project's own `run:`
+commands run only when the config lists them; fun-ci never guesses at them.
+
+The evidence records what was chosen and why (`"because": "file Gemfile"`,
+`"because": "output matched rspec ./"`, `"because": "configured"`), and
+`fun-ci check` lists the presets whose markers the project has, so a
+developer or an agent can see what will run before anything fails.
+
+**Decision: presets detect themselves; `init` writes no lists.** A list
+written by `init` goes stale when the project adds a tool, and misses the
+second stack in a repository that has two. Markers are checked on every run
+and cost a handful of file checks; signatures cost one pass over the output.
+*Revisit if* the scan shows up in a stage's time: then scan only the last
+part of the output for signatures.
+
+### When the built-ins aren't enough
+
 A project that needs something the built-ins don't do has three steps up,
 each more work than the last: use a preset; give `section`, `grep` or
 `json-log` patterns of its own; or run a command.
@@ -151,48 +198,43 @@ recorded against that extractor, not a hung pipeline.
 
 ## Configuration
 
-Extractors are configured in `.fun-ci/config`, the YAML file that already
-holds `worktree_slots`, as a list per stage. `all` applies to every stage and
-runs first.
+Most projects need no configuration. When they do, it goes in
+`.fun-ci/config`, the YAML file that already holds `worktree_slots`, as a list
+per stage, which runs before the detected presets. `all` applies to every
+stage and runs first.
 
 ```yaml
 worktree_slots: 2
 evidence:
   budget: 5s
+  skip: [pino]
   all:
-    - use: output-tail
+    - use: grep
+      patterns: ["FATAL", "Segmentation fault"]
+      context: 3
   fast:
-    - use: test-reports
-    - use: section
-      preset: rspec
     - use: log-file
-      path: log/test.log
-      grep: ["ERROR", "FATAL"]
+      path: log/payments.log
+      grep: ["ERROR"]
       context: 5
-    - use: json-log
-      from: output
-      preset: logstash
-      level: warn
   slow:
-    - use: junit-files
-      paths: ["build/test-results/**/*.xml"]
     - run: .fun-ci/evidence/gradle-problems
       format: json
       watch: ["build/reports/problems/*"]
   overrun:
-    - use: process-tree
     - use: jvm-thread-dump
 ```
 
 - Each entry is a mapping with `use:` (a built-in) or `run:` (a command), and
   the options it takes. Order is the order of the evidence, and decides what
   the digest shows first.
-- With no `evidence` key, every stage gets `test-reports` then `output-tail`,
-  and an overrun gets `process-tree`: today's behaviour, plus the process
-  tree.
-- `fun-ci init` writes the list for the stack it detects (the Gradle and Maven
-  lists read their own report directories, so the copying that AT-9.8 put in
-  their stage scripts can go).
+- The evidence comes in this order: `test-reports`, the configured entries,
+  the detected presets, then `output-tail`.
+- `skip` names presets not to run even when detected, and `detect: false`
+  turns detection off, leaving the configured entries and the two that always
+  run.
+- Detection replaces the report copying that AT-9.8 put in the Gradle and
+  Maven stage scripts: their presets read the build's own report directories.
 - `fun-ci check` reports an unknown name, an option the extractor doesn't take,
   a pattern that doesn't compile, and a `run:` path that doesn't exist or isn't
   executable, in the same place it reports a missing stage script.
@@ -300,6 +342,7 @@ database keeps and what `why --json` prints:
   "signal": null,
   "seconds": 8.4,
   "budget": 10,
+  "chosen": [{ "extractor": "section", "preset": "rspec", "because": "output matched rspec ./" }],
   "facts": [{ "name": "running", "value": "java ... GradleWorkerMain", "source": "process-tree" }],
   "failures": [{ "test": "...", "file": "...", "line": 42, "message": "...", "output": "...",
                  "source": "test-reports" }],
@@ -434,7 +477,7 @@ first passes), each with 8 MB of output: 160 MB before compression.
 New code, in `lib/fun_ci/evidence/`: `Context`, `Findings`, `Document` (merge,
 caps, schema), `Collector` (runs a stage's list within its budget, turning
 anything an extractor raises into a problem), `Catalog` (built-in names),
-`Presets`, `Command` (the `run:` adapter), `Masking`, one file per built-in,
+`Presets` (each with its markers and signature), `Detection`, `Command` (the `run:` adapter), `Masking`, one file per built-in,
 and `Settings` for the `evidence` key of `.fun-ci/config`.
 
 ## Testing it
@@ -446,6 +489,9 @@ and `Settings` for the `evidence` key of `.fun-ci/config`.
 - A property test feeds every built-in arbitrary bytes (invalid UTF-8, colour
   codes, lines of a megabyte, no newline at the end) and holds that it answers
   findings and never raises.
+- Detection is a unit test over a worktree fixture and an output: which
+  presets become candidates, which run, and that the output is read once
+  whatever the number of presets (a counting reader, not a timer).
 - `Collector` and `Document` are unit tests with fake extractors and the clock
   seam: order, budget, caps, a raising extractor becoming a problem.
 - `Command` lives in the process lane, with shell-script extractors: text and
@@ -466,4 +512,5 @@ builds on what is already there, and masking is in place before fun-ci starts
 keeping more than it keeps today. So `why` comes first, over the evidence §9
 already keeps, then the digest's pointer to it, the output spool, masking,
 configuration, the built-ins one family at a time, commands, `extract`,
-overruns, the raw output, and `init`'s lists last.
+overruns, the raw output, and detection last, once there are presets to
+detect.

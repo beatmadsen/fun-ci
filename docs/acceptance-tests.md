@@ -601,8 +601,9 @@ too, and `evidence.mask: false` turns masking off for the project
 ### 10.7 Extractors are configured per stage
 **Given** `.fun-ci/config` with an `evidence` list for `fast` and one for `all`
 **When** the fast suite fails
-**Then** the `all` entries run, then the `fast` ones, in the order given, and
-the evidence keeps that order, each item naming its extractor
+**Then** `test-reports` runs, then the `all` entries, then the `fast` ones in
+the order given, then `output-tail`, and the evidence keeps that order, each
+item naming its extractor
 **And** with no `evidence` key every stage gets `test-reports` then
 `output-tail`, so `why` shows what §9 kept
 **And** `fun-ci check` reports an unknown extractor, an unknown option, a
@@ -689,9 +690,17 @@ for the project's 10 newest runs.
 **Then** it ends by saying that only the output's last lines were kept and that
 `evidence:` in `.fun-ci/config` adds extractors.
 
-### 10.17 `fun-ci init` writes the extractors for the stack it detects
-**Given** a Ruby, Gradle or Maven project
-**When** `fun-ci init` runs
-**Then** `.fun-ci/config` gains an `evidence` list for that stack (for Gradle
-and Maven, `junit-files` over the build's own report directories and the
-tool's preset), and running it again changes nothing.
+### 10.17 fun-ci runs the presets that apply, and only those
+**Given** a project with a `Gemfile` and no `evidence` configuration, whose
+fast suite fails printing rspec's rerun lines
+**When** the evidence is collected
+**Then** the `rspec` preset runs, because its marker file exists and its
+signature is in the output, and presets whose markers are missing (`gradle`,
+`pytest`) or whose signature is absent do not
+**And** the evidence's `chosen` says why each ran (`file Gemfile`,
+`output matched rspec ./`, `configured`)
+**And** the output is read once for all the candidates' signatures, however
+many presets fun-ci ships
+**And** `skip` in `.fun-ci/config` keeps a detected preset from running, and
+`detect: false` leaves only the configured entries and those that always run
+**And** `fun-ci check` lists the presets whose markers the project has.
