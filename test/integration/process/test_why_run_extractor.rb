@@ -3,6 +3,7 @@
 require_relative "../../acceptance/trigger_cli_shared"
 require_relative "../../acceptance/agent_client"
 require_relative "../../support/process_deadline"
+require_relative "../../support/process_state"
 require "json"
 
 # A project's own command is an extractor (acceptance-tests.md, AT-10.15):
@@ -54,7 +55,7 @@ class TestWhyRunExtractor < Minitest::Test
   def test_should_kill_what_the_command_started
     run_with_extractor(STUCK, budget: "2")
 
-    assert_raises(Errno::ESRCH) { Process.kill(0, File.read(File.join(@pipeline.project_dir, ".fun-ci", "child.pid")).to_i) }
+    refute ProcessState.running?(File.read(File.join(@pipeline.project_dir, ".fun-ci", "child.pid")).to_i)
   end
 
   def test_should_leave_the_stage_s_verdict_as_it_was
