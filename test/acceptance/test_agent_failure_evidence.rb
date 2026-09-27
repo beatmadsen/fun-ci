@@ -23,6 +23,6 @@ class TestAgentFailureEvidence < Minitest::Test
   def test_should_follow_the_stages_with_the_failed_stage_s_last_lines_without_colour
     @agent.status
 
-    assert_equal ["fast failed:", *(231..250).map { |n| "  line #{n}" }], @agent.stdout.lines.map(&:chomp).drop(5)
+    assert_equal ["fast failed:", *(231..250).map { |n| "  line #{n}" }], @agent.stdout.lines.map(&:chomp)[5...-1]
   end
 end

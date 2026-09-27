@@ -54,18 +54,22 @@ class TestStatusTextEvidence < Minitest::Test
                  evidence(fast: ["failed", nil, [{ file: nil, line: nil, test: "lint: bad", message: "" }]])[1]
   end
 
+  def test_should_end_with_the_why_command_for_the_stage_that_decided
+    assert_equal "fun-ci why 3f9c2ab fast", evidence(deciding: "fast", fast: %W[failed boom\n]).last
+  end
+
   private
 
-  def evidence(**given)
+  def evidence(deciding: nil, **given)
     stages = %w[lint build fast slow].map do |name|
       state, tail, failures = given.fetch(name.to_sym, ["passed", nil])
       STAGE.new(name: name, state: state, seconds: 1.0, kept: REPORT::Kept.new(tail: tail, failures: failures || []))
     end
-    FunCi::Agent::StatusText.lines(report(stages)).drop(5)
+    FunCi::Agent::StatusText.lines(report(stages, deciding)).drop(5)
   end
 
-  def report(stages)
+  def report(stages, deciding)
     REPORT.new(sha: "3f9c2ab0c4d1", subject: "Add retry", branch: "main", need: "fast", stages: stages,
-               verdict: :failed, superseded_by: nil)
+               verdict: :failed, deciding: deciding, superseded_by: nil)
   end
 end

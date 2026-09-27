@@ -78,5 +78,6 @@ class TestAgentTestReports < Minitest::Test
     @pipeline.trigger(commit_hash: SHA, branch: "main")
   end
 
-  def evidence = @agent.stdout.lines.map(&:chomp).drop(5)
+  # Between the stage lines and the closing `fun-ci why` command.
+  def evidence = @agent.stdout.lines.map(&:chomp)[5...-1]
 end

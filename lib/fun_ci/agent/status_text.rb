@@ -26,6 +26,7 @@ module FunCi
       end
 
       def self.footer(report)
+        return ["fun-ci why #{report.sha[0, 7]} #{report.deciding}"] if report.deciding
         return [] unless report.verdict == :superseded && report.superseded_by
 
         ["Superseded by #{report.superseded_by[0, 7]}."]
