@@ -79,16 +79,20 @@ gets everything below too.
 Three traps come with the worktree slot:
 
 - Slots are reused, and `git clean -fd` keeps ignored files, so a log file or
-  a report directory can hold a previous run's content. Extractors that read
-  files are told which files changed during the stage, and log files are read
-  from the size they had when the stage started.
+  a report directory can hold a previous run's content. So when the stage
+  starts, fun-ci notes each watched file's size, modification time and inode,
+  and when it fails, a file counts as changed if any of the three differ. A
+  time alone is not enough: some file systems keep whole seconds, and `cp -p`
+  or a build cache can put an old time back. A log file is read from the size
+  it had; one that is now shorter was truncated or rotated, so it is read from
+  its start, and the fact `truncated` says so.
 - Stages share a slot at the same time: lint and build run side by side, and
   the slow suite runs beside the fast suite. A log file written during the fast
   suite may hold the slow suite's lines too, and a JUnit directory the other
-  suite's reports. fun-ci can't untangle that, so it says so: the evidence
-  records which other stage was running (the fact `alongside`), and every stage
-  script gets `FUN_CI_STAGE`, so a project can send each stage's logs to a file
-  of its own.
+  suite's reports. fun-ci can't untangle that, so it says so: the fact
+  `alongside` names each other stage of the run that was running at any moment
+  between this stage's start and its failure, and every stage script gets
+  `FUN_CI_STAGE`, so a project can send each stage's logs to a file of its own.
 - A stage that is cancelled keeps no evidence, since a cancel is not a failure.
 
 `fun-ci extract` (below) is the one place that reads the developer's own
@@ -189,17 +193,23 @@ JSON. So each preset says when it applies, with either or both of:
   checked when the stage starts, at the commit being tested, which is also when
   the files a candidate watches have their sizes noted. A preset without
   markers is always a candidate.
-- **An output signature**, a pattern only that tool prints, such as rspec's
-  rerun lines (`rspec ./spec/...`) or pytest's `short test summary info`. When
-  the stage fails, the candidates' signatures are joined into one pattern and
-  the output is read once. A candidate with a signature runs only if it was
-  seen; one without runs on its markers alone.
+- **An output signature**, a pattern only that tool prints, which matches
+  within one line, such as rspec's rerun lines (`rspec ./spec/...`) or pytest's
+  `short test summary info`. When the stage fails, the candidates' signatures
+  are joined into one pattern and the window is read once, line by line. A
+  line the joined pattern matches is then tried against each candidate's own
+  signature, because a joined pattern reports only one of the signatures that
+  match at a place, and two overlapping ones would otherwise hide each other.
+  A candidate with a signature runs only if it was seen; one without runs on
+  its markers alone.
 
-Reading the output once keeps the reads down, but a joined pattern does more
+Reading the window once keeps the reads down, but a joined pattern does more
 work per byte than any one of its parts, so the cost still grows with the
-number of candidates. Markers keep that number to the presets of the stacks
-the project has. How fast the scan is, over the whole window with every
-preset a candidate, is measured before the second set of presets ships.
+number of candidates, and each preset that runs reads the window again.
+Markers keep both to the presets of the stacks the project has. A committed
+script (`script/bench-detection.rb`) times the scan over a full window with
+every preset a candidate; it is run before the second set of presets ships,
+and whenever one is added after.
 
 `output-tail` and `test-reports` always run, and so does `process-tree` for an
 overrun. A project's own `run:` commands run only when the config lists them;
@@ -227,25 +237,31 @@ each more work than the last: turn a preset on or off; give `section`, `grep`,
 
 `test-reports` and `output-tail` run first and outside the budget, so the
 evidence that works for every stack is there whatever else happens. The
-configured entries and detected presets share the rest: `evidence.budget`,
-2 seconds by default, since it sits between a failed fast suite and the
-pre-push hook's verdict.
+detection scan, the configured entries and the detected presets share the
+rest: `evidence.budget`, 2 seconds by default, since it sits between a failed
+fast suite and the pre-push hook's verdict.
 
 A command is killed when the budget runs out. A built-in runs in fun-ci's own
-process and can't be, so the collector checks the deadline between extractors,
-and the built-ins are bounded by what they read:
+process and can't be, so every built-in is given the deadline and checks it as
+it goes, every few thousand lines, and stops with what it has, marked
+`truncated`. The collector checks it again between extractors. What they read
+is bounded too:
 
 - **One window for everything.** The output is kept as its first 1 MB and its
-  last 7 MB, with a marker line where bytes were dropped. Extractors read that
-  window, and the raw output kept for `why --raw` is the same window, so
-  `fun-ci why --raw > f; fun-ci extract fast --output f` reproduces exactly
-  what the extractors saw. A file is read the same way: from its start size, or
-  its start, through the same window.
+  last 7 MB. Both cuts fall on line ends, and a marker line says how many bytes
+  were dropped between them, so no line, and no secret on it, is split (unless
+  one line is longer than the window). The window holds at most one chunk of
+  output in memory as it goes. Extractors read the window, and the raw output
+  kept for `why --raw` is the same window, so
+  `fun-ci why --raw > f; fun-ci extract fast --output f` gives the extractors
+  that read the output exactly what they saw. A file is read the same way:
+  from its start size, or its start, through the same window.
 - **Each pattern has its own timeout.** Every pattern a project or a preset
   supplies is compiled with `Regexp.new(source, timeout:)` (Ruby 3.2 and
   later), not under the process-wide `Regexp.timeout`, because stages run in
-  threads side by side. A pattern that backtracks badly becomes a problem
-  recorded against its entry, not a hung pipeline.
+  threads side by side. The timeout bounds each match, not an extractor's
+  whole run, which is why the deadline is checked inside the loop as well. A
+  pattern that times out becomes a problem recorded against its entry.
 
 ## Configuration
 
@@ -334,6 +350,13 @@ running, as `pgid` in the context and `FUN_CI_PGID` in its environment, for
 tools such as `jcmd`, `py-spy dump` or `rbspy`, or the one-line JVM thread dump
 in the example above.
 
+Its stdout is read up to 256 KB, the cap on the whole evidence; past that the
+command is killed and the overflow recorded as a problem. A command that
+starts a process which leaves its process group (`setsid`) can't be killed
+with it, as with stage scripts today; fun-ci stops reading its output when the
+budget and the drain after a kill are over, so such a process can't hold the
+evidence up, and whatever it does afterwards is not fun-ci's to see.
+
 What it prints depends on `format`:
 
 - `text` (the default) takes stdout as one excerpt, titled with the command.
@@ -354,7 +377,9 @@ What it prints depends on `format`:
 An exit status other than 0, a document that doesn't parse, or a field of the
 wrong type is recorded as a problem with the entry's name and the last 20
 lines of its stderr. Nothing it printed is kept then. A field fun-ci doesn't
-know is ignored, so an extractor written against a later schema still works.
+know is ignored, so an extractor that adds fields still works. A document
+with a `schema` higher than fun-ci knows is a problem, since its fields may
+mean something else.
 
 To write or change an extractor without making a commit, `fun-ci extract`
 runs a stage's extractors against a saved output:
@@ -365,7 +390,11 @@ fun-ci extract fast --output failing-run.log [--reports DIR] [--exit 1 | --timed
 
 It uses the current directory as the worktree, touches no database, and prints
 what `why` would print, problems included. An agent can save a failing run's
-output once (`fun-ci why --raw`) and iterate on an extractor against it.
+output once (`fun-ci why --raw`) and iterate on an extractor against it. Two
+things differ from a real failure, and `extract` says both as facts: there
+were no start sizes, so files are read whole and every watched file counts as
+changed; and with `--timed-out` there is no process group, so entries with
+`on: overrun` don't run.
 
 **Decision: a project's extractor is a command, not a Ruby class.** The
 request was for a strategy class a project could provide. fun-ci's users are
@@ -444,12 +473,14 @@ with the command that shows the rest: `fun-ci why 3f9c2ab fast`.
 
 A stage's output and its log files can hold secrets, and the evidence is kept,
 printed to agents, and pasted into places. Before anything is stored, every
-string in the evidence and the raw output is masked:
+string in the evidence, the problems (a command's stderr included) and the raw
+output is masked:
 
 - the value of each variable in the stage's environment whose name contains
   `TOKEN`, `SECRET`, `PASSWORD`, `PASSWD`, `API_KEY`, `PRIVATE_KEY` or
   `CREDENTIAL`, when the value is at least 8 characters, becomes
-  `[masked:NAME]`;
+  `[masked:NAME]`; longer values are replaced first, so one that contains
+  another is masked whole;
 - well-known token shapes (GitHub, AWS access key IDs, Slack, PEM private key
   blocks, `Authorization:` headers) become `[masked]`;
 - the patterns in `evidence.mask` become `[masked]`.
@@ -457,10 +488,16 @@ string in the evidence and the raw output is masked:
 The masker is given the stage's environment as a hash, never reads `ENV`, so
 its tests say what is in the environment. Masking is on by default and can be
 turned off only for a whole project. It is a best effort, not a guarantee, so
-the state directory is also created readable by its owner only (0700). Today
-`StateDir` doesn't set a mode, so the directory and database get whatever the
-umask gives, typically readable by other local users [inferred from Ruby's
-defaults, not measured].
+what is unmasked stays where only the user can read it:
+
+- The state directory is 0700. Today `StateDir` doesn't set a mode, so the
+  directory and database get whatever the umask gives, typically readable by
+  other local users [inferred from Ruby's defaults, not measured]; fun-ci sets
+  the mode when it opens the directory, including one that already exists.
+- The window is written unmasked while the stage runs, so each stage's
+  directory lives in the state directory, not in `TMPDIR`, named for the
+  process that made it. It is removed when the stage is recorded; a run that
+  starts removes those whose process is dead, which is what a crash leaves.
 
 ## Overruns
 
@@ -469,7 +506,14 @@ reaches its budget, fun-ci runs `process-tree` and the entries with
 `on: overrun` first, while the process group is still alive, then kills it and
 collects the rest as for any failure. `process-tree` lists the group's
 processes, and the deepest one still running is the fact `running`, which the
-digest leads with.
+digest leads with. It reads `ps -A -o pid,pgid,etime,command`, which BSD and
+procps both take, and picks the group in Ruby; whether busybox `ps` on the
+musl target takes it too is not yet checked.
+
+What an overrun entry makes the stage print, such as a JVM's thread dump
+after `SIGQUIT`, goes into the window like the rest of the output, since the
+stage's output is still being read. A stage that exits during these seconds is
+still `over_budget`: its budget ran out before it did.
 
 **Decision: overrun extractors get 2 seconds beyond the budget.** A killed
 stage has already lost its verdict, and the pre-push hook waits on it, so the
@@ -503,16 +547,22 @@ case is two failed stages in each of a project's 10 newest runs (a run fails at
 most lint and build, or fast and slow, since the second pair runs only when the
 first passes), each with a full window: 160 MB before compression.
 
-The 256 KB cap is there because `why` prints the evidence whole into an
-agent's context. Over it, excerpts are cut from the last in the order above
-backwards, then each failure's `output` to its last 4 KB, then messages to 50
-lines each, each cut marked `truncated`; facts and problems are small and never
-cut. At most 100 failures are kept in full, and the rest are counted in a fact.
+Each failure's own output is kept as its last 4 KB, always. The 256 KB cap is
+there because `why` prints the evidence whole into an agent's context. Over
+it, excerpts are cut from the last in the order above backwards, then messages
+to 50 lines each, each cut marked `truncated`; facts and problems are small and
+never cut. At most 100 failures are kept in full, and the rest are counted in a fact.
 The caps are one class (`Evidence::Caps`) apart from the merging.
 
 The `failures` and `output_tail` columns stay filled in as they are today,
 because every project on a machine shares one database, and an older fun-ci in
-another project reads the same rows.
+another project reads the same rows. A row written before this change has
+no evidence, budget or exit status, and `why` shows what it has: the tail and
+the failures, as §9 does.
+
+Pruning deletes the raw output files of the runs it drops, and any file in
+the raw output directory whose stage row no longer exists, which is what a
+crash between the two leaves.
 
 ## Changes to what exists
 
@@ -534,6 +584,15 @@ another project reads the same rows.
   and the stdin file a command extractor reads, go on `Launch` rather than in
   new parameters.
 - **Stage scripts get `FUN_CI_STAGE`.**
+- **New seams**, each left out getting the real thing, as with the others:
+  `clock` on `Seams`, which the budget, the deadline and the overrun grace
+  read; `process_table`, which answers what `ps` would, so `process-tree` runs
+  in the acceptance lane; `environment`, the stage's environment as a hash,
+  which the masker and fake runners see; and `extractor_runner`, which runs
+  `run:` entries, so the fake stage runners tests have never receive an
+  extractor's command. `ProcessRunner` already has `timer:`, which declares an
+  overrun at once, and the grace, the window's sizes and each pattern's timeout
+  are arguments, so tests use milliseconds and kilobytes.
 - `OutputTail` and `TestReport` become the `output-tail` and `test-reports`
   built-ins.
 - `Agent::Evidence`, which prints the digest today, is renamed
@@ -548,40 +607,84 @@ file per built-in, and `Settings` for the `evidence` key of `.fun-ci/config`.
 
 ## Testing it
 
-- Each built-in and each preset is a unit test over recorded output: a real
-  failing run of that tool, saved under `test/fixtures/evidence/<tool>/`, with
-  the excerpt it must pick out. A preset is shipped with its fixture or not at
-  all.
-- A property test feeds every built-in arbitrary bytes (invalid UTF-8, colour
-  codes, lines of a megabyte, no newline at the end) and holds that it answers
-  findings and never raises.
-- Detection is a unit test over a worktree fixture and an output: which
-  presets become candidates, which run, and that the output is read once
-  whatever the number of presets (a counting reader, not a timer). How fast
-  the joined pattern is gets measured by a script, not asserted in a test.
-- `Collector`, `Document` and `Caps` are unit tests with fake extractors and the
-  clock seam: order, the deadline checked between extractors, caps, a raising
-  extractor becoming a problem.
-- `process-tree` parses a recorded `ps` listing in a unit test; only the call
-  that reads the real process group is in the process lane.
-- `Command` lives in the process lane, with shell-script extractors: text and
-  JSON forms, a bad exit, bad JSON, one that outruns its budget and is killed
-  along with what it started.
-- The extractor protocol has contract fixtures, input and output documents in
-  `contract/evidence/`, which the Ruby side parses and which a sample
-  extractor, used in the process tests, answers from.
-- `why`, `extract` and the digest are acceptance tests through the agent
-  client, with evidence written through the recorder.
-- One end-to-end test fails a real slow suite whose cause is only in a log
+The acceptance tests in §10 each pin one thing through a command, with one
+case; the cases around it are pinned by the class that decides them.
+
+- **Unit, one class in memory.** Each built-in over recorded fixtures (below).
+  `Masking`: each kind of secret, the longest first, 7 against 8 characters, a
+  command's stderr. `Window`: the cuts on line ends, the marker, and never
+  more than one chunk held. `Detection`: candidates by marker, signatures
+  (joined detection gives the same presets as each signature tried alone, as
+  a property over generated lines), and that the window is read once, with a
+  counting reader. `Collector`: the order, a raising extractor becoming a
+  problem, the deadline exactly at its edge and inside a built-in's loop.
+  `Command`'s arithmetic, with a fake runner that records the budget it was
+  given. `Caps`, `Document` (one failure per test), `Catalog` and `Settings`
+  (every kind of mistake `check` reports). `process-tree` parsing recorded
+  `ps` listings from BSD and procps.
+- **Properties.** No property-testing gem is in the Gemfile, so generators are
+  hand-rolled on a seeded `Random` and print their seed on failure. Two
+  properties: every built-in, given arbitrary bytes (invalid UTF-8, colour
+  codes, no newline at the end), answers findings and never raises; and no
+  secret's value survives anywhere in the evidence or the raw output. Inputs
+  stay small; one fixed case with a megabyte-long line covers length.
+- **Integration.** The state directory's mode, with a permissive umask set by
+  the test and a directory that already exists at 0755; a row written before
+  the migration; raw output files pruned with their runs, orphans too, and the
+  10th against the 11th newest run; the `output_tail` and `failures` columns
+  still written.
+- **Process lane.** `Command` with shell-script extractors: text and JSON, a
+  bad exit, bad JSON, a higher schema, stdout past 256 KB, one that outruns
+  its budget and is killed with what it started, and one whose child escapes
+  with `setsid` and keeps stdout open, which must not hold the evidence past
+  the budget and the drain. The window at its real sizes, from about 10 MB of
+  `head -c` output. `process-tree` against the real `ps` of the CI machine.
+  An overrun through `ProcessRunner`'s `timer:`: the entry runs before the
+  kill, what it makes the stage print is kept, and a stage that exits during
+  the grace is still over budget. `FUN_CI_STAGE`.
+- **The regexp timeout test** needs a pattern that backtracks on every Ruby in
+  CI: Ruby 3.2 and later memoise the classic `^(a+)+$`, which then never times
+  out, while `^(a+)+\1$` does (on Ruby 4.0.2, 40 `a`s and a
+  `!`: the first returns at once, the second times out; check on 3.2 with
+  `script/ci-matrix.sh` before relying on it).
+- **Mutation.** The code that runs only in the slow suite's forked child shows
+  as no coverage, so the shared path for a failed stage is tested in the
+  foreground, where mutants can be killed.
+- **End to end.** One test fails a real slow suite whose cause is only in a log
   file, and reads it back through `fun-ci why`.
+
+### Fixtures
+
+A preset is only as good as the output it was checked against, so fixtures are
+recorded, not written:
+
+- `script/record-evidence-fixture TOOL` runs a minimal failing project for
+  that tool in a pinned Docker image, stdout and stderr merged through a pipe
+  as a stage's are, and writes the output and a `meta.yml` beside it: the
+  tool and its version, the image digest, the command, the script's commit,
+  and the output's SHA-256.
+- A policy test holds that every preset has a fixture, that each output
+  matches its hash, and that each expected excerpt is a range of the output's
+  own lines, so an expectation can't be made up. A hash shows an edit; it
+  doesn't stop one.
+- A cross test runs every signature against every other tool's fixture, which
+  none may match. It is what notices a bad edit to `presets.yml`, which no
+  mutation tool reads.
+- A scheduled CI job, outside the gate, records each fixture again with the
+  tool's latest version and reports any difference in what its preset picks
+  out.
+- The protocol's contract fixtures in `contract/evidence/` go both ways: Ruby
+  writes the context for a known stage and it must equal the input fixture;
+  the sample extractor is a shell script, so Ruby isn't checking itself; and
+  there are fixtures with unknown fields and with a higher schema.
 
 ## Order of work
 
-The requirements are AT-10.1 to AT-10.18, in the order they are built.
+The requirements are AT-10.1 to AT-10.20, in the order they are built.
 `why` comes first, over the evidence §9 already keeps, then the digest's
-pointer to it. Next come the window, masking and the raw output: once an agent
-has `why --raw`, it can search the output itself, and masking is in place
-before fun-ci keeps more than it keeps today. Then configuration, the
-built-ins with the first presets, log files, JSON logs, each failure's own
+pointer to it. Masking comes next, so it is in place before fun-ci keeps more
+than it keeps today, then the window and `why --raw`: once an agent has the
+raw output, it can search it itself. Then `FUN_CI_STAGE`, configuration, the
+first presets, log files, the stage alongside, JSON logs, each failure's own
 output, commands, `extract`, overruns, and detection, once there are presets
 to detect. The presets for the other popular stacks come last.
