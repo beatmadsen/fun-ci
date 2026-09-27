@@ -130,6 +130,14 @@ class TestCollector < Minitest::Test
     assert_operator JSON.generate(collect(output, entries: [GREP]).to_h).bytesize, :<=, 262_144
   end
 
+  # Ruby 3.2 and later memoise the classic ^(a+)+$, which then never times
+  # out; the back-reference keeps this one backtracking on every Ruby in CI.
+  def test_should_record_a_pattern_that_runs_out_of_time_as_a_problem_of_its_entry
+    entry = { "use" => "grep", "patterns" => ['^(a+)+\1$'] }
+
+    assert_match(/Regexp::TimeoutError/, collect("#{"a" * 40}!\n", entries: [entry]).problems.first[:message])
+  end
+
   def test_should_mask_the_raw_output
     assert_equal "a [masked:API_TOKEN]\n",
                  collector(environment: { "API_TOKEN" => "abcdefgh123" }).masked("a abcdefgh123\n")
