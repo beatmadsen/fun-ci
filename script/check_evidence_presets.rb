@@ -11,6 +11,7 @@
 #   ruby script/check_evidence_presets.rb [NAME...]
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require_relative "record_evidence_fixture"
+require_relative "excerpt_comparison"
 require "fun_ci/evidence/catalog"
 require "fun_ci/evidence/context"
 require "fun_ci/evidence/deadline"
@@ -19,10 +20,11 @@ require "fun_ci/evidence/source"
 
 NEVER = FunCi::Evidence::Deadline.new(clock: -> { 0 }, at: 1)
 
+# The excerpts the preset picks out of `output`, each as its lines.
 def picked(preset, output)
   entry = FunCi::Evidence::Catalog.entry({ "use" => preset.use, "preset" => preset.name })
   context = FunCi::Evidence::Context.new(stage: "fast", output: output, worktree: nil, deadline: NEVER)
-  entry.extractor.extract(context).excerpts.flat_map { |excerpt| excerpt[:lines] }
+  entry.extractor.extract(context).excerpts.map { |excerpt| excerpt[:lines] }
 end
 
 def signed?(preset, output)
@@ -45,9 +47,6 @@ end
 
 def recorded(name) = File.binread(File.join(fixture_dir(name), "output.log")).force_encoding(Encoding::UTF_8)
 
-# Digits differ between runs (durations, pids, times), so they are left out of the comparison.
-def same?(before, after) = before.map { |line| line.gsub(/\d+/, "#") } == after.map { |line| line.gsub(/\d+/, "#") }
-
 # What is wrong with the preset against a fresh run, or nil after saying whether what it picks out changed.
 def check(preset)
   output = fresh_output(preset.name)
@@ -57,7 +56,7 @@ def check(preset)
   puts "#{preset.name}: #{changed?(preset, output) ? "changed" : "unchanged"}"
 end
 
-def changed?(preset, output) = !same?(picked(preset, recorded(preset.name)), picked(preset, output))
+def changed?(preset, output) = !ExcerptComparison.same?(picked(preset, recorded(preset.name)), picked(preset, output))
 
 if $PROGRAM_NAME == __FILE__
   presets = FunCi::Evidence::Presets.all.select { |preset| ARGV.empty? || ARGV.include?(preset.name) }

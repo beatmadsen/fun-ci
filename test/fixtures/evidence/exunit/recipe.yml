@@ -1,7 +1,7 @@
 tool: ExUnit
 image: elixir:1.17@sha256:a40312b97492ce708d2a1cefee144ec680503ab097f52020299645d174a13a8a
 setup: MIX_ENV=test mix compile
-command: mix test
+command: mix test --seed 0
 version: elixir --version
 files:
   mix.exs: |
