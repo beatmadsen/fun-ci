@@ -30,14 +30,17 @@ module FunCi
 
       def self.failure(failure)
         place = failure[:file] ? "#{failure[:file]}:#{failure[:line]}  #{failure[:test]}" : failure[:test]
-        ["  #{place}", *failure[:message].to_s.lines(chomp: true).map { |line| "    #{line}" }]
+        ["  #{place}", *indented(failure[:message], "    "), *own_output(failure[:output])]
       end
+
+      def self.own_output(output) = output.to_s.empty? ? [] : ["    Output:", *indented(output, "      ")]
+      def self.indented(text, margin) = text.to_s.lines(chomp: true).map { |line| "#{margin}#{line}" }
 
       def self.excerpt(excerpt)
         place = excerpt[:location] == "output" ? "" : " (#{excerpt[:location]})"
         ["", "#{excerpt[:title]}#{place}, from #{excerpt[:extractor]}:", *excerpt[:lines].map { |line| "  #{line}" }]
       end
-      private_class_method :facts, :problems, :failures, :failure, :excerpt
+      private_class_method :facts, :problems, :failures, :failure, :own_output, :indented, :excerpt
     end
   end
 end

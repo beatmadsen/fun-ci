@@ -52,7 +52,7 @@ module FunCi
         db.execute("SELECT others.stage FROM stage_jobs AS others JOIN stage_jobs AS me ON me.id = ? " \
                    "WHERE others.pipeline_run_id = me.pipeline_run_id AND others.id != me.id " \
                    "AND others.started_at IS NOT NULL " \
-                   "AND (others.completed_at IS NULL OR others.completed_at >= me.started_at) ORDER BY others.id",
+                   "AND (others.completed_at IS NULL OR others.completed_at > me.started_at) ORDER BY others.id",
                    [id]).flatten
       end
 

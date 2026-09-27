@@ -17,6 +17,7 @@ module FunCi
         },
         count: ->(value) { "must be a whole number, not #{value.inspect}" unless value.is_a?(Integer) && value >= 0 },
         path: ->(value) { "must be a path, not #{value.inspect}" unless value.is_a?(String) && !value.empty? },
+        globs: ->(value) { "must be a list of paths, not #{value.inspect}" unless Array(value).all?(String) },
         word: ->(value) { "must be a word, not #{value.inspect}" unless value.is_a?(String) },
         level: lambda { |value|
           "must be one of trace, debug, info, warn, error or fatal, not #{value.inspect}" unless LogRecord.rank(value)

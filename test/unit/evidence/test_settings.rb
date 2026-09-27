@@ -25,10 +25,11 @@ class TestEvidenceSettings < Minitest::Test
     assert_empty SETTINGS.new({ "stages" => { "fast" => [{ "use" => "b" }] } }).entries("slow")
   end
 
-  def test_should_watch_the_files_under_each_log_file_entry_s_path
-    raw = { "stages" => { "fast" => [{ "use" => "log-file", "path" => "log/*.log" }, { "use" => "grep" }] } }
+  def test_should_watch_the_files_under_each_entry_s_paths
+    raw = { "stages" => { "fast" => [{ "use" => "log-file", "path" => "log/*.log" }, { "use" => "grep" },
+                                     { "use" => "junit-files", "paths" => ["build/*.xml"] }] } }
 
-    assert_equal ["log/*.log"], SETTINGS.new(raw).watched("fast")
+    assert_equal ["log/*.log", "build/*.xml"], SETTINGS.new(raw).watched("fast")
   end
 
   def test_should_detect_presets_by_default

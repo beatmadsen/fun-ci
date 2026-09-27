@@ -42,8 +42,8 @@ module FunCi
       # The globs whose files are stamped when the stage starts, so what it
       # wrote to them can be told from what was there before.
       def watched(stage)
-        entries(stage).select { |raw| raw.is_a?(Hash) && raw["use"] == "log-file" }.map { |raw| raw["path"] }
-                      .grep(String)
+        entries(stage).grep(Hash).flat_map { |raw| Array(raw["path"]) + Array(raw["paths"]) }
+                      .grep(String).uniq
       end
 
       def errors = SettingsCheck.new(@raw).errors

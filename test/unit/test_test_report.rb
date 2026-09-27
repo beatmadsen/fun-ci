@@ -44,4 +44,23 @@ class TestTestReport < Minitest::Test
   def test_should_read_nothing_from_text_that_is_not_json
     assert_nil REPORT.json("not json")
   end
+
+  def test_should_keep_a_junit_failure_s_own_output_and_errors
+    xml = %(<testsuite><testcase name="t"><failure message="m"/><system-out>printed</system-out>) +
+          %(<system-err>warned</system-err></testcase></testsuite>)
+
+    assert_equal "printed\nwarned", REPORT.junit(xml).first[:output]
+  end
+
+  def test_should_keep_a_json_failure_s_own_output
+    assert_equal "printed",
+                 REPORT.json(%({"failures": [{"test": "t", "message": "m", "output": "printed"}]})).first[:output]
+  end
+
+  def test_should_keep_the_last_4_kb_of_a_failure_s_own_output
+    xml = "<testsuite><testcase name=\"t\"><failure message=\"m\"/><system-out>#{"x" * 5000}END</system-out>" \
+          "</testcase></testsuite>"
+
+    assert_equal "#{"x" * 4093}END", REPORT.junit(xml).first[:output]
+  end
 end

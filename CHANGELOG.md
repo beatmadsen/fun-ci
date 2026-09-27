@@ -53,6 +53,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   by the stack trace, out of thousands of lines at `debug`. Presets name the
   fields of logstash-logback-encoder (`preset: logstash`) and Elastic's ECS
   encoders (`preset: ecs`); `fields:` names a setup's own.
+- A failure keeps its own output: a JUnit test case's `<system-out>` and
+  `<system-err>`, or `output` in fun-ci's JSON report, is kept (its last 4
+  KB) and `fun-ci why` prints it under the failure's message.
+- `use: junit-files` reads the JUnit XML a build tool writes in its own
+  place (`paths: [build/test-results/**/*.xml]`) during the stage; a failure
+  that also arrives through `FUN_CI_REPORT` is kept once.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

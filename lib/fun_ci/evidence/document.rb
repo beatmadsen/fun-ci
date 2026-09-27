@@ -19,9 +19,11 @@ module FunCi
       end
 
       # The evidence from each extractor's findings, [name, findings] in the
-      # order they are shown, each item crediting the extractor that found it.
+      # order they are shown, each item crediting the extractor that found
+      # it; the same failure found twice is kept where it was found first.
       def self.assemble(parts, problems:, chosen:)
-        new(chosen: chosen, facts: credited(parts, :facts), failures: credited(parts, :failures),
+        failures = credited(parts, :failures).uniq { |failure| failure.values_at(:test, :file, :line) }
+        new(chosen: chosen, facts: credited(parts, :facts), failures: failures,
             excerpts: credited(parts, :excerpts), problems: problems)
       end
 

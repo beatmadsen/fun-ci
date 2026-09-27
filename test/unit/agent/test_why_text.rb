@@ -32,6 +32,13 @@ class TestWhyText < Minitest::Test
                  lines(stage("failed", kept: { failures: [FAILURE] })).drop(2)
   end
 
+  def test_should_print_a_failure_s_own_output_under_its_message
+    failure = FAILURE.merge(message: "Expected 3", output: "printed\nmore")
+
+    assert_equal ["    Expected 3", "    Output:", "      printed", "      more"],
+                 lines(stage("failed", kept: { failures: [failure] })).drop(5)
+  end
+
   def test_should_print_the_kept_tail_under_its_title
     assert_equal ["", "The output's last lines, from output-tail:", "  one", "  two"],
                  lines(stage("failed", kept: { tail: "one\ntwo\n" })).drop(2)
