@@ -54,6 +54,12 @@ class TestWorktrees < Minitest::Test
     refute File.exist?(File.join(slot, "scratch.txt"))
   end
 
+  def test_should_raise_what_git_said_when_a_checkout_fails
+    error = assert_raises(FunCi::Pipeline::Worktrees::GitError) { @worktrees.check_out(slot, "0" * 40) }
+
+    assert_match(/git worktree add .*: fatal/, error.message)
+  end
+
   private
 
   def slot = File.join(@worktrees.root, "slot-0")
