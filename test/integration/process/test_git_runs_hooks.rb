@@ -13,7 +13,7 @@ require "fun_ci/cli"
 # and stops when one isn't 0. What `trigger --background` and `wait` do with
 # those arguments is pinned in the acceptance lane.
 class TestGitRunsHooks < Minitest::Test
-  SHIM = %(#!/bin/sh\necho "$*" >> %<asked>s\necho "fun-ci was asked: $*"\nexit %<verdict>d\n)
+  SHIMS = File.expand_path("../../fixtures/fun_ci_shim", __dir__)
 
   def setup
     @project = GitProject.create
@@ -79,16 +79,10 @@ class TestGitRunsHooks < Minitest::Test
 
   def push(verdict: 0) = with_hooks("git", "push", "-q", "origin", "main", verdict: verdict).last
 
+  # A stand-in `fun-ci` on PATH records what it is asked, says so, and exits with `verdict`.
   def with_hooks(*command, verdict: 0)
-    Open3.capture2e({ "PATH" => "#{shims(verdict)}:#{ENV.fetch("PATH")}" }, *command, chdir: @project.dir)
-  end
-
-  # A `fun-ci` that records what it is asked, says so, and exits with `verdict`.
-  def shims(verdict)
-    dir = File.join(@tmp, "bin").tap { |path| FileUtils.mkdir_p(path) }
-    shim = File.join(dir, "fun-ci")
-    File.write(shim, format(SHIM, asked: File.join(@tmp, "asked"), verdict: verdict))
-    File.chmod(0o755, shim)
-    dir
+    env = { "PATH" => "#{SHIMS}:#{ENV.fetch("PATH")}", "FUN_CI_SHIM_ASKED" => File.join(@tmp, "asked"),
+            "FUN_CI_SHIM_VERDICT" => verdict.to_s }
+    Open3.capture2e(env, *command, chdir: @project.dir)
   end
 end

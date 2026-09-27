@@ -1,0 +1,8 @@
+#!/bin/sh
+# A stand-in fun-ci for process tests of git hooks: records what it was
+# asked in $FUN_CI_SHIM_ASKED, says so, and exits with $FUN_CI_SHIM_VERDICT.
+# Tracked rather than written per test, since macOS scans each new executable
+# on its first exec (see Gotchas in CLAUDE.md).
+echo "$*" >> "$FUN_CI_SHIM_ASKED"
+echo "fun-ci was asked: $*"
+exit "${FUN_CI_SHIM_VERDICT:-0}"

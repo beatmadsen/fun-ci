@@ -16,7 +16,7 @@ class TestLivePipelineStarts < Minitest::Test
     @project = File.realpath(Dir.mktmpdir("project"))
     %w[lint build fast slow].each { |stage| script(".fun-ci/#{stage}.sh", "exit 0") }
     script("fun-ci", %(echo "$(pwd -P) $*" > #{File.join(@project, "asked")}))
-    within_deadline { FunCi::Agent::LivePipeline.new(@project, command: [File.join(@project, "fun-ci")]).start("abc1234", "main") }
+    within_deadline { live_pipeline.start("abc1234", "main") }
   end
 
   def teardown = FileUtils.rm_rf(@project)
@@ -26,6 +26,9 @@ class TestLivePipelineStarts < Minitest::Test
   end
 
   private
+
+  # Run through sh, since macOS scans a freshly written executable on its first exec.
+  def live_pipeline = FunCi::Agent::LivePipeline.new(@project, command: ["/bin/sh", File.join(@project, "fun-ci")])
 
   def script(path, body)
     File.join(@project, path).then do |full|

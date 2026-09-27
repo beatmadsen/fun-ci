@@ -18,6 +18,7 @@ class TestSlotRunProcesses < Minitest::Test
 
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
   STAGES = %w[lint build fast slow].freeze
+  STAGE_SCRIPT = File.expand_path("../../fixtures/stage_script/run", __dir__)
   Lock = Struct.new(:closed?) do
     def close = self[:closed?] = true
   end
@@ -66,11 +67,16 @@ class TestSlotRunProcesses < Minitest::Test
     within_deadline { slot_run.run(FunCi::Setup::ProjectConfig.new(@slot)) }
   end
 
+  # A hard link to a stage script that runs the body written beside it, so
+  # no executable is freshly written; a copy where the link can't cross file
+  # systems, which is on Linux, where nothing scans a new executable.
   def write_script(stage, body)
     path = File.join(@slot, ".fun-ci", "#{stage}.sh")
     FileUtils.mkdir_p(File.dirname(path))
-    File.write(path, "#!/bin/sh\n#{body}\n")
-    File.chmod(0o755, path)
+    File.write("#{path}.body", "#{body}\n")
+    File.link(STAGE_SCRIPT, path)
+  rescue Errno::EXDEV
+    FileUtils.cp(STAGE_SCRIPT, path, preserve: true)
   end
 
   def slot_run
