@@ -2,6 +2,7 @@
 
 require "json"
 require_relative "status_text"
+require_relative "why_text"
 require_relative "status_json"
 require_relative "runs_text"
 require_relative "exit_code"
@@ -10,6 +11,8 @@ module FunCi
   module Agent
     # Prints what an agent command found, as text or, with --json, as JSON.
     class Output
+      NO_STAGE = "No stage it needs failed or ran over budget; name one to see it: fun-ci why REV STAGE"
+
       def initialize(stdout, json:)
         @stdout = stdout
         @json = json
@@ -17,6 +20,14 @@ module FunCi
 
       def report(report)
         @json ? print_json(StatusJson.document(report)) : print_lines(StatusText.lines(report))
+      end
+
+      # Everything kept about the stage named, or says no stage decided the verdict.
+      def why(report, stage_name)
+        stage = report.stages.find { |candidate| candidate.name == stage_name }
+        return print_lines([StatusText.header(report), NO_STAGE]) unless stage
+
+        print_lines(WhyText.lines(report, stage))
       end
 
       # Says the commit has no run, and answers the exit code for that.

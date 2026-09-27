@@ -12,10 +12,11 @@ module FunCi
   module Persistence
     class NullRecorder
       def create_run(**) = nil
-      def start_stage(_stage) = nil
+      def start_stage(_stage, **) = nil
       def end_stage(_job_id, _status) = nil
       def keep_output(_job_id, _output) = nil
       def keep_failures(_job_id, _failures) = nil
+      def keep_exit(_job_id, _exit_status, _signal) = nil
       def stage_process(_job_id, _pid) = nil
       def slot_taken(_lock_file) = nil
       def foreground_done = nil
@@ -84,12 +85,12 @@ module FunCi
         tolerating { PipelineRun.store_slot_lock(@db, @pipeline_run_id, lock_file) }
       end
 
-      def start_stage(stage)
+      def start_stage(stage, budget: nil)
         return nil unless @pipeline_run_id
 
         tolerating do
           ensure_running
-          job_id = StageJob.create(@db, pipeline_run_id: @pipeline_run_id, stage: stage)
+          job_id = StageJob.create(@db, pipeline_run_id: @pipeline_run_id, stage: stage, budget: budget)
           StageJob.update_status(@db, job_id, "running")
           job_id
         end
@@ -103,6 +104,10 @@ module FunCi
       # Keeps the failures a stage reported, if it reported any.
       def keep_failures(job_id, failures)
         tolerating { StageJob.keep_failures(@db, job_id, JSON.generate(failures)) } if failures.any?
+      end
+
+      def keep_exit(job_id, exit_status, signal)
+        tolerating { StageJob.keep_exit(@db, job_id, exit_status, signal) }
       end
 
       # Records the stage's outcome, then settles the run's status from its stages.

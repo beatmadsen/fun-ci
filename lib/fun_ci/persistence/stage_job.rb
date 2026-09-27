@@ -6,17 +6,18 @@ module FunCi
   module Persistence
     module StageJob
       TERMINAL_STATUSES = %w[completed failed timed_out cancelled].freeze
-      FIELDS = %i[id pipeline_run_id stage status started_at completed_at finished_order output_tail failures].freeze
+      FIELDS = %i[id pipeline_run_id stage status started_at completed_at finished_order output_tail failures
+                  exit_status signal budget].freeze
       COLUMNS = FIELDS.join(", ")
       NEXT_IN_RUN = "(SELECT COALESCE(MAX(others.finished_order), 0) + 1 FROM stage_jobs AS others " \
                     "WHERE others.pipeline_run_id = stage_jobs.pipeline_run_id)"
       TIMESTAMP_COLUMNS = TERMINAL_STATUSES.to_h { |status| [status, "completed_at"] }
                                            .merge("running" => "started_at").freeze
 
-      def self.create(db, pipeline_run_id:, stage:)
+      def self.create(db, pipeline_run_id:, stage:, budget: nil)
         db.execute(
-          "INSERT INTO stage_jobs (pipeline_run_id, stage, status) VALUES (?, ?, 'scheduled')",
-          [pipeline_run_id, stage]
+          "INSERT INTO stage_jobs (pipeline_run_id, stage, status, budget) VALUES (?, ?, 'scheduled', ?)",
+          [pipeline_run_id, stage, budget]
         )
         db.last_insert_row_id
       end
@@ -34,6 +35,11 @@ module FunCi
       # The failures the stage reported, as JSON (acceptance-tests.md, AT-9.7).
       def self.keep_failures(db, id, failures_json)
         db.execute("UPDATE stage_jobs SET failures = ? WHERE id = ?", [failures_json, id])
+      end
+
+      # How the stage's process exited: its status, or the signal that ended it.
+      def self.keep_exit(db, id, exit_status, signal)
+        db.execute("UPDATE stage_jobs SET exit_status = ?, signal = ? WHERE id = ?", [exit_status, signal, id])
       end
 
       def self.find(db, id)

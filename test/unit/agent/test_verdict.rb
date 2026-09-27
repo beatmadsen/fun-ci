@@ -48,7 +48,20 @@ class TestVerdict < Minitest::Test
     assert_equal :passed, decide("build", run_status: "cancelled", lint: "completed", build: "completed")
   end
 
+  def test_should_name_the_needed_stage_that_finished_badly_first_as_the_one_that_decided
+    assert_equal "build", deciding("fast", lint: "completed", build: "failed", fast: "timed_out")
+  end
+
+  def test_should_name_no_stage_as_deciding_while_none_needed_finished_badly
+    assert_nil deciding("build", lint: "completed", build: "completed", fast: "failed")
+  end
+
   private
+
+  def deciding(need, **stages)
+    rows = stages.each_with_index.map { |(stage, status), i| { stage: stage.to_s, status: status, finished_order: i } }
+    FunCi::Agent::Verdict.deciding_stage(stages: rows, need: need)
+  end
 
   # Stages finish in the order given.
   def decide(need, run_status: "running", **stages)

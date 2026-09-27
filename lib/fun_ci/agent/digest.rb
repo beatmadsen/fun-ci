@@ -4,7 +4,7 @@ module FunCi
   module Agent
     # Why a needed stage failed, as text (acceptance-tests.md, AT-9.6): the
     # failures it reported, or else the last lines of its output.
-    module Evidence
+    module Digest
       HEADINGS = { "failed" => "failed", "over_budget" => "ran over budget" }.freeze
       TAIL_LINES = 20
       FAILURES = 10

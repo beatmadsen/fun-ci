@@ -24,6 +24,22 @@ class TestOptions < Minitest::Test
     assert_equal "unknown level 'most': use build, fast or all", error.message
   end
 
+  def test_should_take_a_stage_after_the_revision
+    options = parse("abc1234", "slow", takes: %i[stage])
+
+    assert_equal %w[abc1234 slow], [options.rev, options.stage]
+  end
+
+  def test_should_take_a_stage_alone_as_the_stage_of_head
+    options = parse("fast", takes: %i[stage])
+
+    assert_equal %w[HEAD fast], [options.rev, options.stage]
+  end
+
+  def test_should_take_a_stage_name_as_a_revision_for_a_command_without_stages
+    assert_equal "fast", parse("fast").rev
+  end
+
   def test_should_take_json
     assert parse("--json").json
   end

@@ -31,26 +31,33 @@ unless ENV["MUTATION_TESTING"]
   )
 end
 
-FakeStatus = Data.define(:success?, :exitstatus) unless defined?(FakeStatus)
+unless defined?(FakeStatus)
+  FakeStatus = Data.define(:success?, :exitstatus, :termsig) do
+    def initialize(**fields) = super(termsig: nil, **fields)
+  end
+end
 
 class FakeRecorder
-  attr_reader :calls
+  attr_reader :calls, :budgets
 
   def initialize
     @calls = []
+    @budgets = {}
     @next_job_id = 0
   end
 
   def create_run(commit_hash:, branch:, project_path: nil) = @calls << [:create_run, commit_hash, branch, project_path]
 
-  def start_stage(stage)
+  def start_stage(stage, budget: nil)
     @calls << [:start_stage, stage]
+    @budgets[stage] = budget
     @next_job_id += 1
   end
 
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
   def keep_output(job_id, output) = @calls << [:keep_output, job_id, output]
   def keep_failures(job_id, failures) = @calls << [:keep_failures, job_id, failures]
+  def keep_exit(job_id, exit_status, signal) = @calls << [:keep_exit, job_id, exit_status, signal]
   def report_trouble_to(_out) = nil
   def tolerating = yield
   def stage_process(job_id, pid) = @calls << [:stage_process, job_id, pid]

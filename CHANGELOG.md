@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `fun-ci why [commit] [stage]` prints everything fun-ci kept about a failed
+  stage: how it exited, how long it took against its budget, each reported
+  failure with its whole message, and the last lines of its output. Without a
+  stage it explains the one that decided the verdict, and it exits with the
+  verdict, as `status` does.
+
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push
   sends (`fun-ci wait SHA --need fast`) instead of running the pipeline

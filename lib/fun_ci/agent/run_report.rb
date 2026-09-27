@@ -3,14 +3,17 @@
 require "json"
 require "time"
 require_relative "verdict"
+require_relative "../evidence/document"
 
 module FunCi
   module Agent
     # What an agent is told about one run: its commit, each of the four stages
     # in pipeline order, and the verdict for the level it needs.
-    RunReport = Data.define(:sha, :subject, :branch, :need, :stages, :verdict, :superseded_by)
+    RunReport = Data.define(:sha, :subject, :branch, :need, :stages, :verdict, :deciding, :superseded_by)
 
     class RunReport
+      # deciding: the stage whose failure or overrun decided the verdict, if one did.
+      def initialize(deciding: nil, **) = super
       STAGES = %w[lint build fast slow].freeze
       STATES = { "completed" => "passed", "timed_out" => "over_budget", "scheduled" => "waiting" }.freeze
       # What a failed stage left to explain itself: the end of its output,
@@ -18,10 +21,18 @@ module FunCi
       Kept = Data.define(:tail, :failures)
       NOTHING_KEPT = Kept.new(tail: nil, failures: [])
 
-      Stage = Data.define(:name, :state, :seconds, :kept)
+      # How a finished stage's process ended, and the budget it had.
+      Exit = Data.define(:exit_status, :signal, :budget)
+      NO_EXIT = Exit.new(exit_status: nil, signal: nil, budget: nil)
+
+      Stage = Data.define(:name, :state, :seconds, :kept, :exit)
 
       class Stage
-        def initialize(name:, state:, seconds:, kept: NOTHING_KEPT) = super
+        def initialize(kept: NOTHING_KEPT, exit: NO_EXIT, **) = super
+        def exit_status = exit.exit_status
+        def signal = exit.signal
+        def budget = exit.budget
+        def evidence = Evidence::Document.legacy(tail: tail, failures: failures)
         def tail = kept.tail
         def failures = kept.failures
       end
@@ -29,7 +40,8 @@ module FunCi
       # commit: the run's subject and the commit that superseded it, if any.
       def self.build(run:, jobs:, need:, commit:)
         verdict = Verdict.decide(run_status: run[:status], stages: jobs, need: need)
-        new(sha: run[:commit_hash], branch: run[:branch], need: need, stages: stages(jobs), verdict: verdict, **commit)
+        new(sha: run[:commit_hash], branch: run[:branch], need: need, stages: stages(jobs), verdict: verdict,
+            deciding: Verdict.deciding_stage(stages: jobs, need: need), **commit)
       end
 
       # The four stages in pipeline order, from the run's stage rows.
@@ -43,7 +55,8 @@ module FunCi
 
         state = STATES.fetch(job[:status], job[:status])
         Stage.new(name: name, state: state, seconds: seconds(job),
-                  kept: Kept.new(tail: job[:output_tail], failures: failures(job)))
+                  kept: Kept.new(tail: job[:output_tail], failures: failures(job)),
+                  exit: Exit.new(exit_status: job[:exit_status], signal: job[:signal], budget: job[:budget]))
       end
 
       def self.seconds(job)

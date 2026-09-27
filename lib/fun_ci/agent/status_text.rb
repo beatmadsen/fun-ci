@@ -2,7 +2,7 @@
 
 require_relative "run_report"
 require_relative "verdict"
-require_relative "evidence"
+require_relative "digest"
 
 module FunCi
   module Agent
@@ -13,10 +13,11 @@ module FunCi
 
       def self.lines(report)
         needed = Verdict::LEVELS.fetch(report.need)
-        header = %(fun-ci: #{report.sha[0, 7]} "#{report.subject}" on #{report.branch})
-        [header, *report.stages.map { |stage| stage_line(stage, needed) }, *Evidence.lines(report.stages, needed),
+        [header(report), *report.stages.map { |stage| stage_line(stage, needed) }, *Digest.lines(report.stages, needed),
          *footer(report)]
       end
+
+      def self.header(report) = %(fun-ci: #{report.sha[0, 7]} "#{report.subject}" on #{report.branch})
 
       def self.stage_line(stage, needed)
         seconds = stage.seconds ? format("%6.1fs", stage.seconds) : " " * 7

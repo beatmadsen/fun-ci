@@ -34,6 +34,7 @@ class AgentClient
   def runs(*args) = agent("runs", args)
   def wait(*args) = agent("wait", args)
   def events(*args) = agent("events", args)
+  def why(*args) = agent("why", args)
 
   # stages: { "lint" => "completed", "fast" => "running", ... }, in the order they started.
   def record_run(sha, branch: "main", project: @workspace.project_dir, stages: {})

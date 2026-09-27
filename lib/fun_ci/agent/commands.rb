@@ -9,6 +9,7 @@ require_relative "status_command"
 require_relative "runs_command"
 require_relative "wait_command"
 require_relative "events_command"
+require_relative "why_command"
 
 module FunCi
   module Agent
@@ -16,7 +17,7 @@ module FunCi
     # database and the project's git.
     module Commands
       ALL = { "status" => StatusCommand, "runs" => RunsCommand, "wait" => WaitCommand,
-              "events" => EventsCommand }.freeze
+              "events" => EventsCommand, "why" => WhyCommand }.freeze
 
       def self.run(name, args, context)
         ALL.fetch(name).new(context).run(args)

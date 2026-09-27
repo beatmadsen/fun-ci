@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "trigger_params"
+require_relative "stage_end"
 
 module FunCi
   module Pipeline
@@ -30,24 +31,19 @@ module FunCi
       # A failed stage's output and reported failures are kept before its
       # outcome is recorded, so whoever sees the outcome can read why.
       def passes?(config, stage)
-        job_id = @seams.recorder.start_stage(stage)
-        status = with_report_dir { |reports| run_stage(config, stage, job_id, reports) }
-        @seams.recorder.end_stage(job_id, status)
-        status == "completed"
+        job_id = @seams.recorder.start_stage(stage, budget: @seams.budgets[stage])
+        with_report_dir { |reports| run_stage(config, stage, job_id, reports) } == "completed"
       end
 
       private
 
       def run_stage(config, stage, job_id, reports)
-        output, *finished = execute(config, stage, reports.env) { |pid| @seams.recorder.stage_process(job_id, pid) }
-        outcome(stage, output, *finished).tap do |status|
-          keep_evidence(job_id, output, reports.failures) unless status == "completed"
+        output, status, timed_out = execute(config, stage, reports.env) do |pid|
+          @seams.recorder.stage_process(job_id, pid)
         end
-      end
-
-      def keep_evidence(job_id, output, failures)
-        @seams.recorder.keep_output(job_id, output)
-        @seams.recorder.keep_failures(job_id, failures)
+        finished = StageEnd::Finished.new(output: output, status: status, timed_out: timed_out,
+                                          failures: reports.failures)
+        StageEnd.new(@seams.recorder, job_id).record(finished).tap { |result| tell(stage, output, result) }
       end
 
       def with_report_dir
@@ -61,24 +57,20 @@ module FunCi
         @seams.executor(@dir).call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage], env: env, &)
       end
 
-      def outcome(stage, output, status, timed_out)
-        return report_timeout(stage) if timed_out
-        return report_failure(stage, output) unless status.success?
-
-        "completed"
+      def tell(stage, output, result)
+        report_timeout(stage) if result == "timed_out"
+        report_failure(stage, output) if result == "failed"
       end
 
       def report_timeout(stage)
         @stdout.puts "#{label(stage)} killed -- exceeded #{@seams.budgets[stage]}s time budget."
         @stdout.puts ADVICE[stage]
-        "timed_out"
       end
 
       def report_failure(stage, output)
         @stdout.puts output unless output.empty?
         @stdout.puts "#{label(stage)} failed."
         @stdout.puts NEXT_STEPS[stage]
-        "failed"
       end
 
       def label(stage) = LABELS.fetch(stage, stage)

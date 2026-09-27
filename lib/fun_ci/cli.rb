@@ -17,7 +17,7 @@ module FunCi
       "check" => :run_check,
       "prune" => :run_prune
     }.freeze
-    AGENT_COMMANDS = %w[status runs wait events].freeze
+    AGENT_COMMANDS = %w[status runs wait events why].freeze
 
     def self.default_db_dir = Persistence::StateDir.path(ENV)
 

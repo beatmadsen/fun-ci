@@ -56,8 +56,9 @@ module FunCi
       end
 
       def launch_slow_suite(config)
-        launch(db_path: recorder.db_path, pipeline_run_id: recorder.pipeline_run_id,
-               job_id: recorder.start_stage("slow"), executor: slow_suite(config, @slot.share))
+        job_id = recorder.start_stage("slow", budget: @seams.budgets["slow"])
+        launch(db_path: recorder.db_path, pipeline_run_id: recorder.pipeline_run_id, job_id: job_id,
+               executor: slow_suite(config, @slot.share))
       end
 
       # Answers [output, status, timed_out, failures reported], as BackgroundWrapper expects.

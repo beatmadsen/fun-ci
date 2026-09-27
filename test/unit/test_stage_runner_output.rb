@@ -61,3 +61,20 @@ class TestStageRunnerOutput < Minitest::Test
     recorder.calls
   end
 end
+
+# A stage starts with its budget recorded, which `fun-ci why` reads back (AT-10.1).
+class TestStageRunnerBudget < Minitest::Test
+  Config = Data.define(:dir) do
+    def script_path(stage) = "#{stage}.sh"
+  end
+
+  def test_should_record_the_budget_a_stage_starts_with
+    recorder = FakeRecorder.new
+    seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { ["", FakeStatus.new(true, 0)] }, recorder: recorder,
+                                       report_dir: -> { FakeReportDir.new([]) }, time_budgets: { "fast" => 7 })
+    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams)
+                                .passes?(Config.new(dir: "/p"), "fast")
+
+    assert_equal({ "fast" => 7 }, recorder.budgets)
+  end
+end

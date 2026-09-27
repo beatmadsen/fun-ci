@@ -5,12 +5,13 @@ require_relative "verdict"
 
 module FunCi
   module Agent
-    # The arguments of an agent command: at most one revision, and whichever
-    # of the switches below the command takes.
+    # The arguments of an agent command: at most one revision, then, for a
+    # command that takes :stage, a stage's name, and whichever of the switches
+    # below the command takes.
     module Options
       class Invalid < StandardError; end
 
-      Parsed = Data.define(:rev, :need, :json, :within, :follow_branch, :limit, :branch, :follow, :only)
+      Parsed = Data.define(:rev, :stage, :need, :json, :within, :follow_branch, :limit, :branch, :follow, :only)
       DEFAULTS = { need: "fast", json: false, within: nil, follow_branch: false, limit: 10, branch: nil,
                    follow: false, only: nil }.freeze
       SWITCHES = { need: ["--need LEVEL"], json: ["--json"], within: ["--within DURATION"],
@@ -19,12 +20,15 @@ module FunCi
       FILTERS = %w[failures].freeze
       MULTIPLIERS = { "" => 1, "s" => 1, "m" => 60 }.freeze
 
+      STAGES = %w[lint build fast slow].freeze
+
       def self.parse(args, takes:)
         values = DEFAULTS.dup
         revs = parser(values, takes).parse(args)
+        stage = takes.include?(:stage) && STAGES.include?(revs.last) ? revs.pop : nil
         raise Invalid, "one revision at a time, not #{revs.join(" ")}" if revs.size > 1
 
-        Parsed.new(rev: revs.first || "HEAD", **values)
+        Parsed.new(rev: revs.first || "HEAD", stage: stage, **values)
       rescue OptionParser::ParseError => e
         raise Invalid, e.message
       end
@@ -33,7 +37,9 @@ module FunCi
       def self.parser(values, takes)
         parser = OptionParser.new
         parser.base.long.clear
-        takes.each { |key| parser.on(*SWITCHES.fetch(key)) { |value| values[key] = convert(key, value) } }
+        (takes & SWITCHES.keys).each do |key|
+          parser.on(*SWITCHES.fetch(key)) { |value| values[key] = convert(key, value) }
+        end
         parser
       end
 

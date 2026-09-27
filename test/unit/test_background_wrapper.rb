@@ -68,7 +68,7 @@ class TestBackgroundWrapperOutput < Minitest::Test
   end
 
   def test_keeps_nothing_of_a_slow_suite_that_passed
-    assert_equal [[:end_stage, 1, "completed"]], calls_for(["fine\n", FakeStatus.new(true, 0), false])
+    refute(calls_for(["fine\n", FakeStatus.new(true, 0), false]).any? { |call| call.first == :keep_output })
   end
 
   private

@@ -1,0 +1,62 @@
+# frozen_string_literal: true
+
+require_relative "trigger_cli_shared"
+require_relative "agent_client"
+
+# `fun-ci why` prints everything kept about a failed stage
+# (acceptance-tests.md, AT-10.1): the pipeline keeps a failed fast suite's
+# reported failures and the end of its output, and the agent reads it all.
+class TestAgentWhy < Minitest::Test
+  SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
+  OUTPUT = (1..250).map { |n| "line #{n}\n" }.join
+  MESSAGE = (1..7).map { |n| "detail #{n}" }.join("\n")
+  REPORT = { failures: [{ file: "test/fetch_test.rb", line: 41, test: "FetchTest#retries", message: MESSAGE }] }.freeze
+
+  def setup
+    @pipeline = TriggerCliClient.open(command_runner: fast_suite_failing)
+    @agent = AgentClient.new(@pipeline.workspace)
+    @agent.git.commit(SHA, "Add retry to fetch")
+    @pipeline.trigger(commit_hash: SHA, branch: "main")
+  end
+
+  def teardown = @pipeline.close
+
+  def test_should_start_with_the_stage_its_state_exit_status_time_and_budget
+    @agent.why
+
+    assert_match(/\Afast failed \(exit 1\) after \d+\.\ds, budget 10s\z/, @agent.stdout.lines[1].chomp)
+  end
+
+  def test_should_print_each_reported_failure_with_its_whole_message
+    @agent.why
+
+    assert_includes @agent.stdout, "  test/fetch_test.rb:41  FetchTest#retries\n#{MESSAGE.gsub(/^/, "    ")}\n"
+  end
+
+  def test_should_print_the_whole_kept_tail
+    @agent.why
+
+    assert_includes @agent.stdout, (51..250).map { |n| "  line #{n}\n" }.join
+  end
+
+  def test_should_exit_with_the_verdict
+    assert_equal 1, @agent.why
+  end
+
+  def test_should_answer_for_the_stage_named
+    @agent.why("HEAD", "lint")
+
+    assert_match(/\Alint passed\b/, @agent.stdout.lines[1])
+  end
+
+  private
+
+  def fast_suite_failing
+    lambda do |cmd, env|
+      next ["", FakeStatus.new(true, 0)] unless cmd.include?("fast.sh")
+
+      File.write(File.join(env.fetch("FUN_CI_REPORT"), "fast.json"), JSON.generate(REPORT))
+      [OUTPUT, FakeStatus.new(false, 1)]
+    end
+  end
+end

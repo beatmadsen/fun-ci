@@ -67,6 +67,7 @@ fun-ci status [commit]                          Where a commit's run stands; the
 fun-ci wait [commit]                            Wait until that verdict is decided, then exit with it
 fun-ci runs                                     This project's recent runs, newest first
 fun-ci events [--follow]                        The runs' events as JSON lines
+fun-ci why [commit] [stage]                     Everything kept about why a stage failed
 ```
 
 ## For Coding Agents

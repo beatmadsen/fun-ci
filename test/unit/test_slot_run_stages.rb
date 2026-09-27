@@ -53,6 +53,13 @@ class TestSlotRunStages < Minitest::Test
     assert(recorder.calls.any? { |call| call.values_at(0, 2) == [:keep_failures, [{ test: "t1" }]] })
   end
 
+  def test_should_record_the_slow_suite_s_budget
+    recorder = FakeRecorder.new
+    slot_run(slot_with(Lock.new(false)), recorder: recorder, time_budgets: { "slow" => 90 }).run(config)
+
+    assert_equal 90, recorder.budgets["slow"]
+  end
+
   def test_should_fail_when_fast_fails_while_the_slow_suite_runs
     refute_equal 0, run_with({ "fast.sh" => failing("fast test failed") })
   end

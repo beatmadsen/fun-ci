@@ -45,6 +45,16 @@ class TestRunReport < Minitest::Test
                  report(job("lint", "failed").merge(failures: failures)).stages.first.failures
   end
 
+  def test_should_carry_how_a_stage_exited_and_its_budget
+    stage = report(job("lint", "failed").merge(exit_status: 2, signal: nil, budget: 30)).stages.first
+
+    assert_equal [2, nil, 30], [stage.exit_status, stage.signal, stage.budget]
+  end
+
+  def test_should_name_the_stage_that_decided_the_verdict
+    assert_equal "lint", report(job("lint", "failed"), job("build", "completed")).deciding
+  end
+
   def test_should_carry_no_failures_for_a_stage_that_reported_none
     assert_empty report(job("lint", "failed")).stages.first.failures
   end

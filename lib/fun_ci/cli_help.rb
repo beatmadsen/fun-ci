@@ -19,6 +19,7 @@ module FunCi
         runs           List this project's recent runs, newest first
         wait           Wait for a commit's verdict, then exit with it as status does
         events         Print this project's runs' events as JSON lines
+        why            Print everything kept about why a commit's stage failed
 
       Options:
         -h, --help     Show this help message
@@ -28,7 +29,7 @@ module FunCi
         --background   Run the pipeline in the background and return at once
 
       Agent options:
-        --need LEVEL   (status, wait) What must pass: build, fast (default) or all
+        --need LEVEL   (status, wait, why) What must pass: build, fast (default) or all
         --within TIME  (wait) Give up undecided after 30, 30s or 5m
         --follow-branch  (wait) Move on to the newer commit that superseded the run
         -n N           (runs) How many runs to list (default 10)
