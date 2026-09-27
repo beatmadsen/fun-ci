@@ -80,6 +80,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   too, with the stage's process group in `FUN_CI_PGID`, for `jcmd`,
   `py-spy dump` or a JVM thread dump; what it makes the stage print is kept.
   This adds at most 2 seconds to a stage that has already blown its budget.
+- When all fun-ci kept of a failed stage is its output's last lines, `fun-ci
+  why` ends by saying so, and that extractors under `evidence:` in
+  `.fun-ci/config` keep more.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

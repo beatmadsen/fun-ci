@@ -14,8 +14,17 @@ module FunCi
       PRUNED = "Its evidence is no longer kept: fun-ci keeps it for a project's " \
                "#{Persistence::DbRecorder::KEPT_RUNS} newest runs.".freeze
 
+      ONLY_TAIL = "Only the output's last lines were kept; extractors under `evidence:` in .fun-ci/config keep more."
+
       def self.lines(report, stage)
-        [StatusText.header(report), StageSummary.line(stage), *body(stage), *raw(report, stage)]
+        [StatusText.header(report), StageSummary.line(stage), *body(stage), *raw(report, stage), *only_tail(stage)]
+      end
+
+      # So an agent that reads it knows it can write the extractor itself.
+      def self.only_tail(stage)
+        evidence = stage.evidence
+        kept_more = evidence.failures.any? || evidence.excerpts.any? { |excerpt| excerpt[:extractor] != "output-tail" }
+        kept_more || evidence.excerpts.empty? ? [] : ["", ONLY_TAIL]
       end
 
       def self.raw(report, stage)
@@ -28,7 +37,7 @@ module FunCi
 
         EvidenceText.lines(stage.evidence)
       end
-      private_class_method :body, :raw
+      private_class_method :body, :raw, :only_tail
     end
   end
 end

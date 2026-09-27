@@ -46,7 +46,7 @@ class TestAgentWhyRaw < Minitest::Test
   def test_should_name_the_raw_command_in_why
     @agent.why
 
-    assert_equal "The whole output: fun-ci why 3f9c2ab fast --raw", @agent.stdout.lines.last.chomp
+    assert_includes @agent.stdout.lines, "The whole output: fun-ci why 3f9c2ab fast --raw\n"
   end
 
   private

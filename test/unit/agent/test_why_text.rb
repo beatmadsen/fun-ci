@@ -41,7 +41,7 @@ class TestWhyText < Minitest::Test
 
   def test_should_print_the_kept_tail_under_its_title
     assert_equal ["", "The output's last lines, from output-tail:", "  one", "  two"],
-                 lines(stage("failed", kept: { tail: "one\ntwo\n" })).drop(2)
+                 lines(stage("failed", kept: { tail: "one\ntwo\n" }))[2, 4]
   end
 
   def test_should_say_where_an_excerpt_came_from
@@ -72,6 +72,14 @@ class TestWhyText < Minitest::Test
   def test_should_end_with_the_command_that_prints_the_raw_output_when_it_is_kept
     assert_equal "The whole output: fun-ci why 3f9c2ab fast --raw",
                  lines(stage("failed", kept: { raw_bytes: 1843 })).last
+  end
+
+  def test_should_end_by_saying_when_only_the_output_s_last_lines_were_kept
+    assert_equal ["", FunCi::Agent::WhyText::ONLY_TAIL], lines(stage("failed", kept: { tail: "boom\n" })).last(2)
+  end
+
+  def test_should_not_say_so_when_a_failure_was_kept_too
+    refute_match(/Only the output/, lines(stage("failed", kept: { tail: "boom\n", failures: [FAILURE] })).last)
   end
 
   def test_should_say_nothing_is_kept_for_a_stage_that_passed
