@@ -56,7 +56,7 @@ module FunCi
         column = TIMESTAMP_COLUMNS.fetch(new_status)
         order = TERMINAL_STATUSES.include?(new_status) ? NEXT_IN_RUN : "finished_order"
         db.execute("UPDATE stage_jobs SET status = ?, #{column} = ?, finished_order = #{order} WHERE id = ?",
-                   [new_status, Time.now.utc.iso8601, id])
+                   [new_status, Time.now.utc.iso8601(3), id])
       end
 
       def self.elapsed_duration(job)

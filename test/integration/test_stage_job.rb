@@ -60,6 +60,14 @@ class TestStageJobUpdateStatus < Minitest::Test
     refute_nil job[:started_at], "Should set started_at when running"
   end
 
+  # A stage's duration is shown to a tenth of a second (AT-9.2).
+  def test_should_record_when_a_stage_started_to_the_millisecond
+    id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: @run_id, stage: "build")
+    FunCi::Persistence::StageJob.update_status(@db, id, "running")
+
+    assert_match(/\.\d{3}Z\z/, FunCi::Persistence::StageJob.find(@db, id)[:started_at])
+  end
+
   def test_should_set_completed_at_when_transitioning_to_terminal_state
     id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: @run_id, stage: "build")
     FunCi::Persistence::StageJob.update_status(@db, id, "running")
