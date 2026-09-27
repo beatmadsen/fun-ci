@@ -25,7 +25,7 @@ module FunCi
 
       # Mistakes in the `evidence` key, which `fun-ci check` reports but which
       # never stop a pipeline: the entry with the mistake is left out instead.
-      def evidence_errors = Evidence::Settings.load(File.join(@fun_ci_dir, "config")).errors
+      def evidence_errors = Evidence::Settings.load(File.join(@fun_ci_dir, "config")).errors(root: @project_root)
 
       def worktree_slots = settings.worktree_slots
 

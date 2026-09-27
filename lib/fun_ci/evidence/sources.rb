@@ -4,12 +4,15 @@ module FunCi
   module Evidence
     # Where a failed stage's evidence can come from while it still holds its
     # slot (why.md, "Where evidence can come from"): the stage, the worktree
-    # it ran in, its report directory, its environment as a hash, and the
-    # Stamp of each watched file when it started, by path.
-    Sources = Data.define(:stage, :worktree, :reports, :environment, :watched)
+    # it ran in, its stage directory (`reports`), its environment as a hash,
+    # the Stamp of each watched file when it started, by path, its budget,
+    # its commit ({ sha:, branch: }) and when it started.
+    Sources = Data.define(:stage, :worktree, :reports, :environment, :watched, :budget, :commit, :started)
 
     class Sources
-      def initialize(watched: {}, **) = super
+      UNKNOWN = { watched: {}, budget: nil, commit: nil, started: nil }.freeze
+
+      def initialize(**given) = super(**UNKNOWN, **given)
     end
   end
 end

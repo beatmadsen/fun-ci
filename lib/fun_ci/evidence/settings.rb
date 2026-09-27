@@ -42,11 +42,12 @@ module FunCi
       # The globs whose files are stamped when the stage starts, so what it
       # wrote to them can be told from what was there before.
       def watched(stage)
-        entries(stage).grep(Hash).flat_map { |raw| Array(raw["path"]) + Array(raw["paths"]) }
+        entries(stage).grep(Hash).flat_map { |raw| Array(raw["path"]) + Array(raw["paths"]) + Array(raw["watch"]) }
                       .grep(String).uniq
       end
 
-      def errors = SettingsCheck.new(@raw).errors
+      # root: the project, whose `run:` scripts are checked when it is given.
+      def errors(root: nil) = SettingsCheck.new(@raw, root).errors
 
       private
 

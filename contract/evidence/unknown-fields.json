@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "generator": "a field fun-ci doesn't know",
+  "facts": [{ "name": "module", "value": "core", "colour": "blue" }],
+  "failures": [{ "test": "OrderTest#totals", "file": "src/test/OrderTest.kt", "line": 42,
+                 "message": "expected 3 but was 2", "output": "total: 2", "retries": 3 }],
+  "excerpts": [{ "title": "Gradle problems report", "location": "build/reports/problems.html",
+                 "lines": ["Compilation failed"], "severity": "high" }]
+}

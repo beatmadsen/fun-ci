@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "catalog"
+require_relative "problem"
 
 module FunCi
   module Evidence
@@ -31,9 +32,16 @@ module FunCi
         entry = Catalog.entry(raw)
         return failed(entry.name, "not run: the evidence budget of #{@budget}s ran out") if @context.deadline.passed?
 
-        Attempt.new(name: entry.name, findings: entry.extractor.extract(@context), because: because, problem: nil)
+        ran(entry, because)
       rescue Catalog::Refused => e
         failed(label(raw), e.message)
+      end
+
+      # Whatever an extractor raises is a problem, never the end of the evidence.
+      def ran(entry, because)
+        Attempt.new(name: entry.name, findings: entry.extractor.extract(@context), because: because, problem: nil)
+      rescue Problem => e
+        failed(entry.name, e.message)
       rescue StandardError => e
         failed(entry.name, "#{e.class}: #{e.message}")
       end

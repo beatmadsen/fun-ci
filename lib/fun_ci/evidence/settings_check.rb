@@ -19,8 +19,9 @@ module FunCi
         match && match[1].to_f.positive? ? match[1].to_f : nil
       end
 
-      def initialize(raw)
+      def initialize(raw, root)
         @raw = raw
+        @root = root
       end
 
       def errors
@@ -57,9 +58,20 @@ module FunCi
 
       def refusal(entry)
         Catalog.entry(entry)
-        nil
+        script_mistake(entry)
       rescue Catalog::Refused => e
         e.message
+      end
+
+      # A `run:` command's first word, when it is a path, must name a script that can be run.
+      def script_mistake(entry)
+        script = entry["run"].to_s.split.first.to_s
+        return nil unless @root && script.include?("/")
+
+        path = File.join(@root, script)
+        return "run:#{entry["run"]}: #{script} doesn't exist" unless File.exist?(path)
+
+        "run:#{entry["run"]}: #{script} isn't executable" unless File.executable?(path)
       end
     end
   end

@@ -52,6 +52,18 @@ class TestCatalog < Minitest::Test
                  refusal({ "use" => "grep", "patterns" => ["x"], "on" => "success" })
   end
 
+  def test_should_name_a_command_entry_by_its_command
+    assert_equal "run:.fun-ci/evidence/x", CATALOG.entry({ "run" => ".fun-ci/evidence/x" }).name
+  end
+
+  def test_should_refuse_a_command_entry_with_a_format_it_does_not_know
+    assert_equal "run:x: 'format' must be text or json, not \"xml\"", refusal({ "run" => "x", "format" => "xml" })
+  end
+
+  def test_should_refuse_a_command_entry_without_a_command
+    assert_equal "run: must name a command, not nil", refusal({ "run" => nil })
+  end
+
   private
 
   def refusal(entry) = assert_raises(CATALOG::Refused) { CATALOG.entry(entry) }.message

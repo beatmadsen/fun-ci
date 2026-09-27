@@ -14,6 +14,9 @@ class FakeStageDir
   end
 
   def env = { "FUN_CI_REPORT" => "/fake/reports" }
+  def reports_path = "/fake/reports"
+  def output_file(_text) = "/fake/output.log"
+  def scratch = "/fake"
 
   def window(sizes = FunCi::Pipeline::OutputWindow::REAL)
     FunCi::Pipeline::OutputWindow.in_memory(sizes).tap { |window| @windows << window }

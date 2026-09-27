@@ -33,7 +33,8 @@ module FunCi
       def passes?(config, stage)
         job_id = @seams.recorder.start_stage(stage, budget: @seams.budgets[stage])
         command = "#{config.script_path(stage)} #{@commit.sha}"
-        result, output = StageExecution.new(seams: @seams, dir: @dir).run(stage, command, @seams.recorder, job_id)
+        result, output = StageExecution.new(seams: @seams, dir: @dir, commit: @commit).run(stage, command,
+                                                                                           @seams.recorder, job_id)
         tell(stage, output, result)
         result == "completed"
       end

@@ -10,10 +10,10 @@ module FunCi
     # it fails: its settings are read from the worktree, so they are the
     # commit's own, and the files it watches are stamped.
     module Start
-      def self.collector(sources, clock)
+      def self.collector(sources, clock, commands)
         settings = Settings.load(File.join(sources.worktree, ".fun-ci", "config"))
         Collector.new(sources.with(watched: stamps(Worktree.new(sources.worktree), settings.watched(sources.stage))),
-                      settings: settings, clock: clock)
+                      settings: settings, clock: clock, commands: commands)
       end
 
       def self.stamps(worktree, globs)

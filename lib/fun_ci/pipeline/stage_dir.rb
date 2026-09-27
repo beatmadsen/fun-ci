@@ -40,6 +40,14 @@ module FunCi
       end
 
       def reports_path = File.join(@path, "reports")
+
+      # The output as the window kept it, written for a project's extractor to read.
+      def output_file(text)
+        File.join(@path, "output.log").tap { |file| File.binwrite(file, text) }
+      end
+
+      # Where a project's extractor writes what it needs to (its stdin and stderr).
+      def scratch = @path
       def env = { "FUN_CI_REPORT" => reports_path }
       def window(sizes = OutputWindow::REAL) = OutputWindow.in(@path, sizes)
 

@@ -59,6 +59,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `use: junit-files` reads the JUnit XML a build tool writes in its own
   place (`paths: [build/test-results/**/*.xml]`) during the stage; a failure
   that also arrives through `FUN_CI_REPORT` is kept once.
+- A project can write its own extractor in any language: `run: <command>`
+  in a stage's list runs it in the worktree when the stage fails, with the
+  context (the stage, how it ended, the commit, where its output and reports
+  are, the watched files it wrote) as JSON on stdin. It prints text, kept as
+  an excerpt, or with `format: json` facts, failures and excerpts. A command
+  that outruns the evidence budget is killed with everything it started, and
+  a bad exit, bad JSON or more than 256 KB of output is recorded as a
+  problem. `fun-ci check` reports a `run:` script that is missing or can't be
+  run. The documents are pinned in `contract/evidence/`.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

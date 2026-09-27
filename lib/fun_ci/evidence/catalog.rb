@@ -7,6 +7,7 @@ require_relative "extractors/section"
 require_relative "extractors/log_file"
 require_relative "extractors/json_log"
 require_relative "extractors/junit_files"
+require_relative "extractors/command"
 
 module FunCi
   module Evidence
@@ -27,9 +28,13 @@ module FunCi
       def self.entry(raw)
         raise Refused, "an entry must be a mapping with use: or run:, not #{raw.inspect}" unless raw.is_a?(Hash)
 
+        raw.key?("run") ? command(raw) : built_in(raw)
+      end
+
+      def self.built_in(raw)
         built_in = BUILT_INS[raw["use"]] || raise(Refused, "unknown extractor '#{raw["use"]}'")
-        options = checked_options(raw, built_in)
-        Entry.new(name: [raw["use"], raw["preset"]].compact.join(":"), extractor: built_in.new(options), on: raw["on"])
+        Entry.new(name: [raw["use"], raw["preset"]].compact.join(":"),
+                  extractor: built_in.new(checked_options(raw, built_in)), on: raw["on"])
       end
 
       def self.checked_options(raw, built_in)
@@ -38,6 +43,24 @@ module FunCi
         raise Refused, mistake if mistake
 
         options
+      end
+
+      # A project's own extractor. Whatever the entry says besides run:,
+      # format:, watch: and on: is passed on to it.
+      def self.command(raw)
+        mistake = command_mistake(raw) || on_mistake(raw)
+        raise Refused, mistake if mistake
+
+        Entry.new(name: "run:#{raw["run"]}", extractor: Extractors::Command.new(raw.except("on")), on: raw["on"])
+      end
+
+      def self.command_mistake(raw)
+        unless raw["run"].is_a?(String) && !raw["run"].empty?
+          return "run: must name a command, not #{raw["run"].inspect}"
+        end
+        return nil if [nil, "text", "json"].include?(raw["format"])
+
+        "run:#{raw["run"]}: 'format' must be text or json, not #{raw["format"].inspect}"
       end
 
       # The options of the preset an entry names, which its own replace.
@@ -51,9 +74,9 @@ module FunCi
       def self.on_mistake(raw)
         return nil if [nil, "overrun"].include?(raw["on"])
 
-        "#{raw["use"]}: 'on' must be overrun, not #{raw["on"].inspect}"
+        "#{raw["use"] || "run:#{raw["run"]}"}: 'on' must be overrun, not #{raw["on"].inspect}"
       end
-      private_class_method :checked_options, :preset_options, :on_mistake
+      private_class_method :built_in, :command, :command_mistake, :checked_options, :preset_options, :on_mistake
     end
   end
 end

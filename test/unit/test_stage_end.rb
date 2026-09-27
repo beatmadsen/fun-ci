@@ -9,20 +9,24 @@ class TestStageEnd < Minitest::Test
 
   # Answers what it was given to collect from, so a test can see it was asked.
   class EchoCollector
-    def collect(output, alongside: []) = "evidence of #{output}#{alongside.map { |stage| " beside #{stage}" }.join}"
+    def collect(output, outcome)
+      "evidence of #{output} #{outcome.state}#{outcome.alongside.map { |s| " beside #{s}" }.join}"
+    end
+
     def masked(output) = "masked #{output}"
   end
 
   def test_should_keep_the_evidence_of_a_stage_that_failed_before_recording_its_outcome
     calls = recorded(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
 
-    assert_operator calls.index([:keep_evidence, 1, "evidence of boom"]), :<, calls.index([:end_stage, 1, "failed"])
+    assert_operator calls.index([:keep_evidence, 1, "evidence of boom failed"]), :<,
+                    calls.index([:end_stage, 1, "failed"])
   end
 
   def test_should_keep_the_evidence_of_a_stage_that_ran_over_budget
     calls = recorded(Finished.new(output: "partial", status: nil, timed_out: true))
 
-    assert_includes calls, [:keep_evidence, 1, "evidence of partial"]
+    assert_includes calls, [:keep_evidence, 1, "evidence of partial over_budget"]
   end
 
   def test_should_keep_the_masked_raw_output_of_a_stage_that_failed
@@ -36,7 +40,7 @@ class TestStageEnd < Minitest::Test
     FunCi::Pipeline::StageEnd.new(recorder, 1, EchoCollector.new)
                              .record(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
 
-    assert_equal ["evidence of boom beside slow"], recorder.kept_evidence
+    assert_equal ["evidence of boom failed beside slow"], recorder.kept_evidence
   end
 
   def test_should_keep_no_evidence_of_a_stage_that_passed

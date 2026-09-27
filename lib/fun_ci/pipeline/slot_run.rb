@@ -65,7 +65,7 @@ module FunCi
       # Called with the recorder and job to record the slow suite with, in
       # whichever process runs it; the slot is let go once it is recorded.
       def slow_suite(config, slot)
-        execution = StageExecution.new(seams: @seams, dir: slot.path)
+        execution = StageExecution.new(seams: @seams, dir: slot.path, commit: @commit)
         command = "#{config.script_path("slow")} #{@commit.sha}"
         ->(recorder, job_id) { holding(slot) { execution.run("slow", command, recorder, job_id) } }
       end

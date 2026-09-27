@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "stage": "fast",
+  "state": "failed",
+  "exit_status": 1,
+  "signal": null,
+  "seconds": 8.4,
+  "budget": 10,
+  "alongside": ["slow"],
+  "commit": { "sha": "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a", "branch": "main" },
+  "worktree": "/repo/.git/fun-ci/worktrees/slot-1",
+  "started_at": "2026-09-27T14:02:11.402Z",
+  "output": "/state/fun-ci/stages/4242-abc/output.log",
+  "reports": "/state/fun-ci/stages/4242-abc/reports",
+  "changed": ["build/test-results/test/TEST-FooTest.xml"],
+  "watched": [{ "path": "log/test.log", "offset": 1048576 }],
+  "options": { "module": "core" }
+}

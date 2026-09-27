@@ -9,9 +9,10 @@ module FunCi
     # its own, and records how it ended while it still holds both. The same
     # for every stage, the slow suite in its forked child included.
     class StageExecution
-      def initialize(seams:, dir:)
+      def initialize(seams:, dir:, commit:)
         @seams = seams
         @dir = dir
+        @commit = commit
       end
 
       # Answers [the outcome recorded, what the stage printed].
@@ -44,9 +45,11 @@ module FunCi
 
       # Made before the stage runs, which is when its watched files are stamped.
       def collector(stage, stage_dir)
-        sources = Evidence::Sources.new(stage: stage, worktree: @dir, reports: stage_dir,
-                                        environment: @seams.environment.merge(stage_dir.env))
-        Evidence::Start.collector(sources, @seams.clock)
+        environment = @seams.environment.merge(stage_dir.env)
+        sources = Evidence::Sources.new(stage: stage, worktree: @dir, reports: stage_dir, environment: environment,
+                                        budget: @seams.budgets[stage], commit: @commit.to_h, started: Time.now)
+        commands = @seams.extractor_runner.call(dir: @dir, env: stage_dir.env, scratch: stage_dir.scratch)
+        Evidence::Start.collector(sources, @seams.clock, commands)
       end
     end
   end

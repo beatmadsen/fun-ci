@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../evidence/outcome"
+
 module FunCi
   module Pipeline
     # Records a stage that has finished, whichever process ran it: a failed
@@ -10,6 +12,8 @@ module FunCi
       # What running a stage answered: its output, and its Process::Status
       # (nil when it was killed over budget).
       Finished = Data.define(:output, :status, :timed_out)
+      # A failed stage's state in the words `status --json` uses.
+      STATES = { "failed" => "failed", "timed_out" => "over_budget" }.freeze
 
       def initialize(recorder, job_id, collector)
         @recorder = recorder
@@ -35,9 +39,15 @@ module FunCi
       end
 
       def keep_evidence(finished)
-        alongside = @recorder.alongside(@job_id)
-        @recorder.keep_evidence(@job_id, @collector.collect(finished.output, alongside: alongside))
+        @recorder.keep_evidence(@job_id, @collector.collect(finished.output, ending(finished)))
         @recorder.keep_raw(@job_id, @collector.masked(finished.output))
+      end
+
+      def ending(finished)
+        status = finished.status
+        Evidence::Outcome.new(state: STATES.fetch(outcome(finished)), exit_status: status&.exitstatus,
+                              signal: status&.termsig && Signal.signame(status.termsig),
+                              alongside: @recorder.alongside(@job_id))
       end
 
       def keep_exit(status)

@@ -85,11 +85,12 @@ class TestCollector < Minitest::Test
 
   def test_should_name_the_stages_that_shared_the_slot_as_a_fact_of_fun_ci_s
     assert_equal [{ name: "alongside", value: "lint, slow", extractor: "fun-ci" }],
-                 collector.collect("boom\n", alongside: %w[lint slow]).facts
+                 collector.collect("boom\n",
+                                   FunCi::Evidence::Outcome.new(state: "failed", alongside: %w[lint slow])).facts
   end
 
   def test_should_say_nothing_of_stages_alongside_when_there_were_none
-    assert_empty collector.collect("boom\n", alongside: []).facts
+    assert_empty collector.collect("boom\n", FunCi::Evidence::Outcome.new(state: "failed")).facts
   end
 
   def test_should_mask_the_raw_output

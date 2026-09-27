@@ -9,6 +9,8 @@ require_relative "deadline"
 require_relative "worktree"
 require_relative "extraction"
 require_relative "findings"
+require_relative "outcome"
+require_relative "about_stage"
 require_relative "../persistence/output_tail"
 
 module FunCi
@@ -19,16 +21,19 @@ module FunCi
     class Collector
       MONOTONIC = -> { Process.clock_gettime(Process::CLOCK_MONOTONIC) }
 
-      def initialize(sources, settings: Settings.new(nil), clock: MONOTONIC)
+      FAILED = Outcome.new(state: "failed")
+
+      # commands: runs a project's own extractors (a CommandRunner).
+      def initialize(sources, settings: Settings.new(nil), clock: MONOTONIC, commands: nil)
         @sources = sources
         @settings = settings
         @clock = clock
+        @commands = commands
       end
 
-      # alongside: the other stages that shared the slot while this one ran.
-      def collect(output, alongside: [])
-        result = Extraction.new(context(output), @settings.budget).run(configured)
-        parts = [["fun-ci", own_facts(alongside)], ["test-reports", reported], *result.parts,
+      def collect(output, outcome = FAILED)
+        result = Extraction.new(context(output, outcome), @settings.budget).run(configured)
+        parts = [["fun-ci", own_facts(outcome.alongside)], ["test-reports", reported], *result.parts,
                  ["output-tail", tail(output)]]
         masking.document(Document.assemble(parts, problems: result.problems, chosen: result.chosen))
       end
@@ -38,9 +43,10 @@ module FunCi
 
       private
 
-      def context(output)
+      def context(output, outcome)
         Context.new(stage: @sources.stage, output: output, worktree: Worktree.new(@sources.worktree),
-                    deadline: Deadline.after(@clock, @settings.budget), watched: @sources.watched)
+                    deadline: Deadline.after(@clock, @settings.budget), watched: @sources.watched,
+                    about: AboutStage.of(@sources, outcome, output), commands: @commands)
       end
 
       def own_facts(alongside)
