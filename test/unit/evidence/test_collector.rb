@@ -124,6 +124,12 @@ class TestCollector < Minitest::Test
     assert_equal(%w[grep section:rspec output-tail], found.excerpts.map { |excerpt| excerpt[:extractor] })
   end
 
+  def test_should_keep_the_evidence_within_its_size
+    output = "ERROR #{"x" * 94}\n" * 4000
+
+    assert_operator JSON.generate(collect(output, entries: [GREP]).to_h).bytesize, :<=, 262_144
+  end
+
   def test_should_mask_the_raw_output
     assert_equal "a [masked:API_TOKEN]\n",
                  collector(environment: { "API_TOKEN" => "abcdefgh123" }).masked("a abcdefgh123\n")

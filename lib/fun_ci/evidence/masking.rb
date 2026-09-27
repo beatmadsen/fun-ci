@@ -28,7 +28,9 @@ module FunCi
       # Every string in the document masked.
       def document(document) = document.with(**document.to_h.transform_values { |items| deep(items) })
 
+      # Bytes that aren't UTF-8 become U+FFFD first, as patterns can't read them.
       def mask(text)
+        text = text.dup.force_encoding(Encoding::UTF_8).scrub
         masked = @secrets.reduce(text) { |current, (name, value)| current.gsub(value, "[masked:#{name}]") }
         @patterns.reduce(masked) { |current, pattern| current.gsub(pattern, "[masked]") }
       end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../evidence/outcome"
+require_relative "../evidence/document"
 
 module FunCi
   module Pipeline
@@ -44,9 +45,13 @@ module FunCi
         finished.status.success? ? "completed" : "failed"
       end
 
+      # Whatever goes wrong collecting the evidence is kept as a problem, and
+      # the outcome is recorded all the same.
       def keep_evidence(finished)
         @recorder.keep_evidence(@job_id, @collector.collect(finished.output, ending(finished)))
         @recorder.keep_raw(@job_id, @collector.masked(finished.output))
+      rescue StandardError => e
+        @recorder.keep_evidence(@job_id, Evidence::Document.broken("#{e.class}: #{e.message}"))
       end
 
       def ending(finished)

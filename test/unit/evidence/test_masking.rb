@@ -67,6 +67,12 @@ class TestMasking < Minitest::Test
     assert_equal "id [masked]", masking.mask("id ACME-0123abcd")
   end
 
+  def test_should_mask_text_whose_bytes_are_not_all_unicode
+    text = "\xFF abcdefgh123".dup.force_encoding(Encoding::UTF_8)
+
+    assert_equal "\uFFFD [masked:API_TOKEN]", mask(text, "API_TOKEN" => "abcdefgh123")
+  end
+
   private
 
   def mask(text, environment = {}) = MASKING.new(environment).mask(text)

@@ -31,6 +31,12 @@ module FunCi
         parts.flat_map { |name, found| found.public_send(list).map { |item| item.merge(extractor: name) } }
       end
 
+      # The evidence of a stage whose collecting went wrong: what went wrong.
+      def self.broken(message)
+        new(chosen: [], facts: [], failures: [], excerpts: [],
+            problems: [{ extractor: "fun-ci", message: "couldn't collect the evidence: #{message}" }])
+      end
+
       # The evidence of a row that kept only the output's tail and the reported failures.
       def self.legacy(tail:, failures:)
         new(chosen: [], facts: [], failures: failures.map { |failure| failure.merge(extractor: "test-reports") },

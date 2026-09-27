@@ -80,6 +80,29 @@ class TestStageEnd < Minitest::Test
     assert_equal "timed_out", FunCi::Pipeline::StageEnd.new(FakeRecorder.new, 1, EchoCollector.new).record(finished)
   end
 
+  # Collecting evidence never changes a stage's verdict (why.md, goal 2).
+  class BrokenCollector
+    def collect(_output, _outcome) = raise(ArgumentError, "broken")
+    def masked(_output) = raise(ArgumentError, "broken")
+  end
+
+  def test_should_record_the_outcome_when_collecting_the_evidence_goes_wrong
+    recorder = FakeRecorder.new
+    FunCi::Pipeline::StageEnd.new(recorder, 1, BrokenCollector.new)
+                             .record(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
+
+    assert_includes recorder.calls, [:end_stage, 1, "failed"]
+  end
+
+  def test_should_keep_what_went_wrong_collecting_the_evidence_as_a_problem
+    recorder = FakeRecorder.new
+    FunCi::Pipeline::StageEnd.new(recorder, 1, BrokenCollector.new)
+                             .record(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
+
+    assert_equal [{ extractor: "fun-ci", message: "couldn't collect the evidence: ArgumentError: broken" }],
+                 recorder.kept_evidence.first.problems
+  end
+
   private
 
   def recorded(finished)

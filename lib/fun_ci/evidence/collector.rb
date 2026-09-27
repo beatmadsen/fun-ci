@@ -10,6 +10,7 @@ require_relative "outcome"
 require_relative "stage_context"
 require_relative "detection"
 require_relative "source"
+require_relative "caps"
 require_relative "../persistence/output_tail"
 
 module FunCi
@@ -38,7 +39,7 @@ module FunCi
         overrun = outcome.overrun || NOTHING
         parts = [["fun-ci", own_facts(outcome.alongside)], *overrun.parts, ["test-reports", reported], *result.parts,
                  ["output-tail", tail(output)]]
-        masking.document(assemble(parts, [overrun, result]))
+        Caps.new.apply(masking.document(assemble(parts, [overrun, result])))
       end
 
       # What a stage over budget was doing, looked at before the kill.
