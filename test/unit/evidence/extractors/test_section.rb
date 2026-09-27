@@ -31,6 +31,15 @@ class TestSection < Minitest::Test
     end)
   end
 
+  def test_should_start_the_next_section_on_the_line_that_ends_the_last
+    output = "  1) a\n  detail\n  2) b\n  detail\nsummary\n"
+
+    assert_equal(%w[output:1-2 output:3-4],
+                 section({ "start" => ['^  \d\) '], "end" => ['^  \d\) ', "^summary"] }, output).map do |e|
+                   e[:location]
+                 end)
+  end
+
   def test_should_start_on_any_of_its_start_patterns
     assert_equal(["output:2-4"], excerpts("start" => %w[^nothing ^Failures:], "end" => ["^Finished"]).map do |e|
       e[:location]
