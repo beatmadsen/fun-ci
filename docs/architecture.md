@@ -180,9 +180,8 @@ commands that ask about commits (`lib/fun_ci/agent/`).
 - **`events` is the difference between two looks at the runs**, so it needs no
   events table: every event follows from the stage rows and their finish order.
 
-*Revisit if* agents need the full output of a failure: that is `fun-ci why`,
-whose open questions (how much output to keep, per-test output) are in
-`acceptance-tests.md`, §10.
+*Revisit if* agents need more than this to see why a stage failed: that is
+`fun-ci why` and the extractors it reads, designed in [`why.md`](why.md).
 
 ## Quality standards (from intent-record)
 

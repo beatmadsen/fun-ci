@@ -96,7 +96,8 @@ uncommitted files.
 - A failed stage comes with its evidence: the failures its test reports name
   (JUnit XML or fun-ci's JSON written to `FUN_CI_REPORT`), or else the last
   lines it printed. `status` and `wait` show a digest of it; the whole of it,
-  `fun-ci why`, is still to be designed (`acceptance-tests.md`, §10).
+  `fun-ci why`, is designed in [`why.md`](why.md) and not built yet
+  (`acceptance-tests.md`, §10).
 
 ## A run's states
 

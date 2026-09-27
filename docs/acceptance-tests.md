@@ -4,7 +4,7 @@ The requirements, as acceptance tests, numbered like agent-tome's. The build
 loop implements them one per iteration, in the order of
 `ralph/build/progress.md`, which also says which are done. §0 to §5 and §7 to
 §9 are built; they stay here because the tests that hold them cite them by
-number. §6 is to build, and §10 is to design. An outline item is refined into
+number. §6 and §10 are to build. An outline item is refined into
 full Given/When/Then before it is built, as its own commit to this file. What
 fun-ci is for is in [`design.md`](design.md).
 
@@ -543,38 +543,154 @@ then, with `--follow`, each new one as it happens
 **And** `--only failures` prints only failed or over-budget stages and
 superseded runs.
 
-## 10. Reading why a stage failed (outline; needs design before it is refined)
+## 10. Reading why a stage failed
 
-`fun-ci why [REV] [STAGE]` would give an agent everything fun-ci kept about
-why a stage of a commit's run failed, so it never reruns a suite to find out.
-§9 already keeps it: a failed or over-budget stage's last 200 lines (AT-9.5)
-and the failures its reports named (AT-9.7). `status` and `wait` show only a
-digest of it (AT-9.6: at most 10 failures, 5 lines of each message, or the
-last 20 lines).
+`fun-ci why` gives an agent everything fun-ci kept about why a stage of a
+commit's run failed, so it never reruns a suite to find out. What is kept is
+picked out when the stage fails by extractors, configured per stage in
+`.fun-ci/config`, built in or a project's own command. Why it is designed this
+way, the documents' fields and the extractor protocol are in
+[`why.md`](why.md). Exit codes are those of §9: `why` exits with the verdict.
 
-- 10.1 `fun-ci why [REV] [STAGE]` prints a failed stage's reported failures
-  in full, then every line kept of its output. Without STAGE it takes the
-  first needed stage to fail or overrun, in the order they finished, as the
-  verdict does.
-- 10.2 `why --json` gives the same as one document: the stage, its failures
-  and the kept lines.
-- 10.3 The digest `status` and `wait` print ends with the `fun-ci why`
-  command that shows the rest.
+### 10.1 `fun-ci why` prints everything kept about a failed stage
+**Given** a run whose fast suite failed, with reported failures and kept output
+**When** `fun-ci why [REV] [STAGE]` runs
+**Then** it prints a line naming the stage, its outcome, exit status, time and
+budget, then each reported failure in full, then every kept line of output
+**And** without STAGE it takes the first needed stage to fail or overrun, in
+the order they finished, as the verdict does (`--need` as for `status`)
+**And** it exits with the verdict: 1 here, 2 for an overrun, 0 with "fast
+passed" for a stage that passed, 3, 4 and 5 as `status`.
 
-Open questions, to settle before 10.1 is written as Given/When/Then:
+### 10.2 `why --json` gives the same as one document
+**Given** the run of 10.1
+**When** `fun-ci why --json` runs
+**Then** stdout is the evidence document of `why.md` (`schema` 1, `stage`,
+`outcome`, `exit_status`, `signal`, `seconds`, `budget`, `facts`, `failures`,
+`excerpts`, `problems`), with the same exit code.
 
-- **How much output to keep.** 200 lines and 64 KB were sized for the digest.
-  `why` may want a failed stage's whole output, capped by size, which changes
-  how much the database holds and how long it keeps it (today, a project's 50
-  newest runs).
-- **Per-test output.** JUnit carries each test's `<system-out>` and
-  `<system-err>`. Keeping them would put each failure's own output under it,
-  instead of the stage's last lines.
-- **An overrun.** The kept lines are what the stage printed before the kill.
-  Whether `why` should also say what was running then (the last test started,
-  from a report the stage writes as it goes) is open.
-- **Evidence that is gone.** A run older than the kept runs has no evidence
-  left; `why` says so, but with which exit code, and what `why` exits with for
-  a stage that didn't fail, are undecided.
-- **What the output may contain.** A stage's output can hold secrets. It stays
-  in the user's state directory; whether `why` should mask anything is open.
+### 10.3 A run whose evidence was pruned says so
+**Given** a failed run older than the project's 50 newest
+**When** `fun-ci why` names it
+**Then** it says its evidence is no longer kept and why, exits 1, and with
+`--json` gives `"evidence": null, "evidence_gone": "pruned"`.
+
+### 10.4 The digest in `status` and `wait` names the `why` command
+**Given** a run whose fast suite failed
+**When** `fun-ci status` or `fun-ci wait` prints the digest of AT-9.6
+**Then** its last line is `fun-ci why <sha7> fast`.
+
+### 10.5 A stage's output is spooled to a file, not held in memory
+**Given** a stage that prints 100 MB and fails
+**When** it runs
+**Then** fun-ci's memory does not grow with the output, the extractors see its
+first 1 MB and last 63 MB with a marker line where bytes were dropped, and the
+kept output tail is the same as with a short output.
+
+### 10.6 Secrets are masked before anything is kept
+**Given** a stage whose environment has `DEPLOY_TOKEN=s3cr3t-value-123`, and
+which prints it, a GitHub token and a PEM private key, then fails
+**When** its evidence is kept
+**Then** the kept output and every field of the evidence show
+`[masked:DEPLOY_TOKEN]` and `[masked]` in their place
+**And** a pattern listed under `evidence.mask` in `.fun-ci/config` is masked
+too, and `evidence.mask: false` turns masking off for the project
+**And** the state directory is created with mode 0700.
+
+### 10.7 Extractors are configured per stage
+**Given** `.fun-ci/config` with an `evidence` list for `fast` and one for `all`
+**When** the fast suite fails
+**Then** the `all` entries run, then the `fast` ones, in the order given, and
+the evidence keeps that order, each item naming its extractor
+**And** with no `evidence` key every stage gets `test-reports` then
+`output-tail`, so `why` shows what §9 kept
+**And** `fun-ci check` reports an unknown extractor, an unknown option, a
+pattern that doesn't compile, and a `run:` path that isn't executable
+**And** at run time such a mistake falls back to the default list for the
+stage, is recorded as a problem, and doesn't change the verdict.
+
+### 10.8 `section` and `grep` pick lines out of the output or a file, with presets
+**Given** a failing stage whose output has its failures far above its last 200
+lines
+**When** the stage's list has `section` with a start and end pattern, or
+`grep` with patterns and `context`, or either with a `preset`
+**Then** the evidence has each matching run of lines as an excerpt, titled,
+with its location (`output:340-372`)
+**And** each preset shipped (`rspec`, `minitest`, `pytest`, `jest`, `go-test`,
+`cargo-test`, `gradle`, `maven`, `tsc`) picks out the failures from a recorded
+failing run of that tool
+**And** a pattern that exceeds `Regexp.timeout` is recorded as a problem.
+
+### 10.9 Log files are read from where the stage started writing
+**Given** a worktree slot whose `log/test.log` holds a previous run's lines
+**When** a stage appends to it and fails, and its list has `log-file` with
+`path: log/test.log`
+**Then** the evidence has only the lines the stage appended (filtered by the
+entry's `grep` or `section` options when given)
+**And** `junit-files` reads only JUnit files under its `paths` written during
+the stage.
+
+### 10.10 `json-log` keeps structured log records at or above a level
+**Given** output (or a file) mixing plain lines with JSON log lines at `debug`,
+`info`, `warn` and `error`, one with a stack trace
+**When** the list has `json-log` with `level: warn` and a `preset` (`logstash`,
+`ecs`, `pino`, `structlog`) or field names of its own
+**Then** the evidence has one line per `warn` and `error` record (time, level,
+logger, message), each followed by its stack trace, and nothing else.
+
+### 10.11 A failure keeps its own output
+**Given** a JUnit report whose failing testcase has `<system-out>` and
+`<system-err>`, or a fun-ci JSON report whose failure has `output`
+**When** the stage fails
+**Then** that output is kept under the failure (its last 4 KB) and `why`
+prints it under the failure's message.
+
+### 10.12 A project's own command is an extractor
+**Given** `run: <command>` in a stage's list, with `format: text` or `json`
+**When** the stage fails
+**Then** the command runs in the worktree slot with the context document of
+`why.md` on stdin, and its stdout becomes one excerpt (`text`) or is merged as
+facts, failures and excerpts (`json`)
+**And** a non-zero exit, output that doesn't parse, or a command still running
+when the evidence budget (`evidence.budget`, 5 s by default) runs out is
+recorded as a problem with the last 20 lines of its stderr, and the command
+and all it started are killed
+**And** the stage's verdict is the same in every case.
+
+### 10.13 `fun-ci extract` tries a stage's extractors on a saved output
+**Given** a file holding a failing run's output
+**When** `fun-ci extract fast --output FILE [--reports DIR] [--exit N | --timed-out] [--json]` runs
+**Then** it runs the fast stage's extractors with the current directory as
+the worktree, prints what `why` would print, problems included, and writes
+nothing to the database.
+
+### 10.14 An overrun says what it was doing
+**Given** a stage that runs past its budget in a child process
+**When** its budget runs out
+**Then** before the kill, `process-tree` records the group's processes and the
+deepest still running as the fact `running`, and the digest's first line is
+`fast ran over budget: running <command> (<seconds>s)`
+**And** `jvm-thread-dump` under `overrun` makes each Java process print a
+thread dump into the output, and a `run:` entry there gets `pgid`
+**And** the overrun extractors get at most 2 seconds before the kill.
+
+### 10.15 The raw output of a failed stage is kept
+**Given** a stage that fails after printing 20 MB
+**When** `fun-ci why --raw` runs
+**Then** it prints the first 1 MB and last 7 MB of the output, masked, with a
+marker where bytes were dropped
+**And** `why` names the `--raw` command while the raw output is kept, which is
+for the project's 10 newest runs.
+
+### 10.16 `why` says when only the last lines were kept
+**Given** a failed stage whose only evidence is `output-tail`
+**When** `fun-ci why` runs
+**Then** it ends by saying that only the output's last lines were kept and that
+`evidence:` in `.fun-ci/config` adds extractors.
+
+### 10.17 `fun-ci init` writes the extractors for the stack it detects
+**Given** a Ruby, Gradle or Maven project
+**When** `fun-ci init` runs
+**Then** `.fun-ci/config` gains an `evidence` list for that stack (for Gradle
+and Maven, `junit-files` over the build's own report directories and the
+tool's preset), and running it again changes nothing.

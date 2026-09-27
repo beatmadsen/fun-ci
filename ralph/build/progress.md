@@ -85,6 +85,20 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-9.14: The post-commit hook says how to get the verdict
 - [x] AT-9.15: `fun-ci init` tells agents what to do after a commit
 - [x] AT-9.16: `fun-ci events` prints what happens as JSON lines
-- [ ] AT-10.1: `fun-ci why` prints a failed stage's reported failures and kept output in full
+- [ ] AT-10.1: `fun-ci why` prints everything kept about a failed stage
 - [ ] AT-10.2: `why --json` gives the same as one document
-- [ ] AT-10.3: The digest in `status` and `wait` names the `why` command
+- [ ] AT-10.3: A run whose evidence was pruned says so
+- [ ] AT-10.4: The digest in `status` and `wait` names the `why` command
+- [ ] AT-10.5: A stage's output is spooled to a file, not held in memory
+- [ ] AT-10.6: Secrets are masked before anything is kept
+- [ ] AT-10.7: Extractors are configured per stage
+- [ ] AT-10.8: `section` and `grep` pick lines out of the output or a file, with presets
+- [ ] AT-10.9: Log files are read from where the stage started writing
+- [ ] AT-10.10: `json-log` keeps structured log records at or above a level
+- [ ] AT-10.11: A failure keeps its own output
+- [ ] AT-10.12: A project's own command is an extractor
+- [ ] AT-10.13: `fun-ci extract` tries a stage's extractors on a saved output
+- [ ] AT-10.14: An overrun says what it was doing
+- [ ] AT-10.15: The raw output of a failed stage is kept
+- [ ] AT-10.16: `why` says when only the last lines were kept
+- [ ] AT-10.17: `fun-ci init` writes the extractors for the stack it detects
