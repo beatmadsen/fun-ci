@@ -50,6 +50,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   JSON files. The animations are code in the renderer now.
 
 ### Added
+- `fun-ci runs` lists this project's recent runs, newest first, one line
+  each: short SHA, branch, age, each stage's outcome and the subject. `-n N`
+  sets how many (10 by default), `--branch NAME` keeps to one branch, and
+  `--json` prints each as the document `status --json` gives.
 - `fun-ci status [REV]` says where a commit's run stands in this project,
   stage by stage, and exits with the verdict an agent can branch on: 0
   passed, 1 failed, 2 over budget, 3 undecided, 4 superseded, 5 no run, 64

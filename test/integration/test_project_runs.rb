@@ -46,6 +46,25 @@ class TestProjectRuns < Minitest::Test
     assert_nil @runs.superseded_by(RUN.find(@db, old))
   end
 
+  def test_should_list_the_newest_runs_first_up_to_the_limit
+    %w[abc1234 bcd2345 cde3456].each { |sha| record(sha) }
+
+    assert_equal(%w[cde3456 bcd2345], @runs.recent(limit: 2).map { |run| run[:commit_hash] })
+  end
+
+  def test_should_list_only_the_project_s_runs
+    record("abc1234", project: "/elsewhere")
+
+    assert_empty @runs.recent(limit: 10)
+  end
+
+  def test_should_list_only_the_branch_asked_for
+    record("abc1234")
+    record("bcd2345", branch: "feature")
+
+    assert_equal(%w[bcd2345], @runs.recent(limit: 10, branch: "feature").map { |run| run[:commit_hash] })
+  end
+
   private
 
   def record(sha, branch: "main", project: "/project")

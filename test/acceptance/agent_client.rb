@@ -24,6 +24,7 @@ class AgentClient
   def stdout = @out.string
 
   def status(*args) = agent("status", args)
+  def runs(*args) = agent("runs", args)
 
   # stages: { "lint" => "completed", "fast" => "running", ... }, in the order they started.
   def record_run(sha, branch: "main", project: @workspace.project_dir, stages: {})
@@ -44,6 +45,7 @@ class AgentClient
   def agent(command, args)
     @out = StringIO.new
     io = FunCi::Pipeline::Io.new(stdout: @out, stderr: @out)
-    @exit_code = FunCi::Agent::Commands.run(command, args, FunCi::Agent::Context.new(db: db, git: @git, io: io))
+    context = FunCi::Agent::Context.new(db: db, git: @git, io: io, clock: -> { Time.now })
+    @exit_code = FunCi::Agent::Commands.run(command, args, context)
   end
 end

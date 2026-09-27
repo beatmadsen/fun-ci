@@ -19,6 +19,13 @@ module FunCi
         query("AND branch = ? AND id > ? ORDER BY id LIMIT 1", run[:branch], run[:id]).first&.fetch(:commit_hash)
       end
 
+      # The newest runs first, on one branch when one is named.
+      def recent(limit:, branch: nil)
+        return query("ORDER BY id DESC LIMIT ?", limit) unless branch
+
+        query("AND branch = ? ORDER BY id DESC LIMIT ?", branch, limit)
+      end
+
       private
 
       def query(clause, *params)

@@ -16,6 +16,7 @@ module FunCi
         check          Verify project setup
         prune          Remove fun-ci's worktrees when no pipeline is running
         status         Say where a commit's run stands, as an exit code an agent can act on
+        runs           List this project's recent runs, newest first
 
       Options:
         -h, --help     Show this help message
@@ -24,9 +25,11 @@ module FunCi
       Trigger options:
         --background   Run the pipeline in the background and return at once
 
-      Agent options (status):
-        --need LEVEL   What must pass: build, fast (default) or all
-        --json         Print one JSON document instead of text
+      Agent options:
+        --need LEVEL   (status) What must pass: build, fast (default) or all
+        -n N           (runs) How many runs to list (default 10)
+        --branch NAME  (runs) Only runs on this branch
+        --json         Print JSON instead of text
         Exit codes: 0 passed, 1 failed, 2 over budget, 3 undecided,
         4 superseded, 5 no run, 64 usage error
 

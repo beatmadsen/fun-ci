@@ -3,6 +3,7 @@
 require "json"
 require_relative "status_text"
 require_relative "status_json"
+require_relative "runs_text"
 require_relative "exit_code"
 
 module FunCi
@@ -22,6 +23,13 @@ module FunCi
       def unknown(sha)
         @json ? print_json(StatusJson.unknown(sha)) : print_lines(["fun-ci: no run for #{sha[0, 7]} in this project."])
         ExitCode::FOR.fetch(:unknown)
+      end
+
+      # entries: [[report, age in words], ...], newest first.
+      def runs(entries)
+        return print_json(entries.map { |report, _| StatusJson.document(report) }) if @json
+
+        print_lines(RunsText.lines(entries))
       end
 
       private

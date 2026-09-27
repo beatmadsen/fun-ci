@@ -6,7 +6,7 @@ require_relative "run_report"
 
 module FunCi
   module Agent
-    # A commit's newest run in the project git names, as an agent is told it.
+    # The runs of the project git names, as an agent is told them.
     class Reports
       def initialize(db, git)
         @db = db
@@ -14,14 +14,18 @@ module FunCi
         @runs = Persistence::ProjectRuns.new(db, git.toplevel)
       end
 
+      # The commit's newest run, or nil.
       def for(sha, need)
         run = @runs.latest_of_commit(sha)
-        run && report(run, need)
+        run && of(run, need)
       end
 
-      private
+      # [[run, its report for the whole pipeline], ...], newest first.
+      def recent(limit:, branch:)
+        @runs.recent(limit: limit, branch: branch).map { |run| [run, of(run, "all")] }
+      end
 
-      def report(run, need)
+      def of(run, need)
         superseded_by = run[:status] == "cancelled" ? @runs.superseded_by(run) : nil
         RunReport.build(run: run, jobs: Persistence::StageJob.for_run(@db, run[:id]), need: need,
                         commit: { subject: @git.subject(run[:commit_hash]), superseded_by: superseded_by })
