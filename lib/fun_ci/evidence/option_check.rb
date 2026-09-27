@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "patterns"
+require_relative "log_record"
 
 module FunCi
   module Evidence
@@ -16,8 +17,17 @@ module FunCi
         },
         count: ->(value) { "must be a whole number, not #{value.inspect}" unless value.is_a?(Integer) && value >= 0 },
         path: ->(value) { "must be a path, not #{value.inspect}" unless value.is_a?(String) && !value.empty? },
-        word: ->(value) { "must be a word, not #{value.inspect}" unless value.is_a?(String) }
+        word: ->(value) { "must be a word, not #{value.inspect}" unless value.is_a?(String) },
+        level: lambda { |value|
+          "must be one of trace, debug, info, warn, error or fatal, not #{value.inspect}" unless LogRecord.rank(value)
+        },
+        fields: lambda { |value|
+          "must map time, level, logger, message and stack to field names" unless mapping_of_strings?(value)
+        },
+        levels: ->(value) { "must map each level's number to its name" unless mapping_of_strings?(value) }
       }.freeze
+
+      def self.mapping_of_strings?(value) = value.is_a?(Hash) && value.values.all?(String)
 
       def self.mistake(name, built_in, options)
         unknown = options.keys.find { |key| !built_in::OPTIONS.key?(key) }

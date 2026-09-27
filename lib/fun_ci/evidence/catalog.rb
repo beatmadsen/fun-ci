@@ -5,6 +5,7 @@ require_relative "presets"
 require_relative "extractors/grep"
 require_relative "extractors/section"
 require_relative "extractors/log_file"
+require_relative "extractors/json_log"
 
 module FunCi
   module Evidence
@@ -18,7 +19,7 @@ module FunCi
       Entry = Data.define(:name, :extractor, :on)
 
       BUILT_INS = { "grep" => Extractors::Grep, "section" => Extractors::Section,
-                    "log-file" => Extractors::LogFile }.freeze
+                    "log-file" => Extractors::LogFile, "json-log" => Extractors::JsonLog }.freeze
       SHARED = %w[use on preset].freeze
 
       def self.entry(raw)

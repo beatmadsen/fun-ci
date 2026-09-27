@@ -1,0 +1,73 @@
+tool: logback-ecs-encoder
+image: maven:3.9-eclipse-temurin-21@sha256:99e61abcff91a9b1333463bd8451fb18495d6eba9250ac66a338b518f8278320
+setup: mvn -B -q compile exec:help
+command: mvn -B -q exec:java
+version: echo logback-ecs-encoder 1.6.0
+files:
+  pom.xml: |
+    <project xmlns="http://maven.apache.org/POM/4.0.0">
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>shop</groupId>
+      <artifactId>checkout</artifactId>
+      <version>1.0</version>
+      <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+          <version>1.5.18</version>
+        </dependency>
+        <dependency>
+          <groupId>co.elastic.logging</groupId>
+          <artifactId>logback-ecs-encoder</artifactId>
+          <version>1.6.0</version>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.5.0</version>
+            <configuration><mainClass>shop.App</mainClass></configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </project>
+  src/main/resources/logback.xml: |
+    <configuration>
+      <appender name="json" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="co.elastic.logging.logback.EcsEncoder"/>
+      </appender>
+      <root level="DEBUG"><appender-ref ref="json"/></root>
+    </configuration>
+  src/main/java/shop/App.java: |
+    package shop;
+
+    import org.slf4j.Logger;
+    import org.slf4j.LoggerFactory;
+
+    public class App {
+        private static final Logger log = LoggerFactory.getLogger("shop.Checkout");
+
+        public static void main(String[] args) {
+            log.debug("loading cart 42");
+            log.info("checkout started");
+            log.warn("payment gateway slow: 2300 ms");
+            try {
+                charge();
+            } catch (IllegalStateException e) {
+                log.error("checkout failed", e);
+            }
+            System.out.println("a plain line from System.out");
+            log.info("checkout finished");
+            System.exit(1);
+        }
+
+        private static void charge() {
+            throw new IllegalStateException("card declined");
+        }
+    }

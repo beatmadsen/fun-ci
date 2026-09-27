@@ -1,0 +1,13 @@
+# What the preset picks out of output.log: each excerpt's location, a range of the output's own lines,
+# and the first excerpt's lines, which json-log writes rather than copies.
+excerpts: [output:3-4]
+lines:
+  - "2026-09-27T19:26:11.029677629Z WARN shop.Checkout: payment gateway slow: 2300 ms"
+  - "2026-09-27T19:26:11.02975167Z ERROR shop.Checkout: checkout failed"
+  - "  java.lang.IllegalStateException: card declined"
+  - "  \tat shop.App.charge(App.java:24)"
+  - "  \tat shop.App.main(App.java:14)"
+  - "  \tat org.codehaus.mojo.exec.ExecJavaMojo.doMain(ExecJavaMojo.java:375)"
+  - "  \tat org.codehaus.mojo.exec.ExecJavaMojo.doExec(ExecJavaMojo.java:364)"
+  - "  \tat org.codehaus.mojo.exec.ExecJavaMojo.lambda$execute$0(ExecJavaMojo.java:286)"
+  - "  \tat java.base/java.lang.Thread.run(Thread.java:1583)"

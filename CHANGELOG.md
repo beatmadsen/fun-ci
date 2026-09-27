@@ -48,6 +48,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - When another stage of the run shared the worktree while a stage ran (lint
   beside build, the slow suite beside the fast one), `fun-ci why` says so
   (`alongside: slow`), since a log file may hold both stages' lines.
+- `use: json-log` keeps the JSON log records at or above a level (`level:
+  warn` by default) as one line each (time, level, logger, message) followed
+  by the stack trace, out of thousands of lines at `debug`. Presets name the
+  fields of logstash-logback-encoder (`preset: logstash`) and Elastic's ECS
+  encoders (`preset: ecs`); `fields:` names a setup's own.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

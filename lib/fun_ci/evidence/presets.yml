@@ -22,3 +22,9 @@ maven:
   title: Maven's failed tests
   start: ['<<< (FAILURE|ERROR)!', '^\[ERROR\] (Failures|Errors): $']
   end: ['^\[INFO\] ?$', '^\[INFO\] Results:']
+logstash:
+  use: json-log
+  fields: { time: '@timestamp', level: level, logger: logger_name, message: message, stack: stack_trace }
+ecs:
+  use: json-log
+  fields: { time: '@timestamp', level: log.level, logger: log.logger, message: message, stack: error.stack_trace }

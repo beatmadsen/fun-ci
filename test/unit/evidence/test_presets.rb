@@ -17,6 +17,12 @@ class TestPresets < Minitest::Test
     end
   end
 
+  EvidenceFixtures.all.select { |fixture| fixture.expected.key?("lines") }.each do |fixture|
+    define_method("test_#{fixture.name.tr("-", "_")}_writes_the_lines_expected_of_its_recorded_run") do
+      assert_equal fixture.expected.fetch("lines"), found(fixture).excerpts.first[:lines]
+    end
+  end
+
   def test_should_name_an_entry_for_a_preset_by_its_built_in_and_the_preset
     assert_equal "section:rspec", FunCi::Evidence::Catalog.entry({ "use" => "section", "preset" => "rspec" }).name
   end
@@ -37,9 +43,11 @@ class TestPresets < Minitest::Test
 
   private
 
-  def locations_found(fixture)
+  def locations_found(fixture) = found(fixture).excerpts.map { |excerpt| excerpt[:location] }
+
+  def found(fixture)
     preset = FunCi::Evidence::Presets.fetch(fixture.name)
     entry = FunCi::Evidence::Catalog.entry({ "use" => preset.use, "preset" => fixture.name })
-    entry.extractor.extract(context(output: fixture.output)).excerpts.map { |excerpt| excerpt[:location] }
+    entry.extractor.extract(context(output: fixture.output))
   end
 end

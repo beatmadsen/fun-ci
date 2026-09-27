@@ -1,0 +1,9 @@
+---
+tool: logstash-logback-encoder
+image: maven:3.9-eclipse-temurin-21@sha256:99e61abcff91a9b1333463bd8451fb18495d6eba9250ac66a338b518f8278320
+setup: mvn -B -q compile exec:help
+command: mvn -B -q exec:java
+sha256: c341899f5d9f86f155c20c736021c520d11d7d5e2e0a10d83a73542c127bc6b0
+exit_status: 1
+version: logstash-logback-encoder 8.1
+script_commit: 153e0f28790c389367520199c6ba143d3f88befb
