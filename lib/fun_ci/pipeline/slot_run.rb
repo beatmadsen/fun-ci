@@ -3,6 +3,7 @@
 require_relative "trigger_params"
 require_relative "background_fork"
 require_relative "stage_runner"
+require_relative "stage_execution"
 require_relative "progress_reporter"
 
 module FunCi
@@ -61,27 +62,18 @@ module FunCi
                executor: slow_suite(config, @slot.share))
       end
 
-      # Answers [output, status, timed_out, failures reported], as BackgroundWrapper expects.
+      # Called with the recorder and job to record the slow suite with, in
+      # whichever process runs it; the slot is let go once it is recorded.
       def slow_suite(config, slot)
-        cmd = "#{config.script_path("slow")} #{@commit.sha}"
-        executor = @seams.executor(slot.path)
-        budget = @seams.budgets["slow"]
-        ->(&on_start) { in_slot_reporting(slot) { |env| executor.call(cmd, budget, env: env, &on_start) } }
+        execution = StageExecution.new(seams: @seams, dir: slot.path)
+        command = "#{config.script_path("slow")} #{@commit.sha}"
+        ->(recorder, job_id) { holding(slot) { execution.run("slow", command, recorder, job_id) } }
       end
-
-      def in_slot_reporting(slot, &) = holding(slot) { reporting(&) }
 
       def holding(slot)
         yield
       ensure
         slot.release
-      end
-
-      def reporting
-        reports = @seams.report_dir.call
-        [*yield(reports.env), reports.failures]
-      ensure
-        reports&.remove
       end
 
       def launch(**)

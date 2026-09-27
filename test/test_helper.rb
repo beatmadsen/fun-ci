@@ -55,8 +55,8 @@ class FakeRecorder
   end
 
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
-  def keep_output(job_id, output) = @calls << [:keep_output, job_id, output]
-  def keep_failures(job_id, failures) = @calls << [:keep_failures, job_id, failures]
+  def keep_evidence(job_id, document) = @calls << [:keep_evidence, job_id, document]
+  def kept_evidence = @calls.select { |call| call.first == :keep_evidence }.map(&:last)
   def keep_exit(job_id, exit_status, signal) = @calls << [:keep_exit, job_id, exit_status, signal]
   def report_trouble_to(_out) = nil
   def tolerating = yield

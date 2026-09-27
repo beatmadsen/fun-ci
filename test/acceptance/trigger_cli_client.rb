@@ -14,15 +14,17 @@ require_relative "../support/trigger_test_kit"
 # Acceptance test client for the Trigger CLI: tests say what the user does
 # and what they see, and this client knows how the Trigger is wired.
 class TriggerCliClient
-  def self.open(command_runner: nil, background_launcher: nil, recorder: nil)
-    new(TriggerWorkspace.create, command_runner: command_runner, background_launcher: background_launcher,
-                                 recorder: recorder)
+  # environment: the stages' environment, when a test says what is in it.
+  def self.open(command_runner: nil, background_launcher: nil, recorder: nil, environment: nil)
+    seams = { command_runner: command_runner, background_launcher: background_launcher, recorder: recorder,
+              environment: environment }.compact
+    new(TriggerWorkspace.create, **seams)
   end
 
-  def initialize(workspace, command_runner: nil, background_launcher: nil, recorder: nil)
+  def initialize(workspace, **seams)
     @workspace = workspace
-    @seams = { command_runner: command_runner, background_launcher: background_launcher || ->(**) {},
-               recorder: recorder || FunCi::Persistence::DbRecorder.new(workspace.db) }
+    @seams = { background_launcher: ->(**) {}, recorder: FunCi::Persistence::DbRecorder.new(workspace.db),
+               **seams }
   end
 
   attr_reader :workspace

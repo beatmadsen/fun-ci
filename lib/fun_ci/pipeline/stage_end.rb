@@ -4,15 +4,17 @@ module FunCi
   module Pipeline
     # Records a stage that has finished, whichever process ran it: a failed
     # stage's evidence first, so whoever sees the outcome can read why, then
-    # how it exited, then the outcome.
+    # how it exited, then the outcome. Called while the stage still holds its
+    # slot and report directory, which the collector reads.
     class StageEnd
-      # What running a stage answered: its output, its Process::Status (nil
-      # when it was killed over budget) and the failures it reported.
-      Finished = Data.define(:output, :status, :timed_out, :failures)
+      # What running a stage answered: its output, and its Process::Status
+      # (nil when it was killed over budget).
+      Finished = Data.define(:output, :status, :timed_out)
 
-      def initialize(recorder, job_id)
+      def initialize(recorder, job_id, collector)
         @recorder = recorder
         @job_id = job_id
+        @collector = collector
       end
 
       # Answers the outcome recorded: completed, failed or timed_out.
@@ -32,10 +34,7 @@ module FunCi
         finished.status.success? ? "completed" : "failed"
       end
 
-      def keep_evidence(finished)
-        @recorder.keep_output(@job_id, finished.output)
-        @recorder.keep_failures(@job_id, finished.failures)
-      end
+      def keep_evidence(finished) = @recorder.keep_evidence(@job_id, @collector.collect(finished.output))
 
       def keep_exit(status)
         signal = status.termsig && Signal.signame(status.termsig)

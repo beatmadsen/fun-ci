@@ -21,6 +21,9 @@ class TriggerWorkspace
     @project_dir = project_dir
   end
 
+  # Every byte of the database, its write-ahead log included.
+  def database_bytes = Dir.glob("#{@db.filename("main")}*").map { |path| File.binread(path) }.join
+
   def close
     @db.close
     FileUtils.rm_rf([@db_dir, @project_dir])

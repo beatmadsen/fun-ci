@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "json"
+
 module FunCi
   module Evidence
     # What fun-ci kept about why a stage failed (why.md): the extractors
@@ -10,10 +12,27 @@ module FunCi
     class Document
       TAIL_TITLE = "The output's last lines"
 
+      # A document as fun-ci kept it; a list it doesn't have is empty.
+      def self.from_json(text)
+        parsed = JSON.parse(text, symbolize_names: true)
+        new(**members.to_h { |member| [member, parsed.fetch(member, [])] })
+      end
+
       # The evidence of a row that kept only the output's tail and the reported failures.
       def self.legacy(tail:, failures:)
         new(chosen: [], facts: [], failures: failures.map { |failure| failure.merge(extractor: "test-reports") },
             excerpts: tail ? [tail_excerpt(tail)] : [], problems: [])
+      end
+
+      # The output's last lines as output-tail kept them, or nil.
+      def tail
+        excerpt = excerpts.find { |candidate| candidate[:extractor] == "output-tail" }
+        excerpt && excerpt[:lines].map { |line| "#{line}\n" }.join
+      end
+
+      # The failures the stage's test reports named, as AT-9.7 keeps them.
+      def reported_failures
+        failures.select { |failure| failure[:extractor] == "test-reports" }.map { |failure| failure.except(:extractor) }
       end
 
       def self.tail_excerpt(tail)

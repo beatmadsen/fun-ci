@@ -51,7 +51,7 @@ class TestTriggerPersistence < Minitest::Test
 
   def sync_launcher(db_path:, pipeline_run_id:, job_id:, executor:)
     recorder = FunCi::Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
-    FunCi::Pipeline::BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
+    executor.call(recorder, job_id)
     recorder.close
   end
 end

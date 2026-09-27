@@ -5,29 +5,11 @@ require_relative "stage_job"
 require_relative "run_status"
 require_relative "write_trouble"
 require "json"
-require_relative "output_tail"
+require_relative "null_recorder"
 require_relative "project_runs"
 
 module FunCi
   module Persistence
-    class NullRecorder
-      def create_run(**) = nil
-      def start_stage(_stage, **) = nil
-      def end_stage(_job_id, _status) = nil
-      def keep_output(_job_id, _output) = nil
-      def keep_failures(_job_id, _failures) = nil
-      def keep_exit(_job_id, _exit_status, _signal) = nil
-      def stage_process(_job_id, _pid) = nil
-      def slot_taken(_lock_file) = nil
-      def foreground_done = nil
-      def db = nil
-      def db_path = nil
-      def pipeline_run_id = nil
-      def close = nil
-      def tolerating = yield
-      def report_trouble_to(_out) = nil
-    end
-
     class DbRecorder
       # How many of a project's newest runs keep their failed stages' output.
       KEPT_RUNS = 50
@@ -96,14 +78,14 @@ module FunCi
         end
       end
 
-      # Keeps the end of what a failed stage printed (acceptance-tests.md, AT-9.5).
-      def keep_output(job_id, output)
-        tolerating { StageJob.keep_output(@db, job_id, OutputTail.of(output)) }
-      end
-
-      # Keeps the failures a stage reported, if it reported any.
-      def keep_failures(job_id, failures)
-        tolerating { StageJob.keep_failures(@db, job_id, JSON.generate(failures)) } if failures.any?
+      # Keeps a failed stage's evidence, and the output's tail and reported
+      # failures where an older fun-ci sharing the database reads them.
+      def keep_evidence(job_id, document)
+        tolerating do
+          StageJob.keep_evidence(@db, job_id, JSON.generate(document.to_h))
+          StageJob.keep_output(@db, job_id, document.tail)
+          keep_failures(job_id, document.reported_failures)
+        end
       end
 
       def keep_exit(job_id, exit_status, signal)
@@ -119,6 +101,10 @@ module FunCi
       end
 
       private
+
+      def keep_failures(job_id, failures)
+        StageJob.keep_failures(@db, job_id, JSON.generate(failures)) if failures.any?
+      end
 
       def ensure_running
         run = PipelineRun.find(@db, @pipeline_run_id)

@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failure with its whole message, and the last lines of its output. Without a
   stage it explains the one that decided the verdict, and it exits with the
   verdict, as `status` does.
+- Secrets are masked before fun-ci keeps anything a failed stage printed:
+  the value of any variable in the stage's environment whose name holds
+  TOKEN, SECRET, PASSWORD, PASSWD, API_KEY, PRIVATE_KEY or CREDENTIAL (8
+  characters or more) shows as `[masked:NAME]`, and GitHub, AWS and Slack
+  tokens, private keys and `Authorization:` headers as `[masked]`. The state
+  directory is now readable by its user alone (0700), since masking is a best
+  effort.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

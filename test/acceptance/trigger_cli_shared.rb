@@ -2,7 +2,6 @@
 
 require_relative "../test_helper"
 require_relative "trigger_cli_client"
-require "fun_ci/pipeline/background_wrapper"
 
 # Instant command runner — returns success without spawning any OS process.
 # Use for tests that don't care about real script execution.
@@ -46,10 +45,10 @@ def timing_out_script_runner(script_name)
 end
 
 # Synchronous launcher for deterministic slow-suite testing.
-# Runs BackgroundWrapper inline instead of forking, so the test
+# Runs the slow suite inline instead of forking, so the test
 # can inspect database state immediately after trigger() returns.
 SYNC_LAUNCHER = lambda { |db_path:, pipeline_run_id:, job_id:, executor:|
   recorder = FunCi::Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
-  FunCi::Pipeline::BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
+  executor.call(recorder, job_id)
   recorder.close
 }

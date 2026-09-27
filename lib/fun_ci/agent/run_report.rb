@@ -18,11 +18,15 @@ module FunCi
       STATES = { "completed" => "passed", "timed_out" => "over_budget", "scheduled" => "waiting" }.freeze
       # What a failed stage left to explain itself: the end of its output,
       # and the failures it reported, each { file:, line:, test:, message: },
-      # unless they were pruned.
-      Kept = Data.define(:tail, :failures, :pruned)
+      # unless they were pruned, and the evidence document, if it kept one.
+      Kept = Data.define(:tail, :failures, :pruned, :evidence)
 
       class Kept
-        def initialize(pruned: false, **) = super
+        def initialize(pruned: false, evidence: nil, **) = super
+
+        def document
+          evidence ? Evidence::Document.from_json(evidence) : Evidence::Document.legacy(tail: tail, failures: failures)
+        end
       end
 
       NOTHING_KEPT = Kept.new(tail: nil, failures: [])
@@ -38,7 +42,7 @@ module FunCi
         def exit_status = exit.exit_status
         def signal = exit.signal
         def budget = exit.budget
-        def evidence = Evidence::Document.legacy(tail: tail, failures: failures)
+        def evidence = kept.document
         def pruned? = kept.pruned
         def tail = kept.tail
         def failures = kept.failures
@@ -62,7 +66,8 @@ module FunCi
 
         state = STATES.fetch(job[:status], job[:status])
         Stage.new(name: name, state: state, seconds: seconds(job),
-                  kept: Kept.new(tail: job[:output_tail], failures: failures(job), pruned: job[:pruned] == 1),
+                  kept: Kept.new(tail: job[:output_tail], failures: failures(job), pruned: job[:pruned] == 1,
+                                 evidence: job[:evidence]),
                   exit: Exit.new(exit_status: job[:exit_status], signal: job[:signal], budget: job[:budget]))
       end
 

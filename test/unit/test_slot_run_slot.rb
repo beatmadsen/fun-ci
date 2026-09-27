@@ -56,7 +56,7 @@ class TestSlotRunSlot < Minitest::Test
     lock = Lock.new(false)
     slow = nil
     slot_run(slot_with(lock), background_launcher: ->(executor:, **) { slow = executor }).run(config)
-    slow.call
+    slow.call(FakeRecorder.new, 1)
 
     assert_predicate lock, :closed?
   end

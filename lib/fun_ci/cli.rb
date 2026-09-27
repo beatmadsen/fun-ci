@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "fileutils"
 require_relative "../fun_ci"
 require_relative "cli_help"
 require_relative "pipeline/trigger_params"
@@ -104,7 +103,7 @@ module FunCi
     end
 
     def setup_db
-      FileUtils.mkdir_p(@db_dir)
+      Persistence::StateDir.prepare(@db_dir)
       db_path = File.join(@db_dir, "db.sqlite3")
       db = Persistence::Database.connection(db_path)
       Persistence::Database.migrate!(db)

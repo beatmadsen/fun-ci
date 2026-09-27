@@ -7,7 +7,7 @@ module FunCi
     module StageJob
       TERMINAL_STATUSES = %w[completed failed timed_out cancelled].freeze
       FIELDS = %i[id pipeline_run_id stage status started_at completed_at finished_order output_tail failures
-                  exit_status signal budget pruned].freeze
+                  exit_status signal budget pruned evidence].freeze
       COLUMNS = FIELDS.join(", ")
       NEXT_IN_RUN = "(SELECT COALESCE(MAX(others.finished_order), 0) + 1 FROM stage_jobs AS others " \
                     "WHERE others.pipeline_run_id = stage_jobs.pipeline_run_id)"
@@ -35,6 +35,11 @@ module FunCi
       # The failures the stage reported, as JSON (acceptance-tests.md, AT-9.7).
       def self.keep_failures(db, id, failures_json)
         db.execute("UPDATE stage_jobs SET failures = ? WHERE id = ?", [failures_json, id])
+      end
+
+      # What was kept about why the stage failed, as JSON (why.md).
+      def self.keep_evidence(db, id, evidence_json)
+        db.execute("UPDATE stage_jobs SET evidence = ? WHERE id = ?", [evidence_json, id])
       end
 
       # How the stage's process exited: its status, or the signal that ended it.

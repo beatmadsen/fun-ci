@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "trigger_params"
-require_relative "stage_end"
+require_relative "stage_execution"
 
 module FunCi
   module Pipeline
@@ -28,34 +28,17 @@ module FunCi
         @dir = dir
       end
 
-      # A failed stage's output and reported failures are kept before its
-      # outcome is recorded, so whoever sees the outcome can read why.
+      # A failed stage's evidence is kept before its outcome is recorded, so
+      # whoever sees the outcome can read why.
       def passes?(config, stage)
         job_id = @seams.recorder.start_stage(stage, budget: @seams.budgets[stage])
-        with_report_dir { |reports| run_stage(config, stage, job_id, reports) } == "completed"
+        command = "#{config.script_path(stage)} #{@commit_hash}"
+        result, output = StageExecution.new(seams: @seams, dir: @dir).run(stage, command, @seams.recorder, job_id)
+        tell(stage, output, result)
+        result == "completed"
       end
 
       private
-
-      def run_stage(config, stage, job_id, reports)
-        output, status, timed_out = execute(config, stage, reports.env) do |pid|
-          @seams.recorder.stage_process(job_id, pid)
-        end
-        finished = StageEnd::Finished.new(output: output, status: status, timed_out: timed_out,
-                                          failures: reports.failures)
-        StageEnd.new(@seams.recorder, job_id).record(finished).tap { |result| tell(stage, output, result) }
-      end
-
-      def with_report_dir
-        reports = @seams.report_dir.call
-        yield reports
-      ensure
-        reports&.remove
-      end
-
-      def execute(config, stage, env, &)
-        @seams.executor(@dir).call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage], env: env, &)
-      end
 
       def tell(stage, output, result)
         report_timeout(stage) if result == "timed_out"

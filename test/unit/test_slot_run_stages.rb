@@ -50,7 +50,7 @@ class TestSlotRunStages < Minitest::Test
                                          background_launcher: inline_launcher(recorder),
                                          report_dir: -> { FakeReportDir.new([{ test: "t1" }]) }).run(config)
 
-    assert(recorder.calls.any? { |call| call.values_at(0, 2) == [:keep_failures, [{ test: "t1" }]] })
+    assert_equal [{ test: "t1", extractor: "test-reports" }], recorder.kept_evidence.first.failures
   end
 
   def test_should_record_the_slow_suite_s_budget

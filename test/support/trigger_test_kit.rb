@@ -82,7 +82,7 @@ module TriggerTestKit
   # Runs the slow suite in the calling thread, recording into +recorder+.
   def inline_launcher(recorder = FakeRecorder.new)
     lambda do |job_id:, executor:, **|
-      FunCi::Pipeline::BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
+      executor.call(recorder, job_id)
     end
   end
 

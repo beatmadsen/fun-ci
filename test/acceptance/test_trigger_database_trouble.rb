@@ -68,7 +68,7 @@ class TestTriggerDatabaseTrouble < Minitest::Test
   # Runs the slow suite inline, recording it into the same troubled database.
   def slow_suite_over(error)
     lambda do |job_id:, executor:, **|
-      FunCi::Pipeline::BackgroundWrapper.new(recorder: recorder_over(error), job_id: job_id, executor: executor).run
+      executor.call(recorder_over(error), job_id)
     end
   end
 end

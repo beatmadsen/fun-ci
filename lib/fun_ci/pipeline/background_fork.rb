@@ -2,7 +2,6 @@
 
 require_relative "../persistence/pipeline_recorder"
 require_relative "../persistence/pipeline_run"
-require_relative "background_wrapper"
 
 module FunCi
   module Pipeline
@@ -35,7 +34,7 @@ module FunCi
         @slot.release
         recorder = Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
         recorder.tolerating { Persistence::PipelineRun.store_pid(recorder.db, pipeline_run_id, Process.pid) }
-        BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
+        executor.call(recorder, job_id)
         recorder.close
       end
     end

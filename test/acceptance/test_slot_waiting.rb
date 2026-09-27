@@ -58,7 +58,7 @@ class TestSlotWaiting < Minitest::Test
   def wait
     @run.events << :waited
     @run.calls_while_waiting = @run.second.calls.dup
-    @run.held_slow_suite.call
+    @run.held_slow_suite.call(FakeRecorder.new, 1)
     @run.events << :first_slow_finished
   end
 end

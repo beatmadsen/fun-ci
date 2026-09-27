@@ -59,6 +59,14 @@ class TestRunReport < Minitest::Test
     assert report(job("lint", "failed").merge(pruned: 1)).stages.first.pruned?
   end
 
+  def test_should_read_the_evidence_a_stage_kept
+    evidence = '{"chosen":[],"facts":[{"name":"alongside","value":"slow","extractor":"fun-ci"}],' \
+               '"failures":[],"excerpts":[],"problems":[]}'
+
+    assert_equal [{ name: "alongside", value: "slow", extractor: "fun-ci" }],
+                 report(job("lint", "failed").merge(evidence: evidence)).stages.first.evidence.facts
+  end
+
   def test_should_carry_no_failures_for_a_stage_that_reported_none
     assert_empty report(job("lint", "failed")).stages.first.failures
   end

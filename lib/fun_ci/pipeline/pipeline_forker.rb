@@ -2,7 +2,6 @@
 
 require_relative "../persistence/database"
 require_relative "../persistence/pipeline_recorder"
-require_relative "background_wrapper"
 require_relative "trigger_params"
 require_relative "../setup/project_config"
 
@@ -35,7 +34,7 @@ module FunCi
 
       def self.sync_launcher(db_path:, pipeline_run_id:, job_id:, executor:)
         recorder = Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
-        BackgroundWrapper.new(recorder: recorder, job_id: job_id, executor: executor).run
+        executor.call(recorder, job_id)
         recorder.close
       end
     end

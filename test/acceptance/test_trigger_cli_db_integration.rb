@@ -6,7 +6,7 @@ require_relative "trigger_cli_shared"
 #
 # Covers: pipeline_run creation, stage_job recording for each stage,
 # status transitions (completed/failed), and production-path recording
-# via BackgroundWrapper.
+# in the forked child.
 
 module TriggerCliDbSteps
   def teardown
@@ -95,7 +95,7 @@ class TestTriggerCliProductionSlowSuiteRecording < Minitest::Test
   def test_should_record_slow_suite_result_when_using_production_path
     trigger(background_launcher: SYNC_LAUNCHER)
     assert_equal "completed", job_status("slow"),
-                 "Production path should record slow suite result via BackgroundWrapper"
+                 "Production path should record the slow suite's result"
     assert_equal "completed", pipeline_run[:status],
                  "Pipeline should be completed when all stages pass via production path"
   end
