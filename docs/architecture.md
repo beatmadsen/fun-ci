@@ -141,6 +141,48 @@ same problem if you switch branches while it runs.
 
 *Revisit if* per-slot caches turn out to go stale in ways `build.sh` can't fix.
 
+## The agent interface
+
+Problem: an agent working in a project got a verdict only on push. The
+post-commit run's output went nowhere, a failed stage's output was never kept,
+and the console is made for eyes. §9 of `acceptance-tests.md` gives agents
+commands that ask about commits (`lib/fun_ci/agent/`).
+
+**Decisions:**
+
+- **The commit is the only event.** Nothing is installed into an agent's
+  harness. The post-commit hook prints the `fun-ci wait` command for the
+  commit, and `init` writes one instruction into `AGENTS.md` or `CLAUDE.md`:
+  run it in the background. A harness that runs background commands and wakes
+  the agent when one exits needs nothing more.
+- **Runs are keyed on the commit**, per project (`Persistence::ProjectRuns`
+  scopes every query by `project_path`, since all projects share one
+  database). A tree hash was considered and dropped: stage scripts receive the
+  commit hash, so a verdict can't safely pass between commits.
+- **The database lives in the user's state directory**
+  (`$XDG_STATE_HOME/fun-ci`, or `~/.local/state/fun-ci`), not `$TMPDIR`,
+  which a sandboxed agent can have its own of.
+- **`wait` polls once a second behind a clock seam** (`Agent::Context#clock`),
+  so tests script a run's progress per pause and never sleep. It gives a
+  commit 5 seconds for the post-commit hook's run to turn up before starting
+  one, by spawning `fun-ci trigger --background` rather than forking, so the
+  run shares no SQLite connection with the waiting process. It exits 5 when
+  the project can't start a run, which the pre-push hook lets through.
+- **A waiter protects its run by a heartbeat**, `pipeline_runs.waited_at`,
+  set on each poll; the stale canceller skips a run marked in the last 10
+  seconds, and never cancels a run of the new run's own commit. A timestamp
+  needs no liveness check, so the canceller sends no extra signals.
+- **Evidence is kept only for failures**: the last 200 lines (64 KB) of a
+  failed or over-budget stage's output, and the failures its reports name,
+  pruned to a project's 50 newest runs. Reports go in a directory per stage
+  (`FUN_CI_REPORT`), because Surefire and Gradle write one JUnit file per class;
+  `rexml` reads them.
+- **`events` is the difference between two looks at the runs**, so it needs no
+  events table: every event follows from the stage rows and their finish order.
+
+*Revisit if* agents need the full output of a failure: that is `fun-ci why`,
+left for a later design.
+
 ## Quality standards (from intent-record)
 
 - `rake` (default) is the gate: the Ruby tests, the Rust tests, the binary

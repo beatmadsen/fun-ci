@@ -12,9 +12,9 @@ Fun-CI hooks into git and runs your pipeline locally:
 2. **Slow suite** (spawned in background, 5min budget) -- integration/end-to-end tests
 3. **Fast suite** (synchronous, 10s budget) -- unit tests
 
-After each commit (**post-commit**), the entire pipeline forks to the background so your commit is not blocked. On **pre-push**, lint, build, and fast suite must pass before the push proceeds. The slow suite always runs in the background.
+After each commit (**post-commit**), the entire pipeline forks to the background so your commit is not blocked. On **pre-push**, lint, build and the fast suite of each commit you push must have passed before the push proceeds; a commit whose run has finished goes straight through. The slow suite always runs in the background.
 
-Results are stored in a local SQLite database. A terminal dashboard lets you monitor pipeline status across branches.
+Results are stored in a SQLite database in `~/.local/state/fun-ci/` (or `$XDG_STATE_HOME/fun-ci/`). A terminal dashboard lets you monitor pipeline status across branches, and a coding agent can ask for the same results from the command line.
 
 Each pipeline runs in a git worktree of its own under `.git/fun-ci/worktrees/`, checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. Two pipelines run at once; set `worktree_slots: 3` in `.fun-ci/config` for more. `fun-ci prune` removes the worktrees when you want the space back.
 
@@ -63,7 +63,35 @@ fun-ci install-hooks                            Install post-commit and pre-push
 fun-ci install-hooks post-commit                Install a single hook type
 fun-ci check                                    Verify .fun-ci/ setup
 fun-ci prune                                    Remove fun-ci's worktrees when no pipeline is running
+fun-ci status [commit]                          Where a commit's run stands; the verdict is the exit code
+fun-ci wait [commit]                            Wait until that verdict is decided, then exit with it
+fun-ci runs                                     This project's recent runs, newest first
+fun-ci events [--follow]                        The runs' events as JSON lines
 ```
+
+## For Coding Agents
+
+An agent can't watch a dashboard, so it asks fun-ci about commits and acts on exit codes. After each commit, the commit's output ends with the command that gets its verdict:
+
+```
+fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all
+```
+
+`fun-ci init` adds a short section to your `AGENTS.md` (or `CLAUDE.md`, if that is the only one) telling agents to run that command in the background after each commit. Agent harnesses that run a command in the background wake the agent when it exits, so it hears about a failure without having to remember to ask.
+
+`status` and `wait` exit with the verdict for the stages you need: `--need build` (lint and build), `fast` (the default) or `all` (the slow suite too).
+
+| Exit code | Meaning |
+|---|---|
+| 0 | Passed |
+| 1 | A needed stage failed |
+| 2 | A needed stage ran out of time |
+| 3 | Still undecided (`wait --within 30s` gives up at your deadline) |
+| 4 | Superseded by a newer commit on the branch (`wait --follow-branch` moves on to it) |
+| 5 | No run for the commit |
+| 64 | Usage error |
+
+A failed stage comes with its evidence: the last lines it printed, or better, the failures its tests reported. fun-ci names an empty directory in `FUN_CI_REPORT` for every stage; write JUnit XML (`*.xml`) or `{"failures": [{"file", "line", "test", "message"}]}` (`*.json`) there. The Gradle and Maven scripts `fun-ci init` writes already copy their reports in. Every command takes `--json`.
 
 ## Git Hooks
 
@@ -71,7 +99,7 @@ After `fun-ci install-hooks`, two hooks are active:
 
 **post-commit** -- Runs `fun-ci trigger --background <commit> <branch>` for the commit you just made. This forks the pipeline into a background process and returns immediately, so commits are never blocked.
 
-**pre-push** -- Runs `fun-ci trigger <commit> <branch>`. This validates the project config, runs lint + build + fast suite synchronously, and blocks the push if any stage fails. The slow suite runs in the background.
+**pre-push** -- Runs `fun-ci wait <commit> --need fast` for each commit the push sends. It waits for that commit's run (starting one if it has none) and blocks the push if lint, build or the fast suite failed, showing why. A project not set up for fun-ci pushes without CI.
 
 ## Admin Dashboard
 

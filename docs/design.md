@@ -51,7 +51,8 @@ strand the developer: when fun-ci or its setup is missing, the commit or push
 goes ahead without CI and says so.
 
 **Local.** Everything runs on the developer's machine. fun-ci records outcomes
-in SQLite and keeps no build artefacts or logs.
+in SQLite and keeps no build artefacts. Of what a stage prints it keeps only
+the end of a failed stage's output, so whoever reads the failure can see why.
 
 ## The pipeline
 
@@ -60,14 +61,39 @@ A project describes its pipeline with four executable scripts in `.fun-ci/`:
 first argument, and its exit code decides pass (0) or fail.
 
 Lint and build run in parallel. If both pass, the slow suite forks into the
-background and the fast suite runs in the foreground. The `pre-push` hook waits
-for the fast suite and blocks the push if lint, build or fast failed; the
-`post-commit` hook runs the whole pipeline in the background so a commit is
-never held up.
+background and the fast suite runs in the foreground. The `post-commit` hook
+runs the whole pipeline in the background so a commit is never held up. The
+`pre-push` hook waits for the fast verdict of each commit the push sends and
+stops the push if lint, build or fast failed; a commit whose run has already
+finished goes through at once.
 
 Each run happens in a git worktree of its own, checked out at the commit it
 tests, so the developer keeps editing while it runs. A newer commit on the same
-branch cancels the older run if it hasn't finished: the latest commit wins.
+branch cancels the older run if it hasn't finished, unless an agent is waiting
+on it: the latest commit wins. A run is never cancelled by another run of its
+own commit.
+
+## Agents
+
+A coding agent is a user too, and it can't glance at a second screen. It asks
+fun-ci about commits instead, and branches on exit codes. The commit is the
+only event: fun-ci tests commits, speaks up after one, and never looks at
+uncommitted files.
+
+- A commit's output ends with the command that gets its verdict:
+  `fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all`.
+  `fun-ci init` tells agents, in `AGENTS.md` or `CLAUDE.md`, to run it in the
+  background after each commit.
+- `fun-ci wait` returns once the level the agent needs is decided: `build`
+  (lint and build), `fast` (the default) or `all` (the slow suite too). The
+  first failure ends the wait. `--within 30s` gives up at the agent's deadline.
+- `fun-ci status` says where a run stands without waiting, `fun-ci runs` lists
+  the recent runs, and `fun-ci events` prints what happens as JSON lines.
+- Exit codes: 0 passed, 1 failed, 2 over budget, 3 undecided, 4 superseded,
+  5 no run, 64 usage error. `--json` gives the same facts to a program.
+- A failed stage comes with its evidence: the failures its test reports name
+  (JUnit XML or fun-ci's JSON written to `FUN_CI_REPORT`), or else the last
+  lines it printed.
 
 ## A run's states
 
@@ -190,9 +216,12 @@ digging into internals: the cause obvious, the next step clear.
 | The commit doesn't exist | `fun-ci: commit <sha> not found in this repository.` | non-zero |
 | The commit or branch is missing | `fun-ci: commit hash and branch name are required.` and the usage | non-zero |
 | A newer commit on the same branch | `Cancelled stale pipeline for <old>. Starting fresh for <new>.` | carries on |
+| A pushed commit's fast verdict is a failure | The run's stages, then `fast failed:` and the failures it reported or its last lines; the push stops | non-zero |
 | The database is busy | fun-ci waits for it, for up to 5 seconds; if it stays busy, the stages run on unrecorded and fun-ci says once to trigger again | the pipeline's own |
 | The database can't be written (a full disk, a read-only file) | The stages run on unrecorded, and fun-ci says once where the database is and to check the disk | the pipeline's own |
 
-The slow suite runs in the background, so its failures and timeouts show only
-on the console. If its process dies without finishing, the console notices on
-its next poll and shows the slow stage, and the run, failed.
+The slow suite runs in the background, so its failures and timeouts show on
+the console and to an agent that asks (`status`, `wait --need all`, `events`),
+never in the commit or the push. If its process dies without finishing, the
+console, or a waiting agent, notices on its next poll and records the slow
+stage, and the run, failed.

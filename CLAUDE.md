@@ -59,6 +59,10 @@ fun-ci install-hooks                                  # Install post-commit and 
 fun-ci install-hooks post-commit                      # Install a single hook type
 fun-ci check                                          # Verify .fun-ci/ setup is valid
 fun-ci prune                                          # Remove fun-ci's worktrees when no pipeline is running
+fun-ci status [REV] [--need build|fast|all] [--json]  # Where a commit's run stands; the verdict as the exit code
+fun-ci wait [REV] [--need LEVEL] [--within 30s] [--follow-branch]  # Block until that verdict is decided
+fun-ci runs [-n 10] [--branch NAME] [--json]          # The project's recent runs, newest first
+fun-ci events [--follow] [--only failures]            # The runs' events as JSON lines
 ```
 
 ## Stack
@@ -75,7 +79,8 @@ Fun-CI is an opinionated, local-first CI for a project's own machine: a four-sta
 
 - `exe/fun-ci` -> `Cli` routes subcommands and sets up the shared database (`Cli.run(args, io:, handlers:, db_dir:)`).
 - `lib/fun_ci/pipeline/` -- running a pipeline. `TriggerCommand` parses `fun-ci trigger`; `Trigger` validates the project and the commit, records the run and takes a worktree slot from `WorktreePool` (`<git-common-dir>/fun-ci/worktrees/slot-N`, checked out at the commit by `Worktrees`; `Workspaces.for` sizes the pool from `worktree_slots` in `.fun-ci/config`, read by `Setup::Settings`); `SlotRun` runs lint and build in threads there, forks the slow suite (`BackgroundFork`) and runs the fast suite. A `Slot` is held through an flock on `slot-N.lock` by each stage that uses it and frees when the last lets go, or when its holders die; `StageRunner` runs one stage through `CommandExecutor` (an injected runner, or `ProcessRunner` with its budget); `StalePipelineCanceller` cancels the unfinished runs on the same branch through `RunCanceller`, which kills a run's recorded processes (and, polled by `BoardData`, records failed a slow suite whose process died) (`Persistence::ActiveRuns`: the trigger, the forked slow suite, and each stage script's process group); `PipelineForker` backs `--background`.
-- `lib/fun_ci/persistence/` -- `Database` (connection and migration), `PipelineRun` and `StageJob` (row access), `DbRecorder`/`NullRecorder` (what a pipeline records).
+- `lib/fun_ci/persistence/` -- `Database` (connection and migration), `PipelineRun` and `StageJob` (row access), `DbRecorder`/`NullRecorder` (what a pipeline records, including a failed stage's `OutputTail` and reported failures), `ProjectRuns` (queries scoped to one project), `StateDir` (where the database lives).
+- `lib/fun_ci/agent/` -- the commands an agent runs (`status`, `wait`, `runs`, `events`; `Commands` routes them). Each takes a `Context` (db, `Git`, io, clock, pipeline); `Reports` reads a commit's run into a `RunReport`, `Verdict` decides it for the level needed, `StatusText`/`StatusJson`/`Evidence` say it, `Waiting` polls, `Events` diffs `Snapshots`. `LivePipeline` starts a run by spawning `fun-ci trigger --background`. Stages write test reports into a `Pipeline::ReportDir` (`FUN_CI_REPORT`), read by `TestReport`.
 - `lib/fun_ci/setup/` -- `init`, `install-hooks`, `check`: `Installer`, `ProjectDetector`, `TemplateWriter`, `HookWriter`, `SetupChecker`, `ProjectConfig`.
 - `lib/fun_ci/console/` -- the 2.0 console's Ruby half, which decides what is true. `fun-ci console` runs `Launcher`, which starts the renderer and runs a `ConsoleLoop` (renderer lines to the session, a poll after each quiet second): `ConsoleSession` answers the renderer's lines with protocol messages through a port (`RendererProcess` for the real binary, found by `RendererLookup`); `ConsoleState` builds each `board` from `BoardData` (SQLite reads, paging), the `View` (a `KeyHandler`'s cursor and one page of runs) and `StageEvents` (`StageChangeDetector`'s changes as `event`s); `ConsoleLog` takes what the renderer gets wrong.
 - `contract/` -- renderer scenarios, contract fixtures and the binary lane (`binary/`). `docs/` -- `design.md` (the two goals, and what the developer sees), `architecture.md` (decisions, and the agent loops), `renderer-protocol.md`, and `acceptance-tests.md` (the requirements, worked in the order of `ralph/build/progress.md`). `ralph/` -- the agent build loop.
@@ -86,6 +91,7 @@ Seams tests use in place of the real thing:
 - `pipeline_forker` on `Trigger.run_from_args` (the `--background` fork), `handlers` and `db_dir` on `Cli.run`, `open:` on `Database.connection`.
 - `FUN_CI_RENDERER` names the renderer `fun-ci console` starts; process tests point it at a shell script (`test/support/fake_renderers.rb`).
 - `FakeRecorder` in `test/test_helper.rb` captures recorder calls without SQLite.
+- `Agent::Context` takes `FakeGit`, `FakeClock` and `FakePipeline` (`test/support/`); `test/acceptance/agent_client.rb` wires them. Each `FakeClock#pause` runs the next scripted step, so a test makes a run progress while `wait` or `events --follow` polls, and pausing past the script raises, so a wait that never ends fails instead of hanging. `report_dir` in `Seams` replaces a stage's report directory (`test/support/fake_report_dir.rb`).
 
 ## Invariants
 
@@ -125,3 +131,5 @@ Seams tests use in place of the real thing:
 - The mutation score is killed / (killed + survived). Code that runs only in a forked child shows as no-coverage, not as a pass. Mutineer attributes methods defined in a `Data.define` block to the enclosing module, so reopen the class to define them (`Pipeline::Seams`).
 - Minitest shows two long strings that differ by shelling out to `diff -u`, which the spawn guard would turn into an error that hides the failure. `test/test_helper.rb` sets `Minitest::Assertions.diff = nil`, so failures print plain Expected/Actual.
 - ActiveSupport's parallel executor puts a Unix socket in `Dir.tmpdir`, and socket paths are capped at 104 bytes, which is why the test temp root has a short name.
+- A private test helper named `run` shadows `Minitest::Test#run`, and the parallel executor then fails the whole file with `result not reported`; run it with `MUTATION_TESTING=1` to see the real `NoMethodError`, and name the helper something else.
+- The confinement guard points `TMPDIR` and `XDG_STATE_HOME` into its temp root, and children inherit both; a test that spawns `fun-ci` with an env of its own must pass both, or the child writes its database under `$HOME`.

@@ -2,9 +2,9 @@
 
 The requirements, as acceptance tests, numbered like agent-tome's. The build
 loop implements them one per iteration, in the order of
-`ralph/build/progress.md`, which also says which are done. §0 to §5, §7 and §8
-are built; they stay here because the tests that hold them cite them by
-number. §6 and §9 are to build. An outline item is refined into full Given/When/Then before it is
+`ralph/build/progress.md`, which also says which are done. §0 to §5 and §7 to
+§9 are built; they stay here because the tests that hold them cite them by
+number. §6 is to build. An outline item is refined into full Given/When/Then before it is
 built, as its own commit to this file. What fun-ci is for is in
 [`design.md`](design.md).
 
