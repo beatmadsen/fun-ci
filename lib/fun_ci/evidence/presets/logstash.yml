@@ -1,0 +1,3 @@
+use: json-log
+fields: { time: '@timestamp', level: level, logger: logger_name, message: message, stack: stack_trace }
+signature: '"logger_name":'

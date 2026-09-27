@@ -13,5 +13,6 @@ module EvidenceFixtures
     def expected = YAML.safe_load_file(File.join(dir, "expected.yml"))
   end
 
-  def self.all = Dir.children(ROOT).sort.map { |name| Fixture.new(name: name, dir: File.join(ROOT, name)) }
+  def self.all = Dir.children(ROOT).sort.map { |name| named(name) }
+  def self.named(name) = Fixture.new(name: name, dir: File.join(ROOT, name))
 end

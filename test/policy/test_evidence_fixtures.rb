@@ -46,7 +46,7 @@ class TestEvidenceFixtures < Minitest::Test
     assert_empty silent.map(&:name)
   end
 
-  # What notices a bad edit to presets.yml, which no mutation tool reads.
+  # What notices a bad edit to a preset, which no mutation tool reads.
   def test_no_signature_matches_another_tool_s_recorded_run
     crossed = signed.product(EvidenceFixtures.all)
                     .select { |preset, run| preset.name != run.name && matches?(preset, run) }

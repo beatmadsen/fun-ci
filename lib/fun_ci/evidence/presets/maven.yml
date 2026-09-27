@@ -1,0 +1,6 @@
+use: section
+title: Maven's failed tests
+start: ['<<< (FAILURE|ERROR)!', '^\[ERROR\] (Failures|Errors): $']
+end: ['^\[INFO\] ?$', '^\[INFO\] Results:']
+markers: [pom.xml, mvnw]
+signature: '^\[INFO\] BUILD FAILURE'

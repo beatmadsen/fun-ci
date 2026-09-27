@@ -1,0 +1,6 @@
+use: section
+title: rspec's failures
+start: ['^Failures:$']
+end: ['^Finished in ']
+markers: [Gemfile, .rspec]
+signature: '^rspec \./'

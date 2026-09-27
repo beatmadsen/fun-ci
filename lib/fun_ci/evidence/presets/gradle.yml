@@ -1,0 +1,6 @@
+use: section
+title: Gradle's failed tests, and what went wrong
+start: [' FAILED$', '^\* What went wrong:']
+end: ['^\d+ tests? completed', '^\* Try:']
+markers: [build.gradle, build.gradle.kts, settings.gradle, settings.gradle.kts, gradlew]
+signature: '^BUILD FAILED in '

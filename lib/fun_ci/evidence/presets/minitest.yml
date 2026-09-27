@@ -1,0 +1,6 @@
+use: section
+title: Minitest's failures and errors
+start: ['^\s+\d+\) (Failure|Error):$']
+end: ['^\d+ runs, \d+ assertions']
+markers: [Gemfile, Rakefile]
+signature: '^\d+ runs, \d+ assertions, \d+ failures, \d+ errors'

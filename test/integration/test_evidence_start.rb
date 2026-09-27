@@ -16,7 +16,7 @@ class TestEvidenceStart < Minitest::Test
   def teardown = FileUtils.remove_entry(@worktree)
 
   def test_should_take_the_presets_whose_markers_the_worktree_has_as_candidates
-    assert_equal %w[rspec minitest logstash ecs], candidates
+    assert_equal %w[ecs logstash minitest rspec], candidates
   end
 
   def test_should_take_no_candidates_when_detection_is_off
@@ -24,11 +24,11 @@ class TestEvidenceStart < Minitest::Test
   end
 
   def test_should_leave_out_a_preset_it_is_told_to_skip
-    assert_equal %w[minitest logstash ecs], candidates("evidence:\n  skip: [rspec]\n")
+    assert_equal %w[ecs logstash minitest], candidates("evidence:\n  skip: [rspec]\n")
   end
 
   def test_should_leave_out_a_preset_the_stage_s_entries_name
-    assert_equal %w[minitest logstash ecs],
+    assert_equal %w[ecs logstash minitest],
                  candidates("evidence:\n  stages:\n    fast:\n      - use: section\n        preset: rspec\n")
   end
 
