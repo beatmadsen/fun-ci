@@ -66,5 +66,7 @@ def write_fixture(name, recipe, output, extras)
   puts "#{name}: #{output.lines.size} lines, exit #{extras["exit_status"]}, #{extras["version"]}"
 end
 
-abort "usage: ruby script/record_evidence_fixture.rb NAME..." if ARGV.empty?
-ARGV.each { |name| record(name) }
+if $PROGRAM_NAME == __FILE__
+  abort "usage: ruby script/record_evidence_fixture.rb NAME..." if ARGV.empty?
+  ARGV.each { |name| record(name) }
+end
