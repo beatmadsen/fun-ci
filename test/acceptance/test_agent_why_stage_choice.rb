@@ -33,6 +33,10 @@ class TestAgentWhyStageChoice < Minitest::Test
     assert_match(/\Aslow failed\b/, @client.stdout.lines[1])
   end
 
+  def test_should_say_there_is_no_run_for_a_commit_without_one
+    assert_equal [5, "fun-ci: no run for 3f9c2ab in this project.\n"], [@client.why, @client.stdout]
+  end
+
   def test_should_say_so_when_no_needed_stage_failed
     @client.record_run(SHA, stages: { "lint" => "completed", "build" => "running" })
 

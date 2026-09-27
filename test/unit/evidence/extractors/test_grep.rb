@@ -48,6 +48,10 @@ class TestGrep < Minitest::Test
     assert_empty excerpts("patterns" => %w[PANIC])
   end
 
+  def test_should_not_mark_what_it_found_in_time_as_cut_short
+    assert_equal([false, false], excerpts("patterns" => %w[ERROR FATAL]).map { |e| e[:truncated] })
+  end
+
   def test_should_stop_at_the_deadline_with_what_it_found
     output = "ERROR first\n#{"x\n" * 3000}ERROR last\n"
     found = grep({ "patterns" => %w[ERROR] }, context(output: output, deadline: PassingDeadline.new(1)))

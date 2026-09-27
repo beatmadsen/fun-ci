@@ -20,14 +20,22 @@ module FunCi
       end
 
       def apply(document)
-        document = few_failures(document)
-        document = shorter_excerpts(document) while over(document).positive? && lines?(document)
+        document = shorter(few_failures(document))
         over(document).positive? ? shorter_messages(document) : document
       end
 
       private
 
-      def lines?(document) = document.excerpts.any? { |excerpt| excerpt[:lines].any? }
+      # Each pass cuts at least a line, so there are never more passes than lines.
+      def shorter(document)
+        document.excerpts.sum { |excerpt| excerpt[:lines].size }.times do
+          break unless over(document).positive?
+
+          document = shorter_excerpts(document)
+        end
+        document
+      end
+
       def over(document) = JSON.generate(document.to_h).bytesize - @limits.bytes
 
       def few_failures(document)

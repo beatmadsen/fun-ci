@@ -60,6 +60,12 @@ class TestLogFile < Minitest::Test
                  only_excerpt({ "lines" => 2 }, watched: { "log/test.log" => stamp(16) })[:lines]
   end
 
+  def test_should_keep_no_excerpt_of_a_file_the_stage_created_empty
+    context = context(files: { "log/new.log" => "" })
+
+    assert_empty FunCi::Evidence::Extractors::LogFile.new({ "path" => "log/*.log" }).extract(context).excerpts
+  end
+
   private
 
   def only_excerpt(options, watched:) = log_file(options, watched: watched).excerpts.first

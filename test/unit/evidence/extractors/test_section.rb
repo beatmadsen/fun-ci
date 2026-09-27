@@ -61,6 +61,14 @@ class TestSection < Minitest::Test
                  section({ "start" => ["START"], "end" => ["END"] }, "START\na\n\n  \nEND\n").first[:location]
   end
 
+  def test_should_not_mark_a_section_that_ended_as_cut
+    assert_equal([false], excerpts("start" => ["^Failures:"], "end" => ["^Finished"]).map { |e| e[:truncated] })
+  end
+
+  def test_should_not_mark_a_section_that_ran_to_the_last_line_as_cut
+    assert_equal([false], excerpts("start" => ["^Failures:"]).map { |e| e[:truncated] })
+  end
+
   def test_should_find_nothing_when_no_section_starts
     assert_empty excerpts("start" => ["^PANIC"])
   end

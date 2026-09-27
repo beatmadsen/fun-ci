@@ -67,6 +67,30 @@ class TestExtractCommand < Minitest::Test
     assert_equal 64, extract("quick", "--output", "failing-run.log")
   end
 
+  def test_should_say_why_it_refuses_a_stage
+    extract("quick", "--output", "failing-run.log")
+
+    assert_equal "fun-ci extract: name one stage of lint, build, fast, slow, not quick\n", @stdout.string
+  end
+
+  def test_should_give_no_exit_status_for_an_overrun
+    extract("fast", "--output", "failing-run.log", "--timed-out", "--json")
+
+    assert_nil JSON.parse(@stdout.string)["exit_status"]
+  end
+
+  def test_should_credit_its_notes_to_itself
+    extract("fast", "--output", "failing-run.log", "--json")
+
+    assert_equal ["fun-ci extract"], JSON.parse(@stdout.string).dig("evidence", "facts").map { |f| f["extractor"] }.uniq
+  end
+
+  def test_should_start_with_how_the_stage_ended
+    extract("fast", "--output", "failing-run.log", "--exit", "2")
+
+    assert_equal "fast failed (exit 2)", @stdout.string.lines.first.chomp
+  end
+
   private
 
   def extract(*args)

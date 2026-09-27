@@ -34,7 +34,8 @@ module FunCi
       def at_least?(rank) = !level.nil? && level >= rank
 
       def lines
-        head = [field("time"), RANKS[level].upcase, "#{field("logger")}:", field("message")].compact.join(" ")
+        logger = field("logger")
+        head = [field("time"), RANKS[level].upcase, logger && "#{logger}:", field("message")].compact.join(" ")
         [head, *stack.map { |line| "  #{line}" }]
       end
 

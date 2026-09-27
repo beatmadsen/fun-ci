@@ -47,6 +47,11 @@ class TestCollector < Minitest::Test
     assert_equal(["grep"], collect("", entries: [entry], worktree: Dir.tmpdir).problems.map { |p| p[:extractor] })
   end
 
+  def test_should_record_an_entry_that_is_not_a_mapping_as_a_problem
+    assert_equal [{ extractor: "grep", message: "an entry must be a mapping with use: or run:, not \"grep\"" }],
+                 collect("ERROR\n", entries: ["grep"]).problems
+  end
+
   def test_should_skip_an_entry_once_the_budget_has_run_out
     problems = collect("ERROR\n", entries: [GREP, GREP], settings: { "budget" => 2 }, clock: TickingClock.new).problems
 

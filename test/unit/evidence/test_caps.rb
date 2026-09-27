@@ -34,6 +34,12 @@ class TestCaps < Minitest::Test
     assert_equal [2, true], [failure[:message].lines.size, failure[:truncated]]
   end
 
+  def test_should_leave_a_message_as_long_as_its_limit_whole
+    at_limit = { test: "t", message: "#{"m" * 600}\n#{"n" * 600}" }
+
+    assert_nil capped(doc(failures: [at_limit])).failures.first[:truncated]
+  end
+
   def test_should_keep_at_most_its_number_of_failures
     assert_equal 3, capped(doc(failures: Array.new(5) { |n| { test: "t#{n}", message: "m" } })).failures.size
   end

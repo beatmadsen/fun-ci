@@ -26,6 +26,10 @@ class TestProcessTable < Minitest::Test
     assert_equal ROW.new(pid: 9, ppid: 7, pgid: 1, seconds: 2, command: "sleep 7"), rows("busybox.txt").last
   end
 
+  def test_should_skip_a_listing_s_header
+    assert_equal 1, rows("busybox.txt").first.pid
+  end
+
   def test_should_read_an_elapsed_time_in_hours
     assert_equal 3723, TABLE.parse("  5  1  5  01:02:03 make\n").first.seconds
   end

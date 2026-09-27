@@ -46,6 +46,24 @@ class TestEvidenceSettings < Minitest::Test
     end)
   end
 
+  def test_should_leave_out_a_mask_pattern_that_is_not_text
+    assert_empty SETTINGS.new({ "mask" => [5] }).mask_patterns
+  end
+
+  def test_should_watch_the_files_a_command_entry_watches
+    raw = { "stages" => { "slow" => [{ "run" => "x", "watch" => ["build/reports/*"] }] } }
+
+    assert_equal ["build/reports/*"], SETTINGS.new(raw).watched("slow")
+  end
+
+  def test_should_read_a_budget_given_as_a_number
+    assert_in_delta 3.0, SETTINGS.new({ "budget" => 3 }).budget
+  end
+
+  def test_should_report_stages_that_are_not_a_mapping
+    assert_equal ["evidence.stages must be a mapping of stage to entries"], SETTINGS.new({ "stages" => [] }).errors
+  end
+
   def test_should_name_the_presets_to_skip
     assert_equal %w[pino], SETTINGS.new({ "skip" => %w[pino] }).skip
   end

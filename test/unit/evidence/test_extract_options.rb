@@ -23,6 +23,10 @@ class TestExtractOptions < Minitest::Test
     assert_equal "name one stage of lint, build, fast, slow, not fast slow", refusal(%w[fast slow --output f])
   end
 
+  def test_should_refuse_the_version_switch_it_does_not_take
+    assert_raises(OPTIONS::Invalid) { OPTIONS.parse(%w[fast --output f --version]) }
+  end
+
   private
 
   def refusal(args) = assert_raises(OPTIONS::Invalid) { OPTIONS.parse(args) }.message

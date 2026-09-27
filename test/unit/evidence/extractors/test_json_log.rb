@@ -49,6 +49,12 @@ class TestJsonLog < Minitest::Test
     assert_equal ["1 WARN a: b", "2 FATAL a: c"], only_excerpt({}, output)[:lines]
   end
 
+  def test_should_leave_out_a_field_the_setup_does_not_name
+    fields = FIELDS.except("logger")
+
+    assert_equal "10:01 WARN slow", only_excerpt({ "fields" => fields })[:lines].first
+  end
+
   def test_should_find_nothing_without_a_record_at_the_level
     assert_empty json_log({ "level" => "fatal" }, OUTPUT).excerpts
   end

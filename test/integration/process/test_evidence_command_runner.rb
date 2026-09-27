@@ -47,6 +47,10 @@ class TestEvidenceCommandRunner < Minitest::Test
     assert_equal 1000, ran("yes", limit: 1000).stdout.bytesize
   end
 
+  def test_should_not_kill_a_command_that_prints_exactly_its_limit
+    assert_nil ran("printf %1000s x", limit: 1000).killed
+  end
+
   # A child that leaves the process group keeps stdout open and can't be
   # killed with it; the runner stops reading once the budget and the drain
   # are over, so the child can't hold the evidence up.
