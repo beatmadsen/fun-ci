@@ -14,7 +14,7 @@ module FunCi
       Sizes = Data.define(:head, :tail)
       REAL = Sizes.new(head: 1_048_576, tail: 7_340_032)
 
-      def self.in_memory(sizes = REAL) = new(->(_name) { StringIO.new(+"") }, sizes)
+      def self.in_memory(sizes = REAL) = new(->(_name) { StringIO.new(+"".b) }, sizes)
 
       def self.in(dir, sizes = REAL)
         new(->(name) { File.open(File.join(dir, name), "w+b") }, sizes)
@@ -59,11 +59,14 @@ module FunCi
         "#{kept_head}[fun-ci: #{dropped} bytes dropped here]\n".b + kept_tail
       end
 
-      # The tail holds one byte more than it keeps, to tell whether it starts on a line start.
+      # The tail holds one byte more than it keeps, to tell whether it starts
+      # on a line start. With no line start in it but after its last byte, it
+      # is the end of one long line, and is kept from mid-line.
       def line_start(tail)
-        return tail.byteslice(1..) if tail.start_with?("\n") || !tail.include?("\n")
+        first_end = tail.index("\n")
+        return tail.byteslice(1..) if first_end.nil? || first_end.zero? || first_end == tail.bytesize - 1
 
-        tail.byteslice((tail.index("\n") + 1)..)
+        tail.byteslice((first_end + 1)..)
       end
     end
   end

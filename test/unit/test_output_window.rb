@@ -38,8 +38,17 @@ class TestOutputWindow < Minitest::Test
                                                                                   ("M".."X").to_a.join).text
   end
 
+  def test_should_keep_the_end_of_a_line_longer_than_the_last_part
+    assert_equal "0123456789[fun-ci: 9 bytes dropped here]\nNOPQRSTUVWX\n",
+                 window(("0".."9").to_a.join, "abcdefghM", "NOPQRSTUVWX\n").text
+  end
+
   def test_should_keep_the_last_part_across_many_writes
     assert window("aaa\n", *Array.new(40, "x\n"), "end\n").text.end_with?("x\nx\nx\nx\nend\n")
+  end
+
+  def test_should_keep_text_that_is_not_ascii_when_its_last_part_wraps_around
+    assert window("aaaaaaaaaa", "é" * 20, "\n").text.b.end_with?("ééééé\n".b)
   end
 
   def test_should_close_every_io_it_opened
