@@ -84,4 +84,4 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-9.13: The pre-push hook waits for the fast verdict of what is pushed
 - [x] AT-9.14: The post-commit hook says how to get the verdict
 - [x] AT-9.15: `fun-ci init` tells agents what to do after a commit
-- [ ] AT-9.16: `fun-ci events` prints what happens as JSON lines
+- [x] AT-9.16: `fun-ci events` prints what happens as JSON lines

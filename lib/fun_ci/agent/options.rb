@@ -10,10 +10,13 @@ module FunCi
     module Options
       class Invalid < StandardError; end
 
-      Parsed = Data.define(:rev, :need, :json, :within, :follow_branch, :limit, :branch)
-      DEFAULTS = { need: "fast", json: false, within: nil, follow_branch: false, limit: 10, branch: nil }.freeze
+      Parsed = Data.define(:rev, :need, :json, :within, :follow_branch, :limit, :branch, :follow, :only)
+      DEFAULTS = { need: "fast", json: false, within: nil, follow_branch: false, limit: 10, branch: nil,
+                   follow: false, only: nil }.freeze
       SWITCHES = { need: ["--need LEVEL"], json: ["--json"], within: ["--within DURATION"],
-                   follow_branch: ["--follow-branch"], limit: ["-n N", Integer], branch: ["--branch NAME"] }.freeze
+                   follow_branch: ["--follow-branch"], limit: ["-n N", Integer], branch: ["--branch NAME"],
+                   follow: ["--follow"], only: ["--only KIND"] }.freeze
+      FILTERS = %w[failures].freeze
       MULTIPLIERS = { "" => 1, "s" => 1, "m" => 60 }.freeze
 
       def self.parse(args, takes:)
@@ -37,6 +40,7 @@ module FunCi
       def self.convert(key, value)
         return level(value) if key == :need
         return seconds(value) if key == :within
+        return filter(value) if key == :only
 
         value
       end
@@ -47,13 +51,19 @@ module FunCi
         raise Invalid, "unknown level '#{value}': use build, fast or all"
       end
 
+      def self.filter(value)
+        return value if FILTERS.include?(value)
+
+        raise Invalid, "unknown filter '#{value}': use #{FILTERS.join(", ")}"
+      end
+
       def self.seconds(value)
         match = /\A(\d+)([sm]?)\z/.match(value)
         raise Invalid, "can't read the deadline '#{value}': use 30, 30s or 5m" unless match
 
         match[1].to_i * MULTIPLIERS.fetch(match[2])
       end
-      private_class_method :parser, :convert, :level, :seconds
+      private_class_method :parser, :convert, :level, :filter, :seconds
     end
   end
 end

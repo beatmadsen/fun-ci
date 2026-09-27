@@ -59,6 +59,20 @@ class TestOptions < Minitest::Test
     assert_equal [5, "main"], [options.limit, options.branch]
   end
 
+  def test_should_take_following_as_it_happens
+    assert parse("--follow", takes: %i[follow]).follow
+  end
+
+  def test_should_take_only_failures
+    assert_equal "failures", parse("--only", "failures", takes: %i[only]).only
+  end
+
+  def test_should_refuse_to_keep_only_something_it_does_not_know
+    error = assert_raises(OPTIONS::Invalid) { parse("--only", "passes", takes: %i[only]) }
+
+    assert_equal "unknown filter 'passes': use failures", error.message
+  end
+
   def test_should_refuse_a_second_revision
     assert_raises(OPTIONS::Invalid) { parse("abc1234", "bcd2345") }
   end

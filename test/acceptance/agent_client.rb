@@ -33,6 +33,7 @@ class AgentClient
   def status(*args) = agent("status", args)
   def runs(*args) = agent("runs", args)
   def wait(*args) = agent("wait", args)
+  def events(*args) = agent("events", args)
 
   # stages: { "lint" => "completed", "fast" => "running", ... }, in the order they started.
   def record_run(sha, branch: "main", project: @workspace.project_dir, stages: {})
@@ -41,6 +42,9 @@ class AgentClient
     stages.each { |stage, state| record_stage(run_id, stage, state) }
     run_id
   end
+
+  # A stage of a recorded run finishing now, as the pipeline would record it.
+  def finish_stage(run_id, stage, state) = record_stage(run_id, stage, state)
 
   private
 

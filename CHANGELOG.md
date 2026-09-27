@@ -56,6 +56,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   JSON files. The animations are code in the renderer now.
 
 ### Added
+- `fun-ci events` prints this project's recent runs' events as JSON lines
+  (`schema`, `event`, `commit`, `branch`, and `stage`, `state`, `seconds`
+  for a stage): run started, stage finished, run finished, run superseded.
+  `--follow` keeps printing each new one as it happens, for a supervising
+  agent or a status bar, and `--only failures` keeps to failed or
+  over-budget stages and superseded runs.
 - `fun-ci init` adds a short fun-ci section to the project's `AGENTS.md`,
   or to `CLAUDE.md` when that is the only one, creating `AGENTS.md` when
   there is neither: after each commit, run the `fun-ci wait` command the

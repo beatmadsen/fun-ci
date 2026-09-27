@@ -32,6 +32,7 @@ module FunCi
         new(sha: run[:commit_hash], branch: run[:branch], need: need, stages: stages(jobs), verdict: verdict, **commit)
       end
 
+      # The four stages in pipeline order, from the run's stage rows.
       def self.stages(jobs)
         by_name = jobs.to_h { |job| [job[:stage], job] }
         STAGES.map { |name| stage(name, by_name[name]) }
@@ -52,7 +53,7 @@ module FunCi
       end
 
       def self.failures(job) = job[:failures] ? JSON.parse(job[:failures], symbolize_names: true) : []
-      private_class_method :stages, :stage, :seconds, :failures
+      private_class_method :stage, :seconds, :failures
     end
   end
 end

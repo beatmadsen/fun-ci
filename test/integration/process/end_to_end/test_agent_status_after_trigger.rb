@@ -2,6 +2,7 @@
 
 require_relative "../../../test_helper"
 require_relative "../../../support/end_to_end"
+require "json"
 
 # AT-9.2 and AT-9.9 through the real CLI: an agent asks `fun-ci status` and
 # `fun-ci wait` in a project whose commit a trigger ran, and gets its verdict.
@@ -30,6 +31,14 @@ class TestAgentStatusAfterTrigger < Minitest::Test
 
   def test_should_answer_a_wait_on_a_decided_run_at_once
     assert_equal 0, agent("wait", "--need", "all", "--within", "1")
+  end
+
+  def test_should_print_the_run_s_events_as_json_lines
+    agent("events")
+
+    finished = { "schema" => 1, "event" => "run_finished", "commit" => @sha, "branch" => "main", "state" => "passed" }
+
+    assert_equal finished, JSON.parse(@stdout.string.lines.last)
   end
 
   private
