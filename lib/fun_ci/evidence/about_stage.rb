@@ -10,10 +10,13 @@ module FunCi
     # command to read.
     module AboutStage
       def self.of(sources, outcome, output)
-        About.new(**outcome.to_h, **started(sources), stage: sources.stage, budget: sources.budget,
-                                                      commit: sources.commit, worktree: sources.worktree,
-                                                      output: sources.reports.output_file(output),
-                                                      reports: sources.reports.reports_path)
+        About.new(**outcome.to_h.except(:overrun), **started(sources), **where(sources, output),
+                  stage: sources.stage, budget: sources.budget, commit: sources.commit)
+      end
+
+      def self.where(sources, output)
+        { worktree: sources.worktree, output: sources.reports.output_file(output),
+          reports: sources.reports.reports_path }
       end
 
       def self.started(sources)
@@ -21,7 +24,7 @@ module FunCi
 
         { seconds: (Time.now - sources.started).round(1), started_at: sources.started.utc.iso8601(3) }
       end
-      private_class_method :started
+      private_class_method :started, :where
     end
   end
 end

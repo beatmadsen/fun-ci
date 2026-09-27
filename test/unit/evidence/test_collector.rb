@@ -2,6 +2,7 @@
 
 require_relative "../../test_helper"
 require "fun_ci/evidence/collector"
+require "fun_ci/evidence/process_table"
 require_relative "../../support/fake_stage_dir"
 
 # What fun-ci keeps about a stage that failed (why.md, "How it fits together").
@@ -9,6 +10,10 @@ class TestCollector < Minitest::Test
   SOURCES = FunCi::Evidence::Sources
   SETTINGS = FunCi::Evidence::Settings
   GREP = { "use" => "grep", "patterns" => ["ERROR"] }.freeze
+  OVERRUN_GREP = GREP.merge("on" => "overrun").freeze
+  PROCESSES = [FunCi::Evidence::ProcessTable::Row.new(pid: 42, ppid: 1, pgid: 42, seconds: 9, command: "sh fast.sh"),
+               FunCi::Evidence::ProcessTable::Row.new(pid: 43, ppid: 42, pgid: 42, seconds: 8, command: "java Worker")]
+              .freeze
 
   # A clock that moves on a second each time it is read.
   class TickingClock
@@ -91,6 +96,23 @@ class TestCollector < Minitest::Test
 
   def test_should_say_nothing_of_stages_alongside_when_there_were_none
     assert_empty collector.collect("boom\n", FunCi::Evidence::Outcome.new(state: "failed")).facts
+  end
+
+  def test_should_say_what_an_overrun_stage_was_running_before_the_kill
+    overrun = collector(processes: -> { PROCESSES }).before_kill(42)
+
+    assert_equal [{ name: "running", value: "java Worker (8s)", extractor: "process-tree" }],
+                 collector.collect("", FunCi::Evidence::Outcome.new(state: "over_budget", overrun: overrun)).facts
+  end
+
+  def test_should_run_the_entries_for_an_overrun_before_the_kill
+    overrun = collector(settings: { "stages" => { "fast" => [OVERRUN_GREP] } }).before_kill(42)
+
+    assert_equal(%w[process-tree grep], overrun.chosen.map { |chosen| chosen[:extractor] })
+  end
+
+  def test_should_leave_the_entries_for_an_overrun_out_of_the_evidence_of_a_failure
+    assert_equal(%w[output-tail], collect("ERROR\n", entries: [OVERRUN_GREP]).excerpts.map { |e| e[:extractor] })
   end
 
   def test_should_mask_the_raw_output

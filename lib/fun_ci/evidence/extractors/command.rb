@@ -23,7 +23,7 @@ module FunCi
 
         def extract(context)
           ran = context.commands.call(@options["run"], stdin: JSON.generate(document(context)),
-                                                       seconds: context.deadline.left)
+                                                       seconds: context.deadline.left, env: group(context))
           refuse(ran)
           return CommandOutput.json(ran.stdout) if @options["format"] == "json"
 
@@ -31,6 +31,9 @@ module FunCi
         end
 
         private
+
+        # Run before the kill of a stage over budget, it is told the stage's group.
+        def group(context) = context.pgid ? { "FUN_CI_PGID" => context.pgid.to_s } : {}
 
         def document(context)
           ContextDocument.for(context.about, context, watch: Array(@options["watch"]), options: @options.except(*OWN))

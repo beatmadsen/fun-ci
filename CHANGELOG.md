@@ -73,6 +73,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   directory as the worktree, and prints what `why` would print, so an
   extractor can be written and tried without making a commit. It touches no
   database.
+- A stage that runs over budget says what it was doing: before the kill,
+  fun-ci lists its processes and the deepest one still running, and
+  `status` and `wait` lead with it (`fast ran over budget: running java ...
+  GradleWorkerMain (9.8s)`). A `run:` entry with `on: overrun` runs then
+  too, with the stage's process group in `FUN_CI_PGID`, for `jcmd`,
+  `py-spy dump` or a JVM thread dump; what it makes the stage print is kept.
+  This adds at most 2 seconds to a stage that has already blown its budget.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

@@ -19,20 +19,30 @@ module FunCi
       end
 
       # Yields the pid of the process the command runs in, when there is one.
-      # `env` is added to the command's environment; an injected runner that
-      # takes a second argument is given the whole of it. What the command
-      # prints is written to `output`, and answered as the window keeps it.
-      def call(cmd, budget, env: {}, output: OutputWindow.in_memory, &)
-        launch = Launch.new(chdir: @dir, env: env, output: output)
+      # The launch's `env` is added to the command's environment; an injected
+      # runner that takes a second argument is given the whole of it. What
+      # the command prints is written to the launch's `output`, and answered
+      # as the window keeps it; its `before_kill` is called with the pid of
+      # a command over budget, while it still runs.
+      def call(cmd, budget, launch = Launch.new, &)
+        launch = launch.with(chdir: @dir)
         return run_process_with_timeout(cmd, budget, launch: launch, &) unless @command_runner
 
-        printed, status = run_injected(cmd, env, &)
-        [text(output << printed), status, false]
-      rescue Timeout::Error
-        ["", nil, true]
+        injected(cmd, launch, &)
       end
 
       private
+
+      # An injected runner signals a blown budget by raising Timeout::Error,
+      # which is its moment before the kill.
+      def injected(cmd, launch)
+        started = nil
+        printed, status = run_injected(cmd, launch.env) { |pid| (started = pid) && (yield pid if block_given?) }
+        [text(launch.output << printed), status, false]
+      rescue Timeout::Error
+        launch.before_kill&.call(started)
+        ["", nil, true]
+      end
 
       # A lambda's own, or those of an object's #call.
       def parameters

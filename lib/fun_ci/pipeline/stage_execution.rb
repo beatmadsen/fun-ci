@@ -19,19 +19,29 @@ module FunCi
       def run(stage, command, recorder, job_id)
         with_stage_dir do |stage_dir|
           collector = collector(stage, stage_dir)
-          output, status, timed_out = execute(stage, command, stage_dir) { |pid| recorder.stage_process(job_id, pid) }
-          finished = StageEnd::Finished.new(output: output, status: status, timed_out: timed_out)
-          [StageEnd.new(recorder, job_id, collector).record(finished), output]
+          finished = finished(stage, command, stage_dir, collector) { |pid| recorder.stage_process(job_id, pid) }
+          [StageEnd.new(recorder, job_id, collector).record(finished), finished.output]
         end
       end
 
       private
 
+      # A stage over budget is looked at before the kill (acceptance-tests.md, AT-10.17).
+      def finished(stage, command, stage_dir, collector, &)
+        overrun = nil
+        output, status, timed_out = execute(stage, command, stage_dir, lambda { |pgid|
+          overrun = collector.before_kill(pgid)
+        },
+                                            &)
+        StageEnd::Finished.new(output: output, status: status, timed_out: timed_out, overrun: overrun)
+      end
+
       # The stage learns its name from FUN_CI_STAGE (acceptance-tests.md, AT-10.7).
-      def execute(stage, command, stage_dir, &)
+      def execute(stage, command, stage_dir, before_kill, &)
         window = stage_dir.window
-        env = stage_dir.env.merge("FUN_CI_STAGE" => stage)
-        @seams.executor(@dir).call(command, @seams.budgets[stage], env: env, output: window, &)
+        launch = ProcessRunner::Launch.new(env: stage_dir.env.merge("FUN_CI_STAGE" => stage), output: window,
+                                           before_kill: before_kill)
+        @seams.executor(@dir).call(command, @seams.budgets[stage], launch, &)
       ensure
         window&.close
       end
@@ -47,7 +57,8 @@ module FunCi
       def collector(stage, stage_dir)
         environment = @seams.environment.merge(stage_dir.env)
         sources = Evidence::Sources.new(stage: stage, worktree: @dir, reports: stage_dir, environment: environment,
-                                        budget: @seams.budgets[stage], commit: @commit.to_h, started: Time.now)
+                                        budget: @seams.budgets[stage], commit: @commit.to_h, started: Time.now,
+                                        processes: @seams.process_table)
         commands = @seams.extractor_runner.call(dir: @dir, env: stage_dir.env, scratch: stage_dir.scratch)
         Evidence::Start.collector(sources, @seams.clock, commands)
       end

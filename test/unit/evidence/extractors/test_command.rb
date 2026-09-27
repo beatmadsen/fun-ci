@@ -28,6 +28,20 @@ class TestCommand < Minitest::Test
     assert_in_delta 1.0, commands.given.first[:seconds]
   end
 
+  def test_should_give_a_command_run_before_the_kill_the_stage_s_process_group_in_its_context
+    commands = FakeCommands.new
+    extract({ "run" => "./x" }, commands, pgid: 4242)
+
+    assert_equal 4242, JSON.parse(commands.given.first[:stdin])["pgid"]
+  end
+
+  def test_should_give_a_command_run_before_the_kill_the_stage_s_process_group_in_its_environment
+    commands = FakeCommands.new
+    extract({ "run" => "./x" }, commands, pgid: 4242)
+
+    assert_equal({ "FUN_CI_PGID" => "4242" }, commands.given.first[:env])
+  end
+
   def test_should_take_what_the_command_prints_as_one_excerpt_titled_with_it
     found = extract({ "run" => "./x" }, FakeCommands.new(stdout: "one\ntwo\n"))
 
@@ -90,9 +104,10 @@ class TestCommand < Minitest::Test
 
   def json_found(stdout) = extract({ "run" => "./x", "format" => "json" }, FakeCommands.new(stdout: stdout))
 
-  def extract(options, commands)
+  def extract(options, commands, pgid: nil)
     deadline = FunCi::Evidence::Deadline.new(clock: -> { 0 }, at: 1)
-    FunCi::Evidence::Extractors::Command.new(options).extract(context(commands: commands, deadline: deadline))
+    FunCi::Evidence::Extractors::Command.new(options).extract(context(commands: commands, deadline: deadline,
+                                                                      pgid: pgid))
   end
 
   def problem(options, commands)

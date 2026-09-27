@@ -49,8 +49,8 @@ module EvidenceKit
       @given = []
     end
 
-    def call(command, stdin:, seconds:)
-      @given << { command: command, stdin: stdin, seconds: seconds }
+    def call(command, stdin:, seconds:, env: {})
+      @given << { command: command, stdin: stdin, seconds: seconds, env: env }
       @ran
     end
   end

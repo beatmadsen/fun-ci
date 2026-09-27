@@ -14,5 +14,6 @@
   "reports": "/state/fun-ci/stages/4242-abc/reports",
   "changed": ["build/test-results/test/TEST-FooTest.xml"],
   "watched": [{ "path": "log/test.log", "offset": 1048576 }],
-  "options": { "module": "core" }
+  "options": { "module": "core" },
+  "pgid": null
 }

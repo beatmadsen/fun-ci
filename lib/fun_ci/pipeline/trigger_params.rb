@@ -6,6 +6,7 @@ require_relative "command_executor"
 require_relative "stage_dir"
 require_relative "git_environment"
 require_relative "../evidence/command_runner"
+require_relative "../evidence/process_table"
 
 module FunCi
   module Pipeline
@@ -21,9 +22,10 @@ module FunCi
     # gets the real thing. `environment` is the stages' environment as a hash,
     # which masking and injected command runners see; `clock` answers seconds
     # for the evidence budget; `extractor_runner` makes what runs a project's
-    # own extractors (`run:` entries), given dir:, env: and scratch:.
+    # own extractors (`run:` entries), given dir:, env: and scratch:;
+    # `process_table` answers what ps lists, for a stage over budget.
     Seams = Data.define(:command_runner, :time_budgets, :commit_validator, :recorder, :background_launcher, :workspace,
-                        :stage_dir, :environment, :clock, :extractor_runner)
+                        :stage_dir, :environment, :clock, :extractor_runner, :process_table)
 
     # Reopened rather than given as a block to Data.define, so tools that read
     # the source (mutineer) see these as Seams' methods.
@@ -32,7 +34,8 @@ module FunCi
         { command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new, background_launcher: nil,
           workspace: nil, commit_validator: method(:commit_exists?), stage_dir: StageDir.method(:create),
           environment: ENV.to_h, clock: -> { Process.clock_gettime(Process::CLOCK_MONOTONIC) },
-          extractor_runner: Evidence::CommandRunner.method(:new) }
+          extractor_runner: Evidence::CommandRunner.method(:new),
+          process_table: Evidence::ProcessTable.method(:now) }
       end
 
       def self.commit_exists?(sha) = Open3.capture2e(GitEnvironment::CLEAN, "git", "cat-file", "-t", sha).last.success?

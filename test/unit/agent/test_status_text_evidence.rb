@@ -54,6 +54,20 @@ class TestStatusTextEvidence < Minitest::Test
                  evidence(fast: ["failed", nil, [{ file: nil, line: nil, test: "lint: bad", message: "" }]])[1]
   end
 
+  def test_should_lead_an_overrun_with_what_it_was_running
+    evidence = '{"facts":[{"name":"running","value":"java Worker (9.8s)","extractor":"process-tree"}]}'
+
+    assert_equal "fast ran over budget: running java Worker (9.8s)",
+                 evidence(fast: ["over_budget", nil, [], evidence]).first
+  end
+
+  def test_should_show_the_first_excerpt_before_the_output_s_last_lines
+    evidence = '{"excerpts":[{"title":"t","location":"output:3","lines":["ERROR boom"],"extractor":"grep"},' \
+               '{"title":"tail","location":"output","lines":["last"],"extractor":"output-tail"}]}'
+
+    assert_equal ["fast failed:", "  ERROR boom"], evidence(fast: ["failed", nil, [], evidence])
+  end
+
   def test_should_end_with_the_why_command_for_the_stage_that_decided
     assert_equal "fun-ci why 3f9c2ab fast", evidence(deciding: "fast", fast: %W[failed boom\n]).last
   end
@@ -62,8 +76,9 @@ class TestStatusTextEvidence < Minitest::Test
 
   def evidence(deciding: nil, **given)
     stages = %w[lint build fast slow].map do |name|
-      state, tail, failures = given.fetch(name.to_sym, ["passed", nil])
-      STAGE.new(name: name, state: state, seconds: 1.0, kept: REPORT::Kept.new(tail: tail, failures: failures || []))
+      state, tail, failures, kept = given.fetch(name.to_sym, ["passed", nil])
+      STAGE.new(name: name, state: state, seconds: 1.0,
+                kept: REPORT::Kept.new(tail: tail, failures: failures || [], evidence: kept))
     end
     FunCi::Agent::StatusText.lines(report(stages, deciding)).drop(5)
   end

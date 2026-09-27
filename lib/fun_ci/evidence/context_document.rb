@@ -14,7 +14,7 @@ module FunCi
       def self.for(about, context, watch:, options:)
         paths = watch.flat_map { |glob| context.worktree.glob(glob) }.uniq.sort
         { schema: SCHEMA, **about.to_h, changed: changed(paths, context), watched: watched(paths, context),
-          options: options }
+          options: options, pgid: context.pgid }
       end
 
       def self.changed(paths, context) = paths.reject { |path| context.watched[path] == context.worktree.stamp(path) }

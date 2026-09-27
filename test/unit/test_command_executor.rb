@@ -4,17 +4,31 @@ require_relative "../test_helper"
 require "fun_ci/pipeline/command_executor"
 
 class TestCommandExecutor < Minitest::Test
+  LAUNCH = FunCi::Pipeline::ProcessRunner::Launch
+
   def test_a_runner_that_blows_the_budget_reports_no_output_no_status_and_a_timeout
     executor = FunCi::Pipeline::CommandExecutor.new(->(_cmd) { raise Timeout::Error })
 
     assert_equal ["", nil, true], executor.call("fast.sh", 10)
   end
 
+  def test_calls_the_hook_before_the_kill_with_the_process_of_a_runner_that_blows_the_budget
+    seen = []
+    runner = lambda do |_cmd, &on_start|
+      on_start.call(4242)
+      raise Timeout::Error
+    end
+    FunCi::Pipeline::CommandExecutor.new(runner).call("fast.sh", 10, LAUNCH.new(before_kill: ->(pid) { seen << pid }))
+
+    assert_equal [4242], seen
+  end
+
   def test_keeps_a_runner_s_output_as_the_window_it_is_given
     window = FunCi::Pipeline::OutputWindow.in_memory(FunCi::Pipeline::OutputWindow::Sizes.new(head: 4, tail: 4))
     executor = FunCi::Pipeline::CommandExecutor.new(->(_cmd) { ["aaa\nbbbbbbbbbb\nccc\n", FakeStatus.new(false, 1)] })
 
-    assert_equal "aaa\n[fun-ci: 11 bytes dropped here]\nccc\n", executor.call("fast.sh", 10, output: window).first
+    assert_equal "aaa\n[fun-ci: 11 bytes dropped here]\nccc\n",
+                 executor.call("fast.sh", 10, LAUNCH.new(output: window)).first
   end
 
   def test_passes_on_the_process_the_command_started
@@ -38,7 +52,7 @@ class TestCommandExecutor < Minitest::Test
   def test_gives_a_runner_that_takes_one_the_command_s_environment
     seen = nil
     runner = ->(_cmd, env) { (seen = env) && ["", FakeStatus.new(true, 0)] }
-    FunCi::Pipeline::CommandExecutor.new(runner).call("fast.sh", 10, env: { "FUN_CI_REPORT" => "/r" })
+    FunCi::Pipeline::CommandExecutor.new(runner).call("fast.sh", 10, LAUNCH.new(env: { "FUN_CI_REPORT" => "/r" }))
 
     assert_equal({ "FUN_CI_REPORT" => "/r" }, seen)
   end
@@ -46,6 +60,6 @@ class TestCommandExecutor < Minitest::Test
   def test_runs_a_runner_that_takes_only_the_command_when_given_an_environment
     executor = FunCi::Pipeline::CommandExecutor.new(->(_cmd) { ["ok", FakeStatus.new(true, 0)] })
 
-    assert_equal "ok", executor.call("fast.sh", 10, env: { "FUN_CI_REPORT" => "/r" }).first
+    assert_equal "ok", executor.call("fast.sh", 10, LAUNCH.new(env: { "FUN_CI_REPORT" => "/r" })).first
   end
 end

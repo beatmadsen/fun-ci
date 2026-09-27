@@ -9,9 +9,15 @@ module FunCi
     # how it exited, then the outcome. Called while the stage still holds its
     # slot and report directory, which the collector reads.
     class StageEnd
-      # What running a stage answered: its output, and its Process::Status
-      # (nil when it was killed over budget).
-      Finished = Data.define(:output, :status, :timed_out)
+      # What running a stage answered: its output, its Process::Status (nil
+      # when it was killed over budget), and for an overrun, what was found
+      # before the kill.
+      Finished = Data.define(:output, :status, :timed_out, :overrun)
+
+      class Finished
+        def initialize(overrun: nil, **) = super
+      end
+
       # A failed stage's state in the words `status --json` uses.
       STATES = { "failed" => "failed", "timed_out" => "over_budget" }.freeze
 
@@ -47,7 +53,7 @@ module FunCi
         status = finished.status
         Evidence::Outcome.new(state: STATES.fetch(outcome(finished)), exit_status: status&.exitstatus,
                               signal: status&.termsig && Signal.signame(status.termsig),
-                              alongside: @recorder.alongside(@job_id))
+                              alongside: @recorder.alongside(@job_id), overrun: finished.overrun)
       end
 
       def keep_exit(status)

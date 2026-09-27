@@ -24,10 +24,11 @@ module FunCi
         @drain = limits.drain
       end
 
-      def call(command, stdin:, seconds:)
+      # env: added to the command's environment for this run.
+      def call(command, stdin:, seconds:, env: {})
         File.write(path("context.json"), stdin)
         reader, writer = IO.pipe
-        pid = spawn(command, writer)
+        pid = spawn(command, writer, env)
         writer.close
         finish(pid, CommandReading.start(reader, @limit, -> { kill(pid) }), seconds)
       end
@@ -36,8 +37,8 @@ module FunCi
 
       def path(name) = File.join(@scratch, name)
 
-      def spawn(command, writer)
-        Process.spawn(Pipeline::GitEnvironment::CLEAN.merge(@launch[:env]), command,
+      def spawn(command, writer, env)
+        Process.spawn(Pipeline::GitEnvironment::CLEAN.merge(@launch[:env], env), command,
                       in: path("context.json"), out: writer, err: path("stderr"), pgroup: true, chdir: @launch[:chdir])
       end
 

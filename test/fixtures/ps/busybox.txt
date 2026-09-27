@@ -1,0 +1,4 @@
+PID   PPID  PGID  ELAPSED COMMAND
+    1     0     1  0:02   ps -o pid,ppid,pgid,etime,args
+    7     1     1  0:02   sh -c sleep 7 & wait
+    9     7     1  0:02   sleep 7

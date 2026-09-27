@@ -23,9 +23,14 @@ module FunCi
       DRAIN_SECONDS = 1
 
       # Where the command runs, what it finds in its environment besides
-      # fun-ci's own, and the window what it prints is written to.
-      Launch = Data.define(:chdir, :env, :output) do
-        def initialize(chdir: Dir.pwd, env: {}, output: OutputWindow.in_memory) = super
+      # fun-ci's own, the window what it prints is written to, and what to do
+      # with its pid when it runs over budget, before it is killed.
+      Launch = Data.define(:chdir, :env, :output, :before_kill)
+
+      class Launch
+        def initialize(**given)
+          super(chdir: Dir.pwd, env: {}, output: OutputWindow.in_memory, before_kill: nil, **given)
+        end
       end
 
       def run_process_with_timeout(cmd, budget, launch: Launch.new, timer: BUDGET, &)
@@ -33,7 +38,7 @@ module FunCi
         pid = start(cmd, writer, launch, &)
         printed = launch.output
         reading = Thread.new { read_until_closed(reader, printed) }
-        timer.call(reading, budget) ? process_finished(pid, text(reading.value)) : over_budget(pid, reading, printed)
+        timer.call(reading, budget) ? process_finished(pid, text(reading.value)) : over_budget(pid, reading, launch)
       ensure
         ignoring_errors { reader&.close }
       end
@@ -62,9 +67,11 @@ module FunCi
         printed
       end
 
-      def over_budget(pid, reading, printed)
+      # What looks at the stage before the kill does so while its output is still read.
+      def over_budget(pid, reading, launch)
+        launch.before_kill&.call(pid)
         kill_process_group(pid)
-        [drained(reading, printed), nil, true]
+        [drained(reading, launch.output), nil, true]
       end
 
       def drained(reading, printed)

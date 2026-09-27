@@ -8,6 +8,7 @@ require_relative "extractors/log_file"
 require_relative "extractors/json_log"
 require_relative "extractors/junit_files"
 require_relative "extractors/command"
+require_relative "extractors/process_tree"
 
 module FunCi
   module Evidence
@@ -22,7 +23,7 @@ module FunCi
 
       BUILT_INS = { "grep" => Extractors::Grep, "section" => Extractors::Section,
                     "log-file" => Extractors::LogFile, "json-log" => Extractors::JsonLog,
-                    "junit-files" => Extractors::JunitFiles }.freeze
+                    "junit-files" => Extractors::JunitFiles, "process-tree" => Extractors::ProcessTree }.freeze
       SHARED = %w[use on preset].freeze
 
       def self.entry(raw)

@@ -1,0 +1,4 @@
+      1       0       1       00:01 sh -c sh -c "sleep 7 & wait" & sleep 1.2; ps -A -o pid=,ppid=,pgid=,etime=,args=
+     15       1       1       00:01 sh -c sleep 7 & wait
+     17      15       1       00:01 sleep 7
+     18       1       1       00:00 ps -A -o pid=,ppid=,pgid=,etime=,args=
