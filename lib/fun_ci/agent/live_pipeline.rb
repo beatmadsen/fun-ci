@@ -13,15 +13,17 @@ module FunCi
     class LivePipeline
       FUN_CI = File.expand_path("../../../exe/fun-ci", __dir__)
 
-      def initialize(project_dir)
+      # command: what runs fun-ci, the gem's own executable by default.
+      def initialize(project_dir, command: [RbConfig.ruby, FUN_CI])
         @project_dir = project_dir
+        @command = command
       end
 
       # Answers the finished starter, or nil in a project not set up for fun-ci.
       def start(sha, branch)
         return unless Setup::ProjectConfig.new(@project_dir).validate.empty?
 
-        pid = Process.spawn(RbConfig.ruby, FUN_CI, "trigger", "--background", sha, branch,
+        pid = Process.spawn(*@command, "trigger", "--background", sha, branch,
                             chdir: @project_dir, %i[out err] => File::NULL)
         Process.detach(pid).join
       end

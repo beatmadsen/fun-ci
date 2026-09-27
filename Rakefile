@@ -40,11 +40,8 @@ require_relative "test/support/mutation_scope"
 MUTATED = MutationScope.sources
 
 # Mutineer runs a mutant's covering tests serially and kills a run that passes
-# ten seconds. End-to-end tests run whole pipelines with real git and freshly
-# written stage scripts, which macOS scans on first exec (130-250 ms each), so
-# the Trigger mutants they cover overran that cap; they are left out.
-MUTATION_TESTS = FileList[TEST_LANES.fetch("test")].exclude("test/test_helper.rb",
-                                                            "test/integration/process/end_to_end/**/*")
+# ten seconds.
+MUTATION_TESTS = FileList[TEST_LANES.fetch("test")].exclude("test/test_helper.rb")
 
 def mutineer(*extra)
   tests = MUTATION_TESTS.flat_map { |file| ["--test", file] }
