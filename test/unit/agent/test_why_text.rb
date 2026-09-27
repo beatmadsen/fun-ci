@@ -37,6 +37,11 @@ class TestWhyText < Minitest::Test
                  lines(stage("failed", kept: { tail: "one\ntwo\n" })).drop(2)
   end
 
+  def test_should_say_the_evidence_of_a_failed_stage_was_pruned
+    assert_equal ["Its evidence is no longer kept: fun-ci keeps it for a project's 50 newest runs."],
+                 lines(stage("failed", kept: { pruned: true })).drop(2)
+  end
+
   def test_should_say_nothing_is_kept_for_a_stage_that_passed
     assert_equal ["fast passed", "Nothing is kept about a stage that passed."], lines(stage("passed")).drop(1)
   end

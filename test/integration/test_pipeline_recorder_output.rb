@@ -24,6 +24,13 @@ class TestPipelineRecorderOutput < Minitest::Test
     assert_nil job(first_job)[:output_tail]
   end
 
+  def test_should_mark_a_stage_beyond_the_project_s_newest_50_runs_as_pruned
+    first_job = failed_run_in("/project")
+    50.times { @recorder.create_run(commit_hash: "abc1234", branch: "main", project_path: "/project") }
+
+    assert_equal 1, job(first_job)[:pruned]
+  end
+
   def test_should_keep_output_within_the_project_s_newest_50_runs
     first_job = failed_run_in("/project")
     49.times { @recorder.create_run(commit_hash: "abc1234", branch: "main", project_path: "/project") }

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "run_report"
+
 module FunCi
   module Agent
     # `fun-ci why --json` (acceptance-tests.md, AT-10.2): the stage and how it
@@ -11,8 +13,9 @@ module FunCi
       NOTHING_KEPT = { kept: false, bytes: 0 }.freeze
 
       def self.document(report, stage)
+        reason = no_evidence(report, stage)
         { schema: SCHEMA, commit: { sha: report.sha, branch: report.branch, subject: report.subject },
-          **ending(stage), evidence: evidence(stage), no_evidence: no_evidence(report, stage),
+          **ending(stage), evidence: reason ? nil : stage.evidence.to_h, no_evidence: reason,
           raw_output: NOTHING_KEPT }
       end
 
@@ -21,14 +24,13 @@ module FunCi
           seconds: stage&.seconds, budget: stage&.budget }
       end
 
-      def self.evidence(stage) = stage && FAILED.include?(stage.state) ? stage.evidence.to_h : nil
-
       def self.no_evidence(report, stage)
         return report.verdict == :passed ? "passed" : "running" unless stage
+        return stage.state unless FAILED.include?(stage.state)
 
-        FAILED.include?(stage.state) ? nil : stage.state
+        stage.pruned? ? "pruned" : nil
       end
-      private_class_method :ending, :evidence, :no_evidence
+      private_class_method :ending, :no_evidence
     end
   end
 end

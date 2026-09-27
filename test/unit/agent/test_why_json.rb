@@ -29,6 +29,20 @@ class TestWhyJson < Minitest::Test
     assert_equal [nil, "running"], document(stage("running")).values_at(:evidence, :no_evidence)
   end
 
+  def test_should_say_the_evidence_of_a_failed_stage_was_pruned
+    pruned = REPORT::Stage.new(name: "fast", state: "failed", seconds: 8.4,
+                               kept: REPORT::Kept.new(tail: nil, failures: [], pruned: true))
+
+    assert_equal [nil, "pruned"], document(pruned).values_at(:evidence, :no_evidence)
+  end
+
+  def test_should_say_a_pruned_stage_that_passed_passed
+    pruned = REPORT::Stage.new(name: "fast", state: "passed", seconds: 8.4,
+                               kept: REPORT::Kept.new(tail: nil, failures: [], pruned: true))
+
+    assert_equal "passed", document(pruned)[:no_evidence]
+  end
+
   def test_should_say_why_there_is_no_evidence_when_no_stage_decided
     assert_equal [nil, nil, "passed"], document(nil, verdict: :passed).values_at(:stage, :evidence, :no_evidence)
   end

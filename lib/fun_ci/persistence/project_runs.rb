@@ -27,9 +27,9 @@ module FunCi
       end
 
       # Drops the kept output and reported failures of every run but the
-      # project's newest `keep`.
+      # project's newest `keep`, and marks their stages pruned.
       def forget_output(keep:)
-        @db.execute("UPDATE stage_jobs SET output_tail = NULL, failures = NULL WHERE pipeline_run_id IN " \
+        @db.execute("UPDATE stage_jobs SET output_tail = NULL, failures = NULL, pruned = 1 WHERE pipeline_run_id IN " \
                     "(SELECT id FROM pipeline_runs WHERE project_path = ? ORDER BY id DESC LIMIT -1 OFFSET ?)",
                     [@project, keep])
       end

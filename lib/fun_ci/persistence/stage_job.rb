@@ -7,7 +7,7 @@ module FunCi
     module StageJob
       TERMINAL_STATUSES = %w[completed failed timed_out cancelled].freeze
       FIELDS = %i[id pipeline_run_id stage status started_at completed_at finished_order output_tail failures
-                  exit_status signal budget].freeze
+                  exit_status signal budget pruned].freeze
       COLUMNS = FIELDS.join(", ")
       NEXT_IN_RUN = "(SELECT COALESCE(MAX(others.finished_order), 0) + 1 FROM stage_jobs AS others " \
                     "WHERE others.pipeline_run_id = stage_jobs.pipeline_run_id)"

@@ -55,6 +55,10 @@ class TestRunReport < Minitest::Test
     assert_equal "lint", report(job("lint", "failed"), job("build", "completed")).deciding
   end
 
+  def test_should_carry_that_a_stage_s_evidence_was_pruned
+    assert report(job("lint", "failed").merge(pruned: 1)).stages.first.pruned?
+  end
+
   def test_should_carry_no_failures_for_a_stage_that_reported_none
     assert_empty report(job("lint", "failed")).stages.first.failures
   end

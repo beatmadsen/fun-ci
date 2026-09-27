@@ -17,8 +17,14 @@ module FunCi
       STAGES = %w[lint build fast slow].freeze
       STATES = { "completed" => "passed", "timed_out" => "over_budget", "scheduled" => "waiting" }.freeze
       # What a failed stage left to explain itself: the end of its output,
-      # and the failures it reported, each { file:, line:, test:, message: }.
-      Kept = Data.define(:tail, :failures)
+      # and the failures it reported, each { file:, line:, test:, message: },
+      # unless they were pruned.
+      Kept = Data.define(:tail, :failures, :pruned)
+
+      class Kept
+        def initialize(pruned: false, **) = super
+      end
+
       NOTHING_KEPT = Kept.new(tail: nil, failures: [])
 
       # How a finished stage's process ended, and the budget it had.
@@ -33,6 +39,7 @@ module FunCi
         def signal = exit.signal
         def budget = exit.budget
         def evidence = Evidence::Document.legacy(tail: tail, failures: failures)
+        def pruned? = kept.pruned
         def tail = kept.tail
         def failures = kept.failures
       end
@@ -55,7 +62,7 @@ module FunCi
 
         state = STATES.fetch(job[:status], job[:status])
         Stage.new(name: name, state: state, seconds: seconds(job),
-                  kept: Kept.new(tail: job[:output_tail], failures: failures(job)),
+                  kept: Kept.new(tail: job[:output_tail], failures: failures(job), pruned: job[:pruned] == 1),
                   exit: Exit.new(exit_status: job[:exit_status], signal: job[:signal], budget: job[:budget]))
       end
 
