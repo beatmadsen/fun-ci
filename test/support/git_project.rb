@@ -43,6 +43,12 @@ class GitProject
     git("rev-parse", "HEAD").strip
   end
 
+  # An empty commit, for tests that need a commit and no stage scripts.
+  def commit_empty(message)
+    git("commit", "-q", "--allow-empty", "-m", message)
+    git("rev-parse", "HEAD").strip
+  end
+
   def git(*args)
     output, status = Open3.capture2e("git", *args, chdir: @dir)
     raise "git #{args.join(" ")} failed: #{output}" unless status.success?

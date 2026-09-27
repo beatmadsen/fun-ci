@@ -64,6 +64,11 @@ class TestCliRouting < Minitest::Test
     assert_equal 0, exit_code
   end
 
+  def test_routes_status_subcommand_with_its_arguments
+    routed, = route(["status", "HEAD", "--json"], "status")
+    assert_equal ["HEAD", "--json"], routed
+  end
+
   def test_returns_handler_exit_code
     handlers = { "check" => ->(_args) { 1 } }
     exit_code = FunCi::Cli.run(["check"], handlers: handlers)
@@ -100,8 +105,8 @@ class TestCliHelp < Minitest::Test
   def test_help_lists_all_commands
     stdout = StringIO.new
     FunCi::Cli.run(["--help"], io: FunCi::Pipeline::Io.new(stdout: stdout))
-    %w[trigger console init install-hooks check].each do |cmd|
-      assert_match(/#{cmd}/, stdout.string, "Help should list '#{cmd}'")
+    (FunCi::Cli::ROUTES.keys + FunCi::Cli::AGENT_COMMANDS).each do |cmd|
+      assert_match(/^  #{cmd} /, stdout.string, "Help should list '#{cmd}'")
     end
   end
 

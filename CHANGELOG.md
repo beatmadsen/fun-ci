@@ -50,6 +50,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   JSON files. The animations are code in the renderer now.
 
 ### Added
+- `fun-ci status [REV]` says where a commit's run stands in this project,
+  stage by stage, and exits with the verdict an agent can branch on: 0
+  passed, 1 failed, 2 over budget, 3 undecided, 4 superseded, 5 no run, 64
+  usage error. `--need build|fast|all` says which stages must pass (fast by
+  default), and `--json` prints one JSON document instead of text.
 - `fun-ci-renderer --colours 24bit|256` chooses the colours to draw in.
 - When a stage fails, `fun-ci trigger` says what to do next, such as "Fix the
   failing tests above, then try again."

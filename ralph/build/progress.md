@@ -70,8 +70,8 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-8.3: A slow suite that dies is recorded failed
 - [x] AT-8.4: An unwritable database is reported with its path
 - [x] AT-9.1: The database lives in a per-user state directory
-- [ ] AT-9.2: `fun-ci status` says where a commit's run stands
-- [ ] AT-9.3: `fun-ci status --json` gives the same facts to a program
+- [x] AT-9.2: `fun-ci status` says where a commit's run stands
+- [x] AT-9.3: `fun-ci status --json` gives the same facts to a program
 - [ ] AT-9.4: `fun-ci runs` lists the project's recent runs
 - [ ] AT-9.5: A failed stage keeps the end of its output
 - [ ] AT-9.6: `status` shows why a needed stage failed

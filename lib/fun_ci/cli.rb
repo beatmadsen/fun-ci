@@ -5,10 +5,7 @@ require_relative "../fun_ci"
 require_relative "cli_help"
 require_relative "pipeline/trigger_params"
 require_relative "persistence/state_dir"
-require_relative "setup/installer"
-require_relative "setup/hook_writer"
-require_relative "setup/setup_checker"
-require_relative "setup/legacy_hooks"
+require_relative "setup/commands"
 
 module FunCi
   class Cli
@@ -20,6 +17,7 @@ module FunCi
       "check" => :run_check,
       "prune" => :run_prune
     }.freeze
+    AGENT_COMMANDS = %w[status].freeze
 
     def self.default_db_dir = Persistence::StateDir.path(ENV)
 
@@ -38,7 +36,7 @@ module FunCi
       return help(0) if %w[-h --help].include?(subcommand)
       return version if subcommand == "--version"
 
-      return unknown_command(subcommand) unless ROUTES.key?(subcommand)
+      return unknown_command(subcommand) unless ROUTES.key?(subcommand) || AGENT_COMMANDS.include?(subcommand)
 
       dispatch(subcommand, args.drop(1))
     end
@@ -47,6 +45,7 @@ module FunCi
 
     def dispatch(subcommand, args)
       return @handlers[subcommand].call(args) if @handlers.key?(subcommand)
+      return run_agent(subcommand, args) if AGENT_COMMANDS.include?(subcommand)
 
       send(ROUTES[subcommand], args)
     end
@@ -76,32 +75,19 @@ module FunCi
       db&.close
     end
 
-    def run_init(args)
-      code = Setup::Installer.run(project_root: Dir.pwd, stdout: @io.stdout)
-      return code if !code.zero? || !args.include?("--everything")
-
-      code = run_install_hooks([])
-      return code unless code.zero?
-
-      run_check([])
+    def run_agent(name, args)
+      require_relative "agent/commands"
+      require_relative "agent/git"
+      db = setup_db
+      Agent::Commands.run(name, args, Agent::Context.new(db: db, git: Agent::Git.new(Dir.pwd), io: @io))
+    ensure
+      db&.close
     end
 
-    def run_install_hooks(args)
-      Setup::LegacyHooks.new(Dir.pwd).remove(@io.stdout)
-      install_hooks(args.any? ? [args.first] : Setup::HookScript.types)
-    end
-
-    def install_hooks(types)
-      types.each do |type|
-        code = Setup::HookWriter.run(project_root: Dir.pwd, hook_type: type, stdout: @io.stdout)
-        return code unless code.zero?
-      end
-      0
-    end
-
-    def run_check(_args)
-      Setup::SetupChecker.run(project_root: Dir.pwd, stdout: @io.stdout)
-    end
+    def run_init(args) = setup_commands.init(args)
+    def run_install_hooks(args) = setup_commands.install_hooks(args)
+    def run_check(args) = setup_commands.check(args)
+    def setup_commands = Setup::Commands.new(Dir.pwd, @io.stdout)
 
     def run_prune(_args)
       require_relative "pipeline/worktree_prune"
