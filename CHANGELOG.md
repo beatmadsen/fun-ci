@@ -103,6 +103,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   failing tests above, then try again."
 
 ### Fixed
+- Cancelling a run, from the console or by a newer commit, could leave the
+  slow suite's script running: the suite could start it after the canceller
+  had looked at the run and before it stopped the suite. The canceller now
+  looks again once the run's own processes are gone, and stops any stage
+  started in between.
 - A commit on a branch cancelled every unfinished run on a branch of that
   name, in every project, because all projects share one database. A commit
   on `main` in one project stopped another project's pipeline on `main`. It

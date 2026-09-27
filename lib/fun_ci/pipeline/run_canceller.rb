@@ -20,7 +20,7 @@ module FunCi
 
       # Stops the run and records it, and its unfinished stages, cancelled.
       def cancel(db, run)
-        stop(run)
+        stop(run) && stop_late_stages(db, run)
         Persistence::ActiveRuns.cancelled(db, run)
       end
 
@@ -43,6 +43,15 @@ module FunCi
       end
 
       private
+
+      # A stage its process started after `run` was read. A run's process
+      # records a stage's group before it lets the stage start, so once those
+      # processes are dead, looking again finds every stage they started.
+      def stop_late_stages(db, run)
+        Persistence::ActiveRuns.with_id(db, run.id).each do |now|
+          (now.stage_groups - run.stage_groups).each { |group| kill(-group) }
+        end
+      end
 
       def alive?(run) = run.slot_lock.nil? || @slot_held.call(run.slot_lock)
 

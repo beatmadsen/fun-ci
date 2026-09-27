@@ -2,6 +2,8 @@
 
 require_relative "end_to_end"
 require_relative "descendants"
+require_relative "fifo"
+require_relative "process_deadline"
 require "fun_ci/console/board_data"
 
 # A real `fun-ci trigger` run, in a process of its own, whose stage scripts
@@ -12,6 +14,7 @@ require "fun_ci/console/board_data"
 # Expects @project and @tmp.
 module BlockedRun
   include EndToEnd
+  include ProcessDeadline
 
   FUN_CI = File.expand_path("../../exe/fun-ci", __dir__)
 
@@ -27,6 +30,7 @@ module BlockedRun
   def release = File.join(@tmp, "release")
   def outlived = File.join(@tmp, "outlived")
   def db_dir = File.join(@tmp, "fun-ci")
+  def survivors = File.exist?(outlived) ? File.read(outlived).split.join(", ") : "none"
   def say_started = "echo started > #{started}"
   def park(stage) = "read line < #{release}; echo #{stage} >> #{outlived}"
 
@@ -38,13 +42,15 @@ module BlockedRun
   # Starts the run and returns once a stage script has said it started.
   def start_blocked_run(sha)
     Descendants.spawn({ "TMPDIR" => @tmp, "XDG_STATE_HOME" => @tmp }, RbConfig.ruby, FUN_CI, "trigger", sha, "main",
-                      chdir: @project.dir, %i[out err] => File::NULL).tap { File.read(started) }
+                      chdir: @project.dir, %i[out err] => File::NULL).tap { Fifo.read(started) }
   end
 
-  # Lets whatever survived the cancel finish, and waits for the run to end.
+  # Lets whatever survived the cancel finish, and waits for the run to end;
+  # a script that escaped the cancel and parked after the release fails the
+  # test at the deadline instead of hanging it.
   def release_and_wait(run)
     release_what_survived
-    run.wait_for_all
+    within_deadline { run.wait_for_all }
   end
 
   # Opening a FIFO for writing without blocking fails when nothing reads it;

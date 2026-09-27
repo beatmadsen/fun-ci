@@ -21,7 +21,7 @@ class TestStaleRunCancellation < Minitest::Test
   def teardown = remove_blocked_project
 
   def test_no_stage_script_of_the_old_run_outlives_the_cancel
-    refute File.exist?(outlived)
+    refute File.exist?(outlived), "outlived the cancel: #{survivors}"
   end
 
   def test_the_old_run_is_recorded_cancelled

@@ -4,6 +4,7 @@ require_relative "../../test_helper"
 require "fun_ci/pipeline/process_runner"
 require "fun_ci/pipeline/trigger_params"
 require_relative "../../support/process_deadline"
+require_relative "../../support/fifo"
 
 # Real processes: this is the code every stage script runs through.
 class TestProcessRunner < Minitest::Test
@@ -101,7 +102,7 @@ class TestProcessRunner < Minitest::Test
   private
 
   # A budget that runs out once the command has written to `fifo`.
-  def expiring_once_read(fifo) = ->(_reading, _budget) { File.read(fifo) && nil }
+  def expiring_once_read(fifo) = ->(_reading, _budget) { Fifo.read(fifo) && nil }
 
   # Runs the block in a child of its own, so the only children left to reap
   # afterwards are the block's, and answers whether any was left unreaped.
