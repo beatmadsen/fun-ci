@@ -31,19 +31,38 @@ class TestHookWithoutFunCi < Minitest::Test
   end
 
   def test_should_block_the_push_when_the_installed_fun_ci_fails
-    fake_fun_ci(exit_status: 3)
+    fake_fun_ci(exit_status: 1)
 
     _output, status = run_hook(path: "#{@dir}/bin:#{SYSTEM_PATH}")
 
-    assert_equal 3, status.exitstatus
+    refute_predicate status, :success?
+  end
+
+  # 5: the project isn't set up for fun-ci, so the push goes ahead without CI.
+  def test_should_let_the_push_proceed_when_the_project_is_not_set_up
+    fake_fun_ci(exit_status: 5)
+
+    _output, status = run_hook(path: "#{@dir}/bin:#{SYSTEM_PATH}")
+
+    assert_predicate status, :success?
+  end
+
+  def test_should_let_a_push_that_only_deletes_a_branch_through_without_asking
+    fake_fun_ci(exit_status: 1)
+
+    deletion = "(delete) #{"0" * 40} refs/heads/old #{"a" * 40}"
+    _output, status = run_hook(path: "#{@dir}/bin:#{SYSTEM_PATH}", pushed: deletion)
+
+    assert_predicate status, :success?
   end
 
   private
 
-  def run_hook(path:)
+  # `pushed`: the line git writes to the hook's stdin for each ref it pushes.
+  def run_hook(path:, pushed: "refs/heads/main #{"a" * 40} refs/heads/main #{"b" * 40}")
     hook = File.join(@dir, "pre-push")
     File.write(hook, FunCi::Setup::HookScript.for("pre-push"))
-    Open3.capture2e({ "PATH" => path }, "/bin/sh", hook, chdir: @dir)
+    Open3.capture2e({ "PATH" => path }, "/bin/sh", hook, chdir: @dir, stdin_data: "#{pushed}\n")
   end
 
   def fake_fun_ci(exit_status:)

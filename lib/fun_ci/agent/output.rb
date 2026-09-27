@@ -25,6 +25,16 @@ module FunCi
         ExitCode::FOR.fetch(:unknown)
       end
 
+      # Says the commit has no run and none can start, which leaves it unknown.
+      def not_set_up(sha)
+        if @json
+          print_json(StatusJson.unknown(sha))
+        else
+          print_lines(["fun-ci: no run for #{sha[0, 7]}, and this project isn't set up to start one."])
+        end
+        ExitCode::FOR.fetch(:unknown)
+      end
+
       # Says the commit has no run yet, which leaves it undecided.
       def no_run_yet(sha)
         if @json

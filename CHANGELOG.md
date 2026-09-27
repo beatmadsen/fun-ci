@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
+- The pre-push hook waits for the fast verdict of each commit the push
+  sends (`fun-ci wait SHA --need fast`) instead of running the pipeline
+  again, so a push after a finished post-commit run goes through at once.
+  The post-commit hook's output now ends with the `fun-ci wait` command that
+  gets the commit's verdict. Run `fun-ci install-hooks` again to update
+  hooks you already have.
 - fun-ci keeps its database in `$XDG_STATE_HOME/fun-ci/`, or
   `~/.local/state/fun-ci/` without it, instead of under `$TMPDIR`. Every
   process of a user now finds the same database, including an agent in a

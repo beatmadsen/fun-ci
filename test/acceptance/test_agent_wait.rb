@@ -122,6 +122,13 @@ class TestAgentWaitStartsARun < Minitest::Test
     assert_equal [0, []], [@client.wait, @client.pipeline.started]
   end
 
+  def test_should_stop_waiting_when_the_project_is_not_set_up_to_start_a_run
+    @client.pipeline.set_up = false
+
+    assert_equal [5, "fun-ci: no run for 3f9c2ab, and this project isn't set up to start one.\n"],
+                 [@client.wait, @client.stdout]
+  end
+
   def test_should_say_there_is_no_run_yet_when_none_turns_up_by_the_deadline
     assert_equal [3, "fun-ci: no run for 3f9c2ab yet.\n"], [@client.wait("--within", "8"), @client.stdout]
   end

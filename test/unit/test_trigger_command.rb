@@ -89,6 +89,19 @@ class TestTriggerCommand < Minitest::Test
     assert_empty @stderr.string
   end
 
+  def test_should_say_how_to_get_the_verdict_of_the_run_it_started
+    run_command(["--background", "3f9c2ab0c4d1e2f3", "main"])
+
+    assert_equal "fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all\n", @stdout.string
+  end
+
+  def test_should_say_nothing_when_the_forker_started_no_run
+    @forker = ->(**) { false }
+    run_command(["--background", "3f9c2ab0c4d1e2f3", "main"])
+
+    assert_empty @stdout.string
+  end
+
   # The project has no .fun-ci/, so the foreground run ends before any stage.
   def test_should_not_fork_without_background
     run_command(%w[abc1234 main])
@@ -100,7 +113,8 @@ class TestTriggerCommand < Minitest::Test
 
   def run_command(args, recorder: FakeRecorder.new)
     @stderr = StringIO.new
-    io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: @stderr)
+    @stdout = StringIO.new
+    io = FunCi::Pipeline::Io.new(stdout: @stdout, stderr: @stderr)
     FunCi::Pipeline::TriggerCommand.new(io: io, recorder: recorder, pipeline_forker: @forker,
                                         project: "/no/such/project").run(args)
   end

@@ -10,8 +10,18 @@ class TestHookScript < Minitest::Test
     assert_includes FunCi::Setup::HookScript.for("post-commit"), %(fun-ci trigger --background "$COMMIT" "$BRANCH")
   end
 
-  def test_should_run_the_full_pipeline_before_a_push
-    assert_includes FunCi::Setup::HookScript.for("pre-push"), %(fun-ci trigger "$COMMIT" "$BRANCH")
+  # Git names on stdin each commit a push sends; a deleted ref sends the null SHA.
+  def test_should_wait_for_the_fast_verdict_of_each_commit_pushed
+    assert_includes FunCi::Setup::HookScript.for("pre-push"), %(fun-ci wait "$local_sha" --need fast)
+  end
+
+  def test_should_read_the_commits_pushed_from_git
+    assert_includes FunCi::Setup::HookScript.for("pre-push"), "while read -r local_ref local_sha remote_ref remote_sha"
+  end
+
+  # 5: no run, in a project not set up for fun-ci, which pushes without CI as before.
+  def test_should_let_the_push_through_only_when_every_wait_passed_or_found_fun_ci_not_set_up
+    assert_includes FunCi::Setup::HookScript.for("pre-push"), %([ "$code" -eq 0 ] || [ "$code" -eq 5 ] || status=1)
   end
 
   def test_should_mark_the_script_as_fun_ci_s_own
@@ -19,7 +29,7 @@ class TestHookScript < Minitest::Test
   end
 
   def test_should_fall_back_to_the_null_sha_in_a_repository_without_commits
-    assert_includes FunCi::Setup::HookScript.for("pre-push"),
+    assert_includes FunCi::Setup::HookScript.for("post-commit"),
                     %(COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "#{"0" * 40}"))
   end
 

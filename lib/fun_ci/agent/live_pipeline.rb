@@ -2,6 +2,7 @@
 
 require "rbconfig"
 require_relative "../pipeline/run_canceller"
+require_relative "../setup/project_config"
 
 module FunCi
   module Agent
@@ -16,7 +17,10 @@ module FunCi
         @project_dir = project_dir
       end
 
+      # Answers the finished starter, or nil in a project not set up for fun-ci.
       def start(sha, branch)
+        return unless Setup::ProjectConfig.new(@project_dir).validate.empty?
+
         pid = Process.spawn(RbConfig.ruby, FUN_CI, "trigger", "--background", sha, branch,
                             chdir: @project_dir, %i[out err] => File::NULL)
         Process.detach(pid).join

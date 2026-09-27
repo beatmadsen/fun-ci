@@ -46,12 +46,17 @@ module FunCi
         1
       end
 
+      # The forker answers whether it started a run; one that did says how an
+      # agent gets its verdict (acceptance-tests.md, AT-9.14).
       def fork_pipeline(commit)
         db_path = @recorder.db_path
         @recorder.close
-        @pipeline_forker.call(commit_hash: commit.sha, branch: commit.branch, db_path: db_path)
+        started = @pipeline_forker.call(commit_hash: commit.sha, branch: commit.branch, db_path: db_path)
+        say_how_to_wait(commit.sha[0, 7]) if started
         0
       end
+
+      def say_how_to_wait(sha) = @io.stdout.puts("fun-ci: testing #{sha}. Verdict: fun-ci wait #{sha} --need all")
     end
   end
 end

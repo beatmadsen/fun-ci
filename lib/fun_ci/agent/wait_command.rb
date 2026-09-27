@@ -15,6 +15,8 @@ module FunCi
       # How long a commit may go without a run before `wait` starts one; the
       # post-commit hook's run for a commit just made turns up well within it.
       GRACE_SECONDS = 5
+      # The answer when no run turned up and the project can't start one.
+      NOT_SET_UP = Data.define(:verdict).new(verdict: :unknown)
 
       def initialize(context)
         @context = context
@@ -44,6 +46,7 @@ module FunCi
 
       def answer(sha, report, output)
         return output.no_run_yet(sha) unless report
+        return output.not_set_up(sha) if report.equal?(NOT_SET_UP)
 
         output.report(report)
         ExitCode::FOR.fetch(report.verdict)
@@ -52,15 +55,16 @@ module FunCi
       def poll(sha, need)
         @context.pipeline.watch(@context.db)
         reports.mark_waited(sha, @context.clock.now)
-        reports.for(sha, need).tap { |report| start_after_grace(sha) unless report }
+        reports.for(sha, need) || start_after_grace(sha)
       end
 
+      # Nil while waiting for a run; NOT_SET_UP once one can't be started.
       def start_after_grace(sha)
         @missing_since ||= @context.clock.now
         return if @started || @context.clock.now - @missing_since < GRACE_SECONDS
 
         @started = true
-        @context.pipeline.start(sha, @context.git.branch)
+        @context.pipeline.start(sha, @context.git.branch) ? nil : NOT_SET_UP
       end
     end
   end
