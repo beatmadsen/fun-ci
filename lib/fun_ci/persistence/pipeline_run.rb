@@ -45,6 +45,11 @@ module FunCi
         db.execute("UPDATE pipeline_runs SET trigger_pid = ? WHERE id = ?", [pid, id])
       end
 
+      # When an agent last polled the run, waiting on it (acceptance-tests.md, AT-9.12).
+      def self.mark_waited(db, id, at)
+        db.execute("UPDATE pipeline_runs SET waited_at = ? WHERE id = ?", [at, id])
+      end
+
       def self.update_status(db, id, new_status)
         now = Time.now.utc.iso8601
         db.execute("UPDATE pipeline_runs SET status = ?, updated_at = ? WHERE id = ?", [new_status, now, id])

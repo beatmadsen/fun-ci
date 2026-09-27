@@ -56,6 +56,27 @@ class TestStalePipelineCanceller < Minitest::Test
     assert_empty @signals
   end
 
+  def test_should_leave_alone_a_run_an_agent_waited_on_in_the_last_ten_seconds
+    RUN.mark_waited(@db, active_run("abc1234"), (Time.now - 5).utc.iso8601)
+    cancel
+
+    assert_empty @signals
+  end
+
+  def test_should_stop_a_run_nobody_has_waited_on_for_over_ten_seconds
+    RUN.mark_waited(@db, active_run("abc1234"), (Time.now - 60).utc.iso8601)
+    cancel
+
+    assert_equal [["KILL", 100]], @signals
+  end
+
+  def test_should_leave_alone_a_run_of_the_new_commit
+    active_run("def5678")
+    cancel
+
+    assert_empty @signals
+  end
+
   private
 
   def active_run(sha, branch: "main")

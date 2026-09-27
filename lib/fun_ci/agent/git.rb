@@ -16,6 +16,9 @@ module FunCi
       def subject(sha) = git("log", "-1", "--format=%s", sha).to_s
       def toplevel = File.realpath(git("rev-parse", "--show-toplevel"))
 
+      # The branch checked out, as the git hooks name it; "unknown" when HEAD is detached.
+      def branch = git("branch", "--show-current").to_s.then { |name| name.empty? ? "unknown" : name }
+
       private
 
       # Its first line of output, or nil when git fails.

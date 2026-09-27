@@ -50,6 +50,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   JSON files. The animations are code in the renderer now.
 
 ### Added
+- `fun-ci wait [REV]` waits for a commit's verdict and exits with it, as
+  `status` would say it: it returns as soon as the stages `--need` names
+  have passed, or at the first of them to fail or overrun. `--within 30s`
+  gives up undecided (exit 3) at the agent's deadline. A commit with no run
+  after 5 seconds gets one started, as the post-commit hook would. A run an
+  agent is waiting on is no longer cancelled by a newer commit on its
+  branch, and a run is never cancelled by another of the same commit;
+  `wait` on a superseded run exits 4 naming the newer commit, and
+  `--follow-branch` moves on to that commit's run.
 - Each stage gets an empty directory named by `FUN_CI_REPORT`. A stage that
   writes JUnit XML (`*.xml`) or fun-ci's JSON (`*.json`,
   `{"failures": [{"file", "line", "test", "message"}]}`) there has its

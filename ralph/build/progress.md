@@ -77,10 +77,10 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-9.6: `status` shows why a needed stage failed
 - [x] AT-9.7: A stage's test reports name its failures
 - [x] AT-9.8: `fun-ci init` writes stage scripts that report for Gradle and Maven
-- [ ] AT-9.9: `fun-ci wait` waits for the level it needs
-- [ ] AT-9.10: `wait --within` gives up at the agent's deadline
-- [ ] AT-9.11: `wait` starts a run for a commit that has none
-- [ ] AT-9.12: A run is only superseded by a newer commit nobody is waiting past
+- [x] AT-9.9: `fun-ci wait` waits for the level it needs
+- [x] AT-9.10: `wait --within` gives up at the agent's deadline
+- [x] AT-9.11: `wait` starts a run for a commit that has none
+- [x] AT-9.12: A run is only superseded by a newer commit nobody is waiting past
 - [ ] AT-9.13: The pre-push hook waits for the fast verdict of what is pushed
 - [ ] AT-9.14: The post-commit hook says how to get the verdict
 - [ ] AT-9.15: `fun-ci init` tells agents what to do after a commit

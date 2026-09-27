@@ -51,13 +51,13 @@ class TestActiveRuns < Minitest::Test
   def test_should_leave_out_runs_on_other_branches
     running_run
 
-    assert_empty FunCi::Persistence::ActiveRuns.on_branch(@db, BRANCH.new(project: PROJECT, name: "feature"))
+    assert_empty cancellable(branch: BRANCH.new(project: PROJECT, name: "feature"))
   end
 
   def test_should_leave_out_runs_of_other_projects_on_a_branch_of_the_same_name
     running_run
 
-    assert_empty FunCi::Persistence::ActiveRuns.on_branch(@db, BRANCH.new(project: "/other-project", name: "main"))
+    assert_empty cancellable(branch: BRANCH.new(project: "/other-project", name: "main"))
   end
 
   def test_should_find_an_unfinished_run_by_its_id
@@ -87,9 +87,32 @@ class TestActiveRuns < Minitest::Test
     assert_equal %w[completed cancelled], job_statuses(run_id)
   end
 
+  def test_should_leave_the_new_commit_s_own_run_out_of_those_to_cancel
+    running_run
+
+    assert_empty cancellable(new_commit: "abc1234")
+  end
+
+  def test_should_leave_a_run_waited_on_since_the_cutoff_out_of_those_to_cancel
+    RUN.mark_waited(@db, running_run, "2026-09-27T12:00:05Z")
+
+    assert_empty cancellable(waited_before: "2026-09-27T12:00:00Z")
+  end
+
+  def test_should_count_a_run_last_waited_on_before_the_cutoff_among_those_to_cancel
+    RUN.mark_waited(@db, running_run, "2026-09-27T11:59:00Z")
+
+    assert_equal 1, cancellable(waited_before: "2026-09-27T12:00:00Z").size
+  end
+
   private
 
-  def active = FunCi::Persistence::ActiveRuns.on_branch(@db, BRANCH.new(project: PROJECT, name: "main"))
+  def cancellable(branch: BRANCH.new(project: PROJECT, name: "main"), new_commit: "fff0000",
+                  waited_before: "2026-09-27T12:00:00Z")
+    FunCi::Persistence::ActiveRuns.cancellable(@db, branch, new_commit: new_commit, waited_before: waited_before)
+  end
+
+  def active = cancellable
 
   def job_statuses(run_id)
     @db.execute("SELECT status FROM stage_jobs WHERE pipeline_run_id = ? ORDER BY id", [run_id]).flatten

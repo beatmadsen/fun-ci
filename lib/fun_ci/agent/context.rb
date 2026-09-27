@@ -3,7 +3,8 @@
 module FunCi
   module Agent
     # What every agent command answers from: the database, the project's git,
-    # where to print, and the time now (a callable).
-    Context = Data.define(:db, :git, :io, :clock)
+    # where to print, the time (#now, #pause) and the pipeline (#start a run,
+    # #watch the database for slow suites that died).
+    Context = Data.define(:db, :git, :io, :clock, :pipeline)
   end
 end

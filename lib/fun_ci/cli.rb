@@ -17,7 +17,7 @@ module FunCi
       "check" => :run_check,
       "prune" => :run_prune
     }.freeze
-    AGENT_COMMANDS = %w[status runs].freeze
+    AGENT_COMMANDS = %w[status runs wait].freeze
 
     def self.default_db_dir = Persistence::StateDir.path(ENV)
 
@@ -77,14 +77,16 @@ module FunCi
 
     def run_agent(name, args)
       require_relative "agent/commands"
-      require_relative "agent/git"
       db = setup_db
       Agent::Commands.run(name, args, agent_context(db))
     ensure
       db&.close
     end
 
-    def agent_context(db) = Agent::Context.new(db: db, git: Agent::Git.new(Dir.pwd), io: @io, clock: -> { Time.now })
+    def agent_context(db)
+      Agent::Context.new(db: db, git: Agent::Git.new(Dir.pwd), io: @io, clock: Agent::SystemClock.new,
+                         pipeline: Agent::LivePipeline.new(Dir.pwd))
+    end
 
     def run_init(args) = setup_commands.init(args)
     def run_install_hooks(args) = setup_commands.install_hooks(args)

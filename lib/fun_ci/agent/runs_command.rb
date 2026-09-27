@@ -28,7 +28,7 @@ module FunCi
 
       private
 
-      def age(run) = Age.words(@context.clock.call - Time.parse(run[:created_at]))
+      def age(run) = Age.words(@context.clock.now - Time.parse(run[:created_at]))
     end
   end
 end

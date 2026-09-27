@@ -20,6 +20,12 @@ module FunCi
         run && of(run, need)
       end
 
+      # Notes that an agent is waiting on the commit's newest run, as of `at`.
+      def mark_waited(sha, at)
+        run = @runs.latest_of_commit(sha)
+        Persistence::PipelineRun.mark_waited(@db, run[:id], at.utc.iso8601) if run
+      end
+
       # [[run, its report for the whole pipeline], ...], newest first.
       def recent(limit:, branch:)
         @runs.recent(limit: limit, branch: branch).map { |run| [run, of(run, "all")] }

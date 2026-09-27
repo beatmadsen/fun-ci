@@ -5,6 +5,8 @@
 class FakeGit
   attr_reader :toplevel
 
+  def branch = "main"
+
   def initialize(toplevel)
     @toplevel = toplevel
     @subjects = {}

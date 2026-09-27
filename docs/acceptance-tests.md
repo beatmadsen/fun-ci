@@ -497,6 +497,9 @@ verdict.
 **When** `fun-ci wait REV` runs
 **Then** it starts the pipeline for that commit in the background, as the
 post-commit hook does, and waits on it.
+*Note:* a run recorded within 5 seconds, the post-commit hook's for a commit
+just made, is waited on instead of starting another. With no run by its
+deadline, `wait` says so and exits 3.
 
 ### 9.12 A run is only superseded by a newer commit nobody is waiting past
 **Given** an unfinished run

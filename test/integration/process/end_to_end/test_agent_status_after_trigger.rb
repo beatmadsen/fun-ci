@@ -3,8 +3,8 @@
 require_relative "../../../test_helper"
 require_relative "../../../support/end_to_end"
 
-# AT-9.2 through the real CLI: an agent asks `fun-ci status` in a project
-# whose commit a trigger ran, and gets that run's verdict.
+# AT-9.2 and AT-9.9 through the real CLI: an agent asks `fun-ci status` and
+# `fun-ci wait` in a project whose commit a trigger ran, and gets its verdict.
 class TestAgentStatusAfterTrigger < Minitest::Test
   include EndToEnd
 
@@ -28,11 +28,17 @@ class TestAgentStatusAfterTrigger < Minitest::Test
     assert_includes @stdout.string, %(fun-ci: #{@sha[0, 7]} "Add stage scripts" on main)
   end
 
+  def test_should_answer_a_wait_on_a_decided_run_at_once
+    assert_equal 0, agent("wait", "--need", "all", "--within", "1")
+  end
+
   private
 
-  def status(*args)
+  def status(*) = agent("status", *)
+
+  def agent(command, *args)
     @stdout = StringIO.new
     io = FunCi::Pipeline::Io.new(stdout: @stdout, stderr: @stdout)
-    Dir.chdir(@project.dir) { FunCi::Cli.run(["status", *args], io: io, db_dir: @db_dir) }
+    Dir.chdir(@project.dir) { FunCi::Cli.run([command, *args], io: io, db_dir: @db_dir) }
   end
 end

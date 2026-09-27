@@ -19,7 +19,13 @@ module FunCi
     module ActiveRuns
       ACTIVE = "status IN ('scheduled', 'running')"
 
-      def self.on_branch(db, branch) = where(db, "project_path = ? AND branch = ?", branch.project, branch.name)
+      # The runs on the branch a new commit's run may cancel: not the new
+      # commit's own, nor one an agent has waited on since `waited_before`
+      # (an ISO 8601 UTC time; acceptance-tests.md, AT-9.12).
+      def self.cancellable(db, branch, new_commit:, waited_before:)
+        where(db, "project_path = ? AND branch = ? AND commit_hash != ? AND (waited_at IS NULL OR waited_at < ?)",
+              branch.project, branch.name, new_commit, waited_before)
+      end
 
       # The run with this id, when it has not finished; none otherwise.
       def self.with_id(db, id) = where(db, "id = ?", id)

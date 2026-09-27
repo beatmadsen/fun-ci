@@ -16,7 +16,7 @@ module FunCi
         @context.git.resolve(rev) || raise(Options::Invalid, "git can't find the commit '#{rev}'")
       end
 
-      def reports = Reports.new(@context.db, @context.git)
+      def reports = @reports ||= Reports.new(@context.db, @context.git)
 
       def usage(message)
         @context.io.stderr.puts "fun-ci #{self.class::NAME}: #{message}"

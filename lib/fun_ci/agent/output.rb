@@ -25,6 +25,23 @@ module FunCi
         ExitCode::FOR.fetch(:unknown)
       end
 
+      # Says the commit has no run yet, which leaves it undecided.
+      def no_run_yet(sha)
+        if @json
+          print_json(StatusJson.unknown(sha).merge(verdict: "undecided"))
+        else
+          print_lines(["fun-ci: no run for #{sha[0, 7]} yet."])
+        end
+        ExitCode::FOR.fetch(:undecided)
+      end
+
+      # Says the wait moves on to the commit that superseded `sha`; JSON has only the answer.
+      def following(sha, report)
+        return if @json
+
+        @stdout.puts "fun-ci: #{sha[0, 7]} was superseded; following #{report.branch} to #{report.superseded_by[0, 7]}."
+      end
+
       # entries: [[report, age in words], ...], newest first.
       def runs(entries)
         return print_json(entries.map { |report, _| StatusJson.document(report) }) if @json

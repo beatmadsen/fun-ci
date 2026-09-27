@@ -17,6 +17,7 @@ module FunCi
         prune          Remove fun-ci's worktrees when no pipeline is running
         status         Say where a commit's run stands, as an exit code an agent can act on
         runs           List this project's recent runs, newest first
+        wait           Wait for a commit's verdict, then exit with it as status does
 
       Options:
         -h, --help     Show this help message
@@ -26,7 +27,9 @@ module FunCi
         --background   Run the pipeline in the background and return at once
 
       Agent options:
-        --need LEVEL   (status) What must pass: build, fast (default) or all
+        --need LEVEL   (status, wait) What must pass: build, fast (default) or all
+        --within TIME  (wait) Give up undecided after 30, 30s or 5m
+        --follow-branch  (wait) Move on to the newer commit that superseded the run
         -n N           (runs) How many runs to list (default 10)
         --branch NAME  (runs) Only runs on this branch
         --json         Print JSON instead of text

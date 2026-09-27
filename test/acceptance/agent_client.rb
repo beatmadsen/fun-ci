@@ -6,25 +6,33 @@ require "fun_ci/persistence/pipeline_run"
 require "fun_ci/persistence/stage_job"
 require_relative "trigger_workspace"
 require_relative "../support/fake_git"
+require_relative "../support/fake_clock"
+require_relative "../support/fake_pipeline"
 
 # Acceptance test client for the commands an agent runs in a project: tests
 # record runs as the pipeline would and read what the agent sees.
 class AgentClient
-  attr_reader :git, :exit_code
+  Fakes = Data.define(:git, :clock, :pipeline)
+  Outcome = Data.define(:stdout, :exit_code)
 
   def self.open = new(TriggerWorkspace.create)
 
   def initialize(workspace)
     @workspace = workspace
-    @git = FakeGit.new(workspace.project_dir)
+    @fakes = Fakes.new(git: FakeGit.new(workspace.project_dir), clock: FakeClock.new, pipeline: FakePipeline.new)
   end
 
   def close = @workspace.close
   def db = @workspace.db
-  def stdout = @out.string
+  def git = @fakes.git
+  def clock = @fakes.clock
+  def pipeline = @fakes.pipeline
+  def stdout = @outcome.stdout
+  def exit_code = @outcome.exit_code
 
   def status(*args) = agent("status", args)
   def runs(*args) = agent("runs", args)
+  def wait(*args) = agent("wait", args)
 
   # stages: { "lint" => "completed", "fast" => "running", ... }, in the order they started.
   def record_run(sha, branch: "main", project: @workspace.project_dir, stages: {})
@@ -43,9 +51,11 @@ class AgentClient
   end
 
   def agent(command, args)
-    @out = StringIO.new
-    io = FunCi::Pipeline::Io.new(stdout: @out, stderr: @out)
-    context = FunCi::Agent::Context.new(db: db, git: @git, io: io, clock: -> { Time.now })
-    @exit_code = FunCi::Agent::Commands.run(command, args, context)
+    out = StringIO.new
+    context = FunCi::Agent::Context.new(db: db, git: git, io: FunCi::Pipeline::Io.new(stdout: out, stderr: out),
+                                        clock: clock, pipeline: pipeline)
+    code = FunCi::Agent::Commands.run(command, args, context)
+    @outcome = Outcome.new(stdout: out.string, exit_code: code)
+    code
   end
 end
