@@ -9,7 +9,7 @@ class TestStageEnd < Minitest::Test
 
   # Answers what it was given to collect from, so a test can see it was asked.
   class EchoCollector
-    def collect(output) = "evidence of #{output}"
+    def collect(output, alongside: []) = "evidence of #{output}#{alongside.map { |stage| " beside #{stage}" }.join}"
     def masked(output) = "masked #{output}"
   end
 
@@ -29,6 +29,14 @@ class TestStageEnd < Minitest::Test
     calls = recorded(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
 
     assert_includes calls, [:keep_raw, 1, "masked boom"]
+  end
+
+  def test_should_tell_the_collector_which_stages_shared_the_slot
+    recorder = FakeRecorder.new(alongside: %w[slow])
+    FunCi::Pipeline::StageEnd.new(recorder, 1, EchoCollector.new)
+                             .record(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
+
+    assert_equal ["evidence of boom beside slow"], recorder.kept_evidence
   end
 
   def test_should_keep_no_evidence_of_a_stage_that_passed

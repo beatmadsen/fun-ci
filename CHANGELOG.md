@@ -45,6 +45,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a previous run's lines is read from where it stood when the stage started,
   or from its start when it was rotated. `grep:`, `start:` and `lines:`
   narrow it down.
+- When another stage of the run shared the worktree while a stage ran (lint
+  beside build, the slow suite beside the fast one), `fun-ci why` says so
+  (`alongside: slow`), since a log file may hold both stages' lines.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

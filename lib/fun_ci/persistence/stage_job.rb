@@ -47,6 +47,15 @@ module FunCi
         db.execute("UPDATE stage_jobs SET exit_status = ?, signal = ? WHERE id = ?", [exit_status, signal, id])
       end
 
+      # The other stages of its run that were running at any moment since it started.
+      def self.alongside(db, id)
+        db.execute("SELECT others.stage FROM stage_jobs AS others JOIN stage_jobs AS me ON me.id = ? " \
+                   "WHERE others.pipeline_run_id = me.pipeline_run_id AND others.id != me.id " \
+                   "AND others.started_at IS NOT NULL " \
+                   "AND (others.completed_at IS NULL OR others.completed_at >= me.started_at) ORDER BY others.id",
+                   [id]).flatten
+      end
+
       def self.ids(db) = db.execute("SELECT id FROM stage_jobs").flatten
 
       def self.find(db, id)

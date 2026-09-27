@@ -25,9 +25,11 @@ module FunCi
         @clock = clock
       end
 
-      def collect(output)
+      # alongside: the other stages that shared the slot while this one ran.
+      def collect(output, alongside: [])
         result = Extraction.new(context(output), @settings.budget).run(configured)
-        parts = [["test-reports", reported], *result.parts, ["output-tail", tail(output)]]
+        parts = [["fun-ci", own_facts(alongside)], ["test-reports", reported], *result.parts,
+                 ["output-tail", tail(output)]]
         masking.document(Document.assemble(parts, problems: result.problems, chosen: result.chosen))
       end
 
@@ -39,6 +41,10 @@ module FunCi
       def context(output)
         Context.new(stage: @sources.stage, output: output, worktree: Worktree.new(@sources.worktree),
                     deadline: Deadline.after(@clock, @settings.budget), watched: @sources.watched)
+      end
+
+      def own_facts(alongside)
+        Findings.new(facts: alongside.empty? ? [] : [{ name: "alongside", value: alongside.join(", ") }])
       end
 
       def configured = @settings.entries(@sources.stage).map { |raw| [raw, "configured"] }

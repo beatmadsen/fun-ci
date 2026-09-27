@@ -40,9 +40,11 @@ end
 class FakeRecorder
   attr_reader :calls, :budgets
 
-  def initialize
+  # alongside: the stages it says shared the slot with any stage.
+  def initialize(alongside: [])
     @calls = []
     @budgets = {}
+    @alongside = alongside
     @next_job_id = 0
   end
 
@@ -57,6 +59,7 @@ class FakeRecorder
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
   def keep_evidence(job_id, document) = @calls << [:keep_evidence, job_id, document]
   def keep_raw(job_id, text) = @calls << [:keep_raw, job_id, text]
+  def alongside(_job_id) = @alongside
   def kept_evidence = @calls.select { |call| call.first == :keep_evidence }.map(&:last)
   def keep_exit(job_id, exit_status, signal) = @calls << [:keep_exit, job_id, exit_status, signal]
   def report_trouble_to(_out) = nil

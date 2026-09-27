@@ -35,7 +35,8 @@ module FunCi
       end
 
       def keep_evidence(finished)
-        @recorder.keep_evidence(@job_id, @collector.collect(finished.output))
+        alongside = @recorder.alongside(@job_id)
+        @recorder.keep_evidence(@job_id, @collector.collect(finished.output, alongside: alongside))
         @recorder.keep_raw(@job_id, @collector.masked(finished.output))
       end
 

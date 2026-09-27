@@ -10,6 +10,7 @@ module FunCi
       def keep_exit(_job_id, _exit_status, _signal) = nil
       def keep_evidence(_job_id, _document) = nil
       def keep_raw(_job_id, _text) = nil
+      def alongside(_job_id) = []
       def stage_process(_job_id, _pid) = nil
       def slot_taken(_lock_file) = nil
       def foreground_done = nil

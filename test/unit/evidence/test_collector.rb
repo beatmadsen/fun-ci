@@ -83,6 +83,15 @@ class TestCollector < Minitest::Test
       .excerpts.first[:lines]
   end
 
+  def test_should_name_the_stages_that_shared_the_slot_as_a_fact_of_fun_ci_s
+    assert_equal [{ name: "alongside", value: "lint, slow", extractor: "fun-ci" }],
+                 collector.collect("boom\n", alongside: %w[lint slow]).facts
+  end
+
+  def test_should_say_nothing_of_stages_alongside_when_there_were_none
+    assert_empty collector.collect("boom\n", alongside: []).facts
+  end
+
   def test_should_mask_the_raw_output
     assert_equal "a [masked:API_TOKEN]\n",
                  collector(environment: { "API_TOKEN" => "abcdefgh123" }).masked("a abcdefgh123\n")
