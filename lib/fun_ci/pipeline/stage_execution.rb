@@ -25,9 +25,11 @@ module FunCi
 
       private
 
+      # The stage learns its name from FUN_CI_STAGE (acceptance-tests.md, AT-10.7).
       def execute(stage, command, stage_dir, &)
         window = stage_dir.window
-        @seams.executor(@dir).call(command, @seams.budgets[stage], env: stage_dir.env, output: window, &)
+        env = stage_dir.env.merge("FUN_CI_STAGE" => stage)
+        @seams.executor(@dir).call(command, @seams.budgets[stage], env: env, output: window, &)
       ensure
         window&.close
       end

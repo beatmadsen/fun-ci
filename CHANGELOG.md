@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   stage's output is written to disk as it runs, in the state directory,
   instead of being held in memory, so a stage that prints without end no
   longer grows fun-ci's memory without end.
+- Every stage script finds its stage's name in `FUN_CI_STAGE`, so a project
+  can send each stage's logs to a file of its own.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

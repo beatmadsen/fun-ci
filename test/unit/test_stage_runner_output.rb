@@ -40,6 +40,13 @@ class TestStageRunnerOutput < Minitest::Test
     assert_equal "/fake/reports", seen["FUN_CI_REPORT"]
   end
 
+  def test_names_the_stage_to_its_script
+    seen = nil
+    recorded(->(_cmd, env) { (seen = env) && ["", FakeStatus.new(true, 0)] })
+
+    assert_equal "fast", seen["FUN_CI_STAGE"]
+  end
+
   def test_gives_an_injected_runner_the_stage_s_environment
     seen = nil
     recorded(->(_cmd, env) { (seen = env) && ["", FakeStatus.new(true, 0)] }, environment: { "HOME" => "/home/dev" })
