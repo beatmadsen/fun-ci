@@ -2,6 +2,7 @@
 
 require_relative "../test_helper"
 require_relative "../support/db_recorder_setup"
+require "json"
 
 # The recorder keeps the end of a failed stage's output, and a new run of a
 # project drops what its runs beyond the newest 50 kept (AT-9.5).
@@ -28,6 +29,23 @@ class TestPipelineRecorderOutput < Minitest::Test
     49.times { @recorder.create_run(commit_hash: "abc1234", branch: "main", project_path: "/project") }
 
     assert_equal "boom\n", job(first_job)[:output_tail]
+  end
+
+  def test_should_keep_the_failures_a_stage_reported
+    create_run
+    job_id = @recorder.start_stage("fast")
+    @recorder.keep_failures(job_id, [{ file: "a.rb", line: 3, test: "t", message: "m" }])
+
+    assert_equal [{ "file" => "a.rb", "line" => 3, "test" => "t", "message" => "m" }],
+                 JSON.parse(job(job_id)[:failures])
+  end
+
+  def test_should_keep_no_failures_when_a_stage_reported_none
+    create_run
+    job_id = @recorder.start_stage("fast")
+    @recorder.keep_failures(job_id, [])
+
+    assert_nil job(job_id)[:failures]
   end
 
   private

@@ -55,11 +55,16 @@ class TestBackgroundWrapperOutput < Minitest::Test
   def test_keeps_the_output_of_a_failed_slow_suite_before_recording_its_outcome
     calls = calls_for(["slow boom\n", FakeStatus.new(false, 1), false])
 
-    assert_equal [[:keep_output, 1, "slow boom\n"], [:end_stage, 1, "failed"]], calls
+    assert_operator calls.index([:keep_output, 1, "slow boom\n"]), :<, calls.index([:end_stage, 1, "failed"])
   end
 
   def test_keeps_the_output_of_a_slow_suite_over_budget
     assert_includes calls_for(["partial\n", nil, true]), [:keep_output, 1, "partial\n"]
+  end
+
+  def test_keeps_the_failures_a_failed_slow_suite_reported
+    assert_includes calls_for(["boom\n", FakeStatus.new(false, 1), false, [{ test: "t1" }]]),
+                    [:keep_failures, 1, [{ test: "t1" }]]
   end
 
   def test_keeps_nothing_of_a_slow_suite_that_passed

@@ -41,7 +41,7 @@ module FunCi
       ADDED_COLUMNS = [%w[pipeline_runs pid INTEGER], %w[pipeline_runs project_path TEXT],
                        %w[pipeline_runs trigger_pid INTEGER], %w[pipeline_runs slot_lock TEXT],
                        %w[stage_jobs pid INTEGER], %w[stage_jobs finished_order INTEGER],
-                       %w[stage_jobs output_tail TEXT]].freeze
+                       %w[stage_jobs output_tail TEXT], %w[stage_jobs failures TEXT]].freeze
 
       def self.migrate!(db)
         with_setup_lock(db.filename("main")) do

@@ -21,9 +21,14 @@ module FunCi
       # How long a killed command's last output may take to drain.
       DRAIN_SECONDS = 1
 
-      def run_process_with_timeout(cmd, budget, chdir: Dir.pwd, timer: BUDGET, &)
+      # Where the command runs, and what it finds in its environment besides fun-ci's own.
+      Launch = Data.define(:chdir, :env) do
+        def initialize(chdir: Dir.pwd, env: {}) = super
+      end
+
+      def run_process_with_timeout(cmd, budget, launch: Launch.new, timer: BUDGET, &)
         reader, writer = IO.pipe
-        pid = start(cmd, writer, chdir, &)
+        pid = start(cmd, writer, launch, &)
         printed = String.new
         reading = Thread.new { read_until_closed(reader, printed) }
         timer.call(reading, budget) ? process_finished(pid, text(reading.value)) : over_budget(pid, reading, printed)
@@ -33,14 +38,18 @@ module FunCi
 
       private
 
-      def start(cmd, writer, chdir)
+      def start(cmd, writer, launch)
         gate = Gate.create
-        pid = Process.spawn(GitEnvironment::CLEAN, format(GATED, cmd), out: writer, err: writer,
-                                                                       9 => gate.child_end, pgroup: true, chdir: chdir)
+        pid = spawn_gated(cmd, writer, gate, launch)
         [writer, gate.child_end].each(&:close)
         yield pid if block_given?
         gate.open
         pid
+      end
+
+      def spawn_gated(cmd, writer, gate, launch)
+        Process.spawn(GitEnvironment::CLEAN.merge(launch.env), format(GATED, cmd),
+                      out: writer, err: writer, 9 => gate.child_end, pgroup: true, chdir: launch.chdir)
       end
 
       # The reader may be closed while this thread still reads, once a killed

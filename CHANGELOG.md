@@ -50,6 +50,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   JSON files. The animations are code in the renderer now.
 
 ### Added
+- Each stage gets an empty directory named by `FUN_CI_REPORT`. A stage that
+  writes JUnit XML (`*.xml`) or fun-ci's JSON (`*.json`,
+  `{"failures": [{"file", "line", "test", "message"}]}`) there has its
+  failures kept when it fails, and `fun-ci status` lists them (file, line,
+  test and the first lines of the message) instead of the output's last
+  lines; `status --json` gives them under each stage. The Gradle and Maven
+  scripts `fun-ci init` writes copy the build's reports there. fun-ci now
+  depends on `rexml` to read them.
 - A stage that fails or runs out of time keeps the end of its output: the
   last 200 lines, at most 64 KB, colour codes stripped. The slow suite's
   output is kept too, and a stage killed over budget keeps what it printed

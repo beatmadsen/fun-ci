@@ -4,6 +4,7 @@ require_relative "pipeline_run"
 require_relative "stage_job"
 require_relative "run_status"
 require_relative "write_trouble"
+require "json"
 require_relative "output_tail"
 require_relative "project_runs"
 
@@ -14,6 +15,7 @@ module FunCi
       def start_stage(_stage) = nil
       def end_stage(_job_id, _status) = nil
       def keep_output(_job_id, _output) = nil
+      def keep_failures(_job_id, _failures) = nil
       def stage_process(_job_id, _pid) = nil
       def slot_taken(_lock_file) = nil
       def foreground_done = nil
@@ -96,6 +98,11 @@ module FunCi
       # Keeps the end of what a failed stage printed (acceptance-tests.md, AT-9.5).
       def keep_output(job_id, output)
         tolerating { StageJob.keep_output(@db, job_id, OutputTail.of(output)) }
+      end
+
+      # Keeps the failures a stage reported, if it reported any.
+      def keep_failures(job_id, failures)
+        tolerating { StageJob.keep_failures(@db, job_id, JSON.generate(failures)) } if failures.any?
       end
 
       # Records the stage's outcome, then settles the run's status from its stages.

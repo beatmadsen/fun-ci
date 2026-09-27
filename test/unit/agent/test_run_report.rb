@@ -38,6 +38,17 @@ class TestRunReport < Minitest::Test
     assert_equal "boom\n", report(job("lint", "failed").merge(output_tail: "boom\n")).stages.first.tail
   end
 
+  def test_should_carry_the_failures_a_stage_reported
+    failures = '[{"file":"a.rb","line":3,"test":"t","message":"m"}]'
+
+    assert_equal [{ file: "a.rb", line: 3, test: "t", message: "m" }],
+                 report(job("lint", "failed").merge(failures: failures)).stages.first.failures
+  end
+
+  def test_should_carry_no_failures_for_a_stage_that_reported_none
+    assert_empty report(job("lint", "failed")).stages.first.failures
+  end
+
   private
 
   def report(*jobs, need: "fast")

@@ -50,6 +50,7 @@ class FakeRecorder
 
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
   def keep_output(job_id, output) = @calls << [:keep_output, job_id, output]
+  def keep_failures(job_id, failures) = @calls << [:keep_failures, job_id, failures]
   def report_trouble_to(_out) = nil
   def tolerating = yield
   def stage_process(job_id, pid) = @calls << [:stage_process, job_id, pid]

@@ -31,11 +31,20 @@ class TestStatusJson < Minitest::Test
     assert_equal({ schema: 1, commit: { sha: "abc1234" }, verdict: "unknown" }, FunCi::Agent::StatusJson.unknown("abc1234"))
   end
 
+  def test_should_list_a_stage_s_reported_failures
+    failure = { file: "a.rb", line: 3, test: "t", message: "m" }
+    stage = STAGE.new(name: "fast", state: "failed", seconds: 1.0,
+                      kept: REPORT::Kept.new(tail: nil, failures: [failure]))
+
+    assert_equal [failure], document(stages: [stage])[:stages].first[:failures]
+  end
+
   private
 
-  def document(verdict: :undecided, superseded_by: nil)
+  def document(verdict: :undecided, superseded_by: nil,
+               stages: [STAGE.new(name: "lint", state: "passed", seconds: 3.8)])
     report = REPORT.new(sha: "3f9c2ab0c4d1", subject: "Add retry", branch: "main", need: "fast",
-                        stages: [STAGE.new(name: "lint", state: "passed", seconds: 3.8)], verdict: verdict,
+                        stages: stages, verdict: verdict,
                         superseded_by: superseded_by)
     FunCi::Agent::StatusJson.document(report)
   end

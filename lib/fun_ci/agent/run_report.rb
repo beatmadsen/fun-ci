@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "json"
 require "time"
 require_relative "verdict"
 
@@ -12,11 +13,17 @@ module FunCi
     class RunReport
       STAGES = %w[lint build fast slow].freeze
       STATES = { "completed" => "passed", "timed_out" => "over_budget", "scheduled" => "waiting" }.freeze
-      # tail: the end of what the stage printed, kept when it failed.
-      Stage = Data.define(:name, :state, :seconds, :tail)
+      # What a failed stage left to explain itself: the end of its output,
+      # and the failures it reported, each { file:, line:, test:, message: }.
+      Kept = Data.define(:tail, :failures)
+      NOTHING_KEPT = Kept.new(tail: nil, failures: [])
+
+      Stage = Data.define(:name, :state, :seconds, :kept)
 
       class Stage
-        def initialize(name:, state:, seconds:, tail: nil) = super
+        def initialize(name:, state:, seconds:, kept: NOTHING_KEPT) = super
+        def tail = kept.tail
+        def failures = kept.failures
       end
 
       # commit: the run's subject and the commit that superseded it, if any.
@@ -34,7 +41,8 @@ module FunCi
         return Stage.new(name: name, state: "waiting", seconds: nil) unless job
 
         state = STATES.fetch(job[:status], job[:status])
-        Stage.new(name: name, state: state, seconds: seconds(job), tail: job[:output_tail])
+        Stage.new(name: name, state: state, seconds: seconds(job),
+                  kept: Kept.new(tail: job[:output_tail], failures: failures(job)))
       end
 
       def self.seconds(job)
@@ -42,7 +50,9 @@ module FunCi
 
         (Time.parse(job[:completed_at]) - Time.parse(job[:started_at])).round(1)
       end
-      private_class_method :stages, :stage, :seconds
+
+      def self.failures(job) = job[:failures] ? JSON.parse(job[:failures], symbolize_names: true) : []
+      private_class_method :stages, :stage, :seconds, :failures
     end
   end
 end

@@ -32,6 +32,16 @@ class TestStageOutput < Minitest::Test
     assert_nil JOB.find(@db, old_job)[:output_tail]
   end
 
+  def test_should_drop_the_reported_failures_of_runs_older_than_the_newest_kept
+    old_job = job_of(new_run)
+    JOB.keep_failures(@db, old_job, "[]")
+    job_of(new_run)
+
+    FunCi::Persistence::ProjectRuns.new(@db, "/project").forget_output(keep: 1)
+
+    assert_nil JOB.find(@db, old_job)[:failures]
+  end
+
   def test_should_keep_the_output_of_the_newest_runs
     job = job_of(new_run)
     JOB.keep_output(@db, job, "newest\n")

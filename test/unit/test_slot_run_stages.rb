@@ -44,6 +44,15 @@ class TestSlotRunStages < Minitest::Test
     assert_equal "/slot-0/.fun-ci/slow.sh abc1234", runner.command_for("slow.sh")
   end
 
+  def test_should_keep_the_failures_the_slow_suite_reported
+    recorder = FakeRecorder.new
+    slot_run(slot_with(Lock.new(false)), command_runner: scripted_runner({ "slow.sh" => failing("slow failed") }),
+                                         background_launcher: inline_launcher(recorder),
+                                         report_dir: -> { FakeReportDir.new([{ test: "t1" }]) }).run(config)
+
+    assert(recorder.calls.any? { |call| call.values_at(0, 2) == [:keep_failures, [{ test: "t1" }]] })
+  end
+
   def test_should_fail_when_fast_fails_while_the_slow_suite_runs
     refute_equal 0, run_with({ "fast.sh" => failing("fast test failed") })
   end

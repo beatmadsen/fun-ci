@@ -27,21 +27,38 @@ module FunCi
         @dir = dir
       end
 
-      # A failed stage's output is kept before its outcome is recorded, so
-      # whoever sees the outcome can read why.
+      # A failed stage's output and reported failures are kept before its
+      # outcome is recorded, so whoever sees the outcome can read why.
       def passes?(config, stage)
         job_id = @seams.recorder.start_stage(stage)
-        output, *finished = execute(config, stage) { |pid| @seams.recorder.stage_process(job_id, pid) }
-        status = outcome(stage, output, *finished)
-        @seams.recorder.keep_output(job_id, output) unless status == "completed"
+        status = with_report_dir { |reports| run_stage(config, stage, job_id, reports) }
         @seams.recorder.end_stage(job_id, status)
         status == "completed"
       end
 
       private
 
-      def execute(config, stage, &)
-        @seams.executor(@dir).call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage], &)
+      def run_stage(config, stage, job_id, reports)
+        output, *finished = execute(config, stage, reports.env) { |pid| @seams.recorder.stage_process(job_id, pid) }
+        outcome(stage, output, *finished).tap do |status|
+          keep_evidence(job_id, output, reports.failures) unless status == "completed"
+        end
+      end
+
+      def keep_evidence(job_id, output, failures)
+        @seams.recorder.keep_output(job_id, output)
+        @seams.recorder.keep_failures(job_id, failures)
+      end
+
+      def with_report_dir
+        reports = @seams.report_dir.call
+        yield reports
+      ensure
+        reports&.remove
+      end
+
+      def execute(config, stage, env, &)
+        @seams.executor(@dir).call("#{config.script_path(stage)} #{@commit_hash}", @seams.budgets[stage], env: env, &)
       end
 
       def outcome(stage, output, status, timed_out)

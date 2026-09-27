@@ -6,7 +6,7 @@ module FunCi
   module Persistence
     module StageJob
       TERMINAL_STATUSES = %w[completed failed timed_out cancelled].freeze
-      FIELDS = %i[id pipeline_run_id stage status started_at completed_at finished_order output_tail].freeze
+      FIELDS = %i[id pipeline_run_id stage status started_at completed_at finished_order output_tail failures].freeze
       COLUMNS = FIELDS.join(", ")
       NEXT_IN_RUN = "(SELECT COALESCE(MAX(others.finished_order), 0) + 1 FROM stage_jobs AS others " \
                     "WHERE others.pipeline_run_id = stage_jobs.pipeline_run_id)"
@@ -29,6 +29,11 @@ module FunCi
       # The end of what the stage printed, kept when it failed (acceptance-tests.md, AT-9.5).
       def self.keep_output(db, id, tail)
         db.execute("UPDATE stage_jobs SET output_tail = ? WHERE id = ?", [tail, id])
+      end
+
+      # The failures the stage reported, as JSON (acceptance-tests.md, AT-9.7).
+      def self.keep_failures(db, id, failures_json)
+        db.execute("UPDATE stage_jobs SET failures = ? WHERE id = ?", [failures_json, id])
       end
 
       def self.find(db, id)

@@ -26,9 +26,10 @@ module FunCi
         query("AND branch = ? ORDER BY id DESC LIMIT ?", branch, limit)
       end
 
-      # Drops the kept output of every run but the project's newest `keep`.
+      # Drops the kept output and reported failures of every run but the
+      # project's newest `keep`.
       def forget_output(keep:)
-        @db.execute("UPDATE stage_jobs SET output_tail = NULL WHERE output_tail IS NOT NULL AND pipeline_run_id IN " \
+        @db.execute("UPDATE stage_jobs SET output_tail = NULL, failures = NULL WHERE pipeline_run_id IN " \
                     "(SELECT id FROM pipeline_runs WHERE project_path = ? ORDER BY id DESC LIMIT -1 OFFSET ?)",
                     [@project, keep])
       end

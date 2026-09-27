@@ -27,7 +27,7 @@ class TestStageTemplates < Minitest::Test
     end
 
     define_method(:"test_should_run_the_#{template}_fast_suite_with_its_own_tool") do
-      assert_equal "#!/bin/sh\n#{command}\n", FunCi::Setup::StageTemplates.scripts(template)["fast.sh"]
+      assert_equal command, FunCi::Setup::StageTemplates.scripts(template)["fast.sh"].lines[1].chomp
     end
   end
 

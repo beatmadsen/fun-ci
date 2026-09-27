@@ -63,7 +63,7 @@ fun-ci prune                                          # Remove fun-ci's worktree
 
 ## Stack
 
-- Ruby >= 3.2 (CI runs 3.2, 3.3, 3.4, 4.0). One runtime dependency: `sqlite3`, in WAL mode.
+- Ruby >= 3.2 (CI runs 3.2, 3.3, 3.4, 4.0). Two runtime dependencies: `sqlite3`, in WAL mode, and `rexml`, which reads the JUnit reports stages write.
 - Minitest, run in parallel processes by ActiveSupport's executor (serially under `MUTATION_TESTING`); RuboCop; mutineer for the mutation lane (Ruby >= 3.4 only).
 - Prism, in tests, to read Ruby sources for the code-limit and call scans.
 - Rust pinned to one release in `renderer/rust-toolchain.toml` (the root `rust-toolchain.toml` links to it); raise it on purpose, with the gate green on the new release.

@@ -75,8 +75,8 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-9.4: `fun-ci runs` lists the project's recent runs
 - [x] AT-9.5: A failed stage keeps the end of its output
 - [x] AT-9.6: `status` shows why a needed stage failed
-- [ ] AT-9.7: A stage's test reports name its failures
-- [ ] AT-9.8: `fun-ci init` writes stage scripts that report for Gradle and Maven
+- [x] AT-9.7: A stage's test reports name its failures
+- [x] AT-9.8: `fun-ci init` writes stage scripts that report for Gradle and Maven
 - [ ] AT-9.9: `fun-ci wait` waits for the level it needs
 - [ ] AT-9.10: `wait --within` gives up at the agent's deadline
 - [ ] AT-9.11: `wait` starts a run for a commit that has none

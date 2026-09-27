@@ -32,5 +32,6 @@ Gem::Specification.new do |spec|
   spec.executables = %w[fun-ci]
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "rexml", "~> 3.2"
   spec.add_dependency "sqlite3", "~> 2.0"
 end
