@@ -225,11 +225,28 @@ PNGs and accepts on purpose.
 
 ## Polishing the console with agents
 
-Planned in §6 of the acceptance tests: a loop whose unit of work is one
-finding about the console or its animations, taken from headless renders and
-a rubric, which stops when no open finding is above a threshold. It has two
-agent prompts, an evaluator that finds and an iterator that fixes, and a
-human who approves.
+Planned in §6 of the acceptance tests. There is no loop runner: polishing is
+something one agent does in an ordinary session, following a guide that
+suggests how to work in passes. The guide is a project skill,
+`.claude/skills/polish-console/`, so it loads only when an agent is asked to
+polish, rather than into every session.
+
+One pass renders the scenarios headless, evaluates them against the rubric,
+takes the finding with the most impact, tries candidate fixes for it, keeps
+the best one or none, and commits. The agent runs passes until no open finding
+is above the rubric's threshold, or it reaches the number of passes it was
+given, and then hands the snapshot changes to a human.
+
+**Decision: a fresh subagent evaluates each pass.** An agent that has just
+changed a scene knows what it meant the change to do, and tends to see it done.
+So where the harness has subagents, the guide has the agent delegate each
+pass's evaluation to a new one, which gets the renders, `stats.json` and the
+rubric, and neither the diff nor the code, and which never edits. Where there
+are none, the agent evaluates at the start of the pass, before it opens any
+scene code. Candidate fixes can be delegated too, one subagent per candidate
+value, each in a worktree of its own, so a sweep is rendered side by side.
+*Revisit if* evaluations by the agent itself turn out to agree with fresh
+ones, which would make the delegation cost with nothing to show for it.
 
 **Decision: the evaluator sees ordered PNG frames, never a GIF.** Claude's
 vision input uses only the first frame of an animated image, so a GIF would let
@@ -249,10 +266,10 @@ Background in [`research/llm-tui-iteration.md`](research/llm-tui-iteration.md).
   per item, each tied to a scenario and a frame range or region. It never
   edits. The rubric follows the two goals: an animation that reports state
   must read at a glance, and decoration must never hide status.
-- **The iterator** takes the highest-impact finding and tunes like a sweep:
+- **The fix** takes the highest-impact finding and tunes like a sweep:
   name the parameters in the scene's code that bear on it, change one at a
   time, compare labelled candidates, and mark the finding `needs-design` when
   no parameter can fix it because a mechanism is missing.
 - **A human approves** every snapshot change after watching it in a real
   terminal, since headless output can't show how the terminal's font and
-  repaint behave. The loop can propose aesthetics; it can't approve its own.
+  repaint behave. An agent can propose aesthetics; it can't approve its own.

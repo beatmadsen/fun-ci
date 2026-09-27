@@ -228,13 +228,14 @@ is possible.
 - 5.3b Ruby `tui/` rendering classes and `animations/` are deleted, once 5.2 and 5.3 leave nothing that drives them (the golden corpus capture and the Cucumber features do until then).
 - 5.4 README, CHANGELOG, version 2.0.0.
 
-## 6. Polish loop (outline; see architecture.md, "Polishing the console with agents")
+## 6. Polishing the console (outline; see architecture.md, "Polishing the console with agents")
 
 - 6.1 Objective visual gates from `stats.json` and `frames/` in `rake`, including "consecutive animation frames differ" and "every PNG decodes at the expected size". Bites shown for each.
-- 6.2 `docs/tui-rubric.md`, derived from `design.md` and separating state feedback from decoration, with optional reference screenshots in `docs/tui-references/`.
-- 6.3 Evaluator prompt: reads ordered PNG frames (never a GIF), the contact sheet, `stats.json` and the rubric; every finding names a scenario and a frame range or region.
-- 6.4 Iterator prompt: one-parameter sweeps rendered as labelled candidates, edits limited to the values the finding concerns, `needs-design` when no parameter can fix it.
-- 6.5 `rake polish:approve`, run by a human after viewing the change in a real terminal.
+- 6.2 `docs/tui-rubric.md`, derived from `design.md` and separating state feedback from decoration, with a threshold for a finding worth a pass, and optional reference screenshots in `docs/tui-references/`.
+- 6.3 The `polish-console` project skill: how one agent works in passes (render, evaluate, fix one finding, commit) until no finding is above the threshold or its passes run out, and hands the snapshot changes to a human.
+- 6.4 Evaluation in the skill: a fresh subagent each pass where the harness has them, else the agent's own evaluation before it reads scene code; reads ordered PNG frames (never a GIF), the contact sheet, `stats.json` and the rubric, never the diff; every finding names a scenario and a frame range or region.
+- 6.5 Fixing in the skill: one-parameter sweeps rendered as labelled candidates, optionally one subagent and worktree per candidate; edits limited to the values the finding concerns; `needs-design` when no parameter can fix it.
+- 6.6 `rake polish:approve`, run by a human after viewing the change in a real terminal.
 
 ## 7. Glanceable milestones
 
