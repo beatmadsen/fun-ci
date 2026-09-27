@@ -41,9 +41,12 @@ module FunCi
         stage_dir&.remove
       end
 
+      # What to collect is read from the worktree, so it is the commit's own.
       def collector(stage, stage_dir)
-        Evidence::Collector.new(Evidence::Sources.new(stage: stage, worktree: @dir, reports: stage_dir,
-                                                      environment: @seams.environment.merge(stage_dir.env)))
+        sources = Evidence::Sources.new(stage: stage, worktree: @dir, reports: stage_dir,
+                                        environment: @seams.environment.merge(stage_dir.env))
+        settings = Evidence::Settings.load(File.join(@dir, ".fun-ci", "config"))
+        Evidence::Collector.new(sources, settings: settings, clock: @seams.clock)
       end
     end
   end

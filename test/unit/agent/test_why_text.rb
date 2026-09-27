@@ -37,6 +37,13 @@ class TestWhyText < Minitest::Test
                  lines(stage("failed", kept: { tail: "one\ntwo\n" })).drop(2)
   end
 
+  def test_should_say_where_an_excerpt_came_from
+    evidence = '{"excerpts":[{"title":"Lines matching ERROR","location":"output:3","lines":["ERROR"],' \
+               '"extractor":"grep"}]}'
+
+    assert_equal "Lines matching ERROR (output:3), from grep:", lines(stage("failed", kept: { evidence: evidence }))[3]
+  end
+
   def test_should_say_the_evidence_of_a_failed_stage_was_pruned
     assert_equal ["Its evidence is no longer kept: fun-ci keeps it for a project's 50 newest runs."],
                  lines(stage("failed", kept: { pruned: true })).drop(2)

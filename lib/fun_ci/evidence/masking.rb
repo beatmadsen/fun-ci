@@ -17,10 +17,16 @@ module FunCi
         /(?<=Authorization: ).+/i
       ].freeze
 
-      def initialize(environment, patterns: [])
+      # Masks nothing, for a project that turned masking off.
+      def self.none = new({}, shapes: [])
+
+      def initialize(environment, patterns: [], shapes: SHAPES)
         @secrets = secrets(environment)
-        @patterns = SHAPES + patterns
+        @patterns = shapes + patterns
       end
+
+      # Every string in the document masked.
+      def document(document) = document.with(**document.to_h.transform_values { |items| deep(items) })
 
       def mask(text)
         masked = @secrets.reduce(text) { |current, (name, value)| current.gsub(value, "[masked:#{name}]") }
@@ -28,6 +34,14 @@ module FunCi
       end
 
       private
+
+      def deep(value)
+        return mask(value) if value.is_a?(String)
+        return value.map { |item| deep(item) } if value.is_a?(Array)
+        return value.transform_values { |item| deep(item) } if value.is_a?(Hash)
+
+        value
+      end
 
       # Longest first, so a value that contains another is masked whole.
       def secrets(environment)

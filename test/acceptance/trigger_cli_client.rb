@@ -36,9 +36,11 @@ class TriggerCliClient
   def stdout = @outcome.stdout
   def stderr = @outcome.stderr
 
-  # The action the user takes: commit (or push) on a branch.
-  def trigger(commit_hash:, branch:, scripts: {}, commit_validator: nil)
-    ScriptedProject.new(project_dir).write(scripts)
+  # The action the user takes: commit (or push) on a branch. `files` may
+  # give the stage scripts' bodies (scripts:) and .fun-ci/config (config:).
+  def trigger(commit_hash:, branch:, commit_validator: nil, **files)
+    ScriptedProject.new(project_dir).write(files.fetch(:scripts, {}))
+    File.write(File.join(project_dir, ".fun-ci", "config"), files[:config]) if files[:config]
     run_trigger(project_dir, FunCi::Pipeline::Commit.new(sha: commit_hash, branch: branch), commit_validator)
   end
 

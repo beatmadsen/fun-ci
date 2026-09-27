@@ -28,6 +28,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   longer grows fun-ci's memory without end.
 - Every stage script finds its stage's name in `FUN_CI_STAGE`, so a project
   can send each stage's logs to a file of its own.
+- A project can say what else to keep when a stage fails, under `evidence:`
+  in `.fun-ci/config`: for example a `grep` for `ERROR` lines, with lines of
+  context, in the output or in a log file. Each stage's entries run when it
+  fails, the slow suite's too, within a budget of 2 seconds (`budget:`), and
+  `mask:` adds patterns to mask.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

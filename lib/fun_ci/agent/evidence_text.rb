@@ -21,7 +21,8 @@ module FunCi
       end
 
       def self.excerpt(excerpt)
-        ["", "#{excerpt[:title]}, from #{excerpt[:extractor]}:", *excerpt[:lines].map { |line| "  #{line}" }]
+        place = excerpt[:location] == "output" ? "" : " (#{excerpt[:location]})"
+        ["", "#{excerpt[:title]}#{place}, from #{excerpt[:extractor]}:", *excerpt[:lines].map { |line| "  #{line}" }]
       end
       private_class_method :failures, :failure, :excerpt
     end

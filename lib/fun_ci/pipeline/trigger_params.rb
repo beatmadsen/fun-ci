@@ -18,9 +18,10 @@ module FunCi
 
     # The collaborators a pipeline run can have replaced. Each one left out
     # gets the real thing. `environment` is the stages' environment as a hash,
-    # which masking and injected command runners see.
+    # which masking and injected command runners see; `clock` answers seconds
+    # for the evidence budget.
     Seams = Data.define(:command_runner, :time_budgets, :commit_validator, :recorder, :background_launcher, :workspace,
-                        :stage_dir, :environment)
+                        :stage_dir, :environment, :clock)
 
     # Reopened rather than given as a block to Data.define, so tools that read
     # the source (mutineer) see these as Seams' methods.
@@ -28,7 +29,7 @@ module FunCi
       def self.defaults
         { command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new, background_launcher: nil,
           workspace: nil, commit_validator: method(:commit_exists?), stage_dir: StageDir.method(:create),
-          environment: ENV.to_h }
+          environment: ENV.to_h, clock: -> { Process.clock_gettime(Process::CLOCK_MONOTONIC) } }
       end
 
       def self.commit_exists?(sha) = Open3.capture2e(GitEnvironment::CLEAN, "git", "cat-file", "-t", sha).last.success?

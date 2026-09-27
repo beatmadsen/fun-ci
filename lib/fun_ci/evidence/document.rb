@@ -18,6 +18,17 @@ module FunCi
         new(**members.to_h { |member| [member, parsed.fetch(member, [])] })
       end
 
+      # The evidence from each extractor's findings, [name, findings] in the
+      # order they are shown, each item crediting the extractor that found it.
+      def self.assemble(parts, problems:, chosen:)
+        new(chosen: chosen, facts: credited(parts, :facts), failures: credited(parts, :failures),
+            excerpts: credited(parts, :excerpts), problems: problems)
+      end
+
+      def self.credited(parts, list)
+        parts.flat_map { |name, found| found.public_send(list).map { |item| item.merge(extractor: name) } }
+      end
+
       # The evidence of a row that kept only the output's tail and the reported failures.
       def self.legacy(tail:, failures:)
         new(chosen: [], facts: [], failures: failures.map { |failure| failure.merge(extractor: "test-reports") },
@@ -38,7 +49,7 @@ module FunCi
       def self.tail_excerpt(tail)
         { title: TAIL_TITLE, location: "output", lines: tail.lines(chomp: true), extractor: "output-tail" }
       end
-      private_class_method :tail_excerpt
+      private_class_method :tail_excerpt, :credited
     end
   end
 end
