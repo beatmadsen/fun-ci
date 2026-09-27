@@ -3,7 +3,7 @@
 module FunCi
   module Evidence
     # Where a failed stage's evidence can come from while it still holds its
-    # slot (why.md, "Where evidence can come from"): the stage, the worktree
+    # slot (architecture.md, "Evidence of a failed stage"): the stage, the worktree
     # it ran in, its stage directory (`reports`), its environment as a hash,
     # the Stamp of each watched file when it started, by path, its budget,
     # its commit ({ sha:, branch: }), when it started, `processes`, which

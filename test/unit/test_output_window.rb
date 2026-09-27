@@ -4,7 +4,7 @@ require_relative "../test_helper"
 require "fun_ci/pipeline/output_window"
 
 # A stage's output kept as its first and last bytes, cut on line ends
-# (why.md, "The budget, and what bounds the built-ins").
+# (architecture.md, "Evidence of a failed stage").
 class TestOutputWindow < Minitest::Test
   WINDOW = FunCi::Pipeline::OutputWindow
   SIZES = WINDOW::Sizes.new(head: 10, tail: 12)

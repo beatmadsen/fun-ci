@@ -5,7 +5,7 @@ require_relative "../../../support/evidence_kit"
 require "fun_ci/evidence/extractors/json_log"
 
 # `json-log`: JSON log lines at or above a level, each as one line followed
-# by its stack trace (why.md).
+# by its stack trace (architecture.md, "Evidence of a failed stage").
 class TestJsonLog < Minitest::Test
   include EvidenceKit
 

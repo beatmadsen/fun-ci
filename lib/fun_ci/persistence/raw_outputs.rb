@@ -7,7 +7,7 @@ module FunCi
   module Persistence
     # What each failed stage printed, masked and cut to its window, kept as a
     # gzip file per stage in a directory beside the database: SQLite would
-    # not give a deleted blob's space back without a VACUUM (why.md).
+    # not give a deleted blob's space back without a VACUUM (architecture.md, "Evidence of a failed stage").
     class RawOutputs
       def self.beside(db_path) = new(File.join(File.dirname(db_path), "raw"))
 

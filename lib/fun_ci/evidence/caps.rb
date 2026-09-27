@@ -4,7 +4,7 @@ require "json"
 
 module FunCi
   module Evidence
-    # How much evidence fun-ci keeps (why.md, "Storage and retention"): at
+    # How much evidence fun-ci keeps (architecture.md, "Evidence of a failed stage"): at
     # most `failures` failures, the rest counted in a fact; then, over
     # `bytes` of JSON, excerpts cut from the last backwards, then messages
     # to their first `message_lines`, each cut marked `truncated`. Facts and

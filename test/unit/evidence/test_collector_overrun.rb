@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/collector_kit"
 require "json"
 
-# What a stage over budget was doing, looked at before the kill (why.md, "Overruns").
+# What a stage over budget was doing, looked at before the kill (architecture.md, "Evidence of a failed stage").
 class TestCollectorOverrun < Minitest::Test
   include CollectorKit
 

@@ -4,7 +4,7 @@ require_relative "../test_helper"
 require_relative "../support/db_recorder_setup"
 
 # Which other stages of a run were running at any moment between a stage's
-# start and now (why.md, "Where evidence can come from").
+# start and now (architecture.md, "Evidence of a failed stage").
 class TestStageAlongside < Minitest::Test
   include DbRecorderTestSetup
 

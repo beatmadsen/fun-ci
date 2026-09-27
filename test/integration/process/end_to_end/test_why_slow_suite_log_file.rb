@@ -3,7 +3,7 @@
 require_relative "../../../test_helper"
 require_relative "../../../support/end_to_end"
 
-# The whole of fun-ci why through the real CLI (why.md, "Testing it"): a
+# The whole of fun-ci why through the real CLI (architecture.md, "Evidence of a failed stage"): a
 # real slow suite, run in its forked child in a worktree slot, fails with its
 # cause only in a log file, and an agent reads the cause back.
 class TestWhySlowSuiteLogFile < Minitest::Test

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-# Times what choosing presets costs a failed stage (why.md, "Choosing which
-# run"): the one scan of a full output window (1 MB + 7 MB) for every
-# preset's signature, with every preset a candidate, and each preset reading
-# the window. The window is the recorded runs in test/fixtures/evidence/,
-# repeated. Run it when a preset is added.
+# Times what choosing presets costs a failed stage (architecture.md, "Evidence
+# of a failed stage"): the one scan of a full output window (1 MB + 7 MB) for
+# every preset's signature, with every preset a candidate, and each preset
+# reading the window. The window is the recorded runs in
+# test/fixtures/evidence/, repeated. Run it when a preset is added.
 #
 #   ruby script/bench_detection.rb
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)

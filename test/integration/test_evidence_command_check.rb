@@ -5,7 +5,7 @@ require "tmpdir"
 require "fun_ci/evidence/settings"
 
 # `fun-ci check` reports a `run:` entry whose script is missing or can't be
-# run (why.md, "Configuration").
+# run (architecture.md, "Evidence of a failed stage").
 class TestEvidenceCommandCheck < Minitest::Test
   def setup
     @root = Dir.mktmpdir

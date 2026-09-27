@@ -93,7 +93,34 @@ fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all
 | 5 | No run for the commit |
 | 64 | Usage error |
 
-A failed stage comes with its evidence: the last lines it printed, or better, the failures its tests reported. fun-ci names an empty directory in `FUN_CI_REPORT` for every stage; write JUnit XML (`*.xml`) or `{"failures": [{"file", "line", "test", "message"}]}` (`*.json`) there. The Gradle and Maven scripts `fun-ci init` writes already copy their reports in. Every command takes `--json`.
+A failed stage comes with its evidence, so an agent never has to rerun a suite to find out why. `status` and `wait` end with a digest and the command that shows the rest:
+
+```
+fun-ci why 3f9c2ab fast
+```
+
+`why` prints how the stage ended, each failure with its whole message and its own output, what the extractors picked out of the output and the log files, and anything that went wrong collecting it. `why --raw` prints the output itself. Every command takes `--json`.
+
+fun-ci names an empty directory in `FUN_CI_REPORT` for every stage; write JUnit XML (`*.xml`) or `{"failures": [{"file", "line", "test", "message", "output"}]}` (`*.json`) there. The Gradle and Maven scripts `fun-ci init` writes already copy their reports in.
+
+With no configuration, fun-ci runs the presets for the tools your project has when a failure shows them: rspec, Minitest, Gradle, Maven, pytest, unittest, Jest, Vitest, Mocha, Node's test runner, Bun, Deno, go test, cargo test, dotnet test, PHPUnit, ExUnit, swift test, dart test, GoogleTest, tsc, ESLint, RuboCop, Ruff, mypy, go build, rustc, gcc, ShellCheck and prove, and JSON logs from logstash-logback-encoder, ECS, pino and structlog. `fun-ci check` lists the ones that apply. To keep more, add entries under `evidence:` in `.fun-ci/config`:
+
+```yaml
+evidence:
+  stages:
+    fast:
+      - use: log-file            # what the stage wrote to it, and only that
+        path: log/test.log
+        grep: ["ERROR"]
+        context: 5
+    slow:
+      - run: .fun-ci/evidence/problems   # your own extractor, in any language:
+        format: json                     # the context on stdin, JSON on stdout
+      - run: pkill -QUIT -g "$FUN_CI_PGID" java   # a thread dump before an overrun is killed
+        on: overrun
+```
+
+`fun-ci extract fast --output saved.log` runs a stage's extractors against a saved output (`fun-ci why --raw > saved.log`), so you can try an entry without making a commit. Secrets in the stage's environment are masked before anything is kept.
 
 ## Git Hooks
 

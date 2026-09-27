@@ -15,11 +15,11 @@ require_relative "../persistence/output_tail"
 
 module FunCi
   module Evidence
-    # Picks out what fun-ci keeps about a stage that failed (why.md, "How it
-    # fits together"): for an overrun, what process-tree and the entries for
-    # an overrun found before the kill; the reported failures; the entries
-    # configured for the stage, within the budget; then the output's last
-    # lines; all masked.
+    # Picks out what fun-ci keeps about a stage that failed (architecture.md,
+    # "Evidence of a failed stage"): for an overrun, what process-tree and the
+    # entries for an overrun found before the kill; the reported failures; the
+    # entries configured for the stage, within the budget; then the output's
+    # last lines; all masked.
     class Collector
       MONOTONIC = -> { Process.clock_gettime(Process::CLOCK_MONOTONIC) }
       FAILED = Outcome.new(state: "failed")

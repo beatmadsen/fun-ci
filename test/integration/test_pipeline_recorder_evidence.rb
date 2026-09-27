@@ -6,8 +6,8 @@ require "fun_ci/evidence/document"
 require "json"
 
 # The recorder keeps a failed stage's evidence as one document, and still
-# fills the columns an older fun-ci on the same machine reads (why.md,
-# "Storage and retention").
+# fills the columns an older fun-ci on the same machine reads (architecture.md,
+# "Evidence of a failed stage").
 class TestPipelineRecorderEvidence < Minitest::Test
   include DbRecorderTestSetup
 

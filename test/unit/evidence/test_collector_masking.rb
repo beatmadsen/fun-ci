@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/collector_kit"
 require "json"
 
-# Nothing a failed stage kept holds a secret masking can see (why.md, "Masking secrets").
+# Nothing a failed stage kept holds a secret masking can see (architecture.md, "Evidence of a failed stage").
 class TestCollectorMasking < Minitest::Test
   include CollectorKit
 

@@ -7,7 +7,7 @@ module FunCi
     module Extractors
       # `process-tree`: for a stage that ran over budget, before the kill, the
       # processes of its group as a tree, each with how long it had run, and
-      # the deepest one as the fact `running` (why.md, "Overruns").
+      # the deepest one as the fact `running` (architecture.md, "Evidence of a failed stage").
       class ProcessTree
         OPTIONS = {}.freeze
         REQUIRED = [].freeze

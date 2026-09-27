@@ -93,11 +93,27 @@ uncommitted files.
   `--json` gives the same facts to a program. Both are a contract: a JSON
   document carries a schema version, and a field, once published, keeps its
   name.
-- A failed stage comes with its evidence: the failures its test reports name
-  (JUnit XML or fun-ci's JSON written to `FUN_CI_REPORT`), or else the last
-  lines it printed. `status` and `wait` show a digest of it; the whole of it,
-  `fun-ci why`, is designed in [`why.md`](why.md) and not built yet
-  (`acceptance-tests.md`, §10).
+- A failed stage comes with its evidence, so an agent never reruns a suite to
+  find out why. `status` and `wait` show a digest: for a stage that ran over
+  budget, what it was running when it was stopped; then the failures its test
+  reports name, or else the first excerpt, or else its last lines. The digest
+  ends with the command that shows the rest, `fun-ci why 3f9c2ab fast`.
+- `fun-ci why` prints everything kept: how the stage exited against its
+  budget, the stages that shared its worktree, each failure with its whole
+  message and its own output, each excerpt under its title and where it came
+  from, and anything that went wrong collecting them. `why --raw` prints the
+  output itself (its first megabyte and last seven), and `--json` the same as
+  one document. When all fun-ci kept is the output's last lines, `why` says so
+  and names the setting that keeps more, so an agent can write the extractor
+  itself.
+- A project says what else to keep under `evidence:` in `.fun-ci/config`: a
+  `grep` for lines, a `section` between two patterns, what a stage wrote to a
+  `log-file`, the records of a `json-log` at or above a level, or its own
+  command (`run:`) in any language. With no configuration, presets for 34
+  tools run when the project's files and the failure show that tool.
+  `fun-ci check` lists the presets that apply, and `fun-ci extract` tries a
+  stage's extractors on a saved output, so a change can be tried without a
+  commit. Secrets are masked before anything is kept.
 
 ## A run's states
 

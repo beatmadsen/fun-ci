@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/evidence_kit"
 require "fun_ci/evidence/context_document"
 
-# The context a project's command reads on stdin (why.md, "Your own extractor").
+# The context a project's command reads on stdin (architecture.md, "Evidence of a failed stage").
 class TestContextDocument < Minitest::Test
   include EvidenceKit
 

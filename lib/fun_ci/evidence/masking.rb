@@ -2,10 +2,10 @@
 
 module FunCi
   module Evidence
-    # Masks secrets in text before fun-ci keeps it (why.md, "Masking
-    # secrets"): the values of the stage's secret-named variables, well-known
-    # token shapes, and a project's own patterns. A best effort, not a
-    # guarantee. Given the environment as a hash; never reads ENV.
+    # Masks secrets in text before fun-ci keeps it (architecture.md, "Evidence
+    # of a failed stage"): the values of the stage's secret-named variables,
+    # well-known token shapes, and a project's own patterns. A best effort, not
+    # a guarantee. Given the environment as a hash; never reads ENV.
     class Masking
       SECRET_NAME = /TOKEN|SECRET|PASSWORD|PASSWD|API_KEY|PRIVATE_KEY|CREDENTIAL/
       SHORTEST = 8

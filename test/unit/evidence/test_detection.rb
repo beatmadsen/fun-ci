@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/evidence_kit"
 require "fun_ci/evidence/detection"
 
-# Which presets run (why.md, "Choosing which run"): those whose marker files
+# Which presets run (architecture.md, "Evidence of a failed stage"): those whose marker files
 # the project has, and, of those with an output signature, only those whose
 # signature the output matched.
 class TestDetection < Minitest::Test

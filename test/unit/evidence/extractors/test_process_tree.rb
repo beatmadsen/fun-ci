@@ -6,7 +6,7 @@ require "fun_ci/evidence/extractors/process_tree"
 require "fun_ci/evidence/process_table"
 
 # `process-tree`: the processes of a stage that ran over budget, before the
-# kill (why.md, "Overruns").
+# kill (architecture.md, "Evidence of a failed stage").
 class TestProcessTree < Minitest::Test
   include EvidenceKit
 

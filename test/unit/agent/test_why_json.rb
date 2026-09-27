@@ -3,7 +3,7 @@
 require_relative "../../test_helper"
 require "fun_ci/agent/why_json"
 
-# `fun-ci why --json` (acceptance-tests.md, AT-10.2; the document is why.md's).
+# `fun-ci why --json` (acceptance-tests.md, AT-10.2; the document is its contract).
 class TestWhyJson < Minitest::Test
   REPORT = FunCi::Agent::RunReport
   EXIT = REPORT::Exit.new(exit_status: 1, signal: nil, budget: 10)

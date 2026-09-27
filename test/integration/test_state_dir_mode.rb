@@ -5,7 +5,7 @@ require "tmpdir"
 require "fun_ci/persistence/state_dir"
 
 # What fun-ci keeps can hold what masking missed, so only its user can read
-# the state directory (why.md, "Masking secrets").
+# the state directory (architecture.md, "Evidence of a failed stage").
 class TestStateDirMode < Minitest::Test
   def setup
     @root = Dir.mktmpdir

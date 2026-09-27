@@ -4,7 +4,7 @@ require_relative "../../../test_helper"
 require_relative "../../../support/evidence_kit"
 require "fun_ci/evidence/extractors/log_file"
 
-# `log-file`: what a stage wrote to the files under a glob (why.md).
+# `log-file`: what a stage wrote to the files under a glob (architecture.md, "Evidence of a failed stage").
 class TestLogFile < Minitest::Test
   include EvidenceKit
 

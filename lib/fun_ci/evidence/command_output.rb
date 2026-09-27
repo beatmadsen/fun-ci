@@ -7,7 +7,7 @@ require_relative "problem"
 module FunCi
   module Evidence
     # What a project's command printed, as findings: with `format: text`,
-    # one excerpt; with `format: json`, the document of why.md, whose fields
+    # one excerpt; with `format: json`, the document of `contract/evidence/`, whose fields
     # fun-ci doesn't know are ignored.
     module CommandOutput
       SCHEMA = 1

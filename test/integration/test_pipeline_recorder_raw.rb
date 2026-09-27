@@ -5,7 +5,7 @@ require_relative "../support/db_recorder_setup"
 require "fun_ci/persistence/raw_outputs"
 
 # A failed stage's raw output is kept for a project's 10 newest runs
-# (acceptance-tests.md, AT-10.6; why.md, "Storage and retention").
+# (acceptance-tests.md, AT-10.6; architecture.md, "Evidence of a failed stage").
 class TestPipelineRecorderRaw < Minitest::Test
   include DbRecorderTestSetup
 

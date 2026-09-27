@@ -3,7 +3,7 @@
 require_relative "../../test_helper"
 require "fun_ci/evidence/masking"
 
-# Secrets are masked before anything is kept (why.md, "Masking secrets").
+# Secrets are masked before anything is kept (architecture.md, "Evidence of a failed stage").
 class TestMasking < Minitest::Test
   MASKING = FunCi::Evidence::Masking
 

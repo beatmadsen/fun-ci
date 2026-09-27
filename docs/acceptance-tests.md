@@ -3,8 +3,8 @@
 The requirements, as acceptance tests, numbered like agent-tome's. They are
 built one at a time, in the order of their numbers, and each is committed with
 its number at the start of the subject, so `git log --grep 'AT-10\.'` shows
-which of a section are built. §6 and §10 are still to build; the built
-sections stay here because the tests that hold them cite them by number. An
+which of a section are built. §6 is still to build; the built sections stay
+here because the tests that hold them cite them by number. An
 outline item is refined into full Given/When/Then before it is built, as its
 own commit to this file. What fun-ci is for is in [`design.md`](design.md).
 
@@ -550,10 +550,11 @@ superseded runs.
 commit's run failed, so it never reruns a suite to find out. What is kept is
 picked out when the stage fails by extractors: built-ins, presets for popular
 stacks that fun-ci runs when they apply, and a project's own commands. Why it
-is designed this way, the documents' fields, the extractor protocol, and the
-unit and integration tests beneath these are in [`why.md`](why.md). Each test
-here pins one behaviour through a command; the cases around it belong to the
-class that decides them. Exit codes are those of §9: `why` exits with the
+is designed this way is in [`architecture.md`](architecture.md) (Evidence of a
+failed stage), what an agent sees in [`design.md`](design.md) (Agents), and the
+documents a project's command reads and prints in `contract/evidence/`. Each
+test here pins one behaviour through a command; the cases around it belong to
+the class that decides them. Exit codes are those of §9: `why` exits with the
 verdict.
 
 ### 10.1 `fun-ci why` prints everything kept about a failed stage
@@ -570,7 +571,7 @@ the order they finished, as the verdict does (`--need` as for `status`)
 ### 10.2 `why --json` gives the same as one document
 **Given** the run of 10.1
 **When** `fun-ci why --json` runs
-**Then** stdout is the document of `why.md`: `schema` 1, `commit`, `stage`,
+**Then** stdout is one document: `schema` 1, `commit`, `stage`,
 `state` (in `status --json`'s words), `exit_status`, `signal`, `seconds`,
 `budget`, `evidence` (`chosen`, `facts`, `failures`, `excerpts`, `problems`),
 `no_evidence` and `raw_output`, with the same exit code
@@ -660,8 +661,9 @@ logger, message), each followed by its stack trace, and nothing else.
 ### 10.15 A project's own command is an extractor
 **Given** `run: <command>` in a stage's list, with `format: json`
 **When** the stage fails
-**Then** the command gets the context document of `why.md` on stdin, and the
-facts, failures and excerpts it prints are in the evidence under its name
+**Then** the command gets the context document
+(`contract/evidence/context.json`) on stdin, and the facts, failures and
+excerpts it prints are in the evidence under its name
 **And** a command still running when the budget runs out is killed with what
 it started, recorded as a problem, and the verdict is unchanged.
 *Note:* in the process lane, since the command is real.

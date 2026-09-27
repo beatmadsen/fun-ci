@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Records the output of a real failing run of a tool, which pins its preset
-# (why.md, "Fixtures"): the minimal failing project in
+# (architecture.md, "Evidence of a failed stage"): the minimal failing project in
 # test/fixtures/evidence/NAME/recipe.yml runs in the recipe's pinned Docker
 # image (`setup` quietly, then `command`, stdout and stderr merged through a
 # pipe as a stage's are, then `version`), and its output is written beside

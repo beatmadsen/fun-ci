@@ -2,7 +2,7 @@
 
 require "yaml"
 
-# The recorded failing runs that pin each preset (why.md, "Fixtures"), in
+# The recorded failing runs that pin each preset (architecture.md, "Evidence of a failed stage"), in
 # test/fixtures/evidence/<preset>/: output.log, meta.yml and expected.yml.
 module EvidenceFixtures
   ROOT = File.expand_path("../fixtures/evidence", __dir__)

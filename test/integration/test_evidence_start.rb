@@ -5,7 +5,7 @@ require "tmpdir"
 require "fun_ci/evidence/start"
 
 # What a stage's evidence starts from, read from its worktree when it starts
-# (why.md, "Choosing which run").
+# (architecture.md, "Evidence of a failed stage").
 class TestEvidenceStart < Minitest::Test
   def setup
     @worktree = Dir.mktmpdir

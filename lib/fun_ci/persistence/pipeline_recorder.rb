@@ -93,7 +93,7 @@ module FunCi
         tolerating { RawOutputs.beside(@db_path).write(job_id, text) }
       end
 
-      # The stages that shared the slot with this one (why.md, "Where evidence can come from").
+      # The stages that shared the slot with this one (architecture.md, "Evidence of a failed stage").
       def alongside(job_id) = tolerating { StageJob.alongside(@db, job_id) } || []
 
       def keep_exit(job_id, exit_status, signal)

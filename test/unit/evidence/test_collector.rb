@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/collector_kit"
 require "json"
 
-# What fun-ci keeps about a stage that failed (why.md, "How it fits together").
+# What fun-ci keeps about a stage that failed (architecture.md, "Evidence of a failed stage").
 class TestCollector < Minitest::Test
   include CollectorKit
 

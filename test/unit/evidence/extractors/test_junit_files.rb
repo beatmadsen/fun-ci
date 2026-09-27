@@ -5,7 +5,7 @@ require_relative "../../../support/evidence_kit"
 require "fun_ci/evidence/extractors/junit_files"
 
 # `junit-files`: the failures in JUnit XML a build tool wrote in its own
-# place during the stage (why.md).
+# place during the stage (architecture.md, "Evidence of a failed stage").
 class TestJunitFiles < Minitest::Test
   include EvidenceKit
 

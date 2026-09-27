@@ -5,7 +5,7 @@ require "fun_ci/evidence/caps"
 require "fun_ci/evidence/document"
 
 # The evidence is printed whole into an agent's context, so it has a size
-# (why.md, "Storage and retention").
+# (architecture.md, "Evidence of a failed stage").
 class TestCaps < Minitest::Test
   CAPS = FunCi::Evidence::Caps
   LIMITS = CAPS::Limits.new(bytes: 1000, failures: 3, message_lines: 2)

@@ -13,7 +13,7 @@ require_relative "extractors/process_tree"
 module FunCi
   module Evidence
     # The built-in extractors by name, and how an entry of .fun-ci/config
-    # becomes one to run (why.md, "Configuration"). An entry that can't is
+    # becomes one to run (architecture.md, "Evidence of a failed stage"). An entry that can't is
     # Refused, with what is wrong with it.
     module Catalog
       class Refused < StandardError; end

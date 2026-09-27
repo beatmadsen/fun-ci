@@ -4,8 +4,8 @@ require_relative "about"
 
 module FunCi
   module Evidence
-    # The context a project's command reads on stdin (why.md, "Your own
-    # extractor"). Fields once published keep their names; a change that
+    # The context a project's command reads on stdin (architecture.md, "Evidence
+    # of a failed stage"). Fields once published keep their names; a change that
     # isn't additive bumps SCHEMA.
     module ContextDocument
       SCHEMA = 1

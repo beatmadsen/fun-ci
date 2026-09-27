@@ -6,7 +6,7 @@ require_relative "../../support/process_state"
 require "tmpdir"
 require "fun_ci/evidence/command_runner"
 
-# A project's extractor command, run for real (why.md, "Your own extractor").
+# A project's extractor command, run for real (architecture.md, "Evidence of a failed stage").
 class TestEvidenceCommandRunner < Minitest::Test
   include ProcessDeadline
 

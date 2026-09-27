@@ -8,8 +8,8 @@ require "fun_ci/evidence/catalog"
 require "fun_ci/evidence/collector"
 require "json"
 
-# Properties of every built-in and of masking over arbitrary output (why.md,
-# "Testing it"). Each run is seeded and says its seed when it fails.
+# Properties of every built-in and of masking over arbitrary output (architecture.md,
+# "Evidence of a failed stage"). Each run is seeded and says its seed when it fails.
 class TestEvidenceProperties < Minitest::Test
   include EvidenceKit
 

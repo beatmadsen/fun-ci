@@ -80,7 +80,7 @@ class TestStageEnd < Minitest::Test
     assert_equal "timed_out", FunCi::Pipeline::StageEnd.new(FakeRecorder.new, 1, EchoCollector.new).record(finished)
   end
 
-  # Collecting evidence never changes a stage's verdict (why.md, goal 2).
+  # Collecting evidence never changes a stage's verdict (architecture.md, "Evidence of a failed stage").
   class BrokenCollector
     def collect(_output, _outcome) = raise(ArgumentError, "broken")
     def masked(_output) = raise(ArgumentError, "broken")

@@ -37,7 +37,7 @@ module FunCi
         db.execute("UPDATE stage_jobs SET failures = ? WHERE id = ?", [failures_json, id])
       end
 
-      # What was kept about why the stage failed, as JSON (why.md).
+      # What was kept about why the stage failed, as JSON (architecture.md, "Evidence of a failed stage").
       def self.keep_evidence(db, id, evidence_json)
         db.execute("UPDATE stage_jobs SET evidence = ? WHERE id = ?", [evidence_json, id])
       end

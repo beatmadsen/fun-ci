@@ -4,7 +4,7 @@ require_relative "../../../test_helper"
 require_relative "../../../support/evidence_kit"
 require "fun_ci/evidence/extractors/section"
 
-# `section`: the lines from a start pattern up to an end pattern (why.md).
+# `section`: the lines from a start pattern up to an end pattern (architecture.md, "Evidence of a failed stage").
 class TestSection < Minitest::Test
   include EvidenceKit
 

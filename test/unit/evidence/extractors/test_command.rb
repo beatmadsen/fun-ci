@@ -6,7 +6,7 @@ require "fun_ci/evidence/extractors/command"
 require "json"
 
 # A project's own extractor: a command given the context on stdin, whose
-# stdout is evidence (why.md, "Your own extractor").
+# stdout is evidence (architecture.md, "Evidence of a failed stage").
 class TestCommand < Minitest::Test
   include EvidenceKit
 

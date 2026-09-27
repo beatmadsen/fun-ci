@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require "fun_ci/evidence/catalog"
 
 # The built-in extractors by name, each with the options it takes, which is
-# how an entry in .fun-ci/config is checked (why.md, "Configuration").
+# how an entry in .fun-ci/config is checked (architecture.md, "Evidence of a failed stage").
 class TestCatalog < Minitest::Test
   CATALOG = FunCi::Evidence::Catalog
 

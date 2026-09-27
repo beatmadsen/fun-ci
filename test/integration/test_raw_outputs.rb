@@ -5,7 +5,7 @@ require "tmpdir"
 require "fun_ci/persistence/raw_outputs"
 
 # The raw output of each failed stage, kept as a compressed file per stage
-# beside the database (why.md, "Storage and retention").
+# beside the database (architecture.md, "Evidence of a failed stage").
 class TestRawOutputs < Minitest::Test
   TEXT = "line of output\n" * 1000
 

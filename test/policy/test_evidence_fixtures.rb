@@ -8,8 +8,8 @@ require "fun_ci/evidence/source"
 
 # A preset is only as good as the output it was checked against, so every
 # preset has a recorded failing run, the run is the one recorded, and what it
-# is expected to pick out is a range of that run's own lines (why.md,
-# "Fixtures"). A hash shows an edit; it doesn't stop one.
+# is expected to pick out is a range of that run's own lines (architecture.md,
+# "Evidence of a failed stage"). A hash shows an edit; it doesn't stop one.
 class TestEvidenceFixtures < Minitest::Test
   RANGE = /\Aoutput:(\d+)(?:-(\d+))?\z/
 

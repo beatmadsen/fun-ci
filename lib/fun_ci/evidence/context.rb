@@ -2,7 +2,7 @@
 
 module FunCi
   module Evidence
-    # What an extractor is given about a failed stage (why.md, "Extractors"):
+    # What an extractor is given about a failed stage (architecture.md, "Evidence of a failed stage"):
     # the stage, its output as the window kept it, the worktree it ran in
     # (read through #read, #exist?, #glob, #stamp and #lines_before, by path
     # relative to it), the deadline it checks as it goes, the Stamp of each

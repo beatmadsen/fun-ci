@@ -4,7 +4,7 @@ require "json"
 
 module FunCi
   module Evidence
-    # What fun-ci kept about why a stage failed (why.md): the extractors
+    # What fun-ci kept about why a stage failed (architecture.md, "Evidence of a failed stage"): the extractors
     # chosen and why, facts, failures, excerpts, and the problems extractors
     # had. Each item is a hash naming the extractor that found it.
     Document = Data.define(:chosen, :facts, :failures, :excerpts, :problems)

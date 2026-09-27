@@ -7,7 +7,7 @@ require_relative "settings_check"
 
 module FunCi
   module Evidence
-    # The `evidence` key of .fun-ci/config (why.md, "Configuration"): the
+    # The `evidence` key of .fun-ci/config (architecture.md, "Evidence of a failed stage"): the
     # settings, each with its default, and each stage's entries, those for
     # `all` first. A setting that is wrong takes its default; #errors says
     # what is wrong, for `fun-ci check`.

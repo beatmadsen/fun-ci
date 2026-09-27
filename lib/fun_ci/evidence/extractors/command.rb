@@ -11,7 +11,7 @@ module FunCi
       # A project's own extractor, a `run:` entry: the command, run in the
       # worktree with what is left of the budget, reads the context on stdin
       # and prints evidence as text or, with `format: json`, as a document
-      # (why.md, "Your own extractor"). `watch` names the files it is told
+      # (architecture.md, "Evidence of a failed stage"). `watch` names the files it is told
       # about; whatever else the entry says is passed on as `options`.
       class Command
         OWN = %w[run format watch].freeze

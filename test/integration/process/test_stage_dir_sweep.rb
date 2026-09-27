@@ -5,8 +5,8 @@ require "tmpdir"
 require "fun_ci/pipeline/stage_dir"
 
 # A stage's directory holds its output unmasked until the stage is recorded,
-# so one a crash left behind is removed when the next stage starts (why.md,
-# "Masking secrets").
+# so one a crash left behind is removed when the next stage starts (architecture.md,
+# "Evidence of a failed stage").
 class TestStageDirSweep < Minitest::Test
   def setup = @root = Dir.mktmpdir
   def teardown = FileUtils.remove_entry(@root)

@@ -4,7 +4,8 @@ require_relative "../../../test_helper"
 require_relative "../../../support/evidence_kit"
 require "fun_ci/evidence/extractors/grep"
 
-# `grep`: the lines matching patterns, with lines of context around each (why.md).
+# `grep`: the lines matching patterns, with lines of context around each
+# (architecture.md, "Evidence of a failed stage").
 class TestGrep < Minitest::Test
   include EvidenceKit
 

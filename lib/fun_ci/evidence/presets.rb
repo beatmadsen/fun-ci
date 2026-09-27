@@ -11,7 +11,7 @@ module FunCi
 
       # markers: files any of which the worktree must have, each a path or
       # { path, contains }; signature: a pattern only the tool prints. Either
-      # may be missing (why.md, "Choosing which run").
+      # may be missing (architecture.md, "Evidence of a failed stage").
       Preset = Data.define(:name, :use, :options, :markers, :signature)
       OWN = %w[use markers signature].freeze
 

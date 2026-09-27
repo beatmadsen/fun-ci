@@ -175,12 +175,99 @@ commands that ask about commits (`lib/fun_ci/agent/`).
   failed or over-budget stage's output, and the failures its reports name,
   pruned to a project's 50 newest runs. Reports go in a directory per stage
   (`FUN_CI_REPORT`), because Surefire and Gradle write one JUnit file per class;
-  `rexml` reads them.
+  `rexml` reads them. How much more is kept, and how, is the next section.
 - **`events` is the difference between two looks at the runs**, so it needs no
   events table: every event follows from the stage rows and their finish order.
 
-*Revisit if* agents need more than this to see why a stage failed: that is
-`fun-ci why` and the extractors it reads, designed in [`why.md`](why.md).
+## Evidence of a failed stage
+
+Problem: an agent told a stage failed should never rerun the suite to find out
+why, and the cause is often not in the last lines. Gradle and Maven print a
+test's stack trace far above their summary, a build can print a hundred errors
+after the first one that counts, a Rails test writes to `log/test.log`, a JSON
+appender hides the exception among thousands of `debug` lines, and a stage
+killed at its budget says nothing about what it was stuck on. §10 of
+`acceptance-tests.md` builds `fun-ci why` over evidence picked out at the
+moment a stage fails (`lib/fun_ci/evidence/`); what the agent sees is in
+`design.md` (Agents).
+
+**Decisions:**
+
+- **Evidence is collected where the stage ran, before its outcome is
+  recorded**, since the output, the report directory, the worktree's files and
+  an overrunning process group are all gone within seconds.
+  `Pipeline::StageExecution` runs every stage this way, the slow suite in its
+  forked child too, and `StageEnd` records the evidence, then how the stage
+  exited, then the outcome.
+- **Collecting never changes a verdict.** A mistaken entry, an extractor that
+  raises or runs out of time, and anything else that goes wrong while
+  collecting is kept as a problem, and the outcome is recorded all the same.
+  `fun-ci check` reports mistakes in the `evidence` configuration; the trigger
+  never reads them.
+- **The output is a window on disk**: its first 1 MB and last 7 MB, cut on line
+  ends, with a line saying how much was dropped. `OutputWindow` writes it as it
+  comes, the tail in two segments that take turns, so neither memory nor disk
+  grows with what a stage prints. It lives in a directory per stage
+  (`Pipeline::StageDir`, which also holds `FUN_CI_REPORT`) in the state
+  directory, because it is unmasked until the stage is recorded; the state
+  directory is made 0700, and a stage directory whose process died is removed
+  when the next stage starts.
+- **Everything kept is masked first**: the values of the stage's secret-named
+  variables (the environment is given as a hash, never read from `ENV`), the
+  shapes of well-known tokens, and a project's own `mask` patterns. Masking is
+  a best effort, which is why the state directory is its user's alone.
+- **The evidence is one JSON document per stage** (`stage_jobs.evidence`): the
+  extractors chosen and why, facts, failures, excerpts and problems, capped at
+  256 KB because `why` prints it whole into an agent's context
+  (`Evidence::Caps`). Nothing the stage row already holds is repeated in it,
+  so nothing stored goes stale; the row gained `exit_status`, `signal` and
+  `budget`. The `output_tail` and `failures` columns are still written, for an
+  older fun-ci sharing the database.
+- **The raw output is a gzip file per stage beside the database**, kept for a
+  project's 10 newest runs, because SQLite doesn't give a deleted blob's space
+  back without a `VACUUM` and one database serves every project. It is there
+  for when the extractors chose wrong. `Persistence::Retention` prunes it with
+  the evidence (50 runs), and removes any whose stage row is gone.
+- **Built-in extractors are Ruby classes; a project's own is a command.** The
+  built-ins (`grep`, `section`, `log-file`, `json-log`, `junit-files`,
+  `process-tree`, plus `test-reports` and `output-tail`, which always run)
+  declare the options they take, which is how `check` validates an entry. A
+  project's extractor (`run:`) gets the context as JSON on stdin and prints
+  text or JSON, both pinned in `contract/evidence/`. So it can be written in
+  the project's own language, is killed with everything it started when the
+  budget runs out, and can't crash the trigger or inherit its SQLite
+  connection. The cost is a process per extractor, and on macOS the first run
+  of a freshly written executable is scanned, which under load has taken past
+  the budget (Gotchas in `CLAUDE.md`).
+- **Presets are data, one YAML file each** (`lib/fun_ci/evidence/presets/`),
+  in the shape of an entry a project would write, so adding a stack adds a
+  file. None ships without the recorded output of a real failing run of its
+  tool, made in a pinned Docker image by `script/record_evidence_fixture.rb`
+  and kept in `test/fixtures/evidence/`.
+- **Presets choose themselves.** A preset is a candidate when the worktree has
+  one of its marker files, checked when the stage starts at its commit, and
+  runs when its signature, a line only its tool prints, is in the output's last
+  megabyte. `script/bench_detection.rb` measured about 0.04 s per signature
+  over a full window, 1.6 s with all 34 presets candidates and joining the
+  patterns saving nothing, and 0.2 s over the last megabyte, where tools print
+  their summaries. `init` writes no lists, which would go stale when a project
+  adds a tool.
+- **Evidence has a budget**, 2 seconds by default (`evidence.budget`), shared by
+  the configured entries and the detected presets. Built-ins run in fun-ci's
+  own process and can't be killed, so they check the deadline every thousand
+  lines, and every pattern is compiled with a timeout of its own rather than
+  the process-wide `Regexp.timeout`, since stages run in threads side by side.
+- **An overrun is looked at before the kill**, with 2 seconds of grace:
+  `process-tree` names the deepest process of the stage's group still running,
+  and `on: overrun` entries get the group as `FUN_CI_PGID`, for a thread dump
+  or `py-spy dump`. The hook rides on `ProcessRunner::Launch`. `ps` is read in
+  its BSD and procps form, and busybox's, which takes neither `-A` nor `=`.
+
+*Revisit if* a tool prints its only signature early in an output longer than a
+megabyte (then scan the window's head too); if Ruby projects ask for in-process
+extractors often enough to be worth a second mechanism (then run them in a
+child Ruby); or if a common stack needs longer than 2 seconds to dump its state
+before the kill.
 
 ## Quality standards (from intent-record)
 

@@ -7,7 +7,7 @@ require "fun_ci/evidence/command_output"
 require "json"
 
 # The documents a project's extractor and fun-ci exchange, held to the
-# fixtures in contract/evidence/ (why.md, "Your own extractor").
+# fixtures in contract/evidence/ (architecture.md, "Evidence of a failed stage").
 class TestEvidenceContract < Minitest::Test
   include EvidenceKit
 

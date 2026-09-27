@@ -7,7 +7,7 @@ require "fun_ci/evidence/catalog"
 require "fun_ci/evidence/presets"
 
 # Each preset picks out its tool's failures from a recorded failing run of
-# that tool (acceptance-tests.md, AT-10.10; why.md, "Fixtures").
+# that tool (acceptance-tests.md, AT-10.10; architecture.md, "Evidence of a failed stage").
 class TestPresets < Minitest::Test
   include EvidenceKit
 

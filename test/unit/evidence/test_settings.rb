@@ -3,7 +3,7 @@
 require_relative "../../test_helper"
 require "fun_ci/evidence/settings"
 
-# The `evidence` key of .fun-ci/config (why.md, "Configuration").
+# The `evidence` key of .fun-ci/config (architecture.md, "Evidence of a failed stage").
 class TestEvidenceSettings < Minitest::Test
   SETTINGS = FunCi::Evidence::Settings
 

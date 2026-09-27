@@ -7,7 +7,7 @@ require_relative "source"
 
 module FunCi
   module Evidence
-    # Which presets run when a stage fails (why.md, "Choosing which run").
+    # Which presets run when a stage fails (architecture.md, "Evidence of a failed stage").
     # When it starts, the candidates: presets any of whose marker files the
     # worktree has (a marker may also name a text the file must hold), and
     # presets without markers. When it fails, of the candidates with an
