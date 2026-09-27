@@ -33,7 +33,7 @@ class TestAgentWhyFailureOutput < Minitest::Test
 
   private
 
-  def fast_suite_reporting(cmd, env)
+  def fast_suite_reporting(cmd, env, &)
     return ["", FakeStatus.new(true, 0)] unless cmd.include?("fast.sh")
 
     File.write(File.join(env.fetch("FUN_CI_REPORT"), "TEST-CartTest.xml"), JUNIT)

@@ -19,7 +19,7 @@ class TestStageKnowsItsName < Minitest::Test
 
   private
 
-  def record_stage_name(cmd, env)
+  def record_stage_name(cmd, env, &)
     @seen[File.basename(cmd.split.first)] = env["FUN_CI_STAGE"]
     ["", FakeStatus.new(true, 0)]
   end

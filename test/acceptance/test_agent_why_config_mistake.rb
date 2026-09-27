@@ -52,7 +52,7 @@ class TestAgentWhyConfigMistake < Minitest::Test
 
   private
 
-  def fast_suite_failing(cmd)
+  def fast_suite_failing(cmd, &)
     cmd.include?("fast.sh") ? ["ERROR boom\n", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
   end
 end

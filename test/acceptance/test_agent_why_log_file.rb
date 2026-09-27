@@ -42,7 +42,7 @@ class TestAgentWhyLogFile < Minitest::Test
   def log = File.join(@pipeline.project_dir, "log", "test.log")
   def excerpt = JSON.parse(@agent.stdout).dig("evidence", "excerpts").first
 
-  def fast_suite_appending_to_its_log(cmd)
+  def fast_suite_appending_to_its_log(cmd, &)
     return ["", FakeStatus.new(true, 0)] unless cmd.include?("fast.sh")
 
     File.write(log, "this run: connecting\nthis run: ERROR connection refused\n", mode: "a")

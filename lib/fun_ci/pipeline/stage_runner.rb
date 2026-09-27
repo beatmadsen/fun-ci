@@ -21,8 +21,8 @@ module FunCi
         "slow" => FIX_TESTS
       }.freeze
 
-      def initialize(commit_hash:, stdout:, seams: Seams.new, dir: Dir.pwd)
-        @commit_hash = commit_hash
+      def initialize(commit:, stdout:, seams: Seams.new, dir: Dir.pwd)
+        @commit = commit
         @stdout = stdout
         @seams = seams
         @dir = dir
@@ -32,7 +32,7 @@ module FunCi
       # whoever sees the outcome can read why.
       def passes?(config, stage)
         job_id = @seams.recorder.start_stage(stage, budget: @seams.budgets[stage])
-        command = "#{config.script_path(stage)} #{@commit_hash}"
+        command = "#{config.script_path(stage)} #{@commit.sha}"
         result, output = StageExecution.new(seams: @seams, dir: @dir).run(stage, command, @seams.recorder, job_id)
         tell(stage, output, result)
         result == "completed"

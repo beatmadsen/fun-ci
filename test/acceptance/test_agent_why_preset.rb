@@ -42,7 +42,7 @@ class TestAgentWhyPreset < Minitest::Test
 
   def excerpt = JSON.parse(@agent.stdout).dig("evidence", "excerpts").first
 
-  def fast_suite_failing(cmd)
+  def fast_suite_failing(cmd, &)
     cmd.include?("fast.sh") ? [OUTPUT, FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
   end
 end

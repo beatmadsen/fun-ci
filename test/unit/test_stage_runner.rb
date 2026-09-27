@@ -4,9 +4,11 @@ require_relative "../test_helper"
 require "stringio"
 require "fun_ci/pipeline/stage_runner"
 
+STAGE_COMMIT = FunCi::Pipeline::Commit.new(sha: "abc123", branch: "main") unless defined?(STAGE_COMMIT)
+
 class TestStageRunnerDefaults < Minitest::Test
   def test_records_nothing_when_built_without_a_recorder
-    runner = FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new,
+    runner = FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new,
                                               seams: FunCi::Pipeline::Seams.new(command_runner: passing_runner))
 
     assert runner.passes?(config, "lint")
@@ -15,7 +17,7 @@ class TestStageRunnerDefaults < Minitest::Test
   def test_a_stage_without_a_budget_of_its_own_gets_the_default_one
     stdout = StringIO.new
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { raise Timeout::Error })
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: stdout, seams: seams).passes?(config, "fast")
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: stdout, seams: seams).passes?(config, "fast")
 
     assert_match(/exceeded 10s time budget/, stdout.string)
   end
@@ -23,7 +25,7 @@ class TestStageRunnerDefaults < Minitest::Test
   def test_a_stage_over_budget_is_told_how_to_get_back_under_it
     stdout = StringIO.new
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { raise Timeout::Error })
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: stdout, seams: seams).passes?(config, "fast")
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: stdout, seams: seams).passes?(config, "fast")
 
     assert_includes stdout.string, "Your fast tests have gotten too slow. Split or speed them up."
   end
@@ -31,7 +33,7 @@ class TestStageRunnerDefaults < Minitest::Test
   def test_runs_the_stage_s_script_with_the_commit_hash_as_its_argument
     commands = []
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(cmd) { (commands << cmd) && ["", FakeStatus.new(true, 0)] })
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config, "lint")
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new, seams: seams).passes?(config, "lint")
 
     assert_equal ["lint.sh abc123"], commands
   end
@@ -39,7 +41,7 @@ class TestStageRunnerDefaults < Minitest::Test
   def test_records_the_process_the_stage_s_script_runs_in
     recorder = FakeRecorder.new
     seams = FunCi::Pipeline::Seams.new(command_runner: runner_starting(4242), recorder: recorder)
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config, "lint")
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new, seams: seams).passes?(config, "lint")
 
     assert_includes recorder.calls, [:stage_process, 1, 4242]
   end
@@ -47,7 +49,7 @@ class TestStageRunnerDefaults < Minitest::Test
   def test_records_the_stage_starting
     recorder = FakeRecorder.new
     seams = FunCi::Pipeline::Seams.new(command_runner: passing_runner, recorder: recorder)
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config, "lint")
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new, seams: seams).passes?(config, "lint")
 
     assert_equal [:start_stage, "lint"], recorder.calls.first
   end
@@ -55,14 +57,14 @@ class TestStageRunnerDefaults < Minitest::Test
   def test_a_stage_over_budget_fails
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { raise Timeout::Error })
 
-    refute FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config,
-                                                                                                               "lint")
+    refute FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new, seams: seams).passes?(config,
+                                                                                                              "lint")
   end
 
   def test_a_stage_over_budget_is_recorded_as_timed_out
     recorder = FakeRecorder.new
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { raise Timeout::Error }, recorder: recorder)
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config, "lint")
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new, seams: seams).passes?(config, "lint")
 
     assert_equal [:end_stage, 1, "timed_out"], recorder.calls.last
   end
@@ -94,8 +96,8 @@ class TestStageRunnerDefaults < Minitest::Test
   def test_a_script_that_exits_nonzero_fails_the_stage
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { failing_answer })
 
-    refute FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams).passes?(config,
-                                                                                                               "lint")
+    refute FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new, seams: seams).passes?(config,
+                                                                                                              "lint")
   end
 
   private
@@ -114,7 +116,7 @@ class TestStageRunnerDefaults < Minitest::Test
   def output_of_failing(stage)
     stdout = StringIO.new
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { failing_answer })
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: stdout, seams: seams).passes?(config, stage)
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: stdout, seams: seams).passes?(config, stage)
     stdout.string
   end
 

@@ -3,6 +3,8 @@
 require_relative "../test_helper"
 require "stringio"
 require "fun_ci/pipeline/stage_runner"
+
+STAGE_COMMIT = FunCi::Pipeline::Commit.new(sha: "abc123", branch: "main") unless defined?(STAGE_COMMIT)
 require_relative "../support/fake_stage_dir"
 
 # A stage that fails or overruns has its evidence kept before its outcome is
@@ -74,7 +76,7 @@ class TestStageRunnerOutput < Minitest::Test
     recorder = FakeRecorder.new
     seams = FunCi::Pipeline::Seams.new(command_runner: runner, recorder: recorder, stage_dir: -> { reports },
                                        environment: environment)
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams)
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new, seams: seams)
                                 .passes?(Config.new(dir: "/p"), "fast")
     recorder
   end
@@ -90,7 +92,7 @@ class TestStageRunnerBudget < Minitest::Test
     recorder = FakeRecorder.new
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { ["", FakeStatus.new(true, 0)] }, recorder: recorder,
                                        stage_dir: -> { FakeStageDir.new([]) }, time_budgets: { "fast" => 7 })
-    FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams)
+    FunCi::Pipeline::StageRunner.new(commit: STAGE_COMMIT, stdout: StringIO.new, seams: seams)
                                 .passes?(Config.new(dir: "/p"), "fast")
 
     assert_equal({ "fast" => 7 }, recorder.budgets)

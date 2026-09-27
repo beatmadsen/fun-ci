@@ -34,7 +34,7 @@ module FunCi
 
       def recorder = @seams.recorder
       def progress = ProgressReporter.new(stdout: @io.stdout)
-      def stage_runner = StageRunner.new(commit_hash: @commit.sha, stdout: @io.stdout, seams: @seams, dir: @slot.path)
+      def stage_runner = StageRunner.new(commit: @commit, stdout: @io.stdout, seams: @seams, dir: @slot.path)
 
       # This process's part is over; the slow suite may still be running.
       def released(exit_code)
