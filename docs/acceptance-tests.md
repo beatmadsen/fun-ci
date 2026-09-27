@@ -4,9 +4,9 @@ The requirements, as acceptance tests, numbered like agent-tome's. The build
 loop implements them one per iteration, in the order of
 `ralph/build/progress.md`, which also says which are done. §0 to §5 and §7 to
 §9 are built; they stay here because the tests that hold them cite them by
-number. §6 is to build. An outline item is refined into full Given/When/Then before it is
-built, as its own commit to this file. What fun-ci is for is in
-[`design.md`](design.md).
+number. §6 is to build, and §10 is to design. An outline item is refined into
+full Given/When/Then before it is built, as its own commit to this file. What
+fun-ci is for is in [`design.md`](design.md).
 
 Where a test says "the gate", it means `bundle exec rake` (default task).
 
@@ -395,8 +395,8 @@ An agent working in a project asks fun-ci about commits and branches on exit
 codes. The commit is the only event: fun-ci tests commits, speaks up after one,
 and never looks at uncommitted files. Every command below runs in the project
 directory, names a commit with anything `git rev-parse` accepts (`HEAD` by
-default), and takes `--json`. The design is in the Claude Doc "fun-ci for
-agents: a proposed interface"; `fun-ci why` is left for a later design.
+default), and takes `--json`. Why they look as they do is in `design.md`
+(Agents) and `architecture.md` (The agent interface); `fun-ci why` is §10.
 
 Exit codes, shared by `status` and `wait`: 0 passed (every stage the agent
 needs passed), 1 failed, 2 over budget (a needed stage ran out of time),
@@ -542,3 +542,39 @@ finished, run finished and run superseded: the project's last 10 runs' events,
 then, with `--follow`, each new one as it happens
 **And** `--only failures` prints only failed or over-budget stages and
 superseded runs.
+
+## 10. Reading why a stage failed (outline; needs design before it is refined)
+
+`fun-ci why [REV] [STAGE]` would give an agent everything fun-ci kept about
+why a stage of a commit's run failed, so it never reruns a suite to find out.
+§9 already keeps it: a failed or over-budget stage's last 200 lines (AT-9.5)
+and the failures its reports named (AT-9.7). `status` and `wait` show only a
+digest of it (AT-9.6: at most 10 failures, 5 lines of each message, or the
+last 20 lines).
+
+- 10.1 `fun-ci why [REV] [STAGE]` prints a failed stage's reported failures
+  in full, then every line kept of its output. Without STAGE it takes the
+  first needed stage to fail or overrun, in the order they finished, as the
+  verdict does.
+- 10.2 `why --json` gives the same as one document: the stage, its failures
+  and the kept lines.
+- 10.3 The digest `status` and `wait` print ends with the `fun-ci why`
+  command that shows the rest.
+
+Open questions, to settle before 10.1 is written as Given/When/Then:
+
+- **How much output to keep.** 200 lines and 64 KB were sized for the digest.
+  `why` may want a failed stage's whole output, capped by size, which changes
+  how much the database holds and how long it keeps it (today, a project's 50
+  newest runs).
+- **Per-test output.** JUnit carries each test's `<system-out>` and
+  `<system-err>`. Keeping them would put each failure's own output under it,
+  instead of the stage's last lines.
+- **An overrun.** The kept lines are what the stage printed before the kill.
+  Whether `why` should also say what was running then (the last test started,
+  from a report the stage writes as it goes) is open.
+- **Evidence that is gone.** A run older than the kept runs has no evidence
+  left; `why` says so, but with which exit code, and what `why` exits with for
+  a stage that didn't fail, are undecided.
+- **What the output may contain.** A stage's output can hold secrets. It stays
+  in the user's state directory; whether `why` should mask anything is open.

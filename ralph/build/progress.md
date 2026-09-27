@@ -85,3 +85,6 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-9.14: The post-commit hook says how to get the verdict
 - [x] AT-9.15: `fun-ci init` tells agents what to do after a commit
 - [x] AT-9.16: `fun-ci events` prints what happens as JSON lines
+- [ ] AT-10.1: `fun-ci why` prints a failed stage's reported failures and kept output in full
+- [ ] AT-10.2: `why --json` gives the same as one document
+- [ ] AT-10.3: The digest in `status` and `wait` names the `why` command

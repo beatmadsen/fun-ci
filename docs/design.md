@@ -89,11 +89,14 @@ uncommitted files.
   first failure ends the wait. `--within 30s` gives up at the agent's deadline.
 - `fun-ci status` says where a run stands without waiting, `fun-ci runs` lists
   the recent runs, and `fun-ci events` prints what happens as JSON lines.
-- Exit codes: 0 passed, 1 failed, 2 over budget, 3 undecided, 4 superseded,
-  5 no run, 64 usage error. `--json` gives the same facts to a program.
+- The verdict is the exit code, one per outcome (the README lists them), and
+  `--json` gives the same facts to a program. Both are a contract: a JSON
+  document carries a schema version, and a field, once published, keeps its
+  name.
 - A failed stage comes with its evidence: the failures its test reports name
   (JUnit XML or fun-ci's JSON written to `FUN_CI_REPORT`), or else the last
-  lines it printed.
+  lines it printed. `status` and `wait` show a digest of it; the whole of it,
+  `fun-ci why`, is still to be designed (`acceptance-tests.md`, §10).
 
 ## A run's states
 
