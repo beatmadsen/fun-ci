@@ -74,6 +74,16 @@ class TestCliTriggerSubcommand < Minitest::Test
   end
 end
 
+# Agent commands route through the CLI; an option they don't take is refused
+# before git is asked anything (AT-9.2).
+class TestCliAgentSubcommands < Minitest::Test
+  include CliProject
+
+  def test_status_refuses_an_option_it_does_not_take_as_a_usage_error
+    assert_equal 64, run_cli("status", "--bogus")
+  end
+end
+
 class TestCliInitEverythingWithoutGit < Minitest::Test
   include CliProject
 

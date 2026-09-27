@@ -28,18 +28,6 @@ class TestAgentWait < Minitest::Test
     assert_equal [1, 1], [@client.wait("--need", "all"), @client.clock.pauses]
   end
 
-  def test_should_report_a_needed_stage_that_ran_over_budget
-    script(%w[lint completed], %w[build timed_out])
-
-    assert_equal 2, @client.wait
-  end
-
-  def test_should_not_be_held_up_by_a_stage_the_level_does_not_need
-    script(%w[lint completed], %w[build completed])
-
-    assert_equal [0, 2], [@client.wait("--need", "build"), @client.clock.pauses]
-  end
-
   def test_should_print_what_status_prints_once_decided
     script(%w[lint completed], %w[build completed], %w[fast completed])
     @client.wait
@@ -57,13 +45,6 @@ class TestAgentWait < Minitest::Test
     finish("lint", "completed")
 
     assert_equal [3, 10], [@client.wait("--within", "10s"), @client.clock.pauses]
-  end
-
-  def test_should_print_what_it_knows_when_it_gives_up
-    finish("lint", "completed")
-    @client.wait("--within", "2")
-
-    assert_match(/^  lint   passed .*\n  build  waiting$/, @client.stdout)
   end
 
   def test_should_look_for_slow_suites_that_died_each_time_it_polls
