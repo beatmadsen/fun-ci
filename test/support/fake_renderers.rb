@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "body_script"
+
 # Shell scripts that play the renderer's part for the console's process
 # tests. QUITS shakes hands, waits for the board, presses `q` and waits for
 # `quit`, noting each line it reads in "<script>.heard"; DIES answers `hello`
@@ -22,10 +24,5 @@ module FakeRenderers
   CRASHES_ON_QUIT = "#{QUITS}exit 3\n".freeze
 
   # Writes `script` as an executable renderer in `dir`; answers its path.
-  def self.write(dir, script)
-    File.join(dir, "renderer").tap do |path|
-      File.write(path, "#!/bin/sh\n#{script}")
-      File.chmod(0o755, path)
-    end
-  end
+  def self.write(dir, script) = BodyScript.write(File.join(dir, "renderer"), script)
 end

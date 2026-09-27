@@ -1,5 +1,0 @@
-#!/bin/sh
-# A stage script for process tests: a hard link to it runs the body the test
-# wrote beside the link, so the executable is never freshly written (macOS
-# scans each new executable on its first exec; see Gotchas in CLAUDE.md).
-. "$0.body"
