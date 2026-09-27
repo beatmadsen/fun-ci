@@ -4,6 +4,8 @@ require_relative "pipeline_run"
 require_relative "stage_job"
 require_relative "run_status"
 require_relative "write_trouble"
+require_relative "output_tail"
+require_relative "project_runs"
 
 module FunCi
   module Persistence
@@ -11,6 +13,7 @@ module FunCi
       def create_run(**) = nil
       def start_stage(_stage) = nil
       def end_stage(_job_id, _status) = nil
+      def keep_output(_job_id, _output) = nil
       def stage_process(_job_id, _pid) = nil
       def slot_taken(_lock_file) = nil
       def foreground_done = nil
@@ -23,6 +26,9 @@ module FunCi
     end
 
     class DbRecorder
+      # How many of a project's newest runs keep their failed stages' output.
+      KEPT_RUNS = 50
+
       attr_reader :db, :db_path, :pipeline_run_id, :trouble
 
       def self.for_background(db_path, pipeline_run_id, trouble: WriteTrouble.silent(db_path))
@@ -58,6 +64,7 @@ module FunCi
           @pipeline_run_id = PipelineRun.create(@db, commit_hash: commit_hash, branch: branch,
                                                      project_path: project_path)
           PipelineRun.store_trigger_pid(@db, @pipeline_run_id, Process.pid)
+          ProjectRuns.new(@db, project_path).forget_output(keep: KEPT_RUNS) if project_path
           @pipeline_run_id
         end
       end
@@ -84,6 +91,11 @@ module FunCi
           StageJob.update_status(@db, job_id, "running")
           job_id
         end
+      end
+
+      # Keeps the end of what a failed stage printed (acceptance-tests.md, AT-9.5).
+      def keep_output(job_id, output)
+        tolerating { StageJob.keep_output(@db, job_id, OutputTail.of(output)) }
       end
 
       # Records the stage's outcome, then settles the run's status from its stages.

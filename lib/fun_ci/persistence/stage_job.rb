@@ -6,7 +6,8 @@ module FunCi
   module Persistence
     module StageJob
       TERMINAL_STATUSES = %w[completed failed timed_out cancelled].freeze
-      COLUMNS = "id, pipeline_run_id, stage, status, started_at, completed_at, finished_order"
+      FIELDS = %i[id pipeline_run_id stage status started_at completed_at finished_order output_tail].freeze
+      COLUMNS = FIELDS.join(", ")
       NEXT_IN_RUN = "(SELECT COALESCE(MAX(others.finished_order), 0) + 1 FROM stage_jobs AS others " \
                     "WHERE others.pipeline_run_id = stage_jobs.pipeline_run_id)"
       TIMESTAMP_COLUMNS = TERMINAL_STATUSES.to_h { |status| [status, "completed_at"] }
@@ -23,6 +24,11 @@ module FunCi
       # The stage script's process, which leads a process group of its own.
       def self.store_pid(db, id, pid)
         db.execute("UPDATE stage_jobs SET pid = ? WHERE id = ?", [pid, id])
+      end
+
+      # The end of what the stage printed, kept when it failed (acceptance-tests.md, AT-9.5).
+      def self.keep_output(db, id, tail)
+        db.execute("UPDATE stage_jobs SET output_tail = ? WHERE id = ?", [tail, id])
       end
 
       def self.find(db, id)
@@ -55,7 +61,7 @@ module FunCi
       end
 
       def self.row_to_hash(row)
-        %i[id pipeline_run_id stage status started_at completed_at finished_order].zip(row).to_h
+        FIELDS.zip(row).to_h
       end
       private_class_method :row_to_hash
     end

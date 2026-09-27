@@ -12,7 +12,12 @@ module FunCi
     class RunReport
       STAGES = %w[lint build fast slow].freeze
       STATES = { "completed" => "passed", "timed_out" => "over_budget", "scheduled" => "waiting" }.freeze
-      Stage = Data.define(:name, :state, :seconds)
+      # tail: the end of what the stage printed, kept when it failed.
+      Stage = Data.define(:name, :state, :seconds, :tail)
+
+      class Stage
+        def initialize(name:, state:, seconds:, tail: nil) = super
+      end
 
       # commit: the run's subject and the commit that superseded it, if any.
       def self.build(run:, jobs:, need:, commit:)
@@ -28,7 +33,8 @@ module FunCi
       def self.stage(name, job)
         return Stage.new(name: name, state: "waiting", seconds: nil) unless job
 
-        Stage.new(name: name, state: STATES.fetch(job[:status], job[:status]), seconds: seconds(job))
+        state = STATES.fetch(job[:status], job[:status])
+        Stage.new(name: name, state: state, seconds: seconds(job), tail: job[:output_tail])
       end
 
       def self.seconds(job)

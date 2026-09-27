@@ -14,11 +14,19 @@ module FunCi
 
       # Yields the pid of the process it starts, which leads a process group
       # of its own, so the caller can stop the command and all it spawned.
-      def run_process_with_timeout(cmd, budget, chdir: Dir.pwd, &)
+      # A command over budget answers what it printed before the kill, which
+      # is the only clue to what it was stuck on (acceptance-tests.md, AT-9.5).
+      # `timer` answers whether the reading finished within the budget.
+      BUDGET = ->(reading, budget) { reading.join(budget) }
+      # How long a killed command's last output may take to drain.
+      DRAIN_SECONDS = 1
+
+      def run_process_with_timeout(cmd, budget, chdir: Dir.pwd, timer: BUDGET, &)
         reader, writer = IO.pipe
         pid = start(cmd, writer, chdir, &)
-        output = Thread.new { read_until_closed(reader) }
-        output.join(budget) ? process_finished(pid, output.value) : kill_process_group(pid)
+        printed = String.new
+        reading = Thread.new { read_until_closed(reader, printed) }
+        timer.call(reading, budget) ? process_finished(pid, text(reading.value)) : over_budget(pid, reading, printed)
       ensure
         ignoring_errors { reader&.close }
       end
@@ -35,13 +43,25 @@ module FunCi
         pid
       end
 
-      # On a timeout the reader is closed while this thread may still be
-      # reading; whatever the killed command wrote no longer matters.
-      def read_until_closed(reader)
-        reader.read
+      # The reader may be closed while this thread still reads, once a killed
+      # command's output has drained or stopped coming.
+      def read_until_closed(reader, printed)
+        loop { printed << reader.readpartial(65_536) }
       rescue IOError
-        ""
+        printed
       end
+
+      def over_budget(pid, reading, printed)
+        kill_process_group(pid)
+        [drained(reading, printed), nil, true]
+      end
+
+      def drained(reading, printed)
+        reading.join(DRAIN_SECONDS)
+        text(printed)
+      end
+
+      def text(bytes) = bytes.dup.force_encoding(Encoding.default_external)
 
       def process_finished(pid, output)
         _, status = Process.waitpid2(pid)
@@ -51,7 +71,6 @@ module FunCi
       def kill_process_group(pid)
         %w[TERM KILL].each { |signal| ignoring_errors { Process.kill(signal, -pid) } }
         ignoring_errors { Process.waitpid(pid) }
-        ["", nil, true]
       end
 
       def ignoring_errors

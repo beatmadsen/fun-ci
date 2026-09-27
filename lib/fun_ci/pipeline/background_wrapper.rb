@@ -11,9 +11,12 @@ module FunCi
 
       OUTCOMES = { timed_out: "timed_out", passed: "completed", failed: "failed" }.freeze
 
+      # Keeps a failed suite's output before recording its outcome, as StageRunner does.
       def run
-        _output, status, timed_out = @executor.call { |pid| @recorder.stage_process(@job_id, pid) }
-        @recorder.end_stage(@job_id, OUTCOMES.fetch(outcome(status, timed_out)))
+        output, status, timed_out = @executor.call { |pid| @recorder.stage_process(@job_id, pid) }
+        result = OUTCOMES.fetch(outcome(status, timed_out))
+        @recorder.keep_output(@job_id, output) unless result == "completed"
+        @recorder.end_stage(@job_id, result)
       end
 
       private

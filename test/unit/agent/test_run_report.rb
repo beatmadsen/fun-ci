@@ -34,6 +34,10 @@ class TestRunReport < Minitest::Test
     assert_equal :passed, report(job("lint", "completed"), job("build", "completed"), need: "build").verdict
   end
 
+  def test_should_carry_what_a_stage_kept_of_its_output
+    assert_equal "boom\n", report(job("lint", "failed").merge(output_tail: "boom\n")).stages.first.tail
+  end
+
   private
 
   def report(*jobs, need: "fast")

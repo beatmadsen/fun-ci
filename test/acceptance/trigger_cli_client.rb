@@ -25,6 +25,8 @@ class TriggerCliClient
                recorder: recorder || FunCi::Persistence::DbRecorder.new(workspace.db) }
   end
 
+  attr_reader :workspace
+
   def close = @workspace.close
   def db = @workspace.db
   def project_dir = @workspace.project_dir

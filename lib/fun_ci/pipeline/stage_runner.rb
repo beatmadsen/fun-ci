@@ -27,9 +27,13 @@ module FunCi
         @dir = dir
       end
 
+      # A failed stage's output is kept before its outcome is recorded, so
+      # whoever sees the outcome can read why.
       def passes?(config, stage)
         job_id = @seams.recorder.start_stage(stage)
-        status = outcome(stage, *execute(config, stage) { |pid| @seams.recorder.stage_process(job_id, pid) })
+        output, *finished = execute(config, stage) { |pid| @seams.recorder.stage_process(job_id, pid) }
+        status = outcome(stage, output, *finished)
+        @seams.recorder.keep_output(job_id, output) unless status == "completed"
         @seams.recorder.end_stage(job_id, status)
         status == "completed"
       end

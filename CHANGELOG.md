@@ -50,6 +50,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   JSON files. The animations are code in the renderer now.
 
 ### Added
+- A stage that fails or runs out of time keeps the end of its output: the
+  last 200 lines, at most 64 KB, colour codes stripped. The slow suite's
+  output is kept too, and a stage killed over budget keeps what it printed
+  before the kill. `fun-ci status` shows the last 20 lines of each needed
+  stage that failed. Only a project's 50 newest runs keep their output.
 - `fun-ci runs` lists this project's recent runs, newest first, one line
   each: short SHA, branch, age, each stage's outcome and the subject. `-n N`
   sets how many (10 by default), `--branch NAME` keeps to one branch, and
