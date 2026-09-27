@@ -1,0 +1,5 @@
+use: json-log
+fields: { time: time, level: level, logger: name, message: msg, stack: err.stack }
+levels: { '10': trace, '20': debug, '30': info, '40': warn, '50': error, '60': fatal }
+markers: [{ path: package.json, contains: '"pino"' }]
+signature: '"level":\d+,"time":\d+,"pid":\d+,"hostname":'

@@ -1,0 +1,38 @@
+tool: go build
+image: golang:1.25@sha256:699337d620559a59b4a2bb298ad59611e535d2ee755a34cf2d2a98f37578dc80
+command: go build ./...
+version: go version
+files:
+  go.mod: |
+    module example.com/cart
+
+    go 1.25
+  cart.go: |
+    package cart
+
+    import "strings"
+
+    type Cart struct{ items []int }
+
+    func (c *Cart) Add(price string) { c.items = append(c.items, price) }
+
+    func (c *Cart) Total() int {
+    	total := 0
+    	for _, price := range c.items {
+    		total += price
+    	}
+    	return totl
+    }
+  receipt/receipt.go: |
+    package receipt
+
+    import "fmt"
+
+    func Line(name string, cents int) string {
+    	return fmt.Sprintf("%s: %d", name, cents) + currency
+    }
+
+    func Total(cents int) string {
+    	return fmt.Sprintf("total %d", cents)
+    	fmt.Println("never")
+    }

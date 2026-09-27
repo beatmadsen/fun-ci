@@ -1,0 +1,6 @@
+use: section
+title: prove's failed tests
+start: ['^#\s+Failed test\b', '^Test Summary Report$']
+end: ['^\S+\.t \.+ ', '^Files=\d+, Tests=\d+, ']
+markers: [cpanfile, Makefile.PL, Build.PL, dist.ini]
+signature: '^Files=\d+, Tests=\d+, '

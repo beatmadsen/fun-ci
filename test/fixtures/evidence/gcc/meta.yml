@@ -1,0 +1,8 @@
+---
+tool: gcc
+image: gcc:14@sha256:9188ac751ca24431dc43dbd142a223c98ea74f01d2858e84d30ba342a0d67844
+command: make -k
+sha256: d1f66673d2a0a82562b2d9227294f6e92bfbcd493bbbc912dff2288f7157bcc8
+exit_status: 2
+version: gcc (GCC) 14.4.0; GNU Make 4.4.1
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

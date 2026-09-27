@@ -1,0 +1,45 @@
+tool: mocha
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --no-audit --no-fund --silent mocha@11.7.1
+command: npx mocha
+version: npx mocha --version
+files:
+  package.json: |
+    {
+      "name": "cart",
+      "private": true,
+      "scripts": { "test": "mocha" },
+      "devDependencies": { "mocha": "11.7.1" }
+    }
+  src/cart.js: |
+    class Cart {
+      constructor() { this.items = []; }
+      add(price) { this.items.push(price); }
+      total() { return this.items.reduce((sum, price) => sum + price, 0) + 1; }
+      discount(code) { throw new Error(`unknown code ${code}`); }
+    }
+    module.exports = { Cart };
+  test/cart.test.js: |
+    const assert = require("node:assert/strict");
+    const { Cart } = require("../src/cart");
+
+    describe("Cart", () => {
+      it("starts empty", () => {
+        assert.equal(new Cart().total(), 0);
+      });
+
+      it("adds up its items", () => {
+        const cart = new Cart();
+        cart.add(2);
+        cart.add(3);
+        assert.equal(cart.total(), 5);
+      });
+
+      it("takes a discount code", () => {
+        assert.equal(new Cart().discount("SAVE10"), 0.9);
+      });
+
+      it("is a cart", () => {
+        assert.ok(new Cart() instanceof Cart);
+      });
+    });

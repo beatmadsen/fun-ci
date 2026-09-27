@@ -1,0 +1,24 @@
+--- FAIL: TestStartsEmpty (0.00s)
+    cart_test.go:7: Total() = 1, want 0
+--- FAIL: TestTakesADiscountCode (0.00s)
+    cart_test.go:14: Discount(SAVE10): unknown code SAVE10
+--- FAIL: TestLastOfAnEmptyCart (0.00s)
+panic: runtime error: index out of range [-1] [recovered, repanicked]
+
+goroutine 10 [running]:
+testing.tRunner.func1.2({0x163500, 0x40000160d8})
+	/usr/local/go/src/testing/testing.go:1872 +0x19c
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1875 +0x31c
+panic({0x163500?, 0x40000160d8?})
+	/usr/local/go/src/runtime/panic.go:783 +0x120
+example.com/cart.(*Cart).Last(...)
+	/work/cart.go:21
+example.com/cart.TestLastOfAnEmptyCart(0x4000144000?)
+	/work/cart_test.go:28 +0x28
+testing.tRunner(0x4000144000, 0x180e68)
+	/usr/local/go/src/testing/testing.go:1934 +0xc8
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1997 +0x364
+FAIL	example.com/cart	0.004s
+FAIL

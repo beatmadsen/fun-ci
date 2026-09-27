@@ -1,0 +1,9 @@
+---
+tool: mocha
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --no-audit --no-fund --silent mocha@11.7.1
+command: npx mocha
+sha256: 838ef7998f87a29a31f6c51ab79e97168bd91cb09eded03ce35e9204d50e4d8d
+exit_status: 3
+version: 11.7.1
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

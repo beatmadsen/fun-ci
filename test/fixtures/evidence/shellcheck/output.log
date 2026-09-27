@@ -1,0 +1,34 @@
+
+In clean.sh line 2:
+if [ $# = 0 ]
+^-- SC1049 (error): Did you forget the 'then' for this 'if'?
+^-- SC1073 (error): Couldn't parse this if expression. Fix to allow more checks.
+
+
+In clean.sh line 4:
+fi
+^-- SC1050 (error): Expected 'then'.
+  ^-- SC1072 (error): Unexpected keyword/token. Fix any mentioned problems and try again.
+
+
+In deploy.sh line 4:
+for file in $(ls build/*.tar); do
+            ^---------------^ SC2045 (error): Iterating over ls output is fragile. Use globs.
+
+
+In deploy.sh line 5:
+  cp $file "$target"
+     ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.
+
+Did you mean:
+  cp "$file" "$target"
+
+
+In deploy.sh line 8:
+echo "deployed to $TARGET"
+                  ^-----^ SC2153 (info): Possible misspelling: TARGET may not be assigned. Did you mean target?
+
+For more information:
+  https://www.shellcheck.net/wiki/SC1049 -- Did you forget the 'then' for thi...
+  https://www.shellcheck.net/wiki/SC1050 -- Expected 'then'.
+  https://www.shellcheck.net/wiki/SC2045 -- Iterating over ls output is fragi...

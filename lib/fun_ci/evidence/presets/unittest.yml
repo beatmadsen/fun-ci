@@ -1,0 +1,6 @@
+use: section
+title: unittest's failures and errors
+start: ['^={70}$']
+end: ['^Ran \d+ tests? in ']
+markers: [pyproject.toml, setup.py, setup.cfg, requirements.txt]
+signature: '^Ran \d+ tests? in \d+\.\d+s$'

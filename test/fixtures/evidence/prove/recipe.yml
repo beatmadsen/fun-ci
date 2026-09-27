@@ -1,0 +1,47 @@
+tool: prove
+image: perl:5.40-slim@sha256:90406ca29154d80e43a0681c73e54a996f42c32d307c60ad389db3317c53dacf
+setup: "true"
+command: prove -l t
+version: prove --version
+files:
+  cpanfile: |
+    requires 'perl', '5.036';
+    on test => sub {
+        requires 'Test::More', '1.302';
+    };
+  lib/Cart.pm: |
+    package Cart;
+    use strict;
+    use warnings;
+
+    sub new { my ($class) = @_; return bless { items => [] }, $class }
+    sub add { my ($self, $price) = @_; push @{ $self->{items} }, $price; return }
+    sub total { my ($self) = @_; my $sum = 1; $sum += $_ for @{ $self->{items} }; return $sum }
+    sub discount { my ($self, $code) = @_; die "unknown code $code" }
+
+    1;
+  t/basic.t: |
+    use strict;
+    use warnings;
+    use Test::More;
+    use Cart;
+
+    isa_ok(Cart->new, 'Cart');
+
+    done_testing;
+  t/cart.t: |
+    use strict;
+    use warnings;
+    use Test::More;
+    use Cart;
+
+    is(Cart->new->total, 0, 'starts empty');
+
+    my $cart = Cart->new;
+    $cart->add(2);
+    $cart->add(3);
+    is($cart->total, 5, 'adds up its items');
+
+    is(Cart->new->discount('SAVE10'), 0.9, 'takes a discount code');
+
+    done_testing;

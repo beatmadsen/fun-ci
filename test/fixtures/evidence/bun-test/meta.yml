@@ -1,0 +1,8 @@
+---
+tool: bun test
+image: oven/bun:1.2-slim@sha256:9654aa08d4b7e778b84148921bab8edc1409c8d0a85707b8c801dd7cf1878971
+command: bun test
+sha256: 24b7fc1715c2d9cc04e117cbdcb8eccf666adb123409d77d80db74b0b47ff668
+exit_status: 1
+version: 1.2.23
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

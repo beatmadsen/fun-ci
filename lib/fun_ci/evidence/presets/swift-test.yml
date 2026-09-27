@@ -1,0 +1,5 @@
+use: grep
+title: XCTest's failures
+patterns: ['^.+:\d+: error: (-\[.+\]|\S+) : ']
+markers: [Package.swift]
+signature: '^Test Suite ''.+'' failed at '

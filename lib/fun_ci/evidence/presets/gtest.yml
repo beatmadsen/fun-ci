@@ -1,0 +1,6 @@
+use: section
+title: GoogleTest's failures
+start: [': Failure$']
+end: ['^\[-{10}\] ', '^\[ RUN      \] ']
+markers: [{ path: CMakeLists.txt, contains: 'gtest' }]
+signature: '^\[  FAILED  \] '

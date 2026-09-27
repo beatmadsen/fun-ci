@@ -1,0 +1,5 @@
+shop/cart.py:9: error: Incompatible return value type (got "str", expected "int")  [return-value]
+shop/cart.py:12: error: Returning Any from function declared to return "float"  [no-any-return]
+shop/cart.py:12: error: "Cart" has no attribute "rates"  [attr-defined]
+shop/checkout.py:5: error: Argument 1 to "add" of "Cart" has incompatible type "str"; expected "int"  [arg-type]
+Found 4 errors in 2 files (checked 3 source files)

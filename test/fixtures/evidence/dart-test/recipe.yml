@@ -1,0 +1,44 @@
+tool: dart test
+image: dart:stable@sha256:33faf91bc941466a767ce845b4bbb5d578ecd180abe5ee243e9c8c039109d215
+setup: dart pub get
+command: dart test
+version: dart --version; dart pub deps --style=compact | grep '^- test ' | sed 's/ \[.*//'
+files:
+  pubspec.yaml: |
+    name: cart
+    environment:
+      sdk: ^3.5.0
+    dev_dependencies:
+      test: 1.32.0
+  lib/cart.dart: |
+    class Cart {
+      final List<int> _items = [];
+
+      void add(int price) => _items.add(price);
+      int get total => _items.fold(0, (sum, price) => sum + price) + 1;
+      double discount(String code) => throw ArgumentError('unknown code $code');
+    }
+  test/cart_test.dart: |
+    import 'package:cart/cart.dart';
+    import 'package:test/test.dart';
+
+    void main() {
+      test('starts empty', () {
+        expect(Cart().total, equals(0));
+      });
+
+      test('adds up its items', () {
+        final cart = Cart()
+          ..add(2)
+          ..add(3);
+        expect(cart.total, equals(5));
+      });
+
+      test('takes a discount code', () {
+        expect(Cart().discount('SAVE10'), equals(0.9));
+      });
+
+      test('is a cart', () {
+        expect(Cart(), isA<Cart>());
+      });
+    }

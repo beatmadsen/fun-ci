@@ -1,0 +1,54 @@
+tool: dotnet test (xUnit)
+image: mcr.microsoft.com/dotnet/sdk:8.0@sha256:78235e09001f52b6592c458ac010775ebac6725422e80cd0c1650590f67b2743
+setup: dotnet restore
+command: dotnet test
+version: dotnet --version
+files:
+  Cart.Tests.csproj: |
+    <Project Sdk="Microsoft.NET.Sdk">
+      <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+      </PropertyGroup>
+      <ItemGroup>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+        <PackageReference Include="xunit" Version="2.9.2" />
+        <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+      </ItemGroup>
+    </Project>
+  Cart.cs: |
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public class Cart
+    {
+        private readonly List<int> items = new();
+        public void Add(int price) => items.Add(price);
+        public int Total => items.Sum() + 1;
+        public double Discount(string code) => throw new ArgumentException($"unknown code {code}");
+    }
+  CartTests.cs: |
+    using Xunit;
+
+    public class CartTests
+    {
+        [Fact]
+        public void StartsEmpty() => Assert.Equal(0, new Cart().Total);
+
+        [Fact]
+        public void AddsUpItsItems()
+        {
+            var cart = new Cart();
+            cart.Add(2);
+            cart.Add(3);
+            Assert.Equal(5, cart.Total);
+        }
+
+        [Fact]
+        public void TakesADiscountCode() => Assert.Equal(0.9, new Cart().Discount("SAVE10"));
+
+        [Fact]
+        public void IsACart() => Assert.IsType<Cart>(new Cart());
+    }

@@ -1,0 +1,33 @@
+00:00 +0: loading test/cart_test.dart
+00:00 +0: test/cart_test.dart: starts empty
+00:00 +0 -1: test/cart_test.dart: starts empty [E]
+  Expected: <0>
+    Actual: <1>
+  
+  package:matcher          expect
+  test/cart_test.dart 6:5  main.<fn>
+  
+00:00 +0 -1: test/cart_test.dart: adds up its items
+00:00 +0 -2: test/cart_test.dart: adds up its items [E]
+  Expected: <5>
+    Actual: <6>
+  
+  package:matcher           expect
+  test/cart_test.dart 13:5  main.<fn>
+  
+00:00 +0 -2: test/cart_test.dart: takes a discount code
+00:00 +0 -3: test/cart_test.dart: takes a discount code [E]
+  Invalid argument(s): unknown code SAVE10
+  package:cart/cart.dart 6:35  Cart.discount
+  test/cart_test.dart 17:19    main.<fn>
+  
+00:00 +0 -3: test/cart_test.dart: is a cart
+00:00 +1 -3: Some tests failed.
+
+Failing tests:
+  test/cart_test.dart: adds up its items
+  test/cart_test.dart: starts empty
+  test/cart_test.dart: takes a discount code
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.

@@ -1,0 +1,36 @@
+   Compiling cart v0.1.0 (/work)
+error[E0425]: cannot find value `discount` in this scope
+  --> src/lib.rs:13:42
+   |
+13 |         self.items.iter().sum::<u32>() + discount
+   |                                          ^^^^^^^^ not found in this scope
+
+error[E0308]: mismatched types
+ --> src/lib.rs:9:25
+  |
+9 |         self.items.push(price);
+  |                    ---- ^^^^^ expected `u32`, found `&str`
+  |                    |
+  |                    arguments to this method are incorrect
+  |
+note: method defined here
+ --> /rustc/48a229ceaefd4985c50990b14116b6d856af0985/library/alloc/src/vec/mod.rs:1001:11
+
+error[E0382]: borrow of moved value: `name`
+ --> src/receipt.rs:3:15
+  |
+1 | pub fn line(name: String) -> String {
+  |             ---- move occurs because `name` has type `String`, which does not implement the `Copy` trait
+2 |     let label = name;
+  |                 ---- value moved here
+3 |     format!("{name}: {label}")
+  |               ^^^^ value borrowed here after move
+  |
+help: consider cloning the value if the performance cost is acceptable
+  |
+2 |     let label = name.clone();
+  |                     ++++++++
+
+Some errors have detailed explanations: E0308, E0382, E0425.
+For more information about an error, try `rustc --explain E0308`.
+error: could not compile `cart` (lib) due to 3 previous errors

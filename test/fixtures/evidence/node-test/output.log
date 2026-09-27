@@ -1,0 +1,103 @@
+TAP version 13
+# Subtest: Cart
+    # Subtest: starts empty
+    not ok 1 - starts empty
+      ---
+      duration_ms: 0.726833
+      type: 'test'
+      location: '/work/test/cart.test.js:6:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        1 !== 0
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 0
+      actual: 1
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (/work/test/cart.test.js:7:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        node:internal/test_runner/test:1440:71
+        node:internal/per_context/primordials:466:82
+        new Promise (<anonymous>)
+        new SafePromise (node:internal/per_context/primordials:435:3)
+        node:internal/per_context/primordials:466:9
+        Array.map (<anonymous>)
+      ...
+    # Subtest: adds up its items
+    not ok 2 - adds up its items
+      ---
+      duration_ms: 0.16025
+      type: 'test'
+      location: '/work/test/cart.test.js:10:3'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        
+        6 !== 5
+        
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 5
+      actual: 6
+      operator: 'strictEqual'
+      stack: |-
+        TestContext.<anonymous> (/work/test/cart.test.js:14:12)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Promise.all (index 0)
+        async Suite.run (node:internal/test_runner/test:1442:7)
+        async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+      ...
+    # Subtest: takes a discount code
+    not ok 3 - takes a discount code
+      ---
+      duration_ms: 0.049875
+      type: 'test'
+      location: '/work/test/cart.test.js:17:3'
+      failureType: 'testCodeFailure'
+      error: 'unknown code SAVE10'
+      code: 'ERR_TEST_FAILURE'
+      stack: |-
+        Cart.discount (/work/src/cart.js:5:26)
+        TestContext.<anonymous> (/work/test/cart.test.js:18:29)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Suite.processPendingSubtests (node:internal/test_runner/test:744:18)
+        Test.postRun (node:internal/test_runner/test:1173:19)
+        Test.run (node:internal/test_runner/test:1101:12)
+        async Suite.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: is a cart
+    ok 4 - is a cart
+      ---
+      duration_ms: 0.075041
+      type: 'test'
+      ...
+    1..4
+not ok 1 - Cart
+  ---
+  duration_ms: 1.505291
+  type: 'suite'
+  location: '/work/test/cart.test.js:5:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..1
+# tests 4
+# suites 1
+# pass 1
+# fail 3
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37.213708

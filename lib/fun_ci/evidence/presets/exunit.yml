@@ -1,0 +1,6 @@
+use: section
+title: ExUnit's failures
+start: ['^\s+\d+\) (test|doctest|property) .* \(\S+\)$', '^\s+\d+\) \S+: failure on setup_all callback']
+end: ['^Finished in [\d.]+ seconds \(']
+markers: [mix.exs]
+signature: '^Running ExUnit with seed: \d+'

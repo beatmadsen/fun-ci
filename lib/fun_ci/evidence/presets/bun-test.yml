@@ -1,0 +1,6 @@
+use: section
+title: Bun's failed tests
+start: ['^\s*\d+ \| ', '^error: ', '^\(fail\) ']
+end: ['^\((pass|skip|todo)\) ', '^ \d+ pass$', '^\S+:$']
+markers: [bun.lockb, bun.lock, bunfig.toml]
+signature: '^bun test v\d'

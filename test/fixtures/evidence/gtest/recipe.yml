@@ -1,0 +1,57 @@
+tool: googletest
+image: gcc:14@sha256:9188ac751ca24431dc43dbd142a223c98ea74f01d2858e84d30ba342a0d67844
+setup: apt-get update -qq && apt-get install -y -qq cmake=3.31.6-2 libgtest-dev=1.16.0-1
+command: cmake -S . -B build && cmake --build build && ctest --test-dir build --output-on-failure
+version: dpkg-query -W libgtest-dev cmake && g++ --version | head -1
+files:
+  CMakeLists.txt: |
+    cmake_minimum_required(VERSION 3.20)
+    project(cart CXX)
+    set(CMAKE_CXX_STANDARD 17)
+    find_package(GTest REQUIRED)
+    enable_testing()
+    add_executable(cart_test cart.cpp cart_test.cpp)
+    target_link_libraries(cart_test GTest::gtest_main)
+    include(GoogleTest)
+    gtest_discover_tests(cart_test)
+  cart.h: |
+    #pragma once
+    #include <string>
+    #include <vector>
+
+    class Cart {
+     public:
+      void add(int price);
+      int total() const;
+      double discount(const std::string& code) const;
+
+     private:
+      std::vector<int> items_;
+    };
+  cart.cpp: |
+    #include "cart.h"
+
+    #include <numeric>
+    #include <stdexcept>
+
+    void Cart::add(int price) { items_.push_back(price); }
+
+    int Cart::total() const { return std::accumulate(items_.begin(), items_.end(), 1); }
+
+    double Cart::discount(const std::string& code) const {
+      throw std::invalid_argument("unknown code " + code);
+    }
+  cart_test.cpp: |
+    #include "cart.h"
+
+    #include <gtest/gtest.h>
+
+    TEST(Cart, StartsEmpty) { EXPECT_EQ(0, Cart().total()); }
+
+    TEST(Cart, TakesADiscountCode) { EXPECT_DOUBLE_EQ(0.9, Cart().discount("SAVE10")); }
+
+    TEST(Cart, IsACart) {
+      Cart cart;
+      cart.add(2);
+      EXPECT_GT(cart.total(), 0);
+    }

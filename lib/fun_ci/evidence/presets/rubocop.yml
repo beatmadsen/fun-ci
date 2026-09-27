@@ -1,0 +1,6 @@
+use: section
+title: RuboCop's offenses
+start: ['^Offenses:$']
+end: ['^\d+ files? inspected, ']
+markers: [.rubocop.yml, { path: Gemfile, contains: rubocop }]
+signature: '^\d+ files? inspected, (\d+|no) offenses? detected'

@@ -1,0 +1,11 @@
+
+/work/src/cart.js
+  4:5   error  'sum' is assigned a value but never used  no-unused-vars
+  6:10  error  'summ' is not defined                     no-undef
+
+/work/src/checkout.js
+  4:9   error  'discount' is assigned a value but never used  no-unused-vars
+  5:12  error  Expected '===' and instead saw '=='            eqeqeq
+
+✖ 4 problems (4 errors, 0 warnings)
+

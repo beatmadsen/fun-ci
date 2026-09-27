@@ -1,0 +1,6 @@
+use: section
+title: PHPUnit's errors and failures
+start: ['^There (was|were) \d+ (errors?|failures?):$']
+end: ['^(ERRORS|FAILURES)!$', '^Tests: \d+, Assertions: \d+']
+markers: [phpunit.xml, phpunit.xml.dist, { path: composer.json, contains: phpunit }]
+signature: '^Tests: \d+, Assertions: \d+, '

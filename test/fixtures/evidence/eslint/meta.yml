@@ -1,0 +1,9 @@
+---
+tool: eslint
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --silent --no-audit --no-fund
+command: npx eslint .
+sha256: c2bf05b8836dcb9c92b2bc03d2eed4e6a88a849cd2fdb184ded487cd106ba2a4
+exit_status: 1
+version: v9.36.0
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

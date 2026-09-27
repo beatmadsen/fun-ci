@@ -1,0 +1,8 @@
+---
+tool: go build
+image: golang:1.25@sha256:699337d620559a59b4a2bb298ad59611e535d2ee755a34cf2d2a98f37578dc80
+command: go build ./...
+sha256: bb72d70fecf726386d3099223c91738ec795f0c120788e0f1e078651f97efd02
+exit_status: 1
+version: go version go1.25.14 linux/arm64
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

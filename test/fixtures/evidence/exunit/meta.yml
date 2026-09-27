@@ -1,0 +1,10 @@
+---
+tool: ExUnit
+image: elixir:1.17@sha256:a40312b97492ce708d2a1cefee144ec680503ab097f52020299645d174a13a8a
+setup: MIX_ENV=test mix compile
+command: mix test
+sha256: a47149212b25593af5cc78018f4e19f55d6129fa22125fae3dea225d34c6488c
+exit_status: 2
+version: Erlang/OTP 27 [erts-15.2.7.13] [source] [64-bit] [smp:14:14] [ds:14:14:10]
+  [async-threads:1] [jit]; Elixir 1.17.3 (compiled with Erlang/OTP 27)
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

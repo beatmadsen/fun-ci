@@ -1,0 +1,10 @@
+---
+tool: dart test
+image: dart:stable@sha256:33faf91bc941466a767ce845b4bbb5d578ecd180abe5ee243e9c8c039109d215
+setup: dart pub get
+command: dart test
+sha256: c2af5bbb4873dd62fc0e55b6483abca8af05e547b15960e0e0e9c81df5d3ef0f
+exit_status: 1
+version: 'Dart SDK version: 3.13.4 (stable) (Tue Sep 15 01:01:15 2026 -0700) on "linux_arm64";
+  - test 1.32.0'
+script_commit: 6a8714574f1cbe11ad2b767596e73c6ef9d35de3

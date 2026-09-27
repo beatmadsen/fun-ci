@@ -1,0 +1,32 @@
+PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.3.35
+
+FFE.                                                                4 / 4 (100%)
+
+Time: 00:00.001, Memory: 25.46 MB
+
+There was 1 error:
+
+1) CartTest::testTakesADiscountCode
+InvalidArgumentException: unknown code SAVE10
+
+/work/src/Cart.php:13
+/work/tests/CartTest.php:25
+
+--
+
+There were 2 failures:
+
+1) CartTest::testStartsEmpty
+Failed asserting that 1 is identical to 0.
+
+/work/tests/CartTest.php:12
+
+2) CartTest::testAddsUpItsItems
+Failed asserting that 6 is identical to 5.
+
+/work/tests/CartTest.php:20
+
+ERRORS!
+Tests: 4, Assertions: 3, Errors: 1, Failures: 2.

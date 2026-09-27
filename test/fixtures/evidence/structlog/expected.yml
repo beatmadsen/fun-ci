@@ -1,0 +1,13 @@
+# What the preset picks out of output.log: each excerpt's location, a range of the output's own lines,
+# and the first excerpt's lines, which json-log writes rather than copies.
+excerpts: [output:3-4]
+lines:
+  - "2026-09-27T20:22:34.329562Z WARN shop.checkout: payment gateway slow"
+  - "2026-09-27T20:22:34.329590Z ERROR shop.checkout: checkout failed"
+  - "  Traceback (most recent call last):"
+  - "    File \"/work/app.py\", line 29, in <module>"
+  - "      charge(42)"
+  - "      ~~~~~~^^^^"
+  - "    File \"/work/app.py\", line 22, in charge"
+  - "      raise RuntimeError(f\"card declined for cart {cart_id}\")"
+  - "  RuntimeError: card declined for cart 42"

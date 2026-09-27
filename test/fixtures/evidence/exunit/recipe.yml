@@ -1,0 +1,44 @@
+tool: ExUnit
+image: elixir:1.17@sha256:a40312b97492ce708d2a1cefee144ec680503ab097f52020299645d174a13a8a
+setup: MIX_ENV=test mix compile
+command: mix test
+version: elixir --version
+files:
+  mix.exs: |
+    defmodule Cart.MixProject do
+      use Mix.Project
+
+      def project do
+        [app: :cart, version: "0.1.0", elixir: "~> 1.17", deps: []]
+      end
+    end
+  lib/cart.ex: |
+    defmodule Cart do
+      def new, do: []
+      def add(cart, price), do: [price | cart]
+      def total(cart), do: Enum.sum(cart) + 1
+      def discount(_cart, code), do: raise(ArgumentError, "unknown code #{code}")
+    end
+  test/test_helper.exs: |
+    ExUnit.start()
+  test/cart_test.exs: |
+    defmodule CartTest do
+      use ExUnit.Case
+
+      test "starts empty" do
+        assert Cart.total(Cart.new()) == 0
+      end
+
+      test "adds up its items" do
+        cart = Cart.new() |> Cart.add(2) |> Cart.add(3)
+        assert Cart.total(cart) == 5
+      end
+
+      test "takes a discount code" do
+        assert Cart.discount(Cart.new(), "SAVE10") == 0.9
+      end
+
+      test "is a cart" do
+        assert is_list(Cart.new())
+      end
+    end

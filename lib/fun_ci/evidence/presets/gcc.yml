@@ -1,0 +1,6 @@
+use: section
+title: gcc's errors, file by file
+start: ['^(In file included from )?\S+\.(c|cc|cp|cpp|cxx|c\+\+|h|hh|hpp|hxx):']
+end: ['^g?make(\[\d+\])?: ', '^(cc|c\+\+|gcc|g\+\+|clang|clang\+\+) ']
+markers: [Makefile, makefile, GNUmakefile, CMakeLists.txt]
+signature: '^\S+\.(c|cc|cp|cpp|cxx|c\+\+|h|hh|hpp|hxx):\d+:\d+: (fatal )?error: '

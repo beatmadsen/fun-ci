@@ -1,0 +1,6 @@
+use: section
+title: dart test's failures
+start: ['^\d+:\d+ \+\d+( ~\d+)?( -\d+)?: .* \[E\]$']
+end: ['^\d+:\d+ \+\d+( ~\d+)?( -\d+)?: ']
+markers: [pubspec.yaml]
+signature: '^\d+:\d+ \+\d+( ~\d+)?( -\d+)?: Some tests failed\.$'

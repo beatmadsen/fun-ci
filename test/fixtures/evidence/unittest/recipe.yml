@@ -1,0 +1,47 @@
+tool: unittest
+image: python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+setup: "true"
+command: python -m unittest
+version: python --version
+files:
+  pyproject.toml: |
+    [project]
+    name = "shop"
+    version = "0.1.0"
+    requires-python = ">=3.12"
+  shop/__init__.py: ""
+  shop/cart.py: |
+    class Cart:
+        def __init__(self):
+            self.items = []
+
+        def add(self, price):
+            self.items.append(price)
+
+        def total(self):
+            return sum(self.items) + 1
+
+        def discount(self, code):
+            raise ValueError(f"unknown code {code}")
+  tests/__init__.py: ""
+  tests/test_cart.py: |
+    import unittest
+
+    from shop.cart import Cart
+
+
+    class CartTest(unittest.TestCase):
+        def test_starts_empty(self):
+            self.assertEqual(Cart().total(), 0)
+
+        def test_adds_up_its_items(self):
+            cart = Cart()
+            cart.add(2)
+            cart.add(3)
+            self.assertEqual(cart.total(), 5)
+
+        def test_takes_a_discount_code(self):
+            self.assertEqual(Cart().discount("SAVE10"), 0.9)
+
+        def test_is_a_cart(self):
+            self.assertIsInstance(Cart(), Cart)

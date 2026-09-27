@@ -1,0 +1,9 @@
+---
+tool: googletest
+image: gcc:14@sha256:9188ac751ca24431dc43dbd142a223c98ea74f01d2858e84d30ba342a0d67844
+setup: apt-get update -qq && apt-get install -y -qq cmake=3.31.6-2 libgtest-dev=1.16.0-1
+command: cmake -S . -B build && cmake --build build && ctest --test-dir build --output-on-failure
+sha256: 026c0093b18fc81e51b34e092e98e58dd8f878e178c51bb12bed2bec922d4f1e
+exit_status: 8
+version: "cmake\t3.31.6-2; libgtest-dev:arm64\t1.16.0-1; g++ (GCC) 14.4.0"
+script_commit: 6a8714574f1cbe11ad2b767596e73c6ef9d35de3

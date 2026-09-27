@@ -1,0 +1,4 @@
+use: grep
+patterns: ['^(vet: )?\S+\.go:\d+:\d+: ']
+markers: [go.mod]
+signature: '^(vet: )?\S+\.go:\d+:\d+: '

@@ -1,0 +1,54 @@
+tool: swift test (XCTest)
+image: swift:6.0@sha256:cc93f1594d63122eff78133f799f7d45a441fa4c5193e164ecea6065fd448fdd
+setup: swift build --build-tests
+command: swift test
+version: swift --version
+files:
+  Package.swift: |
+    // swift-tools-version:5.10
+    import PackageDescription
+
+    let package = Package(
+        name: "Cart",
+        targets: [
+            .target(name: "Cart"),
+            .testTarget(name: "CartTests", dependencies: ["Cart"]),
+        ]
+    )
+  Sources/Cart/Cart.swift: |
+    public enum CartError: Error {
+        case unknownCode(String)
+    }
+
+    public struct Cart {
+        private var items: [Int] = []
+
+        public init() {}
+        public mutating func add(_ price: Int) { items.append(price) }
+        public var total: Int { items.reduce(0, +) + 1 }
+        public func discount(_ code: String) throws -> Double { throw CartError.unknownCode(code) }
+    }
+  Tests/CartTests/CartTests.swift: |
+    import XCTest
+    @testable import Cart
+
+    final class CartTests: XCTestCase {
+        func testStartsEmpty() {
+            XCTAssertEqual(Cart().total, 0)
+        }
+
+        func testAddsUpItsItems() {
+            var cart = Cart()
+            cart.add(2)
+            cart.add(3)
+            XCTAssertEqual(cart.total, 5)
+        }
+
+        func testTakesADiscountCode() throws {
+            XCTAssertEqual(try Cart().discount("SAVE10"), 0.9)
+        }
+
+        func testIsACart() {
+            XCTAssertNotNil(Cart() as Cart?)
+        }
+    }

@@ -1,0 +1,16 @@
+# What the preset picks out of output.log: each excerpt's location, a range of the output's own lines,
+# and the first excerpt's lines, which json-log writes rather than copies.
+excerpts: [output:4-5]
+lines:
+  - "1790540586927 WARN shop.checkout: payment gateway slow: 2300 ms"
+  - "1790540586927 ERROR shop.checkout: checkout failed"
+  - "  Error: card declined"
+  - "      at charge (/work/app.js:6:9)"
+  - "      at Object.<anonymous> (/work/app.js:13:3)"
+  - "      at Module._compile (node:internal/modules/cjs/loader:1781:14)"
+  - "      at Object..js (node:internal/modules/cjs/loader:1913:10)"
+  - "      at Module.load (node:internal/modules/cjs/loader:1505:32)"
+  - "      at Function._load (node:internal/modules/cjs/loader:1309:12)"
+  - "      at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)"
+  - "      at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)"
+  - "      at node:internal/main/run_main_module:36:49"

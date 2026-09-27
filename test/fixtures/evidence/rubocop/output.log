@@ -1,0 +1,16 @@
+Inspecting 3 files
+.W.
+
+Offenses:
+
+lib/cart.rb:15:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - unused.
+    unused = @items.size
+    ^^^^^^
+lib/cart.rb:20:5: C: [Correctable] Layout/EmptyLineAfterGuardClause: Add empty line after guard clause.
+    raise ArgumentError, "unknown code #{code}" if code != 'SAVE10'
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/cart.rb:21:5: C: [Correctable] Style/RedundantReturn: Redundant return detected.
+    return total * 0.9
+    ^^^^^^
+
+3 files inspected, 3 offenses detected, 3 offenses autocorrectable

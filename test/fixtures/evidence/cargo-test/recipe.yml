@@ -1,0 +1,55 @@
+tool: cargo test
+image: rust:1.98.1@sha256:a8a5f0a1e5fe7dfe1d352591e4a1c7dd2c08fd70475cae872cf3458ba0df0546
+command: cargo test
+version: cargo --version && rustc --version
+files:
+  Cargo.toml: |
+    [package]
+    name = "cart"
+    version = "0.1.0"
+    edition = "2021"
+  src/lib.rs: |
+    pub struct Cart {
+        items: Vec<u32>,
+    }
+
+    impl Cart {
+        pub fn new() -> Self {
+            Cart { items: Vec::new() }
+        }
+
+        pub fn add(&mut self, price: u32) {
+            self.items.push(price);
+        }
+
+        pub fn total(&self) -> u32 {
+            self.items.iter().sum::<u32>() + 1
+        }
+
+        pub fn discount(&self, code: &str) -> Result<f64, String> {
+            Err(format!("unknown code {code}"))
+        }
+    }
+
+    #[cfg(test)]
+    mod tests {
+        use super::*;
+
+        #[test]
+        fn starts_empty() {
+            assert_eq!(Cart::new().total(), 0);
+        }
+
+        #[test]
+        fn takes_a_discount_code() {
+            let rate = Cart::new().discount("SAVE10").unwrap();
+            assert!(rate < 1.0, "rate {rate} is no discount");
+        }
+
+        #[test]
+        fn adds_an_item() {
+            let mut cart = Cart::new();
+            cart.add(2);
+            assert_eq!(cart.items.len(), 1);
+        }
+    }

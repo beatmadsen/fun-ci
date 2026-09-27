@@ -1,0 +1,5 @@
+use: section
+title: ShellCheck's findings
+start: ['^In .+ line \d+:$', '^Did you mean:$']
+end: ['^$']
+signature: '\^-*\^? SC\d{4} \((error|warning|info|style)\): '

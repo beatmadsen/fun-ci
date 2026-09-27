@@ -1,0 +1,6 @@
+use: section
+title: mypy's type errors
+start: ['^\S+\.pyi?:\d+(:\d+)?: (error|note): ']
+end: ['^Found \d+ errors? in \d+ files? \(checked ']
+markers: [{ path: pyproject.toml, contains: mypy }, mypy.ini, .mypy.ini, { path: setup.cfg, contains: mypy }]
+signature: '^Found \d+ errors? in \d+ files? \(checked \d+ source files?\)$'

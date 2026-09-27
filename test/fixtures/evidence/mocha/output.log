@@ -1,0 +1,51 @@
+
+
+  Cart
+    1) starts empty
+    2) adds up its items
+    3) takes a discount code
+    ✔ is a cart
+
+
+  1 passing (2ms)
+  3 failing
+
+  1) Cart
+       starts empty:
+
+      AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+1 !== 0
+
+      + expected - actual
+
+      -1
+      +0
+      
+      at Context.<anonymous> (test/cart.test.js:6:12)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  2) Cart
+       adds up its items:
+
+      AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+6 !== 5
+
+      + expected - actual
+
+      -6
+      +5
+      
+      at Context.<anonymous> (test/cart.test.js:13:12)
+      at process.processImmediate (node:internal/timers:484:21)
+
+  3) Cart
+       takes a discount code:
+     Error: unknown code SAVE10
+      at Cart.discount (src/cart.js:5:26)
+      at Context.<anonymous> (test/cart.test.js:17:29)
+      at process.processImmediate (node:internal/timers:484:21)
+
+
+

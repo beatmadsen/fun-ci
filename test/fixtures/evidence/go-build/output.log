@@ -1,0 +1,7 @@
+# example.com/cart
+./cart.go:3:8: "strings" imported and not used
+./cart.go:7:62: cannot use price (variable of type string) as int value in argument to append
+./cart.go:14:9: undefined: totl
+# example.com/cart/receipt
+receipt/receipt.go:6:46: undefined: currency
+receipt/receipt.go:12:1: missing return

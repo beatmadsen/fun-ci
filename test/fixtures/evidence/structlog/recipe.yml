@@ -1,0 +1,47 @@
+tool: structlog
+image: python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+setup: pip install -q --root-user-action=ignore structlog==25.4.0
+command: python app.py
+version: python -c 'import structlog; print("structlog", structlog.__version__)'
+files:
+  pyproject.toml: |
+    [project]
+    name = "shop"
+    version = "0.1.0"
+    requires-python = ">=3.12"
+    dependencies = ["structlog>=25"]
+  app.py: |
+    import logging
+    import sys
+
+    import structlog
+
+    logging.basicConfig(format="%(message)s", stream=sys.stdout, level=logging.DEBUG)
+    structlog.configure(
+        processors=[
+            structlog.stdlib.add_logger_name,
+            structlog.stdlib.add_log_level,
+            structlog.processors.TimeStamper(fmt="iso"),
+            structlog.processors.format_exc_info,
+            structlog.processors.JSONRenderer(),
+        ],
+        logger_factory=structlog.stdlib.LoggerFactory(),
+        wrapper_class=structlog.stdlib.BoundLogger,
+    )
+    log = structlog.get_logger("shop.checkout")
+
+
+    def charge(cart_id):
+        raise RuntimeError(f"card declined for cart {cart_id}")
+
+
+    log.debug("loading cart", cart_id=42)
+    log.info("checkout started", cart_id=42)
+    log.warning("payment gateway slow", elapsed_ms=2300)
+    try:
+        charge(42)
+    except RuntimeError:
+        log.error("checkout failed", cart_id=42, exc_info=True)
+    print("a plain line from print", flush=True)
+    log.info("checkout finished", cart_id=42)
+    sys.exit(1)

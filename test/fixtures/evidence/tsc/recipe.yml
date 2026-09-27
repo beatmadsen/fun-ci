@@ -1,0 +1,48 @@
+tool: tsc
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --silent --no-audit --no-fund
+command: npx tsc --noEmit
+version: npx tsc --version
+files:
+  package.json: |
+    {
+      "name": "shop",
+      "private": true,
+      "devDependencies": { "typescript": "5.9.2" }
+    }
+  tsconfig.json: |
+    {
+      "compilerOptions": {
+        "target": "ES2022",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "strict": true,
+        "noEmit": true
+      },
+      "include": ["src"]
+    }
+  src/cart.ts: |
+    export interface Item {
+      name: string;
+      price: number;
+    }
+
+    export class Cart {
+      private items: Item[] = [];
+
+      add(item: Item): void {
+        this.items.push(item);
+      }
+
+      total(): number {
+        return this.items.reduce((sum, item) => sum + item.cost, 0);
+      }
+    }
+  src/checkout.ts: |
+    import { Cart } from "./cart.js";
+
+    export function checkout(cart: Cart, code: string): string {
+      const total: string = cart.total();
+      cart.add({ name: "gift wrap" });
+      return `${code}: ${total}`;
+    }

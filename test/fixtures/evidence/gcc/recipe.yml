@@ -1,0 +1,40 @@
+tool: gcc
+image: gcc:14@sha256:9188ac751ca24431dc43dbd142a223c98ea74f01d2858e84d30ba342a0d67844
+command: make -k
+version: gcc --version | head -1 && make --version | head -1
+files:
+  Makefile: |
+    CFLAGS = -Wall -std=c11
+
+    cart: cart.o receipt.o
+    	$(CC) -o $@ $^
+
+    %.o: %.c cart.h
+    	$(CC) $(CFLAGS) -c $<
+  cart.h: |
+    struct cart { int items[16]; int count; };
+    int cart_total(const struct cart *cart);
+    void receipt_print(const struct cart *cart);
+  cart.c: |
+    #include "cart.h"
+
+    int cart_total(const struct cart *cart) {
+        int total = 0;
+        for (int i = 0; i < cart->count; i++)
+            total += cart->item[i];
+        return totl;
+    }
+
+    int main(void) {
+        struct cart cart = { .count = 0 };
+        receipt_print(&cart);
+        return 0;
+    }
+  receipt.c: |
+    #include <stdio.h>
+    #include "cart.h"
+
+    void receipt_print(const struct cart *cart) {
+        const char *total = cart_total(cart);
+        printf("total %s\n", total)
+    }

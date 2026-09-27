@@ -1,0 +1,9 @@
+---
+tool: structlog
+image: python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+setup: pip install -q --root-user-action=ignore structlog==25.4.0
+command: python app.py
+sha256: d2c880ba8456d906a842f3ddeb6908d3698730175a4a6c211b4367250a874f0e
+exit_status: 1
+version: structlog 25.4.0
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

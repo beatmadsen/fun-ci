@@ -1,0 +1,44 @@
+tool: deno test
+image: denoland/deno:2.5.2@sha256:8aca3eca04f134eca52a50bf3004072995d7a292e4962660d298cbee144d31f2
+setup: deno cache cart_test.ts
+command: deno test
+version: deno --version
+files:
+  deno.json: |
+    {
+      "imports": { "@std/assert": "jsr:@std/assert@1.0.14" }
+    }
+  cart.ts: |
+    export class Cart {
+      private items: number[] = [];
+
+      add(price: number): void {
+        this.items.push(price);
+      }
+
+      total(): number {
+        return this.items.reduce((sum, price) => sum + price, 1);
+      }
+
+      discount(code: string): number {
+        throw new RangeError(`unknown code ${code}`);
+      }
+    }
+  cart_test.ts: |
+    import { assertEquals } from "@std/assert";
+    import { Cart } from "./cart.ts";
+
+    Deno.test("adds up its items", () => {
+      const cart = new Cart();
+      cart.add(2);
+      cart.add(3);
+      assertEquals(cart.total(), 5);
+    });
+
+    Deno.test("takes a discount code", () => {
+      assertEquals(new Cart().discount("SAVE10"), 0.9);
+    });
+
+    Deno.test("is a cart", () => {
+      assertEquals(new Cart() instanceof Cart, true);
+    });

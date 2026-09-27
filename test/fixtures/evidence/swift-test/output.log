@@ -1,0 +1,27 @@
+[0/1] Planning build
+Building for debugging...
+[0/2] Write swift-version-24593BA9C3E375BF.txt
+Build complete! (0.15s)
+Test Suite 'All tests' started at 2026-09-27 20:23:18.340
+Test Suite 'debug.xctest' started at 2026-09-27 20:23:18.361
+Test Suite 'CartTests' started at 2026-09-27 20:23:18.361
+Test Case 'CartTests.testAddsUpItsItems' started at 2026-09-27 20:23:18.361
+/work/Tests/CartTests/CartTests.swift:13: error: CartTests.testAddsUpItsItems : XCTAssertEqual failed: ("6") is not equal to ("5") - 
+Test Case 'CartTests.testAddsUpItsItems' failed (0.001 seconds)
+Test Case 'CartTests.testIsACart' started at 2026-09-27 20:23:18.362
+Test Case 'CartTests.testIsACart' passed (0.0 seconds)
+Test Case 'CartTests.testStartsEmpty' started at 2026-09-27 20:23:18.362
+/work/Tests/CartTests/CartTests.swift:6: error: CartTests.testStartsEmpty : XCTAssertEqual failed: ("1") is not equal to ("0") - 
+Test Case 'CartTests.testStartsEmpty' failed (0.0 seconds)
+Test Case 'CartTests.testTakesADiscountCode' started at 2026-09-27 20:23:18.363
+/work/Tests/CartTests/CartTests.swift:17: error: CartTests.testTakesADiscountCode : XCTAssertEqual threw error "unknownCode("SAVE10")" - 
+Test Case 'CartTests.testTakesADiscountCode' failed (0.001 seconds)
+Test Suite 'CartTests' failed at 2026-09-27 20:23:18.363
+	 Executed 4 tests, with 3 failures (1 unexpected) in 0.002 (0.002) seconds
+Test Suite 'debug.xctest' failed at 2026-09-27 20:23:18.363
+	 Executed 4 tests, with 3 failures (1 unexpected) in 0.002 (0.002) seconds
+Test Suite 'All tests' failed at 2026-09-27 20:23:18.363
+	 Executed 4 tests, with 3 failures (1 unexpected) in 0.002 (0.002) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.0.3 (18c42c19cac3faf)
+✔ Test run with 0 tests passed after 0.001 seconds.

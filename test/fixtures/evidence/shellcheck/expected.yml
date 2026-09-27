@@ -1,0 +1,2 @@
+# What the preset picks out of output.log: each excerpt's location, a range of the output's own lines.
+excerpts: [output:2-5, output:8-11, output:14-16, output:19-21, output:23-24, output:27-29]

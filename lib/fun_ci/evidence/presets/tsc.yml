@@ -1,0 +1,6 @@
+use: section
+title: TypeScript's type errors
+start: ['\(\d+,\d+\): error TS\d+: ']
+end: ['^Found \d+ errors?']
+markers: [tsconfig.json]
+signature: '\(\d+,\d+\): error TS\d+: '

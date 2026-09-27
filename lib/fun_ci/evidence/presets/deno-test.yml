@@ -1,0 +1,6 @@
+use: section
+title: Deno's failing tests
+start: ['^ ERRORS $']
+end: ['^ FAILURES $']
+markers: [deno.json, deno.jsonc]
+signature: 'running \d+ tests? from \./'

@@ -1,0 +1,9 @@
+---
+tool: phpunit
+image: php:8.3-cli@sha256:9bfe0302473ae40466205b3050b8dd9528502e9a9741a96a3911bcaec26bc7cd
+setup: curl -sSfLo phpunit.phar https://phar.phpunit.de/phpunit-11.5.56.phar
+command: php phpunit.phar tests
+sha256: 67ea6aa2ed1ef847f8ea2a8fde0d3df13d2f96622ca40b7e55bef3f816670137
+exit_status: 2
+version: PHPUnit 11.5.56 by Sebastian Bergmann and contributors.
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

@@ -1,0 +1,6 @@
+{"level":20,"time":1790540586927,"pid":21,"hostname":"ab4d193c878d","name":"shop.checkout","msg":"loading cart 42"}
+a plain line from console.log
+{"level":30,"time":1790540586927,"pid":21,"hostname":"ab4d193c878d","name":"shop.checkout","msg":"checkout started"}
+{"level":40,"time":1790540586927,"pid":21,"hostname":"ab4d193c878d","name":"shop.checkout","msg":"payment gateway slow: 2300 ms"}
+{"level":50,"time":1790540586927,"pid":21,"hostname":"ab4d193c878d","name":"shop.checkout","err":{"type":"Error","message":"card declined","stack":"Error: card declined\n    at charge (/work/app.js:6:9)\n    at Object.<anonymous> (/work/app.js:13:3)\n    at Module._compile (node:internal/modules/cjs/loader:1781:14)\n    at Object..js (node:internal/modules/cjs/loader:1913:10)\n    at Module.load (node:internal/modules/cjs/loader:1505:32)\n    at Function._load (node:internal/modules/cjs/loader:1309:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49"},"msg":"checkout failed"}
+{"level":30,"time":1790540586928,"pid":21,"hostname":"ab4d193c878d","name":"shop.checkout","msg":"checkout finished"}

@@ -1,0 +1,9 @@
+---
+tool: dotnet test (xUnit)
+image: mcr.microsoft.com/dotnet/sdk:8.0@sha256:78235e09001f52b6592c458ac010775ebac6725422e80cd0c1650590f67b2743
+setup: dotnet restore
+command: dotnet test
+sha256: 204f97abd5004a4bd525caf8749f1b6d61abae2fba285853174c1705b4496d7f
+exit_status: 1
+version: 8.0.425
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

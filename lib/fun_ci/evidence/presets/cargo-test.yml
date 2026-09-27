@@ -1,0 +1,6 @@
+use: section
+title: cargo test's failed tests
+start: ['^---- \S+ stdout ----$']
+end: ['^test result: ', '^failures:$', '^---- \S+ stdout ----$']
+markers: [Cargo.toml]
+signature: '^test result: FAILED\. '

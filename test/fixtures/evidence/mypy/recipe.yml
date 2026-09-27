@@ -1,0 +1,35 @@
+tool: mypy
+image: python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+setup: pip install -q --root-user-action=ignore mypy==1.18.2
+command: mypy shop
+version: mypy --version
+files:
+  pyproject.toml: |
+    [project]
+    name = "shop"
+    version = "0.1.0"
+    requires-python = ">=3.12"
+
+    [tool.mypy]
+    strict = true
+  shop/__init__.py: ""
+  shop/cart.py: |
+    class Cart:
+        def __init__(self) -> None:
+            self.items: list[int] = []
+
+        def add(self, price: int) -> None:
+            self.items.append(price)
+
+        def total(self) -> int:
+            return str(sum(self.items))
+
+        def discount(self, code: str) -> float:
+            return self.total() * self.rates[code]
+  shop/checkout.py: |
+    from shop.cart import Cart
+
+
+    def checkout(cart: Cart) -> int:
+        cart.add("2.50")
+        return cart.total()

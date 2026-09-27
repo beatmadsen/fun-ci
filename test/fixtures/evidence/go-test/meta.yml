@@ -1,0 +1,8 @@
+---
+tool: go test
+image: golang:1.25@sha256:699337d620559a59b4a2bb298ad59611e535d2ee755a34cf2d2a98f37578dc80
+command: go test ./...
+sha256: b172b78e176530cdedc101347f99283705e04bf953424f3cfde321cc2fa5c69b
+exit_status: 1
+version: go version go1.25.14 linux/arm64
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

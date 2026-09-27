@@ -1,0 +1,9 @@
+---
+tool: prove
+image: perl:5.40-slim@sha256:90406ca29154d80e43a0681c73e54a996f42c32d307c60ad389db3317c53dacf
+setup: 'true'
+command: prove -l t
+sha256: 8cfa07f2e3db4cd53be6d7104578bbbfb55fc012a17a42f4c8053f8972c2554a
+exit_status: 1
+version: TAP::Harness v3.48 and Perl v5.40.5
+script_commit: 6a8714574f1cbe11ad2b767596e73c6ef9d35de3

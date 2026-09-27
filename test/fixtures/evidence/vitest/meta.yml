@@ -1,0 +1,9 @@
+---
+tool: vitest
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --no-audit --no-fund --silent vitest@3.2.4
+command: npx vitest run
+sha256: b85b89a20564f604b1a57e913f189c6b78243e6590e905fd11f23b5f396b2e99
+exit_status: 1
+version: vitest/3.2.4 linux-arm64 node-v22.23.3
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

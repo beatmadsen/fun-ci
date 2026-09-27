@@ -4,6 +4,7 @@ require_relative "../test_helper"
 require_relative "../support/evidence_fixtures"
 require "digest"
 require "fun_ci/evidence/presets"
+require "fun_ci/evidence/source"
 
 # A preset is only as good as the output it was checked against, so every
 # preset has a recorded failing run, the run is the one recorded, and what it
@@ -58,7 +59,11 @@ class TestEvidenceFixtures < Minitest::Test
 
   def signed = FunCi::Evidence::Presets.all.select(&:signature)
   def fixture(name) = EvidenceFixtures.all.find { |run| run.name == name }
-  def matches?(preset, run) = run.output.lines.any? { |line| Regexp.new(preset.signature).match?(line.chomp) }
+
+  # Read as detection reads a stage's output: colour codes stripped.
+  def matches?(preset, run)
+    FunCi::Evidence::Source.of("output", run.output).lines.any? { |line| Regexp.new(preset.signature).match?(line) }
+  end
 
   def outside(fixture)
     fixture.expected.fetch("excerpts").reject { |location| within?(location, fixture.output.lines.size) }

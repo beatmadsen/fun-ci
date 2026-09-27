@@ -1,0 +1,4 @@
+use: json-log
+fields: { time: timestamp, level: level, logger: logger, message: event, stack: exception }
+markers: [{ path: pyproject.toml, contains: structlog }, { path: requirements.txt, contains: structlog }, { path: setup.cfg, contains: structlog }, { path: setup.py, contains: structlog }]
+signature: '"event": ?".*"level": ?"(debug|info|warning|error|critical)"'

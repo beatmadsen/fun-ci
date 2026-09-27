@@ -89,6 +89,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a project nothing. `fun-ci why` says why each was chosen, `fun-ci check`
   lists the presets the project's files select, and `evidence:` takes
   `detect: false` and `skip: [name]`.
+- Presets for 34 tools, each checked against the recorded output of a real
+  failing run: test runners rspec, Minitest, Gradle, Maven, pytest,
+  unittest, Jest, Vitest, Mocha, Node's test runner, Bun, Deno, go test,
+  cargo test, dotnet test, PHPUnit, ExUnit, swift test, dart test and
+  GoogleTest; tsc, ESLint, RuboCop, Ruff, mypy, go build, rustc, gcc and
+  ShellCheck; Perl's prove; and JSON logs from logstash-logback-encoder,
+  Elastic's ECS encoders, pino and structlog.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

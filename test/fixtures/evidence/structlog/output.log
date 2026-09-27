@@ -1,0 +1,6 @@
+{"cart_id": 42, "event": "loading cart", "logger": "shop.checkout", "level": "debug", "timestamp": "2026-09-27T20:22:34.329452Z"}
+{"cart_id": 42, "event": "checkout started", "logger": "shop.checkout", "level": "info", "timestamp": "2026-09-27T20:22:34.329525Z"}
+{"elapsed_ms": 2300, "event": "payment gateway slow", "logger": "shop.checkout", "level": "warning", "timestamp": "2026-09-27T20:22:34.329562Z"}
+{"cart_id": 42, "event": "checkout failed", "logger": "shop.checkout", "level": "error", "timestamp": "2026-09-27T20:22:34.329590Z", "exception": "Traceback (most recent call last):\n  File \"/work/app.py\", line 29, in <module>\n    charge(42)\n    ~~~~~~^^^^\n  File \"/work/app.py\", line 22, in charge\n    raise RuntimeError(f\"card declined for cart {cart_id}\")\nRuntimeError: card declined for cart 42"}
+a plain line from print
+{"cart_id": 42, "event": "checkout finished", "logger": "shop.checkout", "level": "info", "timestamp": "2026-09-27T20:22:34.330137Z"}

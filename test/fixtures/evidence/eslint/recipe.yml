@@ -1,0 +1,39 @@
+tool: eslint
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --silent --no-audit --no-fund
+command: npx eslint .
+version: npx eslint --version
+files:
+  package.json: |
+    {
+      "name": "shop",
+      "private": true,
+      "type": "module",
+      "devDependencies": { "eslint": "9.36.0", "@eslint/js": "9.36.0", "globals": "16.4.0" }
+    }
+  eslint.config.js: |
+    import js from "@eslint/js";
+    import globals from "globals";
+
+    export default [
+      js.configs.recommended,
+      { languageOptions: { globals: globals.node }, rules: { eqeqeq: "error" } },
+    ];
+  src/cart.js: |
+    export function total(items) {
+      let sum = 0;
+      for (const item of items) {
+        sum += item.price;
+      }
+      return summ;
+    }
+  src/checkout.js: |
+    import { total } from "./cart.js";
+
+    export function checkout(items, code) {
+      const discount = 0.1;
+      if (code == "SAVE10") {
+        return total(items) * 0.9;
+      }
+      return total(items);
+    }

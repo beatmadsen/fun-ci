@@ -1,0 +1,6 @@
+use: section
+title: rustc's errors
+start: ['^error(\[E\d+\])?: (?!could not compile |aborting due to |test failed)']
+end: ['^$']
+markers: [Cargo.toml]
+signature: '^error\[E\d{4}\]: '

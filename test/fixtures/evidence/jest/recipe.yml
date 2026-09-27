@@ -1,0 +1,44 @@
+tool: jest
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --no-audit --no-fund --silent jest@29.7.0
+command: npx jest
+version: npx jest --version
+files:
+  package.json: |
+    {
+      "name": "cart",
+      "private": true,
+      "scripts": { "test": "jest" },
+      "devDependencies": { "jest": "29.7.0" }
+    }
+  src/cart.js: |
+    class Cart {
+      constructor() { this.items = []; }
+      add(price) { this.items.push(price); }
+      total() { return this.items.reduce((sum, price) => sum + price, 0) + 1; }
+      discount(code) { throw new Error(`unknown code ${code}`); }
+    }
+    module.exports = { Cart };
+  test/cart.test.js: |
+    const { Cart } = require("../src/cart");
+
+    describe("Cart", () => {
+      test("starts empty", () => {
+        expect(new Cart().total()).toBe(0);
+      });
+
+      test("adds up its items", () => {
+        const cart = new Cart();
+        cart.add(2);
+        cart.add(3);
+        expect(cart.total()).toBe(5);
+      });
+
+      test("takes a discount code", () => {
+        expect(new Cart().discount("SAVE10")).toBe(0.9);
+      });
+
+      test("is a cart", () => {
+        expect(new Cart()).toBeInstanceOf(Cart);
+      });
+    });

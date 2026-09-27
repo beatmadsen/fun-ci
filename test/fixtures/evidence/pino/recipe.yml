@@ -1,0 +1,32 @@
+tool: pino
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --silent --no-audit --no-fund
+command: node app.js
+version: echo pino $(node -p 'require("pino/package.json").version')
+files:
+  package.json: |
+    {
+      "name": "shop",
+      "private": true,
+      "dependencies": { "pino": "9.11.0" }
+    }
+  app.js: |
+    const pino = require("pino");
+
+    const log = pino({ name: "shop.checkout", level: "debug" });
+
+    function charge() {
+      throw new Error("card declined");
+    }
+
+    log.debug("loading cart 42");
+    log.info("checkout started");
+    log.warn("payment gateway slow: 2300 ms");
+    try {
+      charge();
+    } catch (err) {
+      log.error(err, "checkout failed");
+    }
+    console.log("a plain line from console.log");
+    log.info("checkout finished");
+    process.exitCode = 1;

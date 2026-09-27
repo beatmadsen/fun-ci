@@ -1,0 +1,9 @@
+---
+tool: pytest
+image: python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+setup: pip install -q --root-user-action=ignore pytest==8.4.2
+command: pytest
+sha256: 3e358553a93b7e113412b24dd5244296455c82b44391feab304b554aa83f5930
+exit_status: 1
+version: pytest 8.4.2
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

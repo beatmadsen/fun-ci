@@ -1,0 +1,6 @@
+use: section
+title: Node's failed tests
+start: ['^\s*not ok \d+ - ']
+end: ['^\s*\.\.\.$']
+markers: [{ path: package.json, contains: 'node --test' }]
+signature: '^\s+failureType: '''

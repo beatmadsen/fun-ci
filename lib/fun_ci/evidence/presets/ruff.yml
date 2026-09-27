@@ -1,0 +1,6 @@
+use: section
+title: ruff's lint errors
+start: ['^[A-Z]+[0-9]+ ', '^\S+:\d+:\d+: [A-Z]+[0-9]+ ']
+end: ['^Found \d+ errors?']
+markers: [{ path: pyproject.toml, contains: ruff }, ruff.toml, .ruff.toml, { path: .pre-commit-config.yaml, contains: ruff }]
+signature: '^Found \d+ errors?( \(\d+ fixed, \d+ remaining\))?\.$'

@@ -1,0 +1,63 @@
+tool: go test
+image: golang:1.25@sha256:699337d620559a59b4a2bb298ad59611e535d2ee755a34cf2d2a98f37578dc80
+command: go test ./...
+version: go version
+files:
+  go.mod: |
+    module example.com/cart
+
+    go 1.25
+  cart.go: |
+    package cart
+
+    import "errors"
+
+    type Cart struct{ items []int }
+
+    func (c *Cart) Add(price int) { c.items = append(c.items, price) }
+
+    func (c *Cart) Total() int {
+    	total := 1
+    	for _, price := range c.items {
+    		total += price
+    	}
+    	return total
+    }
+
+    func (c *Cart) Discount(code string) (float64, error) {
+    	return 0, errors.New("unknown code " + code)
+    }
+
+    func (c *Cart) Last() int { return c.items[len(c.items)-1] }
+  cart_test.go: |
+    package cart
+
+    import "testing"
+
+    func TestStartsEmpty(t *testing.T) {
+    	if got := (&Cart{}).Total(); got != 0 {
+    		t.Errorf("Total() = %d, want 0", got)
+    	}
+    }
+
+    func TestTakesADiscountCode(t *testing.T) {
+    	rate, err := (&Cart{}).Discount("SAVE10")
+    	if err != nil {
+    		t.Fatalf("Discount(SAVE10): %v", err)
+    	}
+    	if rate != 0.9 {
+    		t.Errorf("rate = %v, want 0.9", rate)
+    	}
+    }
+
+    func TestIsACart(t *testing.T) {
+    	if (&Cart{}) == nil {
+    		t.Error("no cart")
+    	}
+    }
+
+    func TestLastOfAnEmptyCart(t *testing.T) {
+    	if got := (&Cart{}).Last(); got != 0 {
+    		t.Errorf("Last() = %d, want 0", got)
+    	}
+    }

@@ -1,0 +1,40 @@
+F401 [*] `os` imported but unused
+ --> shop/cart.py:1:8
+  |
+1 | import os
+  |        ^^
+  |
+help: Remove unused import: `os`
+
+E711 Comparison to `None` should be `cond is None`
+  --> shop/cart.py:12:26
+   |
+11 |     def total(self):
+12 |         if self.items == None:
+   |                          ^^^^
+13 |             return 0
+14 |         return sum(self.items)
+   |
+help: Replace with `cond is None`
+
+F841 Local variable `rate` is assigned to but never used
+  --> shop/cart.py:17:9
+   |
+16 |     def discount(self, code):
+17 |         rate = 0.1
+   |         ^^^^
+18 |         return self.total() * (1 - rates[code])
+   |
+help: Remove assignment to unused variable `rate`
+
+F821 Undefined name `rates`
+  --> shop/cart.py:18:36
+   |
+16 |     def discount(self, code):
+17 |         rate = 0.1
+18 |         return self.total() * (1 - rates[code])
+   |                                    ^^^^^
+   |
+
+Found 4 errors.
+[*] 1 fixable with the `--fix` option (2 hidden fixes can be enabled with the `--unsafe-fixes` option).

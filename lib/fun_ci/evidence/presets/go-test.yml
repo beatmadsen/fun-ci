@@ -1,0 +1,6 @@
+use: section
+title: go test's failed tests
+start: ['^\s*--- FAIL: ']
+end: ['^(FAIL|ok)\s']
+markers: [go.mod]
+signature: '^\s*--- FAIL: \S+ \(\d+\.\d+s\)$'

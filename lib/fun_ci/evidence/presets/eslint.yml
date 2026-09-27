@@ -1,0 +1,6 @@
+use: section
+title: ESLint's problems, file by file
+start: ['^/\S+$']
+end: ['^\S+ \d+ problems? \(\d+ errors?, \d+ warnings?\)']
+markers: [eslint.config.js, eslint.config.mjs, .eslintrc.json, .eslintrc.js]
+signature: '\d+ problems? \(\d+ errors?, \d+ warnings?\)'

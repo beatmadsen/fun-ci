@@ -1,0 +1,31 @@
+tool: rustc
+image: rust:1.98.1@sha256:a8a5f0a1e5fe7dfe1d352591e4a1c7dd2c08fd70475cae872cf3458ba0df0546
+command: cargo build
+version: cargo --version && rustc --version
+files:
+  Cargo.toml: |
+    [package]
+    name = "cart"
+    version = "0.1.0"
+    edition = "2021"
+  src/lib.rs: |
+    mod receipt;
+
+    pub struct Cart {
+        items: Vec<u32>,
+    }
+
+    impl Cart {
+        pub fn add(&mut self, price: &str) {
+            self.items.push(price);
+        }
+
+        pub fn total(&self) -> u32 {
+            self.items.iter().sum::<u32>() + discount
+        }
+    }
+  src/receipt.rs: |
+    pub fn line(name: String) -> String {
+        let label = name;
+        format!("{name}: {label}")
+    }

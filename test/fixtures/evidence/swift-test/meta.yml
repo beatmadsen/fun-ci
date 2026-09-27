@@ -1,0 +1,9 @@
+---
+tool: swift test (XCTest)
+image: swift:6.0@sha256:cc93f1594d63122eff78133f799f7d45a441fa4c5193e164ecea6065fd448fdd
+setup: swift build --build-tests
+command: swift test
+sha256: fa3dc76283470cb4234b94c162a44631007099a50f5b903a785b390a550909c0
+exit_status: 1
+version: 'Swift version 6.0.3 (swift-6.0.3-RELEASE); Target: aarch64-unknown-linux-gnu'
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

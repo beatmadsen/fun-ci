@@ -22,6 +22,10 @@ class TestGrep < Minitest::Test
     assert_equal "Lines matching ERROR or FATAL", excerpts("patterns" => %w[ERROR FATAL]).first[:title]
   end
 
+  def test_should_title_its_excerpts_as_it_is_told
+    assert_equal "Failed tests", excerpts("patterns" => %w[ERROR], "title" => "Failed tests").first[:title]
+  end
+
   def test_should_keep_lines_of_context_around_a_match
     assert_equal([["two", "ERROR three", "four"]], excerpts("patterns" => %w[ERROR], "context" => 1).map do |e|
       e[:lines]

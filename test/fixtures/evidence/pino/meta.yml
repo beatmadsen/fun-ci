@@ -1,0 +1,9 @@
+---
+tool: pino
+image: node:22-slim@sha256:43ac6c60b8f89723f746e8a92ce91abd5017e627ce1ddfe4238355d3a30b772c
+setup: npm install --silent --no-audit --no-fund
+command: node app.js
+sha256: a7b0c81cc7bb0a2dc36f9aa93309a19e66850b0a97ad18bc2b9fa2f2d884c496
+exit_status: 1
+version: pino 9.11.0
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

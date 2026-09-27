@@ -1,0 +1,9 @@
+---
+tool: ruff
+image: python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+setup: pip install -q --root-user-action=ignore ruff==0.13.1
+command: ruff check
+sha256: b1c5d4cf4d8a3031747579ca2420f497bed5f92cba9faf6d5c80153c14c16c41
+exit_status: 1
+version: ruff 0.13.1
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

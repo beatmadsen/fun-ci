@@ -1,0 +1,53 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.15, pytest-8.4.2, pluggy-1.6.0
+rootdir: /work
+configfile: pyproject.toml
+testpaths: tests
+collected 4 items
+
+tests/test_cart.py FFF.                                                  [100%]
+
+=================================== FAILURES ===================================
+______________________________ test_starts_empty _______________________________
+
+    def test_starts_empty():
+>       assert Cart().total() == 0
+E       assert 1 == 0
+E        +  where 1 = total()
+E        +    where total = <shop.cart.Cart object at 0xffffba046120>.total
+E        +      where <shop.cart.Cart object at 0xffffba046120> = Cart()
+
+tests/test_cart.py:5: AssertionError
+____________________________ test_adds_up_its_items ____________________________
+
+    def test_adds_up_its_items():
+        cart = Cart()
+        cart.add(2)
+        cart.add(3)
+>       assert cart.total() == 5
+E       assert 6 == 5
+E        +  where 6 = total()
+E        +    where total = <shop.cart.Cart object at 0xffffba090190>.total
+
+tests/test_cart.py:12: AssertionError
+__________________________ test_takes_a_discount_code __________________________
+
+    def test_takes_a_discount_code():
+>       assert Cart().discount("SAVE10") == 0.9
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_cart.py:16: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <shop.cart.Cart object at 0xffffba090690>, code = 'SAVE10'
+
+    def discount(self, code):
+>       raise ValueError(f"unknown code {code}")
+E       ValueError: unknown code SAVE10
+
+shop/cart.py:12: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_cart.py::test_starts_empty - assert 1 == 0
+FAILED tests/test_cart.py::test_adds_up_its_items - assert 6 == 5
+FAILED tests/test_cart.py::test_takes_a_discount_code - ValueError: unknown c...
+========================= 3 failed, 1 passed in 0.04s ==========================

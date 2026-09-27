@@ -1,0 +1,6 @@
+use: section
+title: pytest's failures and errors
+start: ['^=+ (FAILURES|ERRORS) =+$']
+end: ['^=+ (short test summary info|warnings summary) =+$', '^=+ .* in [\d.]+s( \([\d:]+\))? =+$']
+markers: [pyproject.toml, pytest.ini, setup.cfg, tox.ini, conftest.py]
+signature: '^=+ (FAILURES|ERRORS|short test summary info) =+$'

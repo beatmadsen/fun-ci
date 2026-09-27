@@ -13,7 +13,7 @@ module FunCi
       # `patterns`, with `context` lines around each; matches whose context
       # meets are one excerpt.
       class Grep
-        OPTIONS = { "patterns" => :patterns, "context" => :count, "path" => :path }.freeze
+        OPTIONS = { "patterns" => :patterns, "context" => :count, "path" => :path, "title" => :word }.freeze
         REQUIRED = %w[patterns].freeze
 
         def initialize(options)
@@ -40,7 +40,7 @@ module FunCi
         end
 
         def excerpt(source, range, truncated)
-          { title: "Lines matching #{Array(@options["patterns"]).join(" or ")}",
+          { title: @options.fetch("title") { "Lines matching #{Array(@options["patterns"]).join(" or ")}" },
             location: source.location(range.first, range.last), lines: source.lines[range], truncated: truncated }
         end
       end

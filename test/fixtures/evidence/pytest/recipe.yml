@@ -1,0 +1,50 @@
+tool: pytest
+image: python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+setup: pip install -q --root-user-action=ignore pytest==8.4.2
+command: pytest
+version: pytest --version
+files:
+  pyproject.toml: |
+    [project]
+    name = "shop"
+    version = "0.1.0"
+    requires-python = ">=3.12"
+
+    [tool.pytest.ini_options]
+    testpaths = ["tests"]
+    pythonpath = ["."]
+  shop/__init__.py: ""
+  shop/cart.py: |
+    class Cart:
+        def __init__(self):
+            self.items = []
+
+        def add(self, price):
+            self.items.append(price)
+
+        def total(self):
+            return sum(self.items) + 1
+
+        def discount(self, code):
+            raise ValueError(f"unknown code {code}")
+  tests/test_cart.py: |
+    from shop.cart import Cart
+
+
+    def test_starts_empty():
+        assert Cart().total() == 0
+
+
+    def test_adds_up_its_items():
+        cart = Cart()
+        cart.add(2)
+        cart.add(3)
+        assert cart.total() == 5
+
+
+    def test_takes_a_discount_code():
+        assert Cart().discount("SAVE10") == 0.9
+
+
+    def test_is_a_cart():
+        assert isinstance(Cart(), Cart)

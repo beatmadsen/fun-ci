@@ -1,0 +1,44 @@
+tool: bun test
+image: oven/bun:1.2-slim@sha256:9654aa08d4b7e778b84148921bab8edc1409c8d0a85707b8c801dd7cf1878971
+command: bun test
+version: bun --version
+files:
+  package.json: |
+    {
+      "name": "cart",
+      "private": true,
+      "scripts": { "test": "bun test" }
+    }
+  bunfig.toml: |
+    [test]
+  src/cart.ts: |
+    export class Cart {
+      private items: number[] = [];
+      add(price: number) { this.items.push(price); }
+      total() { return this.items.reduce((sum, price) => sum + price, 0) + 1; }
+      discount(code: string): number { throw new Error(`unknown code ${code}`); }
+    }
+  test/cart.test.ts: |
+    import { describe, expect, test } from "bun:test";
+    import { Cart } from "../src/cart";
+
+    describe("Cart", () => {
+      test("starts empty", () => {
+        expect(new Cart().total()).toBe(0);
+      });
+
+      test("adds up its items", () => {
+        const cart = new Cart();
+        cart.add(2);
+        cart.add(3);
+        expect(cart.total()).toBe(5);
+      });
+
+      test("takes a discount code", () => {
+        expect(new Cart().discount("SAVE10")).toBe(0.9);
+      });
+
+      test("is a cart", () => {
+        expect(new Cart()).toBeInstanceOf(Cart);
+      });
+    });

@@ -1,0 +1,8 @@
+---
+tool: cargo test
+image: rust:1.98.1@sha256:a8a5f0a1e5fe7dfe1d352591e4a1c7dd2c08fd70475cae872cf3458ba0df0546
+command: cargo test
+sha256: b2455c8b671ab8097ff7970fe57b3a8042d9b66e4bf9d479943dd863f1211719
+exit_status: 101
+version: cargo 1.98.1 (797e8a9bc 2026-08-05); rustc 1.98.1 (48a229cea 2026-09-01)
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

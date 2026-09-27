@@ -1,0 +1,46 @@
+tool: rubocop
+image: ruby:3.4@sha256:c4428c90c4e80ee5848c31912969e73c9f48ac45ec45dfb5f76d1a821358771e
+setup: gem install rubocop -v 1.80.2 --no-document
+command: rubocop
+version: rubocop --version
+files:
+  Gemfile: |
+    # frozen_string_literal: true
+
+    source 'https://rubygems.org'
+    gem 'rubocop', group: :development
+  .rubocop.yml: |
+    AllCops:
+      NewCops: enable
+      TargetRubyVersion: 3.4
+      SuggestExtensions: false
+    Style/Documentation:
+      Enabled: false
+  lib/cart.rb: |
+    # frozen_string_literal: true
+
+    class Cart
+      def initialize
+        @items = []
+      end
+
+      def add(price)
+        @items << price
+      end
+
+      def total
+        sum = 0
+        @items.each { |price| sum += price }
+        unused = @items.size
+        sum
+      end
+
+      def discount(code)
+        raise ArgumentError, "unknown code #{code}" if code != 'SAVE10'
+        return total * 0.9
+      end
+    end
+  lib/shop.rb: |
+    # frozen_string_literal: true
+
+    require_relative 'cart'

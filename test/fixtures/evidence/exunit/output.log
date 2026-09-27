@@ -1,0 +1,37 @@
+Running ExUnit with seed: 206921, max_cases: 28
+
+.
+
+  1) test starts empty (CartTest)
+     test/cart_test.exs:4
+     Assertion with == failed
+     code:  assert Cart.total(Cart.new()) == 0
+     left:  1
+     right: 0
+     stacktrace:
+       test/cart_test.exs:5: (test)
+
+
+
+  2) test takes a discount code (CartTest)
+     test/cart_test.exs:13
+     ** (ArgumentError) unknown code SAVE10
+     code: assert Cart.discount(Cart.new(), "SAVE10") == 0.9
+     stacktrace:
+       (cart 0.1.0) lib/cart.ex:5: Cart.discount/2
+       test/cart_test.exs:14: (test)
+
+
+
+  3) test adds up its items (CartTest)
+     test/cart_test.exs:8
+     Assertion with == failed
+     code:  assert Cart.total(cart) == 5
+     left:  6
+     right: 5
+     stacktrace:
+       test/cart_test.exs:10: (test)
+
+
+Finished in 0.02 seconds (0.00s async, 0.02s sync)
+4 tests, 3 failures

@@ -1,0 +1,47 @@
+bun test v1.2.23 (cf136713)
+
+test/cart.test.ts:
+1 | import { describe, expect, test } from "bun:test";
+2 | import { Cart } from "../src/cart";
+3 | 
+4 | describe("Cart", () => {
+5 |   test("starts empty", () => {
+6 |     expect(new Cart().total()).toBe(0);
+                                   ^
+error: expect(received).toBe(expected)
+
+Expected: 0
+Received: 1
+
+      at <anonymous> (/work/test/cart.test.ts:6:32)
+(fail) Cart > starts empty [1.00ms]
+ 8 | 
+ 9 |   test("adds up its items", () => {
+10 |     const cart = new Cart();
+11 |     cart.add(2);
+12 |     cart.add(3);
+13 |     expect(cart.total()).toBe(5);
+                              ^
+error: expect(received).toBe(expected)
+
+Expected: 5
+Received: 6
+
+      at <anonymous> (/work/test/cart.test.ts:13:26)
+(fail) Cart > adds up its items
+1 | export class Cart {
+2 |   private items: number[] = [];
+3 |   add(price: number) { this.items.push(price); }
+4 |   total() { return this.items.reduce((sum, price) => sum + price, 0) + 1; }
+5 |   discount(code: string): number { throw new Error(`unknown code ${code}`); }
+                                                                             ^
+error: unknown code SAVE10
+      at discount (/work/src/cart.ts:5:74)
+      at <anonymous> (/work/test/cart.test.ts:17:23)
+(fail) Cart > takes a discount code
+(pass) Cart > is a cart
+
+ 1 pass
+ 3 fail
+ 3 expect() calls
+Ran 4 tests across 1 file. [16.00ms]

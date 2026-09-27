@@ -1,0 +1,6 @@
+use: section
+title: Vitest's failed tests
+start: ['^ FAIL  ']
+end: ['⎯\[\d+/\d+\]⎯', '^\s+Test Files  ']
+markers: [{ path: package.json, contains: '"vitest"' }, vitest.config.ts, vitest.config.js, vitest.config.mts, vitest.config.mjs]
+signature: '^\s+Test Files  \d+ '

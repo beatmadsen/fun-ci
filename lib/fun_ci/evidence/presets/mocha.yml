@@ -1,0 +1,6 @@
+use: section
+title: Mocha's failing tests
+start: ['^  \d+\) ']
+end: ['^  \d+\) ']
+markers: [{ path: package.json, contains: '"mocha"' }, .mocharc.yml, .mocharc.yaml, .mocharc.json, .mocharc.js, .mocharc.cjs]
+signature: '^  \d+ passing \(\d+\w+\)$'

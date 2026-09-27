@@ -1,0 +1,10 @@
+---
+tool: deno test
+image: denoland/deno:2.5.2@sha256:8aca3eca04f134eca52a50bf3004072995d7a292e4962660d298cbee144d31f2
+setup: deno cache cart_test.ts
+command: deno test
+sha256: 632e598c3752105214a98cdd703a98ea7a20776fc743bce65d1c1b80bdf2c9f8
+exit_status: 1
+version: deno 2.5.2 (stable, release, aarch64-unknown-linux-gnu); v8 14.0.365.5-rusty;
+  typescript 5.9.2
+script_commit: b8e5a304cc13c9842d2798d80fabe749aa88d4c0

@@ -1,0 +1,6 @@
+use: section
+title: Jest's failed tests
+start: ['^\s+● ']
+end: ['^Test Suites: ', '^(FAIL|PASS) ', '^\s+● ']
+markers: [{ path: package.json, contains: '"jest"' }, jest.config.js, jest.config.ts, jest.config.mjs, jest.config.cjs]
+signature: '^Test Suites: \d+ '

@@ -1,0 +1,31 @@
+cc -Wall -std=c11 -c cart.c
+cart.c: In function 'cart_total':
+cart.c:6:24: error: 'const struct cart' has no member named 'item'; did you mean 'items'?
+    6 |         total += cart->item[i];
+      |                        ^~~~
+      |                        items
+cart.c:7:12: error: 'totl' undeclared (first use in this function); did you mean 'total'?
+    7 |     return totl;
+      |            ^~~~
+      |            total
+cart.c:7:12: note: each undeclared identifier is reported only once for each function it appears in
+cart.c:4:9: warning: variable 'total' set but not used [-Wunused-but-set-variable]
+    4 |     int total = 0;
+      |         ^~~~~
+cart.c:8:1: warning: control reaches end of non-void function [-Wreturn-type]
+    8 | }
+      | ^
+make: *** [Makefile:7: cart.o] Error 1
+cc -Wall -std=c11 -c receipt.c
+receipt.c: In function 'receipt_print':
+receipt.c:5:25: error: initialization of 'const char *' from 'int' makes pointer from integer without a cast [-Wint-conversion]
+    5 |     const char *total = cart_total(cart);
+      |                         ^~~~~~~~~~
+receipt.c:6:32: error: expected ';' before '}' token
+    6 |     printf("total %s\n", total)
+      |                                ^
+      |                                ;
+    7 | }
+      | ~                               
+make: *** [Makefile:7: receipt.o] Error 1
+make: Target 'cart' not remade because of errors.

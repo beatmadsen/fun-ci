@@ -1,0 +1,9 @@
+---
+tool: rubocop
+image: ruby:3.4@sha256:c4428c90c4e80ee5848c31912969e73c9f48ac45ec45dfb5f76d1a821358771e
+setup: gem install rubocop -v 1.80.2 --no-document
+command: rubocop
+sha256: 266d5af60b24b88756bf3aebeb83cbeb6660bb6c4dfd870f1c9960eefb7c0e20
+exit_status: 1
+version: 1.80.2
+script_commit: 6a8714574f1cbe11ad2b767596e73c6ef9d35de3

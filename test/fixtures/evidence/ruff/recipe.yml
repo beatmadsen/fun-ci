@@ -1,0 +1,34 @@
+tool: ruff
+image: python:3.13-slim@sha256:7c61056e61ac89e852de05f3dc6fa51a6dd2181797bceed46aa725dd7cb2cd3b
+setup: pip install -q --root-user-action=ignore ruff==0.13.1
+command: ruff check
+version: ruff --version
+files:
+  pyproject.toml: |
+    [project]
+    name = "shop"
+    version = "0.1.0"
+    requires-python = ">=3.12"
+
+    [tool.ruff.lint]
+    select = ["E", "F"]
+  shop/__init__.py: ""
+  shop/cart.py: |
+    import os
+
+
+    class Cart:
+        def __init__(self):
+            self.items = []
+
+        def add(self, price):
+            self.items.append(price)
+
+        def total(self):
+            if self.items == None:
+                return 0
+            return sum(self.items)
+
+        def discount(self, code):
+            rate = 0.1
+            return self.total() * (1 - rates[code])
