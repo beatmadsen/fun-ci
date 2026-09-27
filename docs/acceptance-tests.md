@@ -548,15 +548,15 @@ superseded runs.
 
 `fun-ci why` gives an agent everything fun-ci kept about why a stage of a
 commit's run failed, so it never reruns a suite to find out. What is kept is
-picked out when the stage fails by extractors, configured per stage in
-`.fun-ci/config`, built in or a project's own command. Why it is designed this
-way, the documents' fields and the extractor protocol are in
+picked out when the stage fails by extractors: built-ins, presets for popular
+stacks that fun-ci runs when they apply, and a project's own commands. Why it
+is designed this way, the documents' fields and the extractor protocol are in
 [`why.md`](why.md). Exit codes are those of §9: `why` exits with the verdict.
 
 ### 10.1 `fun-ci why` prints everything kept about a failed stage
 **Given** a run whose fast suite failed, with reported failures and kept output
 **When** `fun-ci why [REV] [STAGE]` runs
-**Then** it prints a line naming the stage, its outcome, exit status, time and
+**Then** it prints a line naming the stage, its state, exit status, time and
 budget, then each reported failure in full, then every kept line of output
 **And** without STAGE it takes the first needed stage to fail or overrun, in
 the order they finished, as the verdict does (`--need` as for `status`)
@@ -566,27 +566,32 @@ passed" for a stage that passed, 3, 4 and 5 as `status`.
 ### 10.2 `why --json` gives the same as one document
 **Given** the run of 10.1
 **When** `fun-ci why --json` runs
-**Then** stdout is the evidence document of `why.md` (`schema` 1, `stage`,
-`outcome`, `exit_status`, `signal`, `seconds`, `budget`, `facts`, `failures`,
-`excerpts`, `problems`), with the same exit code.
+**Then** stdout is the document of `why.md`: `schema` 1, `commit`, `stage`,
+`state` (in `status --json`'s words), `exit_status`, `signal`, `seconds`,
+`budget`, `evidence` (`chosen`, `facts`, `failures`, `excerpts`, `problems`),
+`no_evidence` and `raw_output`, with the same exit code
+**And** a stage that passed, is running or was cancelled gives `evidence`
+null and `no_evidence` `passed`, `running` or `cancelled`.
 
 ### 10.3 A run whose evidence was pruned says so
 **Given** a failed run older than the project's 50 newest
 **When** `fun-ci why` names it
 **Then** it says its evidence is no longer kept and why, exits 1, and with
-`--json` gives `"evidence": null, "evidence_gone": "pruned"`.
+`--json` gives `evidence` null and `no_evidence` `pruned`.
 
 ### 10.4 The digest in `status` and `wait` names the `why` command
 **Given** a run whose fast suite failed
 **When** `fun-ci status` or `fun-ci wait` prints the digest of AT-9.6
 **Then** its last line is `fun-ci why <sha7> fast`.
 
-### 10.5 A stage's output is spooled to a file, not held in memory
-**Given** a stage that prints 100 MB and fails
-**When** it runs
-**Then** fun-ci's memory does not grow with the output, the extractors see its
-first 1 MB and last 63 MB with a marker line where bytes were dropped, and the
-kept output tail is the same as with a short output.
+### 10.5 Every stage's output is kept as a window on disk, not in memory
+**Given** a fast suite and a slow suite that each print 100 MB and fail
+**When** they run
+**Then** fun-ci's memory does not grow with the output, each stage's output is
+kept as its first 1 MB and last 7 MB with a marker line where bytes were
+dropped, and the kept output tail is the same as with a short output
+**And** the slow suite's evidence is collected by the same code as the others'
+**And** every stage script finds its stage's name in `FUN_CI_STAGE`.
 
 ### 10.6 Secrets are masked before anything is kept
 **Given** a stage whose environment has `DEPLOY_TOKEN=s3cr3t-value-123`, and
@@ -595,94 +600,95 @@ which prints it, a GitHub token and a PEM private key, then fails
 **Then** the kept output and every field of the evidence show
 `[masked:DEPLOY_TOKEN]` and `[masked]` in their place
 **And** a pattern listed under `evidence.mask` in `.fun-ci/config` is masked
-too, and `evidence.mask: false` turns masking off for the project
+too, and `evidence.masking: false` turns masking off for the project
 **And** the state directory is created with mode 0700.
 
-### 10.7 Extractors are configured per stage
-**Given** `.fun-ci/config` with an `evidence` list for `fast` and one for `all`
+### 10.7 A failed stage's raw output is kept
+**Given** a stage that fails after printing 20 MB
+**When** `fun-ci why --raw` runs
+**Then** it prints the window of 10.5, masked
+**And** `why` names the `--raw` command while the raw output is kept, which is
+for the project's 10 newest runs, in a file per stage in the state directory
+that pruning deletes.
+
+### 10.8 Extractors are configured per stage
+**Given** `.fun-ci/config` with `evidence.stages` lists for `fast` and `all`
 **When** the fast suite fails
-**Then** `test-reports` runs, then the `all` entries, then the `fast` ones in
-the order given, then `output-tail`, and the evidence keeps that order, each
-item naming its extractor
+**Then** `test-reports` and `output-tail` run first, outside the budget, then
+the `all` entries, then the `fast` ones, until `evidence.budget` (2 s by
+default) runs out; the evidence shows `test-reports`, the configured entries
+in the order given, then `output-tail`, each item naming its entry
 **And** with no `evidence` key every stage gets `test-reports` then
 `output-tail`, so `why` shows what §9 kept
 **And** `fun-ci check` reports an unknown extractor, an unknown option, a
 pattern that doesn't compile, and a `run:` path that isn't executable
-**And** at run time such a mistake falls back to the default list for the
-stage, is recorded as a problem, and doesn't change the verdict.
+**And** at run time an entry with such a mistake is left out and recorded as a
+problem, the other entries run, and the verdict is unchanged.
 
-### 10.8 `section` and `grep` pick lines out of the output or a file, with presets
+### 10.9 `section` and `grep` pick lines out, with the first presets
 **Given** a failing stage whose output has its failures far above its last 200
 lines
 **When** the stage's list has `section` with a start and end pattern, or
-`grep` with patterns and `context`, or either with a `preset`
+`grep` with patterns and `context`, or a preset
 **Then** the evidence has each matching run of lines as an excerpt, titled,
 with its location (`output:340-372`)
-**And** each preset shipped (`rspec`, `minitest`, `pytest`, `jest`, `go-test`,
-`cargo-test`, `gradle`, `maven`, `tsc`) picks out the failures from a recorded
-failing run of that tool
-**And** a pattern that exceeds `Regexp.timeout` is recorded as a problem.
+**And** the `rspec`, `minitest`, `gradle` and `maven` presets each pick out the
+failures from a recorded failing run of that tool
+**And** a pattern that exceeds its own timeout is recorded as a problem.
 
-### 10.9 Log files are read from where the stage started writing
+### 10.10 Log files are read from where the stage started writing
 **Given** a worktree slot whose `log/test.log` holds a previous run's lines
 **When** a stage appends to it and fails, and its list has `log-file` with
-`path: log/test.log`
-**Then** the evidence has only the lines the stage appended (filtered by the
-entry's `grep` or `section` options when given)
+`path: log/test.log` (or the Rails log preset)
+**Then** the evidence has only the lines appended during the stage (filtered
+by the entry's `grep` or `section` options when given)
 **And** `junit-files` reads only JUnit files under its `paths` written during
-the stage.
+the stage, and a failure it shares with `test-reports` is kept once
+**And** when another stage ran in the slot at the same time, the fact
+`alongside` names it.
 
-### 10.10 `json-log` keeps structured log records at or above a level
+### 10.11 `json-log` keeps structured log records at or above a level
 **Given** output (or a file) mixing plain lines with JSON log lines at `debug`,
 `info`, `warn` and `error`, one with a stack trace
-**When** the list has `json-log` with `level: warn` and a `preset` (`logstash`,
-`ecs`, `pino`, `structlog`) or field names of its own
+**When** the list has `json-log` with `level: warn` and a preset (`logstash`,
+`ecs`) or field names of its own
 **Then** the evidence has one line per `warn` and `error` record (time, level,
 logger, message), each followed by its stack trace, and nothing else.
 
-### 10.11 A failure keeps its own output
+### 10.12 A failure keeps its own output
 **Given** a JUnit report whose failing testcase has `<system-out>` and
 `<system-err>`, or a fun-ci JSON report whose failure has `output`
 **When** the stage fails
 **Then** that output is kept under the failure (its last 4 KB) and `why`
 prints it under the failure's message.
 
-### 10.12 A project's own command is an extractor
+### 10.13 A project's own command is an extractor
 **Given** `run: <command>` in a stage's list, with `format: text` or `json`
 **When** the stage fails
 **Then** the command runs in the worktree slot with the context document of
 `why.md` on stdin, and its stdout becomes one excerpt (`text`) or is merged as
 facts, failures and excerpts (`json`)
 **And** a non-zero exit, output that doesn't parse, or a command still running
-when the evidence budget (`evidence.budget`, 5 s by default) runs out is
-recorded as a problem with the last 20 lines of its stderr, and the command
-and all it started are killed
+when the budget runs out is recorded as a problem with the last 20 lines of
+its stderr, and the command and all it started are killed
 **And** the stage's verdict is the same in every case.
 
-### 10.13 `fun-ci extract` tries a stage's extractors on a saved output
+### 10.14 `fun-ci extract` tries a stage's extractors on a saved output
 **Given** a file holding a failing run's output
 **When** `fun-ci extract fast --output FILE [--reports DIR] [--exit N | --timed-out] [--json]` runs
 **Then** it runs the fast stage's extractors with the current directory as
 the worktree, prints what `why` would print, problems included, and writes
 nothing to the database.
 
-### 10.14 An overrun says what it was doing
+### 10.15 An overrun says what it was doing
 **Given** a stage that runs past its budget in a child process
 **When** its budget runs out
 **Then** before the kill, `process-tree` records the group's processes and the
 deepest still running as the fact `running`, and the digest's first line is
 `fast ran over budget: running <command> (<seconds>s)`
-**And** `jvm-thread-dump` under `overrun` makes each Java process print a
-thread dump into the output, and a `run:` entry there gets `pgid`
-**And** the overrun extractors get at most 2 seconds before the kill.
-
-### 10.15 The raw output of a failed stage is kept
-**Given** a stage that fails after printing 20 MB
-**When** `fun-ci why --raw` runs
-**Then** it prints the first 1 MB and last 7 MB of the output, masked, with a
-marker where bytes were dropped
-**And** `why` names the `--raw` command while the raw output is kept, which is
-for the project's 10 newest runs.
+**And** a `run:` entry with `on: overrun` runs before the kill, with the
+stage's process group as `pgid` and `FUN_CI_PGID`
+**And** overrun extractors get at most 2 seconds before the kill.
 
 ### 10.16 `why` says when only the last lines were kept
 **Given** a failed stage whose only evidence is `output-tail`
@@ -695,12 +701,20 @@ for the project's 10 newest runs.
 fast suite fails printing rspec's rerun lines
 **When** the evidence is collected
 **Then** the `rspec` preset runs, because its marker file exists and its
-signature is in the output, and presets whose markers are missing (`gradle`,
-`pytest`) or whose signature is absent do not
+signature is in the output, and presets whose markers are missing (`gradle`)
+or whose signature is absent do not
 **And** the evidence's `chosen` says why each ran (`file Gemfile`,
 `output matched rspec ./`, `configured`)
-**And** the output is read once for all the candidates' signatures, however
-many presets fun-ci ships
+**And** the output is read once for all the candidates' signatures
 **And** `skip` in `.fun-ci/config` keeps a detected preset from running, and
 `detect: false` leaves only the configured entries and those that always run
 **And** `fun-ci check` lists the presets whose markers the project has.
+
+### 10.18 Presets for the other popular stacks
+**Given** a recorded failing run of pytest, jest, go test, cargo test and tsc,
+and JSON logs from pino and structlog
+**When** each is the output of a failed stage in a project with that tool's
+marker files
+**Then** its preset is chosen and picks out the failures
+**And** a committed script measures the time to scan a full window with every
+preset a candidate, and it has been run before these ship.
