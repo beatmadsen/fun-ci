@@ -21,6 +21,10 @@ class TestExcerptComparison < Minitest::Test
     assert same?([["1) test a"], ["2) test b"]], [["2) test b"], ["1) test a"]])
   end
 
+  def test_should_leave_out_a_duration_printed_only_when_a_test_was_slow
+    assert same?([["(fail) Cart > starts empty [1.00ms]"]], [["(fail) Cart > starts empty"]])
+  end
+
   def test_should_see_a_changed_line
     refute same?([["Assertion with == failed"]], [["Assertion failed"]])
   end
