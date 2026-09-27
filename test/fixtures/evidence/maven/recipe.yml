@@ -1,0 +1,67 @@
+tool: maven
+image: maven:3.9-eclipse-temurin-21@sha256:99e61abcff91a9b1333463bd8451fb18495d6eba9250ac66a338b518f8278320
+command: mvn -B test
+version: mvn -v | head -1
+files:
+  pom.xml: |
+    <project xmlns="http://maven.apache.org/POM/4.0.0">
+      <modelVersion>4.0.0</modelVersion>
+      <groupId>shop</groupId>
+      <artifactId>cart</artifactId>
+      <version>1.0</version>
+      <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <version>5.11.4</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.5.2</version>
+          </plugin>
+        </plugins>
+      </build>
+    </project>
+  src/main/java/shop/Cart.java: |
+    package shop;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class Cart {
+        private final List<Integer> items = new ArrayList<>();
+
+        public void add(int price) { items.add(price); }
+
+        public int total() { return items.stream().mapToInt(Integer::intValue).sum() + 1; }
+
+        public double discount(String code) { throw new IllegalArgumentException("unknown code " + code); }
+    }
+  src/test/java/shop/CartTest.java: |
+    package shop;
+
+    import static org.junit.jupiter.api.Assertions.assertEquals;
+    import org.junit.jupiter.api.Test;
+
+    class CartTest {
+        @Test void startsEmpty() { assertEquals(0, new Cart().total()); }
+
+        @Test void addsUpItsItems() {
+            Cart cart = new Cart();
+            cart.add(2);
+            cart.add(3);
+            assertEquals(5, cart.total());
+        }
+
+        @Test void takesADiscountCode() { assertEquals(0.9, new Cart().discount("SAVE10")); }
+
+        @Test void isACart() { assertEquals(Cart.class, new Cart().getClass()); }
+    }

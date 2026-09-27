@@ -1,0 +1,9 @@
+---
+tool: minitest
+image: ruby:3.4-slim@sha256:2db87e432f2558704a8744b5463bf7b8c56ddabb0e081f86491c3e298afb2882
+setup: gem install minitest -v 5.25.5 --no-document
+command: ruby -Ilib -Itest test/cart_test.rb --seed 1234
+sha256: 03217d10354da9fc0c7a234b38e08803ef20595ff903c27fb28210acdd159615
+exit_status: 1
+version: minitest 5.25.5
+script_commit: 98da220a1849ca1f8f55ef5a76e9a19dc11011dd

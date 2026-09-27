@@ -1,0 +1,9 @@
+---
+tool: gradle
+image: gradle:8.14-jdk21@sha256:fa192d8429108392649083b819ace29e681911dfed35ec3899dd3a652fa75e1e
+setup:
+command: gradle test --no-daemon --console=plain
+sha256: 5de8dd1262832a851996437820479f70a7de136fd38e1ebba25a807c57e487d0
+exit_status: 1
+version: Gradle 8.14.5
+script_commit: 98da220a1849ca1f8f55ef5a76e9a19dc11011dd

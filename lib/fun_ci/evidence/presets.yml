@@ -1,0 +1,24 @@
+# Presets: config entries fun-ci ships for popular tools, in the shape a
+# project would write one (why.md, "Built in"). Each is pinned by the
+# recorded output of a real failing run in test/fixtures/evidence/<name>/,
+# and none ships without one.
+rspec:
+  use: section
+  title: rspec's failures
+  start: ['^Failures:$']
+  end: ['^Finished in ']
+minitest:
+  use: section
+  title: Minitest's failures and errors
+  start: ['^\s+\d+\) (Failure|Error):$']
+  end: ['^\d+ runs, \d+ assertions']
+gradle:
+  use: section
+  title: Gradle's failed tests, and what went wrong
+  start: [' FAILED$', '^\* What went wrong:']
+  end: ['^\d+ tests? completed', '^\* Try:']
+maven:
+  use: section
+  title: Maven's failed tests
+  start: ['<<< (FAILURE|ERROR)!', '^\[ERROR\] (Failures|Errors): $']
+  end: ['^\[INFO\] ?$', '^\[INFO\] Results:']

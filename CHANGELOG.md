@@ -37,6 +37,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   an option it doesn't take, a pattern that doesn't compile). A mistake never
   stops a pipeline: the entry is left out and `fun-ci why` names it as a
   problem.
+- Presets pick out a tool's failures from a stage's output: `use: section`
+  with `preset: rspec`, `minitest`, `gradle` or `maven`. Each is checked
+  against the recorded output of a real failing run of its tool.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

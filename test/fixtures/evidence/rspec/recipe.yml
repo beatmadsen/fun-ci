@@ -1,0 +1,39 @@
+tool: rspec
+image: ruby:3.4-slim@sha256:2db87e432f2558704a8744b5463bf7b8c56ddabb0e081f86491c3e298afb2882
+setup: gem install rspec -v 3.13.1 --no-document
+command: rspec
+version: rspec --version
+files:
+  Gemfile: |
+    source "https://rubygems.org"
+    gem "rspec"
+  lib/cart.rb: |
+    class Cart
+      def initialize = @items = []
+      def add(price) = @items << price
+      def total = @items.sum + 1
+      def discount(code) = raise(ArgumentError, "unknown code #{code}")
+    end
+  spec/cart_spec.rb: |
+    require_relative "../lib/cart"
+
+    RSpec.describe Cart do
+      it "starts empty" do
+        expect(Cart.new.total).to eq(0)
+      end
+
+      it "adds up its items" do
+        cart = Cart.new
+        cart.add(2)
+        cart.add(3)
+        expect(cart.total).to eq(5)
+      end
+
+      it "takes a discount code" do
+        expect(Cart.new.discount("SAVE10")).to eq(0.9)
+      end
+
+      it "is a cart" do
+        expect(Cart.new).to be_a(Cart)
+      end
+    end

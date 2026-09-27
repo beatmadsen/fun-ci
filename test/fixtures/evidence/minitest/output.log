@@ -1,0 +1,25 @@
+Run options: --seed 1234
+
+# Running:
+
+F.FE
+
+Finished in 0.000903s, 4430.9056 runs/s, 3323.1792 assertions/s.
+
+  1) Failure:
+CartTest#test_adds_up_its_items [test/cart_test.rb:14]:
+Expected: 5
+  Actual: 6
+
+  2) Failure:
+CartTest#test_starts_empty [test/cart_test.rb:7]:
+Expected: 0
+  Actual: 1
+
+  3) Error:
+CartTest#test_takes_a_discount_code:
+ArgumentError: unknown code SAVE10
+    lib/cart.rb:5:in 'Cart#discount'
+    test/cart_test.rb:18:in 'CartTest#test_takes_a_discount_code'
+
+4 runs, 3 assertions, 2 failures, 1 errors, 0 skips

@@ -1,0 +1,9 @@
+---
+tool: maven
+image: maven:3.9-eclipse-temurin-21@sha256:99e61abcff91a9b1333463bd8451fb18495d6eba9250ac66a338b518f8278320
+setup:
+command: mvn -B test
+sha256: d083d0fbcdf9c12b2ed49331310dcbec1025ae8c014a23e83e265b238882876b
+exit_status: 1
+version: Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)
+script_commit: 98da220a1849ca1f8f55ef5a76e9a19dc11011dd

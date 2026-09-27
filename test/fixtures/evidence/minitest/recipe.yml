@@ -1,0 +1,41 @@
+tool: minitest
+image: ruby:3.4-slim@sha256:2db87e432f2558704a8744b5463bf7b8c56ddabb0e081f86491c3e298afb2882
+setup: gem install minitest -v 5.25.5 --no-document
+command: ruby -Ilib -Itest test/cart_test.rb --seed 1234
+version: ruby -e 'gem "minitest", "5.25.5"; require "minitest"; puts "minitest " + Minitest::VERSION'
+files:
+  Gemfile: |
+    source "https://rubygems.org"
+    gem "minitest"
+  lib/cart.rb: |
+    class Cart
+      def initialize = @items = []
+      def add(price) = @items << price
+      def total = @items.sum + 1
+      def discount(code) = raise(ArgumentError, "unknown code #{code}")
+    end
+  test/cart_test.rb: |
+    gem "minitest", "5.25.5"
+    require "minitest/autorun"
+    require "cart"
+
+    class CartTest < Minitest::Test
+      def test_starts_empty
+        assert_equal 0, Cart.new.total
+      end
+
+      def test_adds_up_its_items
+        cart = Cart.new
+        cart.add(2)
+        cart.add(3)
+        assert_equal 5, cart.total
+      end
+
+      def test_takes_a_discount_code
+        assert_in_delta 0.9, Cart.new.discount("SAVE10")
+      end
+
+      def test_is_a_cart
+        assert_kind_of Cart, Cart.new
+      end
+    end

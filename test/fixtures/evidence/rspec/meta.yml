@@ -1,0 +1,10 @@
+---
+tool: rspec
+image: ruby:3.4-slim@sha256:2db87e432f2558704a8744b5463bf7b8c56ddabb0e081f86491c3e298afb2882
+setup: gem install rspec -v 3.13.1 --no-document
+command: rspec
+sha256: ee781014aaabe2c59226586a1626d6708935ba8d32713e45341754bd65a88d49
+exit_status: 1
+version: RSpec 3.13; - rspec-core 3.13.6; - rspec-expectations 3.13.5; - rspec-mocks
+  3.13.8; - rspec-support 3.13.7
+script_commit: 98da220a1849ca1f8f55ef5a76e9a19dc11011dd

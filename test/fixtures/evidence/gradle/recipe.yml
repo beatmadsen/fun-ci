@@ -1,0 +1,50 @@
+tool: gradle
+image: gradle:8.14-jdk21@sha256:fa192d8429108392649083b819ace29e681911dfed35ec3899dd3a652fa75e1e
+command: gradle test --no-daemon --console=plain
+version: gradle --version | grep '^Gradle'
+files:
+  settings.gradle.kts: |
+    rootProject.name = "cart"
+  build.gradle.kts: |
+    plugins { java }
+    repositories { mavenCentral() }
+    dependencies {
+        testImplementation("org.junit.jupiter:junit-jupiter:5.11.4")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    }
+    tasks.test { useJUnitPlatform() }
+  src/main/java/shop/Cart.java: |
+    package shop;
+
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class Cart {
+        private final List<Integer> items = new ArrayList<>();
+
+        public void add(int price) { items.add(price); }
+
+        public int total() { return items.stream().mapToInt(Integer::intValue).sum() + 1; }
+
+        public double discount(String code) { throw new IllegalArgumentException("unknown code " + code); }
+    }
+  src/test/java/shop/CartTest.java: |
+    package shop;
+
+    import static org.junit.jupiter.api.Assertions.assertEquals;
+    import org.junit.jupiter.api.Test;
+
+    class CartTest {
+        @Test void startsEmpty() { assertEquals(0, new Cart().total()); }
+
+        @Test void addsUpItsItems() {
+            Cart cart = new Cart();
+            cart.add(2);
+            cart.add(3);
+            assertEquals(5, cart.total());
+        }
+
+        @Test void takesADiscountCode() { assertEquals(0.9, new Cart().discount("SAVE10")); }
+
+        @Test void isACart() { assertEquals(Cart.class, new Cart().getClass()); }
+    }

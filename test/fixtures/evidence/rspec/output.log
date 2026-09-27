@@ -1,0 +1,39 @@
+FFF.
+
+Failures:
+
+  1) Cart starts empty
+     Failure/Error: expect(Cart.new.total).to eq(0)
+
+       expected: 0
+            got: 1
+
+       (compared using ==)
+     # ./spec/cart_spec.rb:5:in 'block (2 levels) in <top (required)>'
+
+  2) Cart adds up its items
+     Failure/Error: expect(cart.total).to eq(5)
+
+       expected: 5
+            got: 6
+
+       (compared using ==)
+     # ./spec/cart_spec.rb:12:in 'block (2 levels) in <top (required)>'
+
+  3) Cart takes a discount code
+     Failure/Error: def discount(code) = raise(ArgumentError, "unknown code #{code}")
+
+     ArgumentError:
+       unknown code SAVE10
+     # ./lib/cart.rb:5:in 'Cart#discount'
+     # ./spec/cart_spec.rb:16:in 'block (2 levels) in <top (required)>'
+
+Finished in 0.00346 seconds (files took 0.02738 seconds to load)
+4 examples, 3 failures
+
+Failed examples:
+
+rspec ./spec/cart_spec.rb:4 # Cart starts empty
+rspec ./spec/cart_spec.rb:8 # Cart adds up its items
+rspec ./spec/cart_spec.rb:15 # Cart takes a discount code
+
