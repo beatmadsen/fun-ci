@@ -697,8 +697,14 @@ fast suite fails printing rspec's rerun lines
 missing, does not.
 
 ### 10.20 Presets for the other popular stacks
-**Given** a recorded failing run of pytest, jest, go test, cargo test and tsc,
-and JSON logs from pino and structlog
+**Given** a recorded failing run of each of these, besides the six of 10.10
+and 10.13 (rspec, minitest, gradle, maven, logstash, ecs):
+test runners pytest, unittest, jest, vitest, mocha, node's test runner, bun,
+deno, go test, cargo test, dotnet test, phpunit, ExUnit, swift test, dart
+test and GoogleTest; build, type and lint tools tsc, eslint, rubocop, ruff,
+mypy, go build, rustc, gcc and shellcheck; Perl's prove; and JSON logs from
+pino and structlog
 **When** each is the output of a failed stage in a project with that tool's
-marker files
-**Then** its preset is chosen and picks out the failures.
+marker files and no `evidence` configuration
+**Then** its preset is chosen and picks out what its recording expects
+**And** no preset's signature matches another tool's recorded run.
