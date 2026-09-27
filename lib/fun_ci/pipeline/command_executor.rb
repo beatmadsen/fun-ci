@@ -20,19 +20,19 @@ module FunCi
 
       # Yields the pid of the process the command runs in, when there is one.
       # `env` is added to the command's environment; an injected runner that
-      # takes a second argument is given the whole of it.
-      def call(cmd, budget, env: {}, &)
-        return run_process_with_timeout(cmd, budget, launch: launch(env), &) unless @command_runner
+      # takes a second argument is given the whole of it. What the command
+      # prints is written to `output`, and answered as the window keeps it.
+      def call(cmd, budget, env: {}, output: OutputWindow.in_memory, &)
+        launch = Launch.new(chdir: @dir, env: env, output: output)
+        return run_process_with_timeout(cmd, budget, launch: launch, &) unless @command_runner
 
-        output, status = run_injected(cmd, env, &)
-        [output, status, false]
+        printed, status = run_injected(cmd, env, &)
+        [text(output << printed), status, false]
       rescue Timeout::Error
         ["", nil, true]
       end
 
       private
-
-      def launch(env) = Launch.new(chdir: @dir, env: env)
 
       # A lambda's own, or those of an object's #call.
       def parameters

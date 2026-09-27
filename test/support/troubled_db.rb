@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
 require "sqlite3"
+require "tmpdir"
 
 # A database whose every statement fails with `error`, as a database stays
-# locked past its busy timeout, or a full disk refuses a write.
+# locked past its busy timeout, or a full disk refuses a write. It names a
+# path in the test's temp root, since fun-ci keeps files beside a database.
 class TroubledDb
-  PATH = "/var/fun-ci/db.sqlite3"
+  PATH = File.join(Dir.tmpdir, "troubled", "db.sqlite3")
 
   def initialize(error)
     @error = error

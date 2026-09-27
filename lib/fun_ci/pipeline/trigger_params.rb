@@ -3,7 +3,7 @@
 require "open3"
 require_relative "../persistence/pipeline_recorder"
 require_relative "command_executor"
-require_relative "report_dir"
+require_relative "stage_dir"
 require_relative "git_environment"
 
 module FunCi
@@ -20,14 +20,14 @@ module FunCi
     # gets the real thing. `environment` is the stages' environment as a hash,
     # which masking and injected command runners see.
     Seams = Data.define(:command_runner, :time_budgets, :commit_validator, :recorder, :background_launcher, :workspace,
-                        :report_dir, :environment)
+                        :stage_dir, :environment)
 
     # Reopened rather than given as a block to Data.define, so tools that read
     # the source (mutineer) see these as Seams' methods.
     class Seams
       def self.defaults
         { command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new, background_launcher: nil,
-          workspace: nil, commit_validator: method(:commit_exists?), report_dir: ReportDir.method(:create),
+          workspace: nil, commit_validator: method(:commit_exists?), stage_dir: StageDir.method(:create),
           environment: ENV.to_h }
       end
 

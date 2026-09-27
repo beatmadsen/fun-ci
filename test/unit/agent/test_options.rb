@@ -40,6 +40,10 @@ class TestOptions < Minitest::Test
     assert_equal "fast", parse("fast").rev
   end
 
+  def test_should_take_raw
+    assert parse("--raw", takes: %i[raw]).raw
+  end
+
   def test_should_take_json
     assert parse("--json").json
   end

@@ -42,6 +42,11 @@ class TestWhyText < Minitest::Test
                  lines(stage("failed", kept: { pruned: true })).drop(2)
   end
 
+  def test_should_end_with_the_command_that_prints_the_raw_output_when_it_is_kept
+    assert_equal "The whole output: fun-ci why 3f9c2ab fast --raw",
+                 lines(stage("failed", kept: { raw_bytes: 1843 })).last
+  end
+
   def test_should_say_nothing_is_kept_for_a_stage_that_passed
     assert_equal ["fast passed", "Nothing is kept about a stage that passed."], lines(stage("passed")).drop(1)
   end

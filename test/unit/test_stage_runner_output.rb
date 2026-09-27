@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require "stringio"
 require "fun_ci/pipeline/stage_runner"
-require_relative "../support/fake_report_dir"
+require_relative "../support/fake_stage_dir"
 
 # A stage that fails or overruns has its evidence kept before its outcome is
 # recorded, so anyone who sees the outcome can read why (AT-9.5, AT-10.1).
@@ -19,7 +19,7 @@ class TestStageRunnerOutput < Minitest::Test
   end
 
   def test_keeps_the_failures_a_failed_stage_reported
-    recorder = recorded(->(_cmd) { ["boom\n", FakeStatus.new(false, 1)] }, FakeReportDir.new([{ test: "t1" }]))
+    recorder = recorded(->(_cmd) { ["boom\n", FakeStatus.new(false, 1)] }, FakeStageDir.new([{ test: "t1" }]))
 
     assert_equal [{ test: "t1" }], recorder.kept_evidence.first.reported_failures
   end
@@ -47,8 +47,15 @@ class TestStageRunnerOutput < Minitest::Test
     assert_equal "/home/dev", seen["HOME"]
   end
 
-  def test_removes_the_report_directory_after_the_stage
-    reports = FakeReportDir.new([])
+  def test_closes_the_stage_s_window_once_it_is_recorded
+    stage_dir = FakeStageDir.new([])
+    recorded(->(_cmd) { ["", FakeStatus.new(true, 0)] }, stage_dir)
+
+    assert_equal [true], stage_dir.windows.map(&:closed?)
+  end
+
+  def test_removes_the_stage_directory_after_the_stage
+    reports = FakeStageDir.new([])
     recorded(->(_cmd) { ["", FakeStatus.new(true, 0)] }, reports)
 
     assert reports.removed
@@ -56,9 +63,9 @@ class TestStageRunnerOutput < Minitest::Test
 
   private
 
-  def recorded(runner, reports = FakeReportDir.new([]), environment: {})
+  def recorded(runner, reports = FakeStageDir.new([]), environment: {})
     recorder = FakeRecorder.new
-    seams = FunCi::Pipeline::Seams.new(command_runner: runner, recorder: recorder, report_dir: -> { reports },
+    seams = FunCi::Pipeline::Seams.new(command_runner: runner, recorder: recorder, stage_dir: -> { reports },
                                        environment: environment)
     FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams)
                                 .passes?(Config.new(dir: "/p"), "fast")
@@ -75,7 +82,7 @@ class TestStageRunnerBudget < Minitest::Test
   def test_should_record_the_budget_a_stage_starts_with
     recorder = FakeRecorder.new
     seams = FunCi::Pipeline::Seams.new(command_runner: ->(_cmd) { ["", FakeStatus.new(true, 0)] }, recorder: recorder,
-                                       report_dir: -> { FakeReportDir.new([]) }, time_budgets: { "fast" => 7 })
+                                       stage_dir: -> { FakeStageDir.new([]) }, time_budgets: { "fast" => 7 })
     FunCi::Pipeline::StageRunner.new(commit_hash: "abc123", stdout: StringIO.new, seams: seams)
                                 .passes?(Config.new(dir: "/p"), "fast")
 

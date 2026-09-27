@@ -67,6 +67,14 @@ class TestRunReport < Minitest::Test
                  report(job("lint", "failed").merge(evidence: evidence)).stages.first.evidence.facts
   end
 
+  def test_should_carry_how_many_bytes_of_raw_output_a_stage_kept
+    assert_equal 1843, report(job("lint", "failed").merge(raw_bytes: 1843)).stages.first.raw_bytes
+  end
+
+  def test_should_carry_the_stage_s_row
+    assert_equal 12, report(job("lint", "failed").merge(id: 12)).stages.first.id
+  end
+
   def test_should_carry_no_failures_for_a_stage_that_reported_none
     assert_empty report(job("lint", "failed")).stages.first.failures
   end

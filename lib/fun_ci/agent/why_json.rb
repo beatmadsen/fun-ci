@@ -10,13 +10,12 @@ module FunCi
     module WhyJson
       SCHEMA = 1
       FAILED = %w[failed over_budget].freeze
-      NOTHING_KEPT = { kept: false, bytes: 0 }.freeze
 
       def self.document(report, stage)
         reason = no_evidence(report, stage)
         { schema: SCHEMA, commit: { sha: report.sha, branch: report.branch, subject: report.subject },
           **ending(stage), evidence: reason ? nil : stage.evidence.to_h, no_evidence: reason,
-          raw_output: NOTHING_KEPT }
+          raw_output: { kept: !stage&.raw_bytes.nil?, bytes: stage&.raw_bytes || 0 } }
       end
 
       def self.ending(stage)

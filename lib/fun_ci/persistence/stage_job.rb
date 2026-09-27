@@ -47,6 +47,8 @@ module FunCi
         db.execute("UPDATE stage_jobs SET exit_status = ?, signal = ? WHERE id = ?", [exit_status, signal, id])
       end
 
+      def self.ids(db) = db.execute("SELECT id FROM stage_jobs").flatten
+
       def self.find(db, id)
         row = db.execute("SELECT #{COLUMNS} FROM stage_jobs WHERE id = ?", [id]).first
         return nil unless row

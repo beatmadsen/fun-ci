@@ -4,7 +4,7 @@ require "stringio"
 require "fun_ci/pipeline/slot_run"
 require "fun_ci/pipeline/slot"
 require_relative "trigger_test_kit"
-require_relative "fake_report_dir"
+require_relative "fake_stage_dir"
 
 # Builds a SlotRun from in-memory stand-ins: a config that only names script
 # paths, a scripted runner, a recorder that keeps calls, and a slot whose lock
@@ -26,7 +26,7 @@ module SlotRunKit
   # suite, and a FakeRecorder.
   def slot_run(slot, io: quiet_io, **seams)
     defaults = { command_runner: scripted_runner, background_launcher: noop_launcher, recorder: FakeRecorder.new,
-                 report_dir: -> { FakeReportDir.new } }
+                 stage_dir: -> { FakeStageDir.new } }
     FunCi::Pipeline::SlotRun.new(commit: FunCi::Pipeline::Commit.new(sha: "abc1234", branch: "main"), io: io,
                                  seams: FunCi::Pipeline::Seams.new(**defaults, **seams), slot: slot)
   end

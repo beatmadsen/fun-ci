@@ -20,6 +20,19 @@ class TestProcessRunner < Minitest::Test
     assert_equal "out\nerr\n", output
   end
 
+  # About 10 MB through the window at its real sizes: 95,325 whole lines of
+  # 11 bytes fit in the first 1 MB, and the last 7 MB start mid-line.
+  def test_a_command_that_prints_more_than_the_window_keeps_its_first_and_last_parts
+    Dir.mktmpdir do |dir|
+      launch = FunCi::Pipeline::ProcessRunner::Launch.new(output: FunCi::Pipeline::OutputWindow.in(dir))
+      output, = within_deadline do
+        Host.new.run_process_with_timeout("yes 0123456789 | head -c 10000000", 30, launch: launch)
+      end
+
+      assert_includes output, "0123456789\n[fun-ci: 1611401 bytes dropped here]\n0123456789\n"
+    end
+  end
+
   def test_a_finished_command_reports_it_did_not_time_out
     _, status, timed_out = run_command("true", 30)
 

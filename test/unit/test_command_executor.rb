@@ -10,6 +10,13 @@ class TestCommandExecutor < Minitest::Test
     assert_equal ["", nil, true], executor.call("fast.sh", 10)
   end
 
+  def test_keeps_a_runner_s_output_as_the_window_it_is_given
+    window = FunCi::Pipeline::OutputWindow.in_memory(FunCi::Pipeline::OutputWindow::Sizes.new(head: 4, tail: 4))
+    executor = FunCi::Pipeline::CommandExecutor.new(->(_cmd) { ["aaa\nbbbbbbbbbb\nccc\n", FakeStatus.new(false, 1)] })
+
+    assert_equal "aaa\n[fun-ci: 11 bytes dropped here]\nccc\n", executor.call("fast.sh", 10, output: window).first
+  end
+
   def test_passes_on_the_process_the_command_started
     started = []
     runner = lambda do |_cmd, &on_start|

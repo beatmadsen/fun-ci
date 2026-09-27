@@ -2,14 +2,14 @@
 
 require_relative "../../test_helper"
 require "fun_ci/evidence/collector"
-require_relative "../../support/fake_report_dir"
+require_relative "../../support/fake_stage_dir"
 
 # What fun-ci keeps about a stage that failed (why.md, "How it fits together").
 class TestCollector < Minitest::Test
   SOURCES = FunCi::Evidence::Sources
 
   def test_should_credit_the_failures_the_stage_reported_to_test_reports
-    reports = FakeReportDir.new([{ file: "a.rb", line: 3, test: "t", message: "m" }])
+    reports = FakeStageDir.new([{ file: "a.rb", line: 3, test: "t", message: "m" }])
 
     assert_equal [{ file: "a.rb", line: 3, test: "t", message: "m", extractor: "test-reports" }],
                  collect("", reports: reports).failures
@@ -32,9 +32,16 @@ class TestCollector < Minitest::Test
     assert_equal 0, kept.scan("h123").size
   end
 
+  def test_should_mask_the_raw_output
+    sources = SOURCES.new(stage: "fast", worktree: "/slot-0", reports: FakeStageDir.new,
+                          environment: { "API_TOKEN" => "abcdefgh123" })
+
+    assert_equal "a [masked:API_TOKEN]\n", FunCi::Evidence::Collector.new(sources).masked("a abcdefgh123\n")
+  end
+
   private
 
-  def collect(output, reports: FakeReportDir.new, environment: {})
+  def collect(output, reports: FakeStageDir.new, environment: {})
     sources = SOURCES.new(stage: "fast", worktree: "/slot-0", reports: reports, environment: environment)
     FunCi::Evidence::Collector.new(sources).collect(output)
   end

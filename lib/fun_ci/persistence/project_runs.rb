@@ -34,6 +34,13 @@ module FunCi
                     [@project, keep])
       end
 
+      # The stages of every run but the project's newest `keep`.
+      def stage_ids_beyond(keep:)
+        @db.execute("SELECT id FROM stage_jobs WHERE pipeline_run_id IN " \
+                    "(SELECT id FROM pipeline_runs WHERE project_path = ? ORDER BY id DESC LIMIT -1 OFFSET ?)",
+                    [@project, keep]).flatten
+      end
+
       private
 
       def query(clause, *params)

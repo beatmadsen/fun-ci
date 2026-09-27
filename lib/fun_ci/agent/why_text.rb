@@ -15,7 +15,11 @@ module FunCi
                "#{Persistence::DbRecorder::KEPT_RUNS} newest runs.".freeze
 
       def self.lines(report, stage)
-        [StatusText.header(report), StageSummary.line(stage), *body(stage)]
+        [StatusText.header(report), StageSummary.line(stage), *body(stage), *raw(report, stage)]
+      end
+
+      def self.raw(report, stage)
+        stage.raw_bytes ? ["", "The whole output: fun-ci why #{report.sha[0, 7]} #{stage.name} --raw"] : []
       end
 
       def self.body(stage)
@@ -24,7 +28,7 @@ module FunCi
 
         EvidenceText.lines(stage.evidence)
       end
-      private_class_method :body
+      private_class_method :body, :raw
     end
   end
 end

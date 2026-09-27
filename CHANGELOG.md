@@ -20,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   tokens, private keys and `Authorization:` headers as `[masked]`. The state
   directory is now readable by its user alone (0700), since masking is a best
   effort.
+- A failed stage's whole output is kept for a project's 10 newest runs, as
+  its first 1 MB and last 7 MB with a line saying how much was dropped
+  between them, masked and compressed, and `fun-ci why --raw` prints it. A
+  stage's output is written to disk as it runs, in the state directory,
+  instead of being held in memory, so a stage that prints without end no
+  longer grows fun-ci's memory without end.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

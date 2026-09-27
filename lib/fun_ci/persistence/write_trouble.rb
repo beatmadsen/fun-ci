@@ -9,8 +9,9 @@ module FunCi
     # AT-8.2, AT-8.4): the pipeline carries on without recording it, and the
     # developer is told once, with what to do about it.
     class WriteTrouble
+      # SystemCallError: the files kept beside the database, such as raw output.
       UNWRITABLE = [SQLite3::FullException, SQLite3::ReadOnlyException, SQLite3::IOException,
-                    SQLite3::CantOpenException].freeze
+                    SQLite3::CantOpenException, SystemCallError].freeze
       BUSY = "fun-ci: couldn't record this run: the database stayed busy. Your stages still ran. " \
              "Trigger it again to record it."
       STILL_RAN = "Check the disk has space. Your stages still ran."

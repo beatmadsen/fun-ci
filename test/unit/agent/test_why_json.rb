@@ -43,6 +43,17 @@ class TestWhyJson < Minitest::Test
     assert_equal "passed", document(pruned)[:no_evidence]
   end
 
+  def test_should_say_how_much_raw_output_is_kept
+    kept = REPORT::Stage.new(name: "fast", state: "failed", seconds: 8.4,
+                             kept: REPORT::Kept.new(tail: nil, failures: [], raw_bytes: 1843))
+
+    assert_equal({ kept: true, bytes: 1843 }, document(kept)[:raw_output])
+  end
+
+  def test_should_say_no_raw_output_is_kept
+    assert_equal({ kept: false, bytes: 0 }, document(stage("failed"))[:raw_output])
+  end
+
   def test_should_say_why_there_is_no_evidence_when_no_stage_decided
     assert_equal [nil, nil, "passed"], document(nil, verdict: :passed).values_at(:stage, :evidence, :no_evidence)
   end

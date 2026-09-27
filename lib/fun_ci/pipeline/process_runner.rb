@@ -2,6 +2,7 @@
 
 require_relative "gate"
 require_relative "git_environment"
+require_relative "output_window"
 
 module FunCi
   module Pipeline
@@ -21,15 +22,16 @@ module FunCi
       # How long a killed command's last output may take to drain.
       DRAIN_SECONDS = 1
 
-      # Where the command runs, and what it finds in its environment besides fun-ci's own.
-      Launch = Data.define(:chdir, :env) do
-        def initialize(chdir: Dir.pwd, env: {}) = super
+      # Where the command runs, what it finds in its environment besides
+      # fun-ci's own, and the window what it prints is written to.
+      Launch = Data.define(:chdir, :env, :output) do
+        def initialize(chdir: Dir.pwd, env: {}, output: OutputWindow.in_memory) = super
       end
 
       def run_process_with_timeout(cmd, budget, launch: Launch.new, timer: BUDGET, &)
         reader, writer = IO.pipe
         pid = start(cmd, writer, launch, &)
-        printed = String.new
+        printed = launch.output
         reading = Thread.new { read_until_closed(reader, printed) }
         timer.call(reading, budget) ? process_finished(pid, text(reading.value)) : over_budget(pid, reading, printed)
       ensure
@@ -70,7 +72,7 @@ module FunCi
         text(printed)
       end
 
-      def text(bytes) = bytes.dup.force_encoding(Encoding.default_external)
+      def text(window) = window.text.force_encoding(Encoding.default_external)
 
       def process_finished(pid, output)
         _, status = Process.waitpid2(pid)

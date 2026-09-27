@@ -48,7 +48,7 @@ class TestSlotRunStages < Minitest::Test
     recorder = FakeRecorder.new
     slot_run(slot_with(Lock.new(false)), command_runner: scripted_runner({ "slow.sh" => failing("slow failed") }),
                                          background_launcher: inline_launcher(recorder),
-                                         report_dir: -> { FakeReportDir.new([{ test: "t1" }]) }).run(config)
+                                         stage_dir: -> { FakeStageDir.new([{ test: "t1" }]) }).run(config)
 
     assert_equal [{ test: "t1", extractor: "test-reports" }], recorder.kept_evidence.first.failures
   end

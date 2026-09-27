@@ -41,4 +41,12 @@ class TestAgentWhyStageChoice < Minitest::Test
     assert_equal "No stage it needs failed or ran over budget; name one to see it: fun-ci why REV STAGE",
                  @client.stdout.lines[1].chomp
   end
+
+  def test_should_say_so_when_no_raw_output_is_kept
+    @client.record_run(SHA, stages: { "lint" => "failed" })
+
+    @client.why("--raw")
+
+    assert_equal "fun-ci why: no raw output is kept for lint of 3f9c2ab\n", @client.stdout
+  end
 end

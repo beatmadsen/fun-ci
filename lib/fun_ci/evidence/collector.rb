@@ -15,12 +15,16 @@ module FunCi
       end
 
       def collect(output)
-        masking = Masking.new(@sources.environment)
         Document.legacy(tail: Persistence::OutputTail.of(output, mask: masking.method(:mask)),
                         failures: @sources.reports.failures.map { |failure| masked_failure(failure, masking) })
       end
 
+      # The raw output, masked as the evidence is.
+      def masked(output) = masking.mask(output)
+
       private
+
+      def masking = Masking.new(@sources.environment)
 
       def masked_failure(failure, masking)
         failure.transform_values { |value| value.is_a?(String) ? masking.mask(value) : value }

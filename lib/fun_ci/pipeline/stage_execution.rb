@@ -16,27 +16,32 @@ module FunCi
 
       # Answers [the outcome recorded, what the stage printed].
       def run(stage, command, recorder, job_id)
-        with_report_dir do |reports|
-          output, status, timed_out = execute(stage, command, reports.env) { |pid| recorder.stage_process(job_id, pid) }
+        with_stage_dir do |stage_dir|
+          output, status, timed_out = execute(stage, command, stage_dir) { |pid| recorder.stage_process(job_id, pid) }
           finished = StageEnd::Finished.new(output: output, status: status, timed_out: timed_out)
-          [StageEnd.new(recorder, job_id, collector(stage, reports)).record(finished), output]
+          [StageEnd.new(recorder, job_id, collector(stage, stage_dir)).record(finished), output]
         end
       end
 
       private
 
-      def execute(stage, command, env, &) = @seams.executor(@dir).call(command, @seams.budgets[stage], env: env, &)
-
-      def with_report_dir
-        reports = @seams.report_dir.call
-        yield reports
+      def execute(stage, command, stage_dir, &)
+        window = stage_dir.window
+        @seams.executor(@dir).call(command, @seams.budgets[stage], env: stage_dir.env, output: window, &)
       ensure
-        reports&.remove
+        window&.close
       end
 
-      def collector(stage, reports)
-        Evidence::Collector.new(Evidence::Sources.new(stage: stage, worktree: @dir, reports: reports,
-                                                      environment: @seams.environment.merge(reports.env)))
+      def with_stage_dir
+        stage_dir = @seams.stage_dir.call
+        yield stage_dir
+      ensure
+        stage_dir&.remove
+      end
+
+      def collector(stage, stage_dir)
+        Evidence::Collector.new(Evidence::Sources.new(stage: stage, worktree: @dir, reports: stage_dir,
+                                                      environment: @seams.environment.merge(stage_dir.env)))
       end
     end
   end

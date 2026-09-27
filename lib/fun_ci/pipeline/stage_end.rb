@@ -34,7 +34,10 @@ module FunCi
         finished.status.success? ? "completed" : "failed"
       end
 
-      def keep_evidence(finished) = @recorder.keep_evidence(@job_id, @collector.collect(finished.output))
+      def keep_evidence(finished)
+        @recorder.keep_evidence(@job_id, @collector.collect(finished.output))
+        @recorder.keep_raw(@job_id, @collector.masked(finished.output))
+      end
 
       def keep_exit(status)
         signal = status.termsig && Signal.signame(status.termsig)

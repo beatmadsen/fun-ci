@@ -5,9 +5,10 @@ require_relative "output"
 
 module FunCi
   module Agent
-    # `fun-ci why [REV] [STAGE] [--need LEVEL] [--json]` (acceptance-tests.md,
-    # AT-10.1): everything kept about the stage named, or else about the stage
-    # that decided the verdict.
+    # `fun-ci why [REV] [STAGE] [--need LEVEL] [--json] [--raw]`
+    # (acceptance-tests.md, AT-10.1, AT-10.6): everything kept about the stage
+    # named, or else about the stage that decided the verdict; with --raw, the
+    # raw output it kept, and nothing else.
     class WhyCommand
       include CommandSupport
 
@@ -18,7 +19,7 @@ module FunCi
       end
 
       def run(args)
-        options = Options.parse(args, takes: %i[need json stage])
+        options = Options.parse(args, takes: %i[need json stage raw])
         sha = resolve(options.rev)
         answer(sha, reports.for(sha, options.need), options)
       rescue Options::Invalid => e
@@ -31,8 +32,18 @@ module FunCi
         output = Output.new(@context.io.stdout, json: options.json)
         return output.unknown(sha) unless report
 
-        output.why(report, options.stage || report.deciding)
+        stage_name = options.stage || report.deciding
+        options.raw ? raw(report, stage_name) : output.why(report, stage_name)
         ExitCode::FOR.fetch(report.verdict)
+      end
+
+      def raw(report, stage_name)
+        stage = report.stages.find { |candidate| candidate.name == stage_name }
+        text = stage && reports.raw_output(stage)
+        return @context.io.stdout.write(text) if text
+
+        @context.io.stderr.puts "fun-ci why: no raw output is kept for #{stage_name || "any stage"} of #{report.sha[0,
+                                                                                                                    7]}"
       end
     end
   end

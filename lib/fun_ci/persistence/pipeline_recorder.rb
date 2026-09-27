@@ -7,12 +7,12 @@ require_relative "write_trouble"
 require "json"
 require_relative "null_recorder"
 require_relative "project_runs"
+require_relative "retention"
 
 module FunCi
   module Persistence
     class DbRecorder
-      # How many of a project's newest runs keep their failed stages' output.
-      KEPT_RUNS = 50
+      KEPT_RUNS = Retention::KEPT_RUNS
 
       attr_reader :db, :db_path, :pipeline_run_id, :trouble
 
@@ -49,7 +49,7 @@ module FunCi
           @pipeline_run_id = PipelineRun.create(@db, commit_hash: commit_hash, branch: branch,
                                                      project_path: project_path)
           PipelineRun.store_trigger_pid(@db, @pipeline_run_id, Process.pid)
-          ProjectRuns.new(@db, project_path).forget_output(keep: KEPT_RUNS) if project_path
+          Retention.apply(@db, project_path) if project_path
           @pipeline_run_id
         end
       end
@@ -86,6 +86,11 @@ module FunCi
           StageJob.keep_output(@db, job_id, document.tail)
           keep_failures(job_id, document.reported_failures)
         end
+      end
+
+      # Keeps what a failed stage printed, masked and cut to its window.
+      def keep_raw(job_id, text)
+        tolerating { RawOutputs.beside(@db_path).write(job_id, text) }
       end
 
       def keep_exit(job_id, exit_status, signal)

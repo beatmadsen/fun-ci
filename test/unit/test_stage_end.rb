@@ -10,6 +10,7 @@ class TestStageEnd < Minitest::Test
   # Answers what it was given to collect from, so a test can see it was asked.
   class EchoCollector
     def collect(output) = "evidence of #{output}"
+    def masked(output) = "masked #{output}"
   end
 
   def test_should_keep_the_evidence_of_a_stage_that_failed_before_recording_its_outcome
@@ -22,6 +23,12 @@ class TestStageEnd < Minitest::Test
     calls = recorded(Finished.new(output: "partial", status: nil, timed_out: true))
 
     assert_includes calls, [:keep_evidence, 1, "evidence of partial"]
+  end
+
+  def test_should_keep_the_masked_raw_output_of_a_stage_that_failed
+    calls = recorded(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
+
+    assert_includes calls, [:keep_raw, 1, "masked boom"]
   end
 
   def test_should_keep_no_evidence_of_a_stage_that_passed

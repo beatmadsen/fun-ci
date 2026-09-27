@@ -2,6 +2,7 @@
 
 require_relative "../persistence/project_runs"
 require_relative "../persistence/stage_job"
+require_relative "../persistence/raw_outputs"
 require_relative "run_report"
 
 module FunCi
@@ -12,7 +13,11 @@ module FunCi
         @db = db
         @git = git
         @runs = Persistence::ProjectRuns.new(db, git.toplevel)
+        @raw = Persistence::RawOutputs.beside(db.filename("main"))
       end
+
+      # What the stage kept of its raw output, or nil.
+      def raw_output(stage) = stage.id && @raw.read(stage.id)
 
       # The commit's newest run, or nil.
       def for(sha, need)
@@ -33,7 +38,8 @@ module FunCi
 
       def of(run, need)
         superseded_by = run[:status] == "cancelled" ? @runs.superseded_by(run) : nil
-        RunReport.build(run: run, jobs: Persistence::StageJob.for_run(@db, run[:id]), need: need,
+        jobs = Persistence::StageJob.for_run(@db, run[:id]).map { |job| job.merge(raw_bytes: @raw.bytes(job[:id])) }
+        RunReport.build(run: run, jobs: jobs, need: need,
                         commit: { subject: @git.subject(run[:commit_hash]), superseded_by: superseded_by })
       end
     end
