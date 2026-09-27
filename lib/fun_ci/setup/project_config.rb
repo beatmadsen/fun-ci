@@ -2,6 +2,7 @@
 
 require_relative "settings"
 require_relative "../evidence/settings"
+require_relative "../evidence/start"
 
 module FunCi
   module Setup
@@ -26,6 +27,13 @@ module FunCi
       # Mistakes in the `evidence` key, which `fun-ci check` reports but which
       # never stop a pipeline: the entry with the mistake is left out instead.
       def evidence_errors = Evidence::Settings.load(File.join(@fun_ci_dir, "config")).errors(root: @project_root)
+
+      # The presets whose markers the project has, which run when a stage fails
+      # and its output shows their tool.
+      def presets
+        settings = Evidence::Settings.load(File.join(@fun_ci_dir, "config"))
+        Evidence::Start.candidates(Evidence::Worktree.new(@project_root), settings, "all").map { |found| found.preset.name }
+      end
 
       def worktree_slots = settings.worktree_slots
 

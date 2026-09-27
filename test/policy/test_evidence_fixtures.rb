@@ -40,7 +40,25 @@ class TestEvidenceFixtures < Minitest::Test
     assert_empty(EvidenceFixtures.all.flat_map { |fixture| outside(fixture) })
   end
 
+  def test_every_signature_matches_its_own_tool_s_recorded_run
+    silent = signed.reject { |preset| matches?(preset, fixture(preset.name)) }
+
+    assert_empty silent.map(&:name)
+  end
+
+  # What notices a bad edit to presets.yml, which no mutation tool reads.
+  def test_no_signature_matches_another_tool_s_recorded_run
+    crossed = signed.product(EvidenceFixtures.all)
+                    .select { |preset, run| preset.name != run.name && matches?(preset, run) }
+
+    assert_empty(crossed.map { |preset, run| "#{preset.name} matches #{run.name}" })
+  end
+
   private
+
+  def signed = FunCi::Evidence::Presets.all.select(&:signature)
+  def fixture(name) = EvidenceFixtures.all.find { |run| run.name == name }
+  def matches?(preset, run) = run.output.lines.any? { |line| Regexp.new(preset.signature).match?(line.chomp) }
 
   def outside(fixture)
     fixture.expected.fetch("excerpts").reject { |location| within?(location, fixture.output.lines.size) }

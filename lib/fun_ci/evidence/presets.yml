@@ -1,30 +1,42 @@
 # Presets: config entries fun-ci ships for popular tools, in the shape a
-# project would write one (why.md, "Built in"). Each is pinned by the
-# recorded output of a real failing run in test/fixtures/evidence/<name>/,
-# and none ships without one.
+# project would write one (why.md, "Built in"), with when each applies:
+# `markers`, files any of which the worktree must have (a path, or a path and
+# a text it must hold), and `signature`, a pattern only the tool prints,
+# matched within one line. Each is pinned by the recorded output of a real
+# failing run in test/fixtures/evidence/<name>/, and none ships without one.
 rspec:
   use: section
   title: rspec's failures
   start: ['^Failures:$']
   end: ['^Finished in ']
+  markers: [Gemfile, .rspec]
+  signature: '^rspec \./'
 minitest:
   use: section
   title: Minitest's failures and errors
   start: ['^\s+\d+\) (Failure|Error):$']
   end: ['^\d+ runs, \d+ assertions']
+  markers: [Gemfile, Rakefile]
+  signature: '^\d+ runs, \d+ assertions, \d+ failures, \d+ errors'
 gradle:
   use: section
   title: Gradle's failed tests, and what went wrong
   start: [' FAILED$', '^\* What went wrong:']
   end: ['^\d+ tests? completed', '^\* Try:']
+  markers: [build.gradle, build.gradle.kts, settings.gradle, settings.gradle.kts, gradlew]
+  signature: '^BUILD FAILED in '
 maven:
   use: section
   title: Maven's failed tests
   start: ['<<< (FAILURE|ERROR)!', '^\[ERROR\] (Failures|Errors): $']
   end: ['^\[INFO\] ?$', '^\[INFO\] Results:']
+  markers: [pom.xml, mvnw]
+  signature: '^\[INFO\] BUILD FAILURE'
 logstash:
   use: json-log
   fields: { time: '@timestamp', level: level, logger: logger_name, message: message, stack: stack_trace }
+  signature: '"logger_name":'
 ecs:
   use: json-log
   fields: { time: '@timestamp', level: log.level, logger: log.logger, message: message, stack: error.stack_trace }
+  signature: '"log\.level": ?"'

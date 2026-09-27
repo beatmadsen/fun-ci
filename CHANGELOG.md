@@ -83,6 +83,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - When all fun-ci kept of a failed stage is its output's last lines, `fun-ci
   why` ends by saying so, and that extractors under `evidence:` in
   `.fun-ci/config` keep more.
+- With no configuration, fun-ci picks the presets that apply: those whose
+  marker files the project has (`Gemfile`, `pom.xml`, `build.gradle`, ...)
+  and whose tool's output the failure shows, so presets for other stacks cost
+  a project nothing. `fun-ci why` says why each was chosen, `fun-ci check`
+  lists the presets the project's files select, and `evidence:` takes
+  `detect: false` and `skip: [name]`.
 
 ### Changed
 - The pre-push hook waits for the fast verdict of each commit the push

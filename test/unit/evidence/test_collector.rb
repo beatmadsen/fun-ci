@@ -3,6 +3,7 @@
 require_relative "../../test_helper"
 require "fun_ci/evidence/collector"
 require "fun_ci/evidence/process_table"
+require "fun_ci/evidence/detection"
 require_relative "../../support/fake_stage_dir"
 
 # What fun-ci keeps about a stage that failed (why.md, "How it fits together").
@@ -113,6 +114,14 @@ class TestCollector < Minitest::Test
 
   def test_should_leave_the_entries_for_an_overrun_out_of_the_evidence_of_a_failure
     assert_equal(%w[output-tail], collect("ERROR\n", entries: [OVERRUN_GREP]).excerpts.map { |e| e[:extractor] })
+  end
+
+  def test_should_run_a_detected_preset_after_the_configured_entries
+    rspec = FunCi::Evidence::Detection::Found.new(preset: FunCi::Evidence::Presets.fetch("rspec"), because: "Gemfile")
+    output = "Failures:\n  1) boom\nFinished in 1s\nrspec ./spec/a_spec.rb:4\n"
+    found = collect(output, entries: [{ "use" => "grep", "patterns" => ["boom"] }], candidates: [rspec])
+
+    assert_equal(%w[grep section:rspec output-tail], found.excerpts.map { |excerpt| excerpt[:extractor] })
   end
 
   def test_should_mask_the_raw_output

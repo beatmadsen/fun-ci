@@ -8,11 +8,16 @@ module FunCi
     module Presets
       FILE = File.join(__dir__, "presets.yml")
 
-      Preset = Data.define(:name, :use, :options)
+      # markers: files any of which the worktree must have, each a path or
+      # { path, contains }; signature: a pattern only the tool prints. Either
+      # may be missing (why.md, "Choosing which run").
+      Preset = Data.define(:name, :use, :options, :markers, :signature)
+      OWN = %w[use markers signature].freeze
 
       def self.all
         @all ||= YAML.safe_load_file(FILE).map do |name, raw|
-          Preset.new(name: name, use: raw.fetch("use"), options: raw.except("use"))
+          Preset.new(name: name, use: raw.fetch("use"), options: raw.except(*OWN), markers: raw.fetch("markers", []),
+                     signature: raw["signature"])
         end
       end
 

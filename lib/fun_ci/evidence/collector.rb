@@ -8,6 +8,8 @@ require_relative "extraction"
 require_relative "findings"
 require_relative "outcome"
 require_relative "stage_context"
+require_relative "detection"
+require_relative "source"
 require_relative "../persistence/output_tail"
 
 module FunCi
@@ -32,7 +34,7 @@ module FunCi
       end
 
       def collect(output, outcome = FAILED)
-        result = Extraction.new(@contexts.after(output, outcome, @settings.budget), @settings.budget).run(entries(nil))
+        result = extracted(output, outcome)
         overrun = outcome.overrun || NOTHING
         parts = [["fun-ci", own_facts(outcome.alongside)], *overrun.parts, ["test-reports", reported], *result.parts,
                  ["output-tail", tail(output)]]
@@ -49,6 +51,19 @@ module FunCi
       def masked(output) = masking.mask(output)
 
       private
+
+      # The configured entries, then the detected presets, within the budget.
+      def extracted(output, outcome)
+        context = @contexts.after(output, outcome, @settings.budget)
+        Extraction.new(context, @settings.budget).run(entries(nil) + detected(output, context.deadline))
+      end
+
+      # The candidates' presets whose signatures the output matched, or that have none.
+      def detected(output, deadline)
+        Detection.chosen(Source.of("output", output).lines, @sources.candidates, deadline).map do |found|
+          [{ "use" => found.preset.use, "preset" => found.preset.name }, found.because]
+        end
+      end
 
       def assemble(parts, results)
         Document.assemble(parts, problems: results.flat_map(&:problems), chosen: results.flat_map(&:chosen))
