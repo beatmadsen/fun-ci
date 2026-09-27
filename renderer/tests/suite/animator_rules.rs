@@ -129,3 +129,33 @@ fn the_header_keeps_animating_while_a_queued_scene_plays() {
     animator.render(&mut screen, &fun_ci_renderer::model::Board::default(), fun_ci_renderer::model::Moment { board_ms: 0, play_ms: 0 });
     assert!(animator.animating(), "the fireworks are still playing");
 }
+
+/// The header scene an animator shows for a board holding `runs`, one frame on.
+fn shown(animator: &mut Animator, runs: &[serde_json::Value], frame: u64) -> String {
+    let board: fun_ci_renderer::model::Board = serde_json::from_value(serde_json::json!({ "runs": runs })).unwrap();
+    let mut screen = fun_ci_renderer::screen::Screen::new(80);
+    animator.render(&mut screen, &board, fun_ci_renderer::model::Moment { board_ms: 0, play_ms: frame * 100 })
+}
+
+/// The quiet scene shown once a run has run: a frame with it running, then one with nothing.
+fn quiet_after_a_run(animator: &mut Animator, spell: u64) -> String {
+    shown(animator, &[crate::support::boards::run(2, "running", &[])], spell * 2);
+    shown(animator, &[], spell * 2 + 1)
+}
+
+#[test]
+fn each_quiet_spell_after_a_run_picks_its_scene_afresh() {
+    let mut animator = Animator::new(Cast::new(Library::builtin(), 5));
+    let mut quiet: Vec<String> = (0..10).map(|spell| quiet_after_a_run(&mut animator, spell)).collect();
+    quiet.sort();
+    quiet.dedup();
+    assert!(quiet.len() > 1, "{quiet:?}");
+}
+
+#[test]
+fn the_header_holds_its_quiet_scene_from_frame_to_frame() {
+    let mut animator = Animator::new(Cast::new(Library::builtin(), 5));
+    let mut scenes: Vec<String> = (0..20).map(|frame| shown(&mut animator, &[], frame)).collect();
+    scenes.dedup();
+    assert_eq!(scenes.len(), 1, "{scenes:?}");
+}

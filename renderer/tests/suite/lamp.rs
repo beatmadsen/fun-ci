@@ -47,3 +47,16 @@ fn should_flicker_after_a_failure() {
 fn should_hold_steady_after_a_pass() {
     assert!(swing(Outcome::Passed) < 0.01, "{}", swing(Outcome::Passed));
 }
+
+#[test]
+fn should_never_go_fully_dark_after_a_failure() {
+    let reds: Vec<f64> = (0..40).map(|tenth| lamp_light(Outcome::Failed, f64::from(tenth) / 10.0)[0]).collect();
+    let (dimmest, brightest) = (reds.iter().copied().fold(f64::MAX, f64::min), reds.iter().copied().fold(0.0, f64::max));
+    assert!(dimmest > brightest * 0.25, "dimmest {dimmest:.3}, brightest {brightest:.3}");
+}
+
+#[test]
+fn should_pulse_once_every_two_seconds_after_a_failure() {
+    let at = |t: f64| lamp_light(Outcome::Failed, t)[0];
+    assert!((at(0.7) - at(2.7)).abs() < 1e-9 && (at(0.7) - at(1.7)).abs() > 0.05, "{} {} {}", at(0.7), at(1.7), at(2.7));
+}

@@ -20,3 +20,12 @@ fn should_light_the_room_with_lightning_now_and_then() {
     let (median, brightest) = (levels[150], levels[299]);
     assert!(brightest > median * 1.4, "brightest {brightest:.3} vs median {median:.3}");
 }
+
+#[test]
+fn should_flash_at_full_speed_in_the_warp() {
+    let scene = Library::builtin().get("warp").unwrap();
+    let mut levels: Vec<f64> = (0..70).map(|step| brightness(scene, step * 50)).collect();
+    levels.sort_by(f64::total_cmp);
+    let (median, brightest) = (levels[35], levels[69]);
+    assert!(brightest > median * 3.0, "brightest {brightest:.3} vs median {median:.3}");
+}
