@@ -3,11 +3,12 @@
 require_relative "../../acceptance/trigger_cli_shared"
 require_relative "../../acceptance/agent_client"
 require_relative "../../support/process_deadline"
-require_relative "../../support/process_state"
 require "json"
 
 # A project's own command is an extractor (acceptance-tests.md, AT-10.15):
-# the stages are stand-ins, the command in the project is real.
+# the stages are stand-ins, the command in the project is real. How its
+# output is read and how it is killed with what it started belong to
+# CommandOutput and CommandRunner, and are pinned there.
 class TestWhyRunExtractor < Minitest::Test
   include ProcessDeadline
 
@@ -15,15 +16,11 @@ class TestWhyRunExtractor < Minitest::Test
   REPORTER = <<~SH
     #!/bin/sh
     stage=$(grep -o '"stage":"[a-z]*"' | cut -d'"' -f4)
-    echo '{"schema": 1, "facts": [{"name": "stage seen", "value": "'"$stage"'"}],'
-    echo ' "failures": [{"test": "OrderTest#totals", "file": "src/OrderTest.kt", "line": 42, "message": "3 != 2"}],'
-    echo ' "excerpts": [{"title": "Problems report", "location": "build/problems.html", "lines": ["one"]}]}'
+    echo '{"schema": 1, "facts": [{"name": "stage seen", "value": "'"$stage"'"}]}'
   SH
   STUCK = <<~SH
     #!/bin/sh
-    sleep 30 &
-    echo $! > "$(dirname "$0")/child.pid"
-    wait
+    exec sleep 30
   SH
 
   def teardown = @pipeline.close
@@ -34,28 +31,10 @@ class TestWhyRunExtractor < Minitest::Test
     assert_includes evidence["facts"], { "name" => "stage seen", "value" => "fast", "extractor" => "run:sh .fun-ci/x" }
   end
 
-  def test_should_keep_the_failures_the_command_reports
-    run_with_extractor(REPORTER)
-
-    assert_equal "OrderTest#totals", evidence["failures"].first["test"]
-  end
-
-  def test_should_keep_the_excerpts_the_command_reports
-    run_with_extractor(REPORTER)
-
-    assert_equal "run:sh .fun-ci/x", evidence["excerpts"].first["extractor"]
-  end
-
   def test_should_record_a_command_still_running_at_the_end_of_the_budget_as_a_problem
     run_with_extractor(STUCK, budget: "2")
 
     assert_match(/killed/, evidence["problems"].first["message"])
-  end
-
-  def test_should_kill_what_the_command_started
-    run_with_extractor(STUCK, budget: "2")
-
-    refute ProcessState.running?(File.read(File.join(@pipeline.project_dir, ".fun-ci", "child.pid")).to_i)
   end
 
   def test_should_leave_the_stage_s_verdict_as_it_was
