@@ -2,9 +2,9 @@
 
 The requirements, as acceptance tests, numbered like agent-tome's. The build
 loop implements them one per iteration, in the order of
-`ralph/build/progress.md`, which also says which are done. §0 to §5 are built;
-they stay here because the tests that hold them cite them by number. §6 to §8
-are to build. An outline item is refined into full Given/When/Then before it is
+`ralph/build/progress.md`, which also says which are done. §0 to §5, §7 and §8
+are built; they stay here because the tests that hold them cite them by
+number. §6 and §9 are to build. An outline item is refined into full Given/When/Then before it is
 built, as its own commit to this file. What fun-ci is for is in
 [`design.md`](design.md).
 
@@ -388,3 +388,154 @@ while a pipeline records its stages
 **Then** every stage still runs and the exit code is the pipeline's own
 **And** fun-ci says once that it can't write to the database, names its path,
 and suggests checking the disk.
+
+## 9. An interface for agents
+
+An agent working in a project asks fun-ci about commits and branches on exit
+codes. The commit is the only event: fun-ci tests commits, speaks up after one,
+and never looks at uncommitted files. Every command below runs in the project
+directory, names a commit with anything `git rev-parse` accepts (`HEAD` by
+default), and takes `--json`. The design is in the Claude Doc "fun-ci for
+agents: a proposed interface"; `fun-ci why` is left for a later design.
+
+Exit codes, shared by `status` and `wait`: 0 passed (every stage the agent
+needs passed), 1 failed, 2 over budget (a needed stage ran out of time),
+3 undecided (still running), 4 superseded (a newer commit on the branch
+replaced the run), 5 unknown (no run for the commit), 64 usage error. The
+level an agent needs is `--need build` (lint and build), `fast` (the
+default: lint, build and the fast suite) or `all` (the slow suite too).
+
+### 9.1 The database lives in a per-user state directory
+**Given** `XDG_STATE_HOME` set, or not
+**When** any fun-ci command opens the database
+**Then** it is `$XDG_STATE_HOME/fun-ci/db.sqlite3`, or
+`~/.local/state/fun-ci/db.sqlite3` without it, whatever `TMPDIR` is.
+*Bites:* today it is under `$TMPDIR`, which a sandboxed agent can have its own
+of, so its runs never reach the console.
+
+### 9.2 `fun-ci status` says where a commit's run stands
+**Given** a project with a run for a commit
+**When** `fun-ci status [REV] [--need LEVEL]` runs in it
+**Then** it prints the short SHA, subject and branch, then one line per stage
+with its state and, once finished, its duration
+**And** exits with the verdict for the level needed: 0, 1, 2, 3, 4 as above,
+from the newest run of that commit in this project.
+**And** a commit with no run in this project exits 5 and says so, and a REV git
+can't resolve exits 64 and says so.
+*Note:* runs are the project's own: the same SHA run in another project is not
+this project's run.
+
+### 9.3 `fun-ci status --json` gives the same facts to a program
+**Given** the run of 9.2
+**When** `fun-ci status --json` runs
+**Then** stdout is one JSON document: `schema` 1, `commit` (`sha`, `branch`,
+`subject`), `need`, `verdict` (`passed`, `failed`, `over_budget`,
+`undecided`, `superseded`, `unknown`), `stages` (each `name`, `state`,
+`seconds`, and `failures` when the stage reported some) and `superseded_by`
+(the newer commit's SHA, or null). The exit code is the same as without
+`--json`.
+
+### 9.4 `fun-ci runs` lists the project's recent runs
+**Given** a project with runs on two branches, and another project's runs
+**When** `fun-ci runs [-n N] [--branch NAME] [--json]` runs in it
+**Then** it prints one line per run of this project, newest first: short SHA,
+branch, age, each stage's outcome, subject; at most N (10 by default), only
+on NAME when given
+**And** `--json` prints a JSON array of the status document of 9.3 for each.
+
+### 9.5 A failed stage keeps the end of its output
+**Given** a stage that fails, or overruns its budget, after printing more
+than 200 lines, with colour codes
+**When** the run finishes
+**Then** the stage's last 200 lines (at most 64 KB), colour codes stripped,
+are kept with it; the slow suite's too
+**And** an overrun keeps what the stage printed before it was killed
+**And** a passing stage keeps nothing, and a new run drops the kept output of
+the project's runs older than its 50 newest.
+*Bites:* today an overrun's output is discarded and the slow suite's is never
+read.
+
+### 9.6 `status` shows why a needed stage failed
+**Given** a run whose fast suite failed
+**When** `fun-ci status` runs
+**Then** after the stage lines comes `fast failed:` and the evidence: each
+reported failure (9.7) as `file:line  test` and the first 5 lines of its
+message, at most 10 failures; or, with no report, the last 20 kept lines.
+
+### 9.7 A stage's test reports name its failures
+**Given** a stage that writes JUnit XML (`*.xml`) or fun-ci's JSON
+(`*.json`: `{"failures": [{"file", "line", "test", "message"}]}`) into the
+empty directory `FUN_CI_REPORT` names
+**When** the stage fails
+**Then** its failures (file, line, test, message) are kept with it and shown by
+`status` (9.6) and `status --json` (9.3)
+**And** a report that can't be read is ignored, and the kept output shown
+instead.
+
+### 9.8 `fun-ci init` writes stage scripts that report for Gradle and Maven
+**Given** a Gradle or Maven project
+**When** `fun-ci init` runs
+**Then** its fast and slow scripts copy the build's JUnit XML reports into
+`FUN_CI_REPORT` when it is set, and still exit with the build's own status.
+
+### 9.9 `fun-ci wait` waits for the level it needs
+**Given** a run still going
+**When** `fun-ci wait [REV] [--need LEVEL]` runs
+**Then** it returns as soon as the level is decided, printing what `status`
+prints, with its exit code: all needed stages passed, or the first needed
+stage that failed or overran
+**And** a stage the level doesn't need neither holds it up nor changes its
+verdict.
+
+### 9.10 `wait --within` gives up at the agent's deadline
+**Given** a run whose needed stages are still going
+**When** `fun-ci wait --within DURATION` runs (`30`, `30s`, `5m`)
+**Then** after DURATION it returns 3 and prints what it knows so far.
+
+### 9.11 `wait` starts a run for a commit that has none
+**Given** a commit with no run in this project
+**When** `fun-ci wait REV` runs
+**Then** it starts the pipeline for that commit in the background, as the
+post-commit hook does, and waits on it.
+
+### 9.12 A run is only superseded by a newer commit nobody is waiting past
+**Given** an unfinished run
+**When** a pipeline starts for a newer commit on the same branch
+**Then** the run is cancelled unless an agent is waiting on it, and a run for
+the same commit is never cancelled
+**And** `wait` on a cancelled run returns 4 and names the newer commit, and
+`wait --follow-branch` moves on to the newest run on the branch and says so.
+*Note:* a waiter marks the run each time it polls; a run marked in the last
+10 seconds counts as waited on.
+
+### 9.13 The pre-push hook waits for the fast verdict of what is pushed
+**Given** hooks installed
+**When** a push runs its pre-push hook
+**Then** the hook runs `fun-ci wait SHA --need fast` for each commit git says
+it is pushing, and the push stops if any is not 0
+**And** a commit whose post-commit run has finished returns at once.
+
+### 9.14 The post-commit hook says how to get the verdict
+**Given** hooks installed in a project fun-ci is set up for
+**When** a commit is made
+**Then** its output ends with
+`fun-ci: testing <sha7>. Verdict: fun-ci wait <sha7> --need all`
+**And** nothing is printed when the project isn't set up and no run starts.
+
+### 9.15 `fun-ci init` tells agents what to do after a commit
+**Given** a project with `AGENTS.md`, only `CLAUDE.md`, or neither
+**When** `fun-ci init` runs
+**Then** `AGENTS.md` (or `CLAUDE.md` when it is the only one) gains a short
+fun-ci section: after each commit, run the `fun-ci wait` command it prints, in
+the background; `AGENTS.md` is created when neither exists
+**And** running it again adds nothing.
+
+### 9.16 `fun-ci events` prints what happens as JSON lines
+**Given** runs of this project going
+**When** `fun-ci events [--follow] [--only failures]` runs
+**Then** it prints one JSON line (`schema` 1, `event`, `commit`, `branch`,
+and `stage`, `state`, `seconds` for a stage) for each run started, stage
+finished, run finished and run superseded: the project's last 10 runs' events,
+then, with `--follow`, each new one as it happens
+**And** `--only failures` prints only failed or over-budget stages and
+superseded runs.

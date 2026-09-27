@@ -69,3 +69,19 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-8.2: A busy database doesn't stop the pipeline, and says so
 - [x] AT-8.3: A slow suite that dies is recorded failed
 - [x] AT-8.4: An unwritable database is reported with its path
+- [ ] AT-9.1: The database lives in a per-user state directory
+- [ ] AT-9.2: `fun-ci status` says where a commit's run stands
+- [ ] AT-9.3: `fun-ci status --json` gives the same facts to a program
+- [ ] AT-9.4: `fun-ci runs` lists the project's recent runs
+- [ ] AT-9.5: A failed stage keeps the end of its output
+- [ ] AT-9.6: `status` shows why a needed stage failed
+- [ ] AT-9.7: A stage's test reports name its failures
+- [ ] AT-9.8: `fun-ci init` writes stage scripts that report for Gradle and Maven
+- [ ] AT-9.9: `fun-ci wait` waits for the level it needs
+- [ ] AT-9.10: `wait --within` gives up at the agent's deadline
+- [ ] AT-9.11: `wait` starts a run for a commit that has none
+- [ ] AT-9.12: A run is only superseded by a newer commit nobody is waiting past
+- [ ] AT-9.13: The pre-push hook waits for the fast verdict of what is pushed
+- [ ] AT-9.14: The post-commit hook says how to get the verdict
+- [ ] AT-9.15: `fun-ci init` tells agents what to do after a commit
+- [ ] AT-9.16: `fun-ci events` prints what happens as JSON lines
