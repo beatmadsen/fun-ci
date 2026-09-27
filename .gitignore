@@ -27,7 +27,6 @@
 *.swp
 *.swo
 *~
-ralph/log.tsv
 
 # Claude Code agent worktrees
 /.claude/worktrees/

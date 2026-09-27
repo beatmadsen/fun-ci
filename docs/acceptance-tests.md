@@ -1,12 +1,12 @@
 # fun-ci acceptance tests
 
-The requirements, as acceptance tests, numbered like agent-tome's. The build
-loop implements them one per iteration, in the order of
-`ralph/build/progress.md`, which also says which are done. §0 to §5 and §7 to
-§9 are built; they stay here because the tests that hold them cite them by
-number. §6 and §10 are to build. An outline item is refined into
-full Given/When/Then before it is built, as its own commit to this file. What
-fun-ci is for is in [`design.md`](design.md).
+The requirements, as acceptance tests, numbered like agent-tome's. They are
+built one at a time, in the order of their numbers, and each is committed with
+its number at the start of the subject, so `git log --grep 'AT-10\.'` shows
+which of a section are built. §6 and §10 are still to build; the built
+sections stay here because the tests that hold them cite them by number. An
+outline item is refined into full Given/When/Then before it is built, as its
+own commit to this file. What fun-ci is for is in [`design.md`](design.md).
 
 Where a test says "the gate", it means `bundle exec rake` (default task).
 
@@ -73,7 +73,7 @@ constructors this item redesigns, and fixing the tests twice would be waste.
 
 ### 0.8 The gem ships exactly the tracked runtime files
 **Given** the gemspec
-**Then** `spec.files` comes from `git ls-files` minus `test/`, `features/`, `docs/`, `ralph/`, `contract/`, dotfiles, CLAUDE.md, and a test asserts no such path is in `spec.files`.
+**Then** `spec.files` is the files git tracks under `lib/` and `exe/`, plus README, CHANGELOG and LICENSE, and a test asserts nothing else is in it.
 
 ### 0.9 CLAUDE.md is written as Invariants and Gotchas
 **Then** CLAUDE.md has sections Stack, Layout, Invariants, Gotchas; every invariant names the test that enforces it, and a test fails if a named test file doesn't exist.
@@ -228,11 +228,11 @@ is possible.
 - 5.3b Ruby `tui/` rendering classes and `animations/` are deleted, once 5.2 and 5.3 leave nothing that drives them (the golden corpus capture and the Cucumber features do until then).
 - 5.4 README, CHANGELOG, version 2.0.0.
 
-## 6. Polish loop (outline; see architecture.md, "Building fun-ci with agents")
+## 6. Polish loop (outline; see architecture.md, "Polishing the console with agents")
 
 - 6.1 Objective visual gates from `stats.json` and `frames/` in `rake`, including "consecutive animation frames differ" and "every PNG decodes at the expected size". Bites shown for each.
 - 6.2 `docs/tui-rubric.md`, derived from `design.md` and separating state feedback from decoration, with optional reference screenshots in `docs/tui-references/`.
-- 6.3 `ralph/polish/` evaluator prompt: reads ordered PNG frames (never a GIF), the contact sheet, `stats.json` and the rubric; every finding names a scenario and a frame range or region.
+- 6.3 Evaluator prompt: reads ordered PNG frames (never a GIF), the contact sheet, `stats.json` and the rubric; every finding names a scenario and a frame range or region.
 - 6.4 Iterator prompt: one-parameter sweeps rendered as labelled candidates, edits limited to the values the finding concerns, `needs-design` when no parameter can fix it.
 - 6.5 `rake polish:approve`, run by a human after viewing the change in a real terminal.
 

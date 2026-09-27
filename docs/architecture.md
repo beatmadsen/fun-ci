@@ -2,7 +2,7 @@
 
 How fun-ci is built and why: the split between the gem and the renderer, how
 the renderer draws, how it is distributed, how pipelines are isolated, the
-quality standards, and the agents that build and polish it. Each decision says
+quality standards, and how agents are to polish the console. Each decision says
 what would make us revisit it. What fun-ci is for, and what the developer
 sees, is in [`design.md`](design.md).
 
@@ -15,8 +15,7 @@ fun).
 2. intent-record's test and code-quality standards apply to the whole repo.
 3. Agents build fun-ci from acceptance tests, and evaluate and iterate on the
    console and its animations.
-4. Worktree isolation per commit, both for the pipelines fun-ci runs and for
-   the agents that build fun-ci.
+4. Each pipeline runs in a worktree of its own, checked out at its commit.
 
 ## The boundary
 
@@ -224,59 +223,13 @@ suite, and a visual change is a snapshot diff a human reviews in the headless
 PNGs and accepts on purpose.
 *Revisit if* snapshots churn so often that review stops being real.
 
-## Building fun-ci with agents
+## Polishing the console with agents
 
-Two loops share one mechanism:
-
-| Loop | Goal | Unit of work | Input | Stop |
-|---|---|---|---|---|
-| **build** (`ralph/build/`) | Implement the acceptance tests | One acceptance test (`AT-x.y`) | `acceptance-tests.md`, `ralph/build/progress.md` | `ralph/build/DONE` |
-| **polish** (`ralph/polish/`, planned in §6 of the acceptance tests) | Make the console and animations good | One finding | Headless renders and a rubric | No open findings above threshold, or an iteration budget |
-
-Both run under Ralphify with `ralph/agent-in-worktree.sh` as the agent command.
-
-### One iteration, one worktree
-
-`ralph/agent-in-worktree.sh` receives the rendered prompt on stdin and:
-
-1. Creates `../<repo>.ralph/iter-<n>` as a new worktree on a fresh branch
-   `ralph/iter-<n>`, starting from the integration branch (`RALPH_BASE`,
-   default: the branch checked out in the main worktree).
-2. Runs the agent (`RALPH_AGENT`, default
-   `claude -p --dangerously-skip-permissions`) inside that worktree with the
-   prompt on stdin.
-3. Refuses the iteration unless the agent made exactly one commit.
-4. Runs the gate itself (`RALPH_GATE`, default `bundle exec rake`) inside the
-   worktree. The agent's own claim that tests pass is not trusted.
-5. Green: `git merge --ff-only` into the integration branch. Red or no commit:
-   the branch is kept as `ralph/rejected/iter-<n>` and nothing lands.
-6. Removes the worktree and appends one line to `ralph/log.tsv`
-   (`iteration  verdict  sha  subject`).
-
-The agent can wreck its worktree without touching the integration branch,
-every commit on it passed a gate the agent didn't run, and `ralph/rejected/*`
-shows where the loop struggles.
-
-A worktree isolates git state; it is not a security sandbox. The agent runs
-with skip-permissions, so the loop runs in Docker:
-
-    ralph/docker/run.sh -n 5 -t 900
-
-The container gets the host repo read-only, clones `main`, runs the loop on the
-clone as a non-root user, and hands back a git bundle. It has no git
-credentials, so it can't push. `run.sh` fetches the result into
-`ralph/incoming` (and any `ralph/rejected/*` branches) without touching `main`;
-a human reviews and runs `git merge --ff-only ralph/incoming`, rebasing first if
-`main` moved. The container still has outbound network, and its commits are
-unsigned. It needs a Claude Code token from `claude setup-token` in
-`~/.config/fun-ci-ralph/oauth-token`.
-
-The build loop's rules are in `ralph/build/RALPH.md`, the prompt each
-iteration gets: the next unchecked item in `progress.md`, acceptance test red
-first, exactly one commit, and after every ten items one refactor iteration
-with no new behaviour.
-
-### The polish loop
+Planned in §6 of the acceptance tests: a loop whose unit of work is one
+finding about the console or its animations, taken from headless renders and
+a rubric, which stops when no open finding is above a threshold. It has two
+agent prompts, an evaluator that finds and an iterator that fixes, and a
+human who approves.
 
 **Decision: the evaluator sees ordered PNG frames, never a GIF.** Claude's
 vision input uses only the first frame of an animated image, so a GIF would let

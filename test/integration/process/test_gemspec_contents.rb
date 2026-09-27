@@ -11,7 +11,7 @@ class TestGemspecContents < Minitest::Test
   ROOT = File.expand_path("../../..", __dir__)
   SPEC = GemspecProbe.load(File.join(ROOT, "fun_ci.gemspec"))
   DOCUMENTS = %w[CHANGELOG.md LICENSE.txt README.md].freeze
-  NOT_RUNTIME = %r{\A(test|features|docs|ralph|contract|script|renderer)/|\A\.|\ACLAUDE\.md\z}
+  NOT_RUNTIME = %r{\A(test|features|docs|contract|script|renderer)/|\A\.|\ACLAUDE\.md\z}
 
   def test_ships_no_tests_docs_tooling_or_dotfiles
     assert_empty SPEC["files"].grep(NOT_RUNTIME)
