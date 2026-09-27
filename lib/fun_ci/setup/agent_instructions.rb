@@ -1,0 +1,31 @@
+# frozen_string_literal: true
+
+module FunCi
+  module Setup
+    # What `fun-ci init` tells a coding agent working in the project, in the
+    # instructions file agents read (acceptance-tests.md, AT-9.15): AGENTS.md,
+    # or CLAUDE.md when that is the only one. The marker keeps it to once.
+    module AgentInstructions
+      MARKER = "<!-- fun-ci: agent instructions -->"
+      SECTION = <<~MD.freeze
+        ## fun-ci
+
+        #{MARKER}
+        This project runs fun-ci on every commit. After each commit, run the
+        `fun-ci wait` command it prints, in the background, and act on its exit
+        code: 0 passed, 1 failed, 2 over budget, 3 undecided, 4 superseded.
+        `fun-ci wait --need all` must exit 0 before the work is called done.
+        `fun-ci runs` lists recent runs, and `fun-ci status` says where one stands.
+      MD
+
+      def self.file_for(names) = names.include?("CLAUDE.md") && !names.include?("AGENTS.md") ? "CLAUDE.md" : "AGENTS.md"
+
+      # The text with the section added, or nil when it has it already.
+      def self.merged(text)
+        return nil if text.include?(MARKER)
+
+        text.strip.empty? ? SECTION : "#{text.rstrip}\n\n#{SECTION}"
+      end
+    end
+  end
+end

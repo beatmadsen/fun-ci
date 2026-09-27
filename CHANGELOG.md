@@ -56,6 +56,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   JSON files. The animations are code in the renderer now.
 
 ### Added
+- `fun-ci init` adds a short fun-ci section to the project's `AGENTS.md`,
+  or to `CLAUDE.md` when that is the only one, creating `AGENTS.md` when
+  there is neither: after each commit, run the `fun-ci wait` command the
+  commit prints, in the background. It adds it once, and also to a
+  project that already has `.fun-ci/`.
 - `fun-ci wait [REV]` waits for a commit's verdict and exits with it, as
   `status` would say it: it returns as soon as the stages `--need` names
   have passed, or at the first of them to fail or overrun. `--within 30s`

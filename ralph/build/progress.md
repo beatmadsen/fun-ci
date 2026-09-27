@@ -83,5 +83,5 @@ refactor iteration (no new behaviour) — record it as `- [x] R<n>: <summary>`.
 - [x] AT-9.12: A run is only superseded by a newer commit nobody is waiting past
 - [x] AT-9.13: The pre-push hook waits for the fast verdict of what is pushed
 - [x] AT-9.14: The post-commit hook says how to get the verdict
-- [ ] AT-9.15: `fun-ci init` tells agents what to do after a commit
+- [x] AT-9.15: `fun-ci init` tells agents what to do after a commit
 - [ ] AT-9.16: `fun-ci events` prints what happens as JSON lines

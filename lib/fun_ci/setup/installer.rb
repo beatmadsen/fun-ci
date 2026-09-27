@@ -3,6 +3,7 @@
 require_relative "project_detector"
 require_relative "template_writer"
 require_relative "maven_linter_detector"
+require_relative "agent_instructions"
 
 module FunCi
   module Setup
@@ -16,8 +17,17 @@ module FunCi
         @stdout = stdout
       end
 
+      # A project set up for fun-ci, new or not, also tells agents what to do.
       def run
-        return report(".fun-ci/ already exists, so init did nothing.", 0) if initialised?
+        code = set_up
+        tell_agents if code.zero?
+        code
+      end
+
+      private
+
+      def set_up
+        return report(".fun-ci/ already exists, so init left it as it is.", 0) if initialised?
 
         detected = ProjectDetector.new(Dir.children(@project_root)).detect
         return report("Could not detect project type. Create .fun-ci/ manually.", 1) if detected == :unknown
@@ -25,7 +35,15 @@ module FunCi
         write_templates(detected)
       end
 
-      private
+      def tell_agents
+        file = AgentInstructions.file_for(Dir.children(@project_root))
+        path = File.join(@project_root, file)
+        merged = AgentInstructions.merged(File.exist?(path) ? File.read(path) : "")
+        return unless merged
+
+        File.write(path, merged)
+        @stdout.puts "Told agents what to do after a commit, in #{file}."
+      end
 
       def initialised?
         Dir.exist?(File.join(@project_root, ".fun-ci"))
