@@ -2,7 +2,7 @@
 
 require_relative "../../test_helper"
 require_relative "../../support/process_deadline"
-require_relative "../../support/process_state"
+require_relative "../../support/lifeline"
 require_relative "../../support/fifo"
 require "tmpdir"
 require "fun_ci/persistence/database"
@@ -23,16 +23,19 @@ class TestRunCancellerProcesses < Minitest::Test
     setup_test_db
     recorder = FunCi::Persistence::DbRecorder.new(@db)
     run_id = recorder.create_run(commit_hash: "abc1234", branch: "main", project_path: "/project")
-    stage, @child = start_stage_group(recorder)
+    stage = start_stage_group(recorder)
     slow = start_slow_suite(run_id)
     FunCi::Persistence::ActiveRuns.with_id(@db, run_id).each { |run| FunCi::Pipeline::RunCanceller.new.cancel(@db, run) }
     @slow_status = within_deadline { Process.wait(stage) && Process.wait2(slow).last }
   end
 
-  def teardown = teardown_test_db
+  def teardown
+    @lifeline.close
+    teardown_test_db
+  end
 
   def test_should_stop_a_process_a_stage_started
-    refute ProcessState.running?(@child)
+    assert(within_deadline { @lifeline.all_ended? })
   end
 
   def test_should_stop_the_forked_slow_suite
@@ -50,11 +53,16 @@ class TestRunCancellerProcesses < Minitest::Test
     Process.spawn("sleep", "30").tap { |pid| FunCi::Persistence::PipelineRun.store_pid(@db, run_id, pid) }
   end
 
-  # A stage whose script starts a child, in a process group of its own, as ProcessRunner starts one.
+  # A stage whose script starts a child, in a process group of its own, as
+  # ProcessRunner starts one; both hold the lifeline. The child outlives any
+  # deadline unless it is killed.
   def start_stage_group(recorder)
+    @lifeline = Lifeline.new(@dir)
     started = File.join(@dir, "started").tap { |fifo| File.mkfifo(fifo) }
-    pid = Process.spawn("sh", "-c", "sleep 30 & echo $! > #{started}; wait", pgroup: true, %i[out err] => File::NULL)
+    script = "#{@lifeline.hold}; sleep 300 & echo $! > #{started}; wait"
+    pid = Process.spawn("sh", "-c", script, pgroup: true, %i[out err] => File::NULL)
     recorder.stage_process(recorder.start_stage("fast"), pid)
-    [pid, Fifo.read(started).to_i]
+    Fifo.read(started)
+    pid
   end
 end

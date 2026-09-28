@@ -2,7 +2,7 @@
 
 require_relative "../../test_helper"
 require_relative "../../support/process_deadline"
-require_relative "../../support/process_state"
+require_relative "../../support/lifeline"
 require "tmpdir"
 require "fun_ci/evidence/command_runner"
 
@@ -34,9 +34,12 @@ class TestEvidenceCommandRunner < Minitest::Test
   end
 
   def test_should_kill_what_the_command_started
-    ran("sleep 30 & echo $! > child.pid; wait", seconds: 0.2)
+    lifeline = Lifeline.new(@dir)
+    ran("#{lifeline.hold}; sleep 300 & wait", seconds: 0.2)
 
-    refute ProcessState.running?(File.read(File.join(@dir, "child.pid")).to_i)
+    assert(within_deadline { lifeline.all_ended? })
+  ensure
+    lifeline.close
   end
 
   def test_should_kill_a_command_that_prints_more_than_its_limit
