@@ -18,7 +18,10 @@ module FunCi
         Process.detach(pid)
       end
 
+      # Trigger requires this file, through TriggerCommand, so it is loaded
+      # here, where it is used, rather than above.
       def self.run_in_child(commit_hash:, branch:, db_path:)
+        require_relative "trigger"
         recorder = Persistence::DbRecorder.new(Persistence::Database.connection(db_path))
         trigger = trigger(commit_hash, branch, recorder)
         trigger.run
