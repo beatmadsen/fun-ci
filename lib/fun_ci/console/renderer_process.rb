@@ -25,6 +25,8 @@ module FunCi
         @output = output
       end
 
+      def pid = @waiter.pid
+
       def write(message) = @input.puts(JSON.generate(message))
 
       # The renderer's next line, or nil once it has closed its output.
