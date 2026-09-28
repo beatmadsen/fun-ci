@@ -7,7 +7,6 @@ module FunCi
       def initialize(open, size)
         @open = open
         @size = size
-        @io = nil
         @closed = false
       end
 

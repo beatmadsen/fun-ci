@@ -49,9 +49,9 @@ module FunCi
         def self.from_row(name, job)
           return new(name: name, state: "waiting", seconds: nil) unless job
 
-          exit = Exit.new(exit_status: job[:exit_status], signal: job[:signal], budget: job[:budget])
+          ended = Exit.new(exit_status: job[:exit_status], signal: job[:signal], budget: job[:budget])
           new(name: name, state: STATES.fetch(job[:status], job[:status]), seconds: seconds(job), id: job[:id],
-              kept: kept(job), exit: exit)
+              kept: kept(job), exit: ended)
         end
 
         def self.kept(job)

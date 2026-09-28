@@ -11,7 +11,6 @@ module FunCi
         @reader = reader
         @limit = limit
         @stop = stop
-        @thread = nil
       end
 
       def begin = @thread = Thread.new { read(+"".b) }

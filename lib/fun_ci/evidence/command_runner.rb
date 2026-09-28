@@ -66,7 +66,7 @@ module FunCi
       def ignoring_gone
         yield
       rescue Errno::ESRCH, Errno::EPERM
-        nil
+        # The group has gone, or what is left of it is no longer ours.
       end
 
       def text(bytes) = bytes.force_encoding(Encoding::UTF_8).scrub("?")

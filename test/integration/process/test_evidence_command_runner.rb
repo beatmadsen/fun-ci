@@ -42,6 +42,18 @@ class TestEvidenceCommandRunner < Minitest::Test
     lifeline.close
   end
 
+  # What the command started may print after the command itself has ended.
+  def test_should_keep_what_the_command_s_children_print_within_the_drain
+    assert_equal "early\nlate\n", ran("(sleep 0.2; echo late) & echo early", drain: 10).stdout
+  end
+
+  def test_should_not_wait_out_the_drain_once_everything_the_command_started_has_ended
+    started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    ran("echo done", drain: 10)
+
+    assert_operator Process.clock_gettime(Process::CLOCK_MONOTONIC) - started, :<, 5
+  end
+
   def test_should_kill_a_command_that_prints_more_than_its_limit
     assert_equal :overflow, ran("yes", limit: 1000).killed
   end
@@ -69,8 +81,8 @@ class TestEvidenceCommandRunner < Minitest::Test
 
   private
 
-  def ran(command, seconds: 10, limit: 262_144)
-    limits = FunCi::Evidence::CommandRunner::Limits.new(bytes: limit, drain: 0.2)
+  def ran(command, seconds: 10, limit: 262_144, drain: 0.2)
+    limits = FunCi::Evidence::CommandRunner::Limits.new(bytes: limit, drain: drain)
     runner = FunCi::Evidence::CommandRunner.new(dir: @dir, env: {}, scratch: @dir, limits: limits)
     within_deadline { runner.call(command, stdin: "context\n", seconds: seconds) }
   end

@@ -11,7 +11,8 @@ module FunCi
     class Extraction
       # parts: [[name, findings], ...] in order; chosen: [{ extractor:, because: }].
       Result = Data.define(:parts, :problems, :chosen)
-      Attempt = Data.define(:name, :findings, :because, :problem)
+      # An entry that ran; one that didn't is a problem, { extractor:, message: }.
+      Ran = Data.define(:name, :findings, :because)
 
       def initialize(context, budget)
         @context = context
@@ -20,9 +21,8 @@ module FunCi
 
       # raw_entries: [[raw entry, why it was chosen], ...]
       def run(raw_entries)
-        attempts = raw_entries.map { |raw, because| attempt(raw, because) }
-        ran = attempts.reject(&:problem)
-        Result.new(parts: ran.map { |done| [done.name, done.findings] }, problems: attempts.filter_map(&:problem),
+        ran, problems = raw_entries.map { |raw, because| attempt(raw, because) }.partition { |done| done.is_a?(Ran) }
+        Result.new(parts: ran.map { |done| [done.name, done.findings] }, problems: problems,
                    chosen: ran.map { |done| { extractor: done.name, because: done.because } })
       end
 
@@ -39,16 +39,14 @@ module FunCi
 
       # Whatever an extractor raises is a problem, never the end of the evidence.
       def ran(entry, because)
-        Attempt.new(name: entry.name, findings: entry.extractor.extract(@context), because: because, problem: nil)
+        Ran.new(name: entry.name, findings: entry.extractor.extract(@context), because: because)
       rescue Problem => e
         failed(entry.name, e.message)
       rescue StandardError => e
         failed(entry.name, "#{e.class}: #{e.message}")
       end
 
-      def failed(name, message)
-        Attempt.new(name: name, findings: nil, because: nil, problem: { extractor: name, message: message })
-      end
+      def failed(name, message) = { extractor: name, message: message }
 
       def label(raw) = raw.is_a?(Hash) ? raw["use"] || "run:#{raw["run"]}" : raw.to_s
     end

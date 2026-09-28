@@ -60,6 +60,26 @@ class TestOutputWindow < Minitest::Test
     assert(opened.all?(&:closed?))
   end
 
+  # A stage's window writes files in its directory, so one that printed
+  # nothing leaves none.
+  def test_should_open_nothing_for_a_stage_that_printed_nothing
+    opened = []
+    WINDOW.new(->(name) { StringIO.new(+"").tap { opened << name } }, SIZES).text
+
+    assert_empty opened
+  end
+
+  def test_should_open_nothing_for_an_empty_write
+    opened = []
+    (WINDOW.new(->(name) { StringIO.new(+"").tap { opened << name } }, SIZES) << "").text
+
+    assert_empty opened
+  end
+
+  def test_should_not_say_it_is_closed_before_it_is
+    refute_predicate window("one\n"), :closed?
+  end
+
   private
 
   def window(*chunks)

@@ -41,9 +41,11 @@ module FunCi
         @filled = 0
       end
 
+      # The earlier segment is full once the tail has wrapped; before that,
+      # nothing came earlier.
       def earlier(count)
         io = segments.first
-        return +"".b if count.zero? || io.size < count
+        return +"".b if count.zero? || io.size < @size
 
         io.seek(io.size - count)
         io.read(count)

@@ -33,7 +33,7 @@ module FunCi
           Persistence::RunStatus.settle(db, run_id)
         end
       rescue SQLite3::BusyException, *Persistence::WriteTrouble::UNWRITABLE
-        nil
+        # The next poll looks again.
       end
 
       def stop(run)
@@ -68,7 +68,7 @@ module FunCi
       def kill(pid)
         @killer.call("KILL", pid)
       rescue Errno::ESRCH
-        nil
+        # Gone already.
       end
     end
   end

@@ -56,7 +56,7 @@ module FunCi
 
       def stage_list(stage)
         stages = value("stages")
-        list = stages.is_a?(Hash) ? stages[stage] : nil
+        list = stages[stage] if stages.is_a?(Hash)
         list.is_a?(Array) ? list : []
       end
     end
