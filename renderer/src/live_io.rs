@@ -2,7 +2,7 @@
 //! lines, the terminal's keys and its size changes (SIGWINCH) into one
 //! channel, which the session waits on with a timeout for the next frame.
 
-use std::io::{self, BufRead, Read};
+use std::io::{self, BufRead, Read, Write};
 use std::path::PathBuf;
 use std::sync::mpsc::{Receiver, RecvTimeoutError, Sender};
 use std::thread;
@@ -36,10 +36,15 @@ impl Inputs for ChannelInputs {
     }
 }
 
-/// Sends each line of `input`, then `End`, from a thread of its own.
-pub fn read_lines(input: impl BufRead + Send + 'static, sender: Sender<Input>) {
+/// Sends each line of `input`, then `End`, from a thread of its own. Input
+/// that stops for any reason but its end is reported to `report`.
+pub fn read_lines(input: impl BufRead + Send + 'static, sender: Sender<Input>, mut report: impl Write + Send + 'static) {
     thread::spawn(move || {
-        for line in input.lines().map_while(Result::ok) {
+        for line in input.lines() {
+            let Ok(line) = line.map_err(|error| tell(&mut report, &format!("stopped reading Ruby's input: {error}")))
+            else {
+                break;
+            };
             if sender.send(Input::Line(line)).is_err() {
                 return;
             }
@@ -91,7 +96,7 @@ impl Terminal for LiveTty {
 
     fn enter(&mut self) -> io::Result<()> {
         self.tty.enter()?;
-        send_keys(tty::keyboard()?, self.sender.clone());
+        send_keys(tty::keyboard()?, self.sender.clone(), io::stderr());
         send_resizes(Signals::new([SIGWINCH])?, self.sender.clone());
         Ok(())
     }
@@ -105,14 +110,21 @@ impl Terminal for LiveTty {
     }
 }
 
-fn send_keys(mut keyboard: impl Read + Send + 'static, sender: Sender<Input>) {
+/// Sends each read from `keyboard` as keys, from a thread of its own, until
+/// the session hangs up; a keyboard that fails or closes first is reported
+/// to `report`, since no key reaches Ruby after it.
+pub fn send_keys(mut keyboard: impl Read + Send + 'static, sender: Sender<Input>, mut report: impl Write + Send + 'static) {
     thread::spawn(move || {
         let mut chunk = [0; 64];
-        while let Ok(read @ 1..) = keyboard.read(&mut chunk) {
-            if sender.send(Input::Keys(chunk[..read].to_vec())).is_err() {
-                return;
+        let stopped = loop {
+            match keyboard.read(&mut chunk) {
+                Ok(0) => break "it closed".to_string(),
+                Ok(read) if sender.send(Input::Keys(chunk[..read].to_vec())).is_ok() => {}
+                Ok(_) => return,
+                Err(error) => break error.to_string(),
             }
-        }
+        };
+        tell(&mut report, &format!("the keyboard stopped: {stopped}"));
     });
 }
 
@@ -125,4 +137,8 @@ fn send_resizes(mut signals: Signals, sender: Sender<Input>) {
             }
         }
     });
+}
+
+fn tell(report: &mut impl Write, what: &str) {
+    let _ = writeln!(report, "fun-ci-renderer: {what}");
 }

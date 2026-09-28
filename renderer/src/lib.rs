@@ -23,6 +23,7 @@ pub mod scenario;
 pub mod scenes;
 pub mod screen;
 pub mod session;
+pub mod slow_draws;
 pub mod spinner;
 pub mod terminal;
 pub mod tty;

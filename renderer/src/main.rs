@@ -17,6 +17,7 @@ use fun_ci_renderer::console::Console;
 use fun_ci_renderer::headless;
 use fun_ci_renderer::live_io::{ChannelInputs, LiveTty, WallClock, read_lines};
 use fun_ci_renderer::session::{Session, on_terminate, run_live};
+use fun_ci_renderer::slow_draws::SlowDraws;
 use fun_ci_renderer::tty::restore_controlling_terminal;
 
 fn main() {
@@ -37,9 +38,9 @@ fn live(tty: PathBuf, depth: Depth) -> i32 {
         Err(error) => eprintln!("fun-ci-renderer: signals will not restore the terminal: {error}"),
     }
     let (sender, receiver) = mpsc::channel();
-    read_lines(BufReader::new(io::stdin()), sender.clone());
+    read_lines(BufReader::new(io::stdin()), sender.clone(), io::stderr());
     let session = Session { inputs: ChannelInputs::new(receiver), output: io::stdout().lock(), clock: WallClock::start(), console: console(depth) };
-    run_live(session, &mut LiveTty::new(tty, sender))
+    run_live(session, &mut SlowDraws::new(LiveTty::new(tty, sender), WallClock::start(), io::stderr()))
 }
 
 fn console(depth: Depth) -> Console {

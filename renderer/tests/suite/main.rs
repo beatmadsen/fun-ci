@@ -35,6 +35,7 @@ mod lamp;
 mod live;
 mod live_binary;
 mod live_keys;
+mod live_reports;
 mod protocol_version;
 mod restore;
 mod resting;
