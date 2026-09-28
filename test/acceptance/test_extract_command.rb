@@ -94,6 +94,12 @@ class TestExtractCommand < Minitest::Test
     assert_includes JSON.parse(@stdout.string).dig("evidence", "facts").map { |f| f["name"] }, "failures not kept"
   end
 
+  def test_should_say_no_more_than_that_a_stage_it_is_told_timed_out_ran_over_budget
+    extract("fast", "--output", "failing-run.log", "--timed-out")
+
+    assert_equal "fast ran over budget", @stdout.string.lines.first.chomp
+  end
+
   def test_should_start_with_how_the_stage_ended
     extract("fast", "--output", "failing-run.log", "--exit", "2")
 

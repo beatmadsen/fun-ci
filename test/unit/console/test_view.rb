@@ -73,7 +73,7 @@ class TestView < Minitest::Test
   end
 
   def test_should_say_there_are_none_when_the_page_ends_at_the_last_run
-    @view.resize(40)
+    @view.resize(28)
 
     refute page[:has_more]
   end
