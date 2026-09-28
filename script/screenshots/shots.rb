@@ -37,7 +37,6 @@ module Screenshots
       "build-gears" => [BUILD, 16, %w[build_passed gears]],
       "fast-yay" => [FAST, 22, %w[fast_passed yay]],
       "run-sunrise" => [PASSED, 36, %w[run_passed sunrise]],
-      "failed-shatter" => [FAILED, 18, %w[run_failed shatter]],
       "rest-passed" => [PASSED, 10, nil],
       "rest-failed" => [ENDED_FAILED, 10, nil]
     }.freeze
@@ -45,8 +44,7 @@ module Screenshots
     # enough ago for the header to have gone quiet.
     QUIET = {
       "quiet-fireplace" => [PASSED, "fireplace"],
-      "quiet-island" => [ENDED_FAILED, "island"],
-      "quiet-snowfall" => [PASSED, "snowfall"]
+      "quiet-island" => [ENDED_FAILED, "island"]
     }.freeze
 
     def self.all

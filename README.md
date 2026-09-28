@@ -1,24 +1,17 @@
 # Fun-CI
 
-Opinionated local CI that checks your code before it leaves your machine. Runs a four-stage pipeline on every commit with strict time budgets, so your feedback loop stays fast.
+Opinionated local CI that checks your code before it leaves your machine. Every commit runs lint, build, a fast suite and a slow suite on your own computer, each held to a strict time budget, so the feedback stays fast.
 
-Fun-CI has two goals. It should be extremely easy to tell whether all is well: the console is meant to sit on a second screen, where colour and motion tell you at a glance what passed and what didn't, without reading a line. And it should be fun: a pass gets a celebration, a failure gets an explosion. The design behind both is in [docs/design.md](docs/design.md).
+![The fun-ci console following a run: a rocket while it runs, then a scene as lint, the build, the fast suite and the whole run pass](docs/screenshots/console.png)
 
-## How It Works
+Fun-CI has two goals. It should be extremely easy to tell whether all is well, and it should be fun. The design behind both is in [docs/design.md](docs/design.md).
 
-Fun-CI hooks into git and runs your pipeline locally:
+There are two ways to use it, and both read the same results:
 
-1. **Lint + Build** (parallel, 30s budget each) -- static analysis and compilation
-2. **Slow suite** (spawned in background, 5min budget) -- integration/end-to-end tests
-3. **Fast suite** (synchronous, 10s budget) -- unit tests
+- **You watch.** `fun-ci console` sits on a second screen. Colour and motion tell you from the corner of your eye that lint passed, the build passed, the fast suite passed, or that something failed and you should look closer. A pass gets a celebration, a failure gets an explosion.
+- **Your agent asks.** A coding agent can't glance at a screen, so it runs commands. `fun-ci wait` blocks until a commit's verdict is in and exits with it, and `fun-ci why` prints everything fun-ci kept about a failure, so the agent never has to rerun a suite to find out what broke.
 
-After each commit (**post-commit**), the entire pipeline forks to the background so your commit is not blocked. On **pre-push**, lint, build and the fast suite of each commit you push must have passed before the push proceeds; a commit whose run has finished goes straight through. The slow suite always runs in the background.
-
-Results are stored in a SQLite database in `~/.local/state/fun-ci/` (or `$XDG_STATE_HOME/fun-ci/`). A terminal dashboard lets you monitor pipeline status across branches, and a coding agent can ask for the same results from the command line.
-
-Each pipeline runs in a git worktree of its own under `.git/fun-ci/worktrees/`, checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. Two pipelines run at once; set `worktree_slots: 3` in `.fun-ci/config` for more. `fun-ci prune` removes the worktrees when you want the space back.
-
-## Getting Started
+## Getting started
 
 ```bash
 gem install fun_ci
@@ -26,84 +19,155 @@ cd your-project
 fun-ci init --everything
 ```
 
-This does three things:
-1. Detects your project type and creates `.fun-ci/` with template scripts
-2. Installs post-commit and pre-push git hooks
-3. Verifies the setup is valid
+This detects your project type, writes four stage scripts into `.fun-ci/`, installs a `post-commit` and a `pre-push` git hook, and checks the setup. It also adds a short section to your `AGENTS.md` (or `CLAUDE.md`, if that is the only one) telling coding agents what to do after a commit.
 
-`fun-ci init` has built-in templates for Ruby (Bundler), JVM (Gradle Kotlin, Gradle Groovy, Maven), but Fun-CI works with any project -- just write your own shell scripts.
+`fun-ci init` has templates for Ruby (Bundler) and the JVM (Gradle Kotlin, Gradle Groovy, Maven). Fun-CI works with any project: the stages are shell scripts, so edit them to run whatever your project uses.
 
-### Manual Setup
+- `lint.sh`: linter and static analysis
+- `build.sh`: compile or build
+- `fast.sh`: the fast suite (unit tests)
+- `slow.sh`: the slow suite (integration tests)
 
-If you prefer to set things up step by step:
+Each script gets the commit hash as its first argument, its stage's name in `FUN_CI_STAGE`, and exits 0 to pass.
+
+Upgrading from 1.x? Read [Upgrading to 2.0](#upgrading-to-20) first.
+
+## How a run works
+
+| Stage | Budget | Runs | Blocks |
+|-------|--------|------|--------|
+| Lint  | 30 s   | in parallel with build | the push |
+| Build | 30 s   | in parallel with lint | the push |
+| Fast  | 10 s   | after lint and build pass | the push |
+| Slow  | 5 min  | in the background, beside the fast suite | nothing |
+
+A stage that overruns its budget is killed and reported as over budget, in yellow rather than red: a fast suite that takes 12 seconds has grown too heavy, which is a different problem from a failing test.
+
+After each commit, the `post-commit` hook starts the pipeline in the background and returns at once, so a commit is never held up. The `pre-push` hook waits for the verdict of each commit you push and stops the push if lint, build or the fast suite failed. A commit whose run has already finished goes straight through. If fun-ci isn't installed, both hooks say so and let git carry on.
+
+Each run happens in a git worktree of its own under `.git/fun-ci/worktrees/`, checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. Two runs can go at once; set `worktree_slots: 3` in `.fun-ci/config` for more, and `fun-ci prune` removes the worktrees when you want the space back. A newer commit on a branch cancels the older run that is still going, unless an agent is waiting on it.
+
+Results are kept in SQLite under `$XDG_STATE_HOME/fun-ci/` (`~/.local/state/fun-ci/` by default), shared by every project on the machine.
+
+## Watching: the console
 
 ```bash
-fun-ci init              # Create .fun-ci/ with template scripts
-fun-ci install-hooks     # Install git hooks
-fun-ci check             # Verify everything is configured
+fun-ci console
 ```
 
-Then edit the generated scripts in `.fun-ci/` to match your project:
-- `lint.sh` -- linter/static analysis
-- `build.sh` -- build/compile step
-- `fast.sh` -- fast test suite (unit tests)
-- `slow.sh` -- slow test suite (integration tests)
+The console lists your runs across branches, newest first, one row each: the commit, the branch, each stage with its time, and the outcome. Above them is a picture that tells you what is happening without reading a word.
 
-Each script receives the commit hash as its first argument.
+While a run runs, a rocket flies. Each milestone a run passes has its own set of scenes, so you can tell which one it was from across the room, and a failure has its own.
 
-## Commands
+| | |
+|---|---|
+| Lint passed: a teal sweep, a ripple or a spirit level | The build passed: amber blocks, gears or a ringing anvil |
+| ![A teal line sweeping across the header](docs/screenshots/lint-sweep.png) | ![Two amber gears turning](docs/screenshots/build-gears.png) |
+| The fast suite passed: a lightning strike, a very happy YAY or a jump to warp speed | The whole run passed: fireworks, a trophy, dancing leprechauns or a sunrise |
+| ![YAY in rainbow letters with balloons](docs/screenshots/fast-yay.png) | ![The sun rising over hills](docs/screenshots/run-sunrise.png) |
 
-```
-fun-ci trigger <commit> <branch>               Run the full pipeline
-fun-ci trigger --background <commit> <branch>  Fork pipeline to background (used by post-commit)
-fun-ci console                                 Launch the TUI dashboard
-fun-ci init                                     Scaffold .fun-ci/ for detected project type
-fun-ci init --everything                        init + install-hooks + check in one step
-fun-ci install-hooks                            Install post-commit and pre-push hooks
-fun-ci install-hooks post-commit                Install a single hook type
-fun-ci check                                    Verify .fun-ci/ setup
-fun-ci prune                                    Remove fun-ci's worktrees when no pipeline is running
-fun-ci status [commit]                          Where a commit's run stands; the verdict is the exit code
-fun-ci wait [commit]                            Wait until that verdict is decided, then exit with it
-fun-ci runs                                     This project's recent runs, newest first
-fun-ci events [--follow]                        The runs' events as JSON lines
-fun-ci why [commit] [stage]                     Everything kept about why a stage failed
-fun-ci extract <stage> --output <file>          Try a stage's extractors on a saved output
-```
+Scenes queue and each plays to its end, so a failure never cuts a celebration short, and a run gets one explosion however many of its stages fail.
 
-## For Coding Agents
+![The console after a run's fast suite failed: an explosion reading BOOM over the runs](docs/screenshots/failure.png)
 
-An agent can't watch a dashboard, so it asks fun-ci about commits and acts on exit codes. After each commit, the commit's output ends with the command that gets its verdict:
+When the scenes are done, the header rests on how the latest run went, so a glance a minute later still tells you: a calm tick after a pass, a pulsing hazard sign after a failure. The top right keeps count of the passes in a row.
+
+| | |
+|---|---|
+| ![A tick over a calm teal horizon](docs/screenshots/rest-passed.png) | ![A pulsing hazard triangle](docs/screenshots/rest-failed.png) |
+
+Five minutes after the latest run finished, the header goes quiet: a starry night, an aurora, fireflies, a fire in a medieval stone hearth while a storm rages at the window, a moonlit island with a lone palm, or snow falling on a pine forest, changing every five minutes while nothing runs. A small lamp in the corner stays green after a pass and flickers red after a failure.
+
+| | |
+|---|---|
+| ![A fire in a stone hearth, with a green lamp in the corner](docs/screenshots/quiet-fireplace.png) | ![A moonlit island with a palm, with a red lamp in the corner](docs/screenshots/quiet-island.png) |
+
+Keys:
+
+- `j` and `k`, or the arrow keys, move the cursor down and up
+- `c` cancels the run under the cursor: a scheduled one at once, a running one once you answer `y` (`n` or `Esc` keeps it running)
+- `q` quits
+
+The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above come from the renderer's headless mode, drawn with its own bitmap font; in your terminal the text is in your terminal's font.
+
+The drawing is done by a separate program, `fun-ci-renderer`, written in Rust. The gem for Linux (x86_64, aarch64, musl) and macOS (arm64, x86_64) includes it. On other systems you get the plain gem, where every command except `console` works; install the renderer with `cargo install fun-ci-renderer`, or point `FUN_CI_RENDERER` at a copy you built. When something goes wrong between the two, the details are in `.fun-ci/console.log`.
+
+## Asking: commands for agents and scripts
+
+Every commit's output ends with the command that gets its verdict:
 
 ```
 fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all
 ```
 
-`fun-ci init` adds a short section to your `AGENTS.md` (or `CLAUDE.md`, if that is the only one) telling agents to run that command in the background after each commit. Agent harnesses that run a command in the background wake the agent when it exits, so it hears about a failure without having to remember to ask.
+The section `fun-ci init` writes into `AGENTS.md` tells an agent to run that command in the background after each commit. Agent harnesses wake the agent when a background command exits, so it hears about a failure without having to remember to ask.
 
-`status` and `wait` exit with the verdict for the stages you need: `--need build` (lint and build), `fast` (the default) or `all` (the slow suite too).
+`status` says where a commit's run stands and `wait` blocks until it is decided. Both exit with the verdict for the stages you need: `--need build` (lint and build), `fast` (the default) or `all` (the slow suite too).
 
 | Exit code | Meaning |
 |---|---|
 | 0 | Passed |
 | 1 | A needed stage failed |
-| 2 | A needed stage ran out of time |
+| 2 | A needed stage ran over budget |
 | 3 | Still undecided (`wait --within 30s` gives up at your deadline) |
 | 4 | Superseded by a newer commit on the branch (`wait --follow-branch` moves on to it) |
 | 5 | No run for the commit |
 | 64 | Usage error |
 
-A failed stage comes with its evidence, so an agent never has to rerun a suite to find out why. `status` and `wait` end with a digest and the command that shows the rest:
+A failed stage comes with its evidence. `status` and `wait` end with a digest and the command that shows the rest:
 
 ```
-fun-ci why 3f9c2ab fast
+$ fun-ci status
+fun-ci: 2330979 "Add shipping to the cart total" on main
+  lint   passed         0.6s
+  build  passed         0.3s
+  fast   FAILED         0.3s
+  slow   passed         0.5s (not needed)
+fast failed:
+  test/cart_test.rb:18  CartTest#test_total_includes_shipping
+    Expected: 104.95
+      Actual: 99.95
+        test/cart_test.rb:18:in `test_total_includes_shipping'
+fun-ci why 2330979 fast
 ```
 
-`why` prints how the stage ended, each failure with its whole message and its own output, what the extractors picked out of the output and the log files, and anything that went wrong collecting it. `why --raw` prints the output itself. Every command takes `--json`.
+`why` prints how the stage ended, each failure with its whole message and its own output, what the extractors picked out of the output and the log files, and anything that went wrong collecting it. `why --raw` prints the whole output. Every command takes `--json`.
 
-fun-ci names an empty directory in `FUN_CI_REPORT` for every stage; write JUnit XML (`*.xml`) or `{"failures": [{"file", "line", "test", "message", "output"}]}` (`*.json`) there. The Gradle and Maven scripts `fun-ci init` writes already copy their reports in.
+```
+$ fun-ci why 2330979 fast
+fun-ci: 2330979 "Add shipping to the cart total" on main
+fast failed (exit 1) after 0.3s, budget 10s
 
-With no configuration, fun-ci runs the presets for the tools your project has when a failure shows them: rspec, Minitest, Gradle, Maven, pytest, unittest, Jest, Vitest, Mocha, Node's test runner, Bun, Deno, go test, cargo test, dotnet test, PHPUnit, ExUnit, swift test, dart test, GoogleTest, tsc, ESLint, RuboCop, Ruff, mypy, go build, rustc, gcc, ShellCheck and prove, and JSON logs from logstash-logback-encoder, ECS, pino and structlog. `fun-ci check` lists the ones that apply. To keep more, add entries under `evidence:` in `.fun-ci/config`:
+Facts:
+  alongside: slow
+
+Failures, from test-reports:
+  test/cart_test.rb:18  CartTest#test_total_includes_shipping
+    Expected: 104.95
+      Actual: 99.95
+        test/cart_test.rb:18:in `test_total_includes_shipping'
+
+The output's last lines, from output-tail:
+  Run options: --seed 4242
+  ..F
+    1) Failure:
+  CartTest#test_total_includes_shipping [test/cart_test.rb:18]:
+  Expected: 104.95
+    Actual: 99.95
+  3 runs, 3 assertions, 1 failures, 0 errors, 0 skips
+
+The whole output: fun-ci why 2330979 fast --raw
+```
+
+`fun-ci runs` lists recent runs one line each, and `fun-ci events --follow` prints each run's events as JSON lines as they happen, for a supervising agent or a status bar.
+
+### What fun-ci keeps when a stage fails
+
+fun-ci names an empty directory in `FUN_CI_REPORT` for every stage. Write JUnit XML (`*.xml`) or `{"failures": [{"file", "line", "test", "message", "output"}]}` (`*.json`) there and each failure is kept with its message. The Gradle and Maven scripts `fun-ci init` writes already copy their reports in.
+
+With no configuration, fun-ci runs the presets for the tools your project has when a failure shows them: rspec, Minitest, Gradle, Maven, pytest, unittest, Jest, Vitest, Mocha, Node's test runner, Bun, Deno, go test, cargo test, dotnet test, PHPUnit, ExUnit, swift test, dart test, GoogleTest, tsc, ESLint, RuboCop, Ruff, mypy, go build, rustc, gcc, ShellCheck and prove, and JSON logs from logstash-logback-encoder, ECS, pino and structlog. Each preset is checked against the recorded output of a real failing run of its tool. `fun-ci check` lists the ones that apply to your project.
+
+To keep more, add entries under `evidence:` in `.fun-ci/config`:
 
 ```yaml
 evidence:
@@ -120,42 +184,41 @@ evidence:
         on: overrun
 ```
 
-`fun-ci extract fast --output saved.log` runs a stage's extractors against a saved output (`fun-ci why --raw > saved.log`), so you can try an entry without making a commit. Secrets in the stage's environment are masked before anything is kept.
+`fun-ci extract fast --output saved.log` runs a stage's extractors against a saved output (`fun-ci why --raw > saved.log`), so you can try an entry without making a commit. A mistake under `evidence:` never stops a pipeline: `fun-ci check` reports it and `fun-ci why` names it.
 
-## Git Hooks
+Secrets in the stage's environment are masked before anything is kept: the value of any variable whose name holds TOKEN, SECRET, PASSWORD, PASSWD, API_KEY, PRIVATE_KEY or CREDENTIAL, and GitHub, AWS and Slack tokens, private keys and `Authorization:` headers wherever they appear. The state directory is readable by your user alone.
 
-After `fun-ci install-hooks`, two hooks are active:
+## Commands
 
-**post-commit** -- Runs `fun-ci trigger --background <commit> <branch>` for the commit you just made. This forks the pipeline into a background process and returns immediately, so commits are never blocked.
-
-**pre-push** -- Runs `fun-ci wait <commit> --need fast` for each commit the push sends. It waits for that commit's run (starting one if it has none) and blocks the push if lint, build or the fast suite failed, showing why. A project not set up for fun-ci pushes without CI.
-
-## Admin Dashboard
-
-```bash
-fun-ci console
+```
+fun-ci init                                     Scaffold .fun-ci/ for the detected project type
+fun-ci init --everything                        init + install-hooks + check in one step
+fun-ci install-hooks                            Install post-commit and pre-push hooks
+fun-ci install-hooks post-commit                Install a single hook type
+fun-ci check                                    Verify .fun-ci/ setup
+fun-ci console                                  Watch the runs
+fun-ci status [commit]                          Where a commit's run stands; the verdict is the exit code
+fun-ci wait [commit]                            Wait until that verdict is decided, then exit with it
+fun-ci why [commit] [stage]                     Everything kept about why a stage failed
+fun-ci runs                                     This project's recent runs, newest first
+fun-ci events [--follow]                        The runs' events as JSON lines
+fun-ci extract <stage> --output <file>          Try a stage's extractors on a saved output
+fun-ci trigger <commit> <branch>                Run the whole pipeline in the foreground
+fun-ci trigger --background <commit> <branch>   Start the pipeline in the background (what post-commit runs)
+fun-ci prune                                    Remove fun-ci's worktrees when no pipeline is running
 ```
 
-Opens a terminal UI showing pipeline status across all branches. Across the top runs an animated picture: a rocket while pipelines run, and a scene for each step a run passes. Lint passing gets a teal sweep, ripple or spirit level, the build amber blocks, gears or a ringing anvil, the fast suite a lightning strike, a very happy YAY or a jump to warp speed, and the whole run fireworks, a trophy, dancing leprechauns or a sunrise. A failure gets an explosion or shattering glass. Afterwards the header rests on the outcome, and when nothing has happened for five minutes it goes quiet: a starry night, an aurora, fireflies, a fire in a medieval stone hearth while a storm rages at the window, a moonlit island with a lone palm, or snow falling on a pine forest, with a small lamp in the corner, green if the last run passed and flickering red if it failed. It is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise.
+`fun-ci --help` lists every option.
 
-The console is drawn by a separate program, `fun-ci-renderer`. The gem for Linux (x86_64, aarch64, musl) and macOS (arm64, x86_64) includes it. On other systems you get the plain gem, where every command except `console` works; install the renderer with `cargo install fun-ci-renderer`, or point `FUN_CI_RENDERER` at a copy you built. When something goes wrong between the two, the details are in `.fun-ci/console.log`.
+## Upgrading to 2.0
 
-Keys:
+- Run `fun-ci install-hooks` again. The background pipeline now runs after the commit (`post-commit`), so it tests the commit you just made; the `pre-commit` hook tested the one before it. Installing removes the `pre-commit` hook fun-ci 1.x wrote and leaves a hook of your own alone (`fun-ci check` warns if yours still calls fun-ci). The new `pre-push` hook waits for the verdict instead of running the pipeline again.
+- The stages run in a worktree at the commit, not in your checkout. A script that relied on uncommitted files in your checkout won't see them any more.
+- The database moved from `$TMPDIR` to `$XDG_STATE_HOME/fun-ci/`. Runs recorded by 1.x are not carried over.
+- `fun-ci-trigger` and `fun-ci-tui` are gone; use `fun-ci trigger` and `fun-ci console`. `fun-ci trigger --no-validate` still works until 2.1, as the old name for `--background`.
+- The console needs `fun-ci-renderer`, which the platform gems include (see [Watching: the console](#watching-the-console)).
 
-- `j` and `k`, or the arrow keys, move the cursor down and up
-- `c` cancels the run under the cursor: a scheduled one at once, a running one once you answer `y` (`n` or `Esc` keeps it running)
-- `q` quits
-
-## Time Budgets
-
-| Stage | Budget | Blocks |
-|-------|--------|--------|
-| Lint  | 30s    | push   |
-| Build | 30s    | push   |
-| Fast  | 10s    | push   |
-| Slow  | 5min   | nothing (background) |
-
-If a stage exceeds its budget, it is killed and reported as timed out.
+The whole list is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Development
 
@@ -164,13 +227,7 @@ bundle install
 bundle exec rake   # the gate: tests, the renderer's tests, the binary contract, rubocop, clippy
 ```
 
-How it is built is in [docs/architecture.md](docs/architecture.md), and the requirements still to build are in [docs/acceptance-tests.md](docs/acceptance-tests.md).
-
-The renderer is written in Rust. Install Rust with [rustup](https://rustup.rs), which picks up the version the repository pins in `rust-toolchain.toml`.
-
-## Changelog
-
-See [CHANGELOG.md](CHANGELOG.md) for release history.
+How it is built is in [docs/architecture.md](docs/architecture.md), and the requirements are in [docs/acceptance-tests.md](docs/acceptance-tests.md). The renderer is written in Rust; install Rust with [rustup](https://rustup.rs), which picks up the version the repository pins in `rust-toolchain.toml`. `ruby script/readme_screenshots.rb` draws the pictures in this README again.
 
 ## License
 
