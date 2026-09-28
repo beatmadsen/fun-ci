@@ -47,6 +47,7 @@ rake "mutation:rust:score[n]"     # Judge the n shards' outcomes together; fails
 ruby script/record_evidence_fixture.rb rspec   # Record a preset's failing run in its pinned Docker image (test/fixtures/evidence/<name>/)
 ruby script/bench_detection.rb   # Time choosing presets over a full output window; run it when a preset is added
 ruby script/check_evidence_presets.rb [NAME...]   # Record presets' runs again with each image's newest tag and report what changed; CI runs it weekly (evidence-presets.yml)
+ruby script/readme_screenshots.rb   # Draw the README's pictures of the console (docs/screenshots/) from pinned headless scenes; run it when what the console draws changes
 cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 --scenario contract/scenarios/running.jsonl --out "$(mktemp -d)"   # PNG frames, sheet, cast, stats
 ```
 
