@@ -3,6 +3,7 @@
 require_relative "../test_helper"
 require "fun_ci/setup/project_config"
 require "tmpdir"
+require "shellwords"
 
 # What .fun-ci/ has to hold before fun-ci will run a project's pipeline.
 class TestProjectConfig < Minitest::Test
@@ -94,6 +95,15 @@ class TestProjectConfig < Minitest::Test
 
   def test_should_place_each_stage_s_script_in_fun_ci
     assert_equal File.join(@dir, ".fun-ci", "build.sh"), config.script_path("build")
+  end
+
+  # Every stage failed in a project whose path held a space: the shell
+  # split the script's path there.
+  def test_should_run_a_stage_s_script_with_the_commit_even_where_the_path_has_a_space
+    spaced = FunCi::Setup::ProjectConfig.new(File.join(@dir, "my project"))
+
+    assert_equal [File.join(@dir, "my project", ".fun-ci", "fast.sh"), "abc1234"],
+                 Shellwords.split(spaced.stage_command("fast", "abc1234"))
   end
 
   private

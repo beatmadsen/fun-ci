@@ -11,7 +11,7 @@ require_relative "../support/fake_stage_dir"
 # recorded, so anyone who sees the outcome can read why (AT-9.5, AT-10.1).
 class TestStageRunnerOutput < Minitest::Test
   Config = Data.define(:dir) do
-    def script_path(stage) = "#{stage}.sh"
+    def stage_command(stage, sha) = "#{stage}.sh #{sha}"
   end
 
   def test_keeps_the_output_of_a_stage_that_failed
@@ -85,7 +85,7 @@ end
 # A stage starts with its budget recorded, which `fun-ci why` reads back (AT-10.1).
 class TestStageRunnerBudget < Minitest::Test
   Config = Data.define(:dir) do
-    def script_path(stage) = "#{stage}.sh"
+    def stage_command(stage, sha) = "#{stage}.sh #{sha}"
   end
 
   def test_should_record_the_budget_a_stage_starts_with

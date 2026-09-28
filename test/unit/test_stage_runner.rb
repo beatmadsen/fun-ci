@@ -125,6 +125,6 @@ class TestStageRunnerDefaults < Minitest::Test
   end
 
   def config
-    Class.new { def script_path(stage) = "#{stage}.sh" }.new
+    Class.new { def stage_command(stage, sha) = "#{stage}.sh #{sha}" }.new
   end
 end

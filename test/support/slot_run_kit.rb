@@ -13,7 +13,7 @@ module SlotRunKit
   include TriggerTestKit
 
   Config = Struct.new(:root) do
-    def script_path(stage) = "#{root}/.fun-ci/#{stage}.sh"
+    def stage_command(stage, sha) = "#{root}/.fun-ci/#{stage}.sh #{sha}"
   end
 
   Lock = Struct.new(:closed?) do

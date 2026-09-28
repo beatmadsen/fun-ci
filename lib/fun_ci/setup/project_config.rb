@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "shellwords"
 require_relative "settings"
 require_relative "../evidence/settings"
 require_relative "../evidence/start"
@@ -40,6 +41,10 @@ module FunCi
       def script_path(stage)
         File.join(@fun_ci_dir, "#{stage}.sh")
       end
+
+      # The shell command that runs a stage's script on a commit, its path
+      # quoted, since a project's path may hold spaces.
+      def stage_command(stage, sha) = "#{Shellwords.escape(script_path(stage))} #{sha}"
 
       private
 

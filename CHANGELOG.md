@@ -220,6 +220,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `fun-ci trigger`, and so every commit's hook, fail with a stack trace.
   Both now name the mistake and the line it is on, and `trigger` runs no
   pipeline until it is fixed, as for any other mistake in `.fun-ci/`.
+- Every stage failed in a project whose path held a space, with "cannot
+  execute: No such file or directory": the stage script's path was split
+  at the space. It is quoted now.
 
 ## [2.0.0] - 2026-09-25
 
