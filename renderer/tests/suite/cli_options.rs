@@ -32,6 +32,11 @@ fn should_draw_in_the_colours_asked_for_when_colours_overrides_colorterm() {
 }
 
 #[test]
+fn should_draw_in_24_bit_colour_when_asked_for_whatever_colorterm_says() {
+    assert_eq!(parse(&["--colours", "24bit"]).unwrap().depth(None), Depth::TrueColour);
+}
+
+#[test]
 fn should_refuse_a_colour_depth_when_it_is_neither_24bit_nor_256() {
     assert!(parse(&["--colours", "16"]).is_err());
 }

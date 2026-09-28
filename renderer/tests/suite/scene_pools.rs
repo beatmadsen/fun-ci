@@ -148,3 +148,9 @@ fn should_shatter_like_glass_when_a_run_fails() {
 fn should_offer_a_snowfall_among_the_quiet_scenes() {
     assert!(Cast::quiet_pool().contains(&"snowfall"), "{:?}", Cast::quiet_pool());
 }
+
+#[test]
+fn should_show_a_scene_the_library_lacks_as_a_blank_header_that_never_ends() {
+    let missing = Cast::new(Library::default(), 1).idle();
+    assert_eq!((missing.name(), missing.length_ms()), ("blank", None));
+}
