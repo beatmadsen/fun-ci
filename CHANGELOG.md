@@ -216,6 +216,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   pre-push hook failed with "fun-ci: command not found" and stopped the push;
   now it says fun-ci is missing, how to install it, and lets the push go
   ahead. Run `fun-ci install-hooks` again to update hooks you already have.
+- A `.fun-ci/config` that isn't valid YAML made `fun-ci check` and
+  `fun-ci trigger`, and so every commit's hook, fail with a stack trace.
+  Both now name the mistake and the line it is on, and `trigger` runs no
+  pipeline until it is fixed, as for any other mistake in `.fun-ci/`.
 
 ## [2.0.0] - 2026-09-25
 

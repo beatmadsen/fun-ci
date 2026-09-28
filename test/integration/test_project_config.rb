@@ -76,6 +76,22 @@ class TestProjectConfig < Minitest::Test
     assert_equal [".fun-ci/config must be a mapping such as `worktree_slots: 2`"], config.validate
   end
 
+  # `fun-ci check` and every hook's `fun-ci trigger` ask this; a typo in the
+  # file died with a stack trace in both.
+  def test_should_name_a_config_file_that_is_not_yaml_and_the_line_it_breaks_on
+    write_scripts(*SCRIPTS)
+    File.write(File.join(fun_ci_dir, "config"), "worktree_slots: 2\nevidence: [\n")
+
+    assert_match(%r{\A\.fun-ci/config is not YAML: .+ \(line 3\)\z}, config.validate.join("\n"))
+  end
+
+  def test_should_take_the_default_worktree_slots_when_the_config_is_not_yaml
+    FileUtils.mkdir_p(fun_ci_dir)
+    File.write(File.join(fun_ci_dir, "config"), "worktree_slots: 3\nevidence: [\n")
+
+    assert_equal 2, config.worktree_slots
+  end
+
   def test_should_place_each_stage_s_script_in_fun_ci
     assert_equal File.join(@dir, ".fun-ci", "build.sh"), config.script_path("build")
   end

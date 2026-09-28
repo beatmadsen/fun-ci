@@ -5,7 +5,8 @@ require "yaml"
 module FunCi
   module Setup
     # .fun-ci/config: settings for this machine's runs, as YAML. Each one left
-    # out takes its default; one that is wrong is reported and the default used.
+    # out takes its default; one that is wrong is reported and the default used,
+    # as are all of them when the file isn't YAML.
     class Settings
       DEFAULTS = { "worktree_slots" => 2 }.freeze
 
@@ -22,6 +23,8 @@ module FunCi
         return [] if slots.is_a?(Integer) && slots.positive?
 
         [".fun-ci/config: worktree_slots must be a whole number above 0, not #{slots.inspect}"]
+      rescue Psych::SyntaxError => e
+        [".fun-ci/config is not YAML: #{e.problem} (line #{e.line})"]
       end
 
       private
