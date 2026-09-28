@@ -83,3 +83,22 @@ class TestCliAgentSubcommands < Minitest::Test
     assert_equal 64, run_cli("status", "--bogus")
   end
 end
+
+# `console` without a renderer it can run says so before starting anything.
+class TestCliConsoleWithoutRenderer < Minitest::Test
+  def test_should_say_the_renderer_fun_ci_renderer_names_is_not_a_program
+    assert_equal [1, "FUN_CI_RENDERER names /no/such/renderer, which is not a program fun-ci can run.\n"],
+                 console_with_renderer("/no/such/renderer")
+  end
+
+  private
+
+  def console_with_renderer(path)
+    stderr = StringIO.new
+    previous = ENV.fetch("FUN_CI_RENDERER", nil)
+    ENV["FUN_CI_RENDERER"] = path
+    [FunCi::Cli.run(["console"], io: FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: stderr)), stderr.string]
+  ensure
+    ENV["FUN_CI_RENDERER"] = previous
+  end
+end
