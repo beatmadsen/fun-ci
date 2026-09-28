@@ -4,3 +4,22 @@ boot: test/mutation_boot.rb
 framework: minitest
 threshold: 90
 jobs: 4
+# Mutants that can't change what any test or user sees, by mutineer's id
+# (a change to the code around one gives it a new id, and it is run again):
+ignore:
+  # MilestoneEvents#news?: `>` as `>=`. The largest id seen is a key of
+  # @previous, so key? has already answered for it.
+  - 41a1fc579304
+  # ExtractCommand#print_text: `budget: nil` as `true`. A budget is printed
+  # only beside a duration, and extract has none.
+  - 09054dc8dd78
+  # SectionWalk#step: an open section's `cut: false` as `true`. Closing a
+  # section always sets cut; nothing reads it while the section is open.
+  - d1f34a32d9d9
+  # InPlace (a seam for tests): its stand-in lock's `close = nil` as `true`,
+  # and `closed?` false as true, which only skips a close that does nothing.
+  - 4e2e35c61fbf
+  - 03c64ee51d74
+  # Seams.defaults: `workspace: nil` as `true`. Nil means the worktree pool,
+  # used only by the real CLI, which process tests run unmutated.
+  - a4336b0d4dd3
