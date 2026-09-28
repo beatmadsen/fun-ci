@@ -61,6 +61,13 @@ class TestJsonLog < Minitest::Test
     assert_equal "10:01 WARN slow", only_excerpt({ "fields" => fields })[:lines].first
   end
 
+  # The stack field's path runs into a plain string here, not an object.
+  def test_should_keep_a_record_whose_field_path_ends_early_without_that_field
+    output = %({"ts":"1","lvl":"ERROR","name":"a","msg":"b","err":"plain"}\n)
+
+    assert_equal ["1 ERROR a: b"], only_excerpt({}, output)[:lines]
+  end
+
   def test_should_find_nothing_without_a_record_at_the_level
     assert_empty json_log({ "level" => "fatal" }, OUTPUT).excerpts
   end
