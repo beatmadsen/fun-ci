@@ -70,3 +70,25 @@ fn should_light_no_lamp_when_no_run_has_finished() {
     let cell = lamp_cell(&[], 2);
     assert!(!leans(&cell, GREEN) && !leans(&cell, RED), "expected no lamp, got {cell:?}");
 }
+
+/// What the header shows a tick after `later` follows a board gone quiet.
+fn showing_after_quiet(later: &[Value]) -> String {
+    let lines = [board(&[ended("passed", 300)]), crate::support::boards::TICK.to_string(), board(later)];
+    frames(&then_ticks(&lines, 1)).pop().unwrap().showing
+}
+
+#[test]
+fn should_leave_the_quiet_scene_for_the_rocket_when_a_run_starts() {
+    let mut started = run(2, "running", &[("lint", "running")]);
+    started["updated_at"] = Value::from(NOW);
+
+    assert_eq!(showing_after_quiet(&[started, ended("passed", 300)]), "running");
+}
+
+#[test]
+fn should_leave_the_quiet_scene_for_the_outcome_when_a_newer_run_passes() {
+    let mut passed = run(2, "passed", &[("lint", "passed")]);
+    passed["updated_at"] = Value::from(NOW);
+
+    assert_eq!(showing_after_quiet(&[passed, ended("passed", 300)]), "calm");
+}
