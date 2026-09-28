@@ -8,6 +8,11 @@ require "rake"
 # either runs a subset of `rake test` or is listed under Tools.
 class TestGateLanes < Minitest::Test
   ROOT = File.expand_path("../..", __dir__)
+  # Under rake, bundler/gem_tasks is required already when this loads the
+  # Rakefile; run alone, requiring it evaluates the gemspec, whose `git
+  # ls-files` the confinement guard refuses. The gem's tasks are none of
+  # this test's business, so it is taken as loaded here too.
+  $LOADED_FEATURES << $LOAD_PATH.resolve_feature_path("bundler/gem_tasks").last
   RAKE = Rake::Application.new.tap do |app|
     Rake.application = app
     Rake.load_rakefile(File.join(ROOT, "Rakefile"))
