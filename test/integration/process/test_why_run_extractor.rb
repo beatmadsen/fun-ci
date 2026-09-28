@@ -32,13 +32,13 @@ class TestWhyRunExtractor < Minitest::Test
   end
 
   def test_should_record_a_command_still_running_at_the_end_of_the_budget_as_a_problem
-    run_with_extractor(STUCK, budget: "2")
+    run_with_extractor(STUCK, budget: "0.3")
 
     assert_match(/killed/, evidence["problems"].first["message"])
   end
 
   def test_should_leave_the_stage_s_verdict_as_it_was
-    run_with_extractor(STUCK, budget: "2")
+    run_with_extractor(STUCK, budget: "0.3")
 
     assert_equal 1, @agent.why
   end

@@ -27,8 +27,8 @@ module CollectorKit
   end
 
   # given: the sources' reports, environment and worktree, where a test names them.
-  def collector(settings: {}, clock: -> { 0 }, **given)
+  def collector(settings: {}, clock: -> { 0 }, commands: nil, **given)
     sources = SOURCES.new(stage: "fast", worktree: "/slot-0", reports: FakeStageDir.new, environment: {}, **given)
-    FunCi::Evidence::Collector.new(sources, settings: SETTINGS.new(settings), clock: clock)
+    FunCi::Evidence::Collector.new(sources, settings: SETTINGS.new(settings), clock: clock, commands: commands)
   end
 end

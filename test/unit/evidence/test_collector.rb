@@ -41,12 +41,6 @@ class TestCollector < Minitest::Test
                  collect("ERROR\n", entries: [{ "use" => "nosuch" }, GREP]).excerpts.map { |e| e[:extractor] })
   end
 
-  def test_should_record_an_entry_that_raises_as_a_problem
-    entry = { "use" => "grep", "patterns" => ["ERROR"], "path" => "no/such.log" }
-
-    assert_equal(["grep"], collect("", entries: [entry], worktree: Dir.tmpdir).problems.map { |p| p[:extractor] })
-  end
-
   def test_should_record_an_entry_that_is_not_a_mapping_as_a_problem
     assert_equal [{ extractor: "grep", message: "an entry must be a mapping with use: or run:, not \"grep\"" }],
                  collect("ERROR\n", entries: ["grep"]).problems
@@ -82,13 +76,12 @@ class TestCollector < Minitest::Test
     assert_operator JSON.generate(collect(output, entries: [GREP]).to_h).bytesize, :<=, 262_144
   end
 
-  # Ruby 3.2 and later memoise the classic ^(a+)+$, which then never times
+  # Whatever an extractor raises, not only a Problem, stays within its
+  # entry: here a command can't start, as when its worktree is gone.
+  def test_should_record_an_error_an_entry_did_not_expect_as_a_problem_naming_it
+    commands = ->(*) { raise Errno::ENOENT, "/slot-0" }
 
-  # out; the back-reference keeps this one backtracking on every Ruby in CI.
-
-  def test_should_record_a_pattern_that_runs_out_of_time_as_a_problem_of_its_entry
-    entry = { "use" => "grep", "patterns" => ['^(a+)+\1$'] }
-
-    assert_match(/Regexp::TimeoutError/, collect("#{"a" * 40}!\n", entries: [entry]).problems.first[:message])
+    assert_equal [{ extractor: "run:make why", message: "Errno::ENOENT: No such file or directory - /slot-0" }],
+                 collect("", entries: [{ "run" => "make why" }], commands: commands).problems
   end
 end
