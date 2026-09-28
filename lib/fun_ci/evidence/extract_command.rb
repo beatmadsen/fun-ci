@@ -47,7 +47,14 @@ module FunCi
         noted(collector.collect(output(options), outcome(options)), options)
       end
 
-      def output(options) = Worktree.new(@dir).read(options.output)
+      # The saved output, a path from the project or an absolute one.
+      def output(options)
+        path = File.expand_path(options.output, @dir)
+        Worktree.new(File.dirname(path)).read(File.basename(path))
+      rescue SystemCallError => e
+        raise ExtractOptions::Invalid, "can't read #{options.output}: #{e.message.sub(/ @ .*/, "")}"
+      end
+
       def state(options) = options.timed_out ? "over_budget" : "failed"
 
       def outcome(options)

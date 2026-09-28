@@ -63,6 +63,20 @@ class TestExtractCommand < Minitest::Test
     assert_includes @stdout.string, "Failures, from test-reports:\n  T#a\n"
   end
 
+  def test_should_read_an_output_saved_outside_the_project
+    Dir.mktmpdir do |elsewhere|
+      File.write(File.join(elsewhere, "run.log"), "ERROR: disk full\n")
+      extract("fast", "--output", File.join(elsewhere, "run.log"))
+    end
+
+    assert_includes @stdout.string, "from grep:\n  ERROR: disk full\n"
+  end
+
+  def test_should_say_it_cannot_read_an_output_that_is_not_there
+    assert_equal [64, "fun-ci extract: can't read missing.log: No such file or directory\n"],
+                 [extract("fast", "--output", "missing.log"), @stdout.string]
+  end
+
   def test_should_refuse_a_stage_it_does_not_know
     assert_equal 64, extract("quick", "--output", "failing-run.log")
   end
