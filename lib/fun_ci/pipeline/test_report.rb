@@ -8,6 +8,7 @@ module FunCi
     # The failures a stage reports (acceptance-tests.md, AT-9.7), each as
     # { file:, line:, test:, message: }, with output: when the failure kept
     # its own (AT-10.14), its last 4 KB; nil for a report that can't be read.
+    # An entry of fun-ci's JSON that is no object is passed over.
     module TestReport
       OUTPUT_BYTES = 4096
 
@@ -19,7 +20,7 @@ module FunCi
 
       def self.json(text)
         failures = JSON.parse(text)["failures"]
-        failures.is_a?(Array) ? failures.map { |failure| json_failure(failure) } : nil
+        failures.is_a?(Array) ? failures.grep(Hash).map { |failure| json_failure(failure) } : nil
       rescue JSON::ParserError, TypeError
         nil
       end

@@ -41,6 +41,13 @@ class TestTestReport < Minitest::Test
     assert_nil REPORT.json(%({"oops": true}))
   end
 
+  # One such entry made the whole of a failed stage's evidence be lost.
+  def test_should_pass_over_json_failures_that_are_not_objects
+    json = '{"failures": [null, "boom", 3, {"test": "t", "message": "m"}]}'
+
+    assert_equal [{ file: nil, line: nil, test: "t", message: "m" }], REPORT.json(json)
+  end
+
   def test_should_read_nothing_from_text_that_is_not_json
     assert_nil REPORT.json("not json")
   end
