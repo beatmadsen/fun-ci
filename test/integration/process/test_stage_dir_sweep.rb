@@ -25,6 +25,15 @@ class TestStageDirSweep < Minitest::Test
     assert Dir.exist?(live)
   end
 
+  # Process 1 always runs, as root: a user may not signal it, so asking
+  # whether it lives is refused rather than answered.
+  def test_should_keep_the_directory_of_a_process_it_may_not_signal
+    other = File.join(@root, "1-abc").tap { |dir| Dir.mkdir(dir) }
+    FunCi::Pipeline::StageDir.create(@root).remove
+
+    assert Dir.exist?(other)
+  end
+
   private
 
   def exited_pid

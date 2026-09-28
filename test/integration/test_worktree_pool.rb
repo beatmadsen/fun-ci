@@ -5,8 +5,13 @@ require "fun_ci/pipeline/worktree_pool"
 
 # The pool's locking, against real lock files and a stand-in for git.
 class TestWorktreePool < Minitest::Test
+  # Checking out the commit `unknown` fails, as git would.
   FakeWorktrees = Struct.new(:root, :checked_out) do
-    def check_out(path, sha) = checked_out << [File.basename(path), sha]
+    def check_out(path, sha)
+      raise FunCi::Pipeline::Worktrees::GitError, "unknown revision" if sha == "unknown"
+
+      checked_out << [File.basename(path), sha]
+    end
   end
 
   def setup
@@ -72,6 +77,12 @@ class TestWorktreePool < Minitest::Test
   end
 
   # GC stays off so a leaked File can't be closed behind the count's back.
+  def test_frees_a_slot_whose_checkout_failed
+    assert_raises(FunCi::Pipeline::Worktrees::GitError) { pool(size: 1).acquire("unknown") }
+
+    assert_equal File.join(@worktrees.root, "slot-0"), hold(pool(size: 1).acquire("abc1234")).path
+  end
+
   def test_keeps_no_descriptor_open_on_a_slot_it_found_taken
     hold(pool.acquire("abc1234"))
     GC.disable
