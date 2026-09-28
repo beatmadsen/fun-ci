@@ -2,16 +2,19 @@
 
 require_relative "installer"
 require_relative "hook_writer"
+require_relative "git_hooks"
 require_relative "setup_checker"
 require_relative "legacy_hooks"
 
 module FunCi
   module Setup
     # `fun-ci init`, `install-hooks` and `check`, in the project directory.
+    # `hooks_dir` answers where git runs a project's hooks from.
     class Commands
-      def initialize(project_root, stdout)
+      def initialize(project_root, stdout, hooks_dir: GitHooks.method(:dir))
         @project_root = project_root
         @stdout = stdout
+        @hooks_dir = hooks_dir
       end
 
       def init(args)
@@ -34,8 +37,9 @@ module FunCi
       private
 
       def install(types)
+        hooks_dir = @hooks_dir.call(@project_root)
         types.each do |type|
-          code = HookWriter.run(project_root: @project_root, hook_type: type, stdout: @stdout)
+          code = HookWriter.run(hooks_dir: hooks_dir, hook_type: type, stdout: @stdout)
           return code unless code.zero?
         end
         0

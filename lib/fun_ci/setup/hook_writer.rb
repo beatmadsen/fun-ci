@@ -5,13 +5,15 @@ require_relative "hook_script"
 
 module FunCi
   module Setup
+    # Writes a hook into `hooks_dir`, where git runs the project's hooks
+    # from (GitHooks.dir); nil outside a git repository.
     class HookWriter
-      def self.run(project_root:, hook_type:, stdout: $stdout)
-        new(project_root: project_root, hook_type: hook_type, stdout: stdout).run
+      def self.run(hooks_dir:, hook_type:, stdout: $stdout)
+        new(hooks_dir: hooks_dir, hook_type: hook_type, stdout: stdout).run
       end
 
-      def initialize(project_root:, hook_type:, stdout:)
-        @project_root = project_root
+      def initialize(hooks_dir:, hook_type:, stdout:)
+        @hooks_dir = hooks_dir
         @hook_type = hook_type
         @stdout = stdout
       end
@@ -28,20 +30,15 @@ module FunCi
 
       private
 
-      def git_repo?
-        Dir.exist?(File.join(@project_root, ".git"))
-      end
-
-      def hook_path
-        File.join(@project_root, ".git", "hooks", @hook_type)
-      end
+      def git_repo? = !@hooks_dir.nil?
+      def hook_path = File.join(@hooks_dir, @hook_type)
 
       def foreign_hook?
         File.exist?(hook_path) && !HookScript.managed?(File.read(hook_path))
       end
 
       def write_hook
-        FileUtils.mkdir_p(File.join(@project_root, ".git", "hooks"))
+        FileUtils.mkdir_p(@hooks_dir)
         File.write(hook_path, HookScript.for(@hook_type))
         File.chmod(0o755, hook_path)
       end

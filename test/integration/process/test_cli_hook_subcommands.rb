@@ -91,3 +91,29 @@ class TestCliInitEverything < Minitest::Test
     refute hook_exists?("post-commit")
   end
 end
+
+# Outside a git repository git names no hooks directory, so init
+# --everything sets the project up and then refuses the hooks.
+class TestCliInitEverythingWithoutGit < Minitest::Test
+  include CliProject
+
+  def test_everything_fails_when_hooks_cannot_be_installed
+    add_gemfile
+
+    assert_equal 1, run_cli("init", "--everything")
+  end
+
+  def test_everything_still_initialises_when_hooks_cannot_be_installed
+    add_gemfile
+    run_cli("init", "--everything")
+
+    assert fun_ci_dir_exists?
+  end
+
+  def test_everything_says_the_git_directory_is_missing
+    add_gemfile
+    run_cli("init", "--everything")
+
+    assert_match(/\.git/, @stdout.string)
+  end
+end

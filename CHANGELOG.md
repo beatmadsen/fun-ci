@@ -223,6 +223,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Every stage failed in a project whose path held a space, with "cannot
   execute: No such file or directory": the stage script's path was split
   at the space. It is quoted now.
+- `fun-ci install-hooks` wrote into `.git/hooks` even when `core.hooksPath`
+  sends git elsewhere (as husky sets it), so it said the hooks were
+  installed and git never ran them; and in a linked worktree, whose `.git`
+  is a file, it said the project wasn't a git repository. It now asks git
+  where the hooks go.
 
 ## [2.0.0] - 2026-09-25
 

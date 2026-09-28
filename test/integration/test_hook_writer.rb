@@ -5,8 +5,8 @@ require "fun_ci/setup/hook_writer"
 require "tmpdir"
 require "stringio"
 
-# Writing hooks into .git/hooks. What goes in them is HookScript's. HookWriter
-# only needs .git/ to exist, so no repository is created.
+# Writing hooks into the directory git runs them from, which GitHooks finds;
+# here a directory in a temp dir. What goes in them is HookScript's.
 class TestHookWriter < Minitest::Test
   FOREIGN_HOOK = "#!/bin/sh\n# husky managed hook\nnpx lint-staged\n"
 
@@ -81,8 +81,9 @@ class TestHookWriter < Minitest::Test
 
   private
 
+  # No hooks directory is given outside a git repository.
   def in_git_dir
-    Dir.mkdir(File.join(@dir, ".git"))
+    @hooks_dir = File.join(@dir, ".git", "hooks")
     yield
   end
 
@@ -94,6 +95,6 @@ class TestHookWriter < Minitest::Test
   end
 
   def install(hook_type = "post-commit")
-    FunCi::Setup::HookWriter.run(project_root: @dir, hook_type: hook_type, stdout: @stdout)
+    FunCi::Setup::HookWriter.run(hooks_dir: @hooks_dir, hook_type: hook_type, stdout: @stdout)
   end
 end

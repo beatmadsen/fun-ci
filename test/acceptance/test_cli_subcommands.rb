@@ -3,8 +3,8 @@
 require_relative "../test_helper"
 require_relative "../support/cli_project"
 
-# Subcommands that need no git repository. The ones that do are in
-# test/integration/test_cli_hook_subcommands.rb.
+# Subcommands that need no git repository. The ones that ask git are in
+# test/integration/process/test_cli_hook_subcommands.rb.
 class TestCliInitSubcommand < Minitest::Test
   include CliProject
 
@@ -81,29 +81,5 @@ class TestCliAgentSubcommands < Minitest::Test
 
   def test_status_refuses_an_option_it_does_not_take_as_a_usage_error
     assert_equal 64, run_cli("status", "--bogus")
-  end
-end
-
-class TestCliInitEverythingWithoutGit < Minitest::Test
-  include CliProject
-
-  def test_everything_fails_when_hooks_cannot_be_installed
-    add_gemfile
-
-    assert_equal 1, run_cli("init", "--everything")
-  end
-
-  def test_everything_still_initialises_when_hooks_cannot_be_installed
-    add_gemfile
-    run_cli("init", "--everything")
-
-    assert fun_ci_dir_exists?
-  end
-
-  def test_everything_says_the_git_directory_is_missing
-    add_gemfile
-    run_cli("init", "--everything")
-
-    assert_match(/\.git/, @stdout.string)
   end
 end
