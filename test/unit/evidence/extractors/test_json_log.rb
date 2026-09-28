@@ -31,6 +31,12 @@ class TestJsonLog < Minitest::Test
     assert_equal "output:3-5", only_excerpt("level" => "warn")[:location]
   end
 
+  def test_should_pass_over_lines_that_are_json_but_not_a_record
+    output = %([1, 2]\n"error"\n{"ts":"1","lvl":"ERROR","name":"a","msg":"b"}\n)
+
+    assert_equal ["1 ERROR a: b"], only_excerpt({}, output)[:lines]
+  end
+
   def test_should_read_a_field_whose_name_holds_a_dot
     output = %({"ts":"1","log.level":"ERROR","name":"a","msg":"b"}\n)
 

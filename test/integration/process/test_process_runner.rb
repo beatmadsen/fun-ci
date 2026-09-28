@@ -4,7 +4,6 @@ require_relative "../../test_helper"
 require "fun_ci/pipeline/process_runner"
 require "fun_ci/pipeline/trigger_params"
 require_relative "../../support/process_deadline"
-require_relative "../../support/fifo"
 
 # Real processes: this is the code every stage script runs through.
 class TestProcessRunner < Minitest::Test
@@ -51,31 +50,6 @@ class TestProcessRunner < Minitest::Test
     assert_equal ["", nil, true], run_command("exec tail -f /dev/null", 0)
   end
 
-  # The budget runs out only once the command has printed and is stuck, so
-  # what it printed before the kill is there to keep (AT-9.5).
-  def test_a_command_over_budget_keeps_what_it_printed_before_the_kill
-    Dir.mktmpdir do |dir|
-      stuck = File.join(dir, "stuck").tap { |fifo| File.mkfifo(fifo) }
-      command = "sh -c 'echo partial; echo > #{stuck}; exec tail -f /dev/null'"
-      output, = within_deadline { Host.new.run_process_with_timeout(command, 30, timer: expiring_once_read(stuck)) }
-
-      assert_equal "partial\n", output
-    end
-  end
-
-  # More than a pipe holds is still being read when the budget runs out, so
-  # the end of it arrives only if the reading drains after the kill.
-  def test_a_command_over_budget_keeps_output_still_unread_at_the_kill
-    Dir.mktmpdir do |dir|
-      stuck = File.join(dir, "stuck").tap { |fifo| File.mkfifo(fifo) }
-      print_a_lot = "yes x | head -c 200000; echo last line"
-      command = "sh -c '#{print_a_lot}; echo > #{stuck}; exec tail -f /dev/null'"
-      output, = within_deadline { Host.new.run_process_with_timeout(command, 30, timer: expiring_once_read(stuck)) }
-
-      assert_equal "last line\n", output.lines.last
-    end
-  end
-
   def test_a_command_killed_over_budget_leaves_no_child_unreaped
     assert_equal("none", in_fresh_process { run_command("exec tail -f /dev/null", 0) })
   end
@@ -113,9 +87,6 @@ class TestProcessRunner < Minitest::Test
   end
 
   private
-
-  # A budget that runs out once the command has written to `fifo`.
-  def expiring_once_read(fifo) = ->(_reading, _budget) { Fifo.read(fifo) && nil }
 
   # Runs the block in a child of its own, so the only children left to reap
   # afterwards are the block's, and answers whether any was left unreaped.

@@ -16,8 +16,7 @@ module FunCi
       def self.parse(line, fields, levels)
         return nil unless line.lstrip.start_with?("{")
 
-        parsed = JSON.parse(line)
-        parsed.is_a?(Hash) ? new(parsed, fields, levels) : nil
+        new(JSON.parse(line), fields, levels)
       rescue JSON::ParserError
         nil
       end

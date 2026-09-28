@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../test_helper"
+require "json"
 require "fun_ci/evidence/caps"
 require "fun_ci/evidence/document"
 
@@ -24,6 +25,14 @@ class TestCaps < Minitest::Test
 
   def test_should_keep_the_first_excerpt_whole_when_cutting_the_last_is_enough
     assert_nil capped(doc(excerpts: [excerpt("first", 10), excerpt("last", 60)])).excerpts.first[:truncated]
+  end
+
+  def test_should_cut_no_more_lines_than_it_must
+    whole = excerpt("last", 60)
+    cut = capped(doc(excerpts: [whole])).excerpts.first
+    one_more = cut.merge(lines: whole[:lines].first(cut[:lines].size + 1))
+
+    assert_operator JSON.generate(doc(excerpts: [one_more]).to_h).bytesize, :>, LIMITS.bytes
   end
 
   def test_should_cut_messages_to_their_first_lines_when_the_excerpts_are_not_enough

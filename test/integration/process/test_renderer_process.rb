@@ -50,6 +50,21 @@ class TestRendererProcess < Minitest::Test
     refute_predicate finish(0), :success?
   end
 
+  # The renderer restores the terminal on SIGTERM; SIGKILL leaves it raw.
+  def test_should_ask_a_renderer_to_stop_with_sigterm_first
+    start(%(exec ruby -e 'trap("TERM") { exit 5 }; puts "waiting"; $stdout.flush; sleep'))
+    next_line
+
+    assert_equal 5, finish(0.5).exitstatus
+  end
+
+  def test_should_close_the_renderer_s_output_once_finished
+    renderer = start("read -r _")
+    finish(5)
+
+    assert_raises(IOError) { renderer.next_line(patience: 0) }
+  end
+
   def test_should_kill_a_renderer_that_ignores_being_asked_to_stop
     start("trap '' TERM; echo ignoring; exec tail -f /dev/null")
     next_line

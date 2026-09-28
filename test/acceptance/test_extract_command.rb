@@ -85,6 +85,15 @@ class TestExtractCommand < Minitest::Test
     assert_equal ["fun-ci extract"], JSON.parse(@stdout.string).dig("evidence", "facts").map { |f| f["extractor"] }.uniq
   end
 
+  def test_should_keep_the_facts_the_collector_found_beside_its_notes
+    failures = Array.new(101) { |n| { test: "T#t#{n}", message: "m" } }
+    FileUtils.mkdir_p(File.join(@project, "reports"))
+    File.write(File.join(@project, "reports", "r.json"), JSON.generate(failures: failures))
+    extract("fast", "--output", "failing-run.log", "--reports", "reports", "--json")
+
+    assert_includes JSON.parse(@stdout.string).dig("evidence", "facts").map { |f| f["name"] }, "failures not kept"
+  end
+
   def test_should_start_with_how_the_stage_ended
     extract("fast", "--output", "failing-run.log", "--exit", "2")
 
