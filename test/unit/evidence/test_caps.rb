@@ -35,6 +35,16 @@ class TestCaps < Minitest::Test
     assert_operator JSON.generate(doc(excerpts: [one_more]).to_h).bytesize, :>, LIMITS.bytes
   end
 
+  # Each pass measures the whole document as JSON, so passing on after it
+  # fits took three times this bound on this excerpt, on every failed stage.
+  def test_should_stop_cutting_once_the_evidence_fits
+    long = doc(excerpts: [{ title: "t", location: "output", lines: Array.new(4000) { "x" * 100 } }])
+    started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    CAPS.new.apply(long)
+
+    assert_operator Process.clock_gettime(Process::CLOCK_MONOTONIC) - started, :<, 0.05
+  end
+
   def test_should_cut_messages_to_their_first_lines_when_the_excerpts_are_not_enough
     long = { test: "t", message: (["m" * 30] * 40).join("\n") }
 

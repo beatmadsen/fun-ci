@@ -75,8 +75,11 @@ module FunCi
       db&.close
     end
 
+    # The mutation lane loads all of lib/ before it mutates, so it can't see
+    # a lazy require go missing (here and in run_prune); the process tests
+    # that run these commands load the files unmutated.
     def run_agent(name, args)
-      require_relative "agent/commands"
+      require_relative "agent/commands" # mutineer:disable-line statement_removal
       db = setup_db
       Agent::Commands.run(name, args, agent_context(db))
     ensure
@@ -99,7 +102,7 @@ module FunCi
     end
 
     def run_prune(_args)
-      require_relative "pipeline/worktree_prune"
+      require_relative "pipeline/worktree_prune" # mutineer:disable-line statement_removal
       removed = Pipeline::WorktreePrune.new(Pipeline::Worktrees.new(Dir.pwd)).run
       @io.stdout.puts "Removed #{removed} fun-ci worktree#{"s" unless removed == 1}."
       0

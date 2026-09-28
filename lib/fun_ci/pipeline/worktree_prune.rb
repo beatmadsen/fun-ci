@@ -33,23 +33,16 @@ module FunCi
       # of the locks it took before raising Busy.
       def take_locks
         slot_paths.each_with_object([]) do |path, locks|
-          locks << lock(path)
-        rescue Busy
+          locks << File.new("#{path}.lock", File::RDWR | File::CREAT, 0o644)
+          next if locks.last.flock(File::LOCK_EX | File::LOCK_NB)
+
           locks.each(&:close)
-          raise
+          raise Busy, "a pipeline is running in #{path}"
         end
       end
 
       def slot_paths
         Dir.glob(File.join(@worktrees.root, "slot-*")).map { |path| path.delete_suffix(".lock") }.uniq
-      end
-
-      def lock(path)
-        lock = File.new("#{path}.lock", File::RDWR | File::CREAT, 0o644)
-        return lock if lock.flock(File::LOCK_EX | File::LOCK_NB)
-
-        lock.close
-        raise Busy, "a pipeline is running in #{path}"
       end
     end
   end
