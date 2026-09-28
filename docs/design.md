@@ -195,7 +195,7 @@ milestone, the header plays a scene for it (AT-7.3):
   pulsing hazard sign for a failure (AT-7.5).
 - Five minutes after that run finished (or at once, if no run has), the header
   goes quiet: it shows a quiet scene picked at random, the starry night, an
-  aurora, fireflies, a fire in a medieval stone hearth while a storm rages outside, or a moonlit island with a palm, held until a run starts. A small lamp in the lower left
+  aurora, fireflies, a fire in a medieval stone hearth while a storm rages outside, or a moonlit island with a palm, and every five minutes another of them takes over, until a run starts. A small lamp in the lower left
   corner keeps the latest outcome in view: steady green after a pass, a slow
   red flicker after a failure, none before any run has finished (AT-7.7). The
   quiet state means "nothing has happened for a while"; the lamp answers "was

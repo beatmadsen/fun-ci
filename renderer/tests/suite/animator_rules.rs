@@ -65,17 +65,43 @@ fn nothing_queued_or_playing_is_not_animating() {
     assert!(!Animator::new(Cast::new(Library::builtin(), 1)).animating());
 }
 
+/// How long a quiet scene shows before the next one takes over.
+const FIVE_MINUTES: u64 = 300_000;
+
 #[test]
-fn the_quiet_scene_picked_holds_from_frame_to_frame() {
+fn the_quiet_scene_picked_holds_for_five_minutes() {
     let mut cast = Cast::new(Library::builtin(), 5);
-    let mut names: Vec<&str> = (0..20).map(|_| cast.quiet().name()).collect();
+    let mut names: Vec<&str> = (0..20).map(|i| cast.quiet(i * (FIVE_MINUTES - 1) / 19).name()).collect();
     names.dedup();
     assert_eq!(names.len(), 1, "{names:?}");
 }
 
+#[test]
+fn another_quiet_scene_takes_over_after_five_minutes() {
+    let mut cast = Cast::new(Library::builtin(), 5);
+    let first = cast.quiet(0).name();
+    assert_ne!(cast.quiet(FIVE_MINUTES).name(), first);
+}
+
+#[test]
+fn the_quiet_scene_that_took_over_holds_for_five_minutes_of_its_own() {
+    let mut cast = Cast::new(Library::builtin(), 5);
+    cast.quiet(0);
+    let second = cast.quiet(FIVE_MINUTES).name();
+    assert_eq!(cast.quiet(2 * FIVE_MINUTES - 1).name(), second);
+}
+
+#[test]
+fn quiet_scenes_keep_taking_over_every_five_minutes() {
+    let mut cast = Cast::new(Library::builtin(), 5);
+    let mut names: Vec<&str> = (0..12).map(|i| cast.quiet(i * FIVE_MINUTES).name()).collect();
+    names.dedup();
+    assert_eq!(names.len(), 12, "{names:?}");
+}
+
 /// The scene one quiet spell shows, ending the spell.
 fn quiet_spell(cast: &mut Cast) -> &'static str {
-    let name = cast.quiet().name();
+    let name = cast.quiet(0).name();
     cast.wake();
     name
 }
@@ -92,7 +118,14 @@ fn each_quiet_spell_picks_its_scene_afresh() {
 #[test]
 fn a_pinned_quiet_scene_is_the_one_the_quiet_spell_shows() {
     let mut cast = pinned("fireflies");
-    assert_eq!(cast.quiet().name(), "fireflies");
+    assert_eq!(cast.quiet(0).name(), "fireflies");
+}
+
+#[test]
+fn a_pinned_quiet_scene_holds_past_five_minutes() {
+    let mut cast = pinned("fireflies");
+    cast.quiet(0);
+    assert_eq!(cast.quiet(FIVE_MINUTES).name(), "fireflies");
 }
 
 #[test]

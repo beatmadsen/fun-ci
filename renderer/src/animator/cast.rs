@@ -27,6 +27,8 @@ pub const MILESTONES: [&str; POOLS.len()] = {
 };
 /// The quiet scenes: the header shows one when nothing has happened for a while.
 const QUIET: [&str; 6] = ["idle", "aurora", "fireflies", "fireplace", "island", "snowfall"];
+/// How long one quiet scene shows before another takes over.
+const QUIET_TURN_MS: u64 = 5 * 60 * 1000;
 static MISSING: Blank = Blank("blank");
 
 /// The scene library plus the current choices.
@@ -35,7 +37,8 @@ pub struct Cast {
     library: Library,
     pins: Vec<&'static str>,
     seed: u64,
-    quiet: Option<&'static str>,
+    /// The quiet scene showing, and when on the play clock it took over.
+    quiet: Option<(&'static str, u64)>,
 }
 
 impl Cast {
@@ -73,11 +76,17 @@ impl Cast {
         Some(self.named(name))
     }
 
-    /// A quiet scene: the one picked before, or a new pick.
-    pub fn quiet(&mut self) -> &'static dyn Scene {
-        let picked = self.pins.iter().copied().find(|pinned| QUIET.contains(pinned)).or(self.quiet);
-        let name = picked.unwrap_or_else(|| self.random(&QUIET));
-        self.quiet = Some(name);
+    /// A quiet scene as of `play_ms`: the one picked before, until it has
+    /// shown for five minutes, when a different one takes over; a pinned one
+    /// holds.
+    pub fn quiet(&mut self, play_ms: u64) -> &'static dyn Scene {
+        if let Some(pinned) = self.pins.iter().copied().find(|pinned| QUIET.contains(pinned)) {
+            return self.named(pinned);
+        }
+        let name = match self.quiet {
+            Some((name, since)) if play_ms.saturating_sub(since) < QUIET_TURN_MS => name,
+            showing => self.next_quiet(showing.map(|(name, _)| name), play_ms),
+        };
         self.named(name)
     }
 
@@ -101,6 +110,14 @@ impl Cast {
     #[must_use]
     pub fn running(&self) -> &'static dyn Scene {
         self.named("running")
+    }
+
+    /// A quiet scene other than `showing`, shown from `play_ms`.
+    fn next_quiet(&mut self, showing: Option<&'static str>, play_ms: u64) -> &'static str {
+        let others: Vec<&'static str> = QUIET.iter().copied().filter(|name| Some(*name) != showing).collect();
+        let name = self.random(&others);
+        self.quiet = Some((name, play_ms));
+        name
     }
 
     fn random(&mut self, names: &[&'static str]) -> &'static str {

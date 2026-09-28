@@ -92,3 +92,10 @@ fn should_leave_the_quiet_scene_for_the_outcome_when_a_newer_run_passes() {
 
     assert_eq!(showing_after_quiet(&[passed, ended("passed", 300)]), "calm");
 }
+
+#[test]
+fn should_show_another_quiet_scene_after_five_quiet_minutes() {
+    let lines = [board(&[ended("passed", 300)]), crate::support::boards::TICK.to_string(), r#"{"t":"tick","ms":300000}"#.to_string()];
+    let shown: Vec<String> = frames(&lines).into_iter().map(|frame| frame.showing).collect();
+    assert_ne!(shown[0], shown[1], "{shown:?}");
+}

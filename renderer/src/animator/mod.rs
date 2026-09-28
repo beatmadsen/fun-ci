@@ -71,7 +71,7 @@ impl Animator {
     pub fn render(&mut self, screen: &mut Screen, board: &Board, at: Moment) -> String {
         let runs = &board.runs;
         self.take_events(runs);
-        self.follow_runs(runs, at.board_ms);
+        self.follow_runs(runs, at);
         self.header.seek(at.play_ms);
         let showing = self.header.showing().to_string();
         self.draw(screen, board);
@@ -103,22 +103,22 @@ impl Animator {
 
     /// Shows the rocket while a run runs, and rests on the latest outcome,
     /// or a quiet scene once nothing has happened for a while.
-    fn follow_runs(&mut self, runs: &[Run], now_ms: i64) {
+    fn follow_runs(&mut self, runs: &[Run], at: Moment) {
         let running = runs.iter().any(|run| run.status() == "running");
-        let resting = resting(runs, now_ms);
-        let rest = self.resting_scene(resting, running);
+        let resting = resting(runs, at.board_ms);
+        let rest = self.resting_scene(resting, running, at.play_ms);
         let rocket = running.then(|| self.cast.running());
         self.header.follow(rocket, rest, resting.lamp());
     }
 
-    fn resting_scene(&mut self, resting: Resting, running: bool) -> &'static dyn Scene {
+    fn resting_scene(&mut self, resting: Resting, running: bool, play_ms: u64) -> &'static dyn Scene {
         if running || !matches!(resting, Resting::Quiet(_)) {
             self.cast.wake();
         }
         match resting {
             Resting::Calm => self.cast.rest("passed"),
             Resting::Warning => self.cast.rest("failed"),
-            Resting::Quiet(_) => self.cast.quiet(),
+            Resting::Quiet(_) => self.cast.quiet(play_ms),
         }
     }
 
