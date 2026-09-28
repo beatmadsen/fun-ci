@@ -13,6 +13,8 @@ module FunCi
 
       # "2", 2, 2.5 or "2s" as seconds, or nil.
       def self.seconds(value)
+        return value.to_f if value.is_a?(Numeric) && value.positive?
+
         match = /\A(\d+(?:\.\d+)?)s?\z/.match(value.to_s)
         match && match[1].to_f.positive? ? match[1].to_f : nil
       end

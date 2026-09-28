@@ -33,13 +33,13 @@ class TestEvidenceCommandRunner < Minitest::Test
     assert_equal :budget, ran("exec sleep 30", seconds: 0.2).killed
   end
 
+  # The budget gives the shell ample time to take hold before the kill.
   def test_should_kill_what_the_command_started
-    lifeline = Lifeline.new(@dir)
-    ran("#{lifeline.hold}; sleep 300 & wait", seconds: 0.2)
+    Lifeline.open(@dir) do |lifeline|
+      ran("#{lifeline.hold}; sleep 300 & wait", seconds: 1)
 
-    assert(within_deadline { lifeline.all_ended? })
-  ensure
-    lifeline.close
+      assert(within_deadline { lifeline.all_ended? })
+    end
   end
 
   # What the command started may print after the command itself has ended.

@@ -30,7 +30,7 @@ class TestRunCancellerProcesses < Minitest::Test
   end
 
   def teardown
-    @lifeline.close
+    @lifeline&.close
     teardown_test_db
   end
 

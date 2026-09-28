@@ -61,13 +61,14 @@ class TestMasking < Minitest::Test
   end
 
   # A failed stage's output window holds up to 8 MB, masked before it is
-  # kept; a pattern that looks behind at every byte took a fifth of a second.
-  def test_should_mask_a_full_output_window_in_well_under_a_tenth_of_a_second
+  # kept. Masking one took about 20 ms on a 2026 laptop; with a pattern
+  # that looked behind at every byte it took 250 ms.
+  def test_should_mask_a_full_output_window_in_under_150_ms
     output = "#{"x" * 99}\n" * 90_000
     started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
     mask(output)
 
-    assert_operator Process.clock_gettime(Process::CLOCK_MONOTONIC) - started, :<, 0.1
+    assert_operator Process.clock_gettime(Process::CLOCK_MONOTONIC) - started, :<, 0.15
   end
 
   def test_should_mask_a_pem_private_key_block

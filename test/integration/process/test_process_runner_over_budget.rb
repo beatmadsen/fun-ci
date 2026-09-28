@@ -17,7 +17,7 @@ class TestProcessRunnerOverBudget < Minitest::Test
   end
 
   # Leaves the process group, waits to be let go through the FIFO it is
-  # given, then prints `late`.
+  # given, then prints `late`. Its stderr stays out of the output asserted on.
   ESCAPEE = "ruby -rtimeout -e 'Process.setsid; Timeout.timeout(5) { File.read(ARGV[0]) }; sleep 0.2; puts :late'"
 
   def setup = @dir = Dir.mktmpdir
@@ -47,7 +47,7 @@ class TestProcessRunnerOverBudget < Minitest::Test
   def test_a_command_over_budget_keeps_what_is_printed_while_its_output_drains
     stuck = fifo("stuck")
     release = fifo("release")
-    command = %(sh -c "#{ESCAPEE} #{release} & echo > #{stuck}; exec tail -f /dev/null")
+    command = %(sh -c "#{ESCAPEE} #{release} 2>/dev/null & echo > #{stuck}; exec tail -f /dev/null")
 
     assert_equal "late\n", over_budget(command, stuck, ->(_pid) { File.write(release, "go") })
   end

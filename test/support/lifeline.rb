@@ -8,9 +8,19 @@
 # whose own parent is gone can't be waited on. A shell takes hold with
 # `hold`, and every process it starts after that holds on too. The reader
 # opens first, without blocking, so no writer waits for it. Closing kills
-# the holders' process group, since a holder the code under test failed to
-# stop may be no child of the test's, out of reach of ProcessDeadline.
+# the holders' process group while any still hold on, since a holder the
+# code under test failed to stop may be no child of the test's, out of
+# reach of ProcessDeadline; once none do, the group may be gone and its id
+# another's.
 class Lifeline
+  # Yields a lifeline in `dir`, and closes it however the block ends.
+  def self.open(dir)
+    lifeline = new(dir)
+    yield lifeline
+  ensure
+    lifeline&.close
+  end
+
   def initialize(dir)
     @path = File.join(dir, "lifeline").tap { |fifo| File.mkfifo(fifo) }
     @group = File.join(dir, "lifeline.group")
@@ -26,10 +36,19 @@ class Lifeline
   def all_ended? = @reader.read == "held\n"
 
   def close
-    Process.kill("KILL", -Integer(File.read(@group))) if File.exist?(@group)
-  rescue Errno::ESRCH
-    nil
+    Process.kill("KILL", -Integer(File.read(@group))) if held?
   ensure
     @reader.close
+  end
+
+  private
+
+  # Whether any holder still holds on; a holder records its group first.
+  def held?
+    loop { @reader.read_nonblock(4096) }
+  rescue EOFError
+    false
+  rescue IO::WaitReadable
+    true
   end
 end

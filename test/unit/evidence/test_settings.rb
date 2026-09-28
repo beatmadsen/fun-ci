@@ -15,6 +15,11 @@ class TestEvidenceSettings < Minitest::Test
     assert_in_delta 3.5, SETTINGS.new({ "budget" => "3.5s" }).budget
   end
 
+  # YAML reads 0.00005 as a Float, which Ruby writes as 5.0e-05.
+  def test_should_read_a_budget_too_small_to_write_without_an_exponent
+    assert_in_delta 0.00005, SETTINGS.new({ "budget" => 0.00005 }).budget, 1e-9
+  end
+
   def test_should_list_the_entries_for_every_stage_before_the_stage_s_own
     raw = { "stages" => { "fast" => [{ "use" => "b" }], "all" => [{ "use" => "a" }] } }
 
