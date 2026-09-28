@@ -23,6 +23,13 @@ class TestEvidenceSettingsFile < Minitest::Test
     assert_in_delta 2.0, budget_from("evidence: [\n")
   end
 
+  # `fun-ci check` names a file that isn't YAML once, as the file's mistake.
+  def test_should_find_no_mistake_in_the_evidence_of_a_file_that_is_not_yaml
+    File.write(File.join(@dir, "config"), "evidence: [\n")
+
+    assert_empty FunCi::Evidence::Settings.load(File.join(@dir, "config")).errors
+  end
+
   def test_should_give_the_defaults_for_a_file_that_holds_a_list
     assert_in_delta 2.0, budget_from("- evidence\n")
   end
