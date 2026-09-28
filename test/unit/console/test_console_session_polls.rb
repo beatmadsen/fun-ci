@@ -53,6 +53,22 @@ class TestConsoleSessionPolls < Minitest::Test
     assert_equal 4, @port.sent.last["runs"].size
   end
 
+  def ready_session(clock, log)
+    session = FunCi::Console::ConsoleSession.build(board_data: @board_data, port: ConsoleFakes::Port.new,
+                                                   clock: clock, log: log)
+    session.tap { session.receive('{"t":"ready","v":1,"cols":120,"rows":40}') }
+  end
+
+  def test_should_note_in_the_console_log_what_it_sent_every_ten_minutes
+    log = ConsoleFakes::Log.new
+    time = Time.at(0)
+    session = ready_session(-> { time }, log)
+    time += 600
+    session.refresh
+
+    assert_equal ["2 boards in the last 600 s; the newest run on the last: 2"], log.lines
+  end
+
   def test_should_send_nothing_on_refresh_before_the_renderer_is_ready
     port = ConsoleFakes::Port.new
     session = FunCi::Console::ConsoleSession.build(board_data: @board_data, port: port, clock: -> { Time.at(0) },
