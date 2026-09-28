@@ -39,6 +39,11 @@ class TestCatalog < Minitest::Test
                  refusal({ "use" => "grep", "patterns" => ["x"], "context" => "3" })
   end
 
+  def test_should_refuse_level_names_that_are_not_words
+    assert_equal "json-log: 'levels' must map each level's number to its name",
+                 refusal({ "use" => "json-log", "fields" => { "level" => "lvl" }, "levels" => { "50" => 50 } })
+  end
+
   def test_should_refuse_an_entry_that_is_not_a_mapping
     assert_equal "an entry must be a mapping with use: or run:, not \"grep\"", refusal("grep")
   end
