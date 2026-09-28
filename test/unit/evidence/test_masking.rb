@@ -55,6 +55,21 @@ class TestMasking < Minitest::Test
     assert_equal "Authorization: [masked]", mask("Authorization: Bearer abc.def.ghi")
   end
 
+  # HTTP/2 tools such as curl -v print header names in lower case.
+  def test_should_mask_an_authorization_header_in_any_case
+    assert_equal "> authorization: [masked]", mask("> authorization: Bearer abc.def.ghi")
+  end
+
+  # A failed stage's output window holds up to 8 MB, masked before it is
+  # kept; a pattern that looks behind at every byte took a fifth of a second.
+  def test_should_mask_a_full_output_window_in_well_under_a_tenth_of_a_second
+    output = "#{"x" * 99}\n" * 90_000
+    started = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    mask(output)
+
+    assert_operator Process.clock_gettime(Process::CLOCK_MONOTONIC) - started, :<, 0.1
+  end
+
   def test_should_mask_a_pem_private_key_block
     pem = "-----BEGIN RSA PRIVATE KEY-----\nMIIEow\nIBAAK\n-----END RSA PRIVATE KEY-----"
 

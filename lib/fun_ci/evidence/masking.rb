@@ -14,7 +14,7 @@ module FunCi
         /\bgh[pousr]_[A-Za-z0-9]{36,}/,
         /\b(?:AKIA|ASIA)[0-9A-Z]{16}\b/,
         /\bxox[abpors]-[A-Za-z0-9-]{10,}/,
-        /(?<=Authorization: ).+/i
+        /Authorization: \K.+/i
       ].freeze
 
       # Masks nothing, for a project that turned masking off.
