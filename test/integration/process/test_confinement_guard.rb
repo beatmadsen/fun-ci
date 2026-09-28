@@ -47,6 +47,13 @@ class TestConfinementGuard < Minitest::Test
     RUBY
   end
 
+  # Writing to the null device keeps nothing, so it is no escape.
+  def test_should_pass_a_test_that_writes_to_the_null_device
+    assert_match(/1 runs, .* 0 failures, 0 errors/, probe_output(<<~RUBY))
+      File.open(File::NULL, "w") { |null| null.write("x") }
+    RUBY
+  end
+
   def setup
     @outside = Dir.mktmpdir("confinement-outside")
   end

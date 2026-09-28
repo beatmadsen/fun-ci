@@ -60,10 +60,12 @@ module ConfinementGuard
     end
 
     # The deepest existing ancestor decides, so /var and /private/var agree.
+    # A path that exists is its own real path, with no slash added.
     def real_path(path)
       existing = path
       existing = File.dirname(existing) until File.exist?(existing)
-      File.join(File.realpath(existing), path.delete_prefix(existing))
+      rest = path.delete_prefix(existing)
+      rest.empty? ? File.realpath(existing) : File.join(File.realpath(existing), rest)
     end
   end
 
