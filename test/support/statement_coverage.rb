@@ -43,7 +43,7 @@ module StatementCoverage
   # Starts coverage afresh with method counts; files loaded from here on are
   # measured, which in the mutation lane is all of lib/.
   def self.install
-    Coverage.result(stop: true) if Coverage.running?
+    Coverage.result(stop: true, clear: true) if Coverage.running?
     Coverage.start(lines: true, methods: true)
     Coverage.singleton_class.prepend(Folded)
   end
