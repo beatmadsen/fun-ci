@@ -2,7 +2,7 @@
 
 require_relative "../../test_helper"
 require_relative "../../support/trigger_test_kit"
-require_relative "../../support/trunk_kit"
+require_relative "../../support/check_across_the_fork"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/pipeline_recorder"
 require "fun_ci/persistence/pipeline_run"
@@ -17,24 +17,6 @@ class TestTriggerForkIntegration < Minitest::Test
       lock = File.new(lock_path, File::RDWR | File::CREAT)
       lock.flock(File::LOCK_EX)
       FunCi::Pipeline::Slot.new(path, lock)
-    end
-  end
-
-  # A trunk whose check can't finish until the fast suite starts, which is
-  # after the slow suite has forked; the wait has a deadline, so a run that
-  # never starts the fast suite fails the test rather than hanging it.
-  class CheckAcrossTheFork
-    include TrunkKit
-
-    def initialize(fast_started) = @fast_started = fast_started
-    def start(sha, _fetches) = sha
-    def notice(_pending) = nil
-    def recheck(_heads, _tip) = []
-
-    def finish(sha)
-      @fast_started.pop(timeout: 30) || raise("the fast suite never started")
-      FunCi::Trunk::Checker::Result.new(check: trunk_check(sha, MERGE.clean(ahead: 1, behind: 1), seen_at: Time.now),
-                                        fetched: nil)
     end
   end
 
