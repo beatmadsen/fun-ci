@@ -14,13 +14,15 @@ module FunCi
     class Output
       NO_STAGE = "No stage it needs failed or ran over budget; name one to see it: fun-ci why REV STAGE"
 
-      def initialize(stdout, json:)
+      # trunk: whether the agent asked about the trunk (--trunk).
+      def initialize(stdout, json:, trunk: false)
         @stdout = stdout
         @json = json
+        @trunk = trunk
       end
 
       def report(report)
-        @json ? print_json(StatusJson.document(report)) : print_lines(StatusText.lines(report))
+        @json ? print_json(StatusJson.document(report)) : print_lines(StatusText.lines(report, trunk: @trunk))
       end
 
       # Everything kept about the stage named, or says no stage decided the verdict.

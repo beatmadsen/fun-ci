@@ -11,6 +11,8 @@ module FunCi
     module TrunkText
       # next_step: whether to say how to integrate a conflict; not while a needed stage has failed.
       def self.lines(shown, branch:, next_step:)
+        return ["  trunk  checking"] unless shown.check
+
         files = shown.check.merge.files
         ["  trunk  #{shown.state.tr("_", " ").ljust(12)} #{detail(shown)}".rstrip, *files.map { |file| "    #{file}" },
          *(next_step && shown.state == "conflicts" ? [NextStep.line(shown.check.tip, files, branch: branch)] : [])]

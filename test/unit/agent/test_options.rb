@@ -10,6 +10,14 @@ class TestOptions < Minitest::Test
     assert_equal(["HEAD", "fast", false], parse.then { |o| [o.rev, o.need, o.json] })
   end
 
+  def test_should_ask_about_the_trunk_when_told_to
+    assert FunCi::Agent::Options.parse(["--trunk"], takes: %i[trunk]).trunk
+  end
+
+  def test_should_not_ask_about_the_trunk_unless_told_to
+    refute FunCi::Agent::Options.parse([], takes: %i[trunk]).trunk
+  end
+
   def test_should_take_the_revision_given
     assert_equal "abc1234", parse("abc1234").rev
   end

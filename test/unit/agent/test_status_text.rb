@@ -42,6 +42,14 @@ class TestStatusText < Minitest::Test
     assert_equal "  trunk  in trunk", lines(trunk: in_trunk)[5]
   end
 
+  def test_should_say_the_check_is_going_when_asked_about_the_trunk
+    checking = FunCi::Trunk::Shown.unchecked(started: Time.utc(2026, 9, 29), now: Time.utc(2026, 9, 29))
+    report = REPORT.new(sha: "3f9c2ab0c4d1", subject: "s", branch: "main", need: "fast", stages: [],
+                        verdict: :undecided, superseded_by: nil, trunk: checking)
+
+    assert_equal "  trunk  checking", FunCi::Agent::StatusText.lines(report, trunk: true).last
+  end
+
   def test_should_print_no_trunk_line_while_the_check_is_going
     checking = FunCi::Trunk::Shown.unchecked(started: Time.utc(2026, 9, 29), now: Time.utc(2026, 9, 29))
 

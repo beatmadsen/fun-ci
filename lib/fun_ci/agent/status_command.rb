@@ -16,9 +16,9 @@ module FunCi
       end
 
       def run(args)
-        options = Options.parse(args, takes: %i[need json])
+        options = Options.parse(args, takes: %i[need json trunk])
         sha = resolve(options.rev)
-        answer(sha, reports.for(sha, options.need), Output.new(@context.io.stdout, json: options.json))
+        answer(sha, report_for(sha, options), output(options))
       rescue Options::Invalid => e
         usage(e.message)
       end

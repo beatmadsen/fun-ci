@@ -12,15 +12,16 @@ module FunCi
     module StatusText
       WORDS = { "failed" => "FAILED", "over_budget" => "OVER BUDGET" }.freeze
 
-      def self.lines(report)
+      # trunk: whether the agent asked about the trunk, which says so while its check is going.
+      def self.lines(report, trunk: false)
         needed = Verdict::LEVELS.fetch(report.need)
         [header(report), *report.stages.map { |stage| stage_line(stage, needed) }, *Digest.lines(report.stages, needed),
-         *trunk(report), *footer(report)]
+         *trunk(report, trunk), *footer(report)]
       end
 
       # Nothing while the check is going: right after a commit it would say nothing useful.
-      def self.trunk(report)
-        return [] if report.trunk.nil? || report.trunk.state == "checking"
+      def self.trunk(report, asked)
+        return [] if report.trunk.nil? || (report.trunk.state == "checking" && !asked)
 
         TrunkText.lines(report.trunk, branch: report.branch, next_step: report.deciding.nil?)
       end

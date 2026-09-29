@@ -42,6 +42,12 @@ class TestTrunkText < Minitest::Test
     assert_equal "    a.rb", lines(CONFLICT, next_step: false).last
   end
 
+  def test_should_say_only_checking_while_the_check_is_going
+    shown = FunCi::Trunk::Shown.unchecked(started: NOW, now: NOW)
+
+    assert_equal ["  trunk  checking"], FunCi::Agent::TrunkText.lines(shown, branch: "feat/cart", next_step: true)
+  end
+
   def test_should_mark_a_stale_trunk_where_its_age_is
     shown = FunCi::Trunk::Shown.of(trunk_check("abc", MERGE.clean(ahead: 3, behind: 0), seen_at: NOW - 7200), now: NOW)
 

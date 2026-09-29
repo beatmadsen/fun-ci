@@ -23,9 +23,9 @@ module FunCi
       end
 
       def run(args)
-        options = Options.parse(args, takes: %i[need json within follow_branch])
+        options = Options.parse(args, takes: %i[need json within follow_branch trunk])
         sha = resolve(options.rev)
-        output = Output.new(@context.io.stdout, json: options.json)
+        output = output(options)
         answer(sha, wait_for(sha, options, deadline(options), output), output)
       rescue Options::Invalid => e
         usage(e.message)
@@ -37,7 +37,7 @@ module FunCi
 
       # Follows a superseded run on to the commit that superseded it, when asked to.
       def wait_for(sha, options, deadline, output)
-        report = Waiting.new(@context.clock, deadline: deadline) { poll(sha, options.need) }.until_decided
+        report = Waiting.new(@context.clock, deadline: deadline) { poll(sha, options) }.until_decided
         return report unless options.follow_branch && report&.superseded_by
 
         output.following(sha, report)
@@ -52,10 +52,10 @@ module FunCi
         ExitCode::FOR.fetch(report.verdict)
       end
 
-      def poll(sha, need)
+      def poll(sha, options)
         @context.pipeline.watch(@context.db)
         reports.mark_waited(sha, @context.clock.now)
-        reports.for(sha, need) || start_after_grace(sha)
+        report_for(sha, options) || start_after_grace(sha)
       end
 
       # Nil while waiting for a run; NOT_SET_UP once one can't be started.

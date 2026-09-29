@@ -3,6 +3,7 @@
 require_relative "options"
 require_relative "reports"
 require_relative "exit_code"
+require_relative "trunk_verdict"
 
 module FunCi
   module Agent
@@ -15,6 +16,14 @@ module FunCi
       def resolve(rev)
         @context.git.resolve(rev) || raise(Options::Invalid, "git can't find the commit '#{rev}'")
       end
+
+      # The commit's newest run, judged on the trunk too when the agent asked (--trunk).
+      def report_for(sha, options)
+        report = reports.for(sha, options.need)
+        options.trunk && report ? report.with(verdict: TrunkVerdict.of(report.verdict, report.trunk)) : report
+      end
+
+      def output(options) = Output.new(@context.io.stdout, json: options.json, trunk: options.trunk)
 
       def reports = @reports ||= Reports.new(@context.db, @context.git, @context.clock)
 
