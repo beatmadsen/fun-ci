@@ -21,6 +21,6 @@ module StacksDoc
       [Names.stack(id), detected.join(" or "), *FunCi::Setup::StageTemplates.scripts(id).values.map { command(_1) }]
     end
 
-    def self.command(script) = Markdown.code(script.lines[1].chomp)
+    def self.command(script) = Markdown.code(script.lines.last.chomp)
   end
 end
