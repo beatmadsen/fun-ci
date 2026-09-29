@@ -25,12 +25,26 @@ class TestTrunkWhy < Minitest::Test
     assert_equal "   2  <<<<<<< ours", document.excerpts.last[:lines][1]
   end
 
+  def test_should_label_the_commit_s_side_of_a_conflict_by_its_short_sha
+    assert_equal "   2  <<<<<<< abc1234", labelled.excerpts.last[:lines][1]
+  end
+
+  def test_should_label_the_trunk_s_side_of_a_conflict_by_its_name
+    assert_equal "   6  >>>>>>> origin/main", labelled.excerpts.last[:lines][5]
+  end
+
   def test_should_say_when_the_commits_merged_are_gone
     assert_equal "origin/main 9e1d004 or the commit is no longer in this repository",
                  FunCi::Agent::TrunkWhy.document(nil, TIP).problems.first[:message]
   end
 
   private
+
+  def labelled
+    commit = "abc1234#{"0" * 33}"
+    text = "keep\n<<<<<<< #{commit}\nmine\n=======\ntheirs\n>>>>>>> #{TRUNK_SHA}\n"
+    FunCi::Agent::TrunkWhy.document(FunCi::Trunk::Explained.new(messages: [], files: { "a.rb" => text }), TIP)
+  end
 
   def document = FunCi::Agent::TrunkWhy.document(EXPLAINED, TIP)
 end

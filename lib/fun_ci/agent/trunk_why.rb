@@ -18,16 +18,26 @@ module FunCi
 
         Evidence::Document.new(chosen: [], facts: [], failures: [], problems: [],
                                excerpts: [messages(explained.messages), *explained.files.flat_map do |path, text|
-                                 regions(path, text)
+                                 regions(path, text, tip)
                                end])
       end
 
       def self.messages(lines) = { title: "Git's messages", location: "merge", lines: lines, extractor: EXTRACTOR }
 
-      def self.regions(path, text)
+      MARKER = /\A(<{7}|>{7}) (\h{40})\z/
+
+      # A conflict marker names its side by the trunk's name or the commit's short SHA, not a full SHA.
+      def self.labelled(line, tip)
+        marker, sha = MARKER.match(line)&.captures
+        return line unless marker
+
+        "#{marker} #{sha == tip.sha ? tip.ref : sha[0, 7]}"
+      end
+
+      def self.regions(path, text, tip)
         Trunk::Regions.of(text).map do |region|
           { title: path, location: "lines #{region.first}-#{region.last}", extractor: EXTRACTOR,
-            lines: region.lines.map { |number, line| "#{number.to_s.rjust(4)}  #{line}" } }
+            lines: region.lines.map { |number, line| "#{number.to_s.rjust(4)}  #{labelled(line, tip)}" } }
         end
       end
 
@@ -36,7 +46,7 @@ module FunCi
                     message: "#{tip.ref} #{tip.sha[0, 7]} or the commit is no longer in this repository" }
         Evidence::Document.new(chosen: [], facts: [], failures: [], excerpts: [], problems: [problem])
       end
-      private_class_method :messages, :regions, :gone
+      private_class_method :messages, :labelled, :regions, :gone
     end
   end
 end
