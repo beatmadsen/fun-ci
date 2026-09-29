@@ -61,7 +61,7 @@ cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 
 ### CLI
 
 ```bash
-fun-ci trigger <commit-hash> <branch>               # Run the full pipeline (pre-push)
+fun-ci trigger <commit-hash> <branch>               # Run the full pipeline in the foreground
 fun-ci trigger --background <commit-hash> <branch>   # Fork pipeline to background (post-commit); --no-validate is the old name, until 2.1
 fun-ci console                                       # Launch the TUI dashboard
 fun-ci init                                           # Scaffold .fun-ci/ for detected project type
