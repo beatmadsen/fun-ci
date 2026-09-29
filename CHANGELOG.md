@@ -133,6 +133,10 @@ before it. See "Upgrading to 2.0" in the README.
   no configuration fun-ci runs those whose marker files the project has
   (`Gemfile`, `pom.xml`, ...) and whose tool's output the failure shows;
   `fun-ci why` says why each was chosen and `fun-ci check` lists them.
+- `fun-ci init` writes stage scripts for every stack a preset reads, not only
+  Ruby and the JVM: rspec projects, Rust, Go, Elixir, Dart, Swift, PHP, .NET,
+  Python (uv, Poetry, pip), Deno, Bun, Node (pnpm, Yarn, npm), Perl, CMake and
+  make.
 - A project says what else to keep when a stage fails under `evidence:` in
   `.fun-ci/config`, within a budget of 2 seconds: `grep`, `section` (with a
   `preset:`), `log-file` (what the stage wrote to a log file, and only that),

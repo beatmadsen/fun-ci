@@ -2,8 +2,11 @@ name: Evidence presets
 
 # Each preset's failing run, recorded again from its recipe with the newest
 # image of its tag, to see whether the preset still picks out what it did
-# (script/check_evidence_presets.rb). Outside the gate: it needs Docker and
-# the network, and what it measures changes without a commit.
+# (script/check_evidence_presets.rb); and the stage scripts `fun-ci init`
+# writes, run on each preset's recorded project in its pinned image, to see
+# that the preset reads what they print (script/check_init_templates.rb).
+# Outside the gate: they need Docker and the network, and what the first
+# measures changes without a commit.
 on:
   schedule:
     - cron: "17 4 * * 1"
@@ -19,3 +22,13 @@ jobs:
           ruby-version: "3.4"
           bundler-cache: true
       - run: ruby script/check_evidence_presets.rb
+
+  init-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - run: ruby script/check_init_templates.rb

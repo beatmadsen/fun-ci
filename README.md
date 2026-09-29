@@ -21,7 +21,7 @@ fun-ci init --everything
 
 This detects your project type, writes four stage scripts into `.fun-ci/`, installs a `post-commit` and a `pre-push` git hook, and checks the setup. It also adds a short section to your `AGENTS.md` (or `CLAUDE.md`, if that is the only one) telling coding agents what to do after a commit.
 
-`fun-ci init` has templates for Ruby (Bundler) and the JVM (Gradle Kotlin, Gradle Groovy, Maven). Fun-CI works with any project: the stages are shell scripts, so edit them to run whatever your project uses.
+`fun-ci init` has templates for every stack fun-ci can read failures from: Ruby (rake or rspec), Gradle, Maven, Rust, Go, Elixir, Dart, Swift, PHP (Composer), .NET, Python (uv, Poetry or pip), Deno, Bun, Node (pnpm, Yarn or npm), Perl, CMake and make. Where a project has more than one, the first in that list wins. The test stages split the suite the way the tool already does (`pytest -m slow`, `go test -short`, `cargo test -- --ignored`, an ExUnit or Dart `slow` tag, Perl's `xt/`), or run a `test:slow` script (a `test-slow` target for make) where the tool has no such habit. Fun-CI works with any project: the stages are shell scripts, so edit them to run whatever your project uses.
 
 - `lint.sh`: linter and static analysis
 - `build.sh`: compile or build
