@@ -70,6 +70,9 @@ constructors this item redesigns, and fixing the tests twice would be waste.
 ### 0.7 CI runs the gate on every supported Ruby
 **Given** `.github/workflows/ci.yml`
 **Then** it runs `bundle exec rake` on push to main and PRs across Ruby 3.2, 3.3, 3.4, 4.0 with `fail-fast: false`, plus `rake mutation` on 3.4.
+*Note:* since 2.0.0 the mutation lanes run nightly (`mutation.yml`), each only
+when a file it depends on changed since the last finished run: they take
+hours, and commits come more often.
 
 ### 0.8 The gem ships exactly the tracked runtime files
 **Given** the gemspec

@@ -279,8 +279,11 @@ before the kill.
 
 - `rake` (default) is the gate: the Ruby tests, the Rust tests, the binary
   contract, RuboCop and Clippy; CLAUDE.md lists the lanes and a test holds the
-  list. The mutation lanes (`rake mutation`, `rake mutation:rust`) run in CI,
-  not on every commit.
+  list. The mutation lanes (`rake mutation`, `rake mutation:rust`) run in CI
+  nightly, each only when a file it depends on changed since its last
+  finished run (`.github/workflows/mutation.yml`), since they take hours and
+  commits come more often than that. The mutants in a commit's own lines run
+  in the slow stage of this repository's own fun-ci pipeline.
 - RuboCop: `Metrics/MethodLength` 7, `Metrics/BlockNesting` 2 (count blocks),
   `Metrics/ParameterLists` 4. Existing fun-ci limits stay: 150 lines per file,
   4 instance variables per class.

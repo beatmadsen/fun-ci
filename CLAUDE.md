@@ -37,20 +37,21 @@ ruby -Itest -Ilib test/unit/test_stage_runner.rb -n test_method # One test metho
 
 ```bash
 cargo insta review --manifest-path renderer/Cargo.toml   # Accept or reject a deliberate change to what the TUI draws (its snapshots)
-rake mutation           # Mutineer over lib/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
+rake mutation           # Mutineer over lib/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it nightly (mutation.yml)
 rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
 rake "mutation:changed[HEAD~1]"   # The same over the last commit's lines, as fun-ci's slow stage runs it here
 ruby script/platform_gem.rb arm64-darwin renderer/target/release/fun-ci-renderer pkg   # A platform gem with that renderer in libexec/
 script/smoke-platform-gem.sh pkg/<gem> [none]   # Install a gem into an empty GEM_HOME and run it; `none` for the plain gem
 script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
 rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable mutants caught. Not in the gate: over an hour on one machine
-rake "mutation:rust:shard[k,n]"   # Shard k of n of those mutants, unjudged; CI runs six side by side
+rake "mutation:rust:shard[k,n]"   # Shard k of n of those mutants, unjudged; CI runs six side by side, nightly
 rake "mutation:rust:score[n]"     # Judge the n shards' outcomes together; fails if any shard's outcomes are missing
 ruby script/record_evidence_fixture.rb rspec   # Record a preset's failing run in its pinned Docker image (test/fixtures/evidence/<name>/)
 ruby script/bench_detection.rb   # Time choosing presets over a full output window; run it when a preset is added
 ruby script/check_evidence_presets.rb [NAME...]   # Record presets' runs again with each image's newest tag and report what changed; CI runs it weekly (evidence-presets.yml)
 ruby script/check_init_templates.rb [NAME...]   # Run the stage script `fun-ci init` writes on each preset's recorded project, in its pinned image, and check the preset reads what it prints; CI runs it weekly (evidence-presets.yml)
 ruby script/readme_screenshots.rb   # Draw the README's pictures of the console (docs/screenshots/) from pinned headless scenes; run it when what the console draws changes
+ruby script/mutation_lanes.rb [SHA]   # Which mutation lanes the nightly workflow runs: those fed by a file changed since SHA
 ruby script/stacks_doc.rb   # Write docs/stacks.md (the stacks init detects, their scripts, the presets) from the code; run it when any of them changes
 cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 --scenario contract/scenarios/running.jsonl --out "$(mktemp -d)"   # PNG frames, sheet, cast, stats
 ```
@@ -120,7 +121,7 @@ Seams tests use in place of the real thing:
 - The gem ships exactly the tracked files under `lib/` and `exe/` plus README, CHANGELOG and LICENSE, and keeps its publishing metadata: `test/integration/process/test_gemspec_contents.rb`.
 - The renderer crate is as crates.io takes it: at most five keywords within its rules, a `rust-version` its readers are told and CI builds with, and only what a user builds, the licence among it: `test/policy/test_renderer_crate.rb`, `test/policy/test_gems_workflow.rb`.
 - CI builds the platform gem for each of the five targets in architecture.md, installs each into an empty GEM_HOME and runs it (the musl one on a musl Ruby), and checks the plain gem says how to get a renderer: `test/policy/test_gems_workflow.rb`.
-- CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and both mutation lanes (Ruby on 3.4, and the Rust renderer's): `test/policy/test_ci_workflow.rb`.
+- CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off on every push, and each mutation lane (Ruby on 3.4, and the Rust renderer's) nightly, only when a file it depends on changed since the last finished run: `test/policy/test_ci_workflow.rb`, `test/policy/test_mutation_workflow.rb`, `test/unit/test_mutation_lanes.rb`, `test/integration/process/test_mutation_lanes_git.rb`.
 - Every machine and CI job builds the renderer with the pinned Rust, never whichever stable is latest, so clippy's verdict is the same everywhere: `test/policy/test_rust_toolchain.rb`, `test/policy/test_ci_workflow.rb`.
 - Collecting a failed stage's evidence never changes its verdict: whatever goes wrong collecting it is kept as a problem, and the outcome is recorded: `test/unit/test_stage_end.rb`, `test/unit/evidence/test_collector.rb`, `test/acceptance/test_agent_why_config_mistake.rb`.
 - Nothing fun-ci keeps of a failed stage (the evidence and the raw output) holds the value of a secret-named variable of the stage's environment: `test/unit/evidence/test_masking.rb`, `test/unit/evidence/test_properties.rb`, `test/acceptance/test_agent_why_masks_secrets.rb`.

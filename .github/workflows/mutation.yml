@@ -1,0 +1,94 @@
+name: Mutation
+
+# The mutation lanes take hours, so they run nightly rather than on each
+# push, and a lane runs only when something it depends on changed since the
+# last run that finished (script/mutation_lanes.rb decides which).
+on:
+  schedule:
+    - cron: "23 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+# A run that outlasts the night finishes; the next waits its turn.
+concurrency:
+  group: mutation
+  cancel-in-progress: false
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      ruby: ${{ steps.lanes.outputs.ruby }}
+      rust: ${{ steps.lanes.outputs.rust }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+      - id: lanes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          last=$(gh run list --workflow mutation.yml --branch main --status completed --limit 30 --json headSha,conclusion \
+            --jq '[.[] | select(.conclusion == "success" or .conclusion == "failure")][0].headSha // ""')
+          echo "Last finished run's commit: ${last:-none}"
+          ruby script/mutation_lanes.rb "$last" | tee -a "$GITHUB_OUTPUT"
+
+  mutation:
+    needs: changes
+    if: needs.changes.outputs.ruby == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - run: bundle exec rake mutation
+
+  # Over 5000 mutants take hours in one job, so six jobs take a shard each and
+  # mutation-rust-score judges them together.
+  mutation-rust:
+    needs: changes
+    if: needs.changes.outputs.rust == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
+      - run: rustup toolchain install
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-mutants
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - run: bundle exec rake "mutation:rust:shard[${{ matrix.shard }},6]"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mutants-shard-${{ matrix.shard }}
+          path: renderer/mutants-shards/${{ matrix.shard }}/mutants.out/outcomes.json
+
+  mutation-rust-score:
+    needs: [changes, mutation-rust]
+    if: needs.changes.outputs.rust == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: mutants-shard-*
+          path: renderer/mutants-shards
+      - run: bundle exec rake "mutation:rust:score[6]"

@@ -3,8 +3,8 @@
 require_relative "../test_helper"
 require "yaml"
 
-# AT-0.7: CI runs the gate on every supported Ruby, and the mutation lane on
-# one Ruby that can install mutineer.
+# AT-0.7: CI runs the gate on every supported Ruby, on every push. The
+# mutation lanes run nightly instead (test_mutation_workflow.rb).
 class TestCiWorkflow < Minitest::Test
   WORKFLOW = File.expand_path("../../.github/workflows/ci.yml", __dir__)
 
@@ -20,45 +20,16 @@ class TestCiWorkflow < Minitest::Test
     assert_includes commands("gate"), "bundle exec rake"
   end
 
-  def test_the_mutation_lane_runs_on_the_oldest_ruby_that_installs_mutineer
-    assert_equal "3.4", setup_ruby("mutation").dig("with", "ruby-version")
-  end
-
-  def test_the_mutation_job_runs_the_mutation_lane
-    assert_includes commands("mutation"), "bundle exec rake mutation"
-  end
-
-  def test_the_rust_mutation_lane_runs_every_shard_of_the_mutants
-    shards = jobs.dig("mutation-rust", "strategy", "matrix", "shard")
-
-    command = "bundle exec rake \"mutation:rust:shard[${{ matrix.shard }},#{shards.size}]\""
-
-    run = commands("mutation-rust").grep(/mutation:rust:shard/).first
-
-    assert_equal [(0...shards.size).to_a, command], [shards, run]
-  end
-
-  def test_the_rust_mutation_lane_is_judged_on_every_shard_together
-    shards = jobs.dig("mutation-rust", "strategy", "matrix", "shard").size
-
-    assert_includes commands("mutation-rust-score"), "bundle exec rake \"mutation:rust:score[#{shards}]\""
-  end
-
   def test_a_newer_push_cancels_the_gate_it_supersedes
     assert_equal true, jobs.dig("gate", "concurrency", "cancel-in-progress")
   end
 
-  # Mutation lanes take long enough that cancelling them on each push would
-  # leave them never finishing; one runs, and the latest waits its turn.
-  def test_a_newer_push_leaves_every_mutation_run_to_finish
-    lanes = %w[mutation mutation-rust mutation-rust-score]
-
-    assert_equal([false] * lanes.size, lanes.map { |job| jobs.dig(job, "concurrency", "cancel-in-progress") })
+  def test_the_gate_installs_the_pinned_rust
+    assert_includes commands("gate"), "rustup toolchain install"
   end
 
-  def test_every_rust_job_installs_the_pinned_toolchain
-    assert_equal({ "gate" => true, "mutation-rust" => true },
-                 %w[gate mutation-rust].to_h { |job| [job, commands(job).include?("rustup toolchain install")] })
+  def test_no_mutation_lane_runs_on_a_push
+    assert_empty jobs.keys.grep(/mutation/)
   end
 
   def test_no_job_installs_whichever_rust_is_latest
@@ -80,5 +51,4 @@ class TestCiWorkflow < Minitest::Test
   def jobs = workflow.fetch("jobs")
   def commands(job) = jobs.dig(job, "steps").filter_map { |step| step["run"] }
   def steps_used = jobs.values.flat_map { |job| job["steps"].filter_map { |step| step["uses"] } }
-  def setup_ruby(job) = jobs.dig(job, "steps").find { |step| step["uses"].to_s.start_with?("ruby/setup-ruby") }
 end
