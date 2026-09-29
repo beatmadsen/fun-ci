@@ -3,8 +3,9 @@
 require_relative "../../test_helper"
 require "open3"
 
-# `rake release` pushes the platform gems before it tags the commit and
-# pushes the plain gem (script/platform_release.rb). The task comes from
+# `rake release` pushes the platform gems and publishes the renderer crate
+# before it tags the commit and pushes the plain gem
+# (script/platform_release.rb, script/crate_release.rb). The task comes from
 # bundler/gem_tasks, which loads the gemspec and so runs git, so a child rake
 # lists the prerequisites.
 class TestReleaseTask < Minitest::Test
@@ -12,6 +13,10 @@ class TestReleaseTask < Minitest::Test
 
   def test_should_push_the_platform_gems_before_tagging_the_commit
     assert_includes prerequisites("release:source_control_push"), "release:platform_gems"
+  end
+
+  def test_should_publish_the_renderer_crate_before_tagging_the_commit
+    assert_includes prerequisites("release:source_control_push"), "release:crate"
   end
 
   private
