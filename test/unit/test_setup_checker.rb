@@ -6,7 +6,7 @@ require "stringio"
 
 # `fun-ci check`: report what ProjectConfig found wrong, or that all is well.
 class TestSetupChecker < Minitest::Test
-  Config = Struct.new(:validate, :evidence_errors, :presets)
+  Config = Struct.new(:validate, :evidence_errors, :presets, :any_project_presets, keyword_init: true)
   Hooks = Struct.new(:warnings)
   PROBLEMS = [".fun-ci/lint.sh is not found", ".fun-ci/fast.sh is not executable"].freeze
 
@@ -47,17 +47,24 @@ class TestSetupChecker < Minitest::Test
                  @stdout.string
   end
 
+  def test_should_name_the_presets_that_read_any_project_s_output_apart
+    check([], any_project_presets: %w[ecs shellcheck])
+
+    assert_equal "All OK. The project is configured.\nEvidence presets for any project's output: ecs, shellcheck\n",
+                 @stdout.string
+  end
+
   def test_should_list_a_mistake_in_the_evidence_configuration_as_a_problem
-    check([], evidence: ["evidence.stages.fast: unknown extractor 'nosuch'"])
+    check([], evidence_errors: ["evidence.stages.fast: unknown extractor 'nosuch'"])
 
     assert_equal "evidence.stages.fast: unknown extractor 'nosuch'\n", @stdout.string
   end
 
   private
 
-  def check(problems, warnings: [], evidence: [], presets: [])
+  def check(problems, warnings: [], **given)
     @stdout = StringIO.new
-    FunCi::Setup::SetupChecker.new(config: Config.new(problems, evidence, presets), hooks: Hooks.new(warnings),
-                                   stdout: @stdout).run
+    config = Config.new(validate: problems, evidence_errors: [], presets: [], any_project_presets: [], **given)
+    FunCi::Setup::SetupChecker.new(config: config, hooks: Hooks.new(warnings), stdout: @stdout).run
   end
 end

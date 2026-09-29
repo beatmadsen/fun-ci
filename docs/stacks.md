@@ -46,7 +46,7 @@ When a stage fails, fun-ci runs the presets that apply, with no configuration. A
 | `cargo-test` | cargo test's failed tests | Rust | `Cargo.toml` |
 | `dart-test` | dart test's failures | Dart | `pubspec.yaml` |
 | `deno-test` | Deno's failing tests | Deno | `deno.json`, `deno.jsonc` |
-| `dotnet-test` | dotnet test's failed tests | .NET | Any project |
+| `dotnet-test` | dotnet test's failed tests | .NET | `*.sln`, `*.csproj`, `*.fsproj` |
 | `ecs` | Log records at warn or above | Any | Any project |
 | `eslint` | ESLint's problems, file by file | Node | `eslint.config.js`, `eslint.config.mjs`, `.eslintrc.json`, `.eslintrc.js` |
 | `exunit` | ExUnit's failures | Elixir | `mix.exs` |

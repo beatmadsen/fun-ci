@@ -2,4 +2,5 @@ use: section
 title: dotnet test's failed tests
 start: ['^\s+Failed \S.* \[[^\]]+\]$']
 end: ['^(Failed|Passed)!\s+- Failed:', '^Total tests: ']
+markers: ['*.sln', '*.csproj', '*.fsproj']
 signature: '^Failed!\s+- Failed:\s+\d+, Passed:\s+\d+'

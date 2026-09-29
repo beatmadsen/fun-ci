@@ -25,8 +25,8 @@ module FunCi
         presets.filter_map do |preset|
           next Found.new(preset: preset, because: nil) if preset.markers.empty?
 
-          marker = preset.markers.find { |candidate| present?(worktree, candidate) }
-          marker && Found.new(preset: preset, because: "file #{path(marker)}")
+          file = preset.markers.lazy.filter_map { |marker| marked(worktree, marker) }.first
+          file && Found.new(preset: preset, because: "file #{file}")
         end
       end
 
@@ -43,14 +43,15 @@ module FunCi
         matched && found.with(because: [found.because, "output matched #{matched.inspect}"].compact.join(", "))
       end
 
-      def self.present?(worktree, marker)
-        return worktree.exist?(marker) if marker.is_a?(String)
+      # The file that bears the marker out, or nil. A marker is a path or a
+      # glob, or { path, contains } for a file that must hold a text.
+      def self.marked(worktree, marker)
+        return worktree.glob(marker).first if marker.is_a?(String)
 
-        worktree.exist?(marker["path"]) && worktree.read(marker["path"]).include?(marker["contains"])
+        path = marker["path"]
+        path if worktree.exist?(path) && worktree.read(path).include?(marker["contains"])
       end
-
-      def self.path(marker) = marker.is_a?(String) ? marker : marker["path"]
-      private_class_method :chose, :present?, :path
+      private_class_method :chose, :marked
     end
 
     # Reads lines once against a set of presets' signatures joined into one

@@ -31,10 +31,11 @@ module FunCi
 
       # The presets whose markers the project has, which run when a stage fails
       # and its output shows their tool.
-      def presets
-        settings = Evidence::Settings.load(File.join(@fun_ci_dir, "config"))
-        Evidence::Start.candidates(Evidence::Worktree.new(@project_root), settings, "all").map { |found| found.preset.name }
-      end
+      def presets = preset_candidates.select(&:because).map { |found| found.preset.name }
+
+      # The presets without markers, which read what any project's output
+      # may hold, such as JSON logs.
+      def any_project_presets = preset_candidates.reject(&:because).map { |found| found.preset.name }
 
       def worktree_slots = settings.worktree_slots
 
@@ -49,6 +50,11 @@ module FunCi
       private
 
       def settings = Settings.new(File.join(@fun_ci_dir, "config"))
+
+      def preset_candidates
+        evidence = Evidence::Settings.load(File.join(@fun_ci_dir, "config"))
+        Evidence::Start.candidates(Evidence::Worktree.new(@project_root), evidence, "all")
+      end
 
       def script_errors(script)
         path = File.join(@fun_ci_dir, script)

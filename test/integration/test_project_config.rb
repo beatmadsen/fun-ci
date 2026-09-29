@@ -106,6 +106,18 @@ class TestProjectConfig < Minitest::Test
                  Shellwords.split(spaced.stage_command("fast", "abc1234"))
   end
 
+  def test_should_name_the_presets_whose_marker_files_the_project_has
+    File.write(File.join(@dir, "Shop.csproj"), "<Project />\n")
+
+    assert_equal ["dotnet-test"], config.presets
+  end
+
+  def test_should_name_the_presets_without_markers_apart
+    File.write(File.join(@dir, "Shop.csproj"), "<Project />\n")
+
+    assert_equal %w[ecs logstash shellcheck], config.any_project_presets
+  end
+
   private
 
   def config = FunCi::Setup::ProjectConfig.new(@dir)

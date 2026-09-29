@@ -16,6 +16,7 @@ class TestDetection < Minitest::Test
                     markers: [{ "path" => "package.json", "contains" => '"jest"' }], signature: "^Tests: ")
   LOGS = PRESET.new(name: "logs", use: "json-log", options: {}, markers: [], signature: nil)
   GRADLE = PRESET.new(name: "gradle", use: "section", options: {}, markers: ["build.gradle"], signature: nil)
+  DOTNET = PRESET.new(name: "dotnet-test", use: "section", options: {}, markers: ["*.csproj"], signature: nil)
   FILES = { "Gemfile" => "", "package.json" => '"jest"' }.freeze
   PIECES = ["rspec", " ./", "Tests:", " ", "x"].freeze
   OVERLAPPING = [RSPEC, JEST, PRESET.new(name: "tests", use: "section", options: {}, markers: [], signature: "Tests")]
@@ -23,6 +24,14 @@ class TestDetection < Minitest::Test
 
   def test_should_take_a_preset_whose_marker_file_exists_as_a_candidate
     assert_equal [["rspec", "file Gemfile"]], candidates({ "Gemfile" => "" }, [RSPEC, GRADLE])
+  end
+
+  def test_should_take_a_preset_whose_marker_glob_names_a_file_as_a_candidate_because_of_that_file
+    assert_equal [["dotnet-test", "file Cart.csproj"]], candidates({ "Cart.csproj" => "" }, [DOTNET])
+  end
+
+  def test_should_not_take_a_preset_whose_marker_glob_names_no_file
+    assert_empty candidates({ "Cart.sln" => "" }, [DOTNET])
   end
 
   def test_should_take_a_preset_without_markers_as_a_candidate_always

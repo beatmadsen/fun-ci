@@ -38,11 +38,12 @@ class TestAgentWhyEveryPreset < Minitest::Test
     ->(cmd, &) { cmd.include?("fast.sh") ? [output, FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)] }
   end
 
-  # A marker is a path, or a path and a text the file must hold.
+  # A marker is a path or a glob, or a path and a text the file must hold;
+  # a glob's file is named as a project would name it.
   def write_marker(marker)
     return unless marker
 
-    path, text = marker.is_a?(String) ? [marker, ""] : marker.values_at("path", "contains")
+    path, text = marker.is_a?(String) ? [marker.sub("*", "Shop"), ""] : marker.values_at("path", "contains")
     FileUtils.mkdir_p(File.dirname(File.join(@pipeline.project_dir, path)))
     File.write(File.join(@pipeline.project_dir, path), text)
   end

@@ -20,9 +20,16 @@ module FunCi
       def run
         errors = @config.validate + @config.evidence_errors
         @stdout.puts(errors.empty? ? "All OK. The project is configured." : errors)
-        @stdout.puts "Evidence presets for this project: #{@config.presets.join(", ")}" if @config.presets.any?
+        list_presets
         @hooks.warnings.each { |warning| @stdout.puts "Warning: #{warning}" }
         errors.empty? ? 0 : 1
+      end
+
+      private
+
+      def list_presets
+        lists = { "this project" => @config.presets, "any project's output" => @config.any_project_presets }
+        lists.each { |what, names| @stdout.puts "Evidence presets for #{what}: #{names.join(", ")}" if names.any? }
       end
     end
   end
