@@ -11,7 +11,9 @@
 # the holders' process group while any still hold on, since a holder the
 # code under test failed to stop may be no child of the test's, out of
 # reach of ProcessDeadline; once none do, the group may be gone and its id
-# another's.
+# another's. A holder already killed may still hold on while it exits, and
+# macOS then refuses the group's kill with EPERM, or finds it gone: either
+# way nothing is left to stop.
 class Lifeline
   # Yields a lifeline in `dir`, and closes it however the block ends.
   def self.open(dir)
@@ -21,10 +23,11 @@ class Lifeline
     lifeline&.close
   end
 
-  def initialize(dir)
+  def initialize(dir, kill: Process.method(:kill))
     @path = File.join(dir, "lifeline").tap { |fifo| File.mkfifo(fifo) }
     @group = File.join(dir, "lifeline.group")
     @reader = File.open(@path, File::RDONLY | File::NONBLOCK)
+    @kill = kill
   end
 
   # The shell commands that take hold, and say so. The shell must lead a
@@ -36,7 +39,9 @@ class Lifeline
   def all_ended? = @reader.read == "held\n"
 
   def close
-    Process.kill("KILL", -Integer(File.read(@group))) if held?
+    @kill.call("KILL", -Integer(File.read(@group))) if held?
+  rescue Errno::ESRCH, Errno::EPERM
+    nil
   ensure
     @reader.close
   end
