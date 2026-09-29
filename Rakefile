@@ -61,6 +61,21 @@ end
 
 RENDERER_MANIFEST = File.expand_path("renderer/Cargo.toml", __dir__)
 
+namespace :release do
+  desc "Push the platform gems the Gems workflow built for HEAD; each asks for an MFA code (DRY_RUN=1 only lists them)"
+  task(:platform_gems) do
+    require_relative "script/platform_release"
+    require_relative "lib/fun_ci/version"
+    PlatformRelease.push(FunCi::VERSION, `git rev-parse HEAD`.strip, PlatformRelease.pusher(ENV))
+  end
+end
+
+# `rake release` (bundler/gem_tasks) tags the commit, then pushes the plain
+# gem; the platform gems go first, so nobody gets the gem without its renderer.
+if Rake::Task.task_defined?("release:source_control_push")
+  Rake::Task["release:source_control_push"].enhance(["release:platform_gems"])
+end
+
 namespace :rust do
   desc "Run the Rust renderer's tests"
   task(:test) { sh "cargo", "test", "--manifest-path", RENDERER_MANIFEST }

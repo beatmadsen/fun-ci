@@ -41,6 +41,8 @@ rake mutation           # Mutineer over lib/ (Ruby >= 3.4); fails below 90 in .m
 rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
 rake "mutation:changed[HEAD~1]"   # The same over the last commit's lines, as fun-ci's slow stage runs it here
 ruby script/platform_gem.rb arm64-darwin renderer/target/release/fun-ci-renderer pkg   # A platform gem with that renderer in libexec/
+rake release            # Push the five platform gems the Gems workflow built for HEAD, then tag it and push the plain gem; each push asks for an MFA code
+DRY_RUN=1 rake release:platform_gems   # List the platform gems `rake release` would push, pushing none
 script/smoke-platform-gem.sh pkg/<gem> [none]   # Install a gem into an empty GEM_HOME and run it; `none` for the plain gem
 script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
 rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable mutants caught. Not in the gate: over an hour on one machine
