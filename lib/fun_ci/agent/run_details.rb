@@ -2,9 +2,7 @@
 
 require_relative "../persistence/stage_job"
 require_relative "../persistence/raw_outputs"
-require_relative "../persistence/trunk_checks"
-require "time"
-require_relative "../trunk/shown"
+require_relative "trunk_reading"
 
 module FunCi
   module Agent
@@ -14,8 +12,7 @@ module FunCi
       def initialize(db, project, clock)
         @db = db
         @raw = Persistence::RawOutputs.beside(db.filename("main"))
-        @trunk_checks = Persistence::TrunkChecks.new(db, project)
-        @clock = clock
+        @trunk = TrunkReading.new(db, project, clock)
       end
 
       def jobs(run)
@@ -26,13 +23,7 @@ module FunCi
       def raw_output(stage) = stage.id && @raw.read(stage.id)
 
       # How the run's commit stands against the trunk, or nil for a run that began no check.
-      def trunk(run)
-        check = @trunk_checks.latest(run[:commit_hash])
-        return Trunk::Shown.of(check, now: @clock.now) if check
-
-        started = run[:trunk_started_at]
-        started && Trunk::Shown.unchecked(started: Time.parse(started), now: @clock.now)
-      end
+      def trunk(run) = @trunk.for(run)
     end
   end
 end

@@ -55,4 +55,21 @@ class TestAgentTrunkStatus < Minitest::Test
 
     assert_includes @client.stdout, "  trunk  unknown      the check never finished\n"
   end
+
+  def test_should_mark_a_trunk_fetched_over_an_hour_ago_stale
+    @client.record_trunk_check(SHA, MERGE.clean(ahead: 1, behind: 1), seen: @client.clock.now - 7200)
+
+    @client.status
+
+    assert_includes @client.stdout, "fetched 2h ago, STALE, 1 ahead, 1 behind\n"
+  end
+
+  def test_should_say_why_the_last_fetch_failed
+    @client.record_trunk_check(SHA, MERGE.clean(ahead: 1, behind: 1), seen: @client.clock.now - 120)
+    @client.record_trunk_fetch(FunCi::Trunk::Fetched.new(error: "fatal: could not resolve host"))
+
+    @client.status
+
+    assert_includes @client.stdout, "fetched 2m ago, STALE (fetch failed: fatal: could not resolve host), 1 ahead"
+  end
 end

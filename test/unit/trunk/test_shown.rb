@@ -45,7 +45,32 @@ class TestTrunkShown < Minitest::Test
                  FunCi::Trunk::Shown.unchecked(started: NOW - 26, now: NOW).check.merge
   end
 
+  def test_should_count_a_trunk_seen_over_an_hour_ago_as_stale
+    assert_predicate shown_seen(NOW - 3601), :stale?
+  end
+
+  def test_should_count_a_trunk_seen_within_the_hour_as_fresh
+    refute_predicate shown_seen(NOW - 3600), :stale?
+  end
+
+  def test_should_count_a_trunk_whose_last_fetch_failed_as_stale
+    assert_predicate shown_after_fetch("fatal: no route"), :stale?
+  end
+
+  def test_should_keep_why_the_last_fetch_failed
+    assert_equal "fatal: no route", shown_after_fetch("fatal: no route").fetch_error
+  end
+
   private
+
+  def shown_seen(at)
+    FunCi::Trunk::Shown.of(trunk_check("abc", MERGE.clean(ahead: 1, behind: 1), seen_at: at), now: NOW)
+  end
+
+  def shown_after_fetch(error)
+    check = trunk_check("abc", MERGE.clean(ahead: 1, behind: 1), seen_at: NOW)
+    FunCi::Trunk::Shown.of(check, now: NOW, fetch_error: error)
+  end
 
   def shown(merge) = FunCi::Trunk::Shown.of(trunk_check("abc", merge, seen_at: NOW - 120), now: NOW)
 end

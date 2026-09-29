@@ -27,9 +27,15 @@ module FunCi
 
       def self.seen(shown)
         tip = shown.check.tip
-        "#{tip.ref} #{tip.sha[0, 7]}, fetched #{Age.words(shown.age)}"
+        "#{tip.ref} #{tip.sha[0, 7]}, fetched #{Age.words(shown.age)}#{stale(shown)}"
       end
-      private_class_method :detail, :seen
+
+      def self.stale(shown)
+        return "" unless shown.stale?
+
+        shown.fetch_error ? ", STALE (fetch failed: #{shown.fetch_error})" : ", STALE"
+      end
+      private_class_method :detail, :seen, :stale
     end
   end
 end

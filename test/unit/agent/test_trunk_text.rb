@@ -42,6 +42,21 @@ class TestTrunkText < Minitest::Test
     assert_equal "    a.rb", lines(CONFLICT, next_step: false).last
   end
 
+  def test_should_mark_a_stale_trunk_where_its_age_is
+    shown = FunCi::Trunk::Shown.of(trunk_check("abc", MERGE.clean(ahead: 3, behind: 0), seen_at: NOW - 7200), now: NOW)
+
+    assert_equal ["  trunk  up to date   origin/main 9e1d004, fetched 2h ago, STALE"],
+                 FunCi::Agent::TrunkText.lines(shown, branch: "feat/cart", next_step: true)
+  end
+
+  def test_should_say_why_the_last_fetch_failed
+    check = trunk_check("abc", MERGE.clean(ahead: 3, behind: 0), seen_at: NOW - 120)
+    shown = FunCi::Trunk::Shown.of(check, now: NOW, fetch_error: "fatal: x")
+
+    assert_equal ["  trunk  up to date   origin/main 9e1d004, fetched 2m ago, STALE (fetch failed: fatal: x)"],
+                 FunCi::Agent::TrunkText.lines(shown, branch: "feat/cart", next_step: true)
+  end
+
   private
 
   def lines(merge, next_step: true)

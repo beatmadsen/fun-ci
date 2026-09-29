@@ -6,6 +6,7 @@ require "fun_ci/agent/reports"
 require_relative "../support/fake_git"
 require_relative "../support/fake_clock"
 require "fun_ci/persistence/trunk_checks"
+require "fun_ci/persistence/trunk_fetches"
 require_relative "../support/trunk_kit"
 
 # A commit's newest run in the project, read into what an agent is told.
@@ -53,6 +54,15 @@ class TestAgentReports < Minitest::Test
     FunCi::Persistence::PipelineRun.trunk_started(@db, run, @clock.now)
 
     assert_equal "checking", @reports.for("abc1234", "fast").trunk.state
+  end
+
+  def test_should_report_why_the_project_s_last_fetch_of_the_trunk_failed
+    run_in_project("abc1234", "completed")
+    record_trunk_check("abc1234", MERGE.clean(ahead: 1, behind: 1))
+    FunCi::Persistence::TrunkFetches.new(@db, "/project").finished(FunCi::Trunk::Fetched.new(error: "fatal: x"),
+                                                                   at: @clock.now)
+
+    assert_equal "fatal: x", @reports.for("abc1234", "fast").trunk.fetch_error
   end
 
   def test_should_take_the_subject_from_git

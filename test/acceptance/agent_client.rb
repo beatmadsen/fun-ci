@@ -5,6 +5,7 @@ require "fun_ci/agent/commands"
 require "fun_ci/persistence/pipeline_run"
 require "fun_ci/persistence/stage_job"
 require "fun_ci/persistence/trunk_checks"
+require "fun_ci/persistence/trunk_fetches"
 require_relative "trigger_workspace"
 require_relative "../support/fake_git"
 require_relative "../support/fake_clock"
@@ -52,6 +53,11 @@ class AgentClient
   def start_trunk_check(sha)
     run = FunCi::Persistence::PipelineRun.find_by_commit(db, sha).first
     FunCi::Persistence::PipelineRun.trunk_started(db, run[:id], clock.now)
+  end
+
+  # A fetch of the project's trunk, as the pipeline would record it.
+  def record_trunk_fetch(fetched)
+    FunCi::Persistence::TrunkFetches.new(db, @workspace.project_dir).finished(fetched, at: clock.now)
   end
 
   # A check of the commit against the trunk, as the pipeline would record it.
