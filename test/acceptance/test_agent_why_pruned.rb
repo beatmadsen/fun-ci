@@ -16,13 +16,17 @@ class TestAgentWhyPruned < Minitest::Test
     @agent = AgentClient.new(@pipeline.workspace)
     @agent.git.commit(OLD, "Add retry to fetch")
     @pipeline.trigger(commit_hash: OLD, branch: "main")
-    recorder = FunCi::Persistence::DbRecorder.new(@pipeline.db)
-    50.times do |n|
-      recorder.create_run(commit_hash: format("%040x", n), branch: "main", project_path: @pipeline.project_dir)
-    end
+    begin_newer_runs(50)
   end
 
   def teardown = @pipeline.close
+
+  def begin_newer_runs(count)
+    recorder = FunCi::Persistence::DbRecorder.new(@pipeline.db)
+    count.times do |n|
+      recorder.create_run(commit_hash: format("%040x", n), branch: "main", project_path: @pipeline.project_dir)
+    end
+  end
 
   def test_should_say_the_evidence_is_no_longer_kept_and_why
     @agent.why(OLD)
