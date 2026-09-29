@@ -66,6 +66,11 @@ class TestMergeCheck < Minitest::Test
                  check(FakeGit.new(counts: [3, 4], merge: answer, version: "2.34.1"))
   end
 
+  def test_should_say_a_merge_over_its_budget_was_stopped
+    assert_equal MERGE.unknown("the merge ran over its 5 s budget; set trunk: none in .fun-ci/config to stop checking"),
+                 check(FakeGit.new(counts: [3, 4], merge: FunCi::Trunk::MergeCheck::OVER_BUDGET))
+  end
+
   def test_should_give_git_s_first_line_for_any_other_failure
     answer = Answer.new(128, "", "fatal: bad object abc\nmore\n")
 

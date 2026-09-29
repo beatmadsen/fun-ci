@@ -10,6 +10,10 @@ module FunCi
     class MergeCheck
       # What a git command answered: its exit status and what it printed.
       Answer = Data.define(:status, :out, :err)
+      # A merge stopped at its budget, with its process group.
+      OVER_BUDGET = Answer.new(status: :over_budget, out: "", err: "")
+      STOPPED = "the merge ran over its #{CHECK_BUDGET} s budget; " \
+                "set trunk: none in .fun-ci/config to stop checking".freeze
 
       def initialize(git)
         @git = git
@@ -29,6 +33,7 @@ module FunCi
       private
 
       def merged(answer, name, **counts)
+        return Merge.unknown(STOPPED) if answer.equal?(OVER_BUDGET)
         return Merge.clean(**counts) if answer.status.zero?
         return Merge.conflicts(MergeOutput.parse(answer.out).paths, **counts) if answer.status == 1
 

@@ -10,7 +10,7 @@ class TestTrunkReport < Minitest::Test
   def teardown = @repos.remove
 
   def test_should_name_the_remote_s_default_branch
-    assert_match(/\ATrunk: origin\/main \(origin's default branch\)\./,
+    assert_match(%r{\ATrunk: origin/main \(origin's default branch\)\.},
                  FunCi::Setup::TrunkReport.new(@repos.project).lines.first)
   end
 end

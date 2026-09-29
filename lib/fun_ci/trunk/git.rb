@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 require "open3"
+require "shellwords"
+require_relative "../pipeline/process_runner"
 require "tmpdir"
 require_relative "../pipeline/git_environment"
 require_relative "merge_check"
@@ -14,8 +16,10 @@ module FunCi
     class Git
       REF_PREFIXES = %w[refs/heads/ refs/remotes/].freeze
 
-      def initialize(dir)
+      # timer: whether a merge finished within its budget (ProcessRunner's timer), for tests to decide.
+      def initialize(dir, timer: Pipeline::ProcessRunner::BUDGET)
         @dir = dir
+        @timer = timer
       end
 
       def counts(commit, trunk) = run("rev-list", "--left-right", "--count", "#{commit}...#{trunk}")
@@ -70,8 +74,14 @@ module FunCi
         answer.status.zero? ? answer.out.strip.delete_prefix("refs/remotes/#{remote}/") : nil
       end
 
+      # Within the check's budget, killed with its process group past it; what it
+      # prints to stderr comes with what it prints, which is all git says when it fails.
       def merged(commit, trunk, env)
-        run("merge-tree", "--write-tree", "--name-only", "--messages", commit, trunk, env: env)
+        command = Shellwords.join(["git", "merge-tree", "--write-tree", "--name-only", "--messages", commit, trunk])
+        launch = Pipeline::ProcessRunner::Launch.new(chdir: @dir, env: env)
+        output, status, over = Object.new.extend(Pipeline::ProcessRunner)
+                                     .run_process_with_timeout(command, CHECK_BUDGET, launch: launch, timer: @timer)
+        over ? MergeCheck::OVER_BUDGET : MergeCheck::Answer.new(status: status.exitstatus, out: output, err: output)
       end
 
       # Yields an environment whose new objects go to a scratch directory that is gone afterwards.

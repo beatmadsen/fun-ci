@@ -67,6 +67,13 @@ class TestTrunkGit < Minitest::Test
     assert_equal before, @repos.git(@repos.project, "count-objects")
   end
 
+  def test_should_stop_a_merge_that_runs_over_its_budget
+    sha = conflicting
+    git = FunCi::Trunk::Git.new(@repos.project, timer: ->(*) { false })
+
+    assert_equal FunCi::Trunk::MergeCheck::OVER_BUDGET, git.merge_tree(sha, "refs/remotes/origin/main")
+  end
+
   def test_should_answer_the_sha_a_ref_names
     assert_equal @repos.git(@repos.project, "rev-parse", "origin/main").strip, @git.rev("refs/remotes/origin/main")
   end
