@@ -23,6 +23,20 @@ class TestConsoleLog < Minitest::Test
     assert_match(/renderer error terminal: no tty\z/, lines.last)
   end
 
+  def test_should_keep_the_log_out_of_git
+    @log.write("x")
+
+    assert_equal "console.log\n", File.read(File.join(@project, ".fun-ci", ".gitignore"))
+  end
+
+  def test_should_leave_a_gitignore_the_project_has_alone
+    FileUtils.mkdir_p(File.join(@project, ".fun-ci"))
+    File.write(File.join(@project, ".fun-ci", ".gitignore"), "mine\n")
+    @log.write("x")
+
+    assert_equal "mine\n", File.read(File.join(@project, ".fun-ci", ".gitignore"))
+  end
+
   def test_should_stamp_the_line_with_the_clock_s_time_in_utc
     @log.write("x")
 

@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in magenta, and plays a knot tying, and later untying, in the header.
 - `fun-ci --help` lists `--raw`, which it left out.
 
+### Fixed
+- `.fun-ci/console.log`, where the console notes what went wrong between it
+  and the renderer, was left for `git add` to sweep into a commit. The console
+  now writes a `.fun-ci/.gitignore` naming it, unless the project has one there.
+
 ## [2.0.2] - 2026-09-29
 
 ### Fixed
