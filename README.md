@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/fun_ci.svg)](https://badge.fury.io/rb/fun_ci)
+
 # Fun-CI
 
 Opinionated local CI that checks your code before it leaves your machine. Every commit runs lint, build, a fast suite and a slow suite on your own computer, each held to a strict time budget, so the feedback stays fast.
