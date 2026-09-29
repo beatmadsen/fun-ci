@@ -3,6 +3,7 @@
 require_relative "../test_helper"
 require_relative "../support/fake_trunk"
 require "fun_ci/pipeline/trunk_run"
+require "fun_ci/pipeline/trigger_params"
 
 # A run's check against the trunk, begun before its stages, finished beside
 # them, and recorded after them.
@@ -51,6 +52,10 @@ class TestTrunkRun < Minitest::Test
     def trunk_fetch_process(pid) = @calls << [:process, pid]
     def trunk_fetched(fetched, tip) = @calls << [:fetched, fetched, tip&.sha]
     def trunk_checked(check) = @calls << [:checked, check.merge, check.commit]
+  end
+
+  def test_should_leave_a_pipeline_to_its_project_s_own_trunk_unless_given_one
+    assert_nil FunCi::Pipeline::Seams.new.trunk
   end
 
   def test_should_note_the_check_has_begun_before_recording_it
