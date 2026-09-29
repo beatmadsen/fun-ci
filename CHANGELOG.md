@@ -13,20 +13,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - In a Gradle project set up by `fun-ci init`, the fast suite could fail
   before running a test, with Gradle unable to hash a file in its own build
   directory (`build/kotlin/compileTestKotlin/...`). The fast and slow suites
-  run at the same time in one worktree, and both compiled the test code into
-  the same place, each deleting what the other was reading. The build script
-  now compiles the test code (`./gradlew assemble testClasses`), so neither
-  suite has to. Maven, .NET, Elixir, Dart and Swift projects could clash the
-  same way, and their scripts change too: Maven builds with `mvn test-compile`
-  and runs `mvn surefire:test` and `mvn failsafe:integration-test
+  run side by side in one worktree, and both compiled the test code into the
+  same place, each deleting what the other was reading. The build script now
+  compiles the test code (`./gradlew assemble testClasses`), so neither suite
+  has to. Maven, .NET, Elixir, Dart and Swift projects could clash the same
+  way, and their scripts change too: Maven builds with `mvn test-compile` and
+  runs `mvn surefire:test` and `mvn failsafe:integration-test
   failsafe:verify`, so its slow suite now runs only the integration tests
   failsafe finds (the classes named `*IT`) rather than every test again;
   Elixir compiles its test environment in the build; Dart precompiles its test
   runner and runs the slow suite from source; the .NET and Swift suites run
-  with `--no-build` and `--skip-build`. `fun-ci init` now says that the suites
-  share what the build made. Scripts already in `.fun-ci/` are left as they
-  are, so an existing project picks this up by editing them to match
-  `docs/stacks.md`.
+  with `--no-build` and `--skip-build`.
+- Lint runs side by side with the build, and the lint `fun-ci init` wrote for
+  Maven (`mvn verify -DskipTests`) and .NET (`dotnet format`) compiled into
+  the same directories as the build. Lint now works on the source code alone.
+  Maven's runs the linter the POM configures (detekt, ktlint, checkstyle or
+  PMD) or else `mvn validate`, and no longer picks spotbugs, which reads
+  compiled classes. .NET's checks whitespace with `dotnet format whitespace
+  --folder`. Gradle's runs ktlint, spotless or detekt when the build applies
+  one, and otherwise says there is none, where it ran `check`, which compiles.
+  A linter that needs compiled code goes in `build.sh` or `fast.sh`.
+- Which stages run side by side, and so what each may read and write, is now
+  spelled out: in a new section of `docs/design.md`, in the README, in what
+  `fun-ci init` prints, and in a comment at the top of each script it writes.
+  Scripts already in `.fun-ci/` are left as they are, so an existing project
+  picks up these fixes by editing them to match `docs/stacks.md`.
 
 ## [2.0.1] - 2026-09-29
 

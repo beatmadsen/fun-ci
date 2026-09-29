@@ -2,15 +2,17 @@
 
 require_relative "project_detector"
 require_relative "template_writer"
-require_relative "maven_linter_detector"
+require_relative "lint_detection"
 require_relative "agent_instructions"
 
 module FunCi
   module Setup
     class Installer
-      # The suites run at once on build.sh's output (design.md, The pipeline).
-      SHARED_BUILD = "fast.sh and slow.sh run at the same time, on what build.sh built: have build.sh " \
-                     "compile everything they need, test code included, so neither suite writes what the other reads."
+      # Which stages run side by side, and so what each may touch (design.md,
+      # Stages side by side).
+      SIDE_BY_SIDE = ["lint.sh runs beside build.sh, so it reads the source alone.",
+                      "Then fast.sh runs beside slow.sh, both on what build.sh built: have build.sh " \
+                      "compile everything they need, test code included."].freeze
 
       def self.run(project_root:, stdout: $stdout)
         new(project_root: project_root, stdout: stdout).run
@@ -55,20 +57,14 @@ module FunCi
 
       def write_templates(detected)
         @stdout.puts "Detected: #{detected.to_s.tr("_", " ")}"
-        TemplateWriter.new(detected, @project_root, lint_override: detect_maven_linter(detected)).write
-        report("Created .fun-ci/ with template scripts.\n#{SHARED_BUILD}", 0)
+        TemplateWriter.new(detected, @project_root, lint_override: LintDetection.command(detected, @project_root)).write
+        @stdout.puts "Created .fun-ci/ with template scripts.", *SIDE_BY_SIDE
+        0
       end
 
       def report(message, exit_code)
         @stdout.puts message
         exit_code
-      end
-
-      def detect_maven_linter(detected)
-        return nil unless detected == :jvm_maven
-
-        command = MavenLinterDetector.new(File.read(File.join(@project_root, "pom.xml"))).lint_command
-        command == MavenLinterDetector::DEFAULT_COMMAND ? nil : command
       end
     end
   end

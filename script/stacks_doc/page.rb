@@ -18,6 +18,10 @@ module StacksDoc
       `fun-ci init` looks at the names at the top of your project and takes the first stack in this table that has one of its markers there. A Python project with a `package.json` for its front end is set up as Python, and a Go project with a `Makefile` as Go. The scripts are plain shell and a starting point, so edit them to run whatever your project uses.
 
       The fast suite leaves out the tests the tool's own convention marks slow, and the slow suite runs only those (for Maven, failsafe's integration tests, the classes named `*IT`). Where the tool has no such convention, the slow suite is a `test:slow` script (a `test-slow` target for make). A slow suite with no tests in it passes having run nothing under cargo, dotnet, Maven, PHPUnit, rspec and swift, and fails under the others, until you edit `slow.sh`.
+
+      Lint runs beside build on the checkout, and the two suites run beside each other on what build made ([Stages side by side](design.md#stages-side-by-side)). So each `lint.sh` works on the source alone, each `build.sh` compiles the test code too, and no suite builds: where a tool would compile as it tests, the suites skip it. For Maven, lint runs the source linter the POM configures (detekt, ktlint, checkstyle or PMD), else `mvn validate`; for Gradle, the one the build applies (ktlint, spotless or detekt), else none. A linter that reads compiled classes, such as spotbugs, goes in `build.sh` after compiling, or in `fast.sh`.
+
+      Maven's slow suite calls failsafe's goals directly, so declare the failsafe plugin in the POM to fix its version, and move anything bound to `pre-integration-test` (a container, a server) into `slow.sh`. Gradle's `testClasses` compiles the `test` source set; an `integrationTest` with a source set of its own needs its classes task (`integrationTestClasses`) added to `build.sh`.
     MD
 
     PRESETS = <<~MD.chomp

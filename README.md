@@ -43,7 +43,7 @@ Upgrading from 1.x? Read [Upgrading to 2.0](#upgrading-to-20) first.
 | Fast  | 10 s   | after lint and build pass | the push |
 | Slow  | 5 min  | in the background, beside the fast suite | nothing |
 
-The fast and slow suites run at the same time on what the build left, so `build.sh` should compile everything they need, test code included; the scripts `fun-ci init` writes do. Otherwise both suites compile into the same build directory at once and can break each other's build.
+Lint and build run side by side on the commit's checkout, and then the fast and slow suites run side by side on what the build left, all in one worktree. Two stages running at once must not write the same files, so `lint.sh` works on the source code only and `build.sh` compiles everything the suites need, test code included. A linter that needs compiled code belongs in `build.sh` or `fast.sh`. The scripts `fun-ci init` writes keep to this; [Stages side by side](docs/design.md#stages-side-by-side) has the details.
 
 A stage that overruns its budget is killed and reported as over budget, in yellow rather than red: a fast suite that takes 12 seconds has grown too heavy, which is a different problem from a failing test.
 

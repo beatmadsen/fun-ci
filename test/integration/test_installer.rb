@@ -52,7 +52,7 @@ class TestInstaller < Minitest::Test
     write_file("pom.xml", POM_WITH_DETEKT)
     install
 
-    assert_equal "#!/bin/sh\nmvn detekt:check\n", lint_script
+    assert_equal "mvn detekt:check", lint_script.lines.last.chomp
   end
 
   def test_should_lint_a_maven_project_without_a_linter_plugin_the_default_way
@@ -60,6 +60,20 @@ class TestInstaller < Minitest::Test
     install
 
     assert_equal FunCi::Setup::StageTemplates.scripts(:jvm_maven)["lint.sh"], lint_script
+  end
+
+  def test_should_lint_a_gradle_project_with_the_source_linter_its_build_applies
+    write_file("build.gradle.kts", "plugins { id(\"org.jlleitschuh.gradle.ktlint\") version \"12.1.1\" }\n")
+    install
+
+    assert_equal "./gradlew ktlintCheck", lint_script.lines.last.chomp
+  end
+
+  def test_should_lint_a_groovy_gradle_project_with_the_source_linter_its_build_applies
+    write_file("build.gradle", "plugins { id 'com.diffplug.spotless' version '6.25.0' }\n")
+    install
+
+    assert_equal "./gradlew spotlessCheck", lint_script.lines.last.chomp
   end
 
   def test_should_fail_for_a_project_it_does_not_recognise

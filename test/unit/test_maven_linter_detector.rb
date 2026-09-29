@@ -37,15 +37,14 @@ class TestMavenLinterDetectorKnownPlugins < Minitest::Test
     assert_equal "mvn checkstyle:check", result, "Should detect checkstyle plugin"
   end
 
-  def test_should_detect_spotbugs_plugin
-    # Given a POM containing the spotbugs plugin
+  # Lint runs beside the build on the source alone (design.md, Stages side by
+  # side); spotbugs reads the classes the build is writing.
+  def test_should_not_lint_with_spotbugs_which_reads_compiled_classes
     pom = "<artifactId>spotbugs-maven-plugin</artifactId>"
 
-    # When we detect the lint command
     result = FunCi::Setup::MavenLinterDetector.new(pom).lint_command
 
-    # Then it should return the spotbugs check command
-    assert_equal "mvn spotbugs:check", result, "Should detect spotbugs plugin"
+    assert_equal "mvn validate", result
   end
 
   def test_should_detect_pmd_plugin
@@ -69,7 +68,7 @@ class TestMavenLinterDetectorFallback < Minitest::Test
     result = FunCi::Setup::MavenLinterDetector.new(pom).lint_command
 
     # Then it should fall back to the default
-    assert_equal "mvn verify -DskipTests", result, "Should fall back to default when no linter found"
+    assert_equal "mvn validate", result, "Should fall back to default when no linter found"
   end
 
   def test_should_return_default_when_pom_is_empty
@@ -78,7 +77,7 @@ class TestMavenLinterDetectorFallback < Minitest::Test
     result = FunCi::Setup::MavenLinterDetector.new("").lint_command
 
     # Then it should fall back to the default
-    assert_equal "mvn verify -DskipTests", result, "Should fall back to default for empty POM"
+    assert_equal "mvn validate", result, "Should fall back to default for empty POM"
   end
 end
 

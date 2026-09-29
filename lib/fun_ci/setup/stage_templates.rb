@@ -18,7 +18,7 @@ module FunCi
       # { "lint.sh" => script, ... }; +lint_override+ replaces the lint command.
       def self.scripts(template_id, lint_override: nil)
         scripts = TEMPLATES.fetch(template_id)
-        lint_override ? scripts.merge("lint.sh" => script(lint_override)) : scripts
+        lint_override ? scripts.merge("lint.sh" => script("lint.sh", lint_override)) : scripts
       end
     end
   end

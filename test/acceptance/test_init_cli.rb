@@ -80,14 +80,15 @@ class TestInitCliUnknownProject < Minitest::Test
   end
 end
 
-# The suites run at once on what build.sh built (design.md, The pipeline), so
-# init says so where the developer reads what it wrote.
-class TestInitCliSharedBuild < Minitest::Test
+# Which stages run side by side (design.md, Stages side by side), said where
+# the developer reads what init wrote.
+class TestInitCliSideBySide < Minitest::Test
   include InitCliProject
 
-  def test_should_say_that_the_suites_run_at_once_on_what_the_build_script_built
-    init_project_with("build.gradle.kts", "plugins { kotlin(\"jvm\") }\n")
+  def test_should_say_which_stages_run_side_by_side
+    init_project_with("go.mod", "module shop\n")
 
-    assert_includes @stdout.string, "fast.sh and slow.sh run at the same time, on what build.sh built"
+    assert_includes @stdout.string, "lint.sh runs beside build.sh, so it reads the source alone.\n" \
+                                    "Then fast.sh runs beside slow.sh, both on what build.sh built"
   end
 end

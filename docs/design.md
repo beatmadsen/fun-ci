@@ -61,24 +61,47 @@ A project describes its pipeline with four executable scripts in `.fun-ci/`:
 first argument, and its exit code decides pass (0) or fail.
 
 Lint and build run in parallel. If both pass, the slow suite forks into the
-background and the fast suite runs in the foreground. The `post-commit` hook
+background and the fast suite runs beside it in the foreground, in the same
+worktree; [Stages side by side](#stages-side-by-side) says what that lets each
+stage read and write. The `post-commit` hook
 runs the whole pipeline in the background so a commit is never held up. The
 `pre-push` hook waits for the fast verdict of each commit the push sends and
 stops the push if lint, build or fast failed; a commit whose run has already
 finished goes through at once.
-
-The fast and slow suites run at the same time, in the same worktree, on what
-the build left there. So `build.sh` compiles everything either suite runs, test
-code included, and neither suite writes a file the other uses: two test runs
-compiling into one build directory at once delete each other's files. The
-scripts `fun-ci init` writes keep to this, and `script/check_init_templates.rb`
-checks each stack's in its pinned image.
 
 Each run happens in a git worktree of its own, checked out at the commit it
 tests, so the developer keeps editing while it runs. A newer commit on the same
 branch cancels the older run if it hasn't finished, unless an agent is waiting
 on it: the latest commit wins. A run is never cancelled by another run of its
 own commit.
+
+## Stages side by side
+
+Two pairs of stages run at the same time, in the same worktree. Lint and build
+start together from the commit's checkout; once both pass, the fast and slow
+suites start together from what the build left.
+
+| Stage | Runs beside | Starts from | Reads | Writes |
+|---|---|---|---|---|
+| `lint.sh` | `build.sh` | the checkout | the source alone | nothing the build uses |
+| `build.sh` | `lint.sh` | the checkout | the source | the build's output, test code included |
+| `fast.sh` | `slow.sh` | what `build.sh` built | the source and the build's output | only what it alone uses |
+| `slow.sh` | `fast.sh` | what `build.sh` built | the source and the build's output | only what it alone uses |
+
+Two stages that run side by side and write the same files break each other: a
+Gradle test run and a Gradle integration test run, compiling the tests into
+one `build/` directory at once, delete the files the other is reading. So
+lint works on the source code only, and a linter that needs compiled code
+(spotbugs, or a checkstyle task that compiles first) goes in `build.sh`, after
+compiling, or in `fast.sh`. `build.sh` compiles everything the suites run, so
+neither suite compiles anything. Each suite may write its own reports, and
+what its tool keeps under a lock of its own.
+
+The scripts `fun-ci init` writes keep to this, and each says in its first
+comment what it runs beside. `script/check_init_templates.rb` runs each
+stack's in its pinned image: it lists what each stage of a pair writes, run
+alone from where it starts, fails on a file both write, and runs the suites
+side by side to see that both still run their tests.
 
 ## Agents
 

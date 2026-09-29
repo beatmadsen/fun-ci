@@ -51,15 +51,30 @@ class TestStageTemplates < Minitest::Test
     dotnet: "dotnet test --no-build --filter \"Category=Slow\""
   }.freeze
 
+  # Lint runs beside the build, so it reads the source alone (design.md,
+  # Stages side by side): where a tool's usual lint compiles, init's doesn't.
+  SOURCE_ONLY_LINTS = {
+    jvm_maven: "mvn validate",
+    dotnet: "dotnet format whitespace --folder --verify-no-changes",
+    jvm_gradle_kotlin: 'echo "No source linter in the build: put ktlint, spotless or detekt in .fun-ci/lint.sh"',
+    jvm_gradle_groovy: 'echo "No source linter in the build: put ktlint, spotless or detekt in .fun-ci/lint.sh"'
+  }.freeze
+
+  SOURCE_ONLY_LINTS.each do |template, command|
+    define_method(:"test_should_lint_#{template}_without_compiling") do
+      assert_equal command, command_in(template, "lint.sh")
+    end
+  end
+
   TEST_CODE_BUILDS.each do |template, command|
     define_method(:"test_should_compile_#{template}_test_code_in_the_build_script") do
-      assert_equal command, FunCi::Setup::StageTemplates.scripts(template)["build.sh"].lines[1].chomp
+      assert_equal command, command_in(template, "build.sh")
     end
   end
 
   SLOW_SUITES_THAT_BUILD_NOTHING.each do |template, command|
     define_method(:"test_should_run_the_#{template}_slow_suite_without_building") do
-      assert_equal command, FunCi::Setup::StageTemplates.scripts(template)["slow.sh"].lines[1].chomp
+      assert_equal command, command_in(template, "slow.sh")
     end
   end
 
@@ -82,23 +97,35 @@ class TestStageTemplates < Minitest::Test
     end
 
     define_method(:"test_should_run_the_#{template}_fast_suite_with_its_own_tool") do
-      assert_equal command, FunCi::Setup::StageTemplates.scripts(template)["fast.sh"].lines[1].chomp
+      assert_equal command, command_in(template, "fast.sh")
     end
   end
 
   def test_should_make_each_stage_s_command_a_shell_script_of_its_own
-    assert_equal({ "lint.sh" => "#!/bin/sh\nl\n", "build.sh" => "#!/bin/sh\nb\n",
-                   "fast.sh" => "#!/bin/sh\nf\n", "slow.sh" => "#!/bin/sh\ns\n" },
-                 FunCi::Setup::StageTemplates.stages("l", "b", "f", "s"))
+    assert_equal({ "lint.sh" => "l", "build.sh" => "b", "fast.sh" => "f", "slow.sh" => "s" },
+                 FunCi::Setup::StageTemplates.stages("l", "b", "f", "s").transform_values { _1.lines.last.chomp })
   end
 
-  def test_should_let_a_lint_override_replace_the_lint_script
-    assert_equal "#!/bin/sh\nmvn detekt:check\n",
+  def test_should_say_in_each_script_which_stage_it_runs_beside
+    assert_equal({ "lint.sh" => "# Runs beside build.sh, so it reads the source alone.",
+                   "build.sh" => "# Runs beside lint.sh; then fast.sh and slow.sh run side by side on what it builds.",
+                   "fast.sh" => "# Runs beside slow.sh, on what build.sh built.",
+                   "slow.sh" => "# Runs beside fast.sh, on what build.sh built." },
+                 FunCi::Setup::StageTemplates.scripts(:go).transform_values { _1.lines[1].chomp })
+  end
+
+  def test_should_say_which_stage_a_lint_override_runs_beside
+    assert_equal "#!/bin/sh\n# Runs beside build.sh, so it reads the source alone.\nmvn detekt:check\n",
                  FunCi::Setup::StageTemplates.scripts(:jvm_maven, lint_override: "mvn detekt:check")["lint.sh"]
   end
 
   def test_should_keep_the_other_scripts_under_a_lint_override
-    assert_equal "#!/bin/sh\nmvn test-compile\n",
-                 FunCi::Setup::StageTemplates.scripts(:jvm_maven, lint_override: "mvn detekt:check")["build.sh"]
+    assert_equal "mvn test-compile", command_in(:jvm_maven, "build.sh", lint_override: "mvn detekt:check")
+  end
+
+  private
+
+  def command_in(template, script, lint_override: nil)
+    FunCi::Setup::StageTemplates.scripts(template, lint_override: lint_override)[script].lines.last.chomp
   end
 end
