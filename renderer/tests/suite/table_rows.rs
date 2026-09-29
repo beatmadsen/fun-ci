@@ -422,3 +422,9 @@ fn a_replaced_run_s_sha_is_no_brighter_than_its_branch() {
     let grid = table(&[passed(2, "main"), passed(1, "main")], 100);
     assert_eq!(fg_at(&grid, 2, "1a3f7c0"), fg_at(&grid, 2, "main"));
 }
+
+#[test]
+fn a_row_that_stands_for_itself_alone_shows_no_count() {
+    let grid = table(&[folded(1)], 100);
+    assert!(!row_text(&grid, 1).contains('×'), "{:?}", row_text(&grid, 1));
+}
