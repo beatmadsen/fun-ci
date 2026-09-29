@@ -39,6 +39,7 @@ module FunCi
 
       def worktree_slots = settings.worktree_slots
       def trunk = settings.trunk
+      def trunk_fetch = settings.trunk_fetch
 
       def script_path(stage)
         File.join(@fun_ci_dir, "#{stage}.sh")
@@ -50,7 +51,7 @@ module FunCi
 
       private
 
-      def settings = Settings.new(File.join(@fun_ci_dir, "config"))
+      def settings = Settings.at(File.join(@fun_ci_dir, "config"))
 
       def preset_candidates
         evidence = Evidence::Settings.load(File.join(@fun_ci_dir, "config"))

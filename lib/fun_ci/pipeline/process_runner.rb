@@ -33,14 +33,28 @@ module FunCi
         end
       end
 
+      # A command started and let go, and the pipe that carries what it prints.
+      Started = Data.define(:pid, :reader)
+
       def run_process_with_timeout(cmd, budget, launch: Launch.new, timer: BUDGET, &)
+        await_process(start_process(cmd, launch, &), budget, launch: launch, timer: timer)
+      end
+
+      # Starts the command and yields its pid before letting it run.
+      def start_process(cmd, launch = Launch.new, &)
         reader, writer = IO.pipe
-        pid = start(cmd, writer, launch, &)
+        Started.new(pid: start(cmd, writer, launch, &), reader: reader)
+      end
+
+      # [what it printed, its status (nil when killed), whether it ran over budget].
+      def await_process(started, budget, launch: Launch.new, timer: BUDGET)
         printed = launch.output
-        reading = Thread.new { read_until_closed(reader, printed) }
-        timer.call(reading, budget) ? process_finished(pid, text(reading.value)) : over_budget(pid, reading, launch)
+        reading = Thread.new { read_until_closed(started.reader, printed) }
+        return process_finished(started.pid, text(reading.value)) if timer.call(reading, budget)
+
+        over_budget(started.pid, reading, launch)
       ensure
-        ignoring_errors { reader&.close }
+        ignoring_errors { started.reader.close }
       end
 
       private

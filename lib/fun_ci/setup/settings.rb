@@ -9,20 +9,32 @@ module FunCi
     # as are all of them when the file isn't YAML.
     class Settings
       DEFAULTS = { "worktree_slots" => 2 }.freeze
+      FETCH_EVERY = 300
+      UNITS = { "" => 1, "s" => 1, "m" => 60, "h" => 3600 }.freeze
 
-      def initialize(path)
-        @path = path
+      # The settings in the file at `path`, which may not exist.
+      def self.at(path) = new(File.exist?(path) ? File.read(path) : nil)
+
+      # text: the YAML, or nil for none.
+      def initialize(text)
+        @text = text
       end
 
       def worktree_slots = errors.empty? ? values.fetch("worktree_slots") : DEFAULTS.fetch("worktree_slots")
 
       # The trunk's name, or nil when none is given or it is no name. A mistake
-      # here never stops a pipeline, so it is not among `errors`.
+      # in the trunk settings never stops a pipeline, so none is among `errors`.
       def trunk
-        given = raw.is_a?(Hash) ? raw["trunk"] : nil
+        given = setting("trunk")
         given.is_a?(String) ? given : nil
-      rescue Psych::SyntaxError
-        nil
+      end
+
+      # Seconds between fetches of the trunk, or nil when fun-ci doesn't fetch it.
+      def trunk_fetch
+        given = setting("trunk_fetch")
+        return nil if given == false
+
+        seconds(given) || FETCH_EVERY
       end
 
       def errors
@@ -38,7 +50,18 @@ module FunCi
 
       private
 
-      def raw = File.exist?(@path) ? YAML.safe_load_file(@path) || {} : {}
+      def setting(key)
+        raw.is_a?(Hash) ? raw[key] : nil
+      rescue Psych::SyntaxError
+        nil
+      end
+
+      def seconds(given)
+        match = /\A(\d+)([smh]?)\z/.match(given.to_s)
+        match && (match[1].to_i * UNITS.fetch(match[2]))
+      end
+
+      def raw = (@text && YAML.safe_load(@text)) || {}
       def values = DEFAULTS.merge(raw)
     end
   end

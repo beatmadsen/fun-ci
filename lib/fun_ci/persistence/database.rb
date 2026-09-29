@@ -39,6 +39,13 @@ module FunCi
         )
       SQL
 
+      # When fun-ci last fetched each project's trunk (docs/trunk-conflicts.md, Storage).
+      TRUNK_FETCHES_TABLE = <<~SQL
+        CREATE TABLE IF NOT EXISTS trunk_fetches (
+          project_path TEXT PRIMARY KEY, claimed_at INTEGER, fetched_at TEXT, failures INTEGER, error TEXT
+        )
+      SQL
+
       # Opening and migrating hold an exclusive lock on a file beside the
       # database, so fun-ci processes starting at once set it up one at a time.
       # SQLite's busy timeout doesn't cover the switch to WAL, and a column can
@@ -55,11 +62,13 @@ module FunCi
                        %w[stage_jobs output_tail TEXT], %w[stage_jobs failures TEXT],
                        %w[pipeline_runs waited_at TEXT], %w[stage_jobs exit_status INTEGER],
                        %w[stage_jobs signal TEXT], %w[stage_jobs budget INTEGER], %w[stage_jobs pruned INTEGER],
-                       %w[stage_jobs evidence TEXT]].freeze
+                       %w[stage_jobs evidence TEXT], %w[pipeline_runs fetch_pgid INTEGER]].freeze
 
       def self.migrate!(db)
         with_setup_lock(db.filename("main")) do
-          [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE].each { |table| db.execute(table) }
+          [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE, TRUNK_FETCHES_TABLE].each do |table|
+            db.execute(table)
+          end
           ADDED_COLUMNS.each { |table, column, type| add_column_if_missing(db, table, column, type) }
           db.execute(NAME_DETACHED)
         end

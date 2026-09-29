@@ -1,25 +1,27 @@
 # frozen_string_literal: true
 
 require_relative "trunk_kit"
+require "fun_ci/trunk/checker"
 
 # The trunk a pipeline checks its commit against, without git: every check
-# finds the merge it was given, against a tip seen at `seen_at`.
+# finds the merge it was given, against a tip seen at `seen_at`, and fetches
+# nothing.
 class FakeTrunk
   include TrunkKit
 
-  # A project that checks no trunk, as with `trunk: none`.
-  NONE = Object.new.tap { |none| def none.check(_sha) = nil }.freeze
+  RESULT = FunCi::Trunk::Checker::Result
 
-  attr_reader :checked
+  # A project that checks no trunk, as with `trunk: none`.
+  NONE = Object.new.tap do |none|
+    def none.start(_sha, _fetches) = nil
+    def none.finish(_pending) = RESULT.new(check: nil, fetched: nil)
+  end.freeze
 
   def initialize(merge, seen_at: Time.now)
     @merge = merge
     @seen_at = seen_at
-    @checked = []
   end
 
-  def check(sha)
-    @checked << sha
-    trunk_check(sha, @merge, seen_at: @seen_at)
-  end
+  def start(sha, _fetches) = sha
+  def finish(sha) = RESULT.new(check: trunk_check(sha, @merge, seen_at: @seen_at), fetched: nil)
 end

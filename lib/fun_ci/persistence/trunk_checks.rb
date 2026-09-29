@@ -25,6 +25,12 @@ module FunCi
                     [@project, checked_at.utc.iso8601, check.commit, *tip_row(check.tip), *merge_row(check.merge)])
       end
 
+      # A fetch found the trunk still at `sha`: the checks against it are as fresh as that fetch.
+      def seen(sha, at:)
+        @db.execute("UPDATE trunk_checks SET trunk_seen_at = ? WHERE project_path = ? AND trunk_sha = ?",
+                    [at.utc.iso8601, @project, sha])
+      end
+
       # The commit's check against the trunk SHA fun-ci saw last, or nil.
       def latest(sha)
         found = @db.execute("#{SELECT} WHERE project_path = ? AND commit_hash = ? " \

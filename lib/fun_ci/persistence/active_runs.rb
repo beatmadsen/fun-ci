@@ -52,16 +52,17 @@ module FunCi
       end
 
       def self.where(db, clause, *values)
-        db.execute("SELECT id, commit_hash, trigger_pid, pid, slot_lock FROM pipeline_runs " \
+        db.execute("SELECT id, commit_hash, trigger_pid, pid, slot_lock, fetch_pgid FROM pipeline_runs " \
                    "WHERE #{clause} AND #{ACTIVE} ORDER BY id", values).map { |row| active_run(db, row) }
       end
       private_class_method :where
 
-      def self.active_run(db, (id, commit_hash, trigger_pid, pid, slot_lock))
+      # The groups are each running stage's, and the trunk fetch's (docs/trunk-conflicts.md).
+      def self.active_run(db, (id, commit_hash, trigger_pid, pid, slot_lock, fetch_pgid))
         groups = db.execute("SELECT pid FROM stage_jobs WHERE pipeline_run_id = ? AND #{ACTIVE} AND pid IS NOT NULL",
                             [id]).flatten
-        ActiveRun.new(id: id, commit_hash: commit_hash, processes: [trigger_pid, pid].compact, stage_groups: groups,
-                      slot_lock: slot_lock)
+        ActiveRun.new(id: id, commit_hash: commit_hash, processes: [trigger_pid, pid].compact,
+                      stage_groups: [*groups, *fetch_pgid], slot_lock: slot_lock)
       end
       private_class_method :active_run
     end

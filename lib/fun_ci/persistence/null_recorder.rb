@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "trunk_recording"
+
 module FunCi
   module Persistence
     # Records nothing, for a pipeline run with no database.
@@ -11,6 +13,9 @@ module FunCi
       def keep_evidence(_job_id, _document); end
       def keep_raw(_job_id, _text); end
       def trunk_checked(_check); end
+      def trunk_fetched(_fetched, _tip); end
+      def trunk_fetch_process(_pgid); end
+      def trunk_fetches = TrunkRecording::NoFetches.new
       def alongside(_job_id) = []
       def stage_process(_job_id, _pid); end
       def slot_taken(_lock_file); end

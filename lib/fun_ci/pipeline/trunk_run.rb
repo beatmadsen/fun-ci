@@ -1,32 +1,49 @@
 # frozen_string_literal: true
 
 require_relative "../trunk/check"
+require_relative "../trunk/checker"
 
 module FunCi
   module Pipeline
     # A run's check against the trunk (docs/trunk-conflicts.md, Inside the
-    # trigger): made in a thread beside the stages, since it needs no slot,
-    # and recorded once they are done, through whichever recorder the run
-    # holds then. The thread touches no database, and whatever goes wrong in
-    # it is recorded as an unknown check rather than raised into the run.
+    # trigger). It begins before the stages, where the database may be used
+    # (claiming a fetch, recording its process); finishes in a thread beside
+    # them, which touches no database, since the slow suite's fork closes the
+    # recorder; and is recorded once they are done, through whichever
+    # recorder the run holds then. Whatever goes wrong is recorded as an
+    # unknown check rather than raised into the run.
     class TrunkRun
-      # trunk: answers #check(sha), a Trunk::Check or nil for a project that checks none.
-      def self.start(trunk, sha) = new(Thread.new { checked(trunk, sha) })
+      Result = Trunk::Checker::Result
 
-      def self.checked(trunk, sha)
-        trunk.check(sha)
+      # trunk: begins a check (#start(sha, fetches)) and finishes it (#finish(pending)).
+      def self.start(trunk, sha, recorder)
+        pending = trunk.start(sha, recorder.trunk_fetches) { |pid| recorder.trunk_fetch_process(pid) }
+        new(Thread.new { finished(trunk, pending, sha) })
       rescue StandardError => e
-        Trunk::Check.new(commit: sha, tip: nil, merge: Trunk::Merge.unknown("the check failed: #{e.message}"))
+        new(Thread.new { failed(sha, e) })
       end
-      private_class_method :checked
+
+      def self.finished(trunk, pending, sha)
+        trunk.finish(pending)
+      rescue StandardError => e
+        failed(sha, e)
+      end
+
+      def self.failed(sha, error)
+        check = Trunk::Check.new(commit: sha, tip: nil,
+                                 merge: Trunk::Merge.unknown("the check failed: #{error.message}"))
+        Result.new(check: check, fetched: nil)
+      end
+      private_class_method :finished, :failed
 
       def initialize(thread)
         @thread = thread
       end
 
       def finish(recorder)
-        check = @thread.value
-        recorder.trunk_checked(check) if check
+        result = @thread.value
+        recorder.trunk_fetched(result.fetched, result.check&.tip) if result.fetched
+        recorder.trunk_checked(result.check) if result.check
       end
     end
   end

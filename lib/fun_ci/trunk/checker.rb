@@ -2,44 +2,73 @@
 
 require_relative "../setup/project_config"
 require_relative "check"
+require_relative "fetch"
 require_relative "git"
 require_relative "merge_check"
 require_relative "resolver"
+require_relative "tip_reader"
 
 module FunCi
   module Trunk
     # Checks a commit against the project's trunk (docs/trunk-conflicts.md):
     # the ref `trunk:` names in .fun-ci/config, or the one the repository
-    # has; no check at all when it says `none`.
+    # has; none at all when it says `none`. A check starts where the database
+    # may be used (resolving the trunk, claiming a fetch, recording its pid)
+    # and finishes where it may not (waiting for the fetch, merging).
     class Checker
       SET_IT = "set trunk: in .fun-ci/config"
+      FETCH_DEADLINE = 20
 
-      def self.for(project) = new(Git.new(project), Setup::ProjectConfig.new(project))
+      # What a check found, or nil for none, and how its fetch went, or nil when it made none.
+      Result = Data.define(:check, :fetched)
+      # A check begun: the trunk it found (nil for none), its fetch if started, and the fetch before it.
+      Pending = Data.define(:sha, :ref, :started, :last)
+      NOT_CHECKED = Pending.new(sha: nil, ref: nil, started: nil, last: nil)
 
-      # config: answers #trunk, the name .fun-ci/config gives, or nil.
-      def initialize(git, config)
-        @git = git
-        @config = config
+      def self.for(project, env: ENV.to_h)
+        new(Git.new(project), Setup::ProjectConfig.new(project), Fetch.new(project, env: env), -> { Time.now })
       end
 
-      # A Trunk::Check, or nil when the project checks no trunk.
-      def check(sha)
+      # config: answers #trunk and #trunk_fetch; fetch: starts and finishes a Fetch; clock: answers the time.
+      def initialize(git, config, fetch, clock)
+        @git = git
+        @config = config
+        @fetch = fetch
+        @clock = clock
+      end
+
+      # fetches: claims a fetch and knows the last (Persistence::TrunkFetches). Yields a fetch's pid.
+      def start(sha, fetches, &)
         setting = @config.trunk
-        return nil if setting == "none"
+        return NOT_CHECKED if setting == "none"
 
         ref = Resolver.pick(setting, @git.refs)
-        ref ? against(sha, ref) : unknown(sha, "no trunk found; #{SET_IT}")
+        started = fetch?(ref, fetches) ? @fetch.start(ref, &) : nil
+        Pending.new(sha: sha, ref: ref, started: started, last: fetches.last)
+      end
+
+      def finish(pending)
+        return Result.new(check: nil, fetched: nil) if pending.equal?(NOT_CHECKED)
+        return Result.new(check: unknown(pending.sha, "no trunk found; #{SET_IT}"), fetched: nil) unless pending.ref
+
+        fetched = pending.started && @fetch.finish(pending.started, deadline: FETCH_DEADLINE)
+        Result.new(check: against(pending, fetched), fetched: fetched)
       end
 
       private
 
-      def against(sha, ref)
-        full = ref.remote ? "refs/remotes/#{ref}" : "refs/heads/#{ref.branch}"
-        tip_sha = @git.rev(full)
-        return unknown(sha, "#{ref} doesn't exist; #{SET_IT}") unless tip_sha
+      def fetch?(ref, fetches)
+        interval = @config.trunk_fetch
+        ref&.remote && interval && fetches.claim(now: @clock.call, interval: interval)
+      end
 
-        tip = Tip.new(remote: ref.remote, branch: ref.branch, sha: tip_sha, seen_at: @git.moved_at(full))
-        Check.new(commit: sha, tip: tip, merge: MergeCheck.new(@git).merge(sha, tip_sha, ref.to_s))
+      def against(pending, fetched)
+        ref = pending.ref
+        tip = TipReader.new(@git, @clock).tip(ref, fetching: !@config.trunk_fetch.nil?, fetched: fetched,
+                                                   last: pending.last)
+        return unknown(pending.sha, "#{ref} doesn't exist; #{SET_IT}") unless tip
+
+        Check.new(commit: pending.sha, tip: tip, merge: MergeCheck.new(@git).merge(pending.sha, tip.sha, ref.to_s))
       end
 
       def unknown(sha, reason) = Check.new(commit: sha, tip: nil, merge: Merge.unknown(reason))

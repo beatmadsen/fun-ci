@@ -40,6 +40,20 @@ class TestTrunkChecks < Minitest::Test
     assert_equal "clean", @checks.latest("abc1234").merge.outcome
   end
 
+  def test_should_count_checks_against_a_tip_fetched_again_as_seen_then
+    @checks.record(trunk_check("abc1234", CONFLICTS, seen_at: SEEN, sha: "fff"), checked_at: SEEN)
+    @checks.seen("fff", at: SEEN + 600)
+
+    assert_equal SEEN + 600, @checks.latest("abc1234").tip.seen_at
+  end
+
+  def test_should_leave_checks_against_another_tip_as_they_were_seen
+    @checks.record(trunk_check("abc1234", CONFLICTS, seen_at: SEEN, sha: "aaa"), checked_at: SEEN)
+    @checks.seen("fff", at: SEEN + 600)
+
+    assert_equal SEEN, @checks.latest("abc1234").tip.seen_at
+  end
+
   def test_should_not_find_another_project_s_check_of_the_same_commit
     FunCi::Persistence::TrunkChecks.new(@db, "/elsewhere").record(trunk_check("abc1234", CONFLICTS, seen_at: SEEN),
                                                                   checked_at: SEEN)
