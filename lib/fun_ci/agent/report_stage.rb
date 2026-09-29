@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "json"
-require "time"
 require_relative "../evidence/document"
+require_relative "../persistence/stage_job"
 
 module FunCi
   module Agent
@@ -62,9 +62,7 @@ module FunCi
         end
 
         def self.seconds(job)
-          return nil unless job[:started_at] && job[:completed_at]
-
-          (Time.parse(job[:completed_at]) - Time.parse(job[:started_at])).round(1)
+          Persistence::StageJob.elapsed_duration(job)&.round(1)
         end
         private_class_method :kept, :seconds
       end

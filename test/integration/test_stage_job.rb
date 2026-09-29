@@ -102,6 +102,12 @@ class TestStageJobElapsedDuration < Minitest::Test
     assert_in_delta 5.0, duration, 0.01, "Should calculate 5 seconds elapsed"
   end
 
+  def test_should_never_report_a_stage_ending_before_it_started
+    job = job_timed(Time.utc(2026, 1, 1, 12, 0, 0.572r), Time.utc(2026, 1, 1, 12, 0, 0))
+
+    assert_equal 0, FunCi::Persistence::StageJob.elapsed_duration(job)
+  end
+
   def test_should_return_nil_elapsed_duration_when_not_started
     id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: @run_id, stage: "build")
     job = FunCi::Persistence::StageJob.find(@db, id)
@@ -122,7 +128,7 @@ class TestStageJobElapsedDuration < Minitest::Test
   def job_timed(started, completed)
     id = FunCi::Persistence::StageJob.create(@db, pipeline_run_id: @run_id, stage: "build")
     @db.execute("UPDATE stage_jobs SET started_at = ?, completed_at = ? WHERE id = ?",
-                [started.iso8601, completed.iso8601, id])
+                [started.iso8601(3), completed.iso8601(3), id])
     FunCi::Persistence::StageJob.find(@db, id)
   end
 end

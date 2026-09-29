@@ -76,10 +76,12 @@ module FunCi
                    [new_status, Time.now.utc.iso8601(3), id])
       end
 
+      # Never less than nothing: rows kept before ends were recorded to the
+      # millisecond can end in the second they started, before their start.
       def self.elapsed_duration(job)
         return nil unless job[:started_at] && job[:completed_at]
 
-        Time.parse(job[:completed_at]) - Time.parse(job[:started_at])
+        [Time.parse(job[:completed_at]) - Time.parse(job[:started_at]), 0].max
       end
 
       def self.row_to_hash(row)
