@@ -38,4 +38,21 @@ class TestAgentTrunkStatus < Minitest::Test
                     "Conflicts with origin/main in 2 files. When the task is done, integrate: git pull origin main " \
                     "(or git pull --rebase origin main if the branch isn't shared)\n"
   end
+
+  def test_should_print_no_trunk_line_while_the_check_is_going
+    @client.start_trunk_check(SHA)
+
+    @client.status
+
+    refute_includes @client.stdout, "trunk"
+  end
+
+  def test_should_say_a_check_that_never_finished_is_unknown
+    @client.start_trunk_check(SHA)
+    @client.clock.pause(60)
+
+    @client.status
+
+    assert_includes @client.stdout, "  trunk  unknown      the check never finished\n"
+  end
 end

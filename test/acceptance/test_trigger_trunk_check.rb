@@ -22,6 +22,12 @@ class TestTriggerTrunkCheck < Minitest::Test
     assert_equal CONFLICTS, check.merge
   end
 
+  def test_should_note_when_the_run_began_its_check
+    trigger(INSTANT_SUCCESS_RUNNER)
+
+    refute_nil @client.pipeline_runs_for(commit_hash: "abc1234").first[:trunk_started_at]
+  end
+
   private
 
   def trigger(runner)

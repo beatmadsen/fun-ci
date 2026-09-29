@@ -48,6 +48,13 @@ class TestAgentReports < Minitest::Test
     assert_nil @reports.for("abc1234", "fast").trunk
   end
 
+  def test_should_report_a_check_begun_and_not_yet_recorded_as_checking
+    run = run_in_project("abc1234", "running")
+    FunCi::Persistence::PipelineRun.trunk_started(@db, run, @clock.now)
+
+    assert_equal "checking", @reports.for("abc1234", "fast").trunk.state
+  end
+
   def test_should_take_the_subject_from_git
     run_in_project("abc1234", "completed")
 

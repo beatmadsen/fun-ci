@@ -48,6 +48,12 @@ class AgentClient
     run_id
   end
 
+  # The commit's newest run begins its check against the trunk now, as the pipeline would record it.
+  def start_trunk_check(sha)
+    run = FunCi::Persistence::PipelineRun.find_by_commit(db, sha).first
+    FunCi::Persistence::PipelineRun.trunk_started(db, run[:id], clock.now)
+  end
+
   # A check of the commit against the trunk, as the pipeline would record it.
   def record_trunk_check(sha, merge, seen:)
     FunCi::Persistence::TrunkChecks.new(db, @workspace.project_dir).record(trunk_check(sha, merge, seen_at: seen),

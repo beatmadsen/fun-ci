@@ -5,7 +5,7 @@ require "time"
 module FunCi
   module Persistence
     module PipelineRun
-      COLUMNS = %i[id commit_hash branch status pid project_path created_at updated_at].freeze
+      COLUMNS = %i[id commit_hash branch status pid project_path created_at updated_at trunk_started_at].freeze
       SELECT = "SELECT #{COLUMNS.join(", ")} FROM pipeline_runs".freeze
 
       def self.create(db, commit_hash:, branch:, project_path: nil)
@@ -48,6 +48,11 @@ module FunCi
       # When an agent last polled the run, waiting on it (acceptance-tests.md, AT-9.12).
       def self.mark_waited(db, id, at)
         db.execute("UPDATE pipeline_runs SET waited_at = ? WHERE id = ?", [at, id])
+      end
+
+      # When the run began checking its commit against the trunk (docs/trunk-conflicts.md).
+      def self.trunk_started(db, id, at)
+        db.execute("UPDATE pipeline_runs SET trunk_started_at = ? WHERE id = ?", [at.utc.iso8601, id])
       end
 
       def self.update_status(db, id, new_status)

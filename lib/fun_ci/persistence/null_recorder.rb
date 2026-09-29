@@ -15,6 +15,7 @@ module FunCi
       def trunk_checked(_check); end
       def trunk_fetched(_fetched, _tip); end
       def trunk_fetch_process(_pgid); end
+      def trunk_check_started; end
       def trunk_fetches = TrunkRecording::NoFetches.new
       def alongside(_job_id) = []
       def stage_process(_job_id, _pid); end

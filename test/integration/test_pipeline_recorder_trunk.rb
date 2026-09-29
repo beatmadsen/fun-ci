@@ -54,6 +54,13 @@ class TestDbRecorderTrunk < Minitest::Test
     refute FunCi::Persistence::TrunkFetches.new(@db, "/project").claim(now: Time.now, interval: 300)
   end
 
+  def test_should_note_when_the_run_began_its_check
+    recorder = recorder_of_run
+    recorder.trunk_check_started
+
+    refute_nil FunCi::Persistence::PipelineRun.find(@db, recorder.pipeline_run_id)[:trunk_started_at]
+  end
+
   def test_should_keep_the_fetch_s_process_group_for_a_cancel
     recorder = recorder_of_run
     recorder.trunk_fetch_process(4242)

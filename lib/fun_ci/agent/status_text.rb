@@ -18,8 +18,11 @@ module FunCi
          *trunk(report), *footer(report)]
       end
 
+      # Nothing while the check is going: right after a commit it would say nothing useful.
       def self.trunk(report)
-        report.trunk ? TrunkText.lines(report.trunk, branch: report.branch, next_step: report.deciding.nil?) : []
+        return [] if report.trunk.nil? || report.trunk.state == "checking"
+
+        TrunkText.lines(report.trunk, branch: report.branch, next_step: report.deciding.nil?)
       end
 
       def self.header(report) = %(fun-ci: #{report.sha[0, 7]} "#{report.subject}" on #{report.branch})

@@ -62,6 +62,7 @@ class FakeRecorder
   def trunk_checked(check) = @calls << [:trunk_checked, check]
   def trunk_fetched(fetched, tip) = @calls << [:trunk_fetched, fetched, tip]
   def trunk_fetch_process(pgid) = @calls << [:trunk_fetch_process, pgid]
+  def trunk_check_started = @calls << [:trunk_check_started]
   def trunk_fetches = FunCi::Persistence::TrunkRecording::NoFetches.new
   def alongside(_job_id) = @alongside
   def kept_evidence = @calls.select { |call| call.first == :keep_evidence }.map(&:last)

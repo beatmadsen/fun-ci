@@ -15,9 +15,17 @@ module FunCi
     class TrunkRun
       Result = Trunk::Checker::Result
 
-      # trunk: begins a check (#start(sha, fetches)) and finishes it (#finish(pending)).
+      # For a project that checks no trunk.
+      class Skipped
+        def finish(_recorder) = nil
+      end
+
+      # trunk: begins a check (#start(sha, fetches), nil for none) and finishes it (#finish(pending)).
       def self.start(trunk, sha, recorder)
         pending = trunk.start(sha, recorder.trunk_fetches) { |pid| recorder.trunk_fetch_process(pid) }
+        return Skipped.new unless pending
+
+        recorder.trunk_check_started
         new(Thread.new { finished(trunk, pending, sha) })
       rescue StandardError => e
         new(Thread.new { failed(sha, e) })

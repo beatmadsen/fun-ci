@@ -62,7 +62,8 @@ module FunCi
                        %w[stage_jobs output_tail TEXT], %w[stage_jobs failures TEXT],
                        %w[pipeline_runs waited_at TEXT], %w[stage_jobs exit_status INTEGER],
                        %w[stage_jobs signal TEXT], %w[stage_jobs budget INTEGER], %w[stage_jobs pruned INTEGER],
-                       %w[stage_jobs evidence TEXT], %w[pipeline_runs fetch_pgid INTEGER]].freeze
+                       %w[stage_jobs evidence TEXT], %w[pipeline_runs fetch_pgid INTEGER],
+                       %w[pipeline_runs trunk_started_at TEXT]].freeze
 
       def self.migrate!(db)
         with_setup_lock(db.filename("main")) do

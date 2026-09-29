@@ -2,6 +2,10 @@
 
 module FunCi
   module Trunk
+    # Seconds a run's fetch of the trunk may take, and then its merge.
+    FETCH_DEADLINE = 20
+    CHECK_BUDGET = 5
+
     # The trunk as fun-ci saw it: its branch, on a remote or (remote nil)
     # local, the SHA at its tip, and when fun-ci first saw that SHA.
     Tip = Data.define(:remote, :branch, :sha, :seen_at)

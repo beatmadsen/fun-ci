@@ -15,6 +15,10 @@ module FunCi
         def last = nil
       end
 
+      def trunk_check_started
+        tolerating { PipelineRun.trunk_started(@db, @pipeline_run_id, Time.now) }
+      end
+
       def trunk_fetches = tolerating { TrunkFetches.new(@db, project) } || NoFetches.new
 
       # The fetch's process group, which cancelling the run kills.

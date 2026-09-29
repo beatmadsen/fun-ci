@@ -42,6 +42,12 @@ class TestStatusText < Minitest::Test
     assert_equal "  trunk  in trunk", lines(trunk: in_trunk)[5]
   end
 
+  def test_should_print_no_trunk_line_while_the_check_is_going
+    checking = FunCi::Trunk::Shown.unchecked(started: Time.utc(2026, 9, 29), now: Time.utc(2026, 9, 29))
+
+    refute_includes lines(trunk: checking).join("\n"), "trunk"
+  end
+
   def test_should_not_say_how_to_integrate_while_a_needed_stage_has_failed
     refute_includes lines(verdict: :failed, trunk: conflict, deciding: "build").join("\n"), "integrate"
   end

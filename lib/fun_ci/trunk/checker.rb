@@ -17,13 +17,11 @@ module FunCi
     # and finishes where it may not (waiting for the fetch, merging).
     class Checker
       SET_IT = "set trunk: in .fun-ci/config"
-      FETCH_DEADLINE = 20
 
       # What a check found, or nil for none, and how its fetch went, or nil when it made none.
       Result = Data.define(:check, :fetched)
       # A check begun: the trunk it found (nil for none), its fetch if started, and the fetch before it.
       Pending = Data.define(:sha, :ref, :started, :last)
-      NOT_CHECKED = Pending.new(sha: nil, ref: nil, started: nil, last: nil)
 
       def self.for(project, env: ENV.to_h)
         new(Git.new(project), Setup::ProjectConfig.new(project), Fetch.new(project, env: env), -> { Time.now })
@@ -38,9 +36,10 @@ module FunCi
       end
 
       # fetches: claims a fetch and knows the last (Persistence::TrunkFetches). Yields a fetch's pid.
+      # Nil when the project checks no trunk.
       def start(sha, fetches, &)
         setting = @config.trunk
-        return NOT_CHECKED if setting == "none"
+        return nil if setting == "none"
 
         ref = Resolver.pick(setting, @git.refs)
         started = fetch?(ref, fetches) ? @fetch.start(ref, &) : nil
@@ -48,7 +47,6 @@ module FunCi
       end
 
       def finish(pending)
-        return Result.new(check: nil, fetched: nil) if pending.equal?(NOT_CHECKED)
         return Result.new(check: unknown(pending.sha, "no trunk found; #{SET_IT}"), fetched: nil) unless pending.ref
 
         fetched = pending.started && @fetch.finish(pending.started, deadline: FETCH_DEADLINE)

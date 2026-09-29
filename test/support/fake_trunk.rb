@@ -14,7 +14,6 @@ class FakeTrunk
   # A project that checks no trunk, as with `trunk: none`.
   NONE = Object.new.tap do |none|
     def none.start(_sha, _fetches) = nil
-    def none.finish(_pending) = RESULT.new(check: nil, fetched: nil)
   end.freeze
 
   def initialize(merge, seen_at: Time.now)

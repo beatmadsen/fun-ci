@@ -40,18 +40,23 @@ class TestTrunkRun < Minitest::Test
 
     def initialize = @calls = []
     def trunk_fetches = :fetches
+    def trunk_check_started = @calls << [:started]
     def trunk_fetch_process(pid) = @calls << [:process, pid]
     def trunk_fetched(fetched, tip) = @calls << [:fetched, fetched, tip&.sha]
     def trunk_checked(check) = @calls << [:checked, check.merge]
   end
 
+  def test_should_note_the_check_has_begun_before_recording_it
+    assert_equal [:started], run_with(FakeTrunk.new(CLEAN)).calls.first
+  end
+
   def test_should_record_the_check_the_trunk_made
-    assert_equal [[:checked, CLEAN]], run_with(FakeTrunk.new(CLEAN)).calls
+    assert_equal [:checked, CLEAN], run_with(FakeTrunk.new(CLEAN)).calls.last
   end
 
   def test_should_record_a_check_that_raised_as_unknown_with_its_reason
-    assert_equal [[:checked, FunCi::Trunk::Merge.unknown("the check failed: git went away")]],
-                 run_with(RaisingTrunk.new).calls
+    assert_equal [:checked, FunCi::Trunk::Merge.unknown("the check failed: git went away")],
+                 run_with(RaisingTrunk.new).calls.last
   end
 
   def test_should_record_a_check_that_could_not_start_as_unknown_with_its_reason
@@ -68,7 +73,7 @@ class TestTrunkRun < Minitest::Test
   end
 
   def test_should_record_how_the_fetch_went_and_the_tip_it_found
-    assert_equal [:fetched, FETCHED, TrunkKit::TRUNK_SHA], run_with(FetchingTrunk.new).calls[1]
+    assert_equal [:fetched, FETCHED, TrunkKit::TRUNK_SHA], run_with(FetchingTrunk.new).calls[2]
   end
 
   private

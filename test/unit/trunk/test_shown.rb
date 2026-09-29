@@ -36,6 +36,15 @@ class TestTrunkShown < Minitest::Test
     assert_equal "unknown", FunCi::Trunk::Shown.of(check, now: NOW).state
   end
 
+  def test_should_show_a_check_still_within_its_time_as_checking
+    assert_equal "checking", FunCi::Trunk::Shown.unchecked(started: NOW - 24, now: NOW).state
+  end
+
+  def test_should_show_a_check_past_its_time_as_unknown
+    assert_equal MERGE.unknown("the check never finished"),
+                 FunCi::Trunk::Shown.unchecked(started: NOW - 26, now: NOW).check.merge
+  end
+
   private
 
   def shown(merge) = FunCi::Trunk::Shown.of(trunk_check("abc", merge, seen_at: NOW - 120), now: NOW)

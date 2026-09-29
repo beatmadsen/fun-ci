@@ -47,8 +47,10 @@ class TestTrunkChecker < Minitest::Test
     assert_equal MERGE.clean(ahead: 2, behind: 0), check.check.merge
   end
 
-  def test_should_make_no_check_when_the_project_says_none
-    assert_nil check(trunk: "none").check
+  def test_should_begin_no_check_when_the_project_says_none
+    checker = checker(Config.new(trunk: "none", trunk_fetch: 300), FakeFetch.new)
+
+    assert_nil checker.start("abc1234", Fetches.new(due: true))
   end
 
   def test_should_say_the_named_trunk_does_not_exist
