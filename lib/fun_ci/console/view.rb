@@ -7,9 +7,9 @@ module FunCi
     # fits, scrolled so the run under the cursor is on it (renderer-protocol.md,
     # `board`).
     class View
-      # The renderer's 14-row header, a blank line and the footer.
-      CHROME_ROWS = 16
-      ROWS_PER_RUN = 2
+      # The renderer's 14-row header, a blank line, the stages' names, a blank
+      # line and the footer (renderer-protocol.md, `board`).
+      CHROME_ROWS = 18
 
       def initialize(key_handler:)
         @key_handler = key_handler
@@ -18,7 +18,7 @@ module FunCi
 
       # The number of runs a terminal of `rows` fits.
       def resize(rows)
-        @page_size = [(rows - CHROME_ROWS) / ROWS_PER_RUN, 0].max
+        @page_size = [rows - CHROME_ROWS, 0].max
       end
 
       # :quit when the key ends the session.

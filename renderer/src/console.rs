@@ -27,7 +27,7 @@ impl Console {
 
     /// Draws the header in `depth`'s colours from the next frame.
     pub fn set_depth(&mut self, depth: crate::art::output::Depth) {
-        self.view.animator().set_depth(depth);
+        self.view.set_depth(depth);
     }
 
     /// Clears the screen at the start of the next frame.

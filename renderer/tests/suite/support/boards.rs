@@ -41,9 +41,16 @@ pub fn last_screen(lines: &[String]) -> Grid {
     emulate(&frames(lines)).pop().unwrap()
 }
 
-/// Whether the first cell of `word` on screen row `row` is bold.
-pub fn bold_at_word(screen: &Grid, row: usize, word: &str) -> bool {
-    let text: Vec<String> = screen.text().lines().map(str::to_string).collect();
-    let column = text[row].find(word).unwrap();
-    screen.cells[row][column].attrs.contains(&"bold")
+/// The screen row of the table's heading, which names each stage over its column.
+pub const HEADING_ROW: usize = 15;
+
+/// The column `stage`'s cells start at, as the heading names it.
+pub fn stage_column(screen: &Grid, stage: &str) -> usize {
+    let heading = screen.text().lines().nth(HEADING_ROW).unwrap().to_string();
+    heading[..heading.find(stage).unwrap_or_else(|| panic!("no {stage:?} in {heading:?}"))].chars().count()
+}
+
+/// Whether the first cell of `stage`'s column on screen row `row` is bold.
+pub fn bold_at_stage(screen: &Grid, row: usize, stage: &str) -> bool {
+    screen.cells[row][stage_column(screen, stage)].attrs.contains(&"bold")
 }

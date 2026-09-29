@@ -4,6 +4,8 @@
 
 use font8x8::{BASIC_FONTS, BLOCK_FONTS, BOX_FONTS, LATIN_FONTS, UnicodeFonts};
 
+use super::symbols::symbol;
+
 use super::palette::{Rgb, cell_colours};
 use crate::grid::{Cell, Grid};
 
@@ -63,7 +65,7 @@ fn glyph(ch: char) -> [u8; 16] {
     if ('\u{2800}'..='\u{28FF}').contains(&ch) {
         return braille(u32::from(ch) & 0xFF);
     }
-    let rows = [BASIC_FONTS.get(ch), LATIN_FONTS.get(ch), BOX_FONTS.get(ch), BLOCK_FONTS.get(ch)];
+    let rows = [symbol(ch), BASIC_FONTS.get(ch), LATIN_FONTS.get(ch), BOX_FONTS.get(ch), BLOCK_FONTS.get(ch)];
     let rows = rows.into_iter().flatten().next().unwrap_or([0xFF, 0x81, 0x81, 0x81, 0x81, 0x81, 0x81, 0xFF]);
     std::array::from_fn(|y| rows[y / 2])
 }

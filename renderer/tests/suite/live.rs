@@ -108,14 +108,14 @@ fn live_frames_are_the_headless_frames_for_the_same_state_and_clock() {
 fn the_clock_advances_from_the_boards_now_with_wall_time() {
     let a_second_of_idle_frames = [Input::FrameDue, Input::FrameDue, Input::FrameDue, Input::FrameDue];
     let frames = live([vec![line(&board_aged(1_790_000_000, 59))], a_second_of_idle_frames.to_vec()].concat()).frames;
-    assert!(screen_text(&frames).contains("1m ago"));
+    assert!(screen_text(&frames).lines().any(|line| line.trim_end().ends_with(" 1m")));
 }
 
 #[test]
 fn a_new_board_sets_the_clock_to_its_now() {
     let aged = board_aged(1_790_000_000, 59);
     let frames = live(vec![line(&aged), Input::FrameDue, line(&aged)]).frames;
-    assert!(screen_text(&frames).contains("just now"));
+    assert!(screen_text(&frames).lines().any(|line| line.trim_end().ends_with(" now")));
 }
 
 #[test]

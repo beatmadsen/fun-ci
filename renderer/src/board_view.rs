@@ -2,12 +2,15 @@
 //! animations over them, laid out as the 1.x `BoardRenderer` laid them out.
 
 use crate::animator::{Animator, HEADER_HEIGHT};
-use crate::ansi::{DIM, paint};
-use crate::format::{age, project_name, short_sha};
+use crate::ansi::{DIM, RESET, paint};
+use crate::art::output::{Depth, escape};
+use crate::format::{age, cut, project_name, short_sha};
 use crate::model::{Board, Run, StaleTrunk};
-use crate::row::format_run;
 use crate::screen::Screen;
 use crate::spinner::Spinner;
+use crate::table::layout::conflict_marker;
+use crate::table::palette::SECONDARY;
+use crate::table::{Frame, draw};
 
 const EMPTY_STATE: [&str; 7] = [
     "",
@@ -21,18 +24,32 @@ const EMPTY_STATE: [&str; 7] = [
 
 pub use crate::model::Moment;
 
+/// The rows under the header that are not runs: a blank line, the stages'
+/// names, a blank line and the footer (renderer-protocol.md, `board`).
+const CHROME_BELOW_HEADER: usize = 4;
+
+/// What the footer adds when a conflict is shown as `↯ main` rather than in words.
+const ZIGZAG_LEGEND: &str = "   ↯ conflicts with trunk";
+
 /// Draws boards into a frame buffer.
 #[derive(Debug)]
 pub struct BoardView {
     screen: Screen,
     spinner: Spinner,
     animator: Animator,
+    depth: Depth,
 }
 
 impl BoardView {
     #[must_use]
     pub fn new(animator: Animator) -> Self {
-        Self { screen: Screen::new(80), spinner: Spinner::default(), animator }
+        Self { screen: Screen::new(80), spinner: Spinner::default(), animator, depth: Depth::TrueColour }
+    }
+
+    /// Draws the header and the table in `depth`'s colours from the next frame.
+    pub fn set_depth(&mut self, depth: Depth) {
+        self.depth = depth;
+        self.animator.set_depth(depth);
     }
 
     pub fn animator(&mut self) -> &mut Animator {
@@ -69,7 +86,7 @@ impl BoardView {
     pub fn render(&mut self, board: &Board, at: Moment, rows: u16) -> String {
         self.screen.set_height(rows);
         self.screen.write_at(HEADER_HEIGHT + 1, 1, "");
-        self.render_body(board, at.board_ms, rows);
+        self.render_body(board, at, rows);
         self.screen.clear_below();
         self.animator.render(&mut self.screen, board, at)
     }
@@ -79,11 +96,11 @@ impl BoardView {
         self.screen.take()
     }
 
-    fn render_body(&mut self, board: &Board, now_ms: i64, rows: u16) {
+    fn render_body(&mut self, board: &Board, at: Moment, rows: u16) {
         if board.runs.is_empty() {
             self.render_empty(rows);
         } else {
-            self.render_rows(board, now_ms, rows);
+            self.render_rows(board, at, rows);
         }
     }
 
@@ -97,43 +114,50 @@ impl BoardView {
         }
     }
 
-    fn render_rows(&mut self, board: &Board, now_ms: i64, rows: u16) {
-        let lines = self.lines(board, now_ms, rows);
-        self.render_lines(&lines, board.view.cursor);
+    /// A blank line, the stages' names, one line per run that fits, a blank
+    /// line, and the footer on the line after.
+    fn render_rows(&mut self, board: &Board, at: Moment, rows: u16) {
+        let (lines, zigzag) = self.lines(board, at, rows);
         if !lines.is_empty() {
             self.screen.println("");
-        }
-        self.render_footer(board, now_ms, rows);
-    }
-
-    /// The footer, unless its newline would scroll a screen with no row left below it.
-    fn render_footer(&mut self, board: &Board, now_ms: i64, rows: u16) {
-        if usize::from(rows) > HEADER_HEIGHT + 1 {
-            self.screen.println(&paint(DIM, &footer(board, now_ms)));
-        }
-    }
-
-    fn lines(&self, board: &Board, now_ms: i64, rows: u16) -> Vec<String> {
-        let fitting = usize::from(rows).saturating_sub(HEADER_HEIGHT + 2) / 2;
-        let spinner = self.spinner.current();
-        board.runs.iter().take(fitting).map(|run| format_run(run, now_ms, spinner)).collect()
-    }
-
-    fn render_lines(&mut self, lines: &[String], cursor: Option<usize>) {
-        for (i, line) in lines.iter().enumerate() {
-            let selected = cursor == Some(i);
-            self.screen.println(&if selected { format!("> {}", lstrip(line)) } else { line.clone() });
-            if i + 1 != lines.len() {
-                self.screen.println("");
+            for line in &lines {
+                self.screen.println(line);
             }
+            self.screen.println("");
+        }
+        let (keys, note) = footer(board, at.board_ms);
+        self.render_footer(&keys, &(note + if zigzag { ZIGZAG_LEGEND } else { "" }), rows);
+    }
+
+    /// The footer below the header, if a row is left for it: the keys dim, and
+    /// the notes in a grey no state uses, cut first when they don't fit.
+    fn render_footer(&mut self, keys: &str, note: &str, rows: u16) {
+        if usize::from(rows) > HEADER_HEIGHT + 1 {
+            let width = usize::from(self.screen.width());
+            let keys = cut(keys, width);
+            let note = cut(note, width - keys.chars().count());
+            let note_colour = escape(38, SECONDARY, self.depth);
+            self.screen.print_last(&format!("{}{note_colour}{note}{RESET}", paint(DIM, &keys)));
         }
     }
+
+    /// The table's heading and as many runs as fit, or nothing when not even
+    /// one does; and whether a conflict among them is shown as a zigzag.
+    fn lines(&self, board: &Board, at: Moment, rows: u16) -> (Vec<String>, bool) {
+        let fitting = usize::from(rows).saturating_sub(HEADER_HEIGHT + CHROME_BELOW_HEADER);
+        let frame = Frame { now_ms: at.board_ms, play_ms: at.play_ms, spinner: self.spinner.current(), width: self.screen.width(), depth: self.depth };
+        let drawn = draw(board, frame);
+        let zigzag = !drawn.layout.words && board.runs.iter().take(fitting).any(|run| conflict_marker(run, false).is_some());
+        (if fitting == 0 { Vec::new() } else { drawn.lines.into_iter().take(fitting + 1).collect() }, zigzag)
+    }
+
 }
 
-fn footer(board: &Board, now_ms: i64) -> String {
+/// The footer's keys or prompt, and its note on stale trunks.
+fn footer(board: &Board, now_ms: i64) -> (String, String) {
     match confirming(board) {
-        Some(run) => format!("  Cancel {} ({})? y / n", run.commit.branch, short_sha(&run.commit.sha)),
-        None => format!("  j/k move   c cancel   q quit{}", stale_note(&board.stale_trunks, now_ms)),
+        Some(run) => (format!("  Cancel {} ({})? y / n", run.commit.branch, short_sha(&run.commit.sha)), String::new()),
+        None => ("  j/k move   c cancel   q quit".to_string(), stale_note(&board.stale_trunks, now_ms)),
     }
 }
 
@@ -143,18 +167,15 @@ fn stale_note(stale: &[StaleTrunk], now_ms: i64) -> String {
         return String::new();
     }
     let projects: Vec<String> = stale.iter().map(|trunk| stale_project(trunk, now_ms)).collect();
-    format!("   trunk stale: {}", projects.join("; "))
+    format!("   {}", projects.join("; "))
 }
 
+/// `app: trunk 3h old`, from its last good fetch, or `app: trunk fetch failed`.
 fn stale_project(trunk: &StaleTrunk, now_ms: i64) -> String {
-    let fetched = trunk.since.map_or_else(|| "fetch failed".to_string(), |since| format!("fetched {}", age(since, now_ms)));
-    format!("{}, {fetched}", project_name(&trunk.project))
+    let fetched = trunk.since.map_or_else(|| "fetch failed".to_string(), |since| format!("{} old", age(since, now_ms)));
+    format!("{}: trunk {fetched}", project_name(&trunk.project))
 }
 
 fn confirming(board: &Board) -> Option<&Run> {
     board.view.cursor.filter(|_| board.view.confirming).and_then(|index| board.runs.get(index))
-}
-
-fn lstrip(line: &str) -> &str {
-    line.trim_start_matches([' ', '\t', '\n', '\u{b}', '\u{c}', '\r', '\0'])
 }

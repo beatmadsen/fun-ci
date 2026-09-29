@@ -48,7 +48,7 @@ class TestConsoleSessionPolls < Minitest::Test
 
   def test_should_page_the_board_for_the_rows_of_a_resize
     @board_data.runs = (1..6).map { |id| ConsoleFakes.run_row(id) }
-    @session.receive('{"t":"resize","cols":120,"rows":24}')
+    @session.receive('{"t":"resize","cols":120,"rows":22}')
 
     assert_equal 4, @port.sent.last["runs"].size
   end

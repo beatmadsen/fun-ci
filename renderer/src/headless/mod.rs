@@ -7,6 +7,7 @@ pub mod palette;
 pub mod raster;
 pub mod sheet;
 pub mod stats;
+mod symbols;
 
 use std::fs;
 use std::path::{Path, PathBuf};

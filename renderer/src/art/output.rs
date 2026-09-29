@@ -87,7 +87,9 @@ fn extended(mut spans: Vec<Span>, row: usize, col: usize) -> Vec<Span> {
     spans
 }
 
-fn escape(layer: u8, rgb: [u8; 3], depth: Depth) -> String {
+/// The SGR escape setting `layer` (38 text, 48 background) to `rgb`, in `depth`.
+#[must_use]
+pub fn escape(layer: u8, rgb: [u8; 3], depth: Depth) -> String {
     match depth {
         Depth::TrueColour => format!("\u{1b}[{layer};2;{};{};{}m", rgb[0], rgb[1], rgb[2]),
         Depth::Xterm256 => format!("\u{1b}[{layer};5;{}m", xterm(rgb)),

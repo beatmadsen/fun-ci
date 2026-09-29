@@ -1,112 +1,129 @@
 ---
 source: tests/suite/snapshots.rs
+assertion_line: 32
 expression: "render(& frames(\"narrow-60\"))"
 ---
 frame 0001 at 60x30
   header cecf31f7
-  |>   d54ede8  main  Scheduled...  just now
   |
-  |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
-  |low --  FAILED  4m ago
-  |
-  |  8d552d0  main  Lint 0.4s  Build 1.3s  Fast TIMEOUT 10s  Sl
-  |ow --  TIMED OUT  25m ago
-  |
-  |  c67191d  spike  Lint 0.3s  Build 1.2s  Fast 0.7s  Slow --
-  | CANCELLED  1h ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m02
-  |  PASSED  25h ago
+  |                           l  b  f  s
+  |▌  f7cf32d  feature/login  ✓  ✓  ⠙  ·  RUNNING    now
+  |▌› d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
+  |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
+  |   c67191d  spike          ✓  ✓  –  –  cancelled   1h
+  |   1767828  main           ✓  ✓  ✓  ✓  passed      1d
   |
   |  Cancel main (d54ede8)? y / n
   |
-  :..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |
+  |
+  |
+  |
+  |
   :
-  :......................bbbbbbbbb..ccccccccccccccc..aaaaaaa..a
-  :aaaaaa..cccccc..aaaaaa
+  :...........................aaaaaaaaaa
+  :bbbcccccccccdddddddddddddddeeeeeefffaaafffffffffffccc
+  :ghhiiiiiiiiihhhhhhhhhhhhhhhggggggggggggjjjjjjjjjjjiiii
+  :kkklllllllllmmmmmmmmmmmmmmmnnnoooppppppoooooooooooolll
+  :...cccccccccqqqqqqqqqqqqqqqrrrrrrssstttsssssssssssccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrcc
   :
-  :.................bbbbbbbbb..bbbbbbbbbb..dddddddddddddddd..aa
-  :aaaaa..ddddddddd..aaaaaaa
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
   :
-  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :aaaaaaaaaaaaaaaaaa
   :
-  :.................bbbbbbbbb..bbbbbbbbbb..bbbbbbbbb..bbbbbbbbb
-  :..eeeeee..aaaaaaa
   :
-  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :
+  :
   :
 frame 0002 at 60x30
-  header 5c3928c5
-  |>   d54ede8  main  Scheduled...  just now
+  header dd4127e5
   |
-  |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
-  |low --  FAILED  4m ago
-  |
-  |  8d552d0  main  Lint 0.4s  Build 1.3s  Fast TIMEOUT 10s  Sl
-  |ow --  TIMED OUT  25m ago
-  |
-  |  c67191d  spike  Lint 0.3s  Build 1.2s  Fast 0.7s  Slow --
-  | CANCELLED  1h ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m02
-  |  PASSED  25h ago
+  |                           l  b  f  s
+  |▌  f7cf32d  feature/login  ✓  ✓  ⠹  ·  RUNNING    now
+  |▌› d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
+  |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
+  |   c67191d  spike          ✓  ✓  –  –  cancelled   1h
+  |   1767828  main           ✓  ✓  ✓  ✓  passed      1d
   |
   |  Cancel main (d54ede8)? y / n
   |
-  :..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |
+  |
+  |
+  |
+  |
   :
-  :......................bbbbbbbbb..ccccccccccccccc..aaaaaaa..a
-  :aaaaaa..cccccc..aaaaaa
+  :...........................aaaaaaaaaa
+  :bbbcccccccccdddddddddddddddeeeeeefffaaafffffffffffccc
+  :ghhiiiiiiiiihhhhhhhhhhhhhhhggggggggggggjjjjjjjjjjjiiii
+  :kkklllllllllmmmmmmmmmmmmmmmnnnoooppppppoooooooooooolll
+  :...cccccccccqqqqqqqqqqqqqqqrrrrrrssstttsssssssssssccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrcc
   :
-  :.................bbbbbbbbb..bbbbbbbbbb..dddddddddddddddd..aa
-  :aaaaa..ddddddddd..aaaaaaa
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
   :
-  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :aaaaaaaaaaaaaaaaaa
   :
-  :.................bbbbbbbbb..bbbbbbbbbb..bbbbbbbbb..bbbbbbbbb
-  :..eeeeee..aaaaaaa
   :
-  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :
+  :
   :
 frame 0003 at 60x30
-  header 863d184a
-  |>   d54ede8  main  Scheduled...  just now
+  header 59e05b0e
   |
-  |  f731578  fix/crash  Lint 0.3s  Build FAIL 0.9s  Fast --  S
-  |low --  FAILED  4m ago
-  |
-  |  8d552d0  main  Lint 0.4s  Build 1.3s  Fast TIMEOUT 10s  Sl
-  |ow --  TIMED OUT  25m ago
-  |
-  |  c67191d  spike  Lint 0.3s  Build 1.2s  Fast 0.7s  Slow --
-  | CANCELLED  1h ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 1m02
-  |  PASSED  25h ago
+  |                           l  b  f  s
+  |▌  f7cf32d  feature/login  ✓  ✓  ⠸  ·  RUNNING    now
+  |▌› d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
+  |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
+  |   c67191d  spike          ✓  ✓  –  –  cancelled   1h
+  |   1767828  main           ✓  ✓  ✓  ✓  passed      1d
   |
   |  Cancel main (d54ede8)? y / n
   |
-  :..aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |
+  |
+  |
+  |
+  |
   :
-  :......................bbbbbbbbb..ccccccccccccccc..aaaaaaa..a
-  :aaaaaa..cccccc..aaaaaa
+  :...........................aaaaaaaaaa
+  :bbbcccccccccdddddddddddddddeeeeeefffaaafffffffffffccc
+  :ghhiiiiiiiiihhhhhhhhhhhhhhhggggggggggggjjjjjjjjjjjiiii
+  :kkklllllllllmmmmmmmmmmmmmmmnnnoooppppppoooooooooooolll
+  :...cccccccccqqqqqqqqqqqqqqqrrrrrrssstttsssssssssssccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrcc
   :
-  :.................bbbbbbbbb..bbbbbbbbbb..dddddddddddddddd..aa
-  :aaaaa..ddddddddd..aaaaaaa
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
   :
-  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :aaaaaaaaaaaaaaaaaa
   :
-  :.................bbbbbbbbb..bbbbbbbbbb..bbbbbbbbb..bbbbbbbbb
-  :..eeeeee..aaaaaaa
   :
-  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :
+  :
   :
 legend
-a = fg Default, bg Default, ["dim"]
-b = fg Idx(2), bg Default, []
-c = fg Idx(1), bg Default, ["bold"]
-d = fg Idx(3), bg Default, ["bold"]
-e = fg Idx(2), bg Default, ["bold"]
+a = fg Rgb(75, 81, 92), bg Default, []
+b = fg Rgb(79, 214, 232), bg Default, []
+c = fg Rgb(110, 117, 130), bg Default, []
+d = fg Rgb(201, 206, 214), bg Default, []
+e = fg Rgb(95, 211, 141), bg Default, []
+f = fg Rgb(79, 214, 232), bg Default, ["bold"]
+g = fg Rgb(138, 145, 158), bg Rgb(29, 39, 51), []
+h = fg Rgb(255, 255, 255), bg Rgb(29, 39, 51), ["bold"]
+i = fg Rgb(110, 117, 130), bg Rgb(29, 39, 51), []
+j = fg Rgb(138, 145, 158), bg Rgb(29, 39, 51), ["bold"]
+k = fg Rgb(255, 95, 95), bg Rgb(58, 21, 25), []
+l = fg Rgb(138, 145, 158), bg Rgb(58, 21, 25), []
+m = fg Rgb(201, 206, 214), bg Rgb(58, 21, 25), []
+n = fg Rgb(95, 211, 141), bg Rgb(58, 21, 25), []
+o = fg Rgb(255, 95, 95), bg Rgb(58, 21, 25), ["bold"]
+p = fg Rgb(75, 81, 92), bg Rgb(58, 21, 25), []
+q = fg Rgb(62, 65, 71), bg Default, []
+r = fg Rgb(42, 94, 63), bg Default, []
+s = fg Rgb(114, 81, 31), bg Default, []
+t = fg Rgb(33, 36, 41), bg Default, []
+u = fg Default, bg Default, ["dim"]

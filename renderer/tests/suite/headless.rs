@@ -48,7 +48,7 @@ fn frames_jsonl_has_one_line_per_tick() {
 #[test]
 fn frames_jsonl_holds_each_frames_cell_grid() {
     let frame = &lines(&headless("running").path().join("frames.jsonl"))[0];
-    assert_eq!(frame["cells"][14][2]["text"], "8");
+    assert_eq!(frame["cells"][16][3]["text"], "8");
 }
 
 #[test]

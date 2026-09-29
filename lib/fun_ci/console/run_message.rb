@@ -13,8 +13,12 @@ module FunCi
       def self.from(run)
         { id: run[:id], sha: run[:commit_hash], branch: run[:branch], project: run[:project_path],
           status: status(run[:status]), started_at: epoch(run[:created_at]), updated_at: epoch(run[:updated_at]),
-          stages: run[:stages].map { |stage| stage(stage) }, trunk: conflict(run[:trunk]) }.compact
+          stages: run[:stages].map { |stage| stage(stage) }, **marks(run) }.compact
       end
+
+      # What the row marks beyond the run itself: a conflict with the trunk, and
+      # how many cancelled runs it stands for.
+      def self.marks(run) = { trunk: conflict(run[:trunk]), folded: run[:folded] }
 
       # The branch's standing against the trunk, sent only where the row shows it: a conflict.
       def self.conflict(trunk) = trunk && trunk[:branch_state] == "conflicts" ? trunk : nil
@@ -24,7 +28,7 @@ module FunCi
           duration_ms: stage[:duration] && (stage[:duration] * 1000).round,
           started_at: (epoch(stage[:started_at]) if stage[:status] == "running") }.compact
       end
-      private_class_method :stage, :conflict
+      private_class_method :stage, :conflict, :marks
 
       def self.status(name) = STATUS.fetch(name, name)
       private_class_method :status

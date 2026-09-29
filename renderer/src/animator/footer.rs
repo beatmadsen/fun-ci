@@ -11,6 +11,7 @@ const HOLD: usize = 8;
 #[must_use]
 pub fn footer_overlay(effect: &Effect, width: u16, runs: &[Run]) -> Option<String> {
     let (colour, text) = look(effect, runs)?;
+    let text: String = text.chars().take(usize::from(width)).collect();
     let pad = usize::from(width).saturating_sub(text.chars().count()) / 2;
     Some(format!("{}\u{1b}[{colour}m{text}{RESET}", " ".repeat(pad)))
 }

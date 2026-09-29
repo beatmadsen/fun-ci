@@ -46,6 +46,12 @@ impl Screen {
         self.print(&format!("{text}\u{1b}[K\r\n"));
     }
 
+    /// `text`, then erase to the end of the line, and no newline, so it can
+    /// be the screen's last line without scrolling it.
+    pub fn print_last(&mut self, text: &str) {
+        self.print(&format!("{text}\u{1b}[K"));
+    }
+
     pub fn clear(&mut self) {
         self.print("\u{1b}[2J\u{1b}[H");
         self.clears += 1;

@@ -1,0 +1,684 @@
+---
+source: tests/suite/snapshots.rs
+assertion_line: 32
+expression: "render(& frames(\"busy-board\"))"
+---
+frame 0001 at 120x40
+  header f877ccd5
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠙ 6s     ⠙ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0002 at 120x40
+  header ededf082
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠹ 6s     ⠹ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0003 at 120x40
+  header 9be72d1b
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠸ 6s     ⠸ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0004 at 120x40
+  header 4f9c585c
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠼ 6s     ⠼ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0005 at 120x40
+  header 1fd334dd
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠴ 6s     ⠴ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :DDDcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0006 at 120x40
+  header 0edfbd24
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠦ 6s     ⠦ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :DDDcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0007 at 120x40
+  header e3cf3023
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠧ 6s     ⠧ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :DDDcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0008 at 120x40
+  header 3d2d36ab
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠇ 6s     ⠇ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :DDDcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0009 at 120x40
+  header 5dbad92e
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠏ 6s     ⠏ 6s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :DDDcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0010 at 120x40
+  header 1c6cc3e6
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠋ 7s     ⠋ 7s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0011 at 120x40
+  header b0e33ac1
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠙ 7s     ⠙ 7s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+frame 0012 at 120x40
+  header 2c663ac5
+  |
+  |                                                                    lint     build    fast     slow
+  |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠹ 7s     ⠹ 7s     RUNNING    now
+  |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
+  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
+  |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
+  |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
+  |▌  f731578  fix/crash                                 agent-tome    ✓ 0.3s   ✗ 0.9s   ·        ·        FAILED     40m
+  |▌  a3f7c01  main                                      fun-ci        ✓ 7.3s   ✓ 6.2s   ✓ 4.4s   ✓ 1m53   PASSED      1h
+  |   b9d3a6f  main                                      fun-ci        ✓ 0.2s   ✓ 0.2s   –        –        cancelled   1h
+  |   e5f6a7b  main                                      strings-kata  ✓ 2.1s   ✓ 7.4s   ✓ 3.9s   ✓ 21s    passed      2h
+  |
+  |  j/k move   c cancel   q quit   agent-tome: trunk 2h old
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+  :
+  :....................................................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffgggggggggggggggggggggggggggggccc
+  :eeecccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeehhhhhhhhhhhccc
+  :ijjkkkkkkkkkjjjjjjjjjjjjjjjjjjllllllllllllllllllllllllkkkkkkkkkkkkkkmmmmmmmmmmmmmmmmmmnnnnnnnnnmmmmmmmmmnnnnnnnnnnnnkkk
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooccc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaccc
+  :pppqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqqqqqqqqqqsssssssssssssssssstttttttttssssssssstttttttttttqqqq
+  :uuuvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvvvvvvvvxxxxxxxxxyyyyyyyyyzzzzzzzzzzzzzzzzzzyyyyyyyyyyyvvvv
+  :fffcccccccccddddddddddddddddddddddddddddddddddddddddddeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffoooooooooooocc
+  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
+  :...cccccccccAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBcc
+  :
+  :CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+  :
+legend
+a = fg Rgb(75, 81, 92), bg Default, []
+b = fg Rgb(79, 214, 232), bg Default, []
+c = fg Rgb(110, 117, 130), bg Default, []
+d = fg Rgb(201, 206, 214), bg Default, []
+e = fg Rgb(138, 145, 158), bg Default, []
+f = fg Rgb(95, 211, 141), bg Default, []
+g = fg Rgb(79, 214, 232), bg Default, ["bold"]
+h = fg Rgb(138, 145, 158), bg Default, ["bold"]
+i = fg Rgb(255, 95, 95), bg Rgb(68, 31, 35), []
+j = fg Rgb(255, 255, 255), bg Rgb(68, 31, 35), ["bold"]
+k = fg Rgb(138, 145, 158), bg Rgb(68, 31, 35), []
+l = fg Rgb(226, 124, 245), bg Rgb(68, 31, 35), ["bold"]
+m = fg Rgb(95, 211, 141), bg Rgb(68, 31, 35), []
+n = fg Rgb(255, 95, 95), bg Rgb(68, 31, 35), ["bold"]
+o = fg Rgb(95, 211, 141), bg Default, ["bold"]
+p = fg Rgb(255, 181, 71), bg Rgb(51, 39, 17), []
+q = fg Rgb(138, 145, 158), bg Rgb(51, 39, 17), []
+r = fg Rgb(201, 206, 214), bg Rgb(51, 39, 17), []
+s = fg Rgb(95, 211, 141), bg Rgb(51, 39, 17), []
+t = fg Rgb(255, 181, 71), bg Rgb(51, 39, 17), ["bold"]
+u = fg Rgb(255, 95, 95), bg Rgb(58, 21, 25), []
+v = fg Rgb(138, 145, 158), bg Rgb(58, 21, 25), []
+w = fg Rgb(201, 206, 214), bg Rgb(58, 21, 25), []
+x = fg Rgb(95, 211, 141), bg Rgb(58, 21, 25), []
+y = fg Rgb(255, 95, 95), bg Rgb(58, 21, 25), ["bold"]
+z = fg Rgb(75, 81, 92), bg Rgb(58, 21, 25), []
+A = fg Rgb(62, 65, 71), bg Default, []
+B = fg Rgb(42, 94, 63), bg Default, []
+C = fg Default, bg Default, ["dim"]
+D = fg Rgb(30, 90, 98), bg Default, []

@@ -18,13 +18,13 @@ pub mod live_io;
 pub mod model;
 pub mod protocol;
 pub mod replay;
-pub mod row;
 pub mod scenario;
 pub mod scenes;
 pub mod screen;
 pub mod session;
 pub mod slow_draws;
 pub mod spinner;
+pub mod table;
 pub mod terminal;
 pub mod tty;
 

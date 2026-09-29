@@ -7,10 +7,14 @@ require_relative "../persistence/active_runs"
 require_relative "../pipeline/run_canceller"
 require_relative "streak_counter"
 require_relative "trunk_marks"
+require_relative "cancelled_folding"
 
 module FunCi
   module Console
     class BoardData
+      # How many pages of runs are read, so a page is full once cancelled runs are folded.
+      WINDOW_PAGES = 4
+
       def initialize(db, limit: 15, page_size: nil, run_canceller: Pipeline::RunCanceller.new)
         @db = db
         @page_size = page_size || limit
@@ -28,17 +32,19 @@ module FunCi
         @limit = [@limit, page_size].max
       end
 
-      # Whether the store holds runs beyond those `runs` loads.
+      # Whether there are rows beyond those `runs` loads, folded or still unread.
       def more?
-        Persistence::PipelineRun.recent(@db, limit: @limit + 1).size > @limit
+        window = Persistence::PipelineRun.recent(@db, limit: window_size + 1)
+        window.size > window_size || CancelledFolding.fold(window).size > @limit
       end
 
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
 
-      # Newest first, each with its stages and, a branch's newest, the branch's standing against the trunk.
+      # Newest first, a branch's consecutive cancelled runs folded into one, each
+      # with its stages and, a branch's newest, the branch's standing against the trunk.
       def runs
-        pipeline_runs = Persistence::PipelineRun.recent(@db, limit: @limit)
+        pipeline_runs = CancelledFolding.fold(Persistence::PipelineRun.recent(@db, limit: window_size)).first(@limit)
         TrunkMarks.new(@db).mark(pipeline_runs.map { |run| enrich_with_stages(run) })
       end
 
@@ -57,6 +63,8 @@ module FunCi
       end
 
       private
+
+      def window_size = @limit * WINDOW_PAGES
 
       def enrich_with_stages(run)
         run.merge(stages: Persistence::StageJob.for_run(@db, run[:id]).map { |job| stage(job) })

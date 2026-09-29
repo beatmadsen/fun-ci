@@ -50,6 +50,9 @@ pub struct Run {
     /// Its branch's standing against the trunk, sent only where the row shows it.
     #[serde(default)]
     pub trunk: Option<Trunk>,
+    /// How many cancelled runs of its branch, one after another, this one stands for.
+    #[serde(default)]
+    pub folded: Option<u32>,
 }
 
 /// A branch's standing against the trunk (architecture.md, Checking against the trunk): Ruby

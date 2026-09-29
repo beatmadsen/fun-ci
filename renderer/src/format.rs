@@ -2,8 +2,6 @@
 
 use std::path::Path;
 
-const PROJECT_COLOURS: [u8; 10] = [31, 32, 33, 34, 35, 36, 91, 92, 93, 94];
-
 /// `300` -> `0.3s`, `1000` -> `1s`, `62500` -> `1m02`.
 #[must_use]
 pub fn duration(ms: u64) -> String {
@@ -21,13 +19,14 @@ pub fn seconds_since(since: i64, now_ms: i64) -> i64 {
     (now_ms - since * 1000) / 1000
 }
 
-/// `just now`, `5m ago`, `2h ago`.
+/// `now`, `5m`, `2h`, `3d`: short, so every row's age ends in the same place.
 #[must_use]
 pub fn age(since: i64, now_ms: i64) -> String {
     match seconds_since(since, now_ms) {
-        ..60 => "just now".to_string(),
-        s @ ..3600 => format!("{}m ago", s / 60),
-        s => format!("{}h ago", s / 3600),
+        ..60 => "now".to_string(),
+        s @ ..3600 => format!("{}m", s / 60),
+        s @ ..86_400 => format!("{}h", s / 3600),
+        s => format!("{}d", s / 86_400),
     }
 }
 
@@ -43,33 +42,11 @@ pub fn project_name(path: &str) -> String {
     Path::new(path).file_name().map_or(String::new(), |n| n.to_string_lossy().into_owned())
 }
 
-/// The SGR colour code for a project name: CRC-32 of the name, so a project
-/// keeps its colour across restarts.
+/// `text` in at most `room` columns, its end replaced by `…` when cut.
 #[must_use]
-pub fn project_colour(name: &str) -> u8 {
-    let index = crc32fast::hash(name.as_bytes()) % 10;
-    PROJECT_COLOURS[usize::try_from(index).unwrap_or_default()]
-}
-
-/// The word a finished stage's status adds after its name: `Lint FAIL 2s`.
-#[must_use]
-pub fn finished_word(status: &str) -> Option<&'static str> {
-    match status {
-        "passed" => Some(""),
-        "failed" => Some(" FAIL"),
-        "timeout" => Some(" TIMEOUT"),
-        _ => None,
+pub fn cut(text: &str, room: usize) -> String {
+    if text.chars().count() <= room {
+        return text.to_string();
     }
-}
-
-/// The label a stage is shown under, for the four stages fun-ci runs.
-#[must_use]
-pub fn stage_label(stage: &str) -> Option<&'static str> {
-    match stage {
-        "lint" => Some("Lint"),
-        "build" => Some("Build"),
-        "fast" => Some("Fast"),
-        "slow" => Some("Slow"),
-        _ => None,
-    }
+    text.chars().take(room.saturating_sub(1)).chain(['…']).collect()
 }

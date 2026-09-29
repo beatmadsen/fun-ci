@@ -1,6 +1,7 @@
-//! The braille spinner shown beside a running stage.
+//! The braille spinner shown in a running stage's cell: every frame at least
+//! three dots, so it never looks like the single dot of a stage not reached.
 
-const FRAMES: [char; 8] = ['\u{2800}', '\u{2801}', '\u{2803}', '\u{2807}', '\u{280F}', '\u{281F}', '\u{283F}', '\u{287F}'];
+const FRAMES: [char; 10] = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏'];
 
 /// Cycles through the braille frames, one step per drawn frame.
 #[derive(Debug, Default)]

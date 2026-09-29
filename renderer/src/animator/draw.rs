@@ -3,13 +3,18 @@
 use super::effect::Effect;
 use super::footer::footer_overlay;
 use super::header::HEADER_HEIGHT;
-use super::overlay::{stage_column, stage_overlay, stage_text};
+use super::overlay::{stage_overlay, stage_text};
 use crate::model::Run;
 use crate::screen::Screen;
+use crate::table::layout::Layout;
 
-/// Each effect over its stage's text, on its run's row.
+/// The screen row of the table's first run, under the header, a blank line and the stages' names.
+pub const FIRST_RUN_ROW: usize = HEADER_HEIGHT + 3;
+
+/// Each effect over its stage's cell, on its run's row.
 pub fn stages(screen: &mut Screen, effects: &[Effect], runs: &[Run]) {
-    for (row, col, text) in effects.iter().filter_map(|effect| placed(effect, runs)) {
+    let layout = Layout::fit(runs, screen.width());
+    for (row, col, text) in effects.iter().filter_map(|effect| placed(effect, runs, &layout)) {
         screen.write_at(row, col, &text);
     }
 }
@@ -19,15 +24,14 @@ pub fn stages(screen: &mut Screen, effects: &[Effect], runs: &[Run]) {
 pub fn footer(screen: &mut Screen, effects: &[Effect], runs: &[Run]) {
     let banner = most_important(effects).and_then(|effect| footer_overlay(effect, screen.width(), runs));
     if let Some(text) = banner {
-        screen.write_at(HEADER_HEIGHT + runs.len() * 2 + 1, 1, &format!("{text}\u{1b}[K"));
+        screen.write_at(FIRST_RUN_ROW + runs.len(), 1, &format!("{text}\u{1b}[K"));
     }
 }
 
-fn placed(effect: &Effect, runs: &[Run]) -> Option<(usize, usize, String)> {
+fn placed(effect: &Effect, runs: &[Run], layout: &Layout) -> Option<(usize, usize, String)> {
     let index = runs.iter().position(|run| run.id == effect.run_id)?;
-    let run = &runs[index];
-    let overlay = stage_overlay(effect, &stage_text(run, &effect.stage)?)?;
-    Some((HEADER_HEIGHT + 1 + index * 2, stage_column(run, &effect.stage)?, overlay))
+    let overlay = stage_overlay(effect, &stage_text(&runs[index], &effect.stage, layout)?)?;
+    Some((FIRST_RUN_ROW + index, layout.stage_column(&effect.stage)? + 1, overlay))
 }
 
 fn most_important(effects: &[Effect]) -> Option<&Effect> {

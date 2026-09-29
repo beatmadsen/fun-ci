@@ -1,14 +1,15 @@
 ---
 source: tests/suite/snapshots.rs
+assertion_line: 32
 expression: "render(& frames(\"resize-mid-animation\"))"
 ---
 frame 0001 at 80x30
   header 6b696585
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠁ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠙ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -20,13 +21,13 @@ frame 0001 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -38,11 +39,11 @@ frame 0001 at 80x30
   :
 frame 0002 at 80x30
   header df254129
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠃ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠹ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -54,13 +55,13 @@ frame 0002 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -72,11 +73,11 @@ frame 0002 at 80x30
   :
 frame 0003 at 80x30
   header 41536c44
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠇ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠸ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -88,13 +89,13 @@ frame 0003 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -106,11 +107,11 @@ frame 0003 at 80x30
   :
 frame 0004 at 80x30
   header 848f2f79
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠏ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠼ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -122,13 +123,13 @@ frame 0004 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -140,11 +141,11 @@ frame 0004 at 80x30
   :
 frame 0005 at 80x30
   header 78dc4295
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠟ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠴ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -156,13 +157,13 @@ frame 0005 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -174,11 +175,11 @@ frame 0005 at 80x30
   :
 frame 0006 at 80x30
   header 24ec4eca
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠿ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠦ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -190,13 +191,13 @@ frame 0006 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -208,11 +209,11 @@ frame 0006 at 80x30
   :
 frame 0007 at 80x30
   header d1db05a8
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⡿ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠧ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -224,13 +225,13 @@ frame 0007 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -242,11 +243,11 @@ frame 0007 at 80x30
   :
 frame 0008 at 80x30
   header 2d604919
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠀ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠇ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -258,13 +259,13 @@ frame 0008 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -276,11 +277,11 @@ frame 0008 at 80x30
   :
 frame 0009 at 80x30
   header df4514df
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠁ 2s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠏ 2s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -292,13 +293,13 @@ frame 0009 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -310,11 +311,11 @@ frame 0009 at 80x30
   :
 frame 0010 at 80x30
   header 339fc508
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠃ 3s  Slow --  RUNNING  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠋ 3s     ·        RUNNING    now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -326,13 +327,13 @@ frame 0010 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..bbbbbbbbb..ccccccc..ddddddd..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -344,11 +345,11 @@ frame 0010 at 80x30
   :
 frame 0011 at 80x30
   header d7c18cd6
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  * Fast FAIL 3s *ow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -360,13 +361,13 @@ frame 0011 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..f.ffffffffffff.fccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnppppppppppppppppppqqqqrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -378,11 +379,11 @@ frame 0011 at 80x30
   :
 frame 0012 at 80x30
   header 6c0fbe65
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  *. Fast FAIL 3s .* --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -394,13 +395,13 @@ frame 0012 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ff.ffffffffffff.ffccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnppppppppppppppppppttttrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -412,11 +413,11 @@ frame 0012 at 80x30
   :
 frame 0013 at 80x30
   header af79705f
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  .*+. Fast FAIL 3s .+*. FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -428,13 +429,13 @@ frame 0013 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..gggg.ffffffffffff.gggg.ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnppppppppppppppppppuuuurrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -446,11 +447,11 @@ frame 0013 at 80x30
   :
 frame 0014 at 80x30
   header 6dd05436
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  '+.* Fast FAIL 3s *.+' FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -462,13 +463,13 @@ frame 0014 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..gggg.ffffffffffff.gggg.ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnppppppppppppppppppvvvvrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -480,11 +481,11 @@ frame 0014 at 80x30
   :
 frame 0015 at 80x30
   header 57a3a42f
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  . ' Fast FAIL 3s ' .-  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -496,13 +497,13 @@ frame 0015 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..hhh.ffffffffffff.hhhc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnppppppppppppppppppwwwwrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -514,11 +515,11 @@ frame 0015 at 80x30
   :
 frame 0016 at 80x30
   header 8136edd9
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  . Fast FAIL 3s .ow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -530,13 +531,13 @@ frame 0016 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..h.ffffffffffff.hccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnppppppppppppppppppxxxxrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -548,11 +549,11 @@ frame 0016 at 80x30
   :
 frame 0017 at 80x30
   header 47ad910c
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -564,13 +565,13 @@ frame 0017 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa................ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -582,11 +583,11 @@ frame 0017 at 80x30
   :
 frame 0018 at 80x30
   header d75edd3a
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -598,13 +599,13 @@ frame 0018 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -616,13 +617,13 @@ frame 0018 at 80x30
   :
 frame 0019 at 80x30
   header fa8a1f3c
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                              >>> FAST FAILED <<<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -632,13 +633,13 @@ frame 0019 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :..............................fffffffffffffffffff
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :..............................yyyyyyyyyyyyyyyyyyy
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -650,13 +651,13 @@ frame 0019 at 80x30
   :
 frame 0020 at 80x30
   header 7e835637
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                              >>> FAST FAILED <<<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -666,13 +667,13 @@ frame 0020 at 80x30
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :..............................fffffffffffffffffff
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :..............................yyyyyyyyyyyyyyyyyyy
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -684,13 +685,13 @@ frame 0020 at 80x30
   :
 frame 0021 at 120x40
   header 8c68e974
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                  >>> FAST FAILED <<<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -710,13 +711,13 @@ frame 0021 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :..................................................fffffffffffffffffff
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :..................................................yyyyyyyyyyyyyyyyyyy
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -738,13 +739,13 @@ frame 0021 at 120x40
   :
 frame 0022 at 120x40
   header 4b9d684e
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                  >>> FAST FAILED <<<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -764,13 +765,13 @@ frame 0022 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :..................................................fffffffffffffffffff
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :..................................................yyyyyyyyyyyyyyyyyyy
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -792,13 +793,13 @@ frame 0022 at 120x40
   :
 frame 0023 at 120x40
   header 738efa74
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                  >>> FAST FAILED <<<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -818,13 +819,13 @@ frame 0023 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :..................................................fffffffffffffffffff
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :..................................................yyyyyyyyyyyyyyyyyyy
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -846,13 +847,13 @@ frame 0023 at 120x40
   :
 frame 0024 at 120x40
   header 50f19c5b
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                  >>> FAST FAILED <<<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -872,13 +873,13 @@ frame 0024 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :..................................................fffffffffffffffffff
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :..................................................yyyyyyyyyyyyyyyyyyy
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -900,13 +901,13 @@ frame 0024 at 120x40
   :
 frame 0025 at 120x40
   header 68dae91e
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                  >>> FAST FAILED <<<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -926,13 +927,13 @@ frame 0025 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :..................................................fffffffffffffffffff
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :..................................................yyyyyyyyyyyyyyyyyyy
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -954,13 +955,13 @@ frame 0025 at 120x40
   :
 frame 0026 at 120x40
   header b3994bbc
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                  >>> FAST FAILED <<<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -980,13 +981,13 @@ frame 0026 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :..................................................fffffffffffffffffff
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :..................................................yyyyyyyyyyyyyyyyyyy
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1008,13 +1009,13 @@ frame 0026 at 120x40
   :
 frame 0027 at 120x40
   header f296fb1a
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                   >> fast failed <<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1034,13 +1035,13 @@ frame 0027 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :...................................................iiiiiiiiiiiiiiiii
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...................................................zzzzzzzzzzzzzzzzz
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1062,13 +1063,13 @@ frame 0027 at 120x40
   :
 frame 0028 at 120x40
   header 54b03916
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                   >> fast failed <<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1088,13 +1089,13 @@ frame 0028 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :...................................................iiiiiiiiiiiiiiiii
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...................................................zzzzzzzzzzzzzzzzz
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1116,13 +1117,13 @@ frame 0028 at 120x40
   :
 frame 0029 at 120x40
   header 7a8ab45e
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                   >> fast failed <<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1142,13 +1143,13 @@ frame 0029 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :...................................................iiiiiiiiiiiiiiiii
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...................................................zzzzzzzzzzzzzzzzz
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1170,13 +1171,13 @@ frame 0029 at 120x40
   :
 frame 0030 at 120x40
   header 5eb49289
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                   >> fast failed <<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1196,13 +1197,13 @@ frame 0030 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :...................................................iiiiiiiiiiiiiiiii
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...................................................zzzzzzzzzzzzzzzzz
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1224,13 +1225,13 @@ frame 0030 at 120x40
   :
 frame 0031 at 120x40
   header f2659b30
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                   >> fast failed <<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1250,13 +1251,13 @@ frame 0031 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :...................................................iiiiiiiiiiiiiiiii
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...................................................zzzzzzzzzzzzzzzzz
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1278,13 +1279,13 @@ frame 0031 at 120x40
   :
 frame 0032 at 120x40
   header 489de145
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                   >> fast failed <<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1304,13 +1305,13 @@ frame 0032 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :...................................................iiiiiiiiiiiiiiiii
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...................................................zzzzzzzzzzzzzzzzz
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1332,13 +1333,13 @@ frame 0032 at 120x40
   :
 frame 0033 at 120x40
   header 31509850
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                   >> fast failed <<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1358,13 +1359,13 @@ frame 0033 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :...................................................iiiiiiiiiiiiiiiii
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...................................................zzzzzzzzzzzzzzzzz
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1386,13 +1387,13 @@ frame 0033 at 120x40
   :
 frame 0034 at 120x40
   header e97029a9
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                   >> fast failed <<
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1412,13 +1413,13 @@ frame 0034 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :...................................................iiiiiiiiiiiiiiiii
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...................................................zzzzzzzzzzzzzzzzz
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1440,13 +1441,13 @@ frame 0034 at 120x40
   :
 frame 0035 at 120x40
   header af6380c4
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                    > fast failed <
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1466,13 +1467,13 @@ frame 0035 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :....................................................jjjjjjjjjjjjjjj
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :....................................................AAAAAAAAAAAAAAA
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1494,13 +1495,13 @@ frame 0035 at 120x40
   :
 frame 0036 at 120x40
   header f1cc6dba
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                    > fast failed <
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1520,13 +1521,13 @@ frame 0036 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :....................................................jjjjjjjjjjjjjjj
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :....................................................AAAAAAAAAAAAAAA
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1548,13 +1549,13 @@ frame 0036 at 120x40
   :
 frame 0037 at 120x40
   header 94ccf453
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                    > fast failed <
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1574,13 +1575,13 @@ frame 0037 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :....................................................jjjjjjjjjjjjjjj
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :....................................................AAAAAAAAAAAAAAA
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1602,13 +1603,13 @@ frame 0037 at 120x40
   :
 frame 0038 at 120x40
   header 4096f3dc
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                    > fast failed <
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1628,13 +1629,13 @@ frame 0038 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :....................................................jjjjjjjjjjjjjjj
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :....................................................AAAAAAAAAAAAAAA
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1656,13 +1657,13 @@ frame 0038 at 120x40
   :
 frame 0039 at 120x40
   header 9c78f812
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                    > fast failed <
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1682,13 +1683,13 @@ frame 0039 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :....................................................jjjjjjjjjjjjjjj
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :....................................................AAAAAAAAAAAAAAA
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1710,13 +1711,13 @@ frame 0039 at 120x40
   :
 frame 0040 at 120x40
   header a87e9d0c
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                    > fast failed <
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1736,13 +1737,13 @@ frame 0040 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :....................................................jjjjjjjjjjjjjjj
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :....................................................AAAAAAAAAAAAAAA
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1764,13 +1765,13 @@ frame 0040 at 120x40
   :
 frame 0041 at 120x40
   header 59d937ef
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                    > fast failed <
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1790,13 +1791,13 @@ frame 0041 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :....................................................jjjjjjjjjjjjjjj
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :....................................................AAAAAAAAAAAAAAA
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1818,13 +1819,13 @@ frame 0041 at 120x40
   :
 frame 0042 at 120x40
   header a87aa022
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
-  |
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                                    > fast failed <
+  |  j/k move   c cancel   q quit
   |
   |
   |
@@ -1844,13 +1845,13 @@ frame 0042 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
-  :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :....................................................jjjjjjjjjjjjjjj
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :....................................................AAAAAAAAAAAAAAA
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1872,11 +1873,11 @@ frame 0042 at 120x40
   :
 frame 0043 at 120x40
   header 83aaa07c
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -1898,13 +1899,13 @@ frame 0043 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1926,11 +1927,11 @@ frame 0043 at 120x40
   :
 frame 0044 at 120x40
   header 7e02528a
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -1952,13 +1953,13 @@ frame 0044 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -1980,11 +1981,11 @@ frame 0044 at 120x40
   :
 frame 0045 at 120x40
   header 30cfeeed
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2006,13 +2007,13 @@ frame 0045 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2034,11 +2035,11 @@ frame 0045 at 120x40
   :
 frame 0046 at 120x40
   header 83100601
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2060,13 +2061,13 @@ frame 0046 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2088,11 +2089,11 @@ frame 0046 at 120x40
   :
 frame 0047 at 120x40
   header 30cfeeed
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2114,13 +2115,13 @@ frame 0047 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2142,11 +2143,11 @@ frame 0047 at 120x40
   :
 frame 0048 at 120x40
   header 7e02528a
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2168,13 +2169,13 @@ frame 0048 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2196,11 +2197,11 @@ frame 0048 at 120x40
   :
 frame 0049 at 120x40
   header 83aaa07c
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2222,13 +2223,13 @@ frame 0049 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2250,11 +2251,11 @@ frame 0049 at 120x40
   :
 frame 0050 at 120x40
   header 05eb6f9d
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2276,13 +2277,13 @@ frame 0050 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2304,11 +2305,11 @@ frame 0050 at 120x40
   :
 frame 0051 at 120x40
   header 037b9997
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2330,13 +2331,13 @@ frame 0051 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2358,11 +2359,11 @@ frame 0051 at 120x40
   :
 frame 0052 at 120x40
   header 785f8aaf
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2384,13 +2385,13 @@ frame 0052 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2412,11 +2413,11 @@ frame 0052 at 120x40
   :
 frame 0053 at 120x40
   header cabf8dde
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2438,13 +2439,13 @@ frame 0053 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2466,11 +2467,11 @@ frame 0053 at 120x40
   :
 frame 0054 at 120x40
   header 70ccbfc5
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2492,13 +2493,13 @@ frame 0054 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2520,11 +2521,11 @@ frame 0054 at 120x40
   :
 frame 0055 at 120x40
   header 79b0d06f
-  |> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast FAIL 3s  Slow --  FAILED  just now
   |
-  |  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
-  |
-  |  1767828  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 51s  PASSED  2h ago
+  |                  lint     build    fast     slow
+  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
+  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
   |  j/k move   c cancel   q quit
   |
@@ -2546,13 +2547,13 @@ frame 0055 at 120x40
   |
   |
   |
-  :.................aaaaaaaaa..aaaaaaaaaa..ffffffffffff..ccccccc..ffffff..cccccccc
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..ccccccc
+  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
+  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
   :
-  :.................aaaaaaaaa..aaaaaaaaaa..aaaaaaaaa..aaaaaaaa..eeeeee..cccccc
-  :
-  :cccccccccccccccccccccccccccccc
+  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
   :
   :
   :
@@ -2573,13 +2574,30 @@ frame 0055 at 120x40
   :
   :
 legend
-a = fg Idx(2), bg Default, []
-b = fg Idx(6), bg Default, []
-c = fg Default, bg Default, ["dim"]
-d = fg Idx(6), bg Default, ["bold"]
-e = fg Idx(2), bg Default, ["bold"]
-f = fg Idx(1), bg Default, ["bold"]
-g = fg Idx(208), bg Default, []
-h = fg Idx(52), bg Default, []
-i = fg Idx(1), bg Default, []
-j = fg Idx(1), bg Default, ["dim"]
+a = fg Rgb(75, 81, 92), bg Default, []
+b = fg Rgb(79, 214, 232), bg Rgb(29, 39, 51), []
+c = fg Rgb(255, 255, 255), bg Rgb(29, 39, 51), ["bold"]
+d = fg Rgb(110, 117, 130), bg Rgb(29, 39, 51), []
+e = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), []
+f = fg Rgb(79, 214, 232), bg Rgb(29, 39, 51), ["bold"]
+g = fg Rgb(75, 81, 92), bg Rgb(29, 39, 51), []
+h = fg Rgb(110, 117, 130), bg Default, []
+i = fg Rgb(62, 65, 71), bg Default, []
+j = fg Rgb(42, 94, 63), bg Default, []
+k = fg Default, bg Default, ["dim"]
+l = fg Rgb(30, 90, 98), bg Rgb(29, 39, 51), []
+m = fg Rgb(255, 95, 95), bg Rgb(68, 31, 35), []
+n = fg Rgb(255, 255, 255), bg Rgb(68, 31, 35), ["bold"]
+o = fg Rgb(138, 145, 158), bg Rgb(68, 31, 35), []
+p = fg Rgb(95, 211, 141), bg Rgb(68, 31, 35), []
+q = fg Idx(15), bg Idx(196), ["bold"]
+r = fg Rgb(255, 95, 95), bg Rgb(68, 31, 35), ["bold"]
+s = fg Rgb(75, 81, 92), bg Rgb(68, 31, 35), []
+t = fg Idx(15), bg Idx(160), ["bold"]
+u = fg Idx(15), bg Idx(124), ["bold"]
+v = fg Idx(9), bg Idx(88), ["bold"]
+w = fg Idx(9), bg Idx(52), ["bold"]
+x = fg Idx(9), bg Default, ["bold"]
+y = fg Idx(1), bg Default, ["bold"]
+z = fg Idx(1), bg Default, []
+A = fg Idx(1), bg Default, ["dim"]

@@ -37,8 +37,8 @@ fn last_screen_on(lines: &[String], size: (u16, u16)) -> Grid {
     emulate(&replay(&messages, &Library::builtin(), size, Depth::TrueColour)).pop().unwrap()
 }
 
-fn six_runs_on_24_rows() -> String {
-    let runs: Vec<String> = (1..=6).map(|id| run(id, "passed", "passed")).collect();
+fn eight_runs_on_24_rows() -> String {
+    let runs: Vec<String> = (1..=8).map(|id| run(id, "passed", "passed")).collect();
     last_screen(&[board(&runs), TICK.into()]).text()
 }
 
@@ -49,13 +49,13 @@ fn the_first_frame_starts_by_clearing_the_screen() {
 }
 
 #[test]
-fn a_24_row_terminal_shows_the_fourth_run() {
-    assert!(six_runs_on_24_rows().contains("  b4  "));
+fn a_24_row_terminal_shows_the_sixth_run() {
+    assert!(eight_runs_on_24_rows().contains("  b6  "));
 }
 
 #[test]
-fn a_24_row_terminal_leaves_out_the_fifth_run() {
-    assert!(!six_runs_on_24_rows().contains("  b5  "));
+fn a_24_row_terminal_leaves_out_the_seventh_run() {
+    assert!(!eight_runs_on_24_rows().contains("  b7  "));
 }
 
 /// Lint passes, then a frame later build passes while lint still flashes.
@@ -69,8 +69,9 @@ fn two_stages_passing() -> Vec<String> {
 
 #[test]
 fn a_stage_effect_keeps_playing_when_another_stage_starts_one() {
-    let lint = &last_screen(&two_stages_passing()).cells[14][15];
-    assert_eq!((lint.text.as_str(), lint.attrs.clone()), ("L", vec!["bold"]));
+    let screen = last_screen(&two_stages_passing());
+    let lint = &screen.cells[16][crate::support::boards::stage_column(&screen, "lint")];
+    assert_eq!((lint.text.as_str(), lint.attrs.clone()), ("✓", vec!["bold"]));
 }
 
 #[test]
@@ -84,4 +85,26 @@ fn should_not_write_the_footer_when_its_newline_would_scroll_the_screen() {
     let messages: Vec<Inbound> = [board(&[run(1, "passed", "passed")]), TICK.into()].iter().map(|line| parse(line).unwrap()).collect();
     let frame = replay(&messages, &Library::builtin(), (80, 15), Depth::TrueColour).pop().unwrap();
     assert!(!String::from_utf8(frame.bytes).unwrap().contains("q quit"));
+}
+
+/// A board with as many runs as Ruby pages for `rows` rows (renderer-protocol.md, `board`).
+fn full_page(rows: u16) -> Grid {
+    let runs: Vec<String> = (1..=u32::from(rows) - 18).map(|id| run(id, "passed", "passed")).collect();
+    last_screen_on(&[board(&runs), TICK.into()], (80, rows))
+}
+
+#[test]
+fn a_full_page_keeps_the_stages_names_under_the_header_and_a_blank_line() {
+    assert!(full_page(30).text().lines().nth(15).unwrap().contains("lint"));
+}
+
+#[test]
+fn a_full_page_ends_with_the_footer_on_the_last_row() {
+    assert!(full_page(30).text().lines().nth(29).unwrap().contains("q quit"));
+}
+
+#[test]
+fn each_run_takes_one_row() {
+    let screen = full_page(30);
+    assert_eq!([screen.text().lines().nth(16).unwrap().contains("b1"), screen.text().lines().nth(17).unwrap().contains("b2")], [true, true]);
 }

@@ -34,6 +34,14 @@ class TestRunMessage < Minitest::Test
     refute run_message(trunk: { branch_state: "clean", trunk: "main" }).key?(:trunk)
   end
 
+  def test_should_say_how_many_cancelled_runs_a_folded_run_stands_for
+    assert_equal 25, run_message(folded: 25)[:folded]
+  end
+
+  def test_should_leave_out_folded_for_a_run_that_stands_for_itself
+    refute run_message.key?(:folded)
+  end
+
   def test_should_carry_the_project_path
     assert_equal "/src/app", run_message[:project]
   end

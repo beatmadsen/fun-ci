@@ -37,7 +37,7 @@ maps one tick to one frame and the time of each frame is known.
 *Revisit if* a scenario needs frames drawn between ticks.
 
 **Decision — formatting lives in Rust.** Ruby sends raw values (epoch seconds,
-milliseconds, full SHAs). "2m ago" must keep ticking between Ruby pushes, and
+milliseconds, full SHAs). "2m" must keep ticking between Ruby pushes, and
 the renderer owns the clock, so it owns the formatting.
 *Revisit if* formatting rules start needing data only Ruby has.
 

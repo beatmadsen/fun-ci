@@ -19,8 +19,8 @@ class TestView < Minitest::Test
   def ids = page[:runs].map { |run| run[:id] }
   def press(times) = times.times { @view.press("j") }
 
-  def test_should_fit_two_rows_per_run_below_the_header_and_footer
-    assert_equal 4, @view.resize(24)
+  def test_should_fit_one_row_per_run_below_the_header_the_stage_names_and_the_footer
+    assert_equal 6, @view.resize(24)
   end
 
   def test_should_fit_no_run_on_a_terminal_shorter_than_the_header_and_footer
@@ -28,27 +28,27 @@ class TestView < Minitest::Test
   end
 
   def test_should_show_the_first_page_while_no_run_is_under_the_cursor
-    @view.resize(24)
+    @view.resize(22)
 
     assert_equal [1, 2, 3, 4], ids
   end
 
   def test_should_scroll_so_the_run_under_the_cursor_is_on_the_page
-    @view.resize(24)
+    @view.resize(22)
     press(5)
 
     assert_equal [2, 3, 4, 5], ids
   end
 
   def test_should_point_the_cursor_into_the_page
-    @view.resize(24)
+    @view.resize(22)
     press(5)
 
     assert_equal 3, page[:cursor]
   end
 
   def test_should_have_no_cursor_before_the_first_move
-    @view.resize(24)
+    @view.resize(22)
 
     assert_nil page[:cursor]
   end
@@ -61,7 +61,7 @@ class TestView < Minitest::Test
   end
 
   def test_should_say_there_are_more_when_loaded_runs_go_past_the_page
-    @view.resize(24)
+    @view.resize(22)
 
     assert page[:has_more]
   end
@@ -73,13 +73,13 @@ class TestView < Minitest::Test
   end
 
   def test_should_say_there_are_none_when_the_page_ends_at_the_last_run
-    @view.resize(28)
+    @view.resize(24)
 
     refute page[:has_more]
   end
 
   def test_should_say_whether_a_cancel_is_being_confirmed
-    @view.resize(24)
+    @view.resize(22)
     press(1)
 
     refute page[:confirming]

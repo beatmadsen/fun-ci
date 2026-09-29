@@ -165,7 +165,8 @@ and cheap to resolve.
   `trunk_fetch: false` stops it. A trunk fetched over an hour ago, or whose
   last fetch failed, is stale, and every line that depends on it says so.
 - The console marks a branch whose newest run conflicts: `conflicts main` in
-  bold magenta after its name, the one colour nothing else on the board uses.
+  magenta after its name, the one colour nothing else on the board uses, or
+  `↯ main` where the words don't fit, which the footer then explains.
   The marker follows the branch's latest settled check, so it doesn't flicker
   off while a new commit is being checked. Nothing else about the trunk is on
   the rows; stale trunks get one dim note in the footer.
@@ -195,35 +196,51 @@ fails once, however many of its stages fail.
 ## The console
 
 `fun-ci console` is one screen, like a departure board at a station: you look,
-you know, you go. An animated picture fills the top 14 rows; below it, one row
-per run, newest first:
+you know, you go. An animated picture fills the top 14 rows; below it, after a
+blank line, the stages' names, then one row per run, newest first:
 
 ```
-> 8d552d0  main  Lint 0.3s  Build 1.2s  Fast ⠁ 9s  Slow --  RUNNING  just now
-  c67191d  main  Lint 0.3s  Build 1.2s  Fast 1.8s  Slow 47s  PASSED  10m ago
+                                    lint     build    fast     slow
+▌›8d552d0  feat/search      fun-ci  ✓ 0.3s   ✓ 1.2s   ⠹ 9s     ⠹ 9s     RUNNING     now
+▌ 93d480c  a-life conflicts main  kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED   6m
+  c67191d  feat/search      fun-ci  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      10m
 
-  j/k move   c cancel   q quit
+  j/k move   c cancel   q quit   kata: trunk 2h old
 ```
 
-- A row reads like a sentence: commit, branch, the four stages with their
-  times, the outcome, and when. There are no column headings.
-- The colour is on the stage times themselves, so the board can be scanned for
-  colour without reading. A wall of green means everything is fine.
-- A passed stage is green. A failed one is bold red with the word in it
-  (`Fast FAIL 6.2s`). A timed-out one is bold yellow (`Fast TIMEOUT 10s`). The
-  running stage is cyan, with a spinner and a time that ticks up, so the eye
-  goes straight to where the action is. A stage not reached yet is a dim `--`.
-- The outcome word matches: PASSED in bold green, FAILED in bold red, TIMED OUT
-  in bold yellow, RUNNING in bold cyan. A scheduled run is a dim
-  `Scheduled...`; a cancelled one is dim and colourless, neither good nor bad.
-- The relative time is dim: always there, never competing.
-- `j` and `k` (or the arrows) move the cursor, `c` cancels the run under it,
+- A row reads like a sentence: commit, branch, project, the four stages with
+  their times, the outcome, and when. Each stage has its own column, always
+  in the order lint, build, fast, slow, so the eye runs down a column instead
+  of reading along a row.
+- Each stage shows its state by shape and colour together: a green `✓` for
+  passed, a bold red `✗` for failed, a bold amber `▲` for timed out, a cyan
+  spinner with a time that ticks up for running, a faint `·` for not reached,
+  `–` for cancelled and a grey `◌` for waiting to run. A wall of green ticks
+  means everything is fine.
+- The newest run of each branch carries its state in a bar at the left edge,
+  so reading down that edge gives every branch's health; a running run's bar
+  pulses. A run that a newer run of its branch replaced is dimmed, its outcome
+  in lower case: a failure already fixed no longer shouts. A current failure
+  or timeout, and only trouble, gets a dark band of its colour across the row.
+- Runs of a branch cancelled one after another, as a rebase leaves them, fold
+  into one row: `detached ×25`, faint, with no stages.
+- The outcome word matches: PASSED in bold green, FAILED in bold red, TIMED
+  OUT in bold amber, RUNNING in bold cyan. A scheduled run says `waiting` in
+  grey, and a cancelled one is faint, neither good nor bad.
+- The project shows, in grey, only when the board holds more than one. The
+  age is short (`now`, `6m`, `2h`, `3d`) and faint: always there, never
+  competing.
+- Nothing wraps. As the terminal narrows, the SHA goes first, then the project
+  shrinks to its initial, then the stages keep their marks and lose their
+  times; a branch too long for its column is cut with `…`. It works from 60
+  columns wide up.
+- `j` and `k` (or the arrows) move the cursor, a white `›` with the branch in
+  bold white and the row's band brightened; `c` cancels the run under it,
   `q` quits. Cancelling a scheduled run happens at once; a running one asks
   first, naming it (`Cancel feat/search (d4e5f67)? y / n`), because a process
   gets killed.
 - The board is always live, so there is no refresh key. With no runs yet it
   says `No runs yet.`
-- It works from 60 columns wide up.
 - The streak counts consecutive passed runs; a running run neither breaks nor
   extends it. It sits at the top right of the header, `7 in a row!` in green,
   or `streak broken` in plain white after a failure, since the header shouldn't

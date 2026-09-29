@@ -1,10 +1,16 @@
 //! Stage effects and footer banners in situations the golden scenarios do not
 //! reach: several runs, several effects at once, projects, late stages.
 
-use crate::support::boards::{board, bold_at_word, event, last_screen, run, then_ticks};
+use crate::support::boards::{board, bold_at_stage, event, last_screen, run, then_ticks};
 
-const FIRST_ROW: usize = 14;
-const SECOND_ROW: usize = 16;
+const FIRST_ROW: usize = 16;
+const SECOND_ROW: usize = 17;
+
+/// The first run's row after `lines` and `ticks` ticks, as text: the same with
+/// and without an effect when the effect lands exactly on its stage's cell.
+fn row_after(lines: &[String], ticks: usize) -> String {
+    last_screen(&then_ticks(lines, ticks)).text().lines().nth(FIRST_ROW).unwrap().to_string()
+}
 
 fn passed(stages: &[&'static str]) -> Vec<(&'static str, &'static str)> {
     stages.iter().map(|s| (*s, "passed")).collect()
@@ -14,7 +20,7 @@ fn passed(stages: &[&'static str]) -> Vec<(&'static str, &'static str)> {
 fn an_effect_on_the_second_run_flashes_the_second_row() {
     let lines = [board(&[run(1, "passed", &passed(&["lint"])), run(2, "running", &passed(&["lint"]))]),
                  event("stage_passed", 2, "lint")];
-    assert!(bold_at_word(&last_screen(&then_ticks(&lines, 1)), SECOND_ROW, "Lint"));
+    assert!(bold_at_stage(&last_screen(&then_ticks(&lines, 1)), SECOND_ROW, "lint"));
 }
 
 #[test]
@@ -42,7 +48,7 @@ fn a_timeout_flash_does_not_hide_a_success_banner() {
 #[test]
 fn a_timeout_flash_ends_after_four_frames() {
     let lines = [board(&[run(1, "timeout", &[("fast", "timeout")])]), event("stage_failed", 1, "fast")];
-    assert!(bold_at_word(&last_screen(&then_ticks(&lines, 6)), FIRST_ROW, "Fast"));
+    assert!(bold_at_stage(&last_screen(&then_ticks(&lines, 6)), FIRST_ROW, "fast"));
 }
 
 #[test]
@@ -57,26 +63,25 @@ fn an_effect_lands_exactly_on_its_stage_when_the_run_names_a_project() {
     let mut project_run = run(1, "running", &passed(&["lint"]));
     project_run["project"] = "/src/app".into();
     let lines = [board(&[project_run]), event("stage_passed", 1, "lint")];
-    let text = last_screen(&then_ticks(&lines, 1)).text();
-    assert_eq!(text.lines().nth(FIRST_ROW).unwrap().trim_end(), "  a3f7c01  b1  app  Lint 0.3s  RUNNING  just now");
+    assert_eq!(row_after(&lines, 1), row_after(&lines[..1], 1));
 }
 
 #[test]
 fn the_build_sparkle_starts_two_frames_late() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "build"]))]), event("stage_passed", 1, "build")];
-    assert!(!bold_at_word(&last_screen(&then_ticks(&lines, 1)), FIRST_ROW, "Build"));
+    assert!(!bold_at_stage(&last_screen(&then_ticks(&lines, 1)), FIRST_ROW, "build"));
 }
 
 #[test]
 fn the_slow_sparkle_starts_six_frames_late() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "slow"]))]), event("stage_passed", 1, "slow")];
-    assert!(!bold_at_word(&last_screen(&then_ticks(&lines, 5)), FIRST_ROW, "Slow"));
+    assert!(!bold_at_stage(&last_screen(&then_ticks(&lines, 5)), FIRST_ROW, "slow"));
 }
 
 #[test]
 fn the_slow_sparkle_lights_its_first_letter_on_the_seventh_frame() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "slow"]))]), event("stage_passed", 1, "slow")];
-    assert!(bold_at_word(&last_screen(&then_ticks(&lines, 7)), FIRST_ROW, "Slow"));
+    assert!(bold_at_stage(&last_screen(&then_ticks(&lines, 7)), FIRST_ROW, "slow"));
 }
 
 #[test]
@@ -84,6 +89,5 @@ fn an_effect_lands_exactly_on_its_stage_when_the_run_conflicts_with_the_trunk() 
     let mut conflicting = run(1, "running", &passed(&["lint"]));
     conflicting["trunk"] = serde_json::json!({"branch_state": "conflicts", "trunk": "main"});
     let lines = [board(&[conflicting]), event("stage_passed", 1, "lint")];
-    let text = last_screen(&then_ticks(&lines, 1)).text();
-    assert_eq!(text.lines().nth(FIRST_ROW).unwrap().trim_end(), "  a3f7c01  b1  conflicts main  Lint 0.3s  RUNNING  just now");
+    assert_eq!(row_after(&lines, 1), row_after(&lines[..1], 1));
 }

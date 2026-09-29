@@ -1,42 +1,21 @@
 //! What an effect draws over a stage, and over the footer, frame by frame.
 
 use super::effect::{Effect, Kind};
-use crate::ansi::{BOLD_RED, RESET, paint, strip};
-use crate::format::{duration, finished_word, stage_label};
-use crate::row::head_width;
-use crate::model::{Run, Stage};
+use crate::ansi::{RESET, strip};
+use crate::model::Run;
+use crate::table::layout::Layout;
+use crate::table::stage_cell::stage_cell;
 
 const STAGE_PASS_COLOURS: [&str; 3] = ["\u{1b}[1;33m", "\u{1b}[1;32m", "\u{1b}[32m"];
 const TIMEOUT_COLOURS: [&str; 4] = ["\u{1b}[1;33m", "\u{1b}[33m", "\u{1b}[1;33m", "\u{1b}[33m"];
-const PARTICLES: [(&str, &str); 7] = [
-    ("*", "\u{1b}[1;31m"),
-    (".*", "\u{1b}[1;31m"),
-    (".+*.", "\u{1b}[38;5;208m"),
-    ("*.+'", "\u{1b}[38;5;208m"),
-    ("' .", "\u{1b}[38;5;52m"),
-    (".", "\u{1b}[38;5;52m"),
-    ("", ""),
-];
+/// A failed stage's cell flares red and cools, frame by frame, then shows as the row draws it.
+const FAILURE_GLOW: [&str; 6] = ["1;97;48;5;196", "1;97;48;5;160", "1;97;48;5;124", "1;91;48;5;88", "1;91;48;5;52", "1;91"];
 
-/// The stage's text as its row shows it once the stage has finished.
+/// The stage's cell as its row shows it once the stage has finished.
 #[must_use]
-pub fn stage_text(run: &Run, stage: &str) -> Option<String> {
-    let found = run.stage(stage)?;
-    let name = stage_label(stage).unwrap_or(stage);
-    let took = found.duration_ms.map_or("--".to_string(), duration);
-    Some(match finished_word(&found.status) {
-        Some(word) => format!("{name}{word} {took}"),
-        None => format!("{name} --"),
-    })
-}
-
-/// The 1-based column the stage's text starts at in its row.
-#[must_use]
-pub fn stage_column(run: &Run, stage: &str) -> Option<usize> {
-    let index = run.stages.iter().position(|s| s.stage == stage)?;
-    let text_width = |s: &Stage| stage_text(run, &s.stage).map_or(0, |t| t.chars().count()) + 2;
-    let before: usize = run.stages[..index].iter().map(text_width).sum();
-    Some(head_width(run) + 2 + before + 1)
+pub fn stage_text(run: &Run, stage: &str, layout: &Layout) -> Option<String> {
+    run.stage(stage)?;
+    Some(stage_cell(run, stage, ' ', 0).text.chars().take(layout.cell()).collect())
 }
 
 /// What `effect` draws over the stage text `text` this frame.
@@ -45,7 +24,7 @@ pub fn stage_overlay(effect: &Effect, text: &str) -> Option<String> {
     match effect.kind {
         Kind::StagePass => Some(flash(effect.frame, text, &STAGE_PASS_COLOURS)),
         Kind::Timeout => Some(flash(effect.frame, text, &TIMEOUT_COLOURS)),
-        Kind::Failure => flanks(effect.frame, text),
+        Kind::Failure => glow(effect.frame, text),
         Kind::Success => sparkle(effect, text),
         Kind::Conflict => None,
     }
@@ -55,14 +34,8 @@ fn flash(frame: usize, text: &str, colours: &[&str]) -> String {
     format!("{}{}{RESET}", colours[frame.min(colours.len() - 1)], strip(text))
 }
 
-fn flanks(frame: usize, text: &str) -> Option<String> {
-    let (chars, colour) = PARTICLES.get(frame)?;
-    let plain = strip(text);
-    if chars.is_empty() {
-        return Some(plain);
-    }
-    let left: String = chars.chars().rev().collect();
-    Some(format!("{colour}{left}{RESET} {} {colour}{chars}{RESET}", paint(BOLD_RED, &plain)))
+fn glow(frame: usize, text: &str) -> Option<String> {
+    FAILURE_GLOW.get(frame).map(|code| format!("\u{1b}[{code}m{}{RESET}", strip(text)))
 }
 
 fn sparkle(effect: &Effect, text: &str) -> Option<String> {

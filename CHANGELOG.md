@@ -28,7 +28,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   conflicts.
 - `fun-ci --help` lists `--raw`, which it left out.
 
+### Changed
+- The console's table is drawn anew. Each stage has a column of its own,
+  always lint, build, fast, slow, with a mark that says its state by shape as
+  well as colour (`✓ 1.2s`, `✗ 1.4s`, `▲ 10s`, a spinner while it runs).
+  The newest run of each branch carries its state in a bar at the left edge;
+  a run a newer one replaced is dimmed, so a failure you fixed stops shouting;
+  a current failure or timeout gets a dark band of its colour. Runs take one
+  row each, so twice as many fit, and a branch's runs cancelled one after
+  another, as a rebase leaves them, fold into one row (`detached ×25`).
+  Project names are grey rather than in colours that looked like states, and
+  show only when the board holds more than one project. The cursor is a white
+  `›` that lifts its row.
+
 ### Fixed
+- A console row wider than the terminal, from a long branch name or a
+  failure word, wrapped onto the next line and pushed the board up, hiding
+  the newest run under the header. Rows are now cut to fit, the branch first,
+  and never wrap; the footer too.
 - `.fun-ci/console.log`, where the console notes what went wrong between it
   and the renderer, was left for `git add` to sweep into a commit. The console
   now writes a `.fun-ci/.gitignore` naming it, unless the project has one there.

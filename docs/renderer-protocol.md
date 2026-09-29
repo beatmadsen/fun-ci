@@ -94,22 +94,29 @@ The full state to show. Always complete — never a diff.
   negative. A board with a field the renderer cannot read is dropped whole, and
   the renderer reports the parse error, so one bad field keeps the screen from
   changing.
-- `updated_at` is the run's last status change; the row's "2m ago" counts from
-  it.
+- `updated_at` is the run's last status change; the row's age (`2m`) counts
+  from it.
 - `project` (optional) is the path of the project the run belongs to. The
-  renderer shows its basename in a colour chosen by CRC-32 of the basename, so
-  a project keeps its colour across restarts.
+  renderer shows its basename in grey when the page holds runs of more than
+  one project.
 - `trunk` (optional) on a run is its branch's standing against the trunk,
   `{"branch_state": "conflicts", "trunk": "main"}`. Ruby sends it only on the
   runs whose row shows it: a branch's newest run, when the branch's latest
   settled check conflicts. The renderer draws `conflicts <trunk>` after the
-  branch.
+  branch, or `↯ <trunk>` where words don't fit, and then explains `↯` in the
+  footer.
+- `folded` (optional) on a run says how many cancelled runs of its branch,
+  one after another, it stands for, itself included (a rebase leaves such a
+  stream). Ruby folds them so the cursor and pages count rows; the renderer
+  draws `×<folded>` after the branch and no stages. Ruby leaves it out for a
+  run that stands for itself alone.
 - `stale_trunks` (optional) names the projects whose trunk is stale,
   `[{"project": "/src/app", "since": 1789989200}]`, `since` being the last
   good fetch (epoch seconds) or null when the last fetch failed. The footer
   says so once. Ruby leaves it out when no trunk is stale.
-- `runs` is one page: at most `(rows - 16) / 2` runs for the terminal's `rows`
-  (a 14-row header, a blank line and the footer; two rows per run), scrolled
+- `runs` is one page: at most `rows - 18` runs for the terminal's `rows` (a
+  14-row header, a blank line, the stages' names, a blank line and the
+  footer; one row per run), scrolled
   so the run under the cursor is on it. `cursor` indexes into `runs`, and
   `has_more` says there are runs below the page. Ruby pages from the `rows` of
   `ready` and of each `resize`.

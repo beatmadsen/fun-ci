@@ -16,7 +16,7 @@ fn footer(cursor: &str, confirming: bool) -> String {
     let frame = &replay(&messages, &Library::builtin(), (80, 24), Depth::TrueColour)[0];
     let mut terminal = Emulator::new(frame.size);
     terminal.feed(frame.size, &frame.bytes);
-    terminal.grid().text().lines().nth(16).unwrap().trim_end().to_string()
+    terminal.grid().text().lines().nth(18).unwrap().trim_end().to_string()
 }
 
 #[test]
