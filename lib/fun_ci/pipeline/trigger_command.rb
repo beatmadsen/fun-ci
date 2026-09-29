@@ -47,12 +47,16 @@ module FunCi
       end
 
       # The forker answers whether it started a run; one that did says how an
-      # agent gets its verdict (acceptance-tests.md, AT-9.14).
+      # agent gets its verdict (acceptance-tests.md, AT-9.14), and what the
+      # forker says of a first fetch of the trunk.
       def fork_pipeline(commit)
         db_path = @recorder.db_path
         @recorder.close
-        started = @pipeline_forker.call(commit_hash: commit.sha, branch: commit.branch, db_path: db_path)
-        say_how_to_wait(commit.sha[0, 7]) if started
+        forked = @pipeline_forker.call(commit_hash: commit.sha, branch: commit.branch, db_path: db_path)
+        return 0 unless forked
+
+        say_how_to_wait(commit.sha[0, 7])
+        @io.stdout.puts(forked.notice) if forked.notice
         0
       end
 

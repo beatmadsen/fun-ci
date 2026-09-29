@@ -4,18 +4,33 @@ require_relative "../persistence/database"
 require_relative "../persistence/pipeline_recorder"
 require_relative "trigger_params"
 require_relative "../setup/project_config"
+require_relative "../trunk/first_fetch"
 
 module FunCi
   module Pipeline
     class PipelineForker
-      # Answers whether it started a run: none in a project not set up for fun-ci.
+      # A run started, and what to say before the project's first fetch of its trunk, if this is it.
+      Forked = Data.define(:notice)
+
+      # Answers a Forked, or false in a project not set up for fun-ci. What the
+      # run prints goes nowhere, so the notice is worked out here, before the fork.
       def self.fork_pipeline(commit_hash:, branch:, db_path:)
         return false unless Setup::ProjectConfig.new(Dir.pwd).validate.empty?
 
+        notice = first_fetch(db_path)
         pid = fork do
           run_in_child(commit_hash: commit_hash, branch: branch, db_path: db_path)
         end
         Process.detach(pid)
+        Forked.new(notice: notice)
+      end
+
+      # The connection closes before the fork, which must not inherit it.
+      def self.first_fetch(db_path)
+        db = Persistence::Database.connection(db_path)
+        Trunk::FirstFetch.notice(Dir.pwd, db)
+      ensure
+        db&.close
       end
 
       # Trigger requires this file, through TriggerCommand, so it is loaded
@@ -34,7 +49,7 @@ module FunCi
         Trigger.new(project: Dir.pwd, commit: Commit.new(sha: commit_hash, branch: branch),
                     io: Io.new(stdout: File.open(File::NULL, "w")), seams: Seams.new(recorder: recorder))
       end
-      private_class_method :trigger
+      private_class_method :trigger, :first_fetch
     end
   end
 end

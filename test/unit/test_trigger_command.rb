@@ -10,9 +10,11 @@ require "fun_ci/pipeline/trigger"
 class TestTriggerCommand < Minitest::Test
   USAGE = "fun-ci: commit hash and branch name are required.\nUsage: fun-ci trigger <commit-hash> <branch>\n"
 
+  FORKED = FunCi::Pipeline::PipelineForker::Forked.new(notice: nil)
+
   def setup
     @forker_calls = []
-    @forker = ->(**call) { @forker_calls << call }
+    @forker = ->(**call) { @forker_calls.push(call).then { FORKED } }
   end
 
   def test_should_fail_without_arguments
@@ -65,7 +67,7 @@ class TestTriggerCommand < Minitest::Test
     closed = false
     recorder = FakeRecorder.new
     recorder.define_singleton_method(:close) { closed = true }
-    @forker = ->(**) { @forker_calls << closed }
+    @forker = ->(**) { @forker_calls.push(closed).then { FORKED } }
     run_command(["--background", "abc1234", "main"], recorder: recorder)
 
     assert @forker_calls.first
@@ -93,6 +95,14 @@ class TestTriggerCommand < Minitest::Test
     run_command(["--background", "3f9c2ab0c4d1e2f3", "main"])
 
     assert_equal "fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all\n", @stdout.string
+  end
+
+  def test_should_say_what_the_forker_says_of_a_first_fetch_after_how_to_get_the_verdict
+    @forker = ->(**) { FORKED.with(notice: "fun-ci: fetching origin/main") }
+    run_command(["--background", "3f9c2ab0c4d1e2f3", "main"])
+
+    assert_equal "fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all\nfun-ci: fetching origin/main\n",
+                 @stdout.string
   end
 
   def test_should_say_nothing_when_the_forker_started_no_run

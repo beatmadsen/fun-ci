@@ -51,9 +51,7 @@ module FunCi
       def notice(pending)
         return nil unless pending&.started && pending.last.nil?
 
-        "fun-ci: fetching #{pending.ref} into refs/fun-ci/ now and at most every " \
-          "#{Description.every(@config.trunk_fetch)}, touching none of your refs; " \
-          "set trunk_fetch: false in .fun-ci/config to stop."
+        Description.first_fetch(pending.ref, @config.trunk_fetch)
       end
 
       def finish(pending)

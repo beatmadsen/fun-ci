@@ -44,6 +44,12 @@ class TestTrunkDescription < Minitest::Test
     assert_equal ["Trunk: none (trunk: none in .fun-ci/config), so runs check none."], lines("none", 300, ORIGIN)
   end
 
+  def test_should_announce_a_first_fetch_with_the_setting_that_stops_it
+    assert_equal "fun-ci: fetching origin/main into refs/fun-ci/ now and at most every 5 minutes, touching none of " \
+                 "your refs; set trunk_fetch: false in .fun-ci/config to stop.",
+                 FunCi::Trunk::Description.first_fetch(FunCi::Trunk::Ref.new(remote: "origin", branch: "main"), 300)
+  end
+
   private
 
   def lines(setting, interval, refs) = FunCi::Trunk::Description.lines(setting: setting, interval: interval, refs: refs)

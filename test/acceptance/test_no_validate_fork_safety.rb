@@ -24,7 +24,8 @@ class TestNoValidateForkSafety < Minitest::Test
 
   def test_should_close_db_before_calling_forker
     db_was_closed_before_fork = nil
-    exit_code = trigger_no_validate(->(**) { db_was_closed_before_fork = @recorder.db.closed? })
+    forked = FunCi::Pipeline::PipelineForker::Forked.new(notice: nil)
+    exit_code = trigger_no_validate(->(**) { (db_was_closed_before_fork = @recorder.db.closed?).then { forked } })
     assert_equal 0, exit_code
     assert db_was_closed_before_fork,
            "Parent DB should be closed before calling the forker to prevent SQLite fork safety warnings"

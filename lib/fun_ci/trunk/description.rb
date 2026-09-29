@@ -26,6 +26,12 @@ module FunCi
                                                                       ref.remote.to_s)}).#{fetching(ref, interval)}"]
       end
 
+      # What a project's first fetch says, so it never comes as a surprise.
+      def self.first_fetch(ref, interval)
+        "fun-ci: fetching #{ref} into refs/fun-ci/ now and at most every #{every(interval)}, " \
+          "touching none of your refs; set trunk_fetch: false in .fun-ci/config to stop."
+      end
+
       def self.fetching(ref, interval)
         return "" unless ref.remote
         return " fun-ci doesn't fetch it (trunk_fetch: false)." unless interval
