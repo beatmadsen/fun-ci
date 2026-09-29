@@ -71,7 +71,7 @@ fn gutter(line: &mut Line, run: &Run, place: Place, play_ms: u64) {
         line.put(0, "▌", Style::plain(colour));
     }
     if place.selected {
-        line.put(1, "›", Style::bold(CURSOR));
+        line.put(1, "❯", Style::bold(CURSOR));
     }
 }
 

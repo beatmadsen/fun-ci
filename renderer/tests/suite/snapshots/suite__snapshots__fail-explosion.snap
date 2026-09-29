@@ -7,7 +7,7 @@ frame 0001 at 100x30
   header 6d42ba03
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠙ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠙ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -41,7 +41,7 @@ frame 0002 at 100x30
   header b6775f15
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠹ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠹ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -75,7 +75,7 @@ frame 0003 at 100x30
   header 522ec8cf
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠸ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠸ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -109,7 +109,7 @@ frame 0004 at 100x30
   header accf857c
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠼ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠼ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -143,7 +143,7 @@ frame 0005 at 100x30
   header 133b76df
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠴ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠴ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -177,7 +177,7 @@ frame 0006 at 100x30
   header bec183d0
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠦ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠦ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -211,7 +211,7 @@ frame 0007 at 100x30
   header 63feebb7
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠧ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠧ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -245,7 +245,7 @@ frame 0008 at 100x30
   header 49873264
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠇ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠇ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -279,7 +279,7 @@ frame 0009 at 100x30
   header 6ed725d1
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠏ 2s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠏ 2s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -313,7 +313,7 @@ frame 0010 at 100x30
   header 67709551
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠋ 3s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠋ 3s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -347,7 +347,7 @@ frame 0011 at 100x30
   header 1029c4af
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -381,7 +381,7 @@ frame 0012 at 100x30
   header 5433d382
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -415,7 +415,7 @@ frame 0013 at 100x30
   header 34647194
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -449,7 +449,7 @@ frame 0014 at 100x30
   header ada534de
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -483,7 +483,7 @@ frame 0015 at 100x30
   header cacf4f00
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -517,7 +517,7 @@ frame 0016 at 100x30
   header b473b490
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -551,7 +551,7 @@ frame 0017 at 100x30
   header 8cd23f29
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -585,7 +585,7 @@ frame 0018 at 100x30
   header 13d06ec5
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -619,7 +619,7 @@ frame 0019 at 100x30
   header a54d1e7a
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                        >>> FAST FAILED <<<
@@ -653,7 +653,7 @@ frame 0020 at 100x30
   header 1fe1c02b
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                        >>> FAST FAILED <<<
@@ -687,7 +687,7 @@ frame 0021 at 100x30
   header 2babd383
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                        >>> FAST FAILED <<<
@@ -721,7 +721,7 @@ frame 0022 at 100x30
   header de7efa93
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                        >>> FAST FAILED <<<
@@ -755,7 +755,7 @@ frame 0023 at 100x30
   header 99878cae
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                        >>> FAST FAILED <<<
@@ -789,7 +789,7 @@ frame 0024 at 100x30
   header f745f153
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                        >>> FAST FAILED <<<
@@ -823,7 +823,7 @@ frame 0025 at 100x30
   header bbb5156f
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                        >>> FAST FAILED <<<
@@ -857,7 +857,7 @@ frame 0026 at 100x30
   header 4572b132
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                        >>> FAST FAILED <<<
@@ -891,7 +891,7 @@ frame 0027 at 100x30
   header 5fc0f476
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                         >> fast failed <<
@@ -925,7 +925,7 @@ frame 0028 at 100x30
   header 67497472
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                         >> fast failed <<
@@ -959,7 +959,7 @@ frame 0029 at 100x30
   header 1d66c6d8
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                         >> fast failed <<
@@ -993,7 +993,7 @@ frame 0030 at 100x30
   header a021d5aa
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                         >> fast failed <<
@@ -1027,7 +1027,7 @@ frame 0031 at 100x30
   header 91503a5d
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                         >> fast failed <<
@@ -1061,7 +1061,7 @@ frame 0032 at 100x30
   header 0197a838
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                         >> fast failed <<
@@ -1095,7 +1095,7 @@ frame 0033 at 100x30
   header 7f9c4b27
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                         >> fast failed <<
@@ -1129,7 +1129,7 @@ frame 0034 at 100x30
   header abff29b8
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                         >> fast failed <<
@@ -1163,7 +1163,7 @@ frame 0035 at 100x30
   header 6102ac24
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                          > fast failed <
@@ -1197,7 +1197,7 @@ frame 0036 at 100x30
   header c3c043c7
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                          > fast failed <
@@ -1231,7 +1231,7 @@ frame 0037 at 100x30
   header 4282b039
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                          > fast failed <
@@ -1265,7 +1265,7 @@ frame 0038 at 100x30
   header dbd112f6
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                          > fast failed <
@@ -1299,7 +1299,7 @@ frame 0039 at 100x30
   header 40f4d9ec
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                          > fast failed <
@@ -1333,7 +1333,7 @@ frame 0040 at 100x30
   header afb993b1
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                          > fast failed <
@@ -1367,7 +1367,7 @@ frame 0041 at 100x30
   header da83d00d
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                          > fast failed <
@@ -1401,7 +1401,7 @@ frame 0042 at 100x30
   header 6d27a072
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |                                          > fast failed <
@@ -1435,7 +1435,7 @@ frame 0043 at 100x30
   header f06038bf
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1469,7 +1469,7 @@ frame 0044 at 100x30
   header 07c0d414
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1503,7 +1503,7 @@ frame 0045 at 100x30
   header fba121c3
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1537,7 +1537,7 @@ frame 0046 at 100x30
   header 183fc313
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1571,7 +1571,7 @@ frame 0047 at 100x30
   header fba121c3
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1605,7 +1605,7 @@ frame 0048 at 100x30
   header 07c0d414
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1639,7 +1639,7 @@ frame 0049 at 100x30
   header f06038bf
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1673,7 +1673,7 @@ frame 0050 at 100x30
   header 0b257e4a
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1707,7 +1707,7 @@ frame 0051 at 100x30
   header 084b4e53
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1741,7 +1741,7 @@ frame 0052 at 100x30
   header 2573a4eb
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1775,7 +1775,7 @@ frame 0053 at 100x30
   header 6e8c536c
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1809,7 +1809,7 @@ frame 0054 at 100x30
   header 1912f05b
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1843,7 +1843,7 @@ frame 0055 at 100x30
   header 2207c137
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✗ 3s     ·        FAILED     now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 51s    passed      2h
   |
@@ -1886,13 +1886,13 @@ i = fg Rgb(62, 65, 71), bg Default, []
 j = fg Rgb(42, 94, 63), bg Default, []
 k = fg Default, bg Default, ["dim"]
 l = fg Rgb(30, 90, 98), bg Rgb(29, 39, 51), []
-m = fg Rgb(255, 95, 95), bg Rgb(68, 31, 35), []
-n = fg Rgb(255, 255, 255), bg Rgb(68, 31, 35), ["bold"]
-o = fg Rgb(138, 145, 158), bg Rgb(68, 31, 35), []
-p = fg Rgb(95, 211, 141), bg Rgb(68, 31, 35), []
+m = fg Rgb(255, 95, 95), bg Rgb(78, 41, 45), []
+n = fg Rgb(255, 255, 255), bg Rgb(78, 41, 45), ["bold"]
+o = fg Rgb(138, 145, 158), bg Rgb(78, 41, 45), []
+p = fg Rgb(95, 211, 141), bg Rgb(78, 41, 45), []
 q = fg Idx(15), bg Idx(196), ["bold"]
-r = fg Rgb(255, 95, 95), bg Rgb(68, 31, 35), ["bold"]
-s = fg Rgb(75, 81, 92), bg Rgb(68, 31, 35), []
+r = fg Rgb(255, 95, 95), bg Rgb(78, 41, 45), ["bold"]
+s = fg Rgb(75, 81, 92), bg Rgb(78, 41, 45), []
 t = fg Idx(15), bg Idx(160), ["bold"]
 u = fg Idx(15), bg Idx(124), ["bold"]
 v = fg Idx(9), bg Idx(88), ["bold"]

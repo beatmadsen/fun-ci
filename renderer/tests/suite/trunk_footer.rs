@@ -74,8 +74,13 @@ fn a_footer_too_long_for_the_terminal_ends_in_an_ellipsis() {
 
 /// The footer of a board whose one run's long branch conflicts with main, on `cols` columns.
 fn conflict_footer(cols: u16) -> String {
+    conflict_footer_with(cols, "[]")
+}
+
+/// The same footer with `stale` as the board's `stale_trunks`.
+fn conflict_footer_with(cols: u16, stale: &str) -> String {
     let run = r#"{"id":1,"sha":"d4e5f67a3f7c01e9b2d4c6f8a1b3c5d7e9f0a2b4","branch":"feature/a-branch-name-long-enough-to-crowd-it","status":"failed","updated_at":1790000000,"stages":[],"trunk":{"branch_state":"conflicts","trunk":"main"}}"#;
-    let board = format!(r#"{{"t":"board","now":1790000000,"runs":[{run}]}}"#);
+    let board = format!(r#"{{"t":"board","now":1790000000,"runs":[{run}],"stale_trunks":{stale}}}"#);
     let messages = [parse(&board).unwrap(), parse(r#"{"t":"tick","ms":100}"#).unwrap()];
     let frame = &replay(&messages, &Library::builtin(), (cols, 24), Depth::TrueColour)[0];
     let mut terminal = Emulator::new(frame.size);
@@ -91,4 +96,10 @@ fn a_conflict_shown_as_a_zigzag_is_explained_in_the_footer() {
 #[test]
 fn a_conflict_said_in_words_needs_no_explaining() {
     assert!(!conflict_footer(200).contains('↯'), "{:?}", conflict_footer(200));
+}
+
+#[test]
+fn the_zigzag_s_explanation_comes_before_a_stale_trunk_note() {
+    let footer = conflict_footer_with(80, r#"[{"project":"/src/agent-tome","since":1789992800}]"#);
+    assert!(footer.contains("↯ conflicts with trunk"), "{footer:?}");
 }

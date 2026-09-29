@@ -7,7 +7,7 @@ frame 0001 at 100x30
   header 6d42ba03
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠙ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠙ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -41,7 +41,7 @@ frame 0002 at 100x30
   header b6775f15
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠹ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠹ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -75,7 +75,7 @@ frame 0003 at 100x30
   header 522ec8cf
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠸ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠸ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -109,7 +109,7 @@ frame 0004 at 100x30
   header accf857c
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠼ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠼ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -143,7 +143,7 @@ frame 0005 at 100x30
   header 133b76df
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠴ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠴ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -177,7 +177,7 @@ frame 0006 at 100x30
   header bec183d0
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠦ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠦ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -211,7 +211,7 @@ frame 0007 at 100x30
   header 63feebb7
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠧ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠧ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -245,7 +245,7 @@ frame 0008 at 100x30
   header 49873264
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠇ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠇ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -279,7 +279,7 @@ frame 0009 at 100x30
   header 6ed725d1
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠏ 9s     ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠏ 9s     ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -313,7 +313,7 @@ frame 0010 at 100x30
   header 67709551
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠋ 10s    ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠋ 10s    ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -347,7 +347,7 @@ frame 0011 at 100x30
   header 95bdb9da
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠙ 10s    ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠙ 10s    ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -381,7 +381,7 @@ frame 0012 at 100x30
   header 84a519e4
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠹ 10s    ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠹ 10s    ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -415,7 +415,7 @@ frame 0013 at 100x30
   header 60512426
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠸ 10s    ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠸ 10s    ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -449,7 +449,7 @@ frame 0014 at 100x30
   header a51ce522
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠼ 10s    ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠼ 10s    ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |
@@ -483,7 +483,7 @@ frame 0015 at 100x30
   header 20d7257e
   |
   |                  lint     build    fast     slow
-  |▌› 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠴ 10s    ·        RUNNING    now
+  |▌❯ 8d552d0  main  ✓ 0.3s   ✓ 1.2s   ⠴ 10s    ·        RUNNING    now
   |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed     10m
   |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      2h
   |

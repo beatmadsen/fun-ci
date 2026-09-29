@@ -27,7 +27,7 @@ pub const CURSOR: [u8; 3] = [0xFF, 0xFF, 0xFF];
 const DIMMED_PERCENT: u16 = 45;
 /// How much the cursor lifts each channel of a tinted row: enough to see,
 /// never so much the row outshines a failure.
-const SELECTED_LIFT: u8 = 10;
+const SELECTED_LIFT: u8 = 20;
 
 /// `colour` at the brightness of a run a newer one replaced, its hue kept.
 #[must_use]

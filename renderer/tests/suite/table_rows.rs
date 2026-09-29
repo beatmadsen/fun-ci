@@ -268,7 +268,7 @@ fn a_running_stage_is_bold() {
 fn the_cursor_mark_is_bold_white() {
     let grid = table_with_cursor(&[passed(1, "main")], 100, Some(0));
     let mark = &grid.cells[1][1];
-    assert_eq!((mark.text.as_str(), mark.fg, mark.attrs.clone()), ("›", rgb(palette::CURSOR), vec!["bold"]));
+    assert_eq!((mark.text.as_str(), mark.fg, mark.attrs.clone()), ("❯", rgb(palette::CURSOR), vec!["bold"]));
 }
 
 #[test]
@@ -290,7 +290,7 @@ fn a_failed_row_under_the_cursor_is_clearly_lighter_than_one_that_is_not() {
     let grid = table_with_cursor(&[failed(2, "main"), failed(1, "main")], 100, Some(0));
     let cursor_row = table_with_cursor(&[failed(1, "main")], 100, Some(0));
     let plain_row = table(&[failed(1, "main")], 100);
-    assert!(paper_brightness(&cursor_row, 1) >= paper_brightness(&plain_row, 1) + 30, "{grid:?}");
+    assert!(paper_brightness(&cursor_row, 1) >= paper_brightness(&plain_row, 1) + 60, "{grid:?}");
 }
 
 #[test]

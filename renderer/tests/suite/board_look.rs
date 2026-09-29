@@ -31,20 +31,20 @@ fn find(screen: &Grid, text: &str) -> (usize, usize) {
 #[test]
 fn no_row_is_marked_while_no_run_is_under_the_cursor() {
     let screen = last_screen(&then_ticks(&[board(&two_runs())], 1));
-    assert!(!screen.text().contains('›'));
+    assert!(!screen.text().contains('❯'));
 }
 
 #[test]
 fn the_row_under_the_cursor_is_marked() {
     let screen = last_screen(&then_ticks(&[with_cursor(&two_runs(), 1)], 1));
     let (row, _) = find(&screen, "b2");
-    assert_eq!(screen.cells[row][1].text, "›");
+    assert_eq!(screen.cells[row][1].text, "❯");
 }
 
 #[test]
 fn only_the_row_under_the_cursor_is_marked() {
     let screen = last_screen(&then_ticks(&[with_cursor(&two_runs(), 1)], 1));
-    assert_eq!(screen.text().matches('›').count(), 1);
+    assert_eq!(screen.text().matches('❯').count(), 1);
 }
 
 #[test]

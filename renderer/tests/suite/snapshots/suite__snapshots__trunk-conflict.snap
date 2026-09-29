@@ -7,7 +7,7 @@ frame 0001 at 100x30
   header 82b4dfb0
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -41,7 +41,7 @@ frame 0002 at 100x30
   header 530fa1e3
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -75,7 +75,7 @@ frame 0003 at 100x30
   header f83362e8
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -109,7 +109,7 @@ frame 0004 at 100x30
   header ae4fcf39
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -143,7 +143,7 @@ frame 0005 at 100x30
   header 72379bac
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -177,7 +177,7 @@ frame 0006 at 100x30
   header 844ffb89
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -211,7 +211,7 @@ frame 0007 at 100x30
   header 92a199d1
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -245,7 +245,7 @@ frame 0008 at 100x30
   header 118fcfc0
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -279,7 +279,7 @@ frame 0009 at 100x30
   header a1873899
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -313,7 +313,7 @@ frame 0010 at 100x30
   header ce4e93d6
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -347,7 +347,7 @@ frame 0011 at 100x30
   header 65e92616
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -381,7 +381,7 @@ frame 0012 at 100x30
   header 613a6efd
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -415,7 +415,7 @@ frame 0013 at 100x30
   header b0d2e445
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -449,7 +449,7 @@ frame 0014 at 100x30
   header 8635ef18
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -483,7 +483,7 @@ frame 0015 at 100x30
   header be8550f5
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -517,7 +517,7 @@ frame 0016 at 100x30
   header 82b826ac
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -551,7 +551,7 @@ frame 0017 at 100x30
   header 77831529
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -585,7 +585,7 @@ frame 0018 at 100x30
   header 881df296
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -619,7 +619,7 @@ frame 0019 at 100x30
   header 037ebc0b
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -653,7 +653,7 @@ frame 0020 at 100x30
   header 037ebc0b
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -687,7 +687,7 @@ frame 0021 at 100x30
   header 037ebc0b
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -721,7 +721,7 @@ frame 0022 at 100x30
   header 037ebc0b
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -755,7 +755,7 @@ frame 0023 at 100x30
   header 1bdd8091
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -789,7 +789,7 @@ frame 0024 at 100x30
   header 70071055
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -823,7 +823,7 @@ frame 0025 at 100x30
   header f0d4db50
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -857,7 +857,7 @@ frame 0026 at 100x30
   header 393a16e3
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -891,7 +891,7 @@ frame 0027 at 100x30
   header 9d264b79
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -925,7 +925,7 @@ frame 0028 at 100x30
   header bf3ed0f1
   |
   |                                        lint     build    fast     slow
-  |▌› 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
   |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
@@ -959,7 +959,7 @@ frame 0029 at 100x30
   header abfe3bf5
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -993,7 +993,7 @@ frame 0030 at 100x30
   header b5f1cbcb
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1027,7 +1027,7 @@ frame 0031 at 100x30
   header b6bf9a66
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1061,7 +1061,7 @@ frame 0032 at 100x30
   header 87ea6a6b
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1095,7 +1095,7 @@ frame 0033 at 100x30
   header f566572f
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1129,7 +1129,7 @@ frame 0034 at 100x30
   header 407cd3c4
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1163,7 +1163,7 @@ frame 0035 at 100x30
   header bca5b64b
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1197,7 +1197,7 @@ frame 0036 at 100x30
   header f261450b
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1231,7 +1231,7 @@ frame 0037 at 100x30
   header c91e3a99
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1265,7 +1265,7 @@ frame 0038 at 100x30
   header f084bd0a
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1299,7 +1299,7 @@ frame 0039 at 100x30
   header 84fffe80
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1333,7 +1333,7 @@ frame 0040 at 100x30
   header 84fffe80
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1367,7 +1367,7 @@ frame 0041 at 100x30
   header 6d17def2
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1401,7 +1401,7 @@ frame 0042 at 100x30
   header b2be4a65
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1435,7 +1435,7 @@ frame 0043 at 100x30
   header 5050ab77
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1469,7 +1469,7 @@ frame 0044 at 100x30
   header 14374e2b
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1503,7 +1503,7 @@ frame 0045 at 100x30
   header ec1428bf
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1537,7 +1537,7 @@ frame 0046 at 100x30
   header 26bd75dd
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1571,7 +1571,7 @@ frame 0047 at 100x30
   header 28562d8b
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1605,7 +1605,7 @@ frame 0048 at 100x30
   header 6f82ba2d
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1639,7 +1639,7 @@ frame 0049 at 100x30
   header b4c8ced7
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1673,7 +1673,7 @@ frame 0050 at 100x30
   header c87578f5
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1707,7 +1707,7 @@ frame 0051 at 100x30
   header 1e333ebf
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1741,7 +1741,7 @@ frame 0052 at 100x30
   header ba0d2d6e
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1775,7 +1775,7 @@ frame 0053 at 100x30
   header 5df0a39b
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit
@@ -1809,7 +1809,7 @@ frame 0054 at 100x30
   header 891acd11
   |
   |                         lint     build    fast     slow
-  |▌› 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
+  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
   |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |
   |  j/k move   c cancel   q quit

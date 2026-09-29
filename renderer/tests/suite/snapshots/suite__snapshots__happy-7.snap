@@ -7,7 +7,7 @@ frame 0001 at 120x40
   header f32b8ad8
   |
   |                  lint     build    fast     slow
-  |▌› d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
+  |▌❯ d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
   |   f7cf32d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 44s    passed      5m
   |   d54ede8  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 48s    passed     15m
   |   f731578  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 52s    passed      1h
@@ -61,7 +61,7 @@ frame 0002 at 120x40
   header d14c0c5e
   |
   |                  lint     build    fast     slow
-  |▌› d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
+  |▌❯ d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
   |   f7cf32d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 44s    passed      5m
   |   d54ede8  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 48s    passed     15m
   |   f731578  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 52s    passed      1h
@@ -115,7 +115,7 @@ frame 0003 at 120x40
   header eabd8959
   |
   |                  lint     build    fast     slow
-  |▌› d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
+  |▌❯ d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
   |   f7cf32d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 44s    passed      5m
   |   d54ede8  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 48s    passed     15m
   |   f731578  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 52s    passed      1h

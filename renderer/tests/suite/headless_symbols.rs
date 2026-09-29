@@ -28,7 +28,7 @@ marks! {
     the_warning_triangle_is_drawn: "▲";
     the_hollow_circle_is_drawn: "◌";
     the_conflict_zigzag_is_drawn: "↯";
-    the_cursor_mark_is_drawn: "›";
+    the_cursor_mark_is_drawn: "❯";
     the_ellipsis_is_drawn: "…";
     the_dash_is_drawn: "–";
     the_dot_is_drawn: "·";

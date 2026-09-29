@@ -126,7 +126,7 @@ impl BoardView {
             self.screen.println("");
         }
         let (keys, note) = footer(board, at.board_ms);
-        self.render_footer(&keys, &(note + if zigzag { ZIGZAG_LEGEND } else { "" }), rows);
+        self.render_footer(&keys, &(if zigzag { ZIGZAG_LEGEND } else { "" }.to_string() + &note), rows);
     }
 
     /// The footer below the header, if a row is left for it: the keys dim, and

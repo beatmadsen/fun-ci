@@ -201,7 +201,7 @@ blank line, the stages' names, then one row per run, newest first:
 
 ```
                                     lint     build    fast     slow
-▌›8d552d0  feat/search      fun-ci  ✓ 0.3s   ✓ 1.2s   ⠹ 9s     ⠹ 9s     RUNNING     now
+▌❯8d552d0  feat/search      fun-ci  ✓ 0.3s   ✓ 1.2s   ⠹ 9s     ⠹ 9s     RUNNING     now
 ▌ 93d480c  a-life conflicts main  kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED   6m
   c67191d  feat/search      fun-ci  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    passed      10m
 
@@ -234,8 +234,8 @@ blank line, the stages' names, then one row per run, newest first:
   shrinks to its initial, then the stages keep their marks and lose their
   times; a branch too long for its column is cut with `…`. It works from 60
   columns wide up.
-- `j` and `k` (or the arrows) move the cursor, a white `›` with the branch in
-  bold white and the row's band brightened; `c` cancels the run under it,
+- `j` and `k` (or the arrows) move the cursor, a white `❯` with the branch in
+  bold white and the row lifted; `c` cancels the run under it,
   `q` quits. Cancelling a scheduled run happens at once; a running one asks
   first, naming it (`Cancel feat/search (d4e5f67)? y / n`), because a process
   gets killed.

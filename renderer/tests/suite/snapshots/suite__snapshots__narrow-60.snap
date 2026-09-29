@@ -8,7 +8,7 @@ frame 0001 at 60x30
   |
   |                           l  b  f  s
   |▌  f7cf32d  feature/login  ✓  ✓  ⠙  ·  RUNNING    now
-  |▌› d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  |▌❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
   |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
   |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
   |   c67191d  spike          ✓  ✓  –  –  cancelled   1h
@@ -42,7 +42,7 @@ frame 0002 at 60x30
   |
   |                           l  b  f  s
   |▌  f7cf32d  feature/login  ✓  ✓  ⠹  ·  RUNNING    now
-  |▌› d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  |▌❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
   |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
   |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
   |   c67191d  spike          ✓  ✓  –  –  cancelled   1h
@@ -76,7 +76,7 @@ frame 0003 at 60x30
   |
   |                           l  b  f  s
   |▌  f7cf32d  feature/login  ✓  ✓  ⠸  ·  RUNNING    now
-  |▌› d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  |▌❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
   |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
   |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
   |   c67191d  spike          ✓  ✓  –  –  cancelled   1h

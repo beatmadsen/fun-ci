@@ -15,8 +15,10 @@ What reports a state must read from the corner of the eye. These weigh most.
 1. **The verdict at a glance.** From the whole screen, without reading a
    word, can you tell whether the newest run of each branch passed, failed,
    timed out or is still going? Colour and shape carry it, not text.
-2. **Where the action is.** A running stage draws the eye first; then a
-   failure; then a conflict with the trunk. Nothing else competes with them.
+2. **Where the action is.** Trouble draws the eye first: a failure, a
+   timeout, then a conflict with the trunk. A run in progress is the normal
+   state, so it shows by motion rather than alarm, and is found at once when
+   looked for. Nothing else competes with them.
 3. **Nothing drowns.** What is old, cancelled, superseded or merely
    identifying (SHA, project, age) recedes. A screen of routine rows still
    lets the one row that needs attention stand out.

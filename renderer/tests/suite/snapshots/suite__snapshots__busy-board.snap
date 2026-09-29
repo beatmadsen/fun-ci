@@ -9,7 +9,7 @@ frame 0001 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠙ 6s     ⠙ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -63,7 +63,7 @@ frame 0002 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠹ 6s     ⠹ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -117,7 +117,7 @@ frame 0003 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠸ 6s     ⠸ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -171,7 +171,7 @@ frame 0004 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠼ 6s     ⠼ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -225,7 +225,7 @@ frame 0005 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠴ 6s     ⠴ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -279,7 +279,7 @@ frame 0006 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠦ 6s     ⠦ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -333,7 +333,7 @@ frame 0007 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠧ 6s     ⠧ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -387,7 +387,7 @@ frame 0008 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠇ 6s     ⠇ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -441,7 +441,7 @@ frame 0009 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠏ 6s     ⠏ 6s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -495,7 +495,7 @@ frame 0010 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠋ 7s     ⠋ 7s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -549,7 +549,7 @@ frame 0011 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠙ 7s     ⠙ 7s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -603,7 +603,7 @@ frame 0012 at 120x40
   |                                                                    lint     build    fast     slow
   |▌  8d552d0  feat/search                               fun-ci        ✓ 0.9s   ✓ 7.7s   ⠹ 7s     ⠹ 7s     RUNNING    now
   |▌  4b1e2c7  main                                      strings-kata  ◌        ◌        ◌        ◌        waiting    now
-  |▌› 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
+  |▌❯ 93d480c  a-life-of-its-own conflicts main          strings-kata  ✓ 2.3s   ✓ 7.8s   ✗ 1.4s   ✓ 1.3s   FAILED      6m
   |▌  0ed3131  trunk-conflicts                           fun-ci        ✓ 8.9s   ✓ 7.7s   ✓ 5.1s   ✓ 1m59   PASSED     14m
   |   9d921b2  trunk-conflicts                           fun-ci        ✓ 3.4s   ✓ 2.8s   ✓ 3.6s   – 16.4s  cancelled  16m
   |▌  c67191d  refactor/extract-the-evidence-collector…  agent-tome    ✓ 0.4s   ✓ 12.3s  ▲ 10s    ✓ 1m01   TIMED OUT  25m
@@ -660,12 +660,12 @@ e = fg Rgb(138, 145, 158), bg Default, []
 f = fg Rgb(95, 211, 141), bg Default, []
 g = fg Rgb(79, 214, 232), bg Default, ["bold"]
 h = fg Rgb(138, 145, 158), bg Default, ["bold"]
-i = fg Rgb(255, 95, 95), bg Rgb(68, 31, 35), []
-j = fg Rgb(255, 255, 255), bg Rgb(68, 31, 35), ["bold"]
-k = fg Rgb(138, 145, 158), bg Rgb(68, 31, 35), []
-l = fg Rgb(226, 124, 245), bg Rgb(68, 31, 35), ["bold"]
-m = fg Rgb(95, 211, 141), bg Rgb(68, 31, 35), []
-n = fg Rgb(255, 95, 95), bg Rgb(68, 31, 35), ["bold"]
+i = fg Rgb(255, 95, 95), bg Rgb(78, 41, 45), []
+j = fg Rgb(255, 255, 255), bg Rgb(78, 41, 45), ["bold"]
+k = fg Rgb(138, 145, 158), bg Rgb(78, 41, 45), []
+l = fg Rgb(226, 124, 245), bg Rgb(78, 41, 45), ["bold"]
+m = fg Rgb(95, 211, 141), bg Rgb(78, 41, 45), []
+n = fg Rgb(255, 95, 95), bg Rgb(78, 41, 45), ["bold"]
 o = fg Rgb(95, 211, 141), bg Default, ["bold"]
 p = fg Rgb(255, 181, 71), bg Rgb(51, 39, 17), []
 q = fg Rgb(138, 145, 158), bg Rgb(51, 39, 17), []

@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   another, as a rebase leaves them, fold into one row (`detached ×25`).
   Project names are grey rather than in colours that looked like states, and
   show only when the board holds more than one project. The cursor is a white
-  `›` that lifts its row.
+  `❯` that lifts its row.
 
 ### Fixed
 - A console row wider than the terminal, from a long branch name or a
