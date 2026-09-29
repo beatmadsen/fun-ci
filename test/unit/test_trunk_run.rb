@@ -21,6 +21,7 @@ class TestTrunkRun < Minitest::Test
     end
 
     def finish(sha) = RESULT.new(check: trunk_check(sha, CLEAN, seen_at: Time.now), fetched: FETCHED)
+    def notice(pending) = "fun-ci: fetching for #{pending}"
 
     def recheck(heads, tip)
       heads.keys.map { |commit| FunCi::Trunk::Check.new(commit: commit, tip: tip, merge: CLEAN) }
@@ -30,6 +31,7 @@ class TestTrunkRun < Minitest::Test
   # A trunk whose check raises in the thread.
   class RaisingTrunk
     def start(sha, _fetches) = sha
+    def notice(_pending) = nil
     def finish(_sha) = raise(IOError, "git went away")
   end
 
@@ -83,6 +85,15 @@ class TestTrunkRun < Minitest::Test
 
   def test_should_record_the_other_branches_heads_checked_against_the_new_tip
     assert_equal [:checked, CLEAN, "bbb2222"], run_with(FetchingTrunk.new).calls.last
+  end
+
+  def test_should_give_the_notice_of_a_first_fetch
+    assert_equal "fun-ci: fetching for abc1234",
+                 FunCi::Pipeline::TrunkRun.start(FetchingTrunk.new, "abc1234", TrunkRecorder.new).notice
+  end
+
+  def test_should_give_no_notice_when_the_project_checks_no_trunk
+    assert_nil FunCi::Pipeline::TrunkRun.start(FakeTrunk::NONE, "abc1234", TrunkRecorder.new).notice
   end
 
   private

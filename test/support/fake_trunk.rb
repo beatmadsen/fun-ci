@@ -14,14 +14,18 @@ class FakeTrunk
   # A project that checks no trunk, as with `trunk: none`.
   NONE = Object.new.tap do |none|
     def none.start(_sha, _fetches) = nil
+    def none.notice(_pending) = nil
   end.freeze
 
-  def initialize(merge, seen_at: Time.now)
+  # notice: what it says of a first fetch, nil for none.
+  def initialize(merge, seen_at: Time.now, notice: nil)
     @merge = merge
     @seen_at = seen_at
+    @notice = notice
   end
 
   def start(sha, _fetches) = sha
+  def notice(_pending) = @notice
   def finish(sha) = RESULT.new(check: trunk_check(sha, @merge, seen_at: @seen_at), fetched: nil)
 
   def recheck(heads, tip)

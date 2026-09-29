@@ -28,6 +28,14 @@ class TestTriggerTrunkCheck < Minitest::Test
     refute_nil @client.pipeline_runs_for(commit_hash: "abc1234").first[:trunk_started_at]
   end
 
+  def test_should_say_so_when_it_first_fetches_the_trunk
+    @client = TriggerCliClient.open(command_runner: INSTANT_SUCCESS_RUNNER,
+                                    trunk: FakeTrunk.new(CONFLICTS, notice: "fun-ci: fetching origin/main"))
+    @client.trigger(commit_hash: "abc1234", branch: "feat/cart")
+
+    assert_includes @client.stdout, "fun-ci: fetching origin/main\n"
+  end
+
   private
 
   def trigger(runner)

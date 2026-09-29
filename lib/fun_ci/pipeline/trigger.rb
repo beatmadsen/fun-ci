@@ -59,6 +59,7 @@ module FunCi
       # The check is recorded by the recorder the run holds once its stages are done.
       def checking_the_trunk
         trunk = TrunkRun.start(@seams.trunk || Trunk::Checker.for(@project), @commit.sha, recorder)
+        @io.stdout.puts(trunk.notice) if trunk.notice
         yield.tap { trunk.finish(recorder) }
       end
 

@@ -38,9 +38,9 @@ class TestTrunkChecker < Minitest::Test
   end
 
   # Fetches whose interval allows one or not.
-  Fetches = Data.define(:due) do
+  Fetches = Data.define(:due, :last) do
+    def initialize(last: nil, **) = super
     def claim(now:, interval:) = interval && due && now
-    def last = nil
   end
 
   def test_should_find_how_the_commit_would_merge_with_the_trunk
@@ -103,6 +103,27 @@ class TestTrunkChecker < Minitest::Test
     tip = FunCi::Trunk::Tip.new(remote: "origin", branch: "main", sha: "fff0000", seen_at: NOW)
 
     assert_empty checker(Config.new(trunk: nil, trunk_fetch: 300), FakeFetch.new).recheck({ "ccc" => "fff0000" }, tip)
+  end
+
+  def test_should_announce_the_project_s_first_fetch
+    checker = checker(Config.new(trunk: nil, trunk_fetch: 300), FakeFetch.new)
+
+    assert_equal "fun-ci: fetching origin/main into refs/fun-ci/ now and at most every 5 minutes, touching none of " \
+                 "your refs; set trunk_fetch: false in .fun-ci/config to stop.",
+                 checker.notice(checker.start("abc1234", Fetches.new(due: true)) { |_pid| nil })
+  end
+
+  def test_should_announce_nothing_once_the_project_has_fetched
+    checker = checker(Config.new(trunk: nil, trunk_fetch: 300), FakeFetch.new)
+    fetched = Fetches.new(due: true, last: FunCi::Trunk::LastFetch.new(fetched_at: NOW, error: nil))
+
+    assert_nil checker.notice(checker.start("abc1234", fetched) { |_pid| nil })
+  end
+
+  def test_should_announce_nothing_without_a_fetch
+    checker = checker(Config.new(trunk: nil, trunk_fetch: 300), FakeFetch.new)
+
+    assert_nil checker.notice(checker.start("abc1234", Fetches.new(due: false)))
   end
 
   private

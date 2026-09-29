@@ -34,12 +34,13 @@ module FunCi
           "set trunk_fetch: false in .fun-ci/config to stop."
       end
 
+      # "5 minutes", "1 hour".
       def self.every(seconds)
         size, unit = UNITS.find { |unit_seconds, _| (seconds % unit_seconds).zero? }
         count = seconds / size
         "#{count} #{unit}#{"s" unless count == 1}"
       end
-      private_class_method :fetching, :every
+      private_class_method :fetching
     end
   end
 end

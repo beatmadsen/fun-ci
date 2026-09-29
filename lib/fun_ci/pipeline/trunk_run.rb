@@ -21,6 +21,7 @@ module FunCi
       # For a project that checks no trunk.
       class Skipped
         def finish(_recorder) = nil
+        def notice = nil
       end
 
       # trunk: begins a check (#start(sha, fetches), nil for none), finishes it
@@ -31,7 +32,7 @@ module FunCi
 
         recorder.trunk_check_started
         heads = recorder.trunk_heads(except: sha)
-        new(Thread.new { found(trunk, pending, sha, heads) })
+        new(Thread.new { found(trunk, pending, sha, heads) }, trunk.notice(pending))
       rescue StandardError => e
         new(Thread.new { Found.new(result: failed(sha, e), rechecks: []) })
       end
@@ -61,8 +62,12 @@ module FunCi
       end
       private_class_method :found, :finished, :rechecked, :failed
 
-      def initialize(thread)
+      attr_reader :notice
+
+      # notice: what to tell the developer of a first fetch, or nil.
+      def initialize(thread, notice = nil)
         @thread = thread
+        @notice = notice
       end
 
       def finish(recorder)

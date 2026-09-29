@@ -7,6 +7,7 @@ require_relative "git"
 require_relative "merge_check"
 require_relative "resolver"
 require_relative "tip_reader"
+require_relative "description"
 
 module FunCi
   module Trunk
@@ -44,6 +45,15 @@ module FunCi
         ref = Resolver.pick(setting, @git.refs)
         started = fetch?(ref, fetches) ? @fetch.start(ref, &) : nil
         Pending.new(sha: sha, ref: ref, started: started, last: fetches.last)
+      end
+
+      # What to tell the developer of a project's first fetch, so it never comes as a surprise; else nil.
+      def notice(pending)
+        return nil unless pending&.started && pending.last.nil?
+
+        "fun-ci: fetching #{pending.ref} into refs/fun-ci/ now and at most every " \
+          "#{Description.every(@config.trunk_fetch)}, touching none of your refs; " \
+          "set trunk_fetch: false in .fun-ci/config to stop."
       end
 
       def finish(pending)
