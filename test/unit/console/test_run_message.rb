@@ -25,6 +25,15 @@ class TestRunMessage < Minitest::Test
     assert_equal SHA, run_message[:sha]
   end
 
+  def test_should_mark_a_run_whose_branch_conflicts_with_the_trunk
+    assert_equal({ branch_state: "conflicts", trunk: "main" },
+                 run_message(trunk: { branch_state: "conflicts", trunk: "main" })[:trunk])
+  end
+
+  def test_should_mark_no_run_whose_branch_merges_cleanly
+    refute run_message(trunk: { branch_state: "clean", trunk: "main" }).key?(:trunk)
+  end
+
   def test_should_carry_the_project_path
     assert_equal "/src/app", run_message[:project]
   end

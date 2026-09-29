@@ -9,7 +9,7 @@ require "json"
 module ConsoleFakes
   class BoardData
     attr_reader :cancelled, :loads, :dead_checks
-    attr_accessor :runs
+    attr_accessor :runs, :stale
 
     def initialize(runs)
       @runs = runs
@@ -24,6 +24,7 @@ module ConsoleFakes
     def more? = false
     def record_dead_slow_suites = @dead_checks += 1
     def cancel_run(id) = @cancelled << id
+    def stale_trunks(_runs, now:) = now && (stale || [])
   end
 
   class Port

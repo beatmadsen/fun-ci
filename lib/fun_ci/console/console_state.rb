@@ -35,7 +35,13 @@ module FunCi
       def board(runs)
         page = @view.page(runs, more: @board_data.more?)
         { t: "board", now: @clock.call.to_i, streak: @board_data.streak, **page,
-          runs: page[:runs].map { |run| RunMessage.from(run) } }
+          runs: page[:runs].map { |run| RunMessage.from(run) }, **stale_trunks(runs) }
+      end
+
+      # Only when a trunk is stale, as the protocol lets a board leave it out.
+      def stale_trunks(runs)
+        stale = @board_data.stale_trunks(runs, now: @clock.call)
+        stale.empty? ? {} : { stale_trunks: stale }
       end
     end
   end

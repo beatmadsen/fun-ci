@@ -6,6 +6,7 @@ require_relative "../persistence/stage_job"
 require_relative "../persistence/active_runs"
 require_relative "../pipeline/run_canceller"
 require_relative "streak_counter"
+require_relative "trunk_marks"
 
 module FunCi
   module Console
@@ -35,10 +36,14 @@ module FunCi
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
 
+      # Newest first, each with its stages and, a branch's newest, the branch's standing against the trunk.
       def runs
         pipeline_runs = Persistence::PipelineRun.recent(@db, limit: @limit)
-        pipeline_runs.map { |run| enrich_with_stages(run) }
+        TrunkMarks.new(@db).mark(pipeline_runs.map { |run| enrich_with_stages(run) })
       end
+
+      # The projects among `runs` whose trunk is stale.
+      def stale_trunks(runs, now:) = TrunkMarks.new(@db).stale(runs, now: now)
 
       def streak
         pipeline_runs = Persistence::PipelineRun.recent(@db, limit: @limit)

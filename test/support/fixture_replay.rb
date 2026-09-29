@@ -13,7 +13,7 @@ class FixtureReplay
   # BoardData over the fixture's runs, as SQLite would return them, all of
   # them loaded.
   class Store
-    attr_accessor :runs, :now
+    attr_accessor :runs, :now, :stale
 
     def initialize
       @runs = []
@@ -26,6 +26,7 @@ class FixtureReplay
     def more? = false
     def record_dead_slow_suites = nil
     def cancel_run(_id) = nil
+    def stale_trunks(_runs, now:) = now && (stale || [])
   end
 
   Port = Struct.new(:conversation) do
@@ -63,6 +64,7 @@ class FixtureReplay
   def state(session, state, index)
     @store.runs = state["runs"].map { |run| JSON.parse(JSON.generate(run), symbolize_names: true) }
     @store.now = state["now"]
+    @store.stale = state.fetch("stale_trunks", []).map { |stale| stale.transform_keys(&:to_sym) }
     index.zero? ? session.start : session.refresh
   end
 end
