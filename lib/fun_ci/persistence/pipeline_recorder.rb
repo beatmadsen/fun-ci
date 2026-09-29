@@ -8,6 +8,7 @@ require "json"
 require_relative "null_recorder"
 require_relative "project_runs"
 require_relative "retention"
+require_relative "trunk_checks"
 
 module FunCi
   module Persistence
@@ -97,6 +98,14 @@ module FunCi
 
       def keep_exit(job_id, exit_status, signal)
         tolerating { StageJob.keep_exit(@db, job_id, exit_status, signal) }
+      end
+
+      # Records the run's check against the trunk, under the run's project.
+      def trunk_checked(check)
+        tolerating do
+          project = PipelineRun.find(@db, @pipeline_run_id)[:project_path]
+          TrunkChecks.new(@db, project).record(check, checked_at: Time.now)
+        end
       end
 
       # Records the stage's outcome, then settles the run's status from its stages.

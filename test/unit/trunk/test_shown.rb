@@ -30,6 +30,12 @@ class TestTrunkShown < Minitest::Test
     assert_equal 120, shown(MERGE.clean(ahead: 1, behind: 1)).age
   end
 
+  def test_should_show_a_check_without_a_tip_as_unknown
+    check = FunCi::Trunk::Check.new(commit: "abc", tip: nil, merge: MERGE.unknown("no trunk"))
+
+    assert_equal "unknown", FunCi::Trunk::Shown.of(check, now: NOW).state
+  end
+
   private
 
   def shown(merge) = FunCi::Trunk::Shown.of(trunk_check("abc", merge, seen_at: NOW - 120), now: NOW)

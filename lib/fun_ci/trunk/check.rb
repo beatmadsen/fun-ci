@@ -25,7 +25,8 @@ module FunCi
       def self.unknown(reason) = new(outcome: "unknown", ahead: nil, behind: nil, files: [], reason: reason)
     end
 
-    # One check of a commit against one trunk tip (docs/trunk-conflicts.md).
+    # One check of a commit against one trunk tip (docs/trunk-conflicts.md);
+    # the tip is nil when there was none to check against.
     Check = Data.define(:commit, :tip, :merge)
   end
 end

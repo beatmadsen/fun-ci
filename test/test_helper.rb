@@ -59,6 +59,7 @@ class FakeRecorder
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
   def keep_evidence(job_id, document) = @calls << [:keep_evidence, job_id, document]
   def keep_raw(job_id, text) = @calls << [:keep_raw, job_id, text]
+  def trunk_checked(check) = @calls << [:trunk_checked, check]
   def alongside(_job_id) = @alongside
   def kept_evidence = @calls.select { |call| call.first == :keep_evidence }.map(&:last)
   def keep_exit(job_id, exit_status, signal) = @calls << [:keep_exit, job_id, exit_status, signal]

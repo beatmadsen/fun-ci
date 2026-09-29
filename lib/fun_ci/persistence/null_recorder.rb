@@ -10,6 +10,7 @@ module FunCi
       def keep_exit(_job_id, _exit_status, _signal); end
       def keep_evidence(_job_id, _document); end
       def keep_raw(_job_id, _text); end
+      def trunk_checked(_check); end
       def alongside(_job_id) = []
       def stage_process(_job_id, _pid); end
       def slot_taken(_lock_file); end

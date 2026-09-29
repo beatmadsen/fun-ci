@@ -12,6 +12,7 @@ module FunCi
       TIP = %i[trunk_remote trunk_branch trunk_sha trunk_seen_at].freeze
       MERGE = %i[outcome ahead behind files reason].freeze
       COLUMNS = [:commit_hash, *TIP, *MERGE].freeze
+      SELECT = "SELECT #{COLUMNS.join(", ")} FROM trunk_checks".freeze
 
       def initialize(db, project)
         @db = db
@@ -26,19 +27,21 @@ module FunCi
 
       # The commit's check against the trunk SHA fun-ci saw last, or nil.
       def latest(sha)
-        found = @db.execute("SELECT #{COLUMNS.join(", ")} FROM trunk_checks WHERE project_path = ? " \
-                            "AND commit_hash = ? ORDER BY trunk_seen_at DESC, id DESC LIMIT 1", [@project, sha]).first
+        found = @db.execute("#{SELECT} WHERE project_path = ? AND commit_hash = ? " \
+                            "ORDER BY COALESCE(trunk_seen_at, checked_at) DESC, id DESC LIMIT 1", [@project, sha]).first
         found && Trunk::Check.new(commit: found.first, tip: tip(found[1, TIP.size]),
                                   merge: merge(found.last(MERGE.size)))
       end
 
       private
 
-      def tip_row(tip) = [tip.remote, tip.branch, tip.sha, tip.seen_at.utc.iso8601]
+      def tip_row(tip) = tip ? [tip.remote, tip.branch, tip.sha, tip.seen_at.utc.iso8601] : [nil] * TIP.size
       def merge_row(merge) = [merge.outcome, merge.ahead, merge.behind, JSON.generate(merge.files), merge.reason]
 
       def tip(values)
         remote, branch, sha, seen_at = values
+        return nil unless sha
+
         Trunk::Tip.new(remote: remote, branch: branch, sha: sha, seen_at: Time.parse(seen_at))
       end
 

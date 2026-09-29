@@ -7,6 +7,7 @@ require_relative "trigger_command"
 require_relative "slot_run"
 require_relative "stale_pipeline_canceller"
 require_relative "workspaces"
+require_relative "trunk_run"
 
 module FunCi
   module Pipeline
@@ -30,7 +31,7 @@ module FunCi
         return unknown_commit unless known_commit?
 
         start_run
-        run_in(workspace.acquire(@commit.sha))
+        checking_the_trunk { run_in(workspace.acquire(@commit.sha)) }
       end
 
       # The background launcher swaps in a fresh recorder after forking, so
@@ -52,6 +53,12 @@ module FunCi
       def config_for(slot)
         committed = Setup::ProjectConfig.new(slot.path)
         committed.folder_exists? ? committed : Setup::ProjectConfig.new(@project)
+      end
+
+      # The check is recorded by the recorder the run holds once its stages are done.
+      def checking_the_trunk
+        trunk = TrunkRun.start(@seams.trunk, @commit.sha)
+        yield.tap { trunk.finish(recorder) }
       end
 
       def handle_config_errors(config)
