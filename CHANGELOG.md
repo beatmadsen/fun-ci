@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-09-29
+
+### Fixed
+- `fun-ci console` could show a blank screen and stay that way. When a new
+  commit cancelled a run in the same second one of its stages started, the
+  stage was recorded as ending before it began. The renderer rejected the
+  negative duration and, with it, every board Ruby sent, so nothing was drawn
+  while that run was listed; the only sign was a line per second in
+  `.fun-ci/console.log`. Ends are now recorded to the millisecond, and a stage
+  already recorded that way reads as taking no time, so an existing database
+  needs no repair. `fun-ci status`, `why` and `events` no longer report a
+  negative time for such a stage either.
+
 ## [2.0.0] - 2026-09-29
 
 fun-ci 2.0 has two ways in. People watch a new console, drawn by a Rust

@@ -90,6 +90,10 @@ The full state to show. Always complete — never a diff.
   `cancelled`. (stage): `pending`, `running`, `passed`, `failed`, `cancelled`,
   `timeout`.
 - `sha` is always the full 40-hex SHA; shortening is the renderer's job.
+- `duration_ms` (a finished stage) is a whole number of milliseconds, never
+  negative. A board with a field the renderer cannot read is dropped whole, and
+  the renderer reports the parse error, so one bad field keeps the screen from
+  changing.
 - `updated_at` is the run's last status change; the row's "2m ago" counts from
   it.
 - `project` (optional) is the path of the project the run belongs to. The
