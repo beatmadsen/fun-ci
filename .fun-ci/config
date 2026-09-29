@@ -11,3 +11,7 @@ evidence:
     slow:
       - use: section
         preset: cargo-test
+      # The mutation lane's verdict: what mutineer says went wrong, and its summary.
+      - use: grep
+        title: mutineer
+        patterns: ["^mutineer: ", "^FAILED: ", "^\\[mutineer\\] .* no verdict", "^Mutation score: ", "^Survived: "]
