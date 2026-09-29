@@ -95,7 +95,8 @@ lint works on the source code only, and a linter that needs compiled code
 (spotbugs, or a checkstyle task that compiles first) goes in `build.sh`, after
 compiling, or in `fast.sh`. `build.sh` compiles everything the suites run, so
 neither suite compiles anything. Each suite may write its own reports, and
-what its tool keeps under a lock of its own.
+what its tool shares safely between runs: state under the tool's own lock, or
+a record no verdict reads, such as a test runner's cache.
 
 The scripts `fun-ci init` writes keep to this, and each says in its first
 comment what it runs beside. `script/check_init_templates.rb` runs each
