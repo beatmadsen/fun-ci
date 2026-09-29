@@ -48,6 +48,14 @@ class TestTrunkText < Minitest::Test
     assert_equal ["  trunk  checking"], FunCi::Agent::TrunkText.lines(shown, branch: "feat/cart", next_step: true)
   end
 
+  def test_should_say_the_trunk_has_moved_since_the_check
+    check = trunk_check("abc", MERGE.clean(ahead: 3, behind: 1), seen_at: NOW)
+    shown = FunCi::Trunk::Shown.of(check, now: NOW, moved_to: "1a2b3c4ffff")
+
+    assert_equal "    origin/main has moved to 1a2b3c4 since; fun-ci status --trunk checks again",
+                 FunCi::Agent::TrunkText.lines(shown, branch: "feat/cart", next_step: true).last
+  end
+
   def test_should_mark_a_stale_trunk_where_its_age_is
     shown = FunCi::Trunk::Shown.of(trunk_check("abc", MERGE.clean(ahead: 3, behind: 0), seen_at: NOW - 7200), now: NOW)
 

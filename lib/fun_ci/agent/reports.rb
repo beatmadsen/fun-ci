@@ -8,12 +8,13 @@ module FunCi
   module Agent
     # The runs of the project git names, as an agent is told them.
     class Reports
-      def initialize(db, git, clock)
+      # trunk: where the project's trunk is now (#now_at(tip)), and checks against it (#check(sha, fetches)).
+      def initialize(db, git, clock, trunk)
         @db = db
         @git = git
         project = git.toplevel
         @runs = Persistence::ProjectRuns.new(db, project)
-        @details = RunDetails.new(db, project, clock)
+        @details = RunDetails.new(db, TrunkReading.new(db, project, clock, trunk))
       end
 
       # What the stage kept of its raw output, or nil.
@@ -24,6 +25,9 @@ module FunCi
         run = @runs.latest_of_commit(sha)
         run && of(run, need)
       end
+
+      # Checks the commit against where the trunk is now, and keeps the check.
+      def recheck_trunk(sha) = @details.recheck_trunk(sha)
 
       # Notes that an agent is waiting on the commit's newest run, as of `at`.
       def mark_waited(sha, at)

@@ -11,20 +11,22 @@ require_relative "../support/fake_git"
 require_relative "../support/fake_clock"
 require_relative "../support/fake_pipeline"
 require_relative "../support/trunk_kit"
+require_relative "../support/fake_trunk_now"
 
 # Acceptance test client for the commands an agent runs in a project: tests
 # record runs as the pipeline would and read what the agent sees.
 class AgentClient
   include TrunkKit
 
-  Fakes = Data.define(:git, :clock, :pipeline)
+  Fakes = Data.define(:git, :clock, :pipeline, :trunk)
   Outcome = Data.define(:stdout, :exit_code)
 
   def self.open = new(TriggerWorkspace.create)
 
   def initialize(workspace)
     @workspace = workspace
-    @fakes = Fakes.new(git: FakeGit.new(workspace.project_dir), clock: FakeClock.new, pipeline: FakePipeline.new)
+    @fakes = Fakes.new(git: FakeGit.new(workspace.project_dir), clock: FakeClock.new, pipeline: FakePipeline.new,
+                       trunk: FakeTrunkNow.new)
   end
 
   def close = @workspace.close
@@ -32,6 +34,7 @@ class AgentClient
   def git = @fakes.git
   def clock = @fakes.clock
   def pipeline = @fakes.pipeline
+  def trunk = @fakes.trunk
   def stdout = @outcome.stdout
   def exit_code = @outcome.exit_code
 
@@ -80,7 +83,7 @@ class AgentClient
   def agent(command, args)
     out = StringIO.new
     context = FunCi::Agent::Context.new(db: db, git: git, io: FunCi::Pipeline::Io.new(stdout: out, stderr: out),
-                                        clock: clock, pipeline: pipeline)
+                                        clock: clock, pipeline: pipeline, trunk: trunk)
     code = FunCi::Agent::Commands.run(command, args, context)
     @outcome = Outcome.new(stdout: out.string, exit_code: code)
     code

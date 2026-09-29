@@ -9,10 +9,11 @@ module FunCi
     # What is recorded about one of a project's runs beyond its row: its
     # stages, the raw output they kept, and its commit's check against the trunk.
     class RunDetails
-      def initialize(db, project, clock)
+      # trunk: reads the run's trunk (a TrunkReading).
+      def initialize(db, trunk)
         @db = db
         @raw = Persistence::RawOutputs.beside(db.filename("main"))
-        @trunk = TrunkReading.new(db, project, clock)
+        @trunk = trunk
       end
 
       def jobs(run)
@@ -24,6 +25,7 @@ module FunCi
 
       # How the run's commit stands against the trunk, or nil for a run that began no check.
       def trunk(run) = @trunk.for(run)
+      def recheck_trunk(sha) = @trunk.recheck(sha)
     end
   end
 end

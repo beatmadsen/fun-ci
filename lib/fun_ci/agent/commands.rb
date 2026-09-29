@@ -10,6 +10,7 @@ require_relative "runs_command"
 require_relative "wait_command"
 require_relative "events_command"
 require_relative "why_command"
+require_relative "../trunk/local"
 
 module FunCi
   module Agent

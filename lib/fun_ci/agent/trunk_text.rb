@@ -15,7 +15,14 @@ module FunCi
 
         files = shown.check.merge.files
         ["  trunk  #{shown.state.tr("_", " ").ljust(12)} #{detail(shown)}".rstrip, *files.map { |file| "    #{file}" },
+         *moved(shown),
          *(next_step && shown.state == "conflicts" ? [NextStep.line(shown.check.tip, files, branch: branch)] : [])]
+      end
+
+      def self.moved(shown)
+        return [] unless shown.moved_to
+
+        ["    #{shown.check.tip.ref} has moved to #{shown.moved_to[0, 7]} since; fun-ci status --trunk checks again"]
       end
 
       def self.detail(shown)
@@ -37,7 +44,7 @@ module FunCi
 
         shown.fetch_error ? ", STALE (fetch failed: #{shown.fetch_error})" : ", STALE"
       end
-      private_class_method :detail, :seen, :stale
+      private_class_method :moved, :detail, :seen, :stale
     end
   end
 end

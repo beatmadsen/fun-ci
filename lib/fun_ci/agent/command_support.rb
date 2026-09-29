@@ -17,15 +17,19 @@ module FunCi
         @context.git.resolve(rev) || raise(Options::Invalid, "git can't find the commit '#{rev}'")
       end
 
-      # The commit's newest run, judged on the trunk too when the agent asked (--trunk).
+      # The commit's newest run, judged on the trunk too when the agent asked
+      # (--trunk), checked again first when the trunk has moved since.
       def report_for(sha, options)
         report = reports.for(sha, options.need)
-        options.trunk && report ? report.with(verdict: TrunkVerdict.of(report.verdict, report.trunk)) : report
+        return report unless options.trunk && report
+
+        report = reports.recheck_trunk(sha).then { reports.for(sha, options.need) } if report.trunk&.moved_to
+        report.with(verdict: TrunkVerdict.of(report.verdict, report.trunk))
       end
 
       def output(options) = Output.new(@context.io.stdout, json: options.json, trunk: options.trunk)
 
-      def reports = @reports ||= Reports.new(@context.db, @context.git, @context.clock)
+      def reports = @reports ||= Reports.new(@context.db, @context.git, @context.clock, @context.trunk)
 
       def usage(message)
         @context.io.stderr.puts "fun-ci #{self.class::NAME}: #{message}"

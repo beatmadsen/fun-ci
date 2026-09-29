@@ -88,7 +88,7 @@ module FunCi
 
     def agent_context(db)
       Agent::Context.new(db: db, git: Agent::Git.new(Dir.pwd), io: @io, clock: Agent::SystemClock.new,
-                         pipeline: Agent::LivePipeline.new(Dir.pwd))
+                         pipeline: Agent::LivePipeline.new(Dir.pwd), trunk: Trunk::Local.new(Dir.pwd))
     end
 
     def run_init(args) = setup_commands.init(args)

@@ -8,6 +8,7 @@ require_relative "../support/fake_clock"
 require "fun_ci/persistence/trunk_checks"
 require "fun_ci/persistence/trunk_fetches"
 require_relative "../support/trunk_kit"
+require_relative "../support/fake_trunk_now"
 
 # A commit's newest run in the project, read into what an agent is told.
 class TestAgentReports < Minitest::Test
@@ -20,7 +21,8 @@ class TestAgentReports < Minitest::Test
     git = FakeGit.new("/project")
     git.commit("abc1234", "Add retry")
     @clock = FakeClock.new(now: Time.utc(2026, 9, 29, 10))
-    @reports = FunCi::Agent::Reports.new(@db, git, @clock)
+    @trunk = FakeTrunkNow.new
+    @reports = FunCi::Agent::Reports.new(@db, git, @clock, @trunk)
   end
 
   def teardown = teardown_test_db
@@ -63,6 +65,40 @@ class TestAgentReports < Minitest::Test
                                                                    at: @clock.now)
 
     assert_equal "fatal: x", @reports.for("abc1234", "fast").trunk.fetch_error
+  end
+
+  def test_should_report_where_the_trunk_has_moved_to_since_the_check
+    run_in_project("abc1234", "completed")
+    record_trunk_check("abc1234", MERGE.clean(ahead: 1, behind: 1))
+    @trunk.sha = "1a2b3c4"
+
+    assert_equal "1a2b3c4", @reports.for("abc1234", "fast").trunk.moved_to
+  end
+
+  def test_should_report_no_move_while_the_trunk_is_where_it_was_checked
+    run_in_project("abc1234", "completed")
+    record_trunk_check("abc1234", MERGE.clean(ahead: 1, behind: 1))
+
+    assert_nil @reports.for("abc1234", "fast").trunk.moved_to
+  end
+
+  def test_should_check_again_against_where_the_trunk_is_now
+    run_in_project("abc1234", "completed")
+    record_trunk_check("abc1234", MERGE.conflicts(["a.rb"], ahead: 1, behind: 1))
+    @trunk.sha = "1a2b3c4"
+    @trunk.merge = MERGE.clean(ahead: 1, behind: 2)
+    @reports.recheck_trunk("abc1234")
+
+    assert_equal "clean", @reports.for("abc1234", "fast").trunk.state
+  end
+
+  def test_should_keep_nothing_when_the_project_checks_no_trunk_any_more
+    run_in_project("abc1234", "completed")
+    record_trunk_check("abc1234", MERGE.conflicts(["a.rb"], ahead: 1, behind: 1))
+    @trunk.sha = "1a2b3c4"
+    @reports.recheck_trunk("abc1234")
+
+    assert_equal "conflicts", @reports.for("abc1234", "fast").trunk.state
   end
 
   def test_should_take_the_subject_from_git

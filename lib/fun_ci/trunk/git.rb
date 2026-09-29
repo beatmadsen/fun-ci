@@ -27,6 +27,12 @@ module FunCi
         end
       end
 
+      # The repository's top directory, or nil outside one.
+      def toplevel
+        answer = run("rev-parse", "--show-toplevel")
+        answer.status.zero? ? answer.out.strip : nil
+      end
+
       def version = run("--version").out[/\d+(?:\.\d+)+/]
 
       def refs
