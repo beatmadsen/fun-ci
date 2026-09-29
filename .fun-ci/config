@@ -1,0 +1,13 @@
+# The renderer's Cargo.toml is in renderer/, where the cargo presets don't look
+# for it, so the stages that run cargo name them.
+evidence:
+  stages:
+    lint:
+      - use: section
+        preset: rustc
+    build:
+      - use: section
+        preset: rustc
+    slow:
+      - use: section
+        preset: cargo-test

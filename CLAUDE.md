@@ -38,6 +38,7 @@ ruby -Itest -Ilib test/unit/test_stage_runner.rb -n test_method # One test metho
 cargo insta review --manifest-path renderer/Cargo.toml   # Accept or reject a deliberate change to what the TUI draws (its snapshots)
 rake mutation           # Mutineer over lib/ (Ruby >= 3.4); fails below 90 in .mutineer.yml. CI runs it
 rake mutation:changed   # The same over lines changed since HEAD; a prompt to look, not a verdict
+rake "mutation:changed[HEAD~1]"   # The same over the last commit's lines, as fun-ci's slow stage runs it here
 ruby script/platform_gem.rb arm64-darwin renderer/target/release/fun-ci-renderer pkg   # A platform gem with that renderer in libexec/
 script/smoke-platform-gem.sh pkg/<gem> [none]   # Install a gem into an empty GEM_HOME and run it; `none` for the plain gem
 script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
@@ -105,6 +106,7 @@ Seams tests use in place of the real thing:
 ## Invariants
 
 - The gate runs exactly the lanes listed under Lanes, and every rake task the docs mention is a lane, a subset of `rake test`, or a tool: `test/policy/test_gate_lanes.rb`.
+- This repository runs its own pipeline with fun-ci (`.fun-ci/`), and its stage scripts run every lane of the gate, the test lane as its four subsets, so a commit fun-ci passes is one the gate passes: `test/policy/test_own_pipeline.rb`.
 - Methods of at most 7 lines, block nesting of at most 2, at most 4 parameters (keywords count): RuboCop in the gate, with no file excluded and no todo to inherit exclusions from: `test/policy/test_rubocop_todo.rb`. Fix an offence; never add an exclusion.
 - No Ruby file longer than 150 lines, no class or module with more than 4 instance variables: `test/policy/test_code_limits.rb`.
 - Tests wait on nothing real and reach state through public interfaces: no `sleep`, `Thread.pass`, `Timeout.timeout` or `instance_variable_get/set` in `test/`: `test/policy/test_tests_are_deterministic.rb`. Background work is injected and driven by the test, not spawned and polled; if a test can't get at something through the public API, add a seam.
@@ -149,4 +151,5 @@ Seams tests use in place of the real thing:
 - ActiveSupport's parallel executor puts a Unix socket in `Dir.tmpdir`, and socket paths are capped at 104 bytes, which is why the test temp root has a short name.
 - A private test helper named after one of Minitest's own methods (`run`, `failures`, `name`, ...) shadows it, and the parallel executor then fails the whole file with `result not reported` or a `NoMethodError` in `Minitest::Result.from`; run it with `MUTATION_TESTING=1` to see the real error, and name the helper something else.
 - On Ruby 3.2 and 3.3 under Linux, a child exiting while a test blocks opening a FIFO raises `Errno::EINTR` instead of resuming the open (3.4 resumes). Read FIFOs in tests with `Fifo.read` (`test/support/fifo.rb`), which retries; macOS never shows it, `script/ci-matrix.sh` does.
+- The git hooks run the installed `fun-ci` gem, not this checkout's code, on this repository's own commits. To dogfood a change to fun-ci itself, build and install it: `ruby script/platform_gem.rb arm64-darwin renderer/target/release/fun-ci-renderer pkg` after `cargo build --release`, then `gem install --local pkg/<gem>`.
 - The confinement guard points `TMPDIR` and `XDG_STATE_HOME` into its temp root, and children inherit both; a test that spawns `fun-ci` with an env of its own must pass both, or the child writes its database under `$HOME`.

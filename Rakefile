@@ -53,8 +53,8 @@ desc "Mutation testing over lib (Ruby >= 3.4); fails below the threshold in .mut
 task(:mutation) { mutineer }
 
 namespace :mutation do
-  desc "Mutation testing over lines changed since HEAD; a prompt to look, not a verdict"
-  task(:changed) { mutineer("--since", "HEAD") }
+  desc "Mutation testing over lines changed since REV (HEAD by default); a prompt to look, not a verdict"
+  task(:changed, [:rev]) { |_, args| mutineer("--since", args[:rev] || "HEAD") }
 end
 
 RENDERER_MANIFEST = File.expand_path("renderer/Cargo.toml", __dir__)
