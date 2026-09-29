@@ -711,3 +711,19 @@ pino and structlog
 marker files and no `evidence` configuration
 **Then** its preset is chosen and picks out what its recording expects
 **And** no preset's signature matches another tool's recorded run.
+
+### 10.21 `fun-ci init` sets up every stack a preset reads
+**Given** the recorded failing project of any preset of 10.10 and 10.20 but
+those that read a format any stack may print (logstash, ecs, shellcheck)
+**When** `fun-ci init` runs in it
+**Then** it detects the preset's stack and writes that stack's four stage
+scripts
+**And** the stage script that runs the preset's tool, run on that project in
+the recording's image, fails printing what the preset picks out.
+*Note:* the stacks, first match wins: Ruby, Gradle, Maven, Rust, Go, Elixir,
+Dart, Swift, PHP, .NET, Python (uv, Poetry, pip), Deno, Bun, Node (pnpm, Yarn,
+npm), Perl, CMake, Make. Test stages run the fast suite without the tests the
+tool's own convention marks slow, and the slow suite with only those. The
+first half is a policy test in the gate; the second needs Docker and the
+network, so a script checks it weekly beside the presets
+(`script/check_init_templates.rb`).
