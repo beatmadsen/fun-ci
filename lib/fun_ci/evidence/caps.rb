@@ -15,8 +15,13 @@ module FunCi
       # What a line costs in JSON besides its own bytes: quotes and a comma.
       LINE_COST = 3
 
-      def initialize(limits = REAL)
+      # How many bytes of JSON a document makes.
+      JSON_SIZE = ->(document) { JSON.generate(document.to_h).bytesize }
+
+      # size: measures a document, JSON_SIZE but where a test counts the measuring.
+      def initialize(limits = REAL, size: JSON_SIZE)
         @limits = limits
+        @size = size
       end
 
       def apply(document)
@@ -36,7 +41,7 @@ module FunCi
         document
       end
 
-      def over(document) = JSON.generate(document.to_h).bytesize - @limits.bytes
+      def over(document) = @size.call(document) - @limits.bytes
 
       def few_failures(document)
         left_out = document.failures.size - @limits.failures
