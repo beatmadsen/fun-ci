@@ -8,9 +8,9 @@ frame 0001 at 60x30
   |
   |                           l  b  f  s
   |▌  f7cf32d  feature/login  ✓  ✓  ⠙  ·  RUNNING    now
-  |▌❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  | ❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
   |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
-  |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
+  |▌  8d552d0  main           ✓  ✓  ▲  ·  TIMED OUT  25m
   |   c67191d  spike          ✓  ✓  –  –  cancelled   1h
   |   1767828  main           ✓  ✓  ✓  ✓  passed      1d
   |
@@ -24,13 +24,13 @@ frame 0001 at 60x30
   :
   :...........................aaaaaaaaaa
   :bbbcccccccccdddddddddddddddeeeeeefffaaafffffffffffccc
-  :ghhiiiiiiiiihhhhhhhhhhhhhhhggggggggggggjjjjjjjjjjjiiii
-  :kkklllllllllmmmmmmmmmmmmmmmnnnoooppppppoooooooooooolll
-  :...cccccccccqqqqqqqqqqqqqqqrrrrrrssstttsssssssssssccc
-  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
-  :...cccccccccqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrcc
+  :ghhiiiiiiiiihhhhhhhhhhhhhhhjjjjjjjjjjjjkkkkkkkkkkkiiii
+  :lllmmmmmmmmmnnnnnnnnnnnnnnnooopppqqqqqqppppppppppppmmm
+  :rrrssssssssstttttttttttttttuuuuuuvvvwwwvvvvvvvvvvvssss
+  :...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :...xxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyxx
   :
-  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :
   :
   :
@@ -42,9 +42,9 @@ frame 0002 at 60x30
   |
   |                           l  b  f  s
   |▌  f7cf32d  feature/login  ✓  ✓  ⠹  ·  RUNNING    now
-  |▌❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  | ❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
   |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
-  |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
+  |▌  8d552d0  main           ✓  ✓  ▲  ·  TIMED OUT  25m
   |   c67191d  spike          ✓  ✓  –  –  cancelled   1h
   |   1767828  main           ✓  ✓  ✓  ✓  passed      1d
   |
@@ -58,13 +58,13 @@ frame 0002 at 60x30
   :
   :...........................aaaaaaaaaa
   :bbbcccccccccdddddddddddddddeeeeeefffaaafffffffffffccc
-  :ghhiiiiiiiiihhhhhhhhhhhhhhhggggggggggggjjjjjjjjjjjiiii
-  :kkklllllllllmmmmmmmmmmmmmmmnnnoooppppppoooooooooooolll
-  :...cccccccccqqqqqqqqqqqqqqqrrrrrrssstttsssssssssssccc
-  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
-  :...cccccccccqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrcc
+  :ghhiiiiiiiiihhhhhhhhhhhhhhhjjjjjjjjjjjjkkkkkkkkkkkiiii
+  :lllmmmmmmmmmnnnnnnnnnnnnnnnooopppqqqqqqppppppppppppmmm
+  :rrrssssssssstttttttttttttttuuuuuuvvvwwwvvvvvvvvvvvssss
+  :...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :...xxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyxx
   :
-  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :
   :
   :
@@ -76,9 +76,9 @@ frame 0003 at 60x30
   |
   |                           l  b  f  s
   |▌  f7cf32d  feature/login  ✓  ✓  ⠸  ·  RUNNING    now
-  |▌❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
+  | ❯ d54ede8  main           ◌  ◌  ◌  ◌  waiting    now
   |▌  f731578  fix/crash      ✓  ✗  ·  ·  FAILED      4m
-  |   8d552d0  main           ✓  ✓  ▲  ·  timed out  25m
+  |▌  8d552d0  main           ✓  ✓  ▲  ·  TIMED OUT  25m
   |   c67191d  spike          ✓  ✓  –  –  cancelled   1h
   |   1767828  main           ✓  ✓  ✓  ✓  passed      1d
   |
@@ -92,13 +92,13 @@ frame 0003 at 60x30
   :
   :...........................aaaaaaaaaa
   :bbbcccccccccdddddddddddddddeeeeeefffaaafffffffffffccc
-  :ghhiiiiiiiiihhhhhhhhhhhhhhhggggggggggggjjjjjjjjjjjiiii
-  :kkklllllllllmmmmmmmmmmmmmmmnnnoooppppppoooooooooooolll
-  :...cccccccccqqqqqqqqqqqqqqqrrrrrrssstttsssssssssssccc
-  :...cccccccccaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacc
-  :...cccccccccqqqqqqqqqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrcc
+  :ghhiiiiiiiiihhhhhhhhhhhhhhhjjjjjjjjjjjjkkkkkkkkkkkiiii
+  :lllmmmmmmmmmnnnnnnnnnnnnnnnooopppqqqqqqppppppppppppmmm
+  :rrrssssssssstttttttttttttttuuuuuuvvvwwwvvvvvvvvvvvssss
+  :...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :...xxxxxxxxxxxxxxxxxxxxxxxxyyyyyyyyyyyyyyyyyyyyyyyyxx
   :
-  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :
   :
   :
@@ -112,18 +112,23 @@ c = fg Rgb(110, 117, 130), bg Default, []
 d = fg Rgb(201, 206, 214), bg Default, []
 e = fg Rgb(95, 211, 141), bg Default, []
 f = fg Rgb(79, 214, 232), bg Default, ["bold"]
-g = fg Rgb(138, 145, 158), bg Rgb(29, 39, 51), []
+g = fg Default, bg Rgb(29, 39, 51), []
 h = fg Rgb(255, 255, 255), bg Rgb(29, 39, 51), ["bold"]
 i = fg Rgb(110, 117, 130), bg Rgb(29, 39, 51), []
-j = fg Rgb(138, 145, 158), bg Rgb(29, 39, 51), ["bold"]
-k = fg Rgb(255, 95, 95), bg Rgb(58, 21, 25), []
-l = fg Rgb(138, 145, 158), bg Rgb(58, 21, 25), []
-m = fg Rgb(201, 206, 214), bg Rgb(58, 21, 25), []
-n = fg Rgb(95, 211, 141), bg Rgb(58, 21, 25), []
-o = fg Rgb(255, 95, 95), bg Rgb(58, 21, 25), ["bold"]
-p = fg Rgb(75, 81, 92), bg Rgb(58, 21, 25), []
-q = fg Rgb(82, 87, 94), bg Default, []
-r = fg Rgb(57, 126, 84), bg Default, []
-s = fg Rgb(153, 108, 42), bg Default, []
-t = fg Rgb(45, 48, 55), bg Default, []
-u = fg Default, bg Default, ["dim"]
+j = fg Rgb(138, 145, 158), bg Rgb(29, 39, 51), []
+k = fg Rgb(138, 145, 158), bg Rgb(29, 39, 51), ["bold"]
+l = fg Rgb(255, 95, 95), bg Rgb(58, 21, 25), []
+m = fg Rgb(138, 145, 158), bg Rgb(58, 21, 25), []
+n = fg Rgb(201, 206, 214), bg Rgb(58, 21, 25), []
+o = fg Rgb(95, 211, 141), bg Rgb(58, 21, 25), []
+p = fg Rgb(255, 95, 95), bg Rgb(58, 21, 25), ["bold"]
+q = fg Rgb(75, 81, 92), bg Rgb(58, 21, 25), []
+r = fg Rgb(255, 181, 71), bg Rgb(51, 39, 17), []
+s = fg Rgb(138, 145, 158), bg Rgb(51, 39, 17), []
+t = fg Rgb(201, 206, 214), bg Rgb(51, 39, 17), []
+u = fg Rgb(95, 211, 141), bg Rgb(51, 39, 17), []
+v = fg Rgb(255, 181, 71), bg Rgb(51, 39, 17), ["bold"]
+w = fg Rgb(75, 81, 92), bg Rgb(51, 39, 17), []
+x = fg Rgb(82, 87, 94), bg Default, []
+y = fg Rgb(57, 126, 84), bg Default, []
+z = fg Default, bg Default, ["dim"]

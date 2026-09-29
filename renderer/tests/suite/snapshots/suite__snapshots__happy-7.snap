@@ -34,14 +34,14 @@ frame 0001 at 120x40
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeeedddd
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhfff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffgggggggggggggggggggggggggggggggggggggggggggggggfff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -88,14 +88,14 @@ frame 0002 at 120x40
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeeedddd
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhfff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffgggggggggggggggggggggggggggggggggggggggggggggggfff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -142,14 +142,14 @@ frame 0003 at 120x40
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeeedddd
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhfff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
-  :...fffffffffgggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffgggggggggggggggggggggggggggggggggggggggggggggggfff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
+  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
   :
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -171,7 +171,6 @@ b = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), []
 c = fg Rgb(255, 255, 255), bg Rgb(29, 39, 51), ["bold"]
 d = fg Rgb(110, 117, 130), bg Rgb(29, 39, 51), []
 e = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), ["bold"]
-f = fg Rgb(110, 117, 130), bg Default, []
-g = fg Rgb(82, 87, 94), bg Default, []
-h = fg Rgb(57, 126, 84), bg Default, []
-i = fg Default, bg Default, ["dim"]
+f = fg Rgb(82, 87, 94), bg Default, []
+g = fg Rgb(57, 126, 84), bg Default, []
+h = fg Default, bg Default, ["dim"]

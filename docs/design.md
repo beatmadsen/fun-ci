@@ -219,7 +219,8 @@ blank line, the stages' names, then one row per run, newest first:
   means everything is fine.
 - The newest run of each branch carries its state in a bar at the left edge,
   so reading down that edge gives every branch's health; a running run's bar
-  pulses. A run that a newer run of its branch replaced is dimmed, its outcome
+  pulses. A run still waiting to start takes over from nothing: the result
+  before it keeps the bar until the new run starts. A run that a newer run of its branch replaced is dimmed, its outcome
   in lower case: a failure already fixed no longer shouts. A current failure
   or timeout, and only trouble, gets a dark band of its colour across the row.
 - Runs of a branch cancelled one after another, as a rebase leaves them, fold

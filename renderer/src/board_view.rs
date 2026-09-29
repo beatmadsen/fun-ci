@@ -30,10 +30,30 @@ const CHROME_BELOW_HEADER: usize = 4;
 
 /// The footer's keys, and what is left of them when its notes need the room.
 const KEYS: &str = "  j/k move   c cancel   q quit";
-const SHORT_KEYS: &str = "  q quit";
+const SHORT_KEYS: &str = "  j/k c q";
 
-/// What the footer adds when a conflict is shown as `↯ main` rather than in words.
+/// What the footer adds when a conflict is shown as `↯ main` rather than in
+/// words, and its shorter form.
 const ZIGZAG_LEGEND: &str = "   ↯ conflicts with trunk";
+const SHORT_ZIGZAG_LEGEND: &str = "   ↯ conflict";
+
+/// What the footer says beside the keys: what `↯` means, when it is on
+/// screen, and which trunks are stale.
+struct Notes {
+    zigzag: bool,
+    stale: String,
+}
+
+impl Notes {
+    fn text(&self, short: bool) -> String {
+        let legend = match (self.zigzag, short) {
+            (false, _) => "",
+            (true, false) => ZIGZAG_LEGEND,
+            (true, true) => SHORT_ZIGZAG_LEGEND,
+        };
+        format!("{legend}{}", self.stale)
+    }
+}
 
 /// Draws boards into a frame buffer.
 #[derive(Debug)]
@@ -129,19 +149,20 @@ impl BoardView {
             }
             self.screen.println("");
         }
-        let (keys, note) = footer(board, at.board_ms);
-        self.render_footer(&keys, &(if zigzag { ZIGZAG_LEGEND } else { "" }.to_string() + &note), rows);
+        let (keys, stale) = footer(board, at.board_ms);
+        self.render_footer(&keys, &Notes { zigzag, stale }, rows);
     }
 
     /// The footer below the header, if a row is left for it: the keys dim, and
-    /// the notes in a grey no state uses. When they don't fit, the keys shrink
-    /// to `q quit` first, and then the notes are cut.
-    fn render_footer(&mut self, keys: &str, note: &str, rows: u16) {
+    /// the notes in a grey no state uses. When they don't fit, the keys and the
+    /// legend shorten, and then the notes are cut.
+    fn render_footer(&mut self, keys: &str, notes: &Notes, rows: u16) {
         if usize::from(rows) > HEADER_HEIGHT + 1 {
             let width = usize::from(self.screen.width());
-            let crowded = keys == KEYS && KEYS.chars().count() + note.chars().count() > width;
+            let crowded = keys == KEYS && KEYS.chars().count() + notes.text(false).chars().count() > width;
             let keys = cut(if crowded { SHORT_KEYS } else { keys }, width);
-            let note = cut(note, width - keys.chars().count());
+            let note = notes.text(crowded);
+            let note = cut(&note, width - keys.chars().count());
             let note_colour = escape(38, SECONDARY, self.depth);
             self.screen.print_last(&format!("{}{note_colour}{note}{RESET}", paint(DIM, &keys)));
         }

@@ -40,9 +40,12 @@ impl Tone {
     }
 }
 
-/// For each run, newest first, whether it is the newest of its project's branch.
+/// For each run, newest first, whether it is the newest of its project's
+/// branch; a run still waiting to start replaces none, so the result before
+/// it stays in charge.
 #[must_use]
 pub fn newest_of_branch(runs: &[Run]) -> Vec<bool> {
     let key = |run: &Run| (run.commit.project.clone(), run.commit.branch.clone());
-    runs.iter().enumerate().map(|(i, run)| !runs[..i].iter().any(|newer| key(newer) == key(run))).collect()
+    let replaces = |newer: &Run, run: &Run| newer.status() != "pending" && key(newer) == key(run);
+    runs.iter().enumerate().map(|(i, run)| !runs[..i].iter().any(|newer| replaces(newer, run))).collect()
 }

@@ -24,10 +24,10 @@ frame 0001 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -58,10 +58,10 @@ frame 0002 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -92,10 +92,10 @@ frame 0003 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -126,10 +126,10 @@ frame 0004 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -159,11 +159,11 @@ frame 0005 at 100x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -193,11 +193,11 @@ frame 0006 at 100x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -227,11 +227,11 @@ frame 0007 at 100x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -261,11 +261,11 @@ frame 0008 at 100x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -295,11 +295,11 @@ frame 0009 at 100x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -330,10 +330,10 @@ frame 0010 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -364,10 +364,10 @@ frame 0011 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -398,10 +398,10 @@ frame 0012 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -432,10 +432,10 @@ frame 0013 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -466,10 +466,10 @@ frame 0014 at 100x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -499,11 +499,11 @@ frame 0015 at 100x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -521,8 +521,7 @@ d = fg Rgb(110, 117, 130), bg Rgb(29, 39, 51), []
 e = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), []
 f = fg Rgb(79, 214, 232), bg Rgb(29, 39, 51), ["bold"]
 g = fg Rgb(75, 81, 92), bg Rgb(29, 39, 51), []
-h = fg Rgb(110, 117, 130), bg Default, []
-i = fg Rgb(82, 87, 94), bg Default, []
-j = fg Rgb(57, 126, 84), bg Default, []
-k = fg Default, bg Default, ["dim"]
-l = fg Rgb(30, 90, 98), bg Rgb(29, 39, 51), []
+h = fg Rgb(82, 87, 94), bg Default, []
+i = fg Rgb(57, 126, 84), bg Default, []
+j = fg Default, bg Default, ["dim"]
+k = fg Rgb(30, 90, 98), bg Rgb(29, 39, 51), []

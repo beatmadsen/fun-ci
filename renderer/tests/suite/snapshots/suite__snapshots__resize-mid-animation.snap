@@ -24,10 +24,10 @@ frame 0001 at 80x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -58,10 +58,10 @@ frame 0002 at 80x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -92,10 +92,10 @@ frame 0003 at 80x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -126,10 +126,10 @@ frame 0004 at 80x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -159,11 +159,11 @@ frame 0005 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -193,11 +193,11 @@ frame 0006 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -227,11 +227,11 @@ frame 0007 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -261,11 +261,11 @@ frame 0008 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -295,11 +295,11 @@ frame 0009 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :lccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :kccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -330,10 +330,10 @@ frame 0010 at 80x30
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bccdddddddddcccccceeeeeeeeeeeeeeeeeefffffffffgggggggggfffffffffffdddd
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -363,11 +363,11 @@ frame 0011 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnppppppppppppppppppqqqqrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooppppqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -397,11 +397,11 @@ frame 0012 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnppppppppppppppppppttttrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmoooooooooooooooooossssqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -431,11 +431,11 @@ frame 0013 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnppppppppppppppppppuuuurrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmoooooooooooooooooottttqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -465,11 +465,11 @@ frame 0014 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnppppppppppppppppppvvvvrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmoooooooooooooooooouuuuqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -499,11 +499,11 @@ frame 0015 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnppppppppppppppppppwwwwrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmoooooooooooooooooovvvvqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -533,11 +533,11 @@ frame 0016 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnppppppppppppppppppxxxxrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmoooooooooooooooooowwwwqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -567,11 +567,11 @@ frame 0017 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -601,11 +601,11 @@ frame 0018 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -635,11 +635,11 @@ frame 0019 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :..............................yyyyyyyyyyyyyyyyyyy
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :..............................xxxxxxxxxxxxxxxxxxx
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -669,11 +669,11 @@ frame 0020 at 80x30
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :..............................yyyyyyyyyyyyyyyyyyy
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :..............................xxxxxxxxxxxxxxxxxxx
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -713,11 +713,11 @@ frame 0021 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :..................................................yyyyyyyyyyyyyyyyyyy
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :..................................................xxxxxxxxxxxxxxxxxxx
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -767,11 +767,11 @@ frame 0022 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :..................................................yyyyyyyyyyyyyyyyyyy
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :..................................................xxxxxxxxxxxxxxxxxxx
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -821,11 +821,11 @@ frame 0023 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :..................................................yyyyyyyyyyyyyyyyyyy
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :..................................................xxxxxxxxxxxxxxxxxxx
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -875,11 +875,11 @@ frame 0024 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :..................................................yyyyyyyyyyyyyyyyyyy
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :..................................................xxxxxxxxxxxxxxxxxxx
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -929,11 +929,11 @@ frame 0025 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :..................................................yyyyyyyyyyyyyyyyyyy
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :..................................................xxxxxxxxxxxxxxxxxxx
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -983,11 +983,11 @@ frame 0026 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :..................................................yyyyyyyyyyyyyyyyyyy
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :..................................................xxxxxxxxxxxxxxxxxxx
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1037,11 +1037,11 @@ frame 0027 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :...................................................zzzzzzzzzzzzzzzzz
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :...................................................yyyyyyyyyyyyyyyyy
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1091,11 +1091,11 @@ frame 0028 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :...................................................zzzzzzzzzzzzzzzzz
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :...................................................yyyyyyyyyyyyyyyyy
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1145,11 +1145,11 @@ frame 0029 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :...................................................zzzzzzzzzzzzzzzzz
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :...................................................yyyyyyyyyyyyyyyyy
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1199,11 +1199,11 @@ frame 0030 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :...................................................zzzzzzzzzzzzzzzzz
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :...................................................yyyyyyyyyyyyyyyyy
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1253,11 +1253,11 @@ frame 0031 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :...................................................zzzzzzzzzzzzzzzzz
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :...................................................yyyyyyyyyyyyyyyyy
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1307,11 +1307,11 @@ frame 0032 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :...................................................zzzzzzzzzzzzzzzzz
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :...................................................yyyyyyyyyyyyyyyyy
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1361,11 +1361,11 @@ frame 0033 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :...................................................zzzzzzzzzzzzzzzzz
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :...................................................yyyyyyyyyyyyyyyyy
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1415,11 +1415,11 @@ frame 0034 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :...................................................zzzzzzzzzzzzzzzzz
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :...................................................yyyyyyyyyyyyyyyyy
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1469,11 +1469,11 @@ frame 0035 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :....................................................AAAAAAAAAAAAAAA
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :....................................................zzzzzzzzzzzzzzz
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1523,11 +1523,11 @@ frame 0036 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :....................................................AAAAAAAAAAAAAAA
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :....................................................zzzzzzzzzzzzzzz
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1577,11 +1577,11 @@ frame 0037 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :....................................................AAAAAAAAAAAAAAA
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :....................................................zzzzzzzzzzzzzzz
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1631,11 +1631,11 @@ frame 0038 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :....................................................AAAAAAAAAAAAAAA
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :....................................................zzzzzzzzzzzzzzz
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1685,11 +1685,11 @@ frame 0039 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :....................................................AAAAAAAAAAAAAAA
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :....................................................zzzzzzzzzzzzzzz
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1739,11 +1739,11 @@ frame 0040 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :....................................................AAAAAAAAAAAAAAA
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :....................................................zzzzzzzzzzzzzzz
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1793,11 +1793,11 @@ frame 0041 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :....................................................AAAAAAAAAAAAAAA
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :....................................................zzzzzzzzzzzzzzz
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1847,11 +1847,11 @@ frame 0042 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
-  :....................................................AAAAAAAAAAAAAAA
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
+  :....................................................zzzzzzzzzzzzzzz
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1901,11 +1901,11 @@ frame 0043 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -1955,11 +1955,11 @@ frame 0044 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2009,11 +2009,11 @@ frame 0045 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2063,11 +2063,11 @@ frame 0046 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2117,11 +2117,11 @@ frame 0047 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2171,11 +2171,11 @@ frame 0048 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2225,11 +2225,11 @@ frame 0049 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2279,11 +2279,11 @@ frame 0050 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2333,11 +2333,11 @@ frame 0051 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2387,11 +2387,11 @@ frame 0052 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2441,11 +2441,11 @@ frame 0053 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2495,11 +2495,11 @@ frame 0054 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2549,11 +2549,11 @@ frame 0055 at 120x40
   |
   :
   :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :mnnooooooooonnnnnnpppppppppppppppppprrrrrrrrrsssssssssrrrrrrrrrrroooo
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhh
-  :...hhhhhhhhhiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhh
+  :lmmnnnnnnnnnmmmmmmooooooooooooooooooqqqqqqqqqrrrrrrrrrqqqqqqqqqqqnnnn
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihhh
+  :...hhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiihh
   :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
   :
   :
   :
@@ -2581,23 +2581,22 @@ d = fg Rgb(110, 117, 130), bg Rgb(29, 39, 51), []
 e = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), []
 f = fg Rgb(79, 214, 232), bg Rgb(29, 39, 51), ["bold"]
 g = fg Rgb(75, 81, 92), bg Rgb(29, 39, 51), []
-h = fg Rgb(110, 117, 130), bg Default, []
-i = fg Rgb(82, 87, 94), bg Default, []
-j = fg Rgb(57, 126, 84), bg Default, []
-k = fg Default, bg Default, ["dim"]
-l = fg Rgb(30, 90, 98), bg Rgb(29, 39, 51), []
-m = fg Rgb(255, 95, 95), bg Rgb(78, 41, 45), []
-n = fg Rgb(255, 255, 255), bg Rgb(78, 41, 45), ["bold"]
-o = fg Rgb(138, 145, 158), bg Rgb(78, 41, 45), []
-p = fg Rgb(95, 211, 141), bg Rgb(78, 41, 45), []
-q = fg Idx(15), bg Idx(196), ["bold"]
-r = fg Rgb(255, 95, 95), bg Rgb(78, 41, 45), ["bold"]
-s = fg Rgb(75, 81, 92), bg Rgb(78, 41, 45), []
-t = fg Idx(15), bg Idx(160), ["bold"]
-u = fg Idx(15), bg Idx(124), ["bold"]
-v = fg Idx(9), bg Idx(88), ["bold"]
-w = fg Idx(9), bg Idx(52), ["bold"]
-x = fg Idx(9), bg Default, ["bold"]
-y = fg Idx(1), bg Default, ["bold"]
-z = fg Idx(1), bg Default, []
-A = fg Idx(1), bg Default, ["dim"]
+h = fg Rgb(82, 87, 94), bg Default, []
+i = fg Rgb(57, 126, 84), bg Default, []
+j = fg Default, bg Default, ["dim"]
+k = fg Rgb(30, 90, 98), bg Rgb(29, 39, 51), []
+l = fg Rgb(255, 95, 95), bg Rgb(78, 41, 45), []
+m = fg Rgb(255, 255, 255), bg Rgb(78, 41, 45), ["bold"]
+n = fg Rgb(138, 145, 158), bg Rgb(78, 41, 45), []
+o = fg Rgb(95, 211, 141), bg Rgb(78, 41, 45), []
+p = fg Idx(15), bg Idx(196), ["bold"]
+q = fg Rgb(255, 95, 95), bg Rgb(78, 41, 45), ["bold"]
+r = fg Rgb(75, 81, 92), bg Rgb(78, 41, 45), []
+s = fg Idx(15), bg Idx(160), ["bold"]
+t = fg Idx(15), bg Idx(124), ["bold"]
+u = fg Idx(9), bg Idx(88), ["bold"]
+v = fg Idx(9), bg Idx(52), ["bold"]
+w = fg Idx(9), bg Default, ["bold"]
+x = fg Idx(1), bg Default, ["bold"]
+y = fg Idx(1), bg Default, []
+z = fg Idx(1), bg Default, ["dim"]

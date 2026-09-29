@@ -404,3 +404,21 @@ fn a_replaced_run_s_branch_is_brighter_than_a_cancelled_one_s() {
     };
     assert!(brightness(2, "main") > brightness(3, "dev"));
 }
+
+#[test]
+fn a_waiting_run_leaves_its_branch_s_last_result_in_charge() {
+    let grid = table(&[run(2, "main", "pending", &[]), failed(1, "main")], 100);
+    assert_eq!((grid.cells[2][0].text.as_str(), fg_at(&grid, 2, "FAILED")), ("▌", rgb(palette::FAILED)));
+}
+
+#[test]
+fn a_waiting_run_has_no_bar_of_its_own() {
+    let grid = table(&[run(2, "main", "pending", &[]), failed(1, "main")], 100);
+    assert_eq!(grid.cells[1][0].text.trim(), "");
+}
+
+#[test]
+fn a_replaced_run_s_sha_is_no_brighter_than_its_branch() {
+    let grid = table(&[passed(2, "main"), passed(1, "main")], 100);
+    assert_eq!(fg_at(&grid, 2, "1a3f7c0"), fg_at(&grid, 2, "main"));
+}

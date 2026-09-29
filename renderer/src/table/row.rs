@@ -53,7 +53,17 @@ fn blank_line(run: &Run, layout: &Layout, place: Place) -> (Line, Look) {
     let band = band(run, tone);
     let end = (layout.age_end() + 1).min(layout.width);
     let line = Line::new(end, if place.selected { Some(palette::selected(band)) } else { band });
-    (line, Look { tone, selected: place.selected, quiet: if band.is_some() { SECONDARY } else { QUIET } })
+    (line, Look { tone, selected: place.selected, quiet: quiet(tone, band.is_some()) })
+}
+
+/// The SHA's and the age's colour: grey enough to read on a band, and never
+/// brighter than the branch on a row that recedes.
+fn quiet(tone: Tone, banded: bool) -> [u8; 3] {
+    match tone {
+        _ if banded => SECONDARY,
+        Tone::Current => QUIET,
+        faded => faded.colour(SECONDARY),
+    }
 }
 
 /// A band across the row for trouble alone: a current failure or timeout.
@@ -81,7 +91,6 @@ fn bar(run: &Run, play_ms: u64) -> Option<[u8; 3]> {
         "failed" => Some(FAILED),
         "timeout" => Some(TIMED_OUT),
         "running" => Some(if (play_ms / PULSE_MS).is_multiple_of(2) { RUNNING } else { RUNNING_LOW }),
-        "pending" => Some(SECONDARY),
         _ => None,
     }
 }

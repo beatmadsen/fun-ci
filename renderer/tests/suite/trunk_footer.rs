@@ -101,11 +101,11 @@ fn a_conflict_said_in_words_needs_no_explaining() {
 #[test]
 fn the_zigzag_s_explanation_comes_before_a_stale_trunk_note() {
     let footer = conflict_footer_with(80, r#"[{"project":"/src/agent-tome","since":1789992800}]"#);
-    assert!(footer.contains("↯ conflicts with trunk"), "{footer:?}");
+    assert!(footer.find("↯ conflict").unwrap() < footer.find("agent-tome").unwrap(), "{footer:?}");
 }
 
 #[test]
-fn a_narrow_footer_gives_up_the_key_hints_before_the_notes() {
+fn a_narrow_footer_keeps_every_key_and_both_notes_in_short() {
     let footer = conflict_footer_with(60, r#"[{"project":"/src/agent-tome","since":1789992800}]"#);
-    assert_eq!(footer, "  q quit   ↯ conflicts with trunk   agent-tome: trunk 2h old");
+    assert_eq!(footer, "  j/k c q   ↯ conflict   agent-tome: trunk 2h old");
 }
