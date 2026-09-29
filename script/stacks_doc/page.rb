@@ -17,7 +17,7 @@ module StacksDoc
 
       `fun-ci init` looks at the names at the top of your project and takes the first stack in this table that has one of its markers there. A Python project with a `package.json` for its front end is set up as Python, and a Go project with a `Makefile` as Go. The scripts are plain shell and a starting point, so edit them to run whatever your project uses.
 
-      The fast suite leaves out the tests the tool's own convention marks slow, and the slow suite runs only those. Where the tool has no such convention, the slow suite is a `test:slow` script (a `test-slow` target for make). A slow suite with no tests in it passes having run nothing under cargo, dotnet, PHPUnit, rspec and swift, and fails under the others, until you edit `slow.sh`.
+      The fast suite leaves out the tests the tool's own convention marks slow, and the slow suite runs only those (for Maven, failsafe's integration tests, the classes named `*IT`). Where the tool has no such convention, the slow suite is a `test:slow` script (a `test-slow` target for make). A slow suite with no tests in it passes having run nothing under cargo, dotnet, Maven, PHPUnit, rspec and swift, and fails under the others, until you edit `slow.sh`.
     MD
 
     PRESETS = <<~MD.chomp

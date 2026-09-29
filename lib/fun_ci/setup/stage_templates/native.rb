@@ -15,7 +15,7 @@ module FunCi
                            "cargo test", "cargo test -- --ignored"),
         go: stages("go vet ./...", "go build ./...", "go test -short ./...", "go test ./..."),
         swift: stages("swift format lint --recursive --strict .", "swift build --build-tests",
-                      "swift test --skip Slow", "swift test --filter Slow"),
+                      "swift test --skip-build --skip Slow", "swift test --skip-build --filter Slow"),
         cmake: stages(CLANG_FORMAT, "cmake -S . -B build && cmake --build build",
                       "#{CTEST} -LE slow", "#{CTEST} -L slow"),
         make: stages("make lint", "make", "make test", "make test-slow")

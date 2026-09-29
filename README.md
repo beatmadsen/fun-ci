@@ -43,6 +43,8 @@ Upgrading from 1.x? Read [Upgrading to 2.0](#upgrading-to-20) first.
 | Fast  | 10 s   | after lint and build pass | the push |
 | Slow  | 5 min  | in the background, beside the fast suite | nothing |
 
+The fast and slow suites run at the same time on what the build left, so `build.sh` should compile everything they need, test code included; the scripts `fun-ci init` writes do. Otherwise both suites compile into the same build directory at once and can break each other's build.
+
 A stage that overruns its budget is killed and reported as over budget, in yellow rather than red: a fast suite that takes 12 seconds has grown too heavy, which is a different problem from a failing test.
 
 After each commit, the `post-commit` hook starts the pipeline in the background and returns at once, so a commit is never held up. The `pre-push` hook waits for the verdict of each commit you push and stops the push if lint, build or the fast suite failed. A commit whose run has already finished goes straight through. If fun-ci isn't installed, both hooks say so and let git carry on.

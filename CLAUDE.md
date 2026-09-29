@@ -51,7 +51,7 @@ rake "mutation:rust:score[n]"     # Judge the n shards' outcomes together; fails
 ruby script/record_evidence_fixture.rb rspec   # Record a preset's failing run in its pinned Docker image (test/fixtures/evidence/<name>/)
 ruby script/bench_detection.rb   # Time choosing presets over a full output window; run it when a preset is added
 ruby script/check_evidence_presets.rb [NAME...]   # Record presets' runs again with each image's newest tag and report what changed; CI runs it weekly (evidence-presets.yml)
-ruby script/check_init_templates.rb [NAME...]   # Run the stage script `fun-ci init` writes on each preset's recorded project, in its pinned image, and check the preset reads what it prints; CI runs it weekly (evidence-presets.yml)
+ruby script/check_init_templates.rb [NAME...]   # Run the stage script `fun-ci init` writes on each preset's recorded project, in its pinned image, and check the preset reads what it prints, and that each stack's fast and slow suites write nothing in common after its build (`script/suites_apart.rb`); CI runs it weekly (evidence-presets.yml)
 ruby script/readme_screenshots.rb   # Draw the README's pictures of the console (docs/screenshots/) from pinned headless scenes; run it when what the console draws changes
 ruby script/mutation_lanes.rb [SHA]   # Which mutation lanes the nightly workflow runs: those fed by a file changed since SHA
 ruby script/stacks_doc.rb   # Write docs/stacks.md (the stacks init detects, their scripts, the presets) from the code; run it when any of them changes

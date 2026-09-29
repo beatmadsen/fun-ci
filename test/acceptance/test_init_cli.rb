@@ -79,3 +79,15 @@ class TestInitCliUnknownProject < Minitest::Test
     assert_match(/could not detect|unknown/i, @stdout.string, "Should explain the failure")
   end
 end
+
+# The suites run at once on what build.sh built (design.md, The pipeline), so
+# init says so where the developer reads what it wrote.
+class TestInitCliSharedBuild < Minitest::Test
+  include InitCliProject
+
+  def test_should_say_that_the_suites_run_at_once_on_what_the_build_script_built
+    init_project_with("build.gradle.kts", "plugins { kotlin(\"jvm\") }\n")
+
+    assert_includes @stdout.string, "fast.sh and slow.sh run at the same time, on what build.sh built"
+  end
+end

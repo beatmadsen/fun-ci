@@ -6,22 +6,22 @@ This page lists what fun-ci knows about each stack: how `fun-ci init` recognises
 
 `fun-ci init` looks at the names at the top of your project and takes the first stack in this table that has one of its markers there. A Python project with a `package.json` for its front end is set up as Python, and a Go project with a `Makefile` as Go. The scripts are plain shell and a starting point, so edit them to run whatever your project uses.
 
-The fast suite leaves out the tests the tool's own convention marks slow, and the slow suite runs only those. Where the tool has no such convention, the slow suite is a `test:slow` script (a `test-slow` target for make). A slow suite with no tests in it passes having run nothing under cargo, dotnet, PHPUnit, rspec and swift, and fails under the others, until you edit `slow.sh`.
+The fast suite leaves out the tests the tool's own convention marks slow, and the slow suite runs only those (for Maven, failsafe's integration tests, the classes named `*IT`). Where the tool has no such convention, the slow suite is a `test:slow` script (a `test-slow` target for make). A slow suite with no tests in it passes having run nothing under cargo, dotnet, Maven, PHPUnit, rspec and swift, and fails under the others, until you edit `slow.sh`.
 
 | Stack | Detected by | lint.sh | build.sh | fast.sh | slow.sh |
 | --- | --- | --- | --- | --- | --- |
 | Ruby (rspec) | `Gemfile` and `spec` or `Gemfile` and `.rspec` | `bundle exec rubocop` | `bundle install --quiet` | `bundle exec rspec --tag ~slow` | `bundle exec rspec --tag slow` |
 | Ruby (rake) | `Gemfile` | `bundle exec rubocop` | `bundle install --quiet` | `bundle exec rake test` | `bundle exec rake test:slow` |
-| Gradle (Kotlin DSL) | `build.gradle.kts` or `settings.gradle.kts` | `./gradlew check -x test` | `./gradlew assemble` | `./gradlew test` | `./gradlew integrationTest` |
-| Gradle (Groovy DSL) | `build.gradle` or `settings.gradle` | `./gradlew check -x test` | `./gradlew assemble` | `./gradlew test` | `./gradlew integrationTest` |
-| Maven | `pom.xml` | `mvn verify -DskipTests` | `mvn compile` | `mvn test` | `mvn verify` |
+| Gradle (Kotlin DSL) | `build.gradle.kts` or `settings.gradle.kts` | `./gradlew check -x test` | `./gradlew assemble testClasses` | `./gradlew test` | `./gradlew integrationTest` |
+| Gradle (Groovy DSL) | `build.gradle` or `settings.gradle` | `./gradlew check -x test` | `./gradlew assemble testClasses` | `./gradlew test` | `./gradlew integrationTest` |
+| Maven | `pom.xml` | `mvn verify -DskipTests` | `mvn test-compile` | `mvn surefire:test` | `mvn failsafe:integration-test failsafe:verify` |
 | Rust | `Cargo.toml` | `cargo clippy --all-targets -- -D warnings` | `cargo build --all-targets` | `cargo test` | `cargo test -- --ignored` |
 | Go | `go.mod` | `go vet ./...` | `go build ./...` | `go test -short ./...` | `go test ./...` |
-| Elixir | `mix.exs` | `mix format --check-formatted` | `mix deps.get && mix compile` | `mix test --exclude slow` | `mix test --only slow` |
-| Dart | `pubspec.yaml` | `dart analyze` | `dart pub get` | `dart test --exclude-tags slow` | `dart test --tags slow` |
-| Swift | `Package.swift` | `swift format lint --recursive --strict .` | `swift build --build-tests` | `swift test --skip Slow` | `swift test --filter Slow` |
+| Elixir | `mix.exs` | `mix format --check-formatted` | `mix deps.get && MIX_ENV=test mix compile` | `mix test --exclude slow` | `mix test --only slow` |
+| Dart | `pubspec.yaml` | `dart analyze` | `dart pub get --precompile` | `dart test --exclude-tags slow` | `dart test --compiler source --tags slow` |
+| Swift | `Package.swift` | `swift format lint --recursive --strict .` | `swift build --build-tests` | `swift test --skip-build --skip Slow` | `swift test --skip-build --filter Slow` |
 | PHP | `composer.json` | `vendor/bin/phpcs` | `composer install --no-interaction --no-progress` | `vendor/bin/phpunit --exclude-group slow` | `vendor/bin/phpunit --group slow` |
-| .NET | `*.sln` or `*.csproj` or `*.fsproj` | `dotnet format --verify-no-changes` | `dotnet build` | `dotnet test --filter "Category!=Slow"` | `dotnet test --filter "Category=Slow"` |
+| .NET | `*.sln` or `*.csproj` or `*.fsproj` | `dotnet format --verify-no-changes` | `dotnet build` | `dotnet test --no-build --filter "Category!=Slow"` | `dotnet test --no-build --filter "Category=Slow"` |
 | Python (uv) | `uv.lock` | `uv run ruff check .` | `uv sync` | `uv run pytest -m "not slow"` | `uv run pytest -m slow` |
 | Python (Poetry) | `poetry.lock` | `poetry run ruff check .` | `poetry install` | `poetry run pytest -m "not slow"` | `poetry run pytest -m slow` |
 | Python (pip) | `pyproject.toml` or `setup.py` or `setup.cfg` or `requirements.txt` | `python3 -m ruff check .` | `python3 -m compileall -q .` | `python3 -m pytest -m "not slow"` | `python3 -m pytest -m slow` |

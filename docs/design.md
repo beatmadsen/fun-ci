@@ -67,6 +67,13 @@ runs the whole pipeline in the background so a commit is never held up. The
 stops the push if lint, build or fast failed; a commit whose run has already
 finished goes through at once.
 
+The fast and slow suites run at the same time, in the same worktree, on what
+the build left there. So `build.sh` compiles everything either suite runs, test
+code included, and neither suite writes a file the other uses: two test runs
+compiling into one build directory at once delete each other's files. The
+scripts `fun-ci init` writes keep to this, and `script/check_init_templates.rb`
+checks each stack's in its pinned image.
+
 Each run happens in a git worktree of its own, checked out at the commit it
 tests, so the developer keeps editing while it runs. A newer commit on the same
 branch cancels the older run if it hasn't finished, unless an agent is waiting

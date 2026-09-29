@@ -8,6 +8,10 @@ require_relative "agent_instructions"
 module FunCi
   module Setup
     class Installer
+      # The suites run at once on build.sh's output (design.md, The pipeline).
+      SHARED_BUILD = "fast.sh and slow.sh run at the same time, on what build.sh built: have build.sh " \
+                     "compile everything they need, test code included, so neither suite writes what the other reads."
+
       def self.run(project_root:, stdout: $stdout)
         new(project_root: project_root, stdout: stdout).run
       end
@@ -52,7 +56,7 @@ module FunCi
       def write_templates(detected)
         @stdout.puts "Detected: #{detected.to_s.tr("_", " ")}"
         TemplateWriter.new(detected, @project_root, lint_override: detect_maven_linter(detected)).write
-        report("Created .fun-ci/ with template scripts.", 0)
+        report("Created .fun-ci/ with template scripts.\n#{SHARED_BUILD}", 0)
       end
 
       def report(message, exit_code)
