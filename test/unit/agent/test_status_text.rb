@@ -42,7 +42,17 @@ class TestStatusText < Minitest::Test
     assert_equal "  trunk  in trunk", lines(trunk: in_trunk)[5]
   end
 
+  def test_should_not_say_how_to_integrate_while_a_needed_stage_has_failed
+    refute_includes lines(verdict: :failed, trunk: conflict, deciding: "build").join("\n"), "integrate"
+  end
+
   private
+
+  def conflict
+    now = Time.utc(2026, 9, 29)
+    merge = MERGE.conflicts(["a.rb"], ahead: 1, behind: 1)
+    FunCi::Trunk::Shown.of(trunk_check("3f9c2ab", merge, seen_at: now), now: now)
+  end
 
   def in_trunk
     now = Time.utc(2026, 9, 29)
@@ -51,11 +61,12 @@ class TestStatusText < Minitest::Test
 
   def stage(name, state, seconds = nil) = STAGE.new(name: name, state: state, seconds: seconds)
 
-  def lines(verdict: :undecided, superseded_by: nil, build: stage("build", "passed", 11.2), trunk: nil)
+  # fields: the report's superseded_by, deciding and trunk, each nil unless given.
+  def lines(verdict: :undecided, build: stage("build", "passed", 11.2), **fields)
     stages = [stage("lint", "passed", 3.8), build,
               stage("fast", "running"), stage("slow", "running")]
     report = REPORT.new(sha: "3f9c2ab0c4d1", subject: "Add retry", branch: "main", need: "fast", stages: stages,
-                        verdict: verdict, superseded_by: superseded_by, trunk: trunk)
+                        verdict: verdict, superseded_by: nil, **fields)
     FunCi::Agent::StatusText.lines(report)
   end
 end

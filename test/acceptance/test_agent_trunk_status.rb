@@ -27,4 +27,15 @@ class TestAgentTrunkStatus < Minitest::Test
                     "  trunk  conflicts    origin/main 9e1d004, fetched 2m ago, 3 ahead, 4 behind\n    " \
                     "lib/cart.rb\n    lib/total.rb\n"
   end
+
+  def test_should_say_when_and_how_to_integrate_a_branch_that_conflicts
+    @client.record_trunk_check(SHA, MERGE.conflicts(["lib/cart.rb", "lib/total.rb"], ahead: 3, behind: 4),
+                               seen: @client.clock.now - 120)
+
+    @client.status
+
+    assert_includes @client.stdout,
+                    "Conflicts with origin/main in 2 files. When the task is done, integrate: git pull origin main " \
+                    "(or git pull --rebase origin main if the branch isn't shared)\n"
+  end
 end

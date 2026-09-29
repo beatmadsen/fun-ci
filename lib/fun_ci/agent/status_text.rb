@@ -15,7 +15,11 @@ module FunCi
       def self.lines(report)
         needed = Verdict::LEVELS.fetch(report.need)
         [header(report), *report.stages.map { |stage| stage_line(stage, needed) }, *Digest.lines(report.stages, needed),
-         *(report.trunk ? TrunkText.lines(report.trunk) : []), *footer(report)]
+         *trunk(report), *footer(report)]
+      end
+
+      def self.trunk(report)
+        report.trunk ? TrunkText.lines(report.trunk, branch: report.branch, next_step: report.deciding.nil?) : []
       end
 
       def self.header(report) = %(fun-ci: #{report.sha[0, 7]} "#{report.subject}" on #{report.branch})
@@ -32,7 +36,7 @@ module FunCi
 
         ["Superseded by #{report.superseded_by[0, 7]}."]
       end
-      private_class_method :stage_line, :footer
+      private_class_method :trunk, :stage_line, :footer
     end
   end
 end

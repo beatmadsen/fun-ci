@@ -2,9 +2,13 @@
 
 module FunCi
   module Trunk
-    # The trunk as fun-ci saw it: its ref, the SHA at its tip, and when fun-ci
-    # first saw that SHA.
-    Tip = Data.define(:ref, :sha, :seen_at)
+    # The trunk as fun-ci saw it: its branch, on a remote or (remote nil)
+    # local, the SHA at its tip, and when fun-ci first saw that SHA.
+    Tip = Data.define(:remote, :branch, :sha, :seen_at)
+
+    class Tip
+      def ref = remote ? "#{remote}/#{branch}" : branch
+    end
 
     # What merging a commit with a trunk tip would do: ahead and behind count
     # the commits each has that the other lacks, and outcome is "clean",

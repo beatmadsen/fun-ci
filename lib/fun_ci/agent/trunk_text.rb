@@ -2,15 +2,18 @@
 
 require_relative "../trunk/shown"
 require_relative "age"
+require_relative "next_step"
 
 module FunCi
   module Agent
     # How a run's commit stands against the trunk, as `status` and `wait`
     # print it (docs/trunk-conflicts.md, status and wait).
     module TrunkText
-      def self.lines(shown)
-        ["  trunk  #{shown.state.tr("_", " ").ljust(12)} #{detail(shown)}".rstrip,
-         *shown.check.merge.files.map { |file| "    #{file}" }]
+      # next_step: whether to say how to integrate a conflict; not while a needed stage has failed.
+      def self.lines(shown, branch:, next_step:)
+        files = shown.check.merge.files
+        ["  trunk  #{shown.state.tr("_", " ").ljust(12)} #{detail(shown)}".rstrip, *files.map { |file| "    #{file}" },
+         *(next_step && shown.state == "conflicts" ? [NextStep.line(shown.check.tip, files, branch: branch)] : [])]
       end
 
       def self.detail(shown)

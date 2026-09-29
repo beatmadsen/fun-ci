@@ -32,7 +32,7 @@ module FunCi
       TRUNK_CHECKS_TABLE = <<~SQL
         CREATE TABLE IF NOT EXISTS trunk_checks (
           id INTEGER PRIMARY KEY,
-          project_path TEXT, commit_hash TEXT, trunk_ref TEXT, trunk_sha TEXT,
+          project_path TEXT, commit_hash TEXT, trunk_remote TEXT, trunk_branch TEXT, trunk_sha TEXT,
           trunk_seen_at TEXT, checked_at TEXT,
           outcome TEXT, ahead INTEGER, behind INTEGER, files TEXT, reason TEXT,
           UNIQUE (project_path, commit_hash, trunk_sha)

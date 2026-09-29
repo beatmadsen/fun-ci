@@ -9,7 +9,9 @@ module FunCi
     # A project's checks against its trunk. A check is a fact about a commit
     # and a trunk SHA, so each pair is written once and never changed.
     class TrunkChecks
-      COLUMNS = %i[commit_hash trunk_ref trunk_sha trunk_seen_at outcome ahead behind files reason].freeze
+      TIP = %i[trunk_remote trunk_branch trunk_sha trunk_seen_at].freeze
+      MERGE = %i[outcome ahead behind files reason].freeze
+      COLUMNS = [:commit_hash, *TIP, *MERGE].freeze
 
       def initialize(db, project)
         @db = db
@@ -19,30 +21,30 @@ module FunCi
       def record(check, checked_at:)
         @db.execute("INSERT OR IGNORE INTO trunk_checks (project_path, checked_at, #{COLUMNS.join(", ")}) " \
                     "VALUES (?, ?, #{(["?"] * COLUMNS.size).join(", ")})",
-                    [@project, checked_at.utc.iso8601, *row(check)])
+                    [@project, checked_at.utc.iso8601, check.commit, *tip_row(check.tip), *merge_row(check.merge)])
       end
 
       # The commit's check against the trunk SHA fun-ci saw last, or nil.
       def latest(sha)
         found = @db.execute("SELECT #{COLUMNS.join(", ")} FROM trunk_checks WHERE project_path = ? " \
                             "AND commit_hash = ? ORDER BY trunk_seen_at DESC, id DESC LIMIT 1", [@project, sha]).first
-        found && check(found)
+        found && Trunk::Check.new(commit: found.first, tip: tip(found[1, TIP.size]),
+                                  merge: merge(found.last(MERGE.size)))
       end
 
       private
 
-      def row(check)
-        tip = check.tip
-        merge = check.merge
-        [check.commit, tip.ref, tip.sha, tip.seen_at.utc.iso8601, merge.outcome, merge.ahead, merge.behind,
-         JSON.generate(merge.files), merge.reason]
+      def tip_row(tip) = [tip.remote, tip.branch, tip.sha, tip.seen_at.utc.iso8601]
+      def merge_row(merge) = [merge.outcome, merge.ahead, merge.behind, JSON.generate(merge.files), merge.reason]
+
+      def tip(values)
+        remote, branch, sha, seen_at = values
+        Trunk::Tip.new(remote: remote, branch: branch, sha: sha, seen_at: Time.parse(seen_at))
       end
 
-      def check(found)
-        commit, ref, sha, seen_at, outcome, ahead, behind, files, reason = found
-        Trunk::Check.new(commit: commit, tip: Trunk::Tip.new(ref: ref, sha: sha, seen_at: Time.parse(seen_at)),
-                         merge: Trunk::Merge.new(outcome: outcome, ahead: ahead, behind: behind,
-                                                 files: JSON.parse(files), reason: reason))
+      def merge(values)
+        outcome, ahead, behind, files, reason = values
+        Trunk::Merge.new(outcome: outcome, ahead: ahead, behind: behind, files: JSON.parse(files), reason: reason)
       end
     end
   end
