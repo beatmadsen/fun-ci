@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require "fun_ci/trunk/regions"
 
 # The conflicted regions of a file as a merge leaves it, with the lines around them
-# (docs/trunk-conflicts.md, why REV trunk).
+# (design.md, The trunk).
 class TestRegions < Minitest::Test
   CONFLICT = "<<<<<<< ours\nmine\n=======\ntheirs\n>>>>>>> trunk\n"
 

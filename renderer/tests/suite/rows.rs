@@ -136,7 +136,7 @@ fn a_cancelled_run_shows_its_stage_times_without_colour() {
 
 const MAGENTA: Colour = Colour::Idx(5);
 
-/// A passed run whose branch conflicts with the trunk (docs/trunk-conflicts.md, The console).
+/// A passed run whose branch conflicts with the trunk (design.md, The trunk).
 fn conflicting() -> Value {
     let mut run = passed();
     run["trunk"] = json!({"branch_state": "conflicts", "trunk": "main"});

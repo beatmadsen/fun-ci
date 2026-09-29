@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require_relative "agent_client"
 
-# A trunk that has moved since a run's check (docs/trunk-conflicts.md, AT-11.26).
+# A trunk that has moved since a run's check (acceptance-tests.md, AT-11.26).
 class TestAgentTrunkMoved < Minitest::Test
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
   MOVED_TO = "1a2b3c4dddddeeeeeffff000001111122222333"

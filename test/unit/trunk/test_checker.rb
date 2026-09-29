@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require "fun_ci/trunk/checker"
 
 # A commit checked against the trunk the project names or has, fetched first
-# when it is time to (docs/trunk-conflicts.md).
+# when it is time to (architecture.md, Checking against the trunk).
 class TestTrunkChecker < Minitest::Test
   MERGE = FunCi::Trunk::Merge
   ANSWER = FunCi::Trunk::MergeCheck::Answer

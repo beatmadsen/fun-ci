@@ -57,7 +57,7 @@ module FunCi
       end
       private_class_method :where
 
-      # The groups are each running stage's, and the trunk fetch's (docs/trunk-conflicts.md).
+      # The groups are each running stage's, and the trunk fetch's (architecture.md, Checking against the trunk).
       def self.active_run(db, (id, commit_hash, trigger_pid, pid, slot_lock, fetch_pgid))
         groups = db.execute("SELECT pid FROM stage_jobs WHERE pipeline_run_id = ? AND #{ACTIVE} AND pid IS NOT NULL",
                             [id]).flatten

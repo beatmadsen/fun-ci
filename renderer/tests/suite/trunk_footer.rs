@@ -1,5 +1,5 @@
 //! The footer says, once and dim, which projects' trunks are stale
-//! (docs/trunk-conflicts.md, The console).
+//! (design.md, The trunk).
 
 use fun_ci_renderer::animation::Library;
 use fun_ci_renderer::art::output::Depth;

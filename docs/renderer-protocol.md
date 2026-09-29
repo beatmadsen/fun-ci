@@ -99,6 +99,15 @@ The full state to show. Always complete — never a diff.
 - `project` (optional) is the path of the project the run belongs to. The
   renderer shows its basename in a colour chosen by CRC-32 of the basename, so
   a project keeps its colour across restarts.
+- `trunk` (optional) on a run is its branch's standing against the trunk,
+  `{"branch_state": "conflicts", "trunk": "main"}`. Ruby sends it only on the
+  runs whose row shows it: a branch's newest run, when the branch's latest
+  settled check conflicts. The renderer draws `conflicts <trunk>` after the
+  branch.
+- `stale_trunks` (optional) names the projects whose trunk is stale,
+  `[{"project": "/src/app", "since": 1789989200}]`, `since` being the last
+  good fetch (epoch seconds) or null when the last fetch failed. The footer
+  says so once. Ruby leaves it out when no trunk is stale.
 - `runs` is one page: at most `(rows - 16) / 2` runs for the terminal's `rows`
   (a 14-row header, a blank line and the footer; two rows per run), scrolled
   so the run under the cursor is on it. `cursor` indexes into `runs`, and
@@ -118,8 +127,15 @@ Two kinds, both with `run_id`. The renderer chooses the animation.
   the order their stages finished), none once the run has failed, and none for a cancelled
   run (`design.md`, A run's states).
 
-Stage events come before milestone events when both happened since the last
-`board`.
+- A branch started or stopped conflicting with the trunk: `trunk_conflict`,
+  `trunk_clear`, with `run_id` (one such branch's newest run) and `branches`
+  (how many changed). Ruby sends at most one of each a poll, keyed on project
+  and branch, and none when a check couldn't be made. They play a scene from
+  their own pools and, for a conflict, a footer banner; neither changes the
+  resting outcome, the lamp or the streak.
+
+Stage events come before milestone events, and milestone events before trunk
+events, when they happened since the last `board`.
 
 ### `quit`
 `{"t":"quit"}`

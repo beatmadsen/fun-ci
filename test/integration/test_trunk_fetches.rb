@@ -4,7 +4,7 @@ require_relative "../test_helper"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/trunk_fetches"
 
-# How often fun-ci fetches a project's trunk (docs/trunk-conflicts.md, AT-11.13, AT-11.18).
+# How often fun-ci fetches a project's trunk (acceptance-tests.md, AT-11.13, AT-11.18).
 class TestTrunkFetches < Minitest::Test
   include DatabaseTestSetup
 

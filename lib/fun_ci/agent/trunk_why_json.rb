@@ -6,7 +6,7 @@ require_relative "../evidence/caps"
 
 module FunCi
   module Agent
-    # `why REV trunk --json` (docs/trunk-conflicts.md, why REV trunk): the
+    # `why REV trunk --json` (design.md, The trunk): the
     # run's trunk, and the conflict as evidence, capped as a stage's is, or
     # why there is none. Fields once published keep their names.
     module TrunkWhyJson

@@ -1,6 +1,6 @@
 //! A branch that starts conflicting with the trunk, or stops, plays a scene
 //! from its own pool in the header, and a conflict names itself in the footer
-//! (docs/trunk-conflicts.md, The console).
+//! (design.md, The trunk).
 
 use serde_json::{Value, json};
 

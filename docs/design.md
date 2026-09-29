@@ -146,6 +146,34 @@ uncommitted files.
   stage's extractors on a saved output, so a change can be tried without a
   commit. Secrets are masked before anything is kept.
 
+## The trunk
+
+Integrating often is half of continuous integration, so each run also asks how
+its commit stands against the team's trunk (`main`, `master`, `develop`,
+whatever `trunk:` in `.fun-ci/config` names, else the remote's default
+branch). A conflict found within seconds of the commit that caused it is small
+and cheap to resolve.
+
+- A check finds how many commits each side has that the other lacks, and, when
+  both have some, whether merging them conflicts, and in which files. It merges
+  in memory and leaves nothing in the repository.
+- A conflict is not a failure. The code in the commit may be fine; what is late
+  is its integration. It changes no stage, no run status, no streak and no exit
+  code, unless an agent asks with `--trunk`.
+- fun-ci fetches the trunk itself, at most every 5 minutes, into a ref of its
+  own, touching none of the developer's; the first fetch says so, and
+  `trunk_fetch: false` stops it. A trunk fetched over an hour ago, or whose
+  last fetch failed, is stale, and every line that depends on it says so.
+- The console marks a branch whose newest run conflicts: `conflicts main` in
+  bold magenta after its name, the one colour nothing else on the board uses.
+  The marker follows the branch's latest settled check, so it doesn't flicker
+  off while a new commit is being checked. Nothing else about the trunk is on
+  the rows; stale trunks get one dim note in the footer.
+- `status` and `wait` print a trunk line with its age, and for a conflict the
+  files, when and how to integrate (a pull on the trunk branch, a merge
+  elsewhere, never a force push), and `fun-ci why <sha> trunk`, which shows the
+  conflicted regions. `--trunk` makes a conflict exit 6 and waits for the check.
+
 ## A run's states
 
 A stage is `scheduled`, `running`, then `completed`, `failed`, `timed_out` or
@@ -241,6 +269,8 @@ The pools today:
 | fast passed | a lightning strike and a neon tick (`flash`), a very happy YAY (`yay`), a jump to warp speed (`warp`) |
 | passed | fireworks (`success`), a trophy (`celebrate`), dancing leprechauns (`leprechauns`), a sunrise over the hills (`sunrise`) |
 | failed | the explosion (`explosion`) and shattering glass (`shatter`), both of which shake |
+| a branch starts conflicting with the trunk | two magenta strands braid into a knot (`tangle`) |
+| a branch stops conflicting | the knot loosens and the strands draw apart (`untie`) |
 | quiet (nothing for five minutes) | the starry night (`idle`), an aurora (`aurora`), fireflies (`fireflies`), a fire in a medieval stone hearth with a storm at the window (`fireplace`), a castaway's island by moonlight (`island`), snow falling on a pine forest (`snowfall`) |
 
 Lint's scenes are teal and move across or settle, build's are amber and stack, turn or strike,
@@ -268,6 +298,7 @@ digging into internals: the cause obvious, the next step clear.
 | The commit or branch is missing | `fun-ci: commit hash and branch name are required.` and the usage | non-zero |
 | A newer commit on the same branch | `Cancelled stale pipeline for <old>. Starting fresh for <new>.` | carries on |
 | A pushed commit's fast verdict is a failure | The run's stages, then `fast failed:` and the failures it reported or its last lines; the push stops | non-zero |
+| The trunk can't be fetched | The check goes ahead against the trunk fun-ci has, marked STALE with the fetch's error | the pipeline's own |
 | The database is busy | fun-ci waits for it, for up to 5 seconds; if it stays busy, the stages run on unrecorded and fun-ci says once to trigger again | the pipeline's own |
 | The database can't be written (a full disk, a read-only file) | The stages run on unrecorded, and fun-ci says once where the database is and to check the disk | the pipeline's own |
 

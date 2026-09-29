@@ -5,8 +5,8 @@ require_relative "../trunk/checker"
 
 module FunCi
   module Pipeline
-    # A run's check against the trunk (docs/trunk-conflicts.md, Inside the
-    # trigger). It begins before the stages, where the database may be used
+    # A run's check against the trunk (architecture.md, Checking against the
+    # trunk). It begins before the stages, where the database may be used
     # (claiming a fetch, recording its process, reading the other branches'
     # heads); finishes in a thread beside them, which touches no database,
     # since the slow suite's fork closes the recorder, checking the other

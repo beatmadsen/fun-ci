@@ -3,7 +3,7 @@
 require_relative "../../test_helper"
 require "fun_ci/agent/trunk_why_json"
 
-# `why REV trunk --json` (docs/trunk-conflicts.md, why REV trunk).
+# `why REV trunk --json` (design.md, The trunk).
 class TestTrunkWhyJson < Minitest::Test
   REPORT = FunCi::Agent::RunReport
   EXCERPT = { title: "a.rb", location: "lines 1-9", lines: ["x"], extractor: "merge-tree" }.freeze

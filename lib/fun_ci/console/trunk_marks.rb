@@ -6,8 +6,8 @@ require_relative "../trunk/shown"
 
 module FunCi
   module Console
-    # What the console shows of the trunk (docs/trunk-conflicts.md, The
-    # console). The standing belongs to a branch, not a run: it is shown on
+    # What the console shows of the trunk (design.md, The
+    # trunk). The standing belongs to a branch, not a run: it is shown on
     # the branch's newest run and is the branch's latest settled check, so a
     # new run still checking, or whose check couldn't be made, keeps it.
     class TrunkMarks

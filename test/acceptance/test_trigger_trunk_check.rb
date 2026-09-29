@@ -4,7 +4,7 @@ require_relative "trigger_cli_shared"
 require_relative "../support/fake_trunk"
 require "fun_ci/persistence/trunk_checks"
 
-# Each run checks its commit against the trunk (docs/trunk-conflicts.md, AT-11.21, AT-11.22).
+# Each run checks its commit against the trunk (acceptance-tests.md, AT-11.21, AT-11.22).
 class TestTriggerTrunkCheck < Minitest::Test
   CONFLICTS = FunCi::Trunk::Merge.conflicts(["lib/cart.rb"], ahead: 3, behind: 4)
 

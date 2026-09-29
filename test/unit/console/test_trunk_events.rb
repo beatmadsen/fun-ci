@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require "fun_ci/console/trunk_events"
 
 # The header's events for branches that start or stop conflicting with the
-# trunk (docs/trunk-conflicts.md, The console; AT-11.44, AT-11.45).
+# trunk (acceptance-tests.md, AT-11.44, AT-11.45).
 class TestConsoleTrunkEvents < Minitest::Test
   def setup = @events = FunCi::Console::TrunkEvents.new
 

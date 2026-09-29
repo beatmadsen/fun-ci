@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Each run checks whether its commit would merge cleanly with the trunk:
+  `trunk:` in `.fun-ci/config`, or else the remote's default branch.
+  `status` and `wait` print where the commit stands, with its age; for a
+  conflict, the files and when and how to integrate. A conflict is not a
+  failure and changes no exit code, unless you ask with `--trunk`, which exits
+  6 for a run that passed but conflicts and waits for the check.
+  `fun-ci why REV trunk` prints each conflicted region. `status --json`,
+  `runs` and `events` carry the check; `fun-ci check` names the trunk.
+- fun-ci fetches the trunk itself, at most every five minutes, into
+  `refs/fun-ci/trunk/`, touching none of your refs, and says so the first time.
+  `trunk_fetch: false` stops it, and `trunk: none` turns the check off.
+- The console marks a branch that conflicts with the trunk, `conflicts main`
+  in magenta, and plays a knot tying, and later untying, in the header.
+- `fun-ci --help` lists `--raw`, which it left out.
+
 ## [2.0.2] - 2026-09-29
 
 ### Fixed

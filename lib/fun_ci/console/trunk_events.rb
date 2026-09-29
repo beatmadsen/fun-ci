@@ -2,8 +2,8 @@
 
 module FunCi
   module Console
-    # The header's events for the trunk (docs/trunk-conflicts.md, The
-    # console): trunk_conflict when a branch's standing becomes conflicts,
+    # The header's events for the trunk (design.md, The
+    # trunk): trunk_conflict when a branch's standing becomes conflicts,
     # trunk_clear when it moves from conflicts to another settled standing,
     # each at most once a poll however many branches changed, naming one
     # branch's newest run and how many. A branch keeps its standing through

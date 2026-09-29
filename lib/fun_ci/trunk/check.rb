@@ -49,7 +49,7 @@ module FunCi
       end
     end
 
-    # One check of a commit against one trunk tip (docs/trunk-conflicts.md);
+    # One check of a commit against one trunk tip (architecture.md, Checking against the trunk);
     # the tip is nil when there was none to check against.
     Check = Data.define(:commit, :tip, :merge)
   end

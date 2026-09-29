@@ -3,7 +3,7 @@
 require_relative "../../test_helper"
 require "fun_ci/trunk/resolver"
 
-# Which ref is the trunk (docs/trunk-conflicts.md, Which ref is the trunk; AT-11.9).
+# Which ref is the trunk (acceptance-tests.md, AT-11.9).
 class TestTrunkResolver < Minitest::Test
   REF = FunCi::Trunk::Ref
   REFS = FunCi::Trunk::Refs

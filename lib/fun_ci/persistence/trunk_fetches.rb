@@ -7,7 +7,7 @@ require_relative "../trunk/check"
 module FunCi
   module Persistence
     # When fun-ci last fetched each project's trunk, and how that went
-    # (docs/trunk-conflicts.md, Keeping the trunk fresh). A fetch is claimed
+    # (architecture.md, Checking against the trunk). A fetch is claimed
     # in one statement, so of two processes claiming at once only one
     # fetches; after failures the interval doubles, up to an hour.
     class TrunkFetches

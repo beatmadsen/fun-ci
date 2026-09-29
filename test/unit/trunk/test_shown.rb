@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/trunk_kit"
 require "fun_ci/trunk/shown"
 
-# What a run's check against the trunk is shown as (docs/trunk-conflicts.md, What it answers).
+# What a run's check against the trunk is shown as (architecture.md, Checking against the trunk).
 class TestTrunkShown < Minitest::Test
   include TrunkKit
 

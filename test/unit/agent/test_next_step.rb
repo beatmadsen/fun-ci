@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/trunk_kit"
 require "fun_ci/agent/next_step"
 
-# What an agent is told to do about a conflict with the trunk (docs/trunk-conflicts.md, status and wait).
+# What an agent is told to do about a conflict with the trunk (design.md, The trunk).
 class TestNextStep < Minitest::Test
   include TrunkKit
 

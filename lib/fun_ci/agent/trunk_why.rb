@@ -7,7 +7,7 @@ require_relative "../trunk/regions"
 module FunCi
   module Agent
     # A conflict with the trunk, merged again, as the evidence `why REV trunk`
-    # prints (docs/trunk-conflicts.md, why REV trunk): git's messages, then
+    # prints (design.md, The trunk): git's messages, then
     # each conflicted region under its file, its lines numbered as the file's.
     module TrunkWhy
       EXTRACTOR = "merge-tree"

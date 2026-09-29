@@ -1,6 +1,6 @@
 //! Two strands of light, one from each edge, that wind around each other
 //! where they meet: loosely while they are apart, into a tight knot as
-//! `tight` goes to one. The trunk's scenes draw them (docs/trunk-conflicts.md).
+//! `tight` goes to one. The trunk's scenes draw them (architecture.md, Checking against the trunk).
 
 use crate::art::canvas::Canvas;
 use crate::art::math::Portable;

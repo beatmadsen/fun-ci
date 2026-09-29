@@ -5,7 +5,8 @@ require_relative "../../support/trunk_repos"
 require "fun_ci/trunk/local"
 require "fun_ci/persistence/trunk_recording"
 
-# The trunk as the project's git has it now, read and checked without fetching (docs/trunk-conflicts.md).
+# The trunk as the project's git has it now, read and checked without fetching
+# (architecture.md, Checking against the trunk).
 class TestTrunkLocal < Minitest::Test
   ORIGIN_MAIN = FunCi::Trunk::Tip.new(remote: "origin", branch: "main", sha: "old", seen_at: Time.now)
   # Fetches that would let a fetch go, so a check that fetched would see the teammate's commit.

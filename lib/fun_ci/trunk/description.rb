@@ -4,8 +4,8 @@ require_relative "resolver"
 
 module FunCi
   module Trunk
-    # What `fun-ci check` says about the trunk (docs/trunk-conflicts.md, fun-ci
-    # check): which ref it is, why that one, and how fun-ci keeps it fresh,
+    # What `fun-ci check` says about the trunk (design.md, The
+    # trunk): which ref it is, why that one, and how fun-ci keeps it fresh,
     # so the network access never comes as a surprise; or a warning, which
     # never fails the check, when there is none.
     module Description

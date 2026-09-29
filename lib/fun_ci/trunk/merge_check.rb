@@ -4,7 +4,7 @@ require_relative "check"
 
 module FunCi
   module Trunk
-    # What merging a commit with a trunk tip would do (docs/trunk-conflicts.md,
+    # What merging a commit with a trunk tip would do (architecture.md, Checking against the trunk,
     # How the check works), from what git answers: the commits each side has
     # that the other lacks, then, when both have some, a merge in memory.
     class MergeCheck

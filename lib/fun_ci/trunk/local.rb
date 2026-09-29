@@ -8,7 +8,7 @@ require_relative "tip_reader"
 module FunCi
   module Trunk
     # The trunk as the project's git has it now, for the agent commands
-    # (docs/trunk-conflicts.md, When it runs, and when it runs again): where
+    # (architecture.md, Checking against the trunk): where
     # its ref points, read the way a check reads it, and a check against it
     # that never fetches, since a command an agent runs must not wait on the network.
     class Local

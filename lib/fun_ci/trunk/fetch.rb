@@ -9,7 +9,7 @@ module FunCi
     # How a fetch of the trunk went: nil error when it fetched.
     Fetched = Data.define(:error)
 
-    # Fetches the trunk into a ref of fun-ci's own (docs/trunk-conflicts.md,
+    # Fetches the trunk into a ref of fun-ci's own (architecture.md, Checking against the trunk,
     # Keeping the trunk fresh). An empty refmap keeps git from moving the
     # developer's remote-tracking ref too, and nothing may ask them anything:
     # ssh runs in batch mode unless they have an ssh command of their own.

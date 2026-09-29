@@ -3,7 +3,7 @@
 require_relative "../../test_helper"
 require "fun_ci/trunk/description"
 
-# What `fun-ci check` says about the trunk (docs/trunk-conflicts.md, fun-ci check).
+# What `fun-ci check` says about the trunk (design.md, The trunk).
 class TestTrunkDescription < Minitest::Test
   REFS = FunCi::Trunk::Refs
   ORIGIN = REFS.new(remotes: ["origin"], branches: %w[origin/main origin/develop], heads: { "origin" => "main" })

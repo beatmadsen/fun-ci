@@ -50,7 +50,7 @@ module FunCi
         db.execute("UPDATE pipeline_runs SET waited_at = ? WHERE id = ?", [at, id])
       end
 
-      # When the run began checking its commit against the trunk (docs/trunk-conflicts.md).
+      # When the run began checking its commit against the trunk (architecture.md, Checking against the trunk).
       def self.trunk_started(db, id, at)
         db.execute("UPDATE pipeline_runs SET trunk_started_at = ? WHERE id = ?", [at.utc.iso8601, id])
       end

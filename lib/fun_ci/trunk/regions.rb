@@ -2,7 +2,7 @@
 
 module FunCi
   module Trunk
-    # The conflicted regions of a file as a merge leaves it (docs/trunk-conflicts.md,
+    # The conflicted regions of a file as a merge leaves it (architecture.md, Checking against the trunk,
     # why REV trunk): each conflict from its <<<<<<< line to its >>>>>>> line,
     # with `around` lines either side, regions that touch joined into one.
     module Regions

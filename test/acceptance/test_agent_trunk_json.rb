@@ -5,7 +5,7 @@ require "json"
 require_relative "agent_client"
 
 # `status --json` and `runs --json` carry how the commit stands against the trunk
-# (docs/trunk-conflicts.md, AT-11.36).
+# (acceptance-tests.md, AT-11.36).
 class TestAgentTrunkJson < Minitest::Test
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
   MERGE = FunCi::Trunk::Merge

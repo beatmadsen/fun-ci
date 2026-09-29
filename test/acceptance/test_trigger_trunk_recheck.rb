@@ -6,7 +6,7 @@ require_relative "../support/trunk_kit"
 require "fun_ci/persistence/trunk_checks"
 
 # A run that finds the trunk moved checks the other branches' newest runs
-# against it too (docs/trunk-conflicts.md, AT-11.25).
+# against it too (acceptance-tests.md, AT-11.25).
 class TestTriggerTrunkRecheck < Minitest::Test
   include TrunkKit
 

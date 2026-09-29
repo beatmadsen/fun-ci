@@ -7,7 +7,7 @@ require_relative "next_step"
 module FunCi
   module Agent
     # How a run's commit stands against the trunk, as `status` and `wait`
-    # print it (docs/trunk-conflicts.md, status and wait).
+    # print it (design.md, The trunk).
     module TrunkText
       # next_step: whether to say how to integrate a conflict; not while a needed stage has failed.
       def self.lines(shown, branch:, next_step:)

@@ -86,6 +86,8 @@ Five minutes after the latest run finished, the header goes quiet: a starry nigh
 |---|---|
 | ![A fire in a stone hearth, with a green lamp in the corner](docs/screenshots/quiet-fireplace.png) | ![A moonlit island with a palm, with a red lamp in the corner](docs/screenshots/quiet-island.png) |
 
+A branch that conflicts with the trunk says so after its name, `conflicts main` in magenta, and the header plays two strands braiding into a knot; when a later commit on the branch merges cleanly, the knot unties. The footer names any project whose trunk fun-ci last fetched over an hour ago, or couldn't fetch.
+
 Keys:
 
 - `j` and `k`, or the arrow keys, move the cursor down and up
@@ -116,6 +118,7 @@ The section `fun-ci init` writes into `AGENTS.md` tells an agent to run that com
 | 3 | Still undecided (`wait --within 30s` gives up at your deadline) |
 | 4 | Superseded by a newer commit on the branch (`wait --follow-branch` moves on to it) |
 | 5 | No run for the commit |
+| 6 | Passed, but conflicts with the trunk (only with `--trunk`) |
 | 64 | Usage error |
 
 A failed stage comes with its evidence. `status` and `wait` end with a digest and the command that shows the rest:
@@ -161,6 +164,27 @@ The whole output: fun-ci why 2330979 fast --raw
 
 `fun-ci runs` lists recent runs one line each, and `fun-ci events --follow` prints each run's events as JSON lines as they happen, for a supervising agent or a status bar.
 
+### Where your commit stands against the trunk
+
+Each run also checks whether its commit would merge cleanly with your trunk: `trunk:` in `.fun-ci/config` if you name one, otherwise your remote's default branch. `status` and `wait` print where it stands, and for a conflict, the files and what to do about it:
+
+```
+$ fun-ci status
+fun-ci: f473fdb "Add shipping to the cart total" on feat/cart
+  lint   passed         0.2s
+  build  passed         0.3s
+  fast   passed         0.1s
+  slow   passed         0.2s (not needed)
+  trunk  conflicts    origin/main 0e15acf, fetched just now, 1 ahead, 1 behind
+    lib/cart.rb
+Conflicts with origin/main in 1 file. When the task is done, integrate: git pull origin main (or git pull --rebase origin main if the branch isn't shared)
+fun-ci why f473fdb trunk
+```
+
+A conflict is not a failure, so that run still exits 0. An agent that should integrate before calling its work done asks with `--trunk`, and gets 6 for a run that passed but conflicts; `fun-ci init` tells agents to. `fun-ci why f473fdb trunk` merges again and prints each conflicted region with the lines around it.
+
+fun-ci fetches the trunk itself, at most every five minutes, into a ref of its own (`refs/fun-ci/trunk/...`), so your `origin/main` and `git status` are left as they were. The first fetch says so. `trunk_fetch: false` in `.fun-ci/config` stops it, `trunk_fetch: 30m` spaces it out, and `trunk: none` turns the check off. A trunk fetched over an hour ago, or whose last fetch failed, is marked STALE wherever it is shown.
+
 ### What fun-ci keeps when a stage fails
 
 With no configuration, fun-ci runs the presets for the tools your project has when a failure shows them. There are presets for the test runners, compilers, linters and type checkers of every stack `fun-ci init` knows, and for JSON logs from logstash-logback-encoder, ECS, pino and structlog; [docs/stacks.md](docs/stacks.md#presets) lists each one with what it picks out and when it runs. Each preset is checked against the recorded output of a real failing run of its tool. `fun-ci check` lists the ones that apply to your project.
@@ -197,9 +221,9 @@ fun-ci install-hooks                            Install post-commit and pre-push
 fun-ci install-hooks post-commit                Install a single hook type
 fun-ci check                                    Verify .fun-ci/ setup
 fun-ci console                                  Watch the runs
-fun-ci status [commit]                          Where a commit's run stands; the verdict is the exit code
+fun-ci status [commit] [--trunk]                Where a commit's run stands; the verdict is the exit code
 fun-ci wait [commit]                            Wait until that verdict is decided, then exit with it
-fun-ci why [commit] [stage]                     Everything kept about why a stage failed
+fun-ci why [commit] [stage|trunk]               Everything kept about why a stage failed, or the conflict with the trunk
 fun-ci runs                                     This project's recent runs, newest first
 fun-ci events [--follow]                        The runs' events as JSON lines
 fun-ci extract <stage> --output <file>          Try a stage's extractors on a saved output

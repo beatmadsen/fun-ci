@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/trunk_kit"
 require "fun_ci/agent/trunk_json"
 
-# The trunk object of `status --json` (docs/trunk-conflicts.md, status --json). Its
+# The trunk object of `status --json` (design.md, The trunk). Its
 # fields are a published contract: once published, each keeps its name.
 class TestTrunkJson < Minitest::Test
   include TrunkKit

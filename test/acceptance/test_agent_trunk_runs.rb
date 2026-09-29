@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require_relative "agent_client"
 
-# `fun-ci runs` marks a run whose commit conflicts with the trunk (docs/trunk-conflicts.md, AT-11.37).
+# `fun-ci runs` marks a run whose commit conflicts with the trunk (acceptance-tests.md, AT-11.37).
 class TestAgentTrunkRuns < Minitest::Test
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
 

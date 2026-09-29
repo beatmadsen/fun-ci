@@ -11,7 +11,7 @@ require_relative "description"
 
 module FunCi
   module Trunk
-    # Checks a commit against the project's trunk (docs/trunk-conflicts.md):
+    # Checks a commit against the project's trunk (architecture.md, Checking against the trunk):
     # the ref `trunk:` names in .fun-ci/config, or the one the repository
     # has; none at all when it says `none`. A check starts where the database
     # may be used (resolving the trunk, claiming a fetch, recording its pid)

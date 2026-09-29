@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require_relative "agent_client"
 
-# An agent that asks with --trunk branches on the trunk too (docs/trunk-conflicts.md, AT-11.32 to AT-11.35).
+# An agent that asks with --trunk branches on the trunk too (acceptance-tests.md, AT-11.32 to AT-11.35).
 class TestAgentTrunkVerdict < Minitest::Test
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
   PASSED = { "lint" => "completed", "build" => "completed", "fast" => "completed" }.freeze

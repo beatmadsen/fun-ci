@@ -4,7 +4,7 @@ require_relative "../test_helper"
 require "json"
 require_relative "agent_client"
 
-# `fun-ci events` reports each check against the trunk (docs/trunk-conflicts.md, AT-11.39).
+# `fun-ci events` reports each check against the trunk (acceptance-tests.md, AT-11.39).
 class TestAgentTrunkEvents < Minitest::Test
   SHA = "aaa1111aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   MERGE = FunCi::Trunk::Merge

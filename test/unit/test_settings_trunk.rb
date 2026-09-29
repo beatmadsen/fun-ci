@@ -4,7 +4,7 @@ require_relative "../test_helper"
 require "fun_ci/setup/settings"
 
 # The trunk settings in .fun-ci/config, none of which ever stops a pipeline
-# (docs/trunk-conflicts.md, Which ref is the trunk; Keeping the trunk fresh).
+# (architecture.md, Checking against the trunk).
 class TestSettingsTrunk < Minitest::Test
   def test_should_name_no_trunk_when_nothing_says_which
     assert_nil settings(nil).trunk

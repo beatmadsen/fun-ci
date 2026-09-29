@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require "fun_ci/trunk/merge_check"
 
 # What merging a commit with a trunk tip would do, from git's answers
-# (docs/trunk-conflicts.md, How the check works).
+# (architecture.md, Checking against the trunk).
 class TestMergeCheck < Minitest::Test
   MERGE = FunCi::Trunk::Merge
   Answer = FunCi::Trunk::MergeCheck::Answer

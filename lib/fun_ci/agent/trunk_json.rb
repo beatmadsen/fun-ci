@@ -4,7 +4,7 @@ require_relative "../trunk/shown"
 
 module FunCi
   module Agent
-    # A run's trunk as the object of `status --json` (docs/trunk-conflicts.md,
+    # A run's trunk as the object of `status --json` (architecture.md, Checking against the trunk,
     # status --json): every field in every state, nil where it doesn't apply.
     # Fields once published keep their names.
     module TrunkJson

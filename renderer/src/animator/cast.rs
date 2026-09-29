@@ -17,7 +17,7 @@ const POOLS: [(&str, &[&str]); 5] = [
 ];
 /// The trunk's events, each with its own scenes: small ones, like lint's and
 /// build's, telling a branch that has started or stopped conflicting with
-/// the trunk (docs/trunk-conflicts.md).
+/// the trunk (architecture.md, Checking against the trunk).
 const TRUNK_POOLS: [(&str, &[&str]); 2] = [("trunk_conflict", &["tangle"]), ("trunk_clear", &["untie"])];
 /// The milestones, as `POOLS` names them.
 pub const MILESTONES: [&str; POOLS.len()] = {

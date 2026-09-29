@@ -28,7 +28,7 @@ module FunCi
         )
       SQL
 
-      # One row per commit and trunk SHA, written once (docs/trunk-conflicts.md, Storage).
+      # One row per commit and trunk SHA, written once (architecture.md, Checking against the trunk).
       TRUNK_CHECKS_TABLE = <<~SQL
         CREATE TABLE IF NOT EXISTS trunk_checks (
           id INTEGER PRIMARY KEY,
@@ -39,7 +39,7 @@ module FunCi
         )
       SQL
 
-      # When fun-ci last fetched each project's trunk (docs/trunk-conflicts.md, Storage).
+      # When fun-ci last fetched each project's trunk (architecture.md, Checking against the trunk).
       TRUNK_FETCHES_TABLE = <<~SQL
         CREATE TABLE IF NOT EXISTS trunk_fetches (
           project_path TEXT PRIMARY KEY, claimed_at INTEGER, fetched_at TEXT, failures INTEGER, error TEXT

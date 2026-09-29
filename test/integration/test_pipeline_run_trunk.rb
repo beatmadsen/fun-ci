@@ -4,7 +4,7 @@ require_relative "../test_helper"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/pipeline_run"
 
-# When a run began checking its commit against the trunk (docs/trunk-conflicts.md, What it answers).
+# When a run began checking its commit against the trunk (architecture.md, Checking against the trunk).
 class TestPipelineRunTrunk < Minitest::Test
   include DatabaseTestSetup
 

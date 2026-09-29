@@ -275,6 +275,66 @@ extractors often enough to be worth a second mechanism (then run them in a
 child Ruby); or if a common stack needs longer than 2 seconds to dump its state
 before the kill.
 
+## Checking against the trunk
+
+Problem: fun-ci said whether a commit was fine on its own, never whether it
+would still be fine merged with everyone else's work. §11 of
+`acceptance-tests.md` checks each run's commit against the trunk
+(`lib/fun_ci/trunk/`); what the developer and agents see is in `design.md`
+(The trunk).
+
+**Decisions:**
+
+- **A check is a fact about the run's commit, not a stage.** A fifth stage
+  would put a pass or fail into the run's status and the verdict, so a
+  conflict someone else caused would fail the run and break the streak.
+  *Revisit if* teams ask to hold commits to "integrates cleanly" as strictly
+  as to the fast suite; then `--trunk` becomes a level of `--need`.
+- **Checks are rows written once per commit and trunk SHA**
+  (`trunk_checks`). A check never goes stale for its pair, only when the
+  trunk moves, so a new SHA makes a new row, and two processes checking the
+  same pair write the same row once. What is shown (`in trunk`, `up to date`,
+  `checking`, stale) is derived when read, never stored.
+- **`git merge-tree --write-tree`, in memory, in a scratch object
+  directory.** It needs no worktree slot, took about 10 ms here, and with
+  `GIT_OBJECT_DIRECTORY` pointed at a scratch directory that borrows the
+  repository's objects, leaves nothing behind (it writes the merged tree and
+  conflicted blobs otherwise). It runs through `ProcessRunner`, held to 5 s
+  and killed with its process group past that.
+- **A merge of the tips, not a replay of each commit.** A rebase can stop on
+  an intermediate commit where the merge is clean, and the reverse;
+  `git replay` would do it in memory but is marked experimental.
+  *Revisit if* developers hit rebase conflicts the check called clean.
+- **fun-ci fetches the trunk into `refs/fun-ci/trunk/<remote>/<branch>`,
+  with an empty refmap**, since without `--refmap=` git moves
+  `refs/remotes/<remote>/<branch>` too, which would change what `git status`
+  says and race the developer's own fetch for the ref's lock. Nothing may
+  prompt: batch-mode ssh (unless the developer has an ssh command of their
+  own), no askpass, a 20 s deadline. The interval is claimed in one SQL
+  statement, doubling after failures up to an hour.
+- **Only the main thread touches the database.** The trigger begins the check
+  before the stages (resolving the trunk, claiming the fetch, starting it
+  behind `ProcessRunner`'s gate so its group is recorded for a cancel),
+  finishes it in a thread (waiting for the fetch, merging, checking the other
+  branches' newest runs when the tip moved), and records it after the stages
+  through whichever recorder it holds then, since the slow suite's fork
+  closes the one it started with.
+- **The notice of a first fetch is worked out before the fork**, by
+  `PipelineForker`, because the post-commit hook's run is in the background
+  and what it prints goes nowhere.
+- **Reading never checks.** `status`, `runs`, `events` and the console read
+  the recorded checks and say when the trunk has moved since; only `--trunk`
+  checks again, and never fetches, so a command an agent runs never waits on
+  the network.
+- **The console's marker belongs to the branch.** Ruby sends it on a
+  branch's newest run from the branch's latest settled check, and sends
+  `trunk_conflict` and `trunk_clear` at most once a poll; the renderer
+  decides nothing about which rows qualify.
+
+*Revisit if* the trunk moves often while nobody commits, leaving the board
+stale; a console timer that fetches and checks would fix that, and would be
+the console's first git call.
+
 ## Quality standards (from intent-record)
 
 - `rake` (default) is the gate: the Ruby tests, the Rust tests, the binary

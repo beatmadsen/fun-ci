@@ -6,7 +6,7 @@ require_relative "../../support/body_script"
 require "fun_ci/trunk/fetch"
 
 # fun-ci fetches the trunk into a ref of its own, touching none of the
-# developer's, and never waits on a prompt (docs/trunk-conflicts.md, AT-11.11, 11.12, 11.16, 11.17).
+# developer's, and never waits on a prompt (acceptance-tests.md, AT-11.11, 11.12, 11.16, 11.17).
 class TestTrunkFetch < Minitest::Test
   ORIGIN_MAIN = FunCi::Trunk::Ref.new(remote: "origin", branch: "main")
 

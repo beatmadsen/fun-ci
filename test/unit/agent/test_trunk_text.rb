@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/trunk_kit"
 require "fun_ci/agent/trunk_text"
 
-# The trunk line `status` and `wait` print (docs/trunk-conflicts.md, status and wait).
+# The trunk line `status` and `wait` print (design.md, The trunk).
 class TestTrunkText < Minitest::Test
   include TrunkKit
 

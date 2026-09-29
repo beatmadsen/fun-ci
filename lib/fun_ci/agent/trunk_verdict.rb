@@ -2,7 +2,7 @@
 
 module FunCi
   module Agent
-    # The verdict for an agent that asks with --trunk (docs/trunk-conflicts.md,
+    # The verdict for an agent that asks with --trunk (architecture.md, Checking against the trunk,
     # status and wait): a failure stays one whatever the trunk says; a passed
     # run is undecided while its check is going and in conflict when it
     # conflicts. A trunk that couldn't be checked leaves the verdict alone:

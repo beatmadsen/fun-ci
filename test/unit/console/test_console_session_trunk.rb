@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/console_fakes"
 require "fun_ci/console/console_session"
 
-# The console's board and events for the trunk (docs/trunk-conflicts.md, The console; AT-11.42 to AT-11.46).
+# The console's board and events for the trunk (acceptance-tests.md, AT-11.42 to AT-11.46).
 class TestConsoleSessionTrunk < Minitest::Test
   CONFLICTS = { branch_state: "conflicts", trunk: "main" }.freeze
 

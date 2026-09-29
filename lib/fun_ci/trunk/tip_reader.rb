@@ -8,7 +8,7 @@ require_relative "../persistence/trunk_fetches"
 module FunCi
   module Trunk
     # The tip of the trunk a check reads, and when it counts as seen
-    # (docs/trunk-conflicts.md, Keeping the trunk fresh): fun-ci's own ref once
+    # (architecture.md, Checking against the trunk): fun-ci's own ref once
     # it has fetched one, seen when it was last fetched; else the developer's
     # ref, seen when it last moved.
     class TipReader

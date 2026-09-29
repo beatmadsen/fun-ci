@@ -3,7 +3,7 @@
 require_relative "../../test_helper"
 require "fun_ci/agent/events"
 
-# Checks against the trunk as events (docs/trunk-conflicts.md, events).
+# Checks against the trunk as events (design.md, The trunk).
 class TestTrunkEvents < Minitest::Test
   EVENTS = FunCi::Agent::Events
   CONFLICTS = { state: "conflicts", sha: "fff" }.freeze

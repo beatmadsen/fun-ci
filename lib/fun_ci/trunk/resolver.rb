@@ -14,7 +14,7 @@ module FunCi
     # default branch, where git knows it.
     Refs = Data.define(:remotes, :branches, :heads)
 
-    # Which ref is the trunk (docs/trunk-conflicts.md, Which ref is the trunk):
+    # Which ref is the trunk (architecture.md, Checking against the trunk):
     # the one configured, else the remote's default branch, else the first
     # usual trunk name on the remote, else locally; nil when none exists.
     module Resolver

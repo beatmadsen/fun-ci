@@ -7,7 +7,7 @@ require "fun_ci/persistence/database"
 require "fun_ci/persistence/trunk_fetches"
 
 # What the post-commit hook says before a project's first fetch of its trunk
-# (docs/trunk-conflicts.md, AT-11.20): the run itself is in the background,
+# (acceptance-tests.md, AT-11.20): the run itself is in the background,
 # where nothing it prints is seen.
 class TestFirstFetch < Minitest::Test
   def setup

@@ -5,7 +5,7 @@ require_relative "../../support/trunk_kit"
 require "fun_ci/agent/trunk_verdict"
 require "fun_ci/trunk/shown"
 
-# What a run means for an agent that asks with --trunk (docs/trunk-conflicts.md, status and wait).
+# What a run means for an agent that asks with --trunk (design.md, The trunk).
 class TestTrunkVerdict < Minitest::Test
   include TrunkKit
 

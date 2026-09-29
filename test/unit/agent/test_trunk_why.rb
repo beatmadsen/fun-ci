@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/trunk_kit"
 require "fun_ci/agent/trunk_why"
 
-# A conflict with the trunk as evidence `why REV trunk` prints (docs/trunk-conflicts.md, why REV trunk).
+# A conflict with the trunk as evidence `why REV trunk` prints (design.md, The trunk).
 class TestTrunkWhy < Minitest::Test
   include TrunkKit
 

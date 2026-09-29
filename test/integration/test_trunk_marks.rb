@@ -8,7 +8,7 @@ require "fun_ci/persistence/pipeline_run"
 require "fun_ci/persistence/trunk_checks"
 require "fun_ci/persistence/trunk_fetches"
 
-# What the console marks of the trunk (docs/trunk-conflicts.md, The console): a
+# What the console marks of the trunk (design.md, The trunk): a
 # branch's standing on its newest run, and the projects whose trunk is stale.
 class TestTrunkMarks < Minitest::Test
   include DatabaseTestSetup

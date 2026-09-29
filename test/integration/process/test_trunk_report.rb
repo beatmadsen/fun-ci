@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/trunk_repos"
 require "fun_ci/setup/trunk_report"
 
-# `fun-ci check` describes the trunk a real clone has (docs/trunk-conflicts.md, AT-11.41).
+# `fun-ci check` describes the trunk a real clone has (acceptance-tests.md, AT-11.41).
 class TestTrunkReport < Minitest::Test
   def setup = @repos = TrunkRepos.create
   def teardown = @repos.remove

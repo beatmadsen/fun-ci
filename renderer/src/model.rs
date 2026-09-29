@@ -13,7 +13,7 @@ pub struct Board {
     pub view: View,
     #[serde(default)]
     pub runs: Vec<Run>,
-    /// The projects whose trunk is stale, for the footer (docs/trunk-conflicts.md).
+    /// The projects whose trunk is stale, for the footer (architecture.md, Checking against the trunk).
     #[serde(default)]
     pub stale_trunks: Vec<StaleTrunk>,
 }
@@ -52,7 +52,7 @@ pub struct Run {
     pub trunk: Option<Trunk>,
 }
 
-/// A branch's standing against the trunk (docs/trunk-conflicts.md): Ruby
+/// A branch's standing against the trunk (architecture.md, Checking against the trunk): Ruby
 /// sends it on a branch's newest run when it conflicts, naming the trunk.
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
 pub struct Trunk {

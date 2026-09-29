@@ -6,7 +6,7 @@ require_relative "trunk_fetches"
 
 module FunCi
   module Persistence
-    # What a run records about the trunk (docs/trunk-conflicts.md), under the
+    # What a run records about the trunk (architecture.md, Checking against the trunk), under the
     # run's project. Expects @db and @pipeline_run_id, and #tolerating.
     module TrunkRecording
       # A fetch that never happens, for a run whose project can't be read.

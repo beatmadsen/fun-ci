@@ -5,7 +5,7 @@ require "json"
 require_relative "agent_client"
 
 # `fun-ci why REV trunk` shows the conflict, merged again on demand
-# (docs/trunk-conflicts.md, AT-11.38).
+# (acceptance-tests.md, AT-11.38).
 class TestAgentWhyTrunk < Minitest::Test
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
   CART = "class Cart\n  def total\n    subtotal +\n<<<<<<< 3f9c2ab\n    shipping\n=======\n    tax\n" \

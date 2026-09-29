@@ -9,7 +9,7 @@ require_relative "resolver"
 module FunCi
   module Trunk
     # What to say before a project's first fetch of its trunk, where the
-    # developer sees it (docs/trunk-conflicts.md, Keeping the trunk fresh):
+    # developer sees it (architecture.md, Checking against the trunk):
     # the post-commit hook's run is in the background, and what it prints is not.
     module FirstFetch
       # Nil unless the project fetches a remote trunk and never has yet.

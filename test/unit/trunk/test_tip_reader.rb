@@ -4,7 +4,7 @@ require_relative "../../test_helper"
 require "fun_ci/trunk/tip_reader"
 
 # Which tip of the trunk a check reads, and when it counts as seen
-# (docs/trunk-conflicts.md, Keeping the trunk fresh).
+# (architecture.md, Checking against the trunk).
 class TestTipReader < Minitest::Test
   NOW = Time.utc(2026, 9, 29, 10)
   MOVED = NOW - 3600

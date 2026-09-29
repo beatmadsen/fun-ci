@@ -730,3 +730,162 @@ tool's own convention marks slow, and the slow suite with only those. The
 first half is a policy test in the gate; the second needs Docker and the
 network, so a script checks it weekly beside the presets
 (`script/check_init_templates.rb`).
+
+---
+
+## 11. Checking each commit against the trunk
+
+Each run also finds how its commit stands against the team's trunk, so a
+conflict with everyone else's work shows within seconds of the commit that
+caused it (`design.md`, The trunk; `architecture.md`, Checking against the
+trunk). A conflict is not a failure: it changes no stage, no run status, no
+streak and no exit code unless an agent asks with `--trunk`. "Process" marks
+the tests in `test/integration/process/`, in a temporary clone whose remote is
+a bare repository in the same temp root; the rest use a fake trunk and run no git.
+
+### 11.1 A clean merge is recorded with the commits each side lacks (process)
+**Given** a branch and the remote's trunk that both moved on, on different lines
+**When** the commit is checked
+**Then** the check records `clean`, one ahead and one behind.
+*Bites:* nothing looked at the trunk before.
+
+### 11.2 A conflict is recorded with its files (process)
+**Given** the same, on the same lines
+**Then** the check records `conflicts` and the file.
+
+### 11.3 Nothing to merge is `up to date` or `in trunk`
+**Given** a check with none behind, or none ahead
+**Then** it shows `up to date`, or `in trunk`.
+
+### 11.4 A trunk with no shared history is unknown, and says what to do (process)
+**Then** the reason names `trunk:` in `.fun-ci/config`.
+
+### 11.5 A merge over its budget is stopped
+**Given** a merge that runs past 5 s
+**Then** it is killed with its process group and shown `unknown`, naming `trunk: none`.
+
+### 11.6 A git that can't merge in memory is named
+**Given** a git without `merge-tree --write-tree`
+**Then** the check is `unknown`, naming 2.38 and the version installed.
+
+### 11.7 The check leaves nothing in the repository (process)
+**Then** `git count-objects` is unchanged and no ref outside `refs/fun-ci/` moved.
+
+### 11.8 `trunk: none` checks nothing
+**Then** no check is made and no trunk line is printed.
+
+### 11.9 The trunk is the one configured, else the remote's, else a usual name
+**Given** refs with `trunk:`, a remote's default branch, a usual name on the remote, or only local branches
+**Then** the trunk is picked in that order; with none, `unknown` naming `trunk:`.
+
+### 11.10 Real refs resolve the same way (process)
+**Then** a clone's `origin/HEAD` and a local `develop` without a remote are found.
+
+### 11.11 A run fetches the trunk into fun-ci's own ref (process)
+**Given** a remote whose trunk has a commit the clone lacks
+**Then** `refs/fun-ci/trunk/origin/main` is that commit, and the check reads it.
+
+### 11.12 The fetch touches none of the developer's refs (process)
+**Then** `refs/remotes/origin/main` is unchanged and there is no `FETCH_HEAD`.
+*Bites:* without `--refmap=` git moves `refs/remotes/origin/main` too.
+
+### 11.13 A second run within the interval doesn't fetch
+**Then** the interval, 5 minutes by default (`trunk_fetch:`), holds it back.
+
+### 11.14 Two runs at once fetch once
+**Then** the interval is claimed in one statement, and the loser doesn't fetch.
+
+### 11.15 `trunk_fetch: false` fetches nothing
+**Then** the check reads the remote-tracking ref, as of when it last moved.
+
+### 11.16 A fetch that fails is recorded and fails nothing (process)
+**Then** its error is kept, and the stages run and are recorded as they would be.
+
+### 11.17 A fetch that never answers is stopped at its deadline (process)
+**Then** its process group is killed and `no answer within 20 s` is kept.
+
+### 11.18 After a failed fetch the next waits longer
+**Then** the interval doubles after each failure, up to an hour.
+
+### 11.19 Cancelling a run kills its fetch
+**Then** the fetch's process group is among the run's groups a cancel kills.
+
+### 11.20 A project's first fetch is announced where it is seen
+**Given** a project that fetches a remote trunk and never has
+**When** the post-commit hook starts a run
+**Then** after the line naming the verdict command comes what is fetched, how
+often, and `trunk_fetch: false` to stop it.
+
+### 11.21 A conflict leaves a passing run passed
+**Then** the run is `completed`, and counts towards the streak.
+
+### 11.22 A run whose lint fails still records its check
+
+### 11.23 A check that spans the slow suite's fork is recorded once (process)
+**Then** it is recorded through the recorder the run holds after the fork, and
+nothing is written to stderr.
+
+### 11.24 A check that never finished shows as unknown
+**Given** a run that began a check and recorded none by the fetch deadline plus the merge budget
+**Then** it shows `unknown`, "the check never finished".
+
+### 11.25 A run that finds the trunk moved checks the other branches
+**Then** each other branch's newest checked run is checked against the new tip;
+a branch never checked is left alone.
+
+### 11.26 `--trunk` checks again when the trunk has moved
+**Then** `status --trunk` checks the commit against the trunk as it is now,
+without fetching, and keeps the check; `status` without it says the trunk has
+moved and checks nothing.
+
+### 11.27 Two processes recording the same check keep one row
+
+### 11.28 `status` prints the trunk line with its age, STALE past an hour or after a failed fetch
+
+### 11.29 A conflict says when and how to integrate
+**Then** the files, then a next step built from the resolved trunk: `git pull
+--rebase` on the trunk branch, `git pull` elsewhere (rebase offered for an
+unshared branch), `git merge` for a local trunk, and `fun-ci why <sha> trunk`.
+
+### 11.30 A failed stage comes first
+**Then** the digest precedes the trunk line, which then gives no next step.
+
+### 11.31 A check still running prints no line without `--trunk`
+
+### 11.32 to 11.35 `--trunk`
+**Then** `status --trunk` exits 6 for a passed run that conflicts, 1 for a
+failed one, the verdict alone when the trunk is unknown, and 3 while the check
+runs; `wait --trunk` returns once it has finished.
+
+### 11.36 `status --json` and `runs --json` carry the trunk object
+**Then** `state`, `ref`, `sha`, `as_of`, `stale`, `fetch` (`ok`, `failed` or
+`none`), `fetch_error`, `ahead`, `behind`, `files`, `reason`, `moved_to`;
+`null` for a run that began no check; `schema` still 1.
+
+### 11.37 `runs` marks a conflict before the subject
+
+### 11.38 `why REV trunk` shows the conflicted regions
+**Then** git's merge messages and each region with three lines around it,
+merged again on demand; `--json` the same, capped as a stage's evidence.
+
+### 11.39 `events` prints `trunk_checked`, and `--only failures` leaves it out
+
+### 11.40 `init` tells agents to run `wait --need all --trunk` before calling work done
+
+### 11.41 `check` names the trunk, why that one, and how it is fetched
+**Then** with none it warns, naming `trunk:`, and exits as it would without the warning.
+
+### 11.42 to 11.46 The board
+**Then** a branch's newest run carries its standing, its latest settled check,
+so a new run still checking or unknown keeps it; only a conflict is sent;
+`trunk_conflict` and `trunk_clear` come at most once each a poll, keyed on
+project and branch, and none for an unknown; the board names projects whose
+trunk is stale.
+
+### 11.47 A contract fixture holds the trunk conversation on both sides
+
+### 11.48 The renderer draws the marker, the stale note and the two scenes
+**Then** `conflicts <trunk>` in bold magenta after the branch, before the
+stages, which effects still land on; a dim `trunk stale:` note in the footer;
+a scene from each trunk pool and a fading conflict banner, without changing the
+resting outcome, the lamp or the streak.

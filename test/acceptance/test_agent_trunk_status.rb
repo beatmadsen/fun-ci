@@ -3,7 +3,7 @@
 require_relative "../test_helper"
 require_relative "agent_client"
 
-# `fun-ci status` says how the commit stands against the trunk (docs/trunk-conflicts.md, AT-11.28).
+# `fun-ci status` says how the commit stands against the trunk (acceptance-tests.md, AT-11.28).
 class TestAgentTrunkStatus < Minitest::Test
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
   MERGE = FunCi::Trunk::Merge
