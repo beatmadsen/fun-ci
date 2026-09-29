@@ -101,9 +101,9 @@ impl Layout {
         self.project_column() + if self.project > 0 { self.project + GAP } else { 0 }
     }
 
-    /// Every column but the branch's, and the margin.
+    /// The columns a candidate layout, its branch still 0 wide, takes with the margin.
     fn fixed(&self) -> usize {
-        self.age_end() - self.branch + MARGIN
+        self.age_end() + MARGIN
     }
 }
 
