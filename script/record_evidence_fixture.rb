@@ -28,11 +28,18 @@ def write_project(files, work)
 end
 
 RUN = "(%<setup>s) >/dev/null 2>&1; { (%<command>s) 2>&1; echo $? > /tmp/status; } | cat > /tmp/output; " \
-      "(%<version>s) > /tmp/version 2>&1; mkdir -p /out; cp /tmp/status /tmp/output /tmp/version /out/"
+      "(%<version>s) > /tmp/version 2>&1; mkdir -p /out; cp /tmp/status /tmp/output /tmp/version /out/; " \
+      "chown -R %<owner>s /work /out"
+
+# The image runs as root; on Linux what it writes into the mounts stays
+# root's unless it is handed back, and the host's user can't delete it.
+def container_script(recipe, owner)
+  format(RUN, setup: recipe.fetch("setup", "true"), command: recipe.fetch("command"),
+              version: recipe.fetch("version"), owner: owner)
+end
 
 def in_container(recipe, work, out)
-  script = format(RUN, setup: recipe.fetch("setup", "true"), command: recipe.fetch("command"),
-                       version: recipe.fetch("version"))
+  script = container_script(recipe, "#{Process.uid}:#{Process.gid}")
   system("docker", "run", "--rm", "-v", "#{work}:/work", "-v", "#{out}:/out", "-w", "/work", recipe.fetch("image"),
          "sh", "-c", script, exception: true)
 end
