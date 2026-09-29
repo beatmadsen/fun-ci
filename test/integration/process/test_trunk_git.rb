@@ -13,6 +13,13 @@ class TestTrunkGit < Minitest::Test
 
   def teardown = @repos.remove
 
+  def conflicting
+    @repos.upstream("shared.txt" => "one\nTWO\nthree\n")
+    sha = @repos.work("shared.txt" => "one\n2\nthree\n")
+    @repos.git(@repos.project, "fetch", "-q")
+    sha
+  end
+
   def test_should_count_the_commits_each_side_has_that_the_other_lacks
     @repos.upstream("a.txt" => "a\n")
     sha = @repos.work("b.txt" => "b\n")
@@ -34,6 +41,28 @@ class TestTrunkGit < Minitest::Test
     @repos.git(@repos.project, "fetch", "-q")
     before = @repos.git(@repos.project, "count-objects")
     @git.merge_tree(sha, "refs/remotes/origin/main")
+
+    assert_equal before, @repos.git(@repos.project, "count-objects")
+  end
+
+  def test_should_give_git_s_messages_about_a_conflict
+    sha = conflicting
+
+    assert_includes @git.explain(sha, "refs/remotes/origin/main").messages,
+                    "CONFLICT (content): Merge conflict in shared.txt"
+  end
+
+  def test_should_give_each_conflicted_file_as_the_merge_leaves_it
+    sha = conflicting
+
+    assert_match(/<<<<<<< .*\n2\n=======\nTWO\n>>>>>>> /,
+                 @git.explain(sha, "refs/remotes/origin/main").files["shared.txt"])
+  end
+
+  def test_should_leave_no_object_behind_when_explaining
+    sha = conflicting
+    before = @repos.git(@repos.project, "count-objects")
+    @git.explain(sha, "refs/remotes/origin/main")
 
     assert_equal before, @repos.git(@repos.project, "count-objects")
   end

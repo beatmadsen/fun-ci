@@ -19,7 +19,8 @@ module FunCi
          *trunk(report, trunk), *footer(report)]
       end
 
-      # Nothing while the check is going: right after a commit it would say nothing useful.
+      # The trunk lines; nothing while the check is going, unless asked about
+      # (right after a commit it would say nothing useful).
       def self.trunk(report, asked)
         return [] if report.trunk.nil? || (report.trunk.state == "checking" && !asked)
 
@@ -36,11 +37,12 @@ module FunCi
 
       def self.footer(report)
         return ["fun-ci why #{report.sha[0, 7]} #{report.deciding}"] if report.deciding
+        return ["fun-ci why #{report.sha[0, 7]} trunk"] if report.trunk&.state == "conflicts"
         return [] unless report.verdict == :superseded && report.superseded_by
 
         ["Superseded by #{report.superseded_by[0, 7]}."]
       end
-      private_class_method :trunk, :stage_line, :footer
+      private_class_method :stage_line, :footer
     end
   end
 end

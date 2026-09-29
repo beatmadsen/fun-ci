@@ -30,13 +30,10 @@ module FunCi
 
       def merged(answer, name, **counts)
         return Merge.clean(**counts) if answer.status.zero?
-        return Merge.conflicts(conflicted(answer.out), **counts) if answer.status == 1
+        return Merge.conflicts(MergeOutput.parse(answer.out).paths, **counts) if answer.status == 1
 
         Merge.unknown(reason(answer, name))
       end
-
-      # The paths between the merged tree's SHA and the blank line before git's messages.
-      def conflicted(out) = out.lines.map(&:chomp).drop(1).take_while { |line| !line.empty? }
 
       def reason(answer, name)
         return "#{name} shares no history with this commit; set trunk: in .fun-ci/config" if unrelated?(answer)

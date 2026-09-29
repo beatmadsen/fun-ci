@@ -56,6 +56,14 @@ class TestStatusText < Minitest::Test
     refute_includes lines(trunk: checking).join("\n"), "trunk"
   end
 
+  def test_should_end_a_conflict_with_the_command_that_shows_it
+    assert_equal "fun-ci why 3f9c2ab trunk", lines(trunk: conflict).last
+  end
+
+  def test_should_end_with_the_failed_stage_s_command_when_a_stage_failed_too
+    assert_equal "fun-ci why 3f9c2ab build", lines(verdict: :failed, trunk: conflict, deciding: "build").last
+  end
+
   def test_should_not_say_how_to_integrate_while_a_needed_stage_has_failed
     refute_includes lines(verdict: :failed, trunk: conflict, deciding: "build").join("\n"), "integrate"
   end

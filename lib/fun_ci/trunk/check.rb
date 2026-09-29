@@ -33,6 +33,22 @@ module FunCi
     # succeeded (nil if none has), and why the last one failed, if it did.
     LastFetch = Data.define(:fetched_at, :error)
 
+    # A conflict with the trunk explained: git's messages about the merge, and
+    # each conflicted file as the merge leaves it, by path.
+    Explained = Data.define(:messages, :files)
+
+    # What merge-tree prints: the merged tree's SHA, the conflicted paths, and
+    # after a blank line git's messages.
+    MergeOutput = Data.define(:tree, :paths, :messages)
+
+    class MergeOutput
+      def self.parse(out)
+        lines = out.lines(chomp: true)
+        paths = lines.drop(1).take_while { |line| !line.empty? }
+        new(tree: lines.first, paths: paths, messages: lines.drop(paths.size + 2).reject(&:empty?))
+      end
+    end
+
     # One check of a commit against one trunk tip (docs/trunk-conflicts.md);
     # the tip is nil when there was none to check against.
     Check = Data.define(:commit, :tip, :merge)

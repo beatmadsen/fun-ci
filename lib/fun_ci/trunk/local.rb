@@ -36,6 +36,14 @@ module FunCi
         pending && checker.finish(pending).check
       end
 
+      # The conflict between the commit and the tip it was checked against, merged
+      # again; nil when either is gone from the repository (a force push, then gc).
+      def explain(sha, tip)
+        return nil unless git.rev(sha) && git.rev(tip.sha)
+
+        git.explain(sha, tip.sha)
+      end
+
       private
 
       def root = @root ||= Git.new(@dir).toplevel || @dir

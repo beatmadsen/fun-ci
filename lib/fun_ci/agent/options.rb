@@ -21,7 +21,8 @@ module FunCi
       FILTERS = %w[failures].freeze
       MULTIPLIERS = { "" => 1, "s" => 1, "m" => 60 }.freeze
 
-      STAGES = %w[lint build fast slow].freeze
+      # What `why` explains: a stage, or the run's conflict with the trunk.
+      STAGES = %w[lint build fast slow trunk].freeze
 
       def self.parse(args, takes:)
         values = DEFAULTS.dup

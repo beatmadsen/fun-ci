@@ -7,7 +7,7 @@ require_relative "trunk_kit"
 class FakeTrunkNow
   include TrunkKit
 
-  attr_accessor :sha, :merge
+  attr_accessor :sha, :merge, :explained
 
   def initialize
     @sha = TRUNK_SHA
@@ -15,6 +15,7 @@ class FakeTrunkNow
   end
 
   def now_at(_tip) = @sha
+  def explain(_commit, _tip) = @explained
   # Nil while `merge` is, as for a project that checks no trunk.
   def check(commit, _fetches) = @merge && trunk_check(commit, @merge, seen_at: Time.now, sha: @sha)
 end

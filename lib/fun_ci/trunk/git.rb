@@ -20,10 +20,14 @@ module FunCi
 
       def counts(commit, trunk) = run("rev-list", "--left-right", "--count", "#{commit}...#{trunk}")
 
-      def merge_tree(commit, trunk)
-        Dir.mktmpdir("fun-ci-merge") do |scratch|
-          env = { "GIT_OBJECT_DIRECTORY" => scratch, "GIT_ALTERNATE_OBJECT_DIRECTORIES" => objects }
-          run("merge-tree", "--write-tree", "--name-only", "--messages", commit, trunk, env: env)
+      def merge_tree(commit, trunk) = scratch { |env| merged(commit, trunk, env) }
+
+      # The merge's messages and each conflicted file as the merge leaves it.
+      def explain(commit, trunk)
+        scratch do |env|
+          output = MergeOutput.parse(merged(commit, trunk, env).out)
+          files = output.paths.to_h { |path| [path, run("cat-file", "-p", "#{output.tree}:#{path}", env: env).out] }
+          Explained.new(messages: output.messages, files: files)
         end
       end
 
@@ -64,6 +68,17 @@ module FunCi
       def head(remote)
         answer = run("symbolic-ref", "--quiet", "refs/remotes/#{remote}/HEAD")
         answer.status.zero? ? answer.out.strip.delete_prefix("refs/remotes/#{remote}/") : nil
+      end
+
+      def merged(commit, trunk, env)
+        run("merge-tree", "--write-tree", "--name-only", "--messages", commit, trunk, env: env)
+      end
+
+      # Yields an environment whose new objects go to a scratch directory that is gone afterwards.
+      def scratch
+        Dir.mktmpdir("fun-ci-merge") do |dir|
+          yield({ "GIT_OBJECT_DIRECTORY" => dir, "GIT_ALTERNATE_OBJECT_DIRECTORIES" => objects })
+        end
       end
 
       def objects = File.expand_path(File.join(run("rev-parse", "--git-common-dir").out.strip, "objects"), @dir)

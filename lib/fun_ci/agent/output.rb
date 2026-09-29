@@ -7,11 +7,14 @@ require_relative "why_json"
 require_relative "status_json"
 require_relative "runs_text"
 require_relative "exit_code"
+require_relative "evidence_text"
+require_relative "trunk_why_json"
 
 module FunCi
   module Agent
     # Prints what an agent command found, as text or, with --json, as JSON.
     class Output
+      NO_CONFLICT = "No conflict with the trunk to explain."
       NO_STAGE = "No stage it needs failed or ran over budget; name one to see it: fun-ci why REV STAGE"
 
       # trunk: whether the agent asked about the trunk (--trunk).
@@ -32,6 +35,14 @@ module FunCi
         return print_lines([StatusText.header(report), NO_STAGE]) unless stage
 
         print_lines(WhyText.lines(report, stage))
+      end
+
+      # The run's conflict with the trunk; document nil when there is none to explain.
+      def why_trunk(report, document)
+        return print_json(TrunkWhyJson.document(report, document)) if @json
+
+        print_lines([StatusText.header(report), *StatusText.trunk(report, true),
+                     *(document ? EvidenceText.lines(document) : ["", NO_CONFLICT])])
       end
 
       # Says the commit has no run, and answers the exit code for that.

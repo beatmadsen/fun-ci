@@ -2,6 +2,7 @@
 
 require_relative "command_support"
 require_relative "output"
+require_relative "trunk_why"
 
 module FunCi
   module Agent
@@ -33,7 +34,17 @@ module FunCi
         return output.unknown(sha) unless report
 
         stage_name = options.stage || report.deciding
+        return why_trunk(report, output) if stage_name == "trunk"
+
         options.raw ? raw(report, stage_name) : output.why(report, stage_name)
+        ExitCode::FOR.fetch(report.verdict)
+      end
+
+      # The conflict merged again; nothing to explain unless the run's commit conflicts.
+      def why_trunk(report, output)
+        trunk = report.trunk
+        tip = trunk&.state == "conflicts" ? trunk.check.tip : nil
+        output.why_trunk(report, tip && TrunkWhy.document(@context.trunk.explain(report.sha, tip), tip))
         ExitCode::FOR.fetch(report.verdict)
       end
 

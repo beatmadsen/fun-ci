@@ -37,6 +37,21 @@ class TestTrunkLocal < Minitest::Test
     assert_equal FunCi::Trunk::Merge.clean(ahead: 1, behind: 0), local.check(sha, NO_FETCHES).merge
   end
 
+  def test_should_explain_a_conflict_with_the_tip_it_was_checked_against
+    @repos.upstream("shared.txt" => "one\nTWO\nthree\n")
+    sha = @repos.work("shared.txt" => "one\n2\nthree\n")
+    @repos.git(@repos.project, "fetch", "-q")
+    tip = ORIGIN_MAIN.with(sha: @repos.git(@repos.project, "rev-parse", "origin/main").strip)
+
+    assert_equal ["shared.txt"], local.explain(sha, tip).files.keys
+  end
+
+  def test_should_explain_nothing_when_the_tip_is_gone
+    sha = @repos.work("b.txt" => "b\n")
+
+    assert_nil local.explain(sha, ORIGIN_MAIN.with(sha: "0" * 40))
+  end
+
   private
 
   def local = FunCi::Trunk::Local.new(@repos.project)
