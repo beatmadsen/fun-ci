@@ -20,6 +20,13 @@ class TestOwnPipeline < Minitest::Test
     assert_empty ProjectRakefile.test_files("test") - ["test/test_helper.rb"] - staged
   end
 
+  # The suites run side by side on what build.sh built (design.md, Stages side
+  # by side), and only slow.sh runs cargo test, whose test targets the build
+  # compiles so that no suite compiles anything.
+  def test_should_compile_the_renderer_s_tests_in_the_build_stage
+    assert_match(/cargo build .*--all-targets/, File.read(File.join(ROOT, ".fun-ci", "build.sh")))
+  end
+
   private
 
   def gate_lanes
