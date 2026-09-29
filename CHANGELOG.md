@@ -178,6 +178,10 @@ before it. See "Upgrading to 2.0" in the README.
   `fun-ci console`, which have done the same job since 1.0.
 
 ### Fixed
+- In a pipeline started in the background, as the post-commit hook starts
+  them (and 1.x's pre-commit hook did), the fast suite waited for the slow
+  suite to finish before it began. It now runs beside it, so the verdict a
+  push waits for comes when the fast suite is done, not the slow one.
 - A commit on a branch cancelled every unfinished run on a branch of that
   name in every project, because all projects share one database. It now
   cancels only its own project's runs.

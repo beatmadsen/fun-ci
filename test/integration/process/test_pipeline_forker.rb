@@ -6,6 +6,7 @@ require_relative "../../support/process_deadline"
 require "fun_ci/pipeline/pipeline_forker"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/pipeline_run"
+require "fun_ci/persistence/stage_job"
 
 # `trigger --background` hands the run to PipelineForker, which starts one
 # only in a project set up for fun-ci, and says whether it did (AT-9.14).
@@ -19,6 +20,7 @@ class TestPipelineForker < Minitest::Test
   end
 
   def teardown
+    release_the_slow_suite
     FileUtils.rm_rf(@dir)
     @project&.remove
   end
@@ -34,18 +36,59 @@ class TestPipelineForker < Minitest::Test
   # four stages passed is recorded completed.
   def test_should_run_and_record_the_pipeline_for_the_commit_in_a_child
     sha = project_passing_every_stage
-    started = Dir.chdir(@project.dir) { forked(sha) }
-    within_deadline { started.join }
+    forked_to_the_end(sha)
 
     assert_equal "completed", recorded_status(sha)
   end
 
+  # The slow suite reads a FIFO the fast suite writes, so it can end only once
+  # the fast suite has run; which of the two is recorded first is theirs to race.
+  def test_should_run_the_fast_suite_while_the_slow_suite_runs_in_the_background
+    sha = project_whose_slow_suite_waits_for_the_fast_suite
+    forked_to_the_end(sha)
+
+    assert_operator stage(sha, "fast")[:started_at], :<, stage(sha, "slow")[:completed_at]
+  end
+
   private
+
+  def project_whose_slow_suite_waits_for_the_fast_suite
+    @fifo = File.join(@dir, "fast-ran")
+    File.mkfifo(@fifo)
+    @project = GitProject.create
+    bodies = { "slow" => "cat '#{@fifo}' > /dev/null", "fast" => "echo ran > '#{@fifo}'" }
+    @project.write_stage_scripts { |stage| bodies.fetch(stage, "exit 0") }
+    @project.commit("Add stages")
+  end
+
+  # A slow suite still waiting on the fast suite, when the test failed, is let go.
+  def release_the_slow_suite
+    File.open(@fifo, File::WRONLY | File::NONBLOCK) { |fifo| fifo.write("gave up\n") } if @fifo
+  rescue Errno::ENXIO, Errno::ENOENT
+    nil
+  end
+
+  def stage(sha, name)
+    db = FunCi::Persistence::Database.connection(@db_path)
+    run = FunCi::Persistence::PipelineRun.find_by_commit(db, sha).first
+    FunCi::Persistence::StageJob.for_run(db, run[:id]).find { |job| job[:stage] == name }
+  ensure
+    db&.close
+  end
 
   def project_passing_every_stage
     @project = GitProject.create
     @project.write_stage_scripts { "exit 0" }
     @project.commit("Add stages")
+  end
+
+  # Every process the run forks inherits a pipe this holds, whose end comes
+  # when the last of them, the slow suite's included, has exited.
+  def forked_to_the_end(sha)
+    ended, held = IO.pipe
+    Dir.chdir(@project.dir) { forked(sha) }
+    held.close
+    within_deadline { ended.read }
   end
 
   def forked(sha) = FunCi::Pipeline::PipelineForker.fork_pipeline(commit_hash: sha, branch: "main", db_path: @db_path)

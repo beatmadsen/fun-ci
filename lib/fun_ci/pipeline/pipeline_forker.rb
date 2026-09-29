@@ -28,18 +28,13 @@ module FunCi
         trigger.close
       end
 
+      # The slow suite forks from here as it does in the foreground, so the
+      # fast suite, whose verdict a push waits for, runs beside it.
       def self.trigger(commit_hash, branch, recorder)
         Trigger.new(project: Dir.pwd, commit: Commit.new(sha: commit_hash, branch: branch),
-                    io: Io.new(stdout: File.open(File::NULL, "w")),
-                    seams: Seams.new(recorder: recorder, background_launcher: method(:sync_launcher)))
+                    io: Io.new(stdout: File.open(File::NULL, "w")), seams: Seams.new(recorder: recorder))
       end
       private_class_method :trigger
-
-      def self.sync_launcher(db_path:, pipeline_run_id:, job_id:, executor:)
-        recorder = Persistence::DbRecorder.for_background(db_path, pipeline_run_id)
-        executor.call(recorder, job_id)
-        recorder.close
-      end
     end
   end
 end
