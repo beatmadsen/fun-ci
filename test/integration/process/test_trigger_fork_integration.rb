@@ -2,6 +2,7 @@
 
 require_relative "../../test_helper"
 require_relative "../../support/trigger_test_kit"
+require_relative "../../support/trunk_kit"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/pipeline_recorder"
 require "fun_ci/persistence/pipeline_run"
@@ -16,6 +17,24 @@ class TestTriggerForkIntegration < Minitest::Test
       lock = File.new(lock_path, File::RDWR | File::CREAT)
       lock.flock(File::LOCK_EX)
       FunCi::Pipeline::Slot.new(path, lock)
+    end
+  end
+
+  # A trunk whose check can't finish until the fast suite starts, which is
+  # after the slow suite has forked; the wait has a deadline, so a run that
+  # never starts the fast suite fails the test rather than hanging it.
+  class CheckAcrossTheFork
+    include TrunkKit
+
+    def initialize(fast_started) = @fast_started = fast_started
+    def start(sha, _fetches) = sha
+    def notice(_pending) = nil
+    def recheck(_heads, _tip) = []
+
+    def finish(sha)
+      @fast_started.pop(timeout: 30) || raise("the fast suite never started")
+      FunCi::Trunk::Checker::Result.new(check: trunk_check(sha, MERGE.clean(ahead: 1, behind: 1), seen_at: Time.now),
+                                        fetched: nil)
     end
   end
 
@@ -57,6 +76,14 @@ class TestTriggerForkIntegration < Minitest::Test
     assert(File.open(lock) { |file| file.flock(File::LOCK_EX | File::LOCK_NB) })
   end
 
+  def test_a_check_still_going_when_the_slow_suite_forks_is_recorded_once
+    fast_started = Queue.new
+    runner = announcing_fast(fast_started)
+    run_pipeline(runner: runner, trunk: CheckAcrossTheFork.new(fast_started))
+
+    assert_equal([[1]], with_db { |db| db.execute("SELECT COUNT(*) FROM trunk_checks") })
+  end
+
   def test_the_launcher_stores_the_child_pid
     run_pipeline
 
@@ -76,9 +103,16 @@ class TestTriggerForkIntegration < Minitest::Test
 
   private
 
-  def run_pipeline(runner: scripted_runner, lock: nil)
+  def announcing_fast(queue)
+    lambda do |cmd|
+      queue << true if cmd.include?("fast.sh")
+      PASS
+    end
+  end
+
+  def run_pipeline(runner: scripted_runner, lock: nil, trunk: FakeTrunk::NONE)
     recorder = FunCi::Persistence::DbRecorder.new(FunCi::Persistence::Database.connection(@db_path))
-    exit_code = in_project { |dir| run_and_close(forking_trigger(dir, recorder, runner, lock)) }
+    exit_code = in_project { |dir| run_and_close(forking_trigger(dir, recorder, runner, { lock: lock, trunk: trunk })) }
     @pid = with_db { |db| FunCi::Persistence::PipelineRun.find_by_commit(db, "abc1234").first[:pid] }
     exit_code
   end
@@ -91,10 +125,12 @@ class TestTriggerForkIntegration < Minitest::Test
   end
 
   # Seams left to their defaults fork the slow suite for real.
-  def forking_trigger(dir, recorder, runner, lock)
+  # given: the slot's lock file (nil for none) and the trunk to check against.
+  def forking_trigger(dir, recorder, runner, given)
+    lock, trunk = given.values_at(:lock, :trunk)
     workspace = lock ? LockedWorkspace.new(dir, lock) : FunCi::Pipeline::InPlace.new(dir)
     seams = FunCi::Pipeline::Seams.new(command_runner: runner, recorder: recorder, commit_validator: ->(_) { true },
-                                       workspace: workspace)
+                                       workspace: workspace, trunk: trunk)
     FunCi::Pipeline::Trigger.new(project: dir, commit: FunCi::Pipeline::Commit.new(sha: "abc1234", branch: "main"),
                                  io: quiet_io, seams: seams)
   end
