@@ -64,9 +64,10 @@ class AgentClient
   end
 
   # A check of the commit against the trunk, as the pipeline would record it.
-  def record_trunk_check(sha, merge, seen:)
-    FunCi::Persistence::TrunkChecks.new(db, @workspace.project_dir).record(trunk_check(sha, merge, seen_at: seen),
-                                                                           checked_at: clock.now)
+  def record_trunk_check(sha, merge, seen:, trunk_sha: TRUNK_SHA)
+    FunCi::Persistence::TrunkChecks.new(db, @workspace.project_dir)
+                                   .record(trunk_check(sha, merge, seen_at: seen,
+                                                                   sha: trunk_sha), checked_at: clock.now)
   end
 
   # A stage of a recorded run finishing now, as the pipeline would record it.

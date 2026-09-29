@@ -11,6 +11,9 @@ module FunCi
     # its latest check, how old that is, why the last fetch failed, and
     # where the trunk has moved to since, which it reads and never checks.
     class TrunkReading
+      # Where the trunk is now, unread: for a reader polling every second, which mustn't run git each time.
+      UNREAD = Object.new.tap { |unread| def unread.now_at(_tip) = nil }.freeze
+
       # trunk: where the trunk is now (#now_at(tip)).
       def initialize(db, project, clock, trunk)
         @checks = Persistence::TrunkChecks.new(db, project)

@@ -55,7 +55,7 @@ module FunCi
         @context.io.stdout.flush
       end
 
-      def snapshots = @snapshots ||= Snapshots.new(@context.db, @context.git)
+      def snapshots = @snapshots ||= Snapshots.new(@context.db, @context.git, @context.clock)
     end
   end
 end

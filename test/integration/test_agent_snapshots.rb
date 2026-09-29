@@ -4,18 +4,38 @@ require_relative "../test_helper"
 require "fun_ci/persistence/database"
 require "fun_ci/agent/snapshots"
 require_relative "../support/fake_git"
+require_relative "../support/fake_clock"
+require_relative "../support/trunk_kit"
+require "fun_ci/persistence/trunk_checks"
 
 # A look at the project's recent runs, for telling what happened since the last.
 class TestAgentSnapshots < Minitest::Test
   include DatabaseTestSetup
   include PipelineTestHelpers
+  include TrunkKit
 
   def setup
     setup_test_db
-    @snapshots = FunCi::Agent::Snapshots.new(@db, FakeGit.new("/project"))
+    @snapshots = FunCi::Agent::Snapshots.new(@db, FakeGit.new("/project"), FakeClock.new)
   end
 
   def teardown = teardown_test_db
+
+  def test_should_give_a_run_the_latest_check_of_its_commit
+    run = new_run("abc1234")
+    FunCi::Persistence::TrunkChecks.new(@db, "/project")
+                                   .record(trunk_check("abc1234", MERGE.clean(ahead: 1, behind: 1), seen_at: Time.now),
+                                           checked_at: Time.now)
+
+    assert_equal "clean", @snapshots.take(limit: 10).fetch(run).trunk[:state]
+  end
+
+  def test_should_give_a_run_whose_check_is_going_no_trunk_yet
+    run = new_run("abc1234")
+    FunCi::Persistence::PipelineRun.trunk_started(@db, run, Time.now)
+
+    assert_nil @snapshots.take(limit: 10).fetch(run).trunk
+  end
 
   def test_should_list_the_finished_stages_in_the_order_they_finished
     run = new_run("abc1234")
