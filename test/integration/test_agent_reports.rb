@@ -4,6 +4,8 @@ require_relative "../test_helper"
 require "fun_ci/persistence/database"
 require "fun_ci/agent/reports"
 require_relative "../support/fake_git"
+require_relative "../support/fake_clock"
+require "fun_ci/persistence/trunk_checks"
 
 # A commit's newest run in the project, read into what an agent is told.
 class TestAgentReports < Minitest::Test
@@ -14,7 +16,8 @@ class TestAgentReports < Minitest::Test
     setup_test_db
     git = FakeGit.new("/project")
     git.commit("abc1234", "Add retry")
-    @reports = FunCi::Agent::Reports.new(@db, git)
+    @clock = FakeClock.new(now: Time.utc(2026, 9, 29, 10))
+    @reports = FunCi::Agent::Reports.new(@db, git, @clock)
   end
 
   def teardown = teardown_test_db
@@ -28,6 +31,19 @@ class TestAgentReports < Minitest::Test
 
   def test_should_report_nothing_for_a_commit_without_a_run_in_the_project
     assert_nil @reports.for("abc1234", "fast")
+  end
+
+  def test_should_report_how_the_run_s_commit_stands_against_the_trunk
+    run_in_project("abc1234", "completed")
+    record_trunk_check("abc1234", ahead: 0)
+
+    assert_equal "in_trunk", @reports.for("abc1234", "fast").trunk.state
+  end
+
+  def test_should_report_no_trunk_for_a_commit_never_checked
+    run_in_project("abc1234", "completed")
+
+    assert_nil @reports.for("abc1234", "fast").trunk
   end
 
   def test_should_take_the_subject_from_git
@@ -51,6 +67,12 @@ class TestAgentReports < Minitest::Test
   end
 
   private
+
+  def record_trunk_check(sha, ahead:)
+    check = FunCi::Trunk::Check.new(commit: sha, ref: "origin/main", trunk_sha: "fff", seen_at: @clock.now,
+                                    outcome: "clean", ahead: ahead, behind: 1)
+    FunCi::Persistence::TrunkChecks.new(@db, "/project").record(check, checked_at: @clock.now)
+  end
 
   def run_in_project(sha, status)
     run_id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: sha, branch: "main", project_path: "/project")

@@ -4,6 +4,7 @@ require "stringio"
 require "fun_ci/agent/commands"
 require "fun_ci/persistence/pipeline_run"
 require "fun_ci/persistence/stage_job"
+require "fun_ci/persistence/trunk_checks"
 require_relative "trigger_workspace"
 require_relative "../support/fake_git"
 require_relative "../support/fake_clock"
@@ -42,6 +43,13 @@ class AgentClient
     FunCi::Persistence::PipelineRun.update_status(db, run_id, "running")
     stages.each { |stage, state| record_stage(run_id, stage, state) }
     run_id
+  end
+
+  # A check of the commit against the trunk, as the pipeline would record it.
+  def record_trunk_check(sha, trunk_sha:, seen:, outcome:, **counts)
+    check = FunCi::Trunk::Check.new(commit: sha, ref: "origin/main", trunk_sha: trunk_sha, seen_at: seen,
+                                    outcome: outcome, **counts)
+    FunCi::Persistence::TrunkChecks.new(db, @workspace.project_dir).record(check, checked_at: clock.now)
   end
 
   # A stage of a recorded run finishing now, as the pipeline would record it.

@@ -35,15 +35,26 @@ class TestStatusText < Minitest::Test
     refute_includes lines(verdict: :passed, superseded_by: "bcd2345aaaa").last, "Superseded"
   end
 
+  def test_should_print_the_trunk_line_after_the_stages_when_the_run_was_checked
+    assert_equal "  trunk  in trunk", lines(trunk: in_trunk)[5]
+  end
+
   private
+
+  def in_trunk
+    now = Time.utc(2026, 9, 29)
+    check = FunCi::Trunk::Check.new(commit: "3f9c2ab", ref: "origin/main", trunk_sha: "fff", seen_at: now,
+                                    outcome: "clean", ahead: 0, behind: 2)
+    FunCi::Trunk::Shown.of(check, now: now)
+  end
 
   def stage(name, state, seconds = nil) = STAGE.new(name: name, state: state, seconds: seconds)
 
-  def lines(verdict: :undecided, superseded_by: nil, build: stage("build", "passed", 11.2))
+  def lines(verdict: :undecided, superseded_by: nil, build: stage("build", "passed", 11.2), trunk: nil)
     stages = [stage("lint", "passed", 3.8), build,
               stage("fast", "running"), stage("slow", "running")]
     report = REPORT.new(sha: "3f9c2ab0c4d1", subject: "Add retry", branch: "main", need: "fast", stages: stages,
-                        verdict: verdict, superseded_by: superseded_by)
+                        verdict: verdict, superseded_by: superseded_by, trunk: trunk)
     FunCi::Agent::StatusText.lines(report)
   end
 end

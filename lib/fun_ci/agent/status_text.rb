@@ -3,6 +3,7 @@
 require_relative "run_report"
 require_relative "verdict"
 require_relative "digest"
+require_relative "trunk_text"
 
 module FunCi
   module Agent
@@ -14,7 +15,7 @@ module FunCi
       def self.lines(report)
         needed = Verdict::LEVELS.fetch(report.need)
         [header(report), *report.stages.map { |stage| stage_line(stage, needed) }, *Digest.lines(report.stages, needed),
-         *footer(report)]
+         *(report.trunk ? TrunkText.lines(report.trunk) : []), *footer(report)]
       end
 
       def self.header(report) = %(fun-ci: #{report.sha[0, 7]} "#{report.subject}" on #{report.branch})

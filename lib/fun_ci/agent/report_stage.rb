@@ -6,7 +6,7 @@ require_relative "../persistence/stage_job"
 
 module FunCi
   module Agent
-    RunReport = Data.define(:sha, :subject, :branch, :need, :stages, :verdict, :deciding, :superseded_by)
+    RunReport = Data.define(:sha, :subject, :branch, :need, :stages, :verdict, :deciding, :superseded_by, :trunk)
 
     # One stage of a run, as an agent is told it.
     class RunReport

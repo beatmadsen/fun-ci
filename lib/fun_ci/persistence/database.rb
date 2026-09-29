@@ -28,6 +28,17 @@ module FunCi
         )
       SQL
 
+      # One row per commit and trunk SHA, written once (docs/trunk-conflicts.md, Storage).
+      TRUNK_CHECKS_TABLE = <<~SQL
+        CREATE TABLE IF NOT EXISTS trunk_checks (
+          id INTEGER PRIMARY KEY,
+          project_path TEXT, commit_hash TEXT, trunk_ref TEXT, trunk_sha TEXT,
+          trunk_seen_at TEXT, checked_at TEXT,
+          outcome TEXT, ahead INTEGER, behind INTEGER, files TEXT, reason TEXT,
+          UNIQUE (project_path, commit_hash, trunk_sha)
+        )
+      SQL
+
       # Opening and migrating hold an exclusive lock on a file beside the
       # database, so fun-ci processes starting at once set it up one at a time.
       # SQLite's busy timeout doesn't cover the switch to WAL, and a column can
@@ -48,7 +59,7 @@ module FunCi
 
       def self.migrate!(db)
         with_setup_lock(db.filename("main")) do
-          [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE].each { |table| db.execute(table) }
+          [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE].each { |table| db.execute(table) }
           ADDED_COLUMNS.each { |table, column, type| add_column_if_missing(db, table, column, type) }
           db.execute(NAME_DETACHED)
         end

@@ -10,10 +10,11 @@ module FunCi
     class RunReport
       STAGES = %w[lint build fast slow].freeze
 
-      # deciding: the stage whose failure or overrun decided the verdict, if one did.
-      def initialize(deciding: nil, **) = super
+      # deciding: the stage whose failure or overrun decided the verdict, if one did;
+      # trunk: how its commit stands against the trunk (a Trunk::Shown), if it was checked.
+      def initialize(deciding: nil, trunk: nil, **) = super
 
-      # commit: the run's subject and the commit that superseded it, if any.
+      # commit: the run's subject, the commit that superseded it, if any, and its trunk check.
       def self.build(run:, jobs:, need:, commit:)
         verdict = Verdict.decide(run_status: run[:status], stages: jobs, need: need)
         new(sha: run[:commit_hash], branch: run[:branch], need: need, stages: stages(jobs), verdict: verdict,
