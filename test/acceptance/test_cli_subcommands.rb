@@ -60,7 +60,7 @@ class TestCliTriggerSubcommand < Minitest::Test
   def test_trigger_sets_up_its_database_before_anything_else
     run_cli("trigger", "abc1234", "main")
 
-    assert_equal %w[pipeline_runs stage_jobs], table_names(File.join(@dir, "db", "db.sqlite3"))
+    assert_equal %w[pipeline_runs stage_jobs trunk_checks], table_names(File.join(@dir, "db", "db.sqlite3"))
   end
 
   def test_trigger_lets_the_commit_through_when_the_project_has_no_fun_ci_folder

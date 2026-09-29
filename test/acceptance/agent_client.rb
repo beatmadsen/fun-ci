@@ -9,10 +9,13 @@ require_relative "trigger_workspace"
 require_relative "../support/fake_git"
 require_relative "../support/fake_clock"
 require_relative "../support/fake_pipeline"
+require_relative "../support/trunk_kit"
 
 # Acceptance test client for the commands an agent runs in a project: tests
 # record runs as the pipeline would and read what the agent sees.
 class AgentClient
+  include TrunkKit
+
   Fakes = Data.define(:git, :clock, :pipeline)
   Outcome = Data.define(:stdout, :exit_code)
 
@@ -46,10 +49,9 @@ class AgentClient
   end
 
   # A check of the commit against the trunk, as the pipeline would record it.
-  def record_trunk_check(sha, trunk_sha:, seen:, outcome:, **counts)
-    check = FunCi::Trunk::Check.new(commit: sha, ref: "origin/main", trunk_sha: trunk_sha, seen_at: seen,
-                                    outcome: outcome, **counts)
-    FunCi::Persistence::TrunkChecks.new(db, @workspace.project_dir).record(check, checked_at: clock.now)
+  def record_trunk_check(sha, merge, seen:)
+    FunCi::Persistence::TrunkChecks.new(db, @workspace.project_dir).record(trunk_check(sha, merge, seen_at: seen),
+                                                                           checked_at: clock.now)
   end
 
   # A stage of a recorded run finishing now, as the pipeline would record it.

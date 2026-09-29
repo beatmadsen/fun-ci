@@ -32,14 +32,17 @@ module FunCi
       private
 
       def row(check)
-        [check.commit, check.ref, check.trunk_sha, check.seen_at.utc.iso8601, check.outcome, check.ahead,
-         check.behind, JSON.generate(check.files), check.reason]
+        tip = check.tip
+        merge = check.merge
+        [check.commit, tip.ref, tip.sha, tip.seen_at.utc.iso8601, merge.outcome, merge.ahead, merge.behind,
+         JSON.generate(merge.files), merge.reason]
       end
 
       def check(found)
-        commit, ref, trunk_sha, seen_at, outcome, ahead, behind, files, reason = found
-        Trunk::Check.new(commit: commit, ref: ref, trunk_sha: trunk_sha, seen_at: Time.parse(seen_at),
-                         outcome: outcome, ahead: ahead, behind: behind, files: JSON.parse(files), reason: reason)
+        commit, ref, sha, seen_at, outcome, ahead, behind, files, reason = found
+        Trunk::Check.new(commit: commit, tip: Trunk::Tip.new(ref: ref, sha: sha, seen_at: Time.parse(seen_at)),
+                         merge: Trunk::Merge.new(outcome: outcome, ahead: ahead, behind: behind,
+                                                 files: JSON.parse(files), reason: reason))
       end
     end
   end

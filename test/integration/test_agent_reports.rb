@@ -6,11 +6,13 @@ require "fun_ci/agent/reports"
 require_relative "../support/fake_git"
 require_relative "../support/fake_clock"
 require "fun_ci/persistence/trunk_checks"
+require_relative "../support/trunk_kit"
 
 # A commit's newest run in the project, read into what an agent is told.
 class TestAgentReports < Minitest::Test
   include DatabaseTestSetup
   include PipelineTestHelpers
+  include TrunkKit
 
   def setup
     setup_test_db
@@ -35,7 +37,7 @@ class TestAgentReports < Minitest::Test
 
   def test_should_report_how_the_run_s_commit_stands_against_the_trunk
     run_in_project("abc1234", "completed")
-    record_trunk_check("abc1234", ahead: 0)
+    record_trunk_check("abc1234", MERGE.clean(ahead: 0, behind: 1))
 
     assert_equal "in_trunk", @reports.for("abc1234", "fast").trunk.state
   end
@@ -68,10 +70,9 @@ class TestAgentReports < Minitest::Test
 
   private
 
-  def record_trunk_check(sha, ahead:)
-    check = FunCi::Trunk::Check.new(commit: sha, ref: "origin/main", trunk_sha: "fff", seen_at: @clock.now,
-                                    outcome: "clean", ahead: ahead, behind: 1)
-    FunCi::Persistence::TrunkChecks.new(@db, "/project").record(check, checked_at: @clock.now)
+  def record_trunk_check(sha, merge)
+    FunCi::Persistence::TrunkChecks.new(@db, "/project").record(trunk_check(sha, merge, seen_at: @clock.now),
+                                                                checked_at: @clock.now)
   end
 
   def run_in_project(sha, status)

@@ -2,8 +2,11 @@
 
 require_relative "../../test_helper"
 require "fun_ci/agent/status_text"
+require_relative "../../support/trunk_kit"
 
 class TestStatusText < Minitest::Test
+  include TrunkKit
+
   REPORT = FunCi::Agent::RunReport
   STAGE = REPORT::Stage
 
@@ -43,9 +46,7 @@ class TestStatusText < Minitest::Test
 
   def in_trunk
     now = Time.utc(2026, 9, 29)
-    check = FunCi::Trunk::Check.new(commit: "3f9c2ab", ref: "origin/main", trunk_sha: "fff", seen_at: now,
-                                    outcome: "clean", ahead: 0, behind: 2)
-    FunCi::Trunk::Shown.of(check, now: now)
+    FunCi::Trunk::Shown.of(trunk_check("3f9c2ab", MERGE.clean(ahead: 0, behind: 2), seen_at: now), now: now)
   end
 
   def stage(name, state, seconds = nil) = STAGE.new(name: name, state: state, seconds: seconds)
