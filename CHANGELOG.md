@@ -23,7 +23,9 @@ before it. See "Upgrading to 2.0" in the README.
   before it. `fun-ci install-hooks` writes `post-commit` and `pre-push`, and
   removes the `pre-commit` hook fun-ci 1.x wrote. A `pre-commit` hook of your
   own is left alone, and if it still calls fun-ci, `fun-ci check` warns you
-  to take that out. Run `fun-ci install-hooks` again to update your hooks.
+  to take that out. Run `fun-ci install-hooks` again to update your hooks;
+  until you do, `fun-ci check` warns that each run tests the commit before
+  yours.
 - The pre-push hook waits for the fast verdict of each commit the push sends
   (`fun-ci wait SHA --need fast`) instead of running the pipeline again, so a
   push after a finished post-commit run goes through at once. It reads the

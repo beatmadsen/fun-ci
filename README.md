@@ -212,7 +212,7 @@ fun-ci prune                                    Remove fun-ci's worktrees when n
 
 ## Upgrading to 2.0
 
-- Run `fun-ci install-hooks` again. The background pipeline now runs after the commit (`post-commit`), so it tests the commit you just made; the `pre-commit` hook tested the one before it. Installing removes the `pre-commit` hook fun-ci 1.x wrote and leaves a hook of your own alone (`fun-ci check` warns if yours still calls fun-ci). The new `pre-push` hook waits for the verdict instead of running the pipeline again.
+- Run `fun-ci install-hooks` again. The background pipeline now runs after the commit (`post-commit`), so it tests the commit you just made; the `pre-commit` hook tested the one before it. Until you do, each run tests the commit before yours, and `fun-ci check` warns you. Installing removes the `pre-commit` hook fun-ci 1.x wrote and leaves a hook of your own alone (`fun-ci check` warns if yours still calls fun-ci). The new `pre-push` hook waits for the verdict instead of running the pipeline again.
 - The stages run in a worktree at the commit, not in your checkout. A script that relied on uncommitted files in your checkout won't see them any more.
 - The database moved from `$TMPDIR` to `$XDG_STATE_HOME/fun-ci/`. Runs recorded by 1.x are not carried over.
 - `fun-ci-trigger` and `fun-ci-tui` are gone; use `fun-ci trigger` and `fun-ci console`. `fun-ci trigger --no-validate` still works until 2.1, as the old name for `--background`.

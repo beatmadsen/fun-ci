@@ -7,7 +7,8 @@ require "stringio"
 
 # AT-1.9: fun-ci 1.x ran the background pipeline from pre-commit. Upgrading
 # removes the pre-commit hook fun-ci wrote, leaves anyone else's alone, and
-# warns about one that still calls fun-ci itself.
+# warns about one that still calls fun-ci itself, and about fun-ci's own
+# until it is gone.
 class TestLegacyHooks < Minitest::Test
   FUN_CI_1X = "#!/bin/sh\n# fun-ci-managed-hook\nfun-ci trigger --no-validate \"$COMMIT\" \"$BRANCH\"\n"
   HAND_WRITTEN = "#!/bin/sh\nnpx lint-staged\nfun-ci trigger --no-validate $(git rev-parse HEAD) main\n"
@@ -47,6 +48,13 @@ class TestLegacyHooks < Minitest::Test
 
     assert_equal [".git/hooks/pre-commit calls fun-ci, which now runs after the commit: " \
                   "take fun-ci out of it and run `fun-ci install-hooks`"], legacy.warnings
+  end
+
+  def test_should_warn_that_fun_ci_s_own_1x_pre_commit_hook_is_still_installed
+    pre_commit(FUN_CI_1X)
+
+    assert_equal ["fun-ci 1.x's pre-commit hook is still installed, so each run tests the commit before yours " \
+                  "and yours gets none: run `fun-ci install-hooks`"], legacy.warnings
   end
 
   def test_should_not_warn_about_a_pre_commit_hook_that_has_nothing_to_do_with_fun_ci
