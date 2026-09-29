@@ -17,7 +17,7 @@ pub fn stages(screen: &mut Screen, effects: &[Effect], runs: &[Run]) {
 /// The footer banner of the most important effect that has one, on the line
 /// below the last run.
 pub fn footer(screen: &mut Screen, effects: &[Effect], runs: &[Run]) {
-    let banner = most_important(effects).and_then(|effect| footer_overlay(effect, screen.width()));
+    let banner = most_important(effects).and_then(|effect| footer_overlay(effect, screen.width(), runs));
     if let Some(text) = banner {
         screen.write_at(HEADER_HEIGHT + runs.len() * 2 + 1, 1, &format!("{text}\u{1b}[K"));
     }

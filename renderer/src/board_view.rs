@@ -3,8 +3,8 @@
 
 use crate::animator::{Animator, HEADER_HEIGHT};
 use crate::ansi::{DIM, paint};
-use crate::format::short_sha;
-use crate::model::{Board, Run};
+use crate::format::{age, project_name, short_sha};
+use crate::model::{Board, Run, StaleTrunk};
 use crate::row::format_run;
 use crate::screen::Screen;
 use crate::spinner::Spinner;
@@ -103,13 +103,13 @@ impl BoardView {
         if !lines.is_empty() {
             self.screen.println("");
         }
-        self.render_footer(board, rows);
+        self.render_footer(board, now_ms, rows);
     }
 
     /// The footer, unless its newline would scroll a screen with no row left below it.
-    fn render_footer(&mut self, board: &Board, rows: u16) {
+    fn render_footer(&mut self, board: &Board, now_ms: i64, rows: u16) {
         if usize::from(rows) > HEADER_HEIGHT + 1 {
-            self.screen.println(&paint(DIM, &footer(board)));
+            self.screen.println(&paint(DIM, &footer(board, now_ms)));
         }
     }
 
@@ -130,11 +130,25 @@ impl BoardView {
     }
 }
 
-fn footer(board: &Board) -> String {
+fn footer(board: &Board, now_ms: i64) -> String {
     match confirming(board) {
         Some(run) => format!("  Cancel {} ({})? y / n", run.commit.branch, short_sha(&run.commit.sha)),
-        None => "  j/k move   c cancel   q quit".to_string(),
+        None => format!("  j/k move   c cancel   q quit{}", stale_note(&board.stale_trunks, now_ms)),
     }
+}
+
+/// Which projects' trunks are stale, said once here rather than on every row.
+fn stale_note(stale: &[StaleTrunk], now_ms: i64) -> String {
+    if stale.is_empty() {
+        return String::new();
+    }
+    let projects: Vec<String> = stale.iter().map(|trunk| stale_project(trunk, now_ms)).collect();
+    format!("   trunk stale: {}", projects.join("; "))
+}
+
+fn stale_project(trunk: &StaleTrunk, now_ms: i64) -> String {
+    let fetched = trunk.since.map_or_else(|| "fetch failed".to_string(), |since| format!("fetched {}", age(since, now_ms)));
+    format!("{}, {fetched}", project_name(&trunk.project))
 }
 
 fn confirming(board: &Board) -> Option<&Run> {

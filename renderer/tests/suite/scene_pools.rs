@@ -38,9 +38,19 @@ fn should_give_every_success_milestone_at_least_two_scenes() {
     assert!(SUCCESSES.iter().all(|milestone| pool(milestone).len() >= 2));
 }
 
+/// Every event that plays a scene of its pool: a run's milestones and the trunk's.
+fn every_pooled_event() -> Vec<&'static str> {
+    MILESTONES.iter().copied().chain(["trunk_conflict", "trunk_clear"]).collect()
+}
+
+#[test]
+fn should_give_the_trunk_s_events_a_scene_each() {
+    assert!(["trunk_conflict", "trunk_clear"].iter().all(|event| !pool(event).is_empty()));
+}
+
 #[test]
 fn should_share_no_scene_between_pools() {
-    let mut names: Vec<&str> = MILESTONES.iter().flat_map(|milestone| pool(milestone).iter().copied()).collect();
+    let mut names: Vec<&str> = every_pooled_event().iter().flat_map(|event| pool(event).iter().copied()).collect();
     let count = names.len();
     names.sort_unstable();
     names.dedup();
@@ -50,7 +60,7 @@ fn should_share_no_scene_between_pools() {
 #[test]
 fn should_find_every_pooled_scene_in_the_library() {
     let library = Library::builtin();
-    assert!(MILESTONES.iter().flat_map(|milestone| pool(milestone)).all(|name| library.get(name).is_some()));
+    assert!(every_pooled_event().iter().flat_map(|event| pool(event)).all(|name| library.get(name).is_some()));
 }
 
 #[test]

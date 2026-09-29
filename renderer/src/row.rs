@@ -1,6 +1,6 @@
 //! One run as one line of the board, as the 1.x `RowFormatter` drew it.
 
-use crate::ansi::{BOLD_CYAN, BOLD_GREEN, BOLD_RED, BOLD_YELLOW, CYAN, DIM, GREEN, RESET, paint};
+use crate::ansi::{BOLD_CYAN, BOLD_GREEN, BOLD_MAGENTA, BOLD_RED, BOLD_YELLOW, CYAN, DIM, GREEN, RESET, paint, strip};
 use crate::format::{age, duration, finished_word, project_colour, project_name, seconds_since, short_sha, stage_label};
 use crate::model::{Run, Stage};
 
@@ -16,7 +16,7 @@ struct Progress {
 /// spinner frame, shown only while the run is running.
 #[must_use]
 pub fn format_run(run: &Run, now_ms: i64, spinner: char) -> String {
-    let head = format!("  {}  {}{}", short_sha(&run.commit.sha), run.commit.branch, project(run));
+    let head = head(run);
     let age = age(run.state.updated_at, now_ms);
     match run.status() {
         "pending" => paint(DIM, &format!("{head}  Scheduled...  {age}")),
@@ -25,12 +25,30 @@ pub fn format_run(run: &Run, now_ms: i64, spinner: char) -> String {
     }
 }
 
+/// How many columns the row's head (SHA, branch, project, conflict) takes, so
+/// effects can find the stages after it.
+#[must_use]
+pub fn head_width(run: &Run) -> usize {
+    strip(&head(run)).chars().count()
+}
+
+fn head(run: &Run) -> String {
+    format!("  {}  {}{}{}", short_sha(&run.commit.sha), run.commit.branch, project(run), conflict(run))
+}
+
 fn project(run: &Run) -> String {
     let Some(path) = &run.commit.project else {
         return String::new();
     };
     let name = project_name(path);
     format!("  \u{1b}[{}m{name}{RESET}", project_colour(&name))
+}
+
+/// Its branch's conflict with the trunk, in the one colour nothing else on the board uses.
+fn conflict(run: &Run) -> String {
+    run.trunk.as_ref().filter(|trunk| trunk.branch_state == "conflicts").map_or_else(String::new, |trunk| {
+        format!("  {}", paint(BOLD_MAGENTA, &format!("conflicts {}", trunk.trunk)))
+    })
 }
 
 fn cancelled_stages(run: &Run) -> String {

@@ -1,4 +1,5 @@
-//! A short animation over one stage of one run's row.
+//! A short animation over one stage of one run's row, or, for a conflict
+//! with the trunk, over none of its stages, in the footer alone.
 
 /// What an effect celebrates or mourns.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -7,6 +8,7 @@ pub enum Kind {
     Timeout,
     Success,
     StagePass,
+    Conflict,
 }
 
 impl Kind {
@@ -18,6 +20,7 @@ impl Kind {
             ("stage_failed", ..) => Some(Self::Failure),
             ("stage_passed", _, "passed") => Some(Self::Success),
             ("stage_passed", ..) => Some(Self::StagePass),
+            ("trunk_conflict", ..) => Some(Self::Conflict),
             _ => None,
         }
     }
@@ -25,7 +28,7 @@ impl Kind {
     #[must_use]
     pub fn total_frames(self) -> usize {
         match self {
-            Self::Failure | Self::Success => 40,
+            Self::Failure | Self::Success | Self::Conflict => 40,
             Self::Timeout => 4,
             Self::StagePass => 3,
         }
@@ -35,7 +38,7 @@ impl Kind {
     pub fn priority(self) -> u8 {
         match self {
             Self::Failure => 3,
-            Self::Timeout => 2,
+            Self::Timeout | Self::Conflict => 2,
             Self::Success => 1,
             Self::StagePass => 0,
         }
@@ -43,7 +46,7 @@ impl Kind {
 
     #[must_use]
     pub fn has_footer(self) -> bool {
-        matches!(self, Self::Failure | Self::Success)
+        matches!(self, Self::Failure | Self::Success | Self::Conflict)
     }
 }
 

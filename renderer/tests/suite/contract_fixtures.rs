@@ -13,7 +13,7 @@ use serde_json::Value;
 use crate::support::contract_dir;
 use crate::support::live::converse;
 
-const FIXTURES: [&str; 4] = ["cancel", "happy-7", "resize", "stage-failed"];
+const FIXTURES: [&str; 5] = ["cancel", "happy-7", "resize", "stage-failed", "trunk-conflict"];
 
 fn fixture(name: &str) -> Vec<Value> {
     let path = contract_dir().join("fixtures").join(format!("{name}.jsonl"));
@@ -91,4 +91,9 @@ fn the_renderer_holds_the_resize_conversation() {
 #[test]
 fn the_renderer_holds_the_stage_failed_conversation() {
     holds("stage-failed");
+}
+
+#[test]
+fn the_renderer_holds_the_trunk_conflict_conversation() {
+    holds("trunk-conflict");
 }

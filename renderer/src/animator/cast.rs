@@ -15,6 +15,10 @@ const POOLS: [(&str, &[&str]); 5] = [
     ("run_passed", &["success", "celebrate", "leprechauns", "sunrise"]),
     ("run_failed", &["explosion", "shatter"]),
 ];
+/// The trunk's events, each with its own scenes: small ones, like lint's and
+/// build's, telling a branch that has started or stopped conflicting with
+/// the trunk (docs/trunk-conflicts.md).
+const TRUNK_POOLS: [(&str, &[&str]); 2] = [("trunk_conflict", &["tangle"]), ("trunk_clear", &["untie"])];
 /// The milestones, as `POOLS` names them.
 pub const MILESTONES: [&str; POOLS.len()] = {
     let mut names = [""; POOLS.len()];
@@ -51,7 +55,7 @@ impl Cast {
     /// The scenes `milestone` picks from; none for anything else.
     #[must_use]
     pub fn pool(milestone: &str) -> &'static [&'static str] {
-        POOLS.iter().find(|(name, _)| *name == milestone).map_or(&[], |(_, pool)| *pool)
+        POOLS.iter().chain(&TRUNK_POOLS).find(|(name, _)| *name == milestone).map_or(&[], |(_, pool)| *pool)
     }
 
     /// The quiet scenes, one of which shows when nothing has happened for a while.
@@ -62,7 +66,7 @@ impl Cast {
 
     /// Makes `name` its pool's scene from now on; a name in no pool is ignored.
     pub fn pin(&mut self, name: &str) {
-        let pools = POOLS.iter().map(|(_, pool)| *pool).chain([&QUIET[..]]);
+        let pools = POOLS.iter().chain(&TRUNK_POOLS).map(|(_, pool)| *pool).chain([&QUIET[..]]);
         let Some(pool) = pools.into_iter().find(|pool| pool.contains(&name)) else { return };
         self.pins.retain(|pinned| !pool.contains(pinned));
         self.pins.extend(pool.iter().find(|scene| **scene == name));

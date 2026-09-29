@@ -13,6 +13,17 @@ pub struct Board {
     pub view: View,
     #[serde(default)]
     pub runs: Vec<Run>,
+    /// The projects whose trunk is stale, for the footer (docs/trunk-conflicts.md).
+    #[serde(default)]
+    pub stale_trunks: Vec<StaleTrunk>,
+}
+
+/// A project whose trunk is stale: its last good fetch (epoch seconds), or none when its last fetch failed.
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+pub struct StaleTrunk {
+    pub project: String,
+    #[serde(default)]
+    pub since: Option<i64>,
 }
 
 /// What the user is doing: where the cursor is, whether a cancel is being confirmed.
@@ -36,6 +47,17 @@ pub struct Run {
     pub state: RunState,
     #[serde(default)]
     pub stages: Vec<Stage>,
+    /// Its branch's standing against the trunk, sent only where the row shows it.
+    #[serde(default)]
+    pub trunk: Option<Trunk>,
+}
+
+/// A branch's standing against the trunk (docs/trunk-conflicts.md): Ruby
+/// sends it on a branch's newest run when it conflicts, naming the trunk.
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+pub struct Trunk {
+    pub branch_state: String,
+    pub trunk: String,
 }
 
 /// Which commit a run is for.

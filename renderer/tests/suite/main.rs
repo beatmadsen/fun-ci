@@ -48,3 +48,5 @@ mod scene_pools;
 mod scenes;
 mod screen_bytes;
 mod terminal_restore;
+mod trunk_events;
+mod trunk_footer;

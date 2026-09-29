@@ -78,3 +78,12 @@ fn the_slow_sparkle_lights_its_first_letter_on_the_seventh_frame() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "slow"]))]), event("stage_passed", 1, "slow")];
     assert!(bold_at_word(&last_screen(&then_ticks(&lines, 7)), FIRST_ROW, "Slow"));
 }
+
+#[test]
+fn an_effect_lands_exactly_on_its_stage_when_the_run_conflicts_with_the_trunk() {
+    let mut conflicting = run(1, "running", &passed(&["lint"]));
+    conflicting["trunk"] = serde_json::json!({"branch_state": "conflicts", "trunk": "main"});
+    let lines = [board(&[conflicting]), event("stage_passed", 1, "lint")];
+    let text = last_screen(&then_ticks(&lines, 1)).text();
+    assert_eq!(text.lines().nth(FIRST_ROW).unwrap().trim_end(), "  a3f7c01  b1  conflicts main  Lint 0.3s  RUNNING  just now");
+}

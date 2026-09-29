@@ -2,7 +2,8 @@
 
 use super::effect::{Effect, Kind};
 use crate::ansi::{BOLD_RED, RESET, paint, strip};
-use crate::format::{duration, finished_word, project_name, stage_label};
+use crate::format::{duration, finished_word, stage_label};
+use crate::row::head_width;
 use crate::model::{Run, Stage};
 
 const STAGE_PASS_COLOURS: [&str; 3] = ["\u{1b}[1;33m", "\u{1b}[1;32m", "\u{1b}[32m"];
@@ -32,11 +33,10 @@ pub fn stage_text(run: &Run, stage: &str) -> Option<String> {
 /// The 1-based column the stage's text starts at in its row.
 #[must_use]
 pub fn stage_column(run: &Run, stage: &str) -> Option<usize> {
-    let project = run.commit.project.as_deref().map_or(0, |p| project_name(p).chars().count() + 2);
     let index = run.stages.iter().position(|s| s.stage == stage)?;
     let text_width = |s: &Stage| stage_text(run, &s.stage).map_or(0, |t| t.chars().count()) + 2;
     let before: usize = run.stages[..index].iter().map(text_width).sum();
-    Some(2 + 7 + 2 + run.commit.branch.chars().count() + project + 2 + before + 1)
+    Some(head_width(run) + 2 + before + 1)
 }
 
 /// What `effect` draws over the stage text `text` this frame.
@@ -47,6 +47,7 @@ pub fn stage_overlay(effect: &Effect, text: &str) -> Option<String> {
         Kind::Timeout => Some(flash(effect.frame, text, &TIMEOUT_COLOURS)),
         Kind::Failure => flanks(effect.frame, text),
         Kind::Success => sparkle(effect, text),
+        Kind::Conflict => None,
     }
 }
 

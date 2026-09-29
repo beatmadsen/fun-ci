@@ -24,9 +24,12 @@ mod sky;
 mod snowfall;
 mod stonework;
 mod storm;
+mod strands;
 mod sunrise;
 mod sweep;
+mod tangle;
 mod tick;
+mod untie;
 mod warning;
 mod warp;
 mod yay;
@@ -34,7 +37,9 @@ mod yay;
 use crate::animation::Scene;
 
 /// Every built-in scene.
-pub static ALL: [&dyn Scene; 24] = [
+pub static ALL: [&dyn Scene; 26] = [
+    &tangle::Tangle,
+    &untie::Untie,
     &snowfall::Snowfall,
     &shatter::Shatter,
     &sunrise::Sunrise,

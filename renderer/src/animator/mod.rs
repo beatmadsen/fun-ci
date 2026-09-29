@@ -90,6 +90,9 @@ impl Animator {
         if let Some(scene) = self.cast.for_milestone(&event.name) {
             self.header.trigger(scene);
         }
+        if let (Some(Kind::Conflict), Some(run_id)) = (Kind::for_event(&event.name, "", ""), event.run_id) {
+            self.add(Kind::Conflict, run_id, "");
+        }
         let Some((run, stage)) = target(event, runs) else { return };
         if let Some(kind) = Kind::for_event(&event.name, &stage.status, run.status()) {
             self.add(kind, run.id, &stage.stage);

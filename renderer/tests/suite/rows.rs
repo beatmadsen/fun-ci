@@ -133,3 +133,29 @@ fn a_cancelled_run_shows_its_stage_times_without_colour() {
     assert_eq!(look(run("cancelled", &json!([{"stage": "lint", "status": "passed", "duration_ms": 300}])), "Lint 0.3s"),
                (Colour::Default, vec!["dim"]));
 }
+
+const MAGENTA: Colour = Colour::Idx(5);
+
+/// A passed run whose branch conflicts with the trunk (docs/trunk-conflicts.md, The console).
+fn conflicting() -> Value {
+    let mut run = passed();
+    run["trunk"] = json!({"branch_state": "conflicts", "trunk": "main"});
+    run
+}
+
+#[test]
+fn a_branch_that_conflicts_with_the_trunk_says_so_in_bold_magenta() {
+    assert_eq!(look(conflicting(), "conflicts main"), (MAGENTA, vec!["bold"]));
+}
+
+#[test]
+fn a_conflict_with_the_trunk_comes_after_the_branch_and_before_the_stages() {
+    assert!(text(conflicting()).starts_with("  a3f7c01  main  conflicts main  Lint 0.3s"));
+}
+
+#[test]
+fn a_scheduled_run_whose_branch_conflicts_says_so_too() {
+    let mut run = run("pending", &json!([{"stage": "lint", "status": "pending"}]));
+    run["trunk"] = json!({"branch_state": "conflicts", "trunk": "develop"});
+    assert_eq!(text(run), "  a3f7c01  main  conflicts develop  Scheduled...  2m ago");
+}

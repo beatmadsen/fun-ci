@@ -8,6 +8,7 @@ pub const BOLD_YELLOW: &str = "1;33";
 pub const CYAN: &str = "36";
 pub const BOLD_CYAN: &str = "1;36";
 pub const DIM: &str = "2";
+pub const BOLD_MAGENTA: &str = "1;35";
 
 /// `text` in the SGR `code`, then a reset.
 #[must_use]

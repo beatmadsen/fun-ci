@@ -38,4 +38,5 @@ scenarios! {
     a_sixty_column_terminal_looks_as_reviewed: "narrow-60";
     a_two_hundred_column_terminal_looks_as_reviewed: "wide-200";
     a_resize_during_an_animation_looks_as_reviewed: "resize-mid-animation";
+    a_branch_conflicting_with_the_trunk_looks_as_reviewed: "trunk-conflict";
 }

@@ -38,7 +38,7 @@ fn gallery(name: &str) -> String {
 fn should_hold_every_scene_the_events_and_scenarios_name() {
     let names = [
         "anvil", "aurora", "bricks", "calm", "celebrate", "explosion", "fireflies", "fireplace", "flash", "gears", "idle", "island", "leprechauns", "level", "ripple",
-        "running", "shatter", "snowfall", "success", "sunrise", "sweep", "warning", "warp", "yay",
+        "running", "shatter", "snowfall", "success", "sunrise", "sweep", "tangle", "untie", "warning", "warp", "yay",
     ];
     assert_eq!(Library::builtin().names(), names);
 }
@@ -72,6 +72,8 @@ cases! {
     should_play_the_level_for_two_point_four_seconds: scene("level").length_ms() => Some(2400);
     should_play_the_sweep_for_two_point_four_seconds: scene("sweep").length_ms() => Some(2400);
     should_play_the_ripple_for_two_point_six_seconds: scene("ripple").length_ms() => Some(2600);
+    should_play_the_tangle_for_two_point_six_seconds: scene("tangle").length_ms() => Some(2600);
+    should_play_the_untie_for_two_point_four_seconds: scene("untie").length_ms() => Some(2400);
     should_play_the_bricks_for_two_point_eight_seconds: scene("bricks").length_ms() => Some(2800);
     should_play_the_anvil_for_two_point_seven_seconds: scene("anvil").length_ms() => Some(2700);
     should_play_the_gears_for_three_seconds: scene("gears").length_ms() => Some(3000);
@@ -108,6 +110,8 @@ galleries! {
     should_paint_the_warp_as_reviewed: "warp";
     should_paint_the_sunrise_as_reviewed: "sunrise";
     should_paint_the_shatter_as_reviewed: "shatter";
+    should_paint_the_tangle_as_reviewed: "tangle";
+    should_paint_the_untie_as_reviewed: "untie";
     should_paint_the_snowfall_as_reviewed: "snowfall";
     should_paint_the_warning_as_reviewed: "warning";
 }
