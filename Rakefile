@@ -12,7 +12,9 @@ TEST_LANES = {
   "unit" => "test/unit/**/test_*.rb",
   "integration" => "test/integration/**/test_*.rb",
   "acceptance" => "test/acceptance/**/test_*.rb",
-  "policy" => "test/policy/**/test_*.rb"
+  "policy" => "test/policy/**/test_*.rb",
+  # The three that start no process, in one process: fun-ci's fast stage here.
+  "fast" => "test/{unit,acceptance,policy}/**/test_*.rb"
 }.freeze
 
 TEST_LANES.each do |lane, pattern|

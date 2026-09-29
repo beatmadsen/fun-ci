@@ -1,22 +1,14 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
-require "rake"
+require_relative "../support/project_rakefile"
 
 # AT-0.3: a lane nobody runs rots. The gate (`rake default`) runs exactly the
 # lanes CLAUDE.md lists under Lanes; every other rake task the docs mention
 # either runs a subset of `rake test` or is listed under Tools.
 class TestGateLanes < Minitest::Test
-  ROOT = File.expand_path("../..", __dir__)
-  # Under rake, bundler/gem_tasks is required already when this loads the
-  # Rakefile; run alone, requiring it evaluates the gemspec, whose `git
-  # ls-files` the confinement guard refuses. The gem's tasks are none of
-  # this test's business, so it is taken as loaded here too.
-  $LOADED_FEATURES << $LOAD_PATH.resolve_feature_path("bundler/gem_tasks").last
-  RAKE = Rake::Application.new.tap do |app|
-    Rake.application = app
-    Rake.load_rakefile(File.join(ROOT, "Rakefile"))
-  end
+  ROOT = ProjectRakefile::ROOT
+  RAKE = ProjectRakefile::APP
 
   def test_the_gate_runs_exactly_the_lanes_claude_md_lists
     assert_equal section("Lanes"), RAKE[:default].prerequisites
@@ -41,8 +33,6 @@ class TestGateLanes < Minitest::Test
   end
 
   def test_subsets
-    TEST_LANES.keys.select { |lane| (test_files(lane) - test_files("test")).empty? }
+    TEST_LANES.keys.select { |lane| (ProjectRakefile.test_files(lane) - ProjectRakefile.test_files("test")).empty? }
   end
-
-  def test_files(lane) = Dir.glob(TEST_LANES.fetch(lane), base: ROOT)
 end

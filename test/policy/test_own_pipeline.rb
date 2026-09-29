@@ -1,26 +1,23 @@
 # frozen_string_literal: true
 
 require_relative "../test_helper"
+require_relative "../support/project_rakefile"
 
 # This repository runs its own pipeline with fun-ci (.fun-ci/): its stage
-# scripts run every lane of the gate, the test lane as its four subsets, so a
-# commit fun-ci passes is one the gate passes.
+# scripts run every lane of the gate, the test lane through subsets that
+# together hold every one of its tests, so a commit fun-ci passes is one the
+# gate passes.
 class TestOwnPipeline < Minitest::Test
-  ROOT = File.expand_path("../..", __dir__)
-  SUBSETS = %w[unit acceptance policy integration].freeze
+  ROOT = ProjectRakefile::ROOT
 
   def test_should_run_every_lane_of_the_gate_but_the_test_lane_in_a_stage
     assert_empty gate_lanes - ["test"] - staged_tasks
   end
 
-  def test_should_run_each_subset_of_the_test_lane_in_a_stage
-    assert_empty SUBSETS - staged_tasks
-  end
+  def test_should_run_every_test_of_the_test_lane_in_a_stage
+    staged = (staged_tasks & TEST_LANES.keys).flat_map { |lane| ProjectRakefile.test_files(lane) }
 
-  def test_should_leave_no_test_of_the_test_lane_outside_the_subsets
-    tests = Dir.glob("test/**/test_*.rb", base: ROOT) - ["test/test_helper.rb"]
-
-    assert_empty(tests.reject { |path| SUBSETS.any? { |subset| path.start_with?("test/#{subset}/") } })
+    assert_empty ProjectRakefile.test_files("test") - ["test/test_helper.rb"] - staged
   end
 
   private

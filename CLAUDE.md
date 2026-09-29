@@ -28,6 +28,7 @@ rake unit                                                  # test/unit only
 rake acceptance                                            # test/acceptance only
 rake integration                                           # test/integration only (process/ included)
 rake policy                                                # test/policy only
+rake fast                                                  # unit, acceptance and policy in one process (fun-ci's fast stage)
 ruby -Itest -Ilib test/unit/test_stage_runner.rb                # One test file
 ruby -Itest -Ilib test/unit/test_stage_runner.rb -n test_method # One test method
 ```
@@ -106,7 +107,7 @@ Seams tests use in place of the real thing:
 ## Invariants
 
 - The gate runs exactly the lanes listed under Lanes, and every rake task the docs mention is a lane, a subset of `rake test`, or a tool: `test/policy/test_gate_lanes.rb`.
-- This repository runs its own pipeline with fun-ci (`.fun-ci/`), and its stage scripts run every lane of the gate, the test lane as its four subsets, so a commit fun-ci passes is one the gate passes: `test/policy/test_own_pipeline.rb`.
+- This repository runs its own pipeline with fun-ci (`.fun-ci/`), and its stage scripts run every lane of the gate, the test lane through subsets that together hold every one of its tests, so a commit fun-ci passes is one the gate passes: `test/policy/test_own_pipeline.rb`.
 - Methods of at most 7 lines, block nesting of at most 2, at most 4 parameters (keywords count): RuboCop in the gate, with no file excluded and no todo to inherit exclusions from: `test/policy/test_rubocop_todo.rb`. Fix an offence; never add an exclusion.
 - No Ruby file longer than 150 lines, no class or module with more than 4 instance variables: `test/policy/test_code_limits.rb`.
 - Tests wait on nothing real and reach state through public interfaces: no `sleep`, `Thread.pass`, `Timeout.timeout` or `instance_variable_get/set` in `test/`: `test/policy/test_tests_are_deterministic.rb`. Background work is injected and driven by the test, not spawned and polled; if a test can't get at something through the public API, add a seam.
