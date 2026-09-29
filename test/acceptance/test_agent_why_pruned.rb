@@ -5,7 +5,9 @@ require_relative "agent_client"
 require "json"
 
 # A run whose evidence was pruned says so (acceptance-tests.md, AT-10.3):
-# only a project's 50 newest runs keep what their failed stages left.
+# only a project's 50 newest runs keep what their failed stages left. The
+# old run fails through the pipeline; the 50 newer ones only need to begin,
+# since a run is pruned as a newer one begins.
 class TestAgentWhyPruned < Minitest::Test
   OLD = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
 
@@ -14,7 +16,10 @@ class TestAgentWhyPruned < Minitest::Test
     @agent = AgentClient.new(@pipeline.workspace)
     @agent.git.commit(OLD, "Add retry to fetch")
     @pipeline.trigger(commit_hash: OLD, branch: "main")
-    50.times { |n| @pipeline.trigger(commit_hash: format("%040x", n), branch: "main") }
+    recorder = FunCi::Persistence::DbRecorder.new(@pipeline.db)
+    50.times do |n|
+      recorder.create_run(commit_hash: format("%040x", n), branch: "main", project_path: @pipeline.project_dir)
+    end
   end
 
   def teardown = @pipeline.close
