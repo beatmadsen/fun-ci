@@ -4,7 +4,7 @@ module FunCi
   module Setup
     # Which kind of project a directory is, from the names at its top: the
     # first stack, in this order, any of whose markers is there. A marker is a
-    # name, a pattern, or a list of names that must all be there. A language
+    # name, a glob, or a list of them that must all be there. A language
     # comes before the tooling that sits beside it (Node beside Python, a
     # Makefile around Go), and a lockfile picks the package manager.
     class ProjectDetector
@@ -20,7 +20,7 @@ module FunCi
         dart: ["pubspec.yaml"],
         swift: ["Package.swift"],
         php_composer: ["composer.json"],
-        dotnet: [/\.(sln|csproj|fsproj)\z/],
+        dotnet: %w[*.sln *.csproj *.fsproj],
         python_uv: ["uv.lock"],
         python_poetry: ["poetry.lock"],
         python: %w[pyproject.toml setup.py setup.cfg requirements.txt],
@@ -48,7 +48,7 @@ module FunCi
         Array(marker).all? { |part| @filenames.any? { |name| names?(part, name) } }
       end
 
-      def names?(part, name) = part.is_a?(Regexp) ? part.match?(name) : part == name
+      def names?(part, name) = File.fnmatch?(part, name)
     end
   end
 end
