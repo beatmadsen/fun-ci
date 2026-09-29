@@ -44,7 +44,8 @@ module FunCi
         def pruned? = kept.pruned
         def raw_bytes = kept.raw_bytes
         def tail = kept.tail
-        def failures = kept.failures
+        # The failures its evidence names, from whichever extractor found them.
+        def failures = evidence.failures.map { |failure| failure.except(:extractor) }
 
         def self.from_row(name, job)
           return new(name: name, state: "waiting", seconds: nil) unless job
