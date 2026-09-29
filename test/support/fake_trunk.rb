@@ -23,4 +23,8 @@ class FakeTrunk
 
   def start(sha, _fetches) = sha
   def finish(sha) = RESULT.new(check: trunk_check(sha, @merge, seen_at: @seen_at), fetched: nil)
+
+  def recheck(heads, tip)
+    heads.reject { |_, sha| sha == tip.sha }.keys.map { |commit| FunCi::Trunk::Check.new(commit: commit, tip: tip, merge: @merge) }
+  end
 end

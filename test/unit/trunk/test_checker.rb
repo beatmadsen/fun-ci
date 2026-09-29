@@ -92,6 +92,19 @@ class TestTrunkChecker < Minitest::Test
     assert_nil check(trunk: "develop").fetched
   end
 
+  def test_should_check_other_heads_against_a_tip_they_were_not_checked_against
+    tip = FunCi::Trunk::Tip.new(remote: "origin", branch: "main", sha: "fff0000", seen_at: NOW)
+    checks = checker(Config.new(trunk: nil, trunk_fetch: 300), FakeFetch.new).recheck({ "bbb" => "old" }, tip)
+
+    assert_equal([%w[bbb fff0000]], checks.map { |check| [check.commit, check.tip.sha] })
+  end
+
+  def test_should_leave_heads_already_checked_against_the_tip_alone
+    tip = FunCi::Trunk::Tip.new(remote: "origin", branch: "main", sha: "fff0000", seen_at: NOW)
+
+    assert_empty checker(Config.new(trunk: nil, trunk_fetch: 300), FakeFetch.new).recheck({ "ccc" => "fff0000" }, tip)
+  end
+
   private
 
   def check(trunk: nil, trunk_fetch: 300, due: true)

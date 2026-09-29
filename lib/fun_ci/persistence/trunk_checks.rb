@@ -39,6 +39,14 @@ module FunCi
                                   merge: merge(found.last(MERGE.size)))
       end
 
+      # { commit => trunk SHA } for each branch's newest run, other than `except`,
+      # whose commit has been checked against a trunk tip.
+      def branch_heads(except:)
+        heads = @db.execute("SELECT commit_hash FROM pipeline_runs WHERE id IN (SELECT MAX(id) FROM pipeline_runs " \
+                            "WHERE project_path = ? GROUP BY branch) AND commit_hash != ?", [@project, except]).flatten
+        heads.to_h { |sha| [sha, latest(sha)&.tip&.sha] }.compact
+      end
+
       private
 
       def tip_row(tip) = tip ? [tip.remote, tip.branch, tip.sha, tip.seen_at.utc.iso8601] : [nil] * TIP.size

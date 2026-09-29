@@ -34,6 +34,9 @@ module FunCi
         end
       end
 
+      # { commit => trunk SHA } for the other branches' newest checked runs.
+      def trunk_heads(except:) = tolerating { TrunkChecks.new(@db, project).branch_heads(except: except) } || {}
+
       def trunk_checked(check)
         tolerating { TrunkChecks.new(@db, project).record(check, checked_at: Time.now) }
       end

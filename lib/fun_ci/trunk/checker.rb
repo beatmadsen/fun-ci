@@ -53,6 +53,14 @@ module FunCi
         Result.new(check: against(pending, fetched), fetched: fetched)
       end
 
+      # heads: { commit => trunk SHA it was last checked against }. Each checked
+      # against another SHA is checked against `tip`, which it hasn't met yet.
+      def recheck(heads, tip)
+        heads.reject { |_, sha| sha == tip.sha }.keys.map do |commit|
+          Check.new(commit: commit, tip: tip, merge: MergeCheck.new(@git).merge(commit, tip.sha, tip.ref))
+        end
+      end
+
       private
 
       def fetch?(ref, fetches)

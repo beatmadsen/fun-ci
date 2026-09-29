@@ -4,6 +4,7 @@ require_relative "../test_helper"
 require_relative "../support/trunk_kit"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/trunk_checks"
+require "fun_ci/persistence/pipeline_run"
 
 # Checks of a project's commits against its trunk, written once per commit and trunk SHA.
 class TestTrunkChecks < Minitest::Test
@@ -19,6 +20,10 @@ class TestTrunkChecks < Minitest::Test
   end
 
   def teardown = teardown_test_db
+
+  def record_run(sha, branch)
+    FunCi::Persistence::PipelineRun.create(@db, commit_hash: sha, branch: branch, project_path: "/project")
+  end
 
   def test_should_give_back_the_recorded_check_as_the_commit_s_latest
     @checks.record(trunk_check("abc1234", CONFLICTS, seen_at: SEEN), checked_at: SEEN)
@@ -52,6 +57,29 @@ class TestTrunkChecks < Minitest::Test
     @checks.seen("fff", at: SEEN + 600)
 
     assert_equal SEEN, @checks.latest("abc1234").tip.seen_at
+  end
+
+  def test_should_name_each_branch_s_newest_checked_commit_and_the_tip_it_was_checked_against
+    record_run("aaa", "main")
+    record_run("bbb", "feat/x")
+    @checks.record(trunk_check("bbb", CONFLICTS, seen_at: SEEN, sha: "fff"), checked_at: SEEN)
+
+    assert_equal({ "bbb" => "fff" }, @checks.branch_heads(except: "zzz"))
+  end
+
+  def test_should_leave_out_a_branch_s_older_runs
+    record_run("bbb", "feat/x")
+    @checks.record(trunk_check("bbb", CONFLICTS, seen_at: SEEN, sha: "fff"), checked_at: SEEN)
+    record_run("ccc", "feat/x")
+
+    assert_empty @checks.branch_heads(except: "zzz")
+  end
+
+  def test_should_leave_out_the_commit_the_run_checks_itself
+    record_run("bbb", "feat/x")
+    @checks.record(trunk_check("bbb", CONFLICTS, seen_at: SEEN, sha: "fff"), checked_at: SEEN)
+
+    assert_empty @checks.branch_heads(except: "bbb")
   end
 
   def test_should_not_find_another_project_s_check_of_the_same_commit

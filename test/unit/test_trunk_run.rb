@@ -21,6 +21,10 @@ class TestTrunkRun < Minitest::Test
     end
 
     def finish(sha) = RESULT.new(check: trunk_check(sha, CLEAN, seen_at: Time.now), fetched: FETCHED)
+
+    def recheck(heads, tip)
+      heads.keys.map { |commit| FunCi::Trunk::Check.new(commit: commit, tip: tip, merge: CLEAN) }
+    end
   end
 
   # A trunk whose check raises in the thread.
@@ -40,10 +44,11 @@ class TestTrunkRun < Minitest::Test
 
     def initialize = @calls = []
     def trunk_fetches = :fetches
+    def trunk_heads(except:) = except && { "bbb2222" => "old" }
     def trunk_check_started = @calls << [:started]
     def trunk_fetch_process(pid) = @calls << [:process, pid]
     def trunk_fetched(fetched, tip) = @calls << [:fetched, fetched, tip&.sha]
-    def trunk_checked(check) = @calls << [:checked, check.merge]
+    def trunk_checked(check) = @calls << [:checked, check.merge, check.commit]
   end
 
   def test_should_note_the_check_has_begun_before_recording_it
@@ -51,16 +56,16 @@ class TestTrunkRun < Minitest::Test
   end
 
   def test_should_record_the_check_the_trunk_made
-    assert_equal [:checked, CLEAN], run_with(FakeTrunk.new(CLEAN)).calls.last
+    assert_equal [:checked, CLEAN, "abc1234"], run_with(FakeTrunk.new(CLEAN)).calls[1]
   end
 
   def test_should_record_a_check_that_raised_as_unknown_with_its_reason
-    assert_equal [:checked, FunCi::Trunk::Merge.unknown("the check failed: git went away")],
+    assert_equal [:checked, FunCi::Trunk::Merge.unknown("the check failed: git went away"), "abc1234"],
                  run_with(RaisingTrunk.new).calls.last
   end
 
   def test_should_record_a_check_that_could_not_start_as_unknown_with_its_reason
-    assert_equal [[:checked, FunCi::Trunk::Merge.unknown("the check failed: no git")]],
+    assert_equal [[:checked, FunCi::Trunk::Merge.unknown("the check failed: no git"), "abc1234"]],
                  run_with(BrokenTrunk.new).calls
   end
 
@@ -74,6 +79,10 @@ class TestTrunkRun < Minitest::Test
 
   def test_should_record_how_the_fetch_went_and_the_tip_it_found
     assert_equal [:fetched, FETCHED, TrunkKit::TRUNK_SHA], run_with(FetchingTrunk.new).calls[2]
+  end
+
+  def test_should_record_the_other_branches_heads_checked_against_the_new_tip
+    assert_equal [:checked, CLEAN, "bbb2222"], run_with(FetchingTrunk.new).calls.last
   end
 
   private
