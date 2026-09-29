@@ -394,3 +394,13 @@ fn a_folded_row_shows_no_stages() {
     let grid = table(&[folded(25)], 100);
     assert!(!row_text(&grid, 1).contains("0.2s"), "{:?}", row_text(&grid, 1));
 }
+
+#[test]
+fn a_replaced_run_s_branch_is_brighter_than_a_cancelled_one_s() {
+    let grid = table(&[passed(3, "main"), passed(2, "main"), run(1, "dev", "cancelled", &[])], 100);
+    let brightness = |row: usize, word: &str| match fg_at(&grid, row, word) {
+        Colour::Rgb(r, g, b) => u16::from(r) + u16::from(g) + u16::from(b),
+        other => panic!("{other:?}"),
+    };
+    assert!(brightness(2, "main") > brightness(3, "dev"));
+}

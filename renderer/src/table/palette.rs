@@ -24,7 +24,7 @@ pub const SELECTED: [u8; 3] = [0x1D, 0x27, 0x33];
 pub const CURSOR: [u8; 3] = [0xFF, 0xFF, 0xFF];
 
 /// How much of its brightness a colour keeps on a run a newer one replaced.
-const DIMMED_PERCENT: u16 = 45;
+const DIMMED_PERCENT: u16 = 60;
 /// How much the cursor lifts each channel of a tinted row: enough to see,
 /// never so much the row outshines a failure.
 const SELECTED_LIFT: u8 = 20;

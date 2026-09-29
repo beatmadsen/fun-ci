@@ -103,3 +103,9 @@ fn the_zigzag_s_explanation_comes_before_a_stale_trunk_note() {
     let footer = conflict_footer_with(80, r#"[{"project":"/src/agent-tome","since":1789992800}]"#);
     assert!(footer.contains("↯ conflicts with trunk"), "{footer:?}");
 }
+
+#[test]
+fn a_narrow_footer_gives_up_the_key_hints_before_the_notes() {
+    let footer = conflict_footer_with(60, r#"[{"project":"/src/agent-tome","since":1789992800}]"#);
+    assert_eq!(footer, "  q quit   ↯ conflicts with trunk   agent-tome: trunk 2h old");
+}

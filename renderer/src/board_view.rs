@@ -28,6 +28,10 @@ pub use crate::model::Moment;
 /// names, a blank line and the footer (renderer-protocol.md, `board`).
 const CHROME_BELOW_HEADER: usize = 4;
 
+/// The footer's keys, and what is left of them when its notes need the room.
+const KEYS: &str = "  j/k move   c cancel   q quit";
+const SHORT_KEYS: &str = "  q quit";
+
 /// What the footer adds when a conflict is shown as `↯ main` rather than in words.
 const ZIGZAG_LEGEND: &str = "   ↯ conflicts with trunk";
 
@@ -130,11 +134,13 @@ impl BoardView {
     }
 
     /// The footer below the header, if a row is left for it: the keys dim, and
-    /// the notes in a grey no state uses, cut first when they don't fit.
+    /// the notes in a grey no state uses. When they don't fit, the keys shrink
+    /// to `q quit` first, and then the notes are cut.
     fn render_footer(&mut self, keys: &str, note: &str, rows: u16) {
         if usize::from(rows) > HEADER_HEIGHT + 1 {
             let width = usize::from(self.screen.width());
-            let keys = cut(keys, width);
+            let crowded = keys == KEYS && KEYS.chars().count() + note.chars().count() > width;
+            let keys = cut(if crowded { SHORT_KEYS } else { keys }, width);
             let note = cut(note, width - keys.chars().count());
             let note_colour = escape(38, SECONDARY, self.depth);
             self.screen.print_last(&format!("{}{note_colour}{note}{RESET}", paint(DIM, &keys)));
@@ -157,7 +163,7 @@ impl BoardView {
 fn footer(board: &Board, now_ms: i64) -> (String, String) {
     match confirming(board) {
         Some(run) => (format!("  Cancel {} ({})? y / n", run.commit.branch, short_sha(&run.commit.sha)), String::new()),
-        None => ("  j/k move   c cancel   q quit".to_string(), stale_note(&board.stale_trunks, now_ms)),
+        None => (KEYS.to_string(), stale_note(&board.stale_trunks, now_ms)),
     }
 }
 
