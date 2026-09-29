@@ -69,7 +69,7 @@ class TestTrunkShown < Minitest::Test
 
   def shown_after_fetch(error)
     check = trunk_check("abc", MERGE.clean(ahead: 1, behind: 1), seen_at: NOW)
-    FunCi::Trunk::Shown.of(check, now: NOW, fetch_error: error)
+    FunCi::Trunk::Shown.of(check, now: NOW, fetch: FunCi::Trunk::LastFetch.new(fetched_at: nil, error: error))
   end
 
   def shown(merge) = FunCi::Trunk::Shown.of(trunk_check("abc", merge, seen_at: NOW - 120), now: NOW)

@@ -39,13 +39,23 @@ class TestStatusJson < Minitest::Test
     assert_equal [failure], document(stages: [stage])[:stages].first[:failures]
   end
 
+  def test_should_carry_the_trunk_the_run_was_checked_against
+    now = Time.utc(2026, 9, 29)
+    check = FunCi::Trunk::Check.new(commit: "3f9c2ab", tip: nil, merge: FunCi::Trunk::Merge.unknown("no trunk"))
+
+    assert_equal "unknown", document(trunk: FunCi::Trunk::Shown.of(check, now: now))[:trunk][:state]
+  end
+
+  def test_should_carry_no_trunk_for_a_run_that_began_no_check
+    assert_nil document.fetch(:trunk)
+  end
+
   private
 
-  def document(verdict: :undecided, superseded_by: nil,
-               stages: [STAGE.new(name: "lint", state: "passed", seconds: 3.8)])
+  # report: the report's superseded_by and trunk, each nil unless given.
+  def document(verdict: :undecided, stages: [STAGE.new(name: "lint", state: "passed", seconds: 3.8)], **report)
     report = REPORT.new(sha: "3f9c2ab0c4d1", subject: "Add retry", branch: "main", need: "fast",
-                        stages: stages, verdict: verdict,
-                        superseded_by: superseded_by)
+                        stages: stages, verdict: verdict, superseded_by: nil, **report)
     FunCi::Agent::StatusJson.document(report)
   end
 end

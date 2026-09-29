@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "run_report"
+require_relative "trunk_json"
 
 module FunCi
   module Agent
@@ -12,7 +13,7 @@ module FunCi
       def self.document(report)
         { schema: SCHEMA, commit: { sha: report.sha, branch: report.branch, subject: report.subject },
           need: report.need, verdict: report.verdict.to_s, stages: report.stages.map { |stage| stage(stage) },
-          superseded_by: report.superseded_by }
+          superseded_by: report.superseded_by, trunk: report.trunk && TrunkJson.document(report.trunk) }
       end
 
       def self.unknown(sha) = { schema: SCHEMA, commit: { sha: sha }, verdict: "unknown" }

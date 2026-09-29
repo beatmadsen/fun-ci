@@ -2,6 +2,7 @@
 
 require "time"
 require_relative "../trunk/fetch"
+require_relative "../trunk/check"
 
 module FunCi
   module Persistence
@@ -11,8 +12,7 @@ module FunCi
     # fetches; after failures the interval doubles, up to an hour.
     class TrunkFetches
       LONGEST = 3600
-      # The last fetch that was tried: when one last succeeded, and why the last one failed, if it did.
-      Last = Data.define(:fetched_at, :error)
+      Last = Trunk::LastFetch
 
       def initialize(db, project)
         @db = db

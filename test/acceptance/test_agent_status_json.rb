@@ -22,7 +22,7 @@ class TestAgentStatusJson < Minitest::Test
     @client.status("--json")
 
     assert_equal({ "schema" => 1, "commit" => { "sha" => SHA, "branch" => "main", "subject" => "Add retry to fetch" },
-                   "need" => "fast", "verdict" => "failed", "superseded_by" => nil },
+                   "need" => "fast", "verdict" => "failed", "superseded_by" => nil, "trunk" => nil },
                  document.except("stages"))
   end
 

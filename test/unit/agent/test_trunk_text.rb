@@ -65,7 +65,8 @@ class TestTrunkText < Minitest::Test
 
   def test_should_say_why_the_last_fetch_failed
     check = trunk_check("abc", MERGE.clean(ahead: 3, behind: 0), seen_at: NOW - 120)
-    shown = FunCi::Trunk::Shown.of(check, now: NOW, fetch_error: "fatal: x")
+    shown = FunCi::Trunk::Shown.of(check, now: NOW,
+                                          fetch: FunCi::Trunk::LastFetch.new(fetched_at: nil, error: "fatal: x"))
 
     assert_equal ["  trunk  up to date   origin/main 9e1d004, fetched 2m ago, STALE (fetch failed: fatal: x)"],
                  FunCi::Agent::TrunkText.lines(shown, branch: "feat/cart", next_step: true)

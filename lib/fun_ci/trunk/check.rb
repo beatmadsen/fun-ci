@@ -29,6 +29,10 @@ module FunCi
       def self.unknown(reason) = new(outcome: "unknown", ahead: nil, behind: nil, files: [], reason: reason)
     end
 
+    # The last fetch of a project's trunk fun-ci tried: when one last
+    # succeeded (nil if none has), and why the last one failed, if it did.
+    LastFetch = Data.define(:fetched_at, :error)
+
     # One check of a commit against one trunk tip (docs/trunk-conflicts.md);
     # the tip is nil when there was none to check against.
     Check = Data.define(:commit, :tip, :merge)

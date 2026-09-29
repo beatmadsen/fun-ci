@@ -38,7 +38,7 @@ module FunCi
       private
 
       def shown(check)
-        Trunk::Shown.of(check, now: @clock.now, fetch_error: @fetches.last&.error, moved_to: moved(check))
+        Trunk::Shown.of(check, now: @clock.now, fetch: @fetches.last, moved_to: moved(check))
       end
 
       def moved(check)
