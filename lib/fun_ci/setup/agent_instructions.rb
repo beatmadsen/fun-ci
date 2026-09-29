@@ -15,6 +15,9 @@ module FunCi
         `fun-ci wait` command it prints, in the background, and act on its exit
         code: 0 passed, 1 failed, 2 over budget, 3 undecided, 4 superseded.
         `fun-ci wait --need all` must exit 0 before the work is called done.
+        Before calling work done, run `fun-ci wait --need all --trunk`; 6 means
+        the commit conflicts with the trunk, which has to be integrated first,
+        as it prints.
         `fun-ci runs` lists recent runs, and `fun-ci status` says where one stands.
       MD
 

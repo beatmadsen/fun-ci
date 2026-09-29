@@ -14,6 +14,12 @@ class TestInitTellsAgents < Minitest::Test
     assert_includes read("AGENTS.md").tr("\n", " "), "run the `fun-ci wait` command it prints, in the background"
   end
 
+  def test_should_tell_agents_to_integrate_the_trunk_before_calling_work_done
+    init
+
+    assert_includes read("AGENTS.md").tr("\n", " "), "run `fun-ci wait --need all --trunk`; 6 means"
+  end
+
   def test_should_add_the_instruction_to_an_existing_agents_md_and_keep_what_is_there
     File.write(path("AGENTS.md"), "# Our rules\n\nBe kind.\n")
     init

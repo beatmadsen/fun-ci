@@ -2,24 +2,29 @@
 
 require_relative "project_config"
 require_relative "legacy_hooks"
+require_relative "trunk_report"
 
 module FunCi
   module Setup
     class SetupChecker
       def self.run(project_root:, stdout: $stdout)
-        new(config: ProjectConfig.new(project_root), hooks: LegacyHooks.new(project_root), stdout: stdout).run
+        new(config: ProjectConfig.new(project_root), hooks: LegacyHooks.new(project_root), stdout: stdout,
+            trunk: TrunkReport.new(project_root)).run
       end
 
-      def initialize(config:, hooks:, stdout:)
+      # trunk: describes the project's trunk (#lines).
+      def initialize(config:, hooks:, stdout:, trunk:)
         @config = config
         @hooks = hooks
         @stdout = stdout
+        @trunk = trunk
       end
 
       # Warnings are printed but don't fail the check.
       def run
         errors = @config.validate + @config.evidence_errors
         @stdout.puts(errors.empty? ? "All OK. The project is configured." : errors)
+        @stdout.puts(@trunk.lines)
         list_presets
         @hooks.warnings.each { |warning| @stdout.puts "Warning: #{warning}" }
         errors.empty? ? 0 : 1

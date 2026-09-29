@@ -8,6 +8,7 @@ require "stringio"
 class TestSetupChecker < Minitest::Test
   Config = Struct.new(:validate, :evidence_errors, :presets, :any_project_presets, keyword_init: true)
   Hooks = Struct.new(:warnings)
+  Trunk = Struct.new(:lines)
   PROBLEMS = [".fun-ci/lint.sh is not found", ".fun-ci/fast.sh is not executable"].freeze
 
   def test_should_fail_when_the_project_has_problems
@@ -60,11 +61,22 @@ class TestSetupChecker < Minitest::Test
     assert_equal "evidence.stages.fast: unknown extractor 'nosuch'\n", @stdout.string
   end
 
+  def test_should_say_what_the_trunk_is_after_the_verdict
+    check([], trunk: ["Trunk: origin/main (origin's default branch)."])
+
+    assert_equal "All OK. The project is configured.\nTrunk: origin/main (origin's default branch).\n", @stdout.string
+  end
+
+  def test_should_still_pass_when_no_trunk_is_found
+    assert_equal 0, check([], trunk: ["Warning: no trunk found"])
+  end
+
   private
 
-  def check(problems, warnings: [], **given)
+  def check(problems, warnings: [], trunk: [], **given)
     @stdout = StringIO.new
     config = Config.new(validate: problems, evidence_errors: [], presets: [], any_project_presets: [], **given)
-    FunCi::Setup::SetupChecker.new(config: config, hooks: Hooks.new(warnings), stdout: @stdout).run
+    FunCi::Setup::SetupChecker.new(config: config, hooks: Hooks.new(warnings), stdout: @stdout, trunk: Trunk.new(trunk))
+                              .run
   end
 end

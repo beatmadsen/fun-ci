@@ -27,6 +27,17 @@ module FunCi
         remote ? on_remote(remote, refs) : on_local(refs.branches)
       end
 
+      # Why pick chose the trunk it did: :configured, :default (the remote's
+      # default branch), :usual (a usual trunk name on it) or :local.
+      def self.why(setting, refs)
+        return :configured if setting
+
+        remote = remote(refs.remotes)
+        return :local unless remote
+
+        refs.heads[remote] ? :default : :usual
+      end
+
       def self.configured(setting, remotes)
         remote = remotes.find { |name| setting.start_with?("#{name}/") }
         Ref.new(remote: remote, branch: remote ? setting.delete_prefix("#{remote}/") : setting)
