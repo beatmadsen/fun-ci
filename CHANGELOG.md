@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-09-29
+
 ### Added
 - Each run checks whether its commit would merge cleanly with the trunk:
   `trunk:` in `.fun-ci/config`, or else the remote's default branch.
@@ -21,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `trunk_fetch: false` stops it, and `trunk: none` turns the check off.
 - The console marks a branch that conflicts with the trunk, `conflicts main`
   in magenta, and plays a knot tying, and later untying, in the header.
+  This needs renderer 2.1.0, which the platform gems bring; with an older
+  renderer, as `cargo install` left it, the console works but shows no
+  conflicts.
 - `fun-ci --help` lists `--raw`, which it left out.
 
 ### Fixed
