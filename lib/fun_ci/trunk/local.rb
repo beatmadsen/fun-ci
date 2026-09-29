@@ -13,7 +13,11 @@ module FunCi
     # that never fetches, since a command an agent runs must not wait on the network.
     class Local
       # Lets no fetch go, and knows the last one.
-      NoFetch = Data.define(:fetches) do
+      NoFetch = Data.define(:fetches)
+
+      # Reopened rather than given as a block to Data.define, so tools that
+      # read the source (mutineer) see these as NoFetch's methods.
+      class NoFetch
         def claim(**) = nil
         def last = fetches.last
       end

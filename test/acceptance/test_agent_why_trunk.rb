@@ -45,4 +45,24 @@ class TestAgentWhyTrunk < Minitest::Test
 
     assert_equal "lib/cart.rb", JSON.parse(@client.stdout)["evidence"]["excerpts"].last["title"]
   end
+
+  def test_should_say_the_check_is_going_while_it_is
+    other = "4" * 40
+    @client.git.commit(other, "Later")
+    @client.record_run(other, branch: "feat/cart")
+    @client.start_trunk_check(other)
+    @client.why(other, "trunk")
+
+    assert_includes @client.stdout, "  trunk  checking\n"
+  end
+
+  def test_should_explain_nothing_for_a_run_that_merges_cleanly
+    clean = "5" * 40
+    @client.git.commit(clean, "Clean")
+    @client.record_run(clean, branch: "feat/other")
+    @client.record_trunk_check(clean, FunCi::Trunk::Merge.clean(ahead: 1, behind: 1), seen: @client.clock.now)
+    @client.why(clean, "trunk")
+
+    assert_includes @client.stdout, "No conflict with the trunk to explain."
+  end
 end

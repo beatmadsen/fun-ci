@@ -22,6 +22,10 @@ class TestTrunkWhyJson < Minitest::Test
     assert document(evidence([long]))[:evidence][:excerpts].first[:truncated]
   end
 
+  def test_should_give_no_reason_for_a_missing_explanation_when_there_is_one
+    assert_nil document(evidence([EXCERPT]))[:no_evidence]
+  end
+
   def test_should_say_why_there_is_nothing_to_explain
     assert_equal "no conflict", document(nil)[:no_evidence]
   end

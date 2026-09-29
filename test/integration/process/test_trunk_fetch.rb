@@ -34,6 +34,10 @@ class TestTrunkFetch < Minitest::Test
     refute File.exist?(File.join(@repos.project, ".git", "FETCH_HEAD"))
   end
 
+  def test_should_find_nothing_wrong_with_a_fetch_that_worked
+    assert_nil fetch.error
+  end
+
   def test_should_say_why_a_fetch_failed
     @repos.git(@repos.project, "remote", "set-url", "origin", File.join(@repos.project, "no-such-remote.git"))
 

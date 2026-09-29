@@ -66,6 +66,15 @@ class TestTrunkRun < Minitest::Test
                  run_with(RaisingTrunk.new).calls.last
   end
 
+  def test_should_record_a_check_that_raised_without_a_tip
+    recorder = TrunkRecorder.new
+    checks = []
+    recorder.define_singleton_method(:trunk_checked) { |check| checks << check }
+    FunCi::Pipeline::TrunkRun.start(RaisingTrunk.new, "abc1234", recorder).finish(recorder)
+
+    assert_nil checks.first.tip
+  end
+
   def test_should_record_a_check_that_could_not_start_as_unknown_with_its_reason
     assert_equal [[:checked, FunCi::Trunk::Merge.unknown("the check failed: no git"), "abc1234"]],
                  run_with(BrokenTrunk.new).calls

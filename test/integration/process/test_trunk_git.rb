@@ -74,6 +74,10 @@ class TestTrunkGit < Minitest::Test
     assert_equal FunCi::Trunk::MergeCheck::OVER_BUDGET, git.merge_tree(sha, "refs/remotes/origin/main")
   end
 
+  def test_should_name_no_top_directory_outside_a_repository
+    assert_nil FunCi::Trunk::Git.new(File.join(@repos.project, "..")).toplevel
+  end
+
   def test_should_answer_the_sha_a_ref_names
     assert_equal @repos.git(@repos.project, "rev-parse", "origin/main").strip, @git.rev("refs/remotes/origin/main")
   end

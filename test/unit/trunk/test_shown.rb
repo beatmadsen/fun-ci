@@ -40,6 +40,14 @@ class TestTrunkShown < Minitest::Test
     assert_equal "checking", FunCi::Trunk::Shown.unchecked(started: NOW - 24, now: NOW).state
   end
 
+  def test_should_show_a_check_at_the_end_of_its_time_as_checking
+    assert_equal "checking", FunCi::Trunk::Shown.unchecked(started: NOW - 25, now: NOW).state
+  end
+
+  def test_should_name_no_move_of_the_trunk_while_the_check_is_going
+    assert_nil FunCi::Trunk::Shown.unchecked(started: NOW, now: NOW).moved_to
+  end
+
   def test_should_show_a_check_past_its_time_as_unknown
     assert_equal MERGE.unknown("the check never finished"),
                  FunCi::Trunk::Shown.unchecked(started: NOW - 26, now: NOW).check.merge

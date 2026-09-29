@@ -32,6 +32,12 @@ class TestFirstFetch < Minitest::Test
     assert_nil notice
   end
 
+  def test_should_announce_nothing_for_a_local_trunk
+    @repos.git(@repos.project, "remote", "remove", "origin")
+
+    assert_nil notice
+  end
+
   def test_should_announce_nothing_when_the_project_does_not_fetch
     Dir.mkdir(File.join(@repos.project, ".fun-ci"))
     File.write(File.join(@repos.project, ".fun-ci", "config"), "trunk_fetch: false\n")

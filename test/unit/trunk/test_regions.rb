@@ -24,6 +24,12 @@ class TestRegions < Minitest::Test
     assert_equal 1, regions(text).size
   end
 
+  def test_should_join_conflicts_whose_surroundings_just_meet
+    text = "#{CONFLICT}#{(1..6).map { |n| "x#{n}\n" }.join}#{CONFLICT}"
+
+    assert_equal 1, regions(text).size
+  end
+
   def test_should_keep_conflicts_far_apart_apart
     text = "#{CONFLICT}#{(1..7).map { |n| "x#{n}\n" }.join}#{CONFLICT}"
 

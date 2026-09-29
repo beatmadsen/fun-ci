@@ -67,6 +67,18 @@ class TestTrunkChecker < Minitest::Test
                  checker.finish(checker.start("abc1234", Fetches.new(due: true))).check.merge
   end
 
+  def test_should_fetch_nothing_when_no_trunk_is_found
+    git = FakeGit.new
+    def git.refs = FunCi::Trunk::Refs.new(remotes: [], branches: ["feat/x"], heads: {})
+    checker = FunCi::Trunk::Checker.new(git, Config.new(trunk: nil, trunk_fetch: 300), FakeFetch.new, -> { NOW })
+
+    assert_nil checker.finish(checker.start("abc1234", Fetches.new(due: true))).fetched
+  end
+
+  def test_should_name_no_tip_for_a_trunk_that_does_not_exist
+    assert_nil check(trunk: "origin/nosuch").check.tip
+  end
+
   def test_should_fetch_a_remote_trunk_when_it_is_time_to
     assert_equal FETCHED, check.fetched
   end

@@ -23,3 +23,12 @@ ignore:
   # Seams.defaults: `workspace: nil` as `true`. Nil means the worktree pool,
   # used only by the real CLI, which process tests run unmutated.
   - a4336b0d4dd3
+  # TrunkRun::Skipped#finish: `nil` as `true`. Nothing reads what finish answers.
+  - c798b7c2393c
+  # Settings#setting: `nil` as `true` for a config that isn't a mapping. true
+  # is no name for `trunk` and no interval for `trunk_fetch`, so each takes its
+  # default, as with nil.
+  - 322ba40ea2a3
+  # Shown.unchecked: a check that never finished made with `commit: true`.
+  # Nothing shows a Shown's commit.
+  - 22440a16e06e

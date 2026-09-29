@@ -48,6 +48,19 @@ class TestDbRecorderTrunk < Minitest::Test
     assert_in_delta Time.now, FunCi::Persistence::TrunkChecks.new(@db, "/project").latest("abc1234").tip.seen_at, 60
   end
 
+  def test_should_not_count_checks_as_seen_again_when_the_fetch_failed
+    recorder = recorder_of_run
+    recorder.trunk_checked(trunk_check("abc1234", CLEAN, seen_at: Time.utc(2026, 1, 1)))
+    recorder.trunk_fetched(FunCi::Trunk::Fetched.new(error: "fatal: no remote"), trunk_tip(seen_at: Time.now))
+
+    assert_equal Time.utc(2026, 1, 1),
+                 FunCi::Persistence::TrunkChecks.new(@db, "/project").latest("abc1234").tip.seen_at
+  end
+
+  def test_should_know_no_last_fetch_without_a_database
+    assert_nil FunCi::Persistence::TrunkRecording::NoFetches.new.last
+  end
+
   def test_should_claim_fetches_for_the_run_s_project
     recorder_of_run.trunk_fetches.claim(now: Time.now, interval: 300)
 

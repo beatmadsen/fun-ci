@@ -28,6 +28,11 @@ class TestTrunkResolver < Minitest::Test
                  pick(nil, REFS.new(remotes: ["origin"], branches: %w[origin/develop origin/master], heads: {}))
   end
 
+  def test_should_take_origin_among_several_remotes
+    assert_equal REF.new(remote: "origin", branch: "main"),
+                 pick(nil, REFS.new(remotes: %w[upstream origin], branches: %w[upstream/main origin/main], heads: {}))
+  end
+
   def test_should_take_the_only_remote_when_none_is_called_origin
     assert_equal REF.new(remote: "upstream", branch: "main"),
                  pick(nil, REFS.new(remotes: ["upstream"], branches: ["upstream/main"], heads: {}))

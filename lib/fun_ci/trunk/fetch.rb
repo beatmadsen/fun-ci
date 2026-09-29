@@ -24,6 +24,12 @@ module FunCi
 
       def self.ref_for(ref) = "refs/fun-ci/trunk/#{ref.remote}/#{ref.branch}"
 
+      # Why a fetch failed, from what git printed: its fatal line, else its first, else that it failed.
+      def self.reason(output)
+        lines = output.lines.map(&:strip).reject(&:empty?)
+        (lines.find { |line| line.start_with?("fatal:") } || lines.first || "git fetch failed").to_s
+      end
+
       # env: what the fetch finds in its environment besides fun-ci's own.
       def initialize(dir, env:)
         @launch = Pipeline::ProcessRunner::Launch.new(chdir: dir, env: QUIET.merge(env))
@@ -37,7 +43,7 @@ module FunCi
         output, status, over = @runner.await_process(started, deadline, launch: @launch, timer: timer)
         return Fetched.new(error: "no answer within #{deadline} s") if over
 
-        Fetched.new(error: status.success? ? nil : reason(output))
+        Fetched.new(error: status.success? ? nil : self.class.reason(output))
       end
 
       private
@@ -46,11 +52,6 @@ module FunCi
         refspec = "+refs/heads/#{ref.branch}:#{self.class.ref_for(ref)}"
         fetch = Shellwords.join(["git", "fetch", *OPTIONS, ref.remote, refspec])
         "sh -c #{Shellwords.escape("#{NO_PROMPT_SSH}exec #{fetch}")}"
-      end
-
-      def reason(output)
-        lines = output.lines.map(&:strip).reject(&:empty?)
-        (lines.find { |line| line.start_with?("fatal:") } || lines.first || "git fetch failed").to_s
       end
     end
   end
