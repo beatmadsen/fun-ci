@@ -26,7 +26,7 @@ class TestTriggerDefaultTrunk < Minitest::Test
 
   def test_should_check_against_the_project_s_own_trunk_when_given_none
     project = in_project do |dir|
-      build_trigger(dir, trunk: nil, recorder: FunCi::Persistence::DbRecorder.new(@db)).run
+      build_trigger(dir, trunk: nil, command_runner: scripted_runner, recorder: FunCi::Persistence::DbRecorder.new(@db)).run
       dir
     end
 

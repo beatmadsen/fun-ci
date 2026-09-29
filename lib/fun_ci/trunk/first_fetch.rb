@@ -12,13 +12,14 @@ module FunCi
     # developer sees it (architecture.md, Checking against the trunk):
     # the post-commit hook's run is in the background, and what it prints is not.
     module FirstFetch
-      # Nil unless the project fetches a remote trunk and never has yet.
-      def self.notice(project, db)
+      # Nil unless the project fetches a remote trunk and never has yet; git lists
+      # the project's refs.
+      def self.notice(project, db, git: Git.new(project))
         config = Setup::ProjectConfig.new(project)
         interval = config.trunk_fetch
         return nil if interval.nil? || config.trunk == "none" || Persistence::TrunkFetches.new(db, project).last
 
-        ref = Resolver.pick(config.trunk, Git.new(project).refs)
+        ref = Resolver.pick(config.trunk, git.refs)
         ref&.remote ? Description.first_fetch(ref, interval) : nil
       end
     end

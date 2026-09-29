@@ -4,11 +4,10 @@ require_relative "../../test_helper"
 require_relative "../../support/trunk_repos"
 require "fun_ci/trunk/first_fetch"
 require "fun_ci/persistence/database"
-require "fun_ci/persistence/trunk_fetches"
 
 # What the post-commit hook says before a project's first fetch of its trunk
-# (acceptance-tests.md, AT-11.20): the run itself is in the background,
-# where nothing it prints is seen.
+# (acceptance-tests.md, AT-11.20), read from a real clone's refs; what it
+# decides from them is test/integration/test_first_fetch.rb.
 class TestFirstFetch < Minitest::Test
   def setup
     @repos = TrunkRepos.create
@@ -21,31 +20,8 @@ class TestFirstFetch < Minitest::Test
     @repos.remove
   end
 
-  def test_should_announce_a_project_s_first_fetch
-    assert_match(%r{\Afun-ci: fetching origin/main into refs/fun-ci/}, notice)
+  def test_should_announce_the_first_fetch_of_a_clone_s_remote_trunk
+    assert_match(%r{\Afun-ci: fetching origin/main into refs/fun-ci/},
+                 FunCi::Trunk::FirstFetch.notice(@repos.project, @db))
   end
-
-  def test_should_announce_nothing_once_the_project_has_fetched
-    FunCi::Persistence::TrunkFetches.new(@db, @repos.project).finished(FunCi::Trunk::Fetched.new(error: nil),
-                                                                       at: Time.now)
-
-    assert_nil notice
-  end
-
-  def test_should_announce_nothing_for_a_local_trunk
-    @repos.git(@repos.project, "remote", "remove", "origin")
-
-    assert_nil notice
-  end
-
-  def test_should_announce_nothing_when_the_project_does_not_fetch
-    Dir.mkdir(File.join(@repos.project, ".fun-ci"))
-    File.write(File.join(@repos.project, ".fun-ci", "config"), "trunk_fetch: false\n")
-
-    assert_nil notice
-  end
-
-  private
-
-  def notice = FunCi::Trunk::FirstFetch.notice(@repos.project, @db)
 end
