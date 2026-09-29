@@ -1,4 +1,5 @@
 use: grep
+title: go build's and go vet's errors
 patterns: ['^(vet: )?\S+\.go:\d+:\d+: ']
 markers: [go.mod]
 signature: '^(vet: )?\S+\.go:\d+:\d+: '

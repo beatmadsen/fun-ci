@@ -21,7 +21,7 @@ fun-ci init --everything
 
 This detects your project type, writes four stage scripts into `.fun-ci/`, installs a `post-commit` and a `pre-push` git hook, and checks the setup. It also adds a short section to your `AGENTS.md` (or `CLAUDE.md`, if that is the only one) telling coding agents what to do after a commit.
 
-`fun-ci init` has templates for every stack fun-ci can read failures from: Ruby (rake or rspec), Gradle, Maven, Rust, Go, Elixir, Dart, Swift, PHP (Composer), .NET, Python (uv, Poetry or pip), Deno, Bun, Node (pnpm, Yarn or npm), Perl, CMake and make. Where a project has more than one, the first in that list wins. The test stages split the suite the way the tool already does (`pytest -m slow`, `go test -short`, `cargo test -- --ignored`, an ExUnit or Dart `slow` tag, Perl's `xt/`), or run a `test:slow` script (a `test-slow` target for make) where the tool has no such habit. Fun-CI works with any project: the stages are shell scripts, so edit them to run whatever your project uses.
+`fun-ci init` has templates for Ruby, Gradle, Maven, Rust, Go, Elixir, Dart, Swift, PHP, .NET, Python, Deno, Bun, Node, Perl, and C or C++ built with CMake or make. [docs/stacks.md](docs/stacks.md) shows how it recognises each one and the commands it writes. Fun-CI works with any project: the stages are shell scripts, so edit them to run whatever your project uses.
 
 - `lint.sh`: linter and static analysis
 - `build.sh`: compile or build
@@ -165,7 +165,7 @@ The whole output: fun-ci why 2330979 fast --raw
 
 fun-ci names an empty directory in `FUN_CI_REPORT` for every stage. Write JUnit XML (`*.xml`) or `{"failures": [{"file", "line", "test", "message", "output"}]}` (`*.json`) there and each failure is kept with its message. The Gradle and Maven scripts `fun-ci init` writes already copy their reports in.
 
-With no configuration, fun-ci runs the presets for the tools your project has when a failure shows them: rspec, Minitest, Gradle, Maven, pytest, unittest, Jest, Vitest, Mocha, Node's test runner, Bun, Deno, go test, cargo test, dotnet test, PHPUnit, ExUnit, swift test, dart test, GoogleTest, tsc, ESLint, RuboCop, Ruff, mypy, go build, rustc, gcc, ShellCheck and prove, and JSON logs from logstash-logback-encoder, ECS, pino and structlog. Each preset is checked against the recorded output of a real failing run of its tool. `fun-ci check` lists the ones that apply to your project.
+With no configuration, fun-ci runs the presets for the tools your project has when a failure shows them. There are presets for the test runners, compilers, linters and type checkers of every stack `fun-ci init` knows, and for JSON logs from logstash-logback-encoder, ECS, pino and structlog; [docs/stacks.md](docs/stacks.md#presets) lists each one with what it picks out and when it runs. Each preset is checked against the recorded output of a real failing run of its tool. `fun-ci check` lists the ones that apply to your project.
 
 To keep more, add entries under `evidence:` in `.fun-ci/config`:
 
