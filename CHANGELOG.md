@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.2] - 2026-09-29
+
+### Fixed
+- In a Gradle project set up by `fun-ci init`, the fast suite could fail
+  before running a test, with Gradle unable to hash a file in its own build
+  directory (`build/kotlin/compileTestKotlin/...`). The fast and slow suites
+  run at the same time in one worktree, and both compiled the test code into
+  the same place, each deleting what the other was reading. The build script
+  now compiles the test code (`./gradlew assemble testClasses`), so neither
+  suite has to. Maven, .NET, Elixir, Dart and Swift projects could clash the
+  same way, and their scripts change too: Maven builds with `mvn test-compile`
+  and runs `mvn surefire:test` and `mvn failsafe:integration-test
+  failsafe:verify`, so its slow suite now runs only the integration tests
+  failsafe finds (the classes named `*IT`) rather than every test again;
+  Elixir compiles its test environment in the build; Dart precompiles its test
+  runner and runs the slow suite from source; the .NET and Swift suites run
+  with `--no-build` and `--skip-build`. `fun-ci init` now says that the suites
+  share what the build made. Scripts already in `.fun-ci/` are left as they
+  are, so an existing project picks this up by editing them to match
+  `docs/stacks.md`.
+
 ## [2.0.1] - 2026-09-29
 
 ### Fixed
