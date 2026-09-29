@@ -7,8 +7,8 @@ program draws it: the board, the animations, the keys you press.
 ![The fun-ci console following a run: a rocket while it runs, then a scene as each stage passes](https://raw.githubusercontent.com/beatmadsen/fun-ci/main/docs/screenshots/console.png)
 
 You rarely need it on its own. The `fun-ci` gem for Linux (x86_64, aarch64,
-musl) and macOS (arm64, x86_64) bundles it. On any other system, install the
-plain gem and then the renderer:
+musl) and macOS (arm64, x86_64) bundles it. On any other Unix-like system,
+install the plain gem and then the renderer:
 
 ```sh
 cargo install fun-ci-renderer
