@@ -4,6 +4,7 @@ require "bundler/gem_tasks"
 require "rake/testtask"
 require "rubocop/rake_task"
 require "etc"
+require_relative "renderer/tools/renderer_build"
 
 # `test` is the gate's lane; the others are quicker subsets of it.
 # test/policy/test_gate_lanes.rb holds them to that.
@@ -33,7 +34,7 @@ end
 
 namespace :contract do
   desc "Drive the real renderer binary on a pseudo-terminal through the happy-7 contract fixture"
-  task(:binary) { drive_renderer_binary }
+  task(binary: "rust:fresh") { drive_renderer_binary }
 end
 
 RuboCop::RakeTask.new
@@ -77,8 +78,11 @@ if Rake::Task.task_defined?("release:source_control_push")
 end
 
 namespace :rust do
+  # The lanes that run the binary test renderer/src (renderer/tools/renderer_build.rb).
+  task(:fresh) { (clean = FunCi::RendererBuild.clean_command(RENDERER_MANIFEST)) && sh(*clean) }
+
   desc "Run the Rust renderer's tests"
-  task(:test) { sh "cargo", "test", "--manifest-path", RENDERER_MANIFEST }
+  task(test: :fresh) { sh "cargo", "test", "--manifest-path", RENDERER_MANIFEST }
 
   desc "Lint the Rust renderer with clippy (pedantic, warnings are errors)"
   task(:clippy) { sh "cargo", "clippy", "--manifest-path", RENDERER_MANIFEST, "--all-targets", "--", "-D", "warnings" }
