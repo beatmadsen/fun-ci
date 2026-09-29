@@ -19,6 +19,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   already recorded that way reads as taking no time, so an existing database
   needs no repair. `fun-ci status`, `why` and `events` no longer report a
   negative time for such a stage either.
+- A commit made on a detached HEAD, as every commit a rebase replays is, was
+  recorded with no branch name, so `fun-ci status` ended in "on" and the
+  console showed a gap where the branch goes. Such runs are now on the branch
+  `detached`, whether a hook or `fun-ci wait` started them, and runs already
+  recorded without a name are renamed when fun-ci next opens its database.
 
 ## [2.0.0] - 2026-09-29
 

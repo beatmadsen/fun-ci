@@ -15,6 +15,13 @@ class TestAgentGit < Minitest::Test
 
   def teardown = @project.remove
 
+  # Trigger names it, as it does for the hooks, which pass the same "".
+  def test_should_name_no_branch_when_head_is_detached
+    @project.git("checkout", "--detach")
+
+    assert_equal "", @git.branch
+  end
+
   def test_should_resolve_head_to_its_full_sha
     assert_equal @sha, @git.resolve("HEAD")
   end

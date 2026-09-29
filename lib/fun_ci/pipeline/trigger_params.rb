@@ -14,6 +14,14 @@ module FunCi
 
     Commit = Data.define(:sha, :branch)
 
+    # On a detached HEAD git names no branch, and the hooks pass "": the run
+    # is kept, shown and cancelled by others on the branch "detached".
+    class Commit
+      DETACHED = "detached"
+
+      def initialize(sha:, branch:) = super(sha: sha, branch: branch.empty? ? DETACHED : branch)
+    end
+
     Io = Data.define(:stdout, :stderr) do
       def initialize(stdout: $stdout, stderr: $stderr) = super
     end

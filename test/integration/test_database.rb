@@ -96,6 +96,15 @@ class TestDatabaseMigrationFromOlderSchema < Minitest::Test
 
     assert_includes @db.execute("PRAGMA table_info(pipeline_runs)").map { |row| row[1] }, "pid"
   end
+
+  # Before 2.0.1, a run started on a detached HEAD was kept with no branch name.
+  def test_should_name_the_branch_of_a_run_kept_without_one_detached
+    FunCi::Persistence::Database.migrate!(@db)
+    @db.execute("INSERT INTO pipeline_runs (commit_hash, branch) VALUES ('abc1234', '')")
+    FunCi::Persistence::Database.migrate!(@db)
+
+    assert_equal [["detached"]], @db.execute("SELECT branch FROM pipeline_runs")
+  end
 end
 
 class TestDatabaseBusyTimeout < Minitest::Test

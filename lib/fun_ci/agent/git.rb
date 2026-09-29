@@ -16,8 +16,9 @@ module FunCi
       def subject(sha) = git("log", "-1", "--format=%s", sha).to_s
       def toplevel = File.realpath(git("rev-parse", "--show-toplevel"))
 
-      # The branch checked out, as the git hooks name it; "unknown" when HEAD is detached.
-      def branch = git("branch", "--show-current").to_s.then { |name| name.empty? ? "unknown" : name }
+      # The branch checked out, as the git hooks name it: "" when HEAD is
+      # detached, which trigger names (Pipeline::Commit).
+      def branch = git("branch", "--show-current").to_s
 
       private
 

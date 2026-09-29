@@ -50,8 +50,12 @@ module FunCi
         with_setup_lock(db.filename("main")) do
           [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE].each { |table| db.execute(table) }
           ADDED_COLUMNS.each { |table, column, type| add_column_if_missing(db, table, column, type) }
+          db.execute(NAME_DETACHED)
         end
       end
+
+      # Runs started on a detached HEAD before 2.0.1 were kept with no branch name.
+      NAME_DETACHED = "UPDATE pipeline_runs SET branch = 'detached' WHERE branch = ''"
 
       def self.with_setup_lock(db_path)
         File.open("#{db_path}.setup-lock", File::RDWR | File::CREAT, 0o644) do |lock|
