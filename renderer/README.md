@@ -14,6 +14,8 @@ install the plain gem and then the renderer:
 cargo install fun-ci-renderer
 ```
 
+It builds with Rust 1.88 or newer.
+
 `fun-ci console` looks for the renderer in `FUN_CI_RENDERER` first, then in
 the gem, then on your `PATH`.
 

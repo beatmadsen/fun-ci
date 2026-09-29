@@ -63,6 +63,16 @@ jobs:
       - run: mkdir -p pkg && gem build fun_ci.gemspec -o pkg/fun_ci.gem
       - run: script/smoke-platform-gem.sh pkg/fun_ci.gem none
 
+  # The crate builds with the oldest Rust its rust-version names, which is what
+  # `cargo install` on that Rust would do.
+  crate-msrv:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "MSRV=$(sed -n 's/^rust-version = "\(.*\)"$/\1/p' renderer/Cargo.toml)" >> "$GITHUB_ENV"
+      - run: rustup toolchain install "$MSRV" --profile minimal
+      - run: cargo +"$MSRV" build --locked --manifest-path renderer/Cargo.toml
+
   # `cargo install fun-ci-renderer`, short of publishing: the crate packages
   # and builds as crates.io would take it, and the renderer cargo installs is
   # the one the plain gem finds on PATH.

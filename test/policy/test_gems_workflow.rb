@@ -38,6 +38,14 @@ class TestGemsWorkflow < Minitest::Test
     assert_includes commands("cargo-install"), "cargo publish --dry-run --locked --manifest-path renderer/Cargo.toml"
   end
 
+  def test_should_build_the_renderer_crate_with_the_oldest_rust_it_says_it_builds_with
+    assert_includes commands("crate-msrv"), 'cargo +"$MSRV" build --locked --manifest-path renderer/Cargo.toml'
+  end
+
+  def test_should_take_that_rust_from_the_crate_s_own_rust_version
+    assert(commands("crate-msrv").any? { |command| command.include?("rust-version") && command.include?("MSRV=") })
+  end
+
   def test_should_find_a_renderer_installed_with_cargo_from_the_plain_gem
     assert(commands("cargo-install").any? { |command| command.match?(%r{script/smoke-platform-gem\.sh .* path}) })
   end
@@ -47,5 +55,5 @@ class TestGemsWorkflow < Minitest::Test
   def workflow = YAML.safe_load_file(WORKFLOW)
   def jobs = workflow.fetch("jobs")
   def builds = jobs.dig("platform", "strategy", "matrix", "include")
-  def commands(job) = jobs.dig(job, "steps").filter_map { |step| step["run"] }
+  def commands(job) = Array(jobs.dig(job, "steps")).filter_map { |step| step["run"] }
 end

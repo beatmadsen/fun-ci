@@ -78,7 +78,7 @@ fun-ci extract STAGE --output FILE [--exit N | --timed-out] [--json]  # Try a st
 - Ruby >= 3.2 (CI runs 3.2, 3.3, 3.4, 4.0). Two runtime dependencies: `sqlite3`, in WAL mode, and `rexml`, which reads the JUnit reports stages write.
 - Minitest, run in parallel processes by ActiveSupport's executor (serially under `MUTATION_TESTING`); RuboCop; mutineer for the mutation lane (Ruby >= 3.4 only).
 - Prism, in tests, to read Ruby sources for the code-limit and call scans.
-- Rust pinned to one release in `renderer/rust-toolchain.toml` (the root `rust-toolchain.toml` links to it); raise it on purpose, with the gate green on the new release.
+- Rust pinned to one release in `renderer/rust-toolchain.toml` (the root `rust-toolchain.toml` links to it); raise it on purpose, with the gate green on the new release. The crate's `rust-version` is apart from it: the oldest Rust that builds the renderer for `cargo install`, which the gems workflow's `crate-msrv` job builds with; code that needs a newer standard library raises it, and the READMEs with it.
 - 2.0 adds a Rust renderer (`fun-ci-renderer`) that Ruby drives over JSON Lines; `docs/architecture.md` decides the boundary: Ruby decides what is true, Rust decides how it looks.
 
 ## Layout
@@ -115,6 +115,7 @@ Seams tests use in place of the real thing:
 - Ruby's ConsoleSession and the real renderer binary, on a pseudo-terminal, hold the happy-7 contract conversation line for line, and the binary exits 0 on `quit`: `contract/binary/test_renderer_binary.rb` (the `contract:binary` lane; the Ruby and Rust suites each hold every fixture on their own side: `test/acceptance/test_contract_fixtures.rb`, `renderer/tests/suite/contract_fixtures.rs`).
 - What the renderer draws for each scenario in `contract/scenarios/` matches its reviewed snapshot in `renderer/tests/suite/snapshots/`, frame by frame (below the header, characters and each cell's colours and attributes; the header, a digest of its cells), and each header scene matches its gallery of cell digests; a deliberate change to the TUI is a snapshot diff, reviewed in the headless PNGs, accepted with `cargo insta review` and committed with the change: `renderer/tests/suite/snapshots.rs`, `renderer/tests/suite/scenes.rs`.
 - The gem ships exactly the tracked files under `lib/` and `exe/` plus README, CHANGELOG and LICENSE, and keeps its publishing metadata: `test/integration/process/test_gemspec_contents.rb`.
+- The renderer crate is as crates.io takes it: at most five keywords within its rules, a `rust-version` its readers are told and CI builds with, and only what a user builds, the licence among it: `test/policy/test_renderer_crate.rb`, `test/policy/test_gems_workflow.rb`.
 - CI builds the platform gem for each of the five targets in architecture.md, installs each into an empty GEM_HOME and runs it (the musl one on a musl Ruby), and checks the plain gem says how to get a renderer: `test/policy/test_gems_workflow.rb`.
 - CI runs the gate on Ruby 3.2, 3.3, 3.4 and 4.0 with fail-fast off, and both mutation lanes (Ruby on 3.4, and the Rust renderer's): `test/policy/test_ci_workflow.rb`.
 - Every machine and CI job builds the renderer with the pinned Rust, never whichever stable is latest, so clippy's verdict is the same everywhere: `test/policy/test_rust_toolchain.rb`, `test/policy/test_ci_workflow.rb`.

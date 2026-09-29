@@ -2,13 +2,17 @@
 name = "fun-ci-renderer"
 version = "2.0.0"
 edition = "2024"
-description = "Terminal renderer for the fun-ci console"
+# The oldest Rust that builds it; the gems workflow builds it with this one.
+rust-version = "1.88"
+description = "Terminal renderer for the fun-ci console: the dashboard of a local CI"
 license = "MIT"
 repository = "https://github.com/beatmadsen/fun-ci"
 homepage = "https://github.com/beatmadsen/fun-ci"
 readme = "README.md"
-keywords = ["ci", "tui", "terminal", "fun-ci"]
-categories = ["command-line-utilities"]
+keywords = ["ci", "tui", "terminal", "dashboard", "testing"]
+categories = ["command-line-utilities", "development-tools::testing"]
+# What a user builds: the tests read the scenarios in contract/, outside the crate.
+include = ["src/**/*.rs", "Cargo.toml", "Cargo.lock", "README.md", "LICENSE.txt"]
 
 [lib]
 name = "fun_ci_renderer"
