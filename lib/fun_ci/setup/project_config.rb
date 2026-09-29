@@ -38,6 +38,7 @@ module FunCi
       def any_project_presets = preset_candidates.reject(&:because).map { |found| found.preset.name }
 
       def worktree_slots = settings.worktree_slots
+      def trunk = settings.trunk
 
       def script_path(stage)
         File.join(@fun_ci_dir, "#{stage}.sh")

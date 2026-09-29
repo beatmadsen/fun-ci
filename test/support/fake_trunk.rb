@@ -7,6 +7,9 @@ require_relative "trunk_kit"
 class FakeTrunk
   include TrunkKit
 
+  # A project that checks no trunk, as with `trunk: none`.
+  NONE = Object.new.tap { |none| def none.check(_sha) = nil }.freeze
+
   attr_reader :checked
 
   def initialize(merge, seen_at: Time.now)

@@ -10,6 +10,7 @@ require "fun_ci/persistence/pipeline_run"
 require_relative "scripted_project"
 require_relative "trigger_workspace"
 require_relative "../support/trigger_test_kit"
+require_relative "../support/fake_trunk"
 
 # Acceptance test client for the Trigger CLI: tests say what the user does
 # and what they see, and this client knows how the Trigger is wired.
@@ -21,7 +22,7 @@ class TriggerCliClient
   def initialize(workspace, **seams)
     @workspace = workspace
     @seams = { background_launcher: ->(**) {}, recorder: FunCi::Persistence::DbRecorder.new(workspace.db),
-               **seams }
+               trunk: FakeTrunk::NONE, **seams }
   end
 
   attr_reader :workspace

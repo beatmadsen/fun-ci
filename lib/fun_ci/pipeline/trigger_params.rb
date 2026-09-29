@@ -32,7 +32,8 @@ module FunCi
     # for the evidence budget; `extractor_runner` makes what runs a project's
     # own extractors (`run:` entries), given dir:, env: and scratch:;
     # `process_table` answers what ps lists, for a stage over budget; `trunk`
-    # checks a commit against the trunk (#check(sha) answers a Trunk::Check).
+    # checks a commit against the trunk (#check(sha) answers a Trunk::Check,
+    # or nil for no check), nil for the project's own.
     Seams = Data.define(:command_runner, :time_budgets, :commit_validator, :recorder, :background_launcher, :workspace,
                         :stage_dir, :environment, :clock, :extractor_runner, :process_table, :trunk)
 

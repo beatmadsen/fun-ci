@@ -33,9 +33,9 @@ class TestTrunkRun < Minitest::Test
     assert_equal [FunCi::Trunk::Merge.unknown("the check failed: git went away")], recorder.checks.map(&:merge)
   end
 
-  def test_should_record_nothing_without_a_trunk_to_check
+  def test_should_record_nothing_when_the_project_checks_no_trunk
     recorder = CheckRecorder.new
-    FunCi::Pipeline::TrunkRun.start(nil, "abc1234").finish(recorder)
+    FunCi::Pipeline::TrunkRun.start(FakeTrunk::NONE, "abc1234").finish(recorder)
 
     assert_empty recorder.checks
   end

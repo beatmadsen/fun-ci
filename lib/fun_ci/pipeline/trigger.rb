@@ -8,6 +8,7 @@ require_relative "slot_run"
 require_relative "stale_pipeline_canceller"
 require_relative "workspaces"
 require_relative "trunk_run"
+require_relative "../trunk/checker"
 
 module FunCi
   module Pipeline
@@ -57,7 +58,7 @@ module FunCi
 
       # The check is recorded by the recorder the run holds once its stages are done.
       def checking_the_trunk
-        trunk = TrunkRun.start(@seams.trunk, @commit.sha)
+        trunk = TrunkRun.start(@seams.trunk || Trunk::Checker.for(@project), @commit.sha)
         yield.tap { trunk.finish(recorder) }
       end
 

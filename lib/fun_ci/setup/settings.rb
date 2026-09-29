@@ -16,6 +16,15 @@ module FunCi
 
       def worktree_slots = errors.empty? ? values.fetch("worktree_slots") : DEFAULTS.fetch("worktree_slots")
 
+      # The trunk's name, or nil when none is given or it is no name. A mistake
+      # here never stops a pipeline, so it is not among `errors`.
+      def trunk
+        given = raw.is_a?(Hash) ? raw["trunk"] : nil
+        given.is_a?(String) ? given : nil
+      rescue Psych::SyntaxError
+        nil
+      end
+
       def errors
         return [".fun-ci/config must be a mapping such as `worktree_slots: 2`"] unless raw.is_a?(Hash)
 

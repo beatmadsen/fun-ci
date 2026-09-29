@@ -10,12 +10,8 @@ module FunCi
     # holds then. The thread touches no database, and whatever goes wrong in
     # it is recorded as an unknown check rather than raised into the run.
     class TrunkRun
-      # For a project whose trunk isn't checked.
-      class Skipped
-        def finish(_recorder) = nil
-      end
-
-      def self.start(trunk, sha) = trunk ? new(Thread.new { checked(trunk, sha) }) : Skipped.new
+      # trunk: answers #check(sha), a Trunk::Check or nil for a project that checks none.
+      def self.start(trunk, sha) = new(Thread.new { checked(trunk, sha) })
 
       def self.checked(trunk, sha)
         trunk.check(sha)
@@ -28,7 +24,10 @@ module FunCi
         @thread = thread
       end
 
-      def finish(recorder) = recorder.trunk_checked(@thread.value)
+      def finish(recorder)
+        check = @thread.value
+        recorder.trunk_checked(check) if check
+      end
     end
   end
 end
