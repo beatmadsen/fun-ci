@@ -6,7 +6,7 @@ require "fun_ci/trunk/checker"
 require "fun_ci/persistence/trunk_recording"
 
 # A commit checked against the trunk it fetches, in real repositories (docs/trunk-conflicts.md, AT-11.1, AT-11.2).
-class TestTrunkChecker < Minitest::Test
+class TestTrunkCheckerOnRealGit < Minitest::Test
   def setup = @repos = TrunkRepos.create
   def teardown = @repos.remove
 
