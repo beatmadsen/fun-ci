@@ -5,7 +5,7 @@ require_relative "../evidence/start"
 
 module FunCi
   module Pipeline
-    # Runs a stage that has been started, in `dir`, with a report directory of
+    # Runs a stage that has been started, in `dir`, with a stage directory of
     # its own, and records how it ended while it still holds both. The same
     # for every stage, the slow suite in its forked child included.
     class StageExecution
@@ -39,7 +39,7 @@ module FunCi
       # The stage learns its name from FUN_CI_STAGE (acceptance-tests.md, AT-10.7).
       def execute(stage, command, stage_dir, before_kill, &)
         window = stage_dir.window
-        launch = ProcessRunner::Launch.new(env: stage_dir.env.merge("FUN_CI_STAGE" => stage), output: window,
+        launch = ProcessRunner::Launch.new(env: { "FUN_CI_STAGE" => stage }, output: window,
                                            before_kill: before_kill)
         @seams.executor(@dir).call(command, @seams.budgets[stage], launch, &)
       ensure
@@ -55,11 +55,11 @@ module FunCi
 
       # Made before the stage runs, which is when its watched files are stamped.
       def collector(stage, stage_dir)
-        environment = @seams.environment.merge(stage_dir.env)
-        sources = Evidence::Sources.new(stage: stage, worktree: @dir, reports: stage_dir, environment: environment,
+        sources = Evidence::Sources.new(stage: stage, worktree: @dir, stage_dir: stage_dir,
+                                        environment: @seams.environment,
                                         budget: @seams.budgets[stage], commit: @commit.to_h, started: Time.now,
                                         processes: @seams.process_table)
-        commands = @seams.extractor_runner.call(dir: @dir, env: stage_dir.env, scratch: stage_dir.scratch)
+        commands = @seams.extractor_runner.call(dir: @dir, scratch: stage_dir.scratch)
         Evidence::Start.collector(sources, @seams.clock, commands)
       end
     end

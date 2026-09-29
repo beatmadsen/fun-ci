@@ -16,7 +16,7 @@ class TestEvidenceContract < Minitest::Test
     stage: "fast", state: "failed", exit_status: 1, signal: nil, seconds: 8.4, budget: 10, alongside: ["slow"],
     commit: { sha: "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a", branch: "main" },
     worktree: "/repo/.git/fun-ci/worktrees/slot-1", started_at: "2026-09-27T14:02:11.402Z",
-    output: "/state/fun-ci/stages/4242-abc/output.log", reports: "/state/fun-ci/stages/4242-abc/reports"
+    output: "/state/fun-ci/stages/4242-abc/output.log"
   )
 
   FILES = { "build/test-results/test/TEST-FooTest.xml" => "<x/>", "log/test.log" => "a" * 1_048_576 }.freeze

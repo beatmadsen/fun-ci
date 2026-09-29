@@ -11,7 +11,7 @@ class TestContextDocument < Minitest::Test
   ABOUT = FunCi::Evidence::About.new(
     stage: "fast", state: "failed", exit_status: 1, signal: nil, seconds: 8.4, budget: 10, alongside: ["slow"],
     commit: { sha: "3f9c2ab", branch: "main" }, worktree: "/slot-1", started_at: "2026-09-27T14:02:11.402Z",
-    output: "/state/stages/1-x/output.log", reports: "/state/stages/1-x/reports"
+    output: "/state/stages/1-x/output.log"
   )
 
   def test_should_say_how_the_stage_ended
@@ -19,8 +19,8 @@ class TestContextDocument < Minitest::Test
                  document.slice(:schema, :stage, :state, :exit_status, :signal, :seconds, :budget))
   end
 
-  def test_should_say_where_the_output_and_reports_are
-    assert_equal ["/state/stages/1-x/output.log", "/state/stages/1-x/reports"], document.values_at(:output, :reports)
+  def test_should_say_where_the_output_is
+    assert_equal "/state/stages/1-x/output.log", document[:output]
   end
 
   def test_should_list_the_files_under_the_watch_globs_the_stage_wrote

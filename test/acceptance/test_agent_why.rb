@@ -4,19 +4,24 @@ require_relative "trigger_cli_shared"
 require_relative "agent_client"
 
 # `fun-ci why` prints everything kept about a failed stage
-# (acceptance-tests.md, AT-10.1): the pipeline keeps a failed fast suite's
-# reported failures and the end of its output, and the agent reads it all.
+# (acceptance-tests.md, AT-10.1): the pipeline keeps the failures a failed
+# fast suite's JUnit report names and the end of its output, and the agent
+# reads it all.
 class TestAgentWhy < Minitest::Test
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
   OUTPUT = (1..250).map { |n| "line #{n}\n" }.join
   MESSAGE = (1..7).map { |n| "detail #{n}" }.join("\n")
-  REPORT = { failures: [{ file: "test/fetch_test.rb", line: 41, test: "FetchTest#retries", message: MESSAGE }] }.freeze
+  JUNIT = <<~XML.freeze
+    <testsuite><testcase classname="FetchTest" name="retries" file="test/fetch_test.rb" line="41">
+    <failure>#{MESSAGE}</failure></testcase></testsuite>
+  XML
+  CONFIG = "evidence:\n  stages:\n    fast:\n      - use: junit-files\n        paths: [reports/*.xml]\n"
 
   def setup
     @pipeline = TriggerCliClient.open(command_runner: fast_suite_failing)
     @agent = AgentClient.new(@pipeline.workspace)
     @agent.git.commit(SHA, "Add retry to fetch")
-    @pipeline.trigger(commit_hash: SHA, branch: "main")
+    @pipeline.trigger(commit_hash: SHA, branch: "main", config: CONFIG)
   end
 
   def teardown = @pipeline.close
@@ -52,10 +57,11 @@ class TestAgentWhy < Minitest::Test
   private
 
   def fast_suite_failing
-    lambda do |cmd, env|
+    lambda do |cmd|
       next ["", FakeStatus.new(true, 0)] unless cmd.include?("fast.sh")
 
-      File.write(File.join(env.fetch("FUN_CI_REPORT"), "fast.json"), JSON.generate(REPORT))
+      FileUtils.mkdir_p(File.join(@pipeline.project_dir, "reports"))
+      File.write(File.join(@pipeline.project_dir, "reports", "TEST-FetchTest.xml"), JUNIT)
       [OUTPUT, FakeStatus.new(false, 1)]
     end
   end

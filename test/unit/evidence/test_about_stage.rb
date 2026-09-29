@@ -26,7 +26,7 @@ class TestAboutStage < Minitest::Test
   private
 
   def about(**given)
-    sources = FunCi::Evidence::Sources.new(stage: "fast", worktree: "/slot-0", reports: FakeStageDir.new,
+    sources = FunCi::Evidence::Sources.new(stage: "fast", worktree: "/slot-0", stage_dir: FakeStageDir.new,
                                            environment: {}, **given)
     FunCi::Evidence::AboutStage.of(sources, OUTCOME, "boom\n")
   end

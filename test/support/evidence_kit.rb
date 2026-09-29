@@ -64,7 +64,7 @@ module EvidenceKit
   ABOUT = FunCi::Evidence::About.new(
     stage: "fast", state: "failed", exit_status: 1, signal: nil, seconds: 8.4, budget: 10, alongside: [],
     commit: { sha: "3f9c2ab", branch: "main" }, worktree: "/slot-1", started_at: "2026-09-27T14:02:11.402Z",
-    output: "/state/stages/1-x/output.log", reports: "/state/stages/1-x/reports"
+    output: "/state/stages/1-x/output.log"
   )
 
   def stamp(size, mtime: 0, inode: 1) = FunCi::Evidence::Stamp.new(size: size, mtime: mtime, inode: inode)

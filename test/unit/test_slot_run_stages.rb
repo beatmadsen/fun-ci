@@ -44,13 +44,13 @@ class TestSlotRunStages < Minitest::Test
     assert_equal "/slot-0/.fun-ci/slow.sh abc1234", runner.command_for("slow.sh")
   end
 
-  def test_should_keep_the_failures_the_slow_suite_reported
+  def test_should_keep_the_evidence_of_a_slow_suite_that_failed
     recorder = FakeRecorder.new
     slot_run(slot_with(Lock.new(false)), command_runner: scripted_runner({ "slow.sh" => failing("slow failed") }),
                                          background_launcher: inline_launcher(recorder),
-                                         stage_dir: -> { FakeStageDir.new([{ test: "t1" }]) }).run(config)
+                                         stage_dir: -> { FakeStageDir.new }).run(config)
 
-    assert_equal [{ test: "t1", extractor: "test-reports" }], recorder.kept_evidence.first.failures
+    assert_equal "slow failed\n", recorder.kept_evidence.first.tail
   end
 
   def test_should_record_the_slow_suite_s_budget

@@ -15,8 +15,7 @@ module FunCi
       end
 
       def self.where(sources, output)
-        { worktree: sources.worktree, output: sources.reports.output_file(output),
-          reports: sources.reports.reports_path }
+        { worktree: sources.worktree, output: sources.stage_dir.output_file(output) }
       end
 
       def self.started(sources)

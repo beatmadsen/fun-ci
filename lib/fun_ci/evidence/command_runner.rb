@@ -17,8 +17,8 @@ module FunCi
       Limits = Data.define(:bytes, :drain)
       LIMITS = Limits.new(bytes: 262_144, drain: 1)
 
-      def initialize(dir:, env:, scratch:, limits: LIMITS)
-        @launch = { chdir: dir, env: env }
+      def initialize(dir:, scratch:, limits: LIMITS)
+        @dir = dir
         @scratch = scratch
         @limit = limits.bytes
         @drain = limits.drain
@@ -38,8 +38,8 @@ module FunCi
       def path(name) = File.join(@scratch, name)
 
       def spawn(command, writer, env)
-        Process.spawn(Pipeline::GitEnvironment::CLEAN.merge(@launch[:env], env), command,
-                      in: path("context.json"), out: writer, err: path("stderr"), pgroup: true, chdir: @launch[:chdir])
+        Process.spawn(Pipeline::GitEnvironment::CLEAN.merge(env), command,
+                      in: path("context.json"), out: writer, err: path("stderr"), pgroup: true, chdir: @dir)
       end
 
       def finish(pid, reading, seconds)

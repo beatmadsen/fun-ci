@@ -172,10 +172,9 @@ commands that ask about commits (`lib/fun_ci/agent/`).
   seconds, and never cancels a run of the new run's own commit. A timestamp
   needs no liveness check, so the canceller sends no extra signals.
 - **Evidence is kept only for failures**: the last 200 lines (64 KB) of a
-  failed or over-budget stage's output, and the failures its reports name,
-  pruned to a project's 50 newest runs. Reports go in a directory per stage
-  (`FUN_CI_REPORT`), because Surefire and Gradle write one JUnit file per class;
-  `rexml` reads them. How much more is kept, and how, is the next section.
+  failed or over-budget stage's output, and what the extractors picked out,
+  pruned to a project's 50 newest runs. How much more is kept, and how, is the
+  next section.
 - **`events` is the difference between two looks at the runs**, so it needs no
   events table: every event follows from the stage rows and their finish order.
 
@@ -194,7 +193,7 @@ moment a stage fails (`lib/fun_ci/evidence/`); what the agent sees is in
 **Decisions:**
 
 - **Evidence is collected where the stage ran, before its outcome is
-  recorded**, since the output, the report directory, the worktree's files and
+  recorded**, since the output, the stage directory, the worktree's files and
   an overrunning process group are all gone within seconds.
   `Pipeline::StageExecution` runs every stage this way, the slow suite in its
   forked child too, and `StageEnd` records the evidence, then how the stage
@@ -208,7 +207,7 @@ moment a stage fails (`lib/fun_ci/evidence/`); what the agent sees is in
   ends, with a line saying how much was dropped. `OutputWindow` writes it as it
   comes, the tail in two segments that take turns, so neither memory nor disk
   grows with what a stage prints. It lives in a directory per stage
-  (`Pipeline::StageDir`, which also holds `FUN_CI_REPORT`) in the state
+  (`Pipeline::StageDir`, which also holds a project extractor's scratch) in the state
   directory, because it is unmasked until the stage is recorded; the state
   directory is made 0700, and a stage directory whose process died is removed
   when the next stage starts.
@@ -230,7 +229,7 @@ moment a stage fails (`lib/fun_ci/evidence/`); what the agent sees is in
   the evidence (50 runs), and removes any whose stage row is gone.
 - **Built-in extractors are Ruby classes; a project's own is a command.** The
   built-ins (`grep`, `section`, `log-file`, `json-log`, `junit-files`,
-  `process-tree`, plus `test-reports` and `output-tail`, which always run)
+  `process-tree`, plus `output-tail`, which always runs)
   declare the options they take, which is how `check` validates an entry. A
   project's extractor (`run:`) gets the context as JSON on stdin and prints
   text or JSON, both pinned in `contract/evidence/`. So it can be written in
@@ -239,6 +238,13 @@ moment a stage fails (`lib/fun_ci/evidence/`); what the agent sees is in
   connection. The cost is a process per extractor, and on macOS the first run
   of a freshly written executable is scanned, which under load has taken past
   the budget (Gotchas in `CLAUDE.md`).
+- **Test reports are read where the build writes them** (`junit-files`),
+  because Surefire and Gradle write one JUnit file per class and a slot keeps
+  the ones earlier runs wrote: a report whose stamp hasn't changed since the
+  stage started is an earlier run's and is left out. Until 2.0.0, stages copied
+  reports into a directory of their own (`FUN_CI_REPORT`); a copy took the
+  earlier runs' reports along, so a renamed test's old failure, or the last
+  run's failures after a build that broke before the tests, read as this run's.
 - **Presets are data, one YAML file each** (`lib/fun_ci/evidence/presets/`),
   in the shape of an entry a project would write, so adding a stack adds a
   file. None ships without the recorded output of a real failing run of its

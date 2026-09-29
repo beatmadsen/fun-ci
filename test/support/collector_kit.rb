@@ -26,9 +26,9 @@ module CollectorKit
     collector(settings: settings.merge("stages" => { "fast" => entries }), **given).collect(output)
   end
 
-  # given: the sources' reports, environment and worktree, where a test names them.
+  # given: the sources' stage directory, environment and worktree, where a test names them.
   def collector(settings: {}, clock: -> { 0 }, commands: nil, **given)
-    sources = SOURCES.new(stage: "fast", worktree: "/slot-0", reports: FakeStageDir.new, environment: {}, **given)
+    sources = SOURCES.new(stage: "fast", worktree: "/slot-0", stage_dir: FakeStageDir.new, environment: {}, **given)
     FunCi::Evidence::Collector.new(sources, settings: SETTINGS.new(settings), clock: clock, commands: commands)
   end
 end

@@ -52,14 +52,14 @@ class TestCommandExecutor < Minitest::Test
   def test_gives_a_runner_that_takes_one_the_command_s_environment
     seen = nil
     runner = ->(_cmd, env) { (seen = env) && ["", FakeStatus.new(true, 0)] }
-    FunCi::Pipeline::CommandExecutor.new(runner).call("fast.sh", 10, LAUNCH.new(env: { "FUN_CI_REPORT" => "/r" }))
+    FunCi::Pipeline::CommandExecutor.new(runner).call("fast.sh", 10, LAUNCH.new(env: { "FUN_CI_STAGE" => "fast" }))
 
-    assert_equal({ "FUN_CI_REPORT" => "/r" }, seen)
+    assert_equal({ "FUN_CI_STAGE" => "fast" }, seen)
   end
 
   def test_runs_a_runner_that_takes_only_the_command_when_given_an_environment
     executor = FunCi::Pipeline::CommandExecutor.new(->(_cmd) { ["ok", FakeStatus.new(true, 0)] })
 
-    assert_equal "ok", executor.call("fast.sh", 10, LAUNCH.new(env: { "FUN_CI_REPORT" => "/r" })).first
+    assert_equal "ok", executor.call("fast.sh", 10, LAUNCH.new(env: { "FUN_CI_STAGE" => "fast" })).first
   end
 end

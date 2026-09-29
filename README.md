@@ -124,10 +124,10 @@ fun-ci: 2330979 "Add shipping to the cart total" on main
   fast   FAILED         0.3s
   slow   passed         0.5s (not needed)
 fast failed:
-  test/cart_test.rb:18  CartTest#test_total_includes_shipping
-    Expected: 104.95
-      Actual: 99.95
-        test/cart_test.rb:18:in `test_total_includes_shipping'
+    1) Failure:
+  CartTest#test_total_includes_shipping [test/cart_test.rb:16]:
+  Expected: 104.95
+    Actual: 99.95
 fun-ci why 2330979 fast
 ```
 
@@ -136,25 +136,21 @@ fun-ci why 2330979 fast
 ```
 $ fun-ci why 2330979 fast
 fun-ci: 2330979 "Add shipping to the cart total" on main
-fast failed (exit 1) after 0.3s, budget 10s
+fast failed (exit 1) after 0.2s, budget 10s
 
-Facts:
-  alongside: slow
-
-Failures, from test-reports:
-  test/cart_test.rb:18  CartTest#test_total_includes_shipping
-    Expected: 104.95
-      Actual: 99.95
-        test/cart_test.rb:18:in `test_total_includes_shipping'
-
-The output's last lines, from output-tail:
-  Run options: --seed 4242
-  ..F
+Minitest's failures and errors (output:9-12), from section:minitest:
     1) Failure:
-  CartTest#test_total_includes_shipping [test/cart_test.rb:18]:
+  CartTest#test_total_includes_shipping [test/cart_test.rb:16]:
   Expected: 104.95
     Actual: 99.95
+
+The output's last lines, from output-tail:
+  Run options: --seed 20502
+  ...
   3 runs, 3 assertions, 1 failures, 0 errors, 0 skips
+  rake aborted!
+  Command failed with status (1)
+  ...
 
 The whole output: fun-ci why 2330979 fast --raw
 ```
@@ -162,8 +158,6 @@ The whole output: fun-ci why 2330979 fast --raw
 `fun-ci runs` lists recent runs one line each, and `fun-ci events --follow` prints each run's events as JSON lines as they happen, for a supervising agent or a status bar.
 
 ### What fun-ci keeps when a stage fails
-
-fun-ci names an empty directory in `FUN_CI_REPORT` for every stage. Write JUnit XML (`*.xml`) or `{"failures": [{"file", "line", "test", "message", "output"}]}` (`*.json`) there and each failure is kept with its message. The Gradle and Maven scripts `fun-ci init` writes already copy their reports in.
 
 With no configuration, fun-ci runs the presets for the tools your project has when a failure shows them. There are presets for the test runners, compilers, linters and type checkers of every stack `fun-ci init` knows, and for JSON logs from logstash-logback-encoder, ECS, pino and structlog; [docs/stacks.md](docs/stacks.md#presets) lists each one with what it picks out and when it runs. Each preset is checked against the recorded output of a real failing run of its tool. `fun-ci check` lists the ones that apply to your project.
 
@@ -173,6 +167,8 @@ To keep more, add entries under `evidence:` in `.fun-ci/config`:
 evidence:
   stages:
     fast:
+      - use: junit-files         # each failure in the JUnit XML the stage wrote,
+        paths: [build/test-results/test/*.xml]   # as file, line, test and message
       - use: log-file            # what the stage wrote to it, and only that
         path: log/test.log
         grep: ["ERROR"]

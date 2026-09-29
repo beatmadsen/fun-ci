@@ -40,10 +40,10 @@ module FunCi
       private
 
       def collect(options, scratch)
-        saved = SavedRun.new(options.reports && File.expand_path(options.reports, @dir), scratch)
-        sources = Sources.new(stage: options.stage, worktree: @dir, reports: saved, environment: ENV.to_h)
+        sources = Sources.new(stage: options.stage, worktree: @dir, stage_dir: SavedRun.new(scratch),
+                              environment: ENV.to_h)
         collector = Collector.new(sources, settings: Settings.load(File.join(@dir, ".fun-ci", "config")),
-                                           commands: CommandRunner.new(dir: @dir, env: saved.env, scratch: scratch))
+                                           commands: CommandRunner.new(dir: @dir, scratch: scratch))
         noted(collector.collect(output(options), outcome(options)), options)
       end
 

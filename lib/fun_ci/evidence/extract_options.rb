@@ -4,17 +4,17 @@ require "optparse"
 
 module FunCi
   module Evidence
-    # The arguments of `fun-ci extract STAGE --output FILE [--reports DIR]
-    # [--exit N | --timed-out] [--json]`.
+    # The arguments of `fun-ci extract STAGE --output FILE [--exit N |
+    # --timed-out] [--json]`.
     module ExtractOptions
       class Invalid < StandardError; end
 
-      Parsed = Data.define(:stage, :output, :reports, :exit_status, :timed_out, :json)
+      Parsed = Data.define(:stage, :output, :exit_status, :timed_out, :json)
       STAGES = %w[lint build fast slow].freeze
-      DEFAULTS = { output: nil, reports: nil, exit_status: 1, timed_out: false, json: false }.freeze
+      DEFAULTS = { output: nil, exit_status: 1, timed_out: false, json: false }.freeze
 
-      SWITCHES = { output: ["--output FILE"], reports: ["--reports DIR"], exit_status: ["--exit N", Integer],
-                   timed_out: ["--timed-out"], json: ["--json"] }.freeze
+      SWITCHES = { output: ["--output FILE"], exit_status: ["--exit N", Integer], timed_out: ["--timed-out"],
+                   json: ["--json"] }.freeze
 
       def self.parse(args)
         values = DEFAULTS.dup

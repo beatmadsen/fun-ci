@@ -465,20 +465,20 @@ reported failure (9.7) as `file:line  test` and the first 5 lines of its
 message, at most 10 failures; or, with no report, the last 20 kept lines.
 
 ### 9.7 A stage's test reports name its failures
-**Given** a stage that writes JUnit XML (`*.xml`) or fun-ci's JSON
-(`*.json`: `{"failures": [{"file", "line", "test", "message"}]}`) into the
-empty directory `FUN_CI_REPORT` names
+**Given** a stage that writes JUnit XML where its build keeps it, and a
+`junit-files` entry for the stage naming where that is
 **When** the stage fails
 **Then** its failures (file, line, test, message) are kept with it and shown by
 `status` (9.6) and `status --json` (9.3)
 **And** a report that can't be read is ignored, and the kept output shown
 instead.
+*Note:* until 2.0.0 was released, stages wrote reports into a directory named
+by `FUN_CI_REPORT`. It was withdrawn: `junit-files` reads the same reports and
+leaves out those an earlier run left behind, which a copy took along.
 
-### 9.8 `fun-ci init` writes stage scripts that report for Gradle and Maven
-**Given** a Gradle or Maven project
-**When** `fun-ci init` runs
-**Then** its fast and slow scripts copy the build's JUnit XML reports into
-`FUN_CI_REPORT` when it is set, and still exit with the build's own status.
+### 9.8 Withdrawn: `fun-ci init` writes stage scripts that report for Gradle and Maven
+The scripts copied the build's reports into `FUN_CI_REPORT`, withdrawn with it
+(9.7). The Gradle and Maven presets pick the failures out of the output.
 
 ### 9.9 `fun-ci wait` waits for the level it needs
 **Given** a run still going

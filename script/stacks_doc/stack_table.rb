@@ -21,10 +21,6 @@ module StacksDoc
       [Names.stack(id), detected.join(" or "), *FunCi::Setup::StageTemplates.scripts(id).values.map { command(_1) }]
     end
 
-    # The script's command; one that goes on to copy the build's reports says so.
-    def self.command(script)
-      _shebang, command, *rest = script.lines.map(&:chomp)
-      rest.empty? ? Markdown.code(command) : "#{Markdown.code(command)}[^reports]"
-    end
+    def self.command(script) = Markdown.code(script.lines[1].chomp)
   end
 end

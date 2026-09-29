@@ -8,7 +8,7 @@ module FunCi
     # Records a stage that has finished, whichever process ran it: a failed
     # stage's evidence first, so whoever sees the outcome can read why, then
     # how it exited, then the outcome. Called while the stage still holds its
-    # slot and report directory, which the collector reads.
+    # slot and stage directory, which the collector reads.
     class StageEnd
       # What running a stage answered: its output, its Process::Status (nil
       # when it was killed over budget), and for an overrun, what was found

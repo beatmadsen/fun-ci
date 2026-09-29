@@ -17,8 +17,8 @@ module FunCi
   module Evidence
     # Picks out what fun-ci keeps about a stage that failed (architecture.md,
     # "Evidence of a failed stage"): for an overrun, what process-tree and the
-    # entries for an overrun found before the kill; the reported failures; the
-    # entries configured for the stage, within the budget; then the output's
+    # entries for an overrun found before the kill; the entries configured for
+    # the stage and the presets detected, within the budget; then the output's
     # last lines; all masked.
     class Collector
       MONOTONIC = -> { Process.clock_gettime(Process::CLOCK_MONOTONIC) }
@@ -37,8 +37,7 @@ module FunCi
       def collect(output, outcome = FAILED)
         result = extracted(output, outcome)
         overrun = outcome.overrun || NOTHING
-        parts = [["fun-ci", own_facts(outcome.alongside)], *overrun.parts, ["test-reports", reported], *result.parts,
-                 ["output-tail", tail(output)]]
+        parts = [["fun-ci", own_facts(outcome.alongside)], *overrun.parts, *result.parts, ["output-tail", tail(output)]]
         Caps.new.apply(masking.document(assemble(parts, [overrun, result])))
       end
 
@@ -80,8 +79,6 @@ module FunCi
       def own_facts(alongside)
         Findings.new(facts: alongside.empty? ? [] : [{ name: "alongside", value: alongside.join(", ") }])
       end
-
-      def reported = Findings.new(failures: @sources.reports.failures)
 
       def tail(output)
         text = Persistence::OutputTail.of(output, mask: masking.method(:mask))

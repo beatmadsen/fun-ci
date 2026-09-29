@@ -7,13 +7,17 @@ require "json"
 # `why --json` gives what `why` prints as one document (acceptance-tests.md, AT-10.2).
 class TestAgentWhyJson < Minitest::Test
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
-  REPORT = { failures: [{ file: "test/fetch_test.rb", line: 41, test: "FetchTest#retries", message: "boom" }] }.freeze
+  JUNIT = <<~XML
+    <testsuite><testcase classname="FetchTest" name="retries" file="test/fetch_test.rb" line="41">
+    <failure>boom</failure></testcase></testsuite>
+  XML
+  CONFIG = "evidence:\n  stages:\n    fast:\n      - use: junit-files\n        paths: [reports/*.xml]\n"
 
   def setup
     @pipeline = TriggerCliClient.open(command_runner: fast_suite_failing)
     @agent = AgentClient.new(@pipeline.workspace)
     @agent.git.commit(SHA, "Add retry to fetch")
-    @pipeline.trigger(commit_hash: SHA, branch: "main")
+    @pipeline.trigger(commit_hash: SHA, branch: "main", config: CONFIG)
   end
 
   def teardown = @pipeline.close
@@ -36,7 +40,7 @@ class TestAgentWhyJson < Minitest::Test
     @agent.why("--json")
 
     assert_equal [{ "file" => "test/fetch_test.rb", "line" => 41, "test" => "FetchTest#retries", "message" => "boom",
-                    "extractor" => "test-reports" }],
+                    "extractor" => "junit-files" }],
                  JSON.parse(@agent.stdout).dig("evidence", "failures")
   end
 
@@ -53,10 +57,11 @@ class TestAgentWhyJson < Minitest::Test
   private
 
   def fast_suite_failing
-    lambda do |cmd, env|
+    lambda do |cmd|
       next ["", FakeStatus.new(true, 0)] unless cmd.include?("fast.sh")
 
-      File.write(File.join(env.fetch("FUN_CI_REPORT"), "fast.json"), JSON.generate(REPORT))
+      FileUtils.mkdir_p(File.join(@pipeline.project_dir, "reports"))
+      File.write(File.join(@pipeline.project_dir, "reports", "TEST-FetchTest.xml"), JUNIT)
       ["the suite's own output\n", FakeStatus.new(false, 1)]
     end
   end

@@ -17,6 +17,8 @@ class TestExtractCommand < Minitest::Test
         fast:
           - use: grep
             patterns: ["ERROR"]
+          - use: junit-files
+            paths: [reports/*.xml]
   YAML
 
   def setup
@@ -53,14 +55,6 @@ class TestExtractCommand < Minitest::Test
     extract("fast", "--output", "failing-run.log", "--timed-out")
 
     assert_includes @stdout.string, "  process group: none, so entries with on: overrun don't run\n"
-  end
-
-  def test_should_read_the_reports_it_is_given
-    FileUtils.mkdir_p(File.join(@project, "reports"))
-    File.write(File.join(@project, "reports", "r.json"), %({"failures": [{"test": "T#a", "message": "m"}]}))
-    extract("fast", "--output", "failing-run.log", "--reports", "reports")
-
-    assert_includes @stdout.string, "Failures, from test-reports:\n  T#a\n"
   end
 
   def test_should_read_an_output_saved_outside_the_project
@@ -100,10 +94,10 @@ class TestExtractCommand < Minitest::Test
   end
 
   def test_should_keep_the_facts_the_collector_found_beside_its_notes
-    failures = Array.new(101) { |n| { test: "T#t#{n}", message: "m" } }
+    failures = Array.new(101) { |n| %(<testcase classname="T" name="t#{n}"><failure message="m"/></testcase>) }
     FileUtils.mkdir_p(File.join(@project, "reports"))
-    File.write(File.join(@project, "reports", "r.json"), JSON.generate(failures: failures))
-    extract("fast", "--output", "failing-run.log", "--reports", "reports", "--json")
+    File.write(File.join(@project, "reports", "TEST-T.xml"), "<testsuite>#{failures.join}</testsuite>")
+    extract("fast", "--output", "failing-run.log", "--json")
 
     assert_includes JSON.parse(@stdout.string).dig("evidence", "facts").map { |f| f["name"] }, "failures not kept"
   end

@@ -83,7 +83,7 @@ class TestEvidenceCommandRunner < Minitest::Test
 
   def ran(command, seconds: 10, limit: 262_144, drain: 0.2)
     limits = FunCi::Evidence::CommandRunner::Limits.new(bytes: limit, drain: drain)
-    runner = FunCi::Evidence::CommandRunner.new(dir: @dir, env: {}, scratch: @dir, limits: limits)
+    runner = FunCi::Evidence::CommandRunner.new(dir: @dir, scratch: @dir, limits: limits)
     within_deadline { runner.call(command, stdin: "context\n", seconds: seconds) }
   end
 end

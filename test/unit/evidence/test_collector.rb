@@ -8,13 +8,6 @@ require "json"
 class TestCollector < Minitest::Test
   include CollectorKit
 
-  def test_should_credit_the_failures_the_stage_reported_to_test_reports
-    reports = FakeStageDir.new([{ file: "a.rb", line: 3, test: "t", message: "m" }])
-
-    assert_equal [{ file: "a.rb", line: 3, test: "t", message: "m", extractor: "test-reports" }],
-                 collect("", reports: reports).failures
-  end
-
   def test_should_keep_the_output_s_last_lines_without_colour
     assert_equal %w[boom], collect("\e[31mboom\e[0m\n").excerpts.first[:lines]
   end

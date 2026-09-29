@@ -2,17 +2,15 @@
 
 require "tmpdir"
 require "fileutils"
-require_relative "report_reader"
 require_relative "output_window"
 require_relative "../persistence/state_dir"
 
 module FunCi
   module Pipeline
     # A stage's own directory, named for the process that made it, in the
-    # state directory: it holds `reports`, the empty directory named to the
-    # stage as FUN_CI_REPORT (acceptance-tests.md, AT-9.7), JUnit XML (*.xml)
-    # and fun-ci's JSON (*.json), and the window its output is written to,
-    # unmasked, until the stage is recorded (AT-10.6).
+    # state directory: it holds the window its output is written to, unmasked,
+    # until the stage is recorded (AT-10.6), and what a project's extractor
+    # reads and writes.
     class StageDir
       def self.default_root = File.join(Persistence::StateDir.path(ENV), "stages")
 
@@ -20,7 +18,7 @@ module FunCi
       def self.create(root = default_root)
         FileUtils.mkdir_p(root)
         Dir.children(root).reject { |name| alive?(name.to_i) }.each { |name| FileUtils.rm_rf(File.join(root, name)) }
-        new(Dir.mktmpdir("#{Process.pid}-", root)).tap { |dir| Dir.mkdir(dir.reports_path) }
+        new(Dir.mktmpdir("#{Process.pid}-", root))
       end
 
       def self.alive?(pid)
@@ -37,8 +35,6 @@ module FunCi
         @path = path
       end
 
-      def reports_path = File.join(@path, "reports")
-
       # The output as the window kept it, written for a project's extractor to read.
       def output_file(text)
         File.join(@path, "output.log").tap { |file| File.binwrite(file, text) }
@@ -46,10 +42,8 @@ module FunCi
 
       # Where a project's extractor writes what it needs to (its stdin and stderr).
       def scratch = @path
-      def env = { "FUN_CI_REPORT" => reports_path }
       def window(sizes = OutputWindow::REAL) = OutputWindow.in(@path, sizes)
 
-      def failures = ReportReader.failures(reports_path)
       def remove = FileUtils.rm_rf(@path)
     end
   end

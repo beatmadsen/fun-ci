@@ -11,7 +11,6 @@
   "worktree": "/repo/.git/fun-ci/worktrees/slot-1",
   "started_at": "2026-09-27T14:02:11.402Z",
   "output": "/state/fun-ci/stages/4242-abc/output.log",
-  "reports": "/state/fun-ci/stages/4242-abc/reports",
   "changed": ["build/test-results/test/TEST-FooTest.xml"],
   "watched": [{ "path": "log/test.log", "offset": 1048576 }],
   "options": { "module": "core" },

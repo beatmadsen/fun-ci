@@ -16,11 +16,13 @@ class TestAgentWhyFailureOutput < Minitest::Test
     </testsuite>
   XML
 
+  CONFIG = "evidence:\n  stages:\n    fast:\n      - use: junit-files\n        paths: [reports/*.xml]\n"
+
   def setup
     @pipeline = TriggerCliClient.open(command_runner: method(:fast_suite_reporting))
     @agent = AgentClient.new(@pipeline.workspace)
     @agent.git.commit(SHA, "Add retry to fetch")
-    @pipeline.trigger(commit_hash: SHA, branch: "main")
+    @pipeline.trigger(commit_hash: SHA, branch: "main", config: CONFIG)
     @agent.why
   end
 
@@ -33,10 +35,11 @@ class TestAgentWhyFailureOutput < Minitest::Test
 
   private
 
-  def fast_suite_reporting(cmd, env, &)
+  def fast_suite_reporting(cmd, &)
     return ["", FakeStatus.new(true, 0)] unless cmd.include?("fast.sh")
 
-    File.write(File.join(env.fetch("FUN_CI_REPORT"), "TEST-CartTest.xml"), JUNIT)
+    FileUtils.mkdir_p(File.join(@pipeline.project_dir, "reports"))
+    File.write(File.join(@pipeline.project_dir, "reports", "TEST-CartTest.xml"), JUNIT)
     ["", FakeStatus.new(false, 1)]
   end
 end

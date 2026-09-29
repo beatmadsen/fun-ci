@@ -26,7 +26,7 @@ module FunCi
         query("AND branch = ? ORDER BY id DESC LIMIT ?", branch, limit)
       end
 
-      # Drops the kept output and reported failures of every run but the
+      # Drops the kept output and an older fun-ci's failures of every run but the
       # project's newest `keep`, and marks their stages pruned.
       def forget_output(keep:)
         @db.execute("UPDATE stage_jobs SET output_tail = NULL, failures = NULL, pruned = 1 WHERE pipeline_run_id IN " \

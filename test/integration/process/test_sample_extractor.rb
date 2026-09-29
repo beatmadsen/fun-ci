@@ -23,7 +23,7 @@ class TestSampleExtractor < Minitest::Test
   private
 
   def sample_output
-    runner = FunCi::Evidence::CommandRunner.new(dir: @dir, env: {}, scratch: @dir)
+    runner = FunCi::Evidence::CommandRunner.new(dir: @dir, scratch: @dir)
     within_deadline do
       runner.call("sh #{File.join(CONTRACT, "sample-extractor.sh")}",
                   stdin: File.read(File.join(CONTRACT, "context.json")), seconds: 10)

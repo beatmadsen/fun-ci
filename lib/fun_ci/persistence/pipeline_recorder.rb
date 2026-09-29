@@ -78,13 +78,12 @@ module FunCi
         end
       end
 
-      # Keeps a failed stage's evidence, and the output's tail and reported
-      # failures where an older fun-ci sharing the database reads them.
+      # Keeps a failed stage's evidence, and the output's tail where an older
+      # fun-ci sharing the database reads it.
       def keep_evidence(job_id, document)
         tolerating do
           StageJob.keep_evidence(@db, job_id, JSON.generate(document.to_h))
           StageJob.keep_output(@db, job_id, document.tail)
-          keep_failures(job_id, document.reported_failures)
         end
       end
 
@@ -109,10 +108,6 @@ module FunCi
       end
 
       private
-
-      def keep_failures(job_id, failures)
-        StageJob.keep_failures(@db, job_id, JSON.generate(failures)) if failures.any?
-      end
 
       def ensure_running
         run = PipelineRun.find(@db, @pipeline_run_id)

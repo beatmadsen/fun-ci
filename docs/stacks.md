@@ -12,9 +12,9 @@ The fast suite leaves out the tests the tool's own convention marks slow, and th
 | --- | --- | --- | --- | --- | --- |
 | Ruby (rspec) | `Gemfile` and `spec` or `Gemfile` and `.rspec` | `bundle exec rubocop` | `bundle install --quiet` | `bundle exec rspec --tag ~slow` | `bundle exec rspec --tag slow` |
 | Ruby (rake) | `Gemfile` | `bundle exec rubocop` | `bundle install --quiet` | `bundle exec rake test` | `bundle exec rake test:slow` |
-| Gradle (Kotlin DSL) | `build.gradle.kts` or `settings.gradle.kts` | `./gradlew check -x test` | `./gradlew assemble` | `./gradlew test`[^reports] | `./gradlew integrationTest`[^reports] |
-| Gradle (Groovy DSL) | `build.gradle` or `settings.gradle` | `./gradlew check -x test` | `./gradlew assemble` | `./gradlew test`[^reports] | `./gradlew integrationTest`[^reports] |
-| Maven | `pom.xml` | `mvn verify -DskipTests` | `mvn compile` | `mvn test`[^reports] | `mvn verify`[^reports] |
+| Gradle (Kotlin DSL) | `build.gradle.kts` or `settings.gradle.kts` | `./gradlew check -x test` | `./gradlew assemble` | `./gradlew test` | `./gradlew integrationTest` |
+| Gradle (Groovy DSL) | `build.gradle` or `settings.gradle` | `./gradlew check -x test` | `./gradlew assemble` | `./gradlew test` | `./gradlew integrationTest` |
+| Maven | `pom.xml` | `mvn verify -DskipTests` | `mvn compile` | `mvn test` | `mvn verify` |
 | Rust | `Cargo.toml` | `cargo clippy --all-targets -- -D warnings` | `cargo build --all-targets` | `cargo test` | `cargo test -- --ignored` |
 | Go | `go.mod` | `go vet ./...` | `go build ./...` | `go test -short ./...` | `go test ./...` |
 | Elixir | `mix.exs` | `mix format --check-formatted` | `mix deps.get && mix compile` | `mix test --exclude slow` | `mix test --only slow` |
@@ -33,8 +33,6 @@ The fast suite leaves out the tests the tool's own convention marks slow, and th
 | Perl | `cpanfile` or `Makefile.PL` or `Build.PL` or `dist.ini` | `perlcritic lib` | `cpanm --installdeps --notest .` | `prove -lr t` | `prove -lr xt` |
 | C and C++ (CMake) | `CMakeLists.txt` | `git ls-files -z '*.c' '*.cc' '*.cpp' '*.h' '*.hpp' \| xargs -0 clang-format --dry-run --Werror` | `cmake -S . -B build && cmake --build build` | `ctest --test-dir build --output-on-failure --no-tests=error -LE slow` | `ctest --test-dir build --output-on-failure --no-tests=error -L slow` |
 | C and C++ (make) | `Makefile` or `makefile` or `GNUmakefile` | `make lint` | `make` | `make test` | `make test-slow` |
-
-[^reports]: Then copies the build's JUnit XML reports into `FUN_CI_REPORT`, so `fun-ci why` shows each failure with its message.
 
 ## Presets
 

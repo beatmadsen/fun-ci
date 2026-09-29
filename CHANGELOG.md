@@ -113,11 +113,11 @@ before it. See "Upgrading to 2.0" in the README.
   output, kept for a project's 10 newest runs as its first 1 MB and last
   7 MB, compressed. The end of a failed stage's output (200 lines, at most
   64 KB) is kept for the 50 newest.
-- Each stage gets an empty directory in `FUN_CI_REPORT`. Failures written
-  there as JUnit XML (`*.xml`) or fun-ci's JSON (`*.json`, `{"failures":
-  [{"file", "line", "test", "message", "output"}]}`) are kept, with the output
-  each failure printed. The Gradle and Maven scripts `fun-ci init` writes copy
-  the build's reports there. fun-ci now depends on `rexml` to read them.
+- A `junit-files` entry under `evidence:` keeps each failure in the JUnit XML
+  a stage wrote (`build/test-results/**/*.xml`, `target/surefire-reports/*.xml`),
+  with the output each failure printed, and leaves alone reports an earlier
+  run left behind. `status --json` gives them to a program. fun-ci now depends
+  on `rexml` to read them.
 - Every stage script finds its stage's name in `FUN_CI_STAGE`.
 - Secrets are masked before fun-ci keeps anything a stage printed: the value
   of any variable in the stage's environment whose name holds TOKEN, SECRET,

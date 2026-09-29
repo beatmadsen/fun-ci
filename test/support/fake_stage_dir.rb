@@ -3,18 +3,14 @@
 require "fun_ci/pipeline/output_window"
 
 # A stage's directory without a directory: it names a path no stage writes
-# to, reports the failures it is given, keeps its window in memory, and
-# remembers being removed.
+# to, keeps its window in memory, and remembers being removed.
 class FakeStageDir
-  attr_reader :failures, :removed, :windows
+  attr_reader :removed, :windows
 
-  def initialize(failures = [])
-    @failures = failures
+  def initialize
     @windows = []
   end
 
-  def env = { "FUN_CI_REPORT" => "/fake/reports" }
-  def reports_path = "/fake/reports"
   def output_file(_text) = "/fake/output.log"
   def scratch = "/fake"
 

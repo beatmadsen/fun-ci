@@ -31,37 +31,12 @@ class TestTestReport < Minitest::Test
     assert_nil REPORT.junit("<testsuite><testcase")
   end
 
-  def test_should_read_fun_ci_s_json
-    json = %({"failures": [{"file": "a.rb", "line": 3, "test": "lint", "message": "bad"}]})
-
-    assert_equal [{ file: "a.rb", line: 3, test: "lint", message: "bad" }], REPORT.json(json)
-  end
-
-  def test_should_read_nothing_from_json_without_a_list_of_failures
-    assert_nil REPORT.json(%({"oops": true}))
-  end
-
   # One such entry made the whole of a failed stage's evidence be lost.
-  def test_should_pass_over_json_failures_that_are_not_objects
-    json = '{"failures": [null, "boom", 3, {"test": "t", "message": "m"}]}'
-
-    assert_equal [{ file: nil, line: nil, test: "t", message: "m" }], REPORT.json(json)
-  end
-
-  def test_should_read_nothing_from_text_that_is_not_json
-    assert_nil REPORT.json("not json")
-  end
-
   def test_should_keep_a_junit_failure_s_own_output_and_errors
     xml = %(<testsuite><testcase name="t"><failure message="m"/><system-out>printed</system-out>) +
           %(<system-err>warned</system-err></testcase></testsuite>)
 
     assert_equal "printed\nwarned", REPORT.junit(xml).first[:output]
-  end
-
-  def test_should_keep_a_json_failure_s_own_output
-    assert_equal "printed",
-                 REPORT.json(%({"failures": [{"test": "t", "message": "m", "output": "printed"}]})).first[:output]
   end
 
   def test_should_keep_the_last_4_kb_of_a_failure_s_own_output

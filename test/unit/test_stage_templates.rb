@@ -61,10 +61,6 @@ class TestStageTemplates < Minitest::Test
                  FunCi::Setup::StageTemplates.stages("l", "b", "f", "s"))
   end
 
-  def test_should_copy_the_reports_of_every_directory_a_reporting_command_names
-    assert_includes FunCi::Setup::StageTemplates.reporting("mvn verify", "a", "b"), "cp a/*.xml b/*.xml "
-  end
-
   def test_should_let_a_lint_override_replace_the_lint_script
     assert_equal "#!/bin/sh\nmvn detekt:check\n",
                  FunCi::Setup::StageTemplates.scripts(:jvm_maven, lint_override: "mvn detekt:check")["lint.sh"]

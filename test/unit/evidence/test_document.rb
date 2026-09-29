@@ -26,10 +26,10 @@ class TestDocument < Minitest::Test
 
   def test_should_keep_one_failure_per_test_file_and_line
     failure = { file: "a.rb", line: 3, test: "t", message: "m" }
-    parts = [["test-reports", FunCi::Evidence::Findings.new(failures: [failure])],
-             ["junit-files", FunCi::Evidence::Findings.new(failures: [failure.merge(message: "again")])]]
+    parts = [["junit-files", FunCi::Evidence::Findings.new(failures: [failure])],
+             ["command", FunCi::Evidence::Findings.new(failures: [failure.merge(message: "again")])]]
 
-    assert_equal(["test-reports"], DOCUMENT.assemble(parts, problems: [], chosen: []).failures.map do |f|
+    assert_equal(["junit-files"], DOCUMENT.assemble(parts, problems: [], chosen: []).failures.map do |f|
       f[:extractor]
     end)
   end

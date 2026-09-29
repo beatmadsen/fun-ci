@@ -37,7 +37,8 @@ module FunCi
             problems: [{ extractor: "fun-ci", message: "couldn't collect the evidence: #{message}" }])
       end
 
-      # The evidence of a row that kept only the output's tail and the reported failures.
+      # The evidence of a row an older fun-ci kept: the output's tail, and the
+      # failures its stage's reports named.
       def self.legacy(tail:, failures:)
         new(chosen: [], facts: [], failures: failures.map { |failure| failure.merge(extractor: "test-reports") },
             excerpts: tail ? [tail_excerpt(tail)] : [], problems: [])
@@ -47,11 +48,6 @@ module FunCi
       def tail
         excerpt = excerpts.find { |candidate| candidate[:extractor] == "output-tail" }
         excerpt && excerpt[:lines].map { |line| "#{line}\n" }.join
-      end
-
-      # The failures the stage's test reports named, as AT-9.7 keeps them.
-      def reported_failures
-        failures.select { |failure| failure[:extractor] == "test-reports" }.map { |failure| failure.except(:extractor) }
       end
 
       def self.tail_excerpt(tail)

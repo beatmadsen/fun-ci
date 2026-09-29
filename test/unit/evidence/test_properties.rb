@@ -54,7 +54,7 @@ class TestEvidenceProperties < Minitest::Test
   end
 
   def collector(environment)
-    sources = FunCi::Evidence::Sources.new(stage: "fast", worktree: "/nowhere", reports: FakeStageDir.new,
+    sources = FunCi::Evidence::Sources.new(stage: "fast", worktree: "/nowhere", stage_dir: FakeStageDir.new,
                                            environment: environment)
     settings = FunCi::Evidence::Settings.new({ "stages" => { "fast" => ENTRIES.first(3) } })
     FunCi::Evidence::Collector.new(sources, settings: settings, clock: -> { 0 })

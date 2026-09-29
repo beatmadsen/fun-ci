@@ -20,15 +20,12 @@ module StacksDoc
       The fast suite leaves out the tests the tool's own convention marks slow, and the slow suite runs only those. Where the tool has no such convention, the slow suite is a `test:slow` script (a `test-slow` target for make). A slow suite with no tests in it passes having run nothing under cargo, dotnet, PHPUnit, rspec and swift, and fails under the others, until you edit `slow.sh`.
     MD
 
-    REPORTS = "[^reports]: Then copies the build's JUnit XML reports into `FUN_CI_REPORT`, " \
-              "so `fun-ci why` shows each failure with its message."
-
     PRESETS = <<~MD.chomp
       ## Presets
 
       When a stage fails, fun-ci runs the presets that apply, with no configuration. A preset applies when the project has one of its marker files (or the preset has none) and the stage's output has a line only its tool prints. Each is checked against the recorded output of a real failing run of its tool, kept in `test/fixtures/evidence/`. `fun-ci check` lists the presets that apply to your project and `fun-ci why` says why each one ran. To keep more than the presets pick out, add entries under `evidence:` in `.fun-ci/config`, as the README shows.
     MD
 
-    def self.markdown = "#{[INTRO, INIT, StackTable.markdown, REPORTS, PRESETS, PresetTable.markdown].join("\n\n")}\n"
+    def self.markdown = "#{[INTRO, INIT, StackTable.markdown, PRESETS, PresetTable.markdown].join("\n\n")}\n"
   end
 end
