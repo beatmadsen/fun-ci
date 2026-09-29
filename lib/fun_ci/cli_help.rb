@@ -30,7 +30,7 @@ module FunCi
         runs           List this project's recent runs, newest first
         wait           Wait for a commit's verdict, then exit with it as status does
         events         Print this project's runs' events as JSON lines
-        why            Print everything kept about why a commit's stage failed
+        why            Print everything kept about why a commit's stage failed, or its conflict with the trunk
         extract        Try a stage's evidence extractors on a saved output
 
       Options:
@@ -44,13 +44,15 @@ module FunCi
         --need LEVEL   (status, wait, why) What must pass: build, fast (default) or all
         --within TIME  (wait) Give up undecided after 30, 30s or 5m
         --follow-branch  (wait) Move on to the newer commit that superseded the run
+        --trunk        (status, wait) Exit 6 when the run passed but conflicts with the trunk
+        --raw          (why) Print the stage's whole output as it was kept
         -n N           (runs) How many runs to list (default 10)
         --branch NAME  (runs) Only runs on this branch
         --follow       (events) Keep printing events as they happen, until stopped
         --only failures  (events) Print only failed stages and superseded runs
         --json         Print JSON instead of text (events always print JSON lines)
         Exit codes: 0 passed, 1 failed, 2 over budget, 3 undecided,
-        4 superseded, 5 no run, 64 usage error
+        4 superseded, 5 no run, 6 conflicts with the trunk (--trunk), 64 usage error
 
       Init options:
         --everything   Run init + install-hooks + check in one step

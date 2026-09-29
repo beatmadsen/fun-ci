@@ -2,6 +2,7 @@
 
 require_relative "../test_helper"
 require "fun_ci/cli"
+require "fun_ci/agent/options"
 require "stringio"
 
 class TestCliUnknownSubcommand < Minitest::Test
@@ -120,6 +121,14 @@ class TestCliHelp < Minitest::Test
     FunCi::Cli.run(["--help"], io: FunCi::Pipeline::Io.new(stdout: stdout))
     assert_match(/--background/, stdout.string)
     assert_match(/--everything/, stdout.string)
+  end
+
+  def test_help_names_every_switch_the_agent_commands_take
+    stdout = StringIO.new
+    FunCi::Cli.run(["--help"], io: FunCi::Pipeline::Io.new(stdout: stdout))
+    switches = FunCi::Agent::Options::SWITCHES.values.map { |switch| switch.first.split.first }
+
+    assert_empty(switches.reject { |switch| stdout.string.include?(switch) })
   end
 
   def test_help_prints_to_stdout_not_stderr
