@@ -73,3 +73,11 @@ fn a_row_standing_for_several_cancelled_runs_says_how_many() {
 
     assert_eq!(words(&run), "3 runs cancelled");
 }
+
+#[test]
+fn a_row_standing_for_one_cancelled_run_says_cancelled() {
+    let mut run = run("cancelled", &[]);
+    run.folded = Some(1);
+
+    assert_eq!(words(&run), "cancelled");
+}

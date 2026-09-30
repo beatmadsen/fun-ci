@@ -53,3 +53,10 @@ fn a_flat_screen_of_one_project_names_no_project() {
 
     assert!(text.lines().any(|line| line.trim_start().starts_with("one-fix")), "{text}");
 }
+
+#[test]
+fn a_flat_row_on_a_screen_with_no_room_to_spare_keeps_its_whole_branch_name() {
+    let text = screen(&two_crowded_projects(), (72, 22)).text();
+
+    assert!(text.lines().any(|line| line.trim_start().starts_with("one  one-fix ")), "{text}");
+}
