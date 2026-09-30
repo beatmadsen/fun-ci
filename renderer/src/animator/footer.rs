@@ -4,7 +4,7 @@
 use ratatui::style::{Color, Modifier, Style};
 
 use super::effect::{Effect, Kind};
-use crate::model::Run;
+use crate::model::{Run, stage_noun};
 
 const HOLD_MS: u64 = 800;
 
@@ -51,8 +51,10 @@ fn conflict_text(look: usize, text: &str) -> Option<String> {
     }
 }
 
+/// The failure banner, naming the stage in full: `>>> THE FAST SUITE FAILED <<<`.
 fn failure_text(look: usize, stage: &str) -> Option<String> {
-    let (up, down) = (stage.to_uppercase(), stage.to_lowercase());
+    let down = stage_noun(stage);
+    let up = down.to_uppercase();
     match look {
         1 => Some(format!(">>> {up} FAILED <<<")),
         2 => Some(format!(">> {down} failed <<")),

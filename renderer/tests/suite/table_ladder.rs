@@ -29,8 +29,19 @@ fn kinds(room: usize, lead: Option<u64>) -> Vec<String> {
 
 #[test]
 fn a_table_with_room_keeps_every_row_and_its_air() {
-    assert_eq!(kinds(40, None), ["blank", "label a", "blank", "row 1", "blank", "row 2", "blank", "row 3", "blank",
+    assert_eq!(kinds(40, None), ["blank", "label a", "blank", "legend 0", "legend 1", "legend 2", "legend 3", "row 1", "blank", "row 2", "blank", "row 3", "blank",
                                  "blank", "label b", "blank", "row 4", "blank", "row 5", "blank", "row 6", "blank"]);
+}
+
+#[test]
+fn a_short_screen_folds_the_passed_rows_to_keep_the_legend() {
+    assert_eq!(kinds(18, None), ["blank", "label a", "blank", "legend 0", "legend 1", "legend 2", "legend 3", "row 1", "blank", "folded 2", "blank",
+                                 "blank", "label b", "blank", "row 4", "blank", "folded 2", "blank"]);
+}
+
+#[test]
+fn a_short_screen_gives_the_legend_up_before_it_leaves_rows_out() {
+    assert!(!kinds(14, None).iter().any(|kind| kind.starts_with("legend")));
 }
 
 #[test]

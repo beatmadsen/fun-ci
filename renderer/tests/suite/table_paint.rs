@@ -19,7 +19,7 @@ fn a_row_s_marks_start_at_the_strip_linked_into_a_track() {
 
 #[test]
 fn a_row_says_what_happened_after_its_marks() {
-    assert!(at(&drawn(&Piece::Row(&failed()), None, &[]), COLUMNS.words).starts_with("failed in fast · 1.4s "));
+    assert!(at(&drawn(&Piece::Row(&failed()), None, &[]), COLUMNS.words).starts_with("the fast suite failed after 1.4s "));
 }
 
 #[test]

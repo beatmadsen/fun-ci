@@ -70,7 +70,7 @@ fn a_failed_stage_cools_to_how_its_row_draws_it_within_a_second() {
 fn a_failure_banner_outranks_a_success_banner() {
     let lines = [board(&[run(1, "failed", &[("fast", "failed")]), run(2, "passed", &passed(&["fast"]))]),
                  event("stage_passed", 2, "fast"), event("stage_failed", 1, "fast")];
-    assert!(last_screen(&then_ticks(&lines, 9)).text().contains(">>> FAST FAILED <<<"));
+    assert!(last_screen(&then_ticks(&lines, 9)).text().contains(">>> THE FAST SUITE FAILED <<<"));
 }
 
 #[test]

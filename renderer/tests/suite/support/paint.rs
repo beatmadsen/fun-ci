@@ -41,7 +41,7 @@ pub fn frame() -> Frame {
 }
 
 pub fn drawn(piece: &Piece, lead: Option<u64>, stale: &[StaleTrunk]) -> Grid {
-    on_screen(&paint(piece, &Paint { columns: COLUMNS, frame: frame(), lead, stale, tags: None }))
+    on_screen(&paint(piece, &Paint { columns: COLUMNS, frame: frame(), lead, stale, tags: None, brief: false }))
 }
 
 /// `line` drawn across a screen `WIDTH` wide.

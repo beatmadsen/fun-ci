@@ -51,11 +51,18 @@ pub fn said(grid: &Grid) -> Vec<String> {
     lines.into_iter().filter(|line| !line.is_empty()).collect()
 }
 
-/// What `line` says up to its first wide gap, its stripe and any block edge left out.
+/// What `line` says up to its first wide gap, its stripe, any block edge and
+/// any line of the legend left out.
 fn words(line: &str) -> String {
     let saying = line.trim().trim_start_matches('▌').trim();
     let edge = saying.chars().all(|c| matches!(c, '▄' | '▀' | '▗' | '▖' | '▝' | '▘'));
-    if edge { String::new() } else { saying.split("  ").next().unwrap_or_default().to_string() }
+    if edge || legend(saying) { String::new() } else { saying.split("  ").next().unwrap_or_default().to_string() }
+}
+
+/// Whether `line` is one of the legend's: its leaders, then a stage's name alone or before what it is for.
+pub fn legend(line: &str) -> bool {
+    let named = line.trim_start_matches(['│', ' ']);
+    ["lint", "build", "fast suite", "slow suite"].iter().any(|name| named == *name || named.starts_with(&format!("{name} · ")))
 }
 
 /// Whether `cells`, screen row `row`, has any cell on the block's paper

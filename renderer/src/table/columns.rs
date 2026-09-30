@@ -59,6 +59,12 @@ impl Columns {
         Self::place(chosen, want.min(room(chosen)).max(1), words)
     }
 
+    /// Whether these columns cut names `longest` long shorter than a name should be cut.
+    #[must_use]
+    pub fn cramped(self, longest: usize) -> bool {
+        self.name < longest.min(NAME_MIN)
+    }
+
     fn place((margin, gap): (usize, usize), name: usize, words: usize) -> Self {
         let branch = margin + 4;
         let strip = branch + name + gap;

@@ -179,8 +179,8 @@ and cheap to resolve.
 
 A stage is `scheduled`, `running`, then `completed`, `failed`, `timed_out` or
 `cancelled`. A run is `scheduled`, `running`, then `completed`, `failed` or
-`cancelled`. The console says scheduled, running, passed, failed, timed out
-and cancelled.
+`cancelled`. The console says them in words: waiting to start, running,
+passed, failed, ran out of time and cancelled.
 
 A run's status follows from its stages alone: `failed` once any stage
 has failed or timed out, `completed` once all four have passed, and `running`
@@ -202,46 +202,64 @@ sky carries on, dusky violet under the horizon and deepening to night, and
 each project's branches sit under the project's name, one row per branch:
 
 ```
-  S T R I N G S - K A T A   ─────────────────────────────────────────────
-▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-▌   a-life-of-its-own                 ✓─✓─◆─✓    failed in fast · 1.4s       6m
+  S T R I N G S - K A T A   ──────────────────────────────────────────────────
+                        lint · checks the code without running it
+                        │ build · compiles the code and its tests
+                        │ │ fast suite · quick tests, after lint and the build
+                        │ │ │ slow suite · long tests, run in the background
+▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+▌   a-life-of-its-own   ✓─✓─◆─✓    the fast suite failed after 1.4s             6m
 ▌     conflicts with main
-▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-    main                              ◌┄◌┄◌┄◌    scheduled                  now
+▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+    main                ◌┄◌┄◌┄◌    waiting to start                            now
 
 
-  A G E N T - T O M E      trunk last fetched 2h ago   ────────────────
+  A G E N T - T O M E      trunk last fetched 2h ago   ──────────────────────
 
-▌   fix/crash                         ✓─◆┄·┄·    failed in build · 0.9s     40m
+▌   fix/crash           ✓─◆┄·┄·    the build failed after 0.9s                 40m
 
-▌   refactor/extract-the-evidence…    ✓─✓─◇─✓    timed out in fast · 10s    25m
+▌   refactor/extract…   ✓─✓─◇─✓    the fast suite ran out of time after 10s    25m
 
 
-  F U N - C I   ─────────────────────────────────────────────────────────
+  F U N - C I   ──────────────────────────────────────────────────────────────
 
-▌   feat/search                       ✓─✓─⠹─⠹    running fast and slow · 7s now
+▌   feat/search         ✓─✓─⠹─⠹    running the fast and slow suites · 7s       now
 
-    trunk-conflicts                   ✓─✓─✓─✓    passed                     14m
+    trunk-conflicts     ✓─✓─✓─✓    all four stages passed                      14m
 
 
    j/k  move     c  cancel     q  quit
 ```
 
 - A branch has one row, its newest run's, so the table says where each branch
-  stands. The row reads as one phrase: the branch, four marks for lint,
-  build, fast and slow, what happened in fun-ci's own words, and when.
-  The words are exact: `failed in fast · 1.4s`, `timed out in fast · 10s`,
-  `running fast and slow · 7s`, `passed`, `scheduled`, `cancelled`, and
-  `3 runs cancelled` for a branch's runs cancelled one after another, as a
-  rebase leaves them. The calm comes from how the table looks, never from
-  softer words.
+  stands. The row reads as one phrase: the branch, four marks for lint, the
+  build, the fast suite and the slow suite, what happened, and when. The
+  words are written for someone who has never seen fun-ci: each stage by its
+  full name, never shorthand like `failed in fast`. They are exact: `the fast
+  suite failed after 1.4s`, `the fast suite ran out of time after 10s`,
+  `running the fast and slow suites · 7s`, `all four stages passed`, `waiting
+  to start`, `cancelled`, and `3 runs cancelled` for a branch's runs
+  cancelled one after another, as a rebase leaves them. On a screen too
+  narrow for those beside a branch name, they say the same briefly, each
+  stage still by its full name (`fast suite failed · 1.4s`, `running both
+  suites · 7s`), so a name keeps at least 12 columns. The calm comes from how
+  the table looks, never from softer words.
 - Each mark says its stage's state by shape as well as colour: `✓` passed,
   `◆` failed, `◇` timed out, a spinner while it runs, `·` not reached (a
   stage a failure stopped too), `◌` waiting to run, `–` cancelled with its
-  run. Without column headings the marks come in lint, build, fast, slow
-  order, and the words name the stage. A link leads into each mark, a line
+  run. The marks come in lint, build, fast suite, slow suite order. A link leads into each mark, a line
   in half its colour once the stage was reached and a faint dotted one
   before, so a run fills its track from left to right.
+- A legend above the first row names each stage over its own mark, a line
+  running down from each name to the next, and says what each stage is for:
+  lint checks the code without running it, the build compiles the code and
+  its tests, the fast suite is the quick tests that run after lint and the
+  build, and the slow suite the long tests that run in the background.
+  The legend takes four lines, which the table finds by folding its passed
+  rows, never by leaving a row out; when it has no room for them, it says
+  `marks, left to right: lint · build · fast suite · slow suite` on the line
+  above the footer instead. On a screen too narrow for what every stage is
+  for, the legend names the stages alone.
 - A row that needs you or is running has a stripe down its left edge in the
   colour of why: coral for a failure, amber for a timeout, lilac for a
   conflict, blue while it runs. Counting the stripes is the glance.

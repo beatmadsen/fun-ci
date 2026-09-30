@@ -7,648 +7,648 @@ frame 0001 at 120x40
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠙─⠙         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠙─⠙     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
-  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnpqprmqpnnnnnmmmnmmmmnmmmmmnmmmmmmnmmmmmnmmmmnnnnnnnnnnnnnnnssnnllllllll
   :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
   :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0002 at 120x40
   header 0e365346
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠹─⠹         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠹─⠹     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
-  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnpqprmqpnnnnnmmmnmmmmnmmmmmnmmmmmmnmmmmmnmmmmnnnnnnnnnnnnnnnssnnllllllll
   :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
   :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBB1BBB2LLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBB1BBB2LLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0003 at 120x40
   header 850051e8
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠸─⠸         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠸─⠸     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
-  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnpqprmqpnnnnnmmmnmmmmnmmmmmnmmmmmmnmmmmmnmmmmnnnnnnnnnnnnnnnssnnllllllll
   :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
   :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBB3BBB44222LLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBB3BBB44222LLLLLLBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0004 at 120x40
   header 8233c3c2
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠼─⠼         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠼─⠼     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
-  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnpqprmqpnnnnnmmmnmmmmnmmmmmnmmmmmmnmmmmmnmmmmnnnnnnnnnnnnnnnssnnllllllll
   :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
   :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBB5BBB4677642222LBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBB5BBB4677642222LBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0005 at 120x40
   header 2759b828
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠴─⠴         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠴─⠴     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
-  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnpqprmqpnnnnnmmmnmmmmnmmmmmnmmmmmmnmmmmmnmmmmnnnnnnnnnnnnnnnssnnllllllll
   :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
   :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBB22224677644BBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBB22224677644BBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0006 at 120x40
   header d88e7d42
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠦─⠦         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠦─⠦     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjj888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888jjjjjjjj
-  :llllllllll9αααβββββββββββββββββααααααααααααααααααααααγδγε9δγααααααααα999999α99α9999α9α9999ααααααααααααααααααζζααllllllll
+  :llllllllll9αααβββββββββββββββββααααααααααααααααααγδγε9δγααααα999α9999α99999α999999α99999α9999αααααααααααααααζζααllllllll
   :tttttttttt9αααααηηηηηηηηηαηηηηαηηηηαααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααtttttttt
   :vvvvvvvvvvθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBBLLLLL222446BBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLL222446BBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0007 at 120x40
   header cbfdfa10
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠧─⠧         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠧─⠧     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjj888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888jjjjjjjj
-  :llllllllll9αααβββββββββββββββββααααααααααααααααααααααγδγε9δγααααααααα999999α99α9999α9α9999ααααααααααααααααααζζααllllllll
+  :llllllllll9αααβββββββββββββββββααααααααααααααααααγδγε9δγααααα999α9999α99999α999999α99999α9999αααααααααααααααζζααllllllll
   :tttttttttt9αααααηηηηηηηηηαηηηηαηηηηαααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααtttttttt
   :vvvvvvvvvvθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBBLLLLLLLLL22BBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLL22BBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0008 at 120x40
   header 6dd907f3
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠇─⠇         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠇─⠇     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjj888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888jjjjjjjj
-  :llllllllll9αααβββββββββββββββββααααααααααααααααααααααγδγε9δγααααααααα999999α99α9999α9α9999ααααααααααααααααααζζααllllllll
+  :llllllllll9αααβββββββββββββββββααααααααααααααααααγδγε9δγααααα999α9999α99999α999999α99999α9999αααααααααααααααζζααllllllll
   :tttttttttt9αααααηηηηηηηηηαηηηηαηηηηαααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααtttttttt
   :vvvvvvvvvvθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0009 at 120x40
   header 50bc542e
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠏─⠏         running fast and slow · 6s            now
+  |          ▌   feat/search                        ✓─✓─⠏─⠏     running the fast and slow suites · 6s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjj888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888jjjjjjjj
-  :llllllllll9αααβββββββββββββββββααααααααααααααααααααααγδγε9δγααααααααα999999α99α9999α9α9999ααααααααααααααααααζζααllllllll
+  :llllllllll9αααβββββββββββββββββααααααααααααααααααγδγε9δγααααα999α9999α99999α999999α99999α9999αααααααααααααααζζααllllllll
   :tttttttttt9αααααηηηηηηηηηαηηηηαηηηηαααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααtttttttt
   :vvvvvvvvvvθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0010 at 120x40
   header 87248e72
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠋─⠋         running fast and slow · 7s            now
+  |          ▌   feat/search                        ✓─✓─⠋─⠋     running the fast and slow suites · 7s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjjιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιjjjjjjjj
-  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλλλλλκκκκκκλκκλκκκκλκλκκκκλλλλλλλλλλλλλλλλλλππλλllllllll
+  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλκκκλκκκκλκκκκκλκκκκκκλκκκκκλκκκκλλλλλλλλλλλλλλλππλλllllllll
   :ttttttttttκλλλλλρρρρρρρρρλρρρρλρρρρλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλtttttttt
   :vvvvvvvvvvσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0011 at 120x40
   header f3c2804f
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠙─⠙         running fast and slow · 7s            now
+  |          ▌   feat/search                        ✓─✓─⠙─⠙     running the fast and slow suites · 7s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjjιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιjjjjjjjj
-  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλλλλλκκκκκκλκκλκκκκλκλκκκκλλλλλλλλλλλλλλλλλλππλλllllllll
+  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλκκκλκκκκλκκκκκλκκκκκκλκκκκκλκκκκλλλλλλλλλλλλλλλππλλllllllll
   :ttttttttttκλλλλλρρρρρρρρρλρρρρλρρρρλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλtttttttt
   :vvvvvvvvvvσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0012 at 120x40
   header 08ea6782
   |
   |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
   |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌   a-life-of-its-own                  ✓─✓─◆─✓     the fast suite failed after 1.4s               6m
   |          ▌     conflicts with main
   |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
+  |              main                               ◌┄◌┄◌┄◌     waiting to start                              now
   |
   |
   |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                          ✓─◆┄·┄·     the build failed after 0.9s                   40m
   |
-  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
+  |          ▌   refactor/extract-the-evidence-…    ✓─✓─◇─✓     the fast suite ran out of time after 10s      25m
   |
   |
   |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
   |
-  |          ▌   feat/search                            ✓─✓─⠹─⠹         running fast and slow · 7s            now
+  |          ▌   feat/search                        ✓─✓─⠹─⠹     running the fast and slow suites · 7s         now
   |
-  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |              trunk-conflicts                    ✓─✓─✓─✓     all four stages passed                        14m
   |
-  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |              main                               ✓─✓─✓─✓     all four stages passed                         1h
   |
-  |
+  |            marks, left to right: lint · build · fast suite · slow suite
   |             j/k  move     c  cancel     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
   :jjjjjjjjjjιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιjjjjjjjj
-  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλλλλλκκκκκκλκκλκκκκλκλκκκκλλλλλλλλλλλλλλλλλλππλλllllllll
+  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλκκκλκκκκλκκκκκλκκκκκκλκκκκκλκκκκλλλλλλλλλλλλλλλππλλllllllll
   :ttttttttttκλλλλλρρρρρρρρρλρρρρλρρρρλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλtttttttt
   :vvvvvvvvvvσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσvvvvvvvv
-  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxzzzzzzzxzzxzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBKKKBKKKKKBKKKKKKBKKKKKBKKKKBBBBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBQQQBQQQQBQQQQQBQQQBQQQBQQBQQQQBQQQQQBQQQBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBTTTTTTTBTTTBTTTTBTTTBTTTTBTTTTTTBTBTTBBBBBBBBBPPPBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBWWWBWWWWBWWWWWWBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDBDDDDBDDBDDDDDDBDDDDBDBDDDDDBDBDDDDBDDDDDBDBDDDDBDDDDDBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 legend
 a = fg Default, bg Rgb(31, 21, 44), []

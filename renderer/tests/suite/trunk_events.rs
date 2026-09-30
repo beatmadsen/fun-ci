@@ -47,5 +47,5 @@ fn a_failure_banner_outranks_a_conflict_banner() {
     let mut failed = conflicting();
     failed["stages"] = json!([{"stage": "fast", "status": "failed", "duration_ms": 300}]);
     let lines = [board(&[failed]), trunk_event("trunk_conflict"), event("stage_failed", 1, "fast")];
-    assert!(last_screen(&then_ticks(&lines, 9)).text().contains(">>> FAST FAILED <<<"));
+    assert!(last_screen(&then_ticks(&lines, 9)).text().contains(">>> THE FAST SUITE FAILED <<<"));
 }

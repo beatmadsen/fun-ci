@@ -11,6 +11,7 @@ pub fn kind(piece: &Piece) -> String {
         Piece::Conflict(run) => format!("conflict {}", run.id),
         Piece::Edge(top) => (if *top { "top" } else { "bottom" }).into(),
         Piece::Folded(runs) => format!("folded {}", runs.len()),
+        Piece::Legend(n) => format!("legend {n}"),
         Piece::More(count, below) => format!("{count} more {}", if *below { "below" } else { "above" }),
     }
 }

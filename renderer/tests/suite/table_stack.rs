@@ -4,7 +4,7 @@
 use crate::support::pieces::kind;
 use fun_ci_renderer::model::Run;
 use fun_ci_renderer::table::sections::sections;
-use fun_ci_renderer::table::stack::{Fold, Rung, stack};
+use fun_ci_renderer::table::stack::{Fold, Rung, stack, with_legend};
 use serde_json::json;
 
 fn run(id: u64, project: &str, status: &str) -> Run {
@@ -112,4 +112,38 @@ fn a_flat_table_has_neither_labels_nor_a_blank_line_on_top() {
     let runs = [run(1, "/a", "passed"), run(2, "/b", "passed")];
 
     assert_eq!(kinds(&runs, FLAT), ["row 1", "blank", "row 2", "blank"]);
+}
+
+/// The pieces of `runs` on the spaced rung, the legend added, `lead` in the block.
+fn legended(runs: &[Run], lead: Option<u64>, fold: Fold) -> Vec<String> {
+    let sections = sections(runs);
+    with_legend(stack(&sections, lead, Rung { fold, ..SPACED })).iter().map(kind).collect()
+}
+
+#[test]
+fn the_legend_comes_just_above_the_first_row() {
+    let runs = [run(1, "/a", "passed"), run(2, "/b", "passed")];
+
+    assert_eq!(legended(&runs, None, Fold::Never)[..8], ["blank", "label a", "blank", "legend 0", "legend 1", "legend 2", "legend 3", "row 1"]);
+}
+
+#[test]
+fn the_legend_comes_above_the_lead_s_block() {
+    let runs = [run(1, "/a", "failed"), run(2, "/b", "passed")];
+
+    assert_eq!(legended(&runs, Some(1), Fold::Never)[..8], ["blank", "label a", "legend 0", "legend 1", "legend 2", "legend 3", "top", "row 1"]);
+}
+
+#[test]
+fn a_legend_with_nothing_above_it_has_a_blank_line_over_it() {
+    let runs = [run(1, "/a", "failed")];
+
+    assert_eq!(legended(&runs, Some(1), Fold::Never)[..6], ["blank", "legend 0", "legend 1", "legend 2", "legend 3", "top"]);
+}
+
+#[test]
+fn a_table_with_no_rows_has_no_legend() {
+    let runs = [run(1, "/a", "passed"), run(2, "/a", "passed")];
+
+    assert!(!legended(&runs, None, Fold::All).iter().any(|kind| kind.starts_with("legend")));
 }

@@ -7,7 +7,7 @@ use super::marks::{links, marks};
 use super::night::{BRANCH, CONFLICT, CURSOR, FAILED, LABEL, PASSED, QUIET, RUNNING, TIMED_OUT, ink, pale};
 use super::stack::conflicts;
 use super::paint::{Paint, Part};
-use super::words::said;
+use super::words::phrase;
 use crate::format::{age, columns, cut, project_name};
 use crate::model::Run;
 
@@ -28,7 +28,7 @@ pub fn row(run: &Run, paint: &Paint) -> Vec<Part> {
         parts.extend(strip(run, paint, &tone));
     }
     let words = if run.status() == "cancelled" { ink(QUIET).italic() } else { ink(tone(outcome(run))) };
-    parts.push((columns.words, said(run, paint.frame.now_ms), words));
+    parts.push((columns.words, phrase(run, paint.frame.now_ms, paint.brief), words));
     parts.push((columns.age_end - 4, format!("{:>4}", when(run, paint)), ink(tone(QUIET))));
     parts
 }

@@ -1,11 +1,15 @@
 //! How the table fits a short screen (design.md, The console): it climbs down
 //! a ladder of rungs, folding its passed rows, then leaving the folded lines
 //! out, then closing up the rows, then dropping the labels, until it fits.
-//! When even the last rung is too long it keeps the lead's row on screen and
-//! says how many rows it can't show.
+//! The legend over the first row stays while folding the passed rows makes
+//! room for it, but never at the cost of a row. When even the last rung is too
+//! long it keeps the lead's row on screen and says how many rows it can't show.
 
 use super::sections::Section;
-use super::stack::{Fold, Piece, Rung, stack};
+use super::stack::{Fold, Piece, Rung, stack, with_legend};
+
+/// How many of the first rungs are tried with the legend before any without it.
+const LEGEND_RUNGS: usize = 2;
 
 const RUNGS: [Rung; 6] = [
     Rung { gap: true, labels: true, fold: Fold::Never, passed: true },
@@ -16,13 +20,14 @@ const RUNGS: [Rung; 6] = [
     Rung { gap: false, labels: false, fold: Fold::All, passed: false },
 ];
 
-/// The table as it fits: its pieces, how many passed rows it left out, and
-/// whether it had to drop the labels.
+/// The table as it fits: its pieces, how many passed rows it left out,
+/// whether it had to drop the labels, and whether it kept the legend.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Fitted<'a> {
     pub pieces: Vec<Piece<'a>>,
     pub unshown: usize,
     pub flat: bool,
+    pub legend: bool,
 }
 
 /// `sections` in at most `room` lines; on a `calm` board, where nothing needs
@@ -31,9 +36,11 @@ pub struct Fitted<'a> {
 pub fn fit<'a>(sections: &'a [Section<'a>], lead: Option<u64>, room: usize, calm: bool) -> Fitted<'a> {
     let first = Rung { fold: if calm { Fold::Many } else { Fold::Never }, ..RUNGS[0] };
     let rungs = std::iter::once(first).chain(RUNGS.into_iter().skip(1));
-    let chosen = rungs.clone().find(|rung| stack(sections, lead, *rung).len() <= room).unwrap_or(RUNGS[5]);
-    let pieces = window(stack(sections, lead, chosen), room);
-    Fitted { pieces, unshown: unshown(sections, lead, chosen), flat: !chosen.labels }
+    let rungs = rungs.clone().take(LEGEND_RUNGS).map(|rung| (rung, true)).chain(rungs.map(|rung| (rung, false)));
+    let stacked = |(rung, legend): (Rung, bool)| if legend { with_legend(stack(sections, lead, rung)) } else { stack(sections, lead, rung) };
+    let chosen = rungs.clone().find(|step| stacked(*step).len() <= room).unwrap_or((RUNGS[5], false));
+    let pieces = window(stacked(chosen), room);
+    Fitted { pieces, unshown: unshown(sections, lead, chosen.0), flat: !chosen.0.labels, legend: chosen.1 }
 }
 
 /// How many passed rows `rung` leaves out: those it would have folded.

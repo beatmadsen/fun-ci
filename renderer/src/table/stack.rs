@@ -19,6 +19,8 @@ pub enum Piece<'a> {
     Folded(Vec<&'a Run>),
     /// How many rows are off the screen, below it (`true`) or above.
     More(usize, bool),
+    /// Line `n` of the legend that names each stage over its mark.
+    Legend(usize),
 }
 
 /// Which passed rows fold into one line per project: none, a project's
@@ -40,6 +42,9 @@ pub struct Rung {
     pub passed: bool,
 }
 
+/// How many lines the legend takes: one a stage.
+pub const LEGEND_LINES: usize = 4;
+
 /// The pieces of `sections` on `rung`, the row `lead` in the block.
 #[must_use]
 pub fn stack<'a>(sections: &'a [Section<'a>], lead: Option<u64>, rung: Rung) -> Vec<Piece<'a>> {
@@ -56,6 +61,18 @@ pub fn stack<'a>(sections: &'a [Section<'a>], lead: Option<u64>, rung: Rung) -> 
         rows(&mut out, section, lead, rung);
     }
     out
+}
+
+/// `pieces` with the legend's lines just above the first row, or above its
+/// block's top edge, and a blank line over them when nothing else stands
+/// between them and the header; unchanged when there is no row.
+#[must_use]
+pub fn with_legend(mut pieces: Vec<Piece<'_>>) -> Vec<Piece<'_>> {
+    if let Some(at) = pieces.iter().position(|piece| matches!(piece, Piece::Row(_) | Piece::Edge(true))) {
+        let air = (at == 0).then_some(Piece::Blank);
+        pieces.splice(at..at, air.into_iter().chain((0..LEGEND_LINES).map(Piece::Legend)));
+    }
+    pieces
 }
 
 fn rows<'a>(out: &mut Vec<Piece<'a>>, section: &'a Section<'a>, lead: Option<u64>, rung: Rung) {

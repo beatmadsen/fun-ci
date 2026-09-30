@@ -8,6 +8,7 @@ pub mod columns;
 pub mod firefly;
 pub mod footer;
 pub mod ladder;
+pub mod legend;
 pub mod line;
 pub mod marks;
 pub mod night;
@@ -70,25 +71,32 @@ const SHADES: usize = 5;
 pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
     let sections = sections(&board.runs);
     let lead = lead(board);
-    let (fitted, note) = fitted(board, &sections, (lead, room), frame.now_ms);
+    let (fitted, note) = fitted(board, &sections, (lead, room), frame);
     let tags = (fitted.flat && sections.len() > 1).then(|| widest_project(&sections));
-    let columns = Columns::fit(frame.width, longest_name(board) + tags.map_or(0, |tag| tag + 2), longest_words(board, frame));
-    let paint_with = Paint { columns, frame, lead, stale: &board.stale_trunks, tags };
+    let (columns, brief) = laid_out(board, frame, longest_name(board) + tags.map_or(0, |tag| tag + 2));
+    let paint_with = Paint { columns, frame, lead, stale: &board.stale_trunks, tags, brief };
     let lines = fitted.pieces.iter().map(|piece| paint(piece, &paint_with)).collect();
     let needs = board.runs.iter().any(|run| lead == Some(run.id) && needs_you(run));
     let paper = lead.and_then(|run| Paper::over(&fitted.pieces, run, columns, paper(frame.play_ms, needs)));
     Drawn { lines, rows: rows(&fitted.pieces), columns, unshown: fitted.unshown, note, paper }
 }
 
-/// The fitted table, and the stale trunks' note when it had to go flat, which takes a line.
-fn fitted<'a>(board: &Board, sections: &'a [Section<'a>], (lead, room): (Option<u64>, usize), now_ms: i64) -> (Fitted<'a>, Option<String>) {
+/// The fitted table, and the line it says above the footer: the stale
+/// trunks when it had to go flat, which takes a line, or else the one-line
+/// legend when it had no room for the full one.
+fn fitted<'a>(board: &Board, sections: &'a [Section<'a>], (lead, room): (Option<u64>, usize), frame: Frame) -> (Fitted<'a>, Option<String>) {
     let calm = !board.runs.iter().any(needs_you);
     let fitted = fit(sections, lead, room, calm);
     if !fitted.flat || board.stale_trunks.is_empty() {
-        return (fitted, None);
+        let rows = fitted.pieces.iter().any(|piece| matches!(piece, Piece::Row(_)));
+        let key = (rows && !fitted.legend).then(|| legend::key(frame.width, NOTE_AT).to_string());
+        return (fitted, key);
     }
-    (fit(sections, lead, room.saturating_sub(1), calm), Some(footer::stale(board, now_ms)))
+    (fit(sections, lead, room.saturating_sub(1), calm), Some(footer::stale(board, frame.now_ms)))
 }
+
+/// About where a note above the footer starts: the labels' column on a narrow screen.
+const NOTE_AT: usize = 4;
 
 /// The row in the block: the cursor's, else the first that needs you.
 fn lead(board: &Board) -> Option<u64> {
@@ -121,8 +129,18 @@ fn longest_name(board: &Board) -> usize {
     board.runs.iter().map(|run| columns(&run.commit.branch)).max().unwrap_or(0)
 }
 
-fn longest_words(board: &Board, frame: Frame) -> usize {
-    board.runs.iter().map(|run| columns(&words::said(run, frame.now_ms))).max().unwrap_or(0) + WORDS_SPARE
+/// The columns for names `names` wide, and whether the words must be brief
+/// to leave the names their room.
+fn laid_out(board: &Board, frame: Frame, names: usize) -> (Columns, bool) {
+    let full = Columns::fit(frame.width, names, longest_words(board, frame, false));
+    if !full.cramped(names) {
+        return (full, false);
+    }
+    (Columns::fit(frame.width, names, longest_words(board, frame, true)), true)
+}
+
+fn longest_words(board: &Board, frame: Frame, brief: bool) -> usize {
+    board.runs.iter().map(|run| columns(&words::phrase(run, frame.now_ms, brief))).max().unwrap_or(0) + WORDS_SPARE
 }
 
 fn widest_project(sections: &[Section]) -> usize {

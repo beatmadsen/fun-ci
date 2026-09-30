@@ -8,6 +8,7 @@ use ratatui::text::Line;
 use super::Frame;
 use super::columns::Columns;
 pub use super::line::Part;
+use super::legend::legend;
 use super::line::placed;
 use super::night::{CONFLICT, LABEL, NIGHT, NOTE, QUIET, blend, ink};
 use super::rows::{accent, folded, row};
@@ -27,6 +28,8 @@ pub struct Paint<'a> {
     pub stale: &'a [StaleTrunk],
     /// In the flat layout, the widest project's name, which each row starts with.
     pub tags: Option<usize>,
+    /// Whether the rows say what happened briefly, to leave the names room on a narrow screen.
+    pub brief: bool,
 }
 
 /// `piece` as a line.
@@ -38,6 +41,7 @@ pub fn paint(piece: &Piece, paint: &Paint) -> Line<'static> {
         Piece::Label(section) => label(section, paint),
         Piece::Folded(runs) => folded(runs, paint),
         Piece::More(count, below) => vec![more(*count, *below, paint.columns)],
+        Piece::Legend(n) => legend(*n, paint),
         Piece::Edge(_) | Piece::Blank => Vec::new(),
     })
 }

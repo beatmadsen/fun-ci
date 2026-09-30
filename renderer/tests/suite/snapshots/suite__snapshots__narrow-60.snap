@@ -5,138 +5,143 @@ expression: "render(& frames(\"narrow-60\"))"
 frame 0001 at 60x30
   header 769f98d0
   |
-  |  ▌   fix/crash    ✓─◆┄·┄·  failed in build · 0.9s      4m
+  |                  lint
+  |                  │ build
+  |                  │ │ fast suite
+  |                  │ │ │ slow suite
+  |  ▌   fix/crash   ✓─◆┄·┄·  build failed · 0.9s          4m
   |
-  |  ▌   feature/lo…  ✓─✓─⠙┄·  running fast · 5s          now
+  |  ▌   feature/l…  ✓─✓─⠙┄·  running fast suite · 5s     now
   |  ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |      main         ◌┄◌┄◌┄◌  scheduled                  now
+  |      main        ◌┄◌┄◌┄◌  waiting to start            now
   |  ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |      spike                 cancelled                   1h
-  |
-  |
-  |
-  |
+  |      spike                cancelled                    1h
   |
   |
   |
   |    Cancel main (d54ede8)?   y  yes     n  no
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bbcbbbdddddddddbbbbefcghghbbccccccbccbcccccbcbccccbbbbbbhhbb
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-  :jjkjjjllllllllllljjmnmokpqjjkkkkkkkjkkkkjkjkkjjjjjjjjjjqqqjj
-  :rrssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :ttuuuuvvvvuuuuuuuuuwxwxwxwuuwwwwwwwwwuuuuuuuuuuuuuuuuuuwwwuu
-  :yyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :AAAAAABBBBBAAAAAAAAAAAAAAAAACCCCCCCCCAAAAAAAAAAAAAAAAAAABBAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAADDDDDDADDDDADDDDDDDDDDAAEFEABBBAAAAEFEABBAAAAAAAAAAAAAAA
+  :bbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ddddddddddddddddddedfffffddddddddddddddddddddddddddddddddddd
+  :gggggggggggggggggghghgiiiigiiiiigggggggggggggggggggggggggggg
+  :jjjjjjjjjjjjjjjjjjkjkjkjlllljllllljjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmnmmmooooooooommmpqnrsrsmmnnnnnmnnnnnnmnmnnnnmmmmmmmmmmssmm
+  :tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+  :uuvuuuwwwwwwwwwwuuxyxzvABuuvvvvvvvuvvvvuvvvvvuvuvvuuuuuBBBuu
+  :uuCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :uuDDDDEEEEDDDDDDDDFGFGFGFDDFFFFFFFDFFDFFFFFDDDDDDDDDDDDFFFDD
+  :uuCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :uuuuuuBBBBBuuuuuuuuuuuuuuuuHHHHHHHHHuuuuuuuuuuuuuuuuuuuuBBuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuIIIIIIuIIIIuIIIIIIIIIIuuJKJuBBBuuuuJKJuBBuuuuuuuuuuuuuuu
 frame 0002 at 60x30
   header b322e3b1
   |
-  |  ▌   fix/crash    ✓─◆┄·┄·  failed in build · 0.9s      4m
+  |                  lint
+  |                  │ build
+  |                  │ │ fast suite
+  |                  │ │ │ slow suite
+  |  ▌   fix/crash   ✓─◆┄·┄·  build failed · 0.9s          4m
   |
-  |  ▌   feature/lo…  ✓─✓─⠹┄·  running fast · 5s          now
+  |  ▌   feature/l…  ✓─✓─⠹┄·  running fast suite · 5s     now
   |  ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |      main         ◌┄◌┄◌┄◌  scheduled                  now
+  |      main        ◌┄◌┄◌┄◌  waiting to start            now
   |  ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |      spike                 cancelled                   1h
-  |
-  |
-  |
-  |
+  |      spike                cancelled                    1h
   |
   |
   |
   |    Cancel main (d54ede8)?   y  yes     n  no
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bbcbbbdddddddddbbbbefcghghbbccccccbccbcccccbcbccccbbbbbbhhbb
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-  :jjGjjjllllllllllljjmnmokpqjjkkkkkkkjkkkkjkjkkjjjjjjjjjjqqqjj
-  :rrssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :ttuuuuvvvvuuuuuuuuuwxwxwxwuuwwwwwwwwwuuuuuuuuuuuuuuuuuuwwwuu
-  :yyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :AAAAAABBBBBAAAAAAAAAAAAAAAAACCCCCCCCCAAAAAAAAAAAAAAAAAAABBAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAADDDDDDADDDDADDDDDDDDDDAAEFEABBBAAAAEFEABBAAAAAAAAAAAAAAA
+  :bbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ddddddddddddddddddedfffffddddddddddddddddddddddddddddddddddd
+  :gggggggggggggggggghghgiiiigiiiiigggggggggggggggggggggggggggg
+  :jjjjjjjjjjjjjjjjjjkjkjkjlllljllllljjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmnmmmooooooooommmpqnrsrsmmnnnnnmnnnnnnmnmnnnnmmmmmmmmmmssmm
+  :tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+  :uuLuuuwwwwwwwwwwuuxyxzvABuuvvvvvvvuvvvvuvvvvvuvuvvuuuuuBBBuu
+  :uuCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :uuDDDDEEEEDDDDDDDDFGFGFGFDDFFFFFFFDFFDFFFFFDDDDDDDDDDDDFFFDD
+  :uuCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :uuuuuuBBBBBuuuuuuuuuuuuuuuuHHHHHHHHHuuuuuuuuuuuuuuuuuuuuBBuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuIIIIIIuIIIIuIIIIIIIIIIuuJKJuBBBuuuuJKJuBBuuuuuuuuuuuuuuu
 frame 0003 at 60x30
   header dd575bae
   |
-  |  ▌   fix/crash    ✓─◆┄·┄·  failed in build · 0.9s      4m
+  |                  lint
+  |                  │ build
+  |                  │ │ fast suite
+  |                  │ │ │ slow suite
+  |  ▌   fix/crash   ✓─◆┄·┄·  build failed · 0.9s          4m
   |
-  |  ▌   feature/lo…  ✓─✓─⠸┄·  running fast · 5s          now
+  |  ▌   feature/l…  ✓─✓─⠸┄·  running fast suite · 5s     now
   |  ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |      main         ◌┄◌┄◌┄◌  scheduled                  now
+  |      main        ◌┄◌┄◌┄◌  waiting to start            now
   |  ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-  |      spike                 cancelled                   1h
-  |
-  |
-  |
-  |
+  |      spike                cancelled                    1h
   |
   |
   |
   |    Cancel main (d54ede8)?   y  yes     n  no
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bbcbbbdddddddddbbbbefcghghbbccccccbccbcccccbcbccccbbbbbbhhbb
-  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
-  :jjHjjjIIllllllllljjmnmokpqjjkkkkkkkjkkkkjkjkkjjjjjjjjjjqqqjj
-  :rrssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :ttuuuuvvvvuuuuuuuuuwxwxwxwuuwwwwwwwwwuuuuuuuuuuuuuuuuuuwwwuu
-  :yyzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :AAAAAABBBBBAAAAAAAAAAAAAAAAACCCCCCCCCAAAAAAAAAAAAAAAAAAABBAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :AAAADDDDDDADDDDADDDDDDDDDDAAEFEABBBAAAAEFEABBAAAAAAAAAAAAAAA
+  :bbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ddddddddddddddddddedfffffddddddddddddddddddddddddddddddddddd
+  :gggggggggggggggggghghgiiiigiiiiigggggggggggggggggggggggggggg
+  :jjjjjjjjjjjjjjjjjjkjkjkjlllljllllljjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmnmmmooooooooommmpqnrsrsmmnnnnnmnnnnnnmnmnnnnmmmmmmmmmmssmm
+  :tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
+  :uuMuuuNNwwwwwwwwuuxyxzvABuuvvvvvvvuvvvvuvvvvvuvuvvuuuuuBBBuu
+  :uuCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :uuDDDDEEEEDDDDDDDDFGFGFGFDDFFFFFFFDFFDFFFFFDDDDDDDDDDDDFFFDD
+  :uuCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :uuuuuuBBBBBuuuuuuuuuuuuuuuuHHHHHHHHHuuuuuuuuuuuuuuuuuuuuBBuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu
+  :uuuuIIIIIIuIIIIuIIIIIIIIIIuuJKJuBBBuuuuJKJuBBuuuuuuuuuuuuuuu
 legend
 a = fg Default, bg Rgb(31, 21, 44), []
 b = fg Default, bg Rgb(27, 18, 38), []
-c = fg Rgb(220, 132, 118), bg Rgb(27, 18, 38), []
-d = fg Rgb(216, 212, 232), bg Rgb(27, 18, 38), []
-e = fg Rgb(111, 184, 170), bg Rgb(27, 18, 38), []
-f = fg Rgb(116, 71, 69), bg Rgb(27, 18, 38), []
-g = fg Rgb(49, 46, 62), bg Rgb(27, 18, 38), []
-h = fg Rgb(85, 82, 104), bg Rgb(27, 18, 38), []
-i = fg Default, bg Rgb(23, 16, 33), []
-j = fg Default, bg Rgb(19, 14, 29), []
-k = fg Rgb(143, 184, 222), bg Rgb(19, 14, 29), []
-l = fg Rgb(216, 212, 232), bg Rgb(19, 14, 29), []
-m = fg Rgb(111, 184, 170), bg Rgb(19, 14, 29), []
-n = fg Rgb(62, 97, 95), bg Rgb(19, 14, 29), []
-o = fg Rgb(78, 97, 121), bg Rgb(19, 14, 29), []
-p = fg Rgb(49, 46, 62), bg Rgb(19, 14, 29), []
-q = fg Rgb(85, 82, 104), bg Rgb(19, 14, 29), []
-r = fg Default, bg Rgb(17, 13, 25), []
-s = fg Rgb(29, 27, 54), bg Rgb(17, 13, 25), []
-t = fg Default, bg Rgb(15, 12, 23), []
-u = fg Default, bg Rgb(29, 27, 54), []
-v = fg Rgb(242, 239, 250), bg Rgb(29, 27, 54), ["bold"]
-w = fg Rgb(85, 82, 104), bg Rgb(29, 27, 54), []
-x = fg Rgb(49, 46, 62), bg Rgb(29, 27, 54), []
-y = fg Default, bg Rgb(13, 11, 21), []
-z = fg Rgb(29, 27, 54), bg Rgb(13, 11, 21), []
-A = fg Default, bg Rgb(12, 10, 19), []
+c = fg Rgb(127, 122, 150), bg Rgb(27, 18, 38), ["bold"]
+d = fg Default, bg Rgb(23, 16, 33), []
+e = fg Rgb(81, 77, 98), bg Rgb(23, 16, 33), []
+f = fg Rgb(127, 122, 150), bg Rgb(23, 16, 33), ["bold"]
+g = fg Default, bg Rgb(19, 14, 29), []
+h = fg Rgb(81, 77, 98), bg Rgb(19, 14, 29), []
+i = fg Rgb(127, 122, 150), bg Rgb(19, 14, 29), ["bold"]
+j = fg Default, bg Rgb(17, 13, 25), []
+k = fg Rgb(81, 77, 98), bg Rgb(17, 13, 25), []
+l = fg Rgb(127, 122, 150), bg Rgb(17, 13, 25), ["bold"]
+m = fg Default, bg Rgb(15, 12, 23), []
+n = fg Rgb(220, 132, 118), bg Rgb(15, 12, 23), []
+o = fg Rgb(216, 212, 232), bg Rgb(15, 12, 23), []
+p = fg Rgb(111, 184, 170), bg Rgb(15, 12, 23), []
+q = fg Rgb(116, 71, 69), bg Rgb(15, 12, 23), []
+r = fg Rgb(49, 46, 62), bg Rgb(15, 12, 23), []
+s = fg Rgb(85, 82, 104), bg Rgb(15, 12, 23), []
+t = fg Default, bg Rgb(13, 11, 21), []
+u = fg Default, bg Rgb(12, 10, 19), []
+v = fg Rgb(143, 184, 222), bg Rgb(12, 10, 19), []
+w = fg Rgb(216, 212, 232), bg Rgb(12, 10, 19), []
+x = fg Rgb(111, 184, 170), bg Rgb(12, 10, 19), []
+y = fg Rgb(62, 97, 95), bg Rgb(12, 10, 19), []
+z = fg Rgb(78, 97, 121), bg Rgb(12, 10, 19), []
+A = fg Rgb(49, 46, 62), bg Rgb(12, 10, 19), []
 B = fg Rgb(85, 82, 104), bg Rgb(12, 10, 19), []
-C = fg Rgb(85, 82, 104), bg Rgb(12, 10, 19), ["italic"]
-D = fg Rgb(207, 200, 232), bg Rgb(12, 10, 19), []
-E = fg Default, bg Rgb(38, 33, 56), []
-F = fg Rgb(207, 200, 232), bg Rgb(38, 33, 56), []
-G = fg Rgb(155, 192, 227), bg Rgb(19, 14, 29), []
-H = fg Rgb(178, 207, 236), bg Rgb(19, 14, 29), []
-I = fg Rgb(218, 216, 235), bg Rgb(19, 14, 29), []
+C = fg Rgb(29, 27, 54), bg Rgb(12, 10, 19), []
+D = fg Default, bg Rgb(29, 27, 54), []
+E = fg Rgb(242, 239, 250), bg Rgb(29, 27, 54), ["bold"]
+F = fg Rgb(85, 82, 104), bg Rgb(29, 27, 54), []
+G = fg Rgb(49, 46, 62), bg Rgb(29, 27, 54), []
+H = fg Rgb(85, 82, 104), bg Rgb(12, 10, 19), ["italic"]
+I = fg Rgb(207, 200, 232), bg Rgb(12, 10, 19), []
+J = fg Default, bg Rgb(38, 33, 56), []
+K = fg Rgb(207, 200, 232), bg Rgb(38, 33, 56), []
+L = fg Rgb(155, 192, 227), bg Rgb(12, 10, 19), []
+M = fg Rgb(178, 207, 236), bg Rgb(12, 10, 19), []
+N = fg Rgb(218, 216, 235), bg Rgb(12, 10, 19), []
