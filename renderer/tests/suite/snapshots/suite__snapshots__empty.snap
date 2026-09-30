@@ -3,7 +3,7 @@ source: tests/suite/snapshots.rs
 expression: "render(& frames(\"empty\"))"
 ---
 frame 0001 at 80x24
-  header f13e7a97
+  header d2e2d782
   |
   |
   |          No runs yet.
@@ -25,7 +25,7 @@ frame 0001 at 80x24
   :
   :
 frame 0002 at 80x24
-  header 6b95860d
+  header dbd571e7
   |
   |
   |          No runs yet.
@@ -47,7 +47,7 @@ frame 0002 at 80x24
   :
   :
 frame 0003 at 80x24
-  header a97e3206
+  header 0e960a24
   |
   |
   |          No runs yet.
@@ -69,7 +69,7 @@ frame 0003 at 80x24
   :
   :
 frame 0004 at 80x24
-  header 7e527df7
+  header 0579dcbc
   |
   |
   |          No runs yet.
@@ -91,7 +91,7 @@ frame 0004 at 80x24
   :
   :
 frame 0005 at 80x24
-  header e216df9f
+  header 31c91b72
   |
   |
   |          No runs yet.
@@ -113,7 +113,7 @@ frame 0005 at 80x24
   :
   :
 frame 0006 at 80x24
-  header 0ea2506d
+  header 5895fa28
   |
   |
   |          No runs yet.
@@ -135,7 +135,7 @@ frame 0006 at 80x24
   :
   :
 frame 0007 at 80x24
-  header f2faad08
+  header 2d1b7727
   |
   |
   |          No runs yet.
@@ -157,7 +157,7 @@ frame 0007 at 80x24
   :
   :
 frame 0008 at 80x24
-  header 9d185c12
+  header d5aa645c
   |
   |
   |          No runs yet.

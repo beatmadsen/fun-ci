@@ -74,8 +74,9 @@ fn text(row: &[Cell]) -> String {
     row.iter().map(|cell| if cell.text.is_empty() { " " } else { &cell.text }).collect()
 }
 
-/// A CRC-32 of every cell of `rows`: text, colours and attributes.
+/// A CRC-32 of every cell of `rows`: its text and the style it shows.
 #[must_use]
 pub fn digest(rows: &[Vec<Cell>]) -> String {
-    format!("{:08x}", crc32fast::hash(serde_json::to_string(rows).unwrap().as_bytes()))
+    let shown: Vec<Vec<(&str, Style)>> = rows.iter().map(|row| row.iter().map(|cell| (cell.text.as_str(), visible(cell))).collect()).collect();
+    format!("{:08x}", crc32fast::hash(serde_json::to_string(&shown).unwrap().as_bytes()))
 }

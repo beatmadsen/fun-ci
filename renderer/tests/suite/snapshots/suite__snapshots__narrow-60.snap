@@ -3,7 +3,7 @@ source: tests/suite/snapshots.rs
 expression: "render(& frames(\"narrow-60\"))"
 ---
 frame 0001 at 60x30
-  header cecf31f7
+  header 769f98d0
   |
   |      fix/crash    ✓ ◆ · ·  failed in build · 0.9s      4m
   |
@@ -37,7 +37,7 @@ frame 0001 at 60x30
   :
   :....dddddd.dddd.dddddddddd.d.d.d
 frame 0002 at 60x30
-  header dd4127e5
+  header b322e3b1
   |
   |      fix/crash    ✓ ◆ · ·  failed in build · 0.9s      4m
   |
@@ -71,7 +71,7 @@ frame 0002 at 60x30
   :
   :....dddddd.dddd.dddddddddd.d.d.d
 frame 0003 at 60x30
-  header 59e05b0e
+  header dd575bae
   |
   |      fix/crash    ✓ ◆ · ·  failed in build · 0.9s      4m
   |
