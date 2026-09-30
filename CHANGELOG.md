@@ -23,7 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The table reads to someone who has never seen fun-ci. Each stage is named
   in full (`the fast suite failed after 1.4s`, `running the fast and slow
   suites · 7s`, `all four stages passed`, `waiting to start`), and a legend
-  over the first row names each stage over its mark and says what it is for.
+  at the top of the table, above every project, names each stage and says
+  what it is for, a line running down from each name through every project
+  to its column of marks.
   When the legend has no room, one line above the keys names the marks.
 
 ## [2.1.0] - 2026-09-30

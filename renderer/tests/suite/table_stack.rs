@@ -121,24 +121,26 @@ fn legended(runs: &[Run], lead: Option<u64>, fold: Fold) -> Vec<String> {
 }
 
 #[test]
-fn the_legend_comes_just_above_the_first_row() {
+fn the_legend_comes_before_every_project_a_blank_line_over_it() {
     let runs = [run(1, "/a", "passed"), run(2, "/b", "passed")];
 
-    assert_eq!(legended(&runs, None, Fold::Never)[..8], ["blank", "label a", "blank", "legend 0", "legend 1", "legend 2", "legend 3", "row 1"]);
+    assert_eq!(legended(&runs, None, Fold::Never)[..8], ["blank", "legend 0", "legend 1", "legend 2", "legend 3", "blank", "label a", "blank"]);
 }
 
 #[test]
-fn the_legend_comes_above_the_lead_s_block() {
+fn the_legend_comes_before_every_project_when_the_lead_leads_the_table() {
     let runs = [run(1, "/a", "failed"), run(2, "/b", "passed")];
 
-    assert_eq!(legended(&runs, Some(1), Fold::Never)[..8], ["blank", "label a", "legend 0", "legend 1", "legend 2", "legend 3", "top", "row 1"]);
+    assert_eq!(legended(&runs, Some(1), Fold::Never)[..8], ["blank", "legend 0", "legend 1", "legend 2", "legend 3", "blank", "label a", "top"]);
 }
 
 #[test]
-fn a_legend_with_nothing_above_it_has_a_blank_line_over_it() {
-    let runs = [run(1, "/a", "failed")];
+fn a_flat_table_s_legend_comes_straight_above_its_first_row() {
+    let runs = [run(1, "/a", "failed"), run(2, "/b", "passed")];
+    let sections = sections(&runs);
+    let flat: Vec<String> = with_legend(stack(&sections, None, FLAT)).iter().map(kind).collect();
 
-    assert_eq!(legended(&runs, Some(1), Fold::Never)[..6], ["blank", "legend 0", "legend 1", "legend 2", "legend 3", "top"]);
+    assert_eq!(flat[..6], ["blank", "legend 0", "legend 1", "legend 2", "legend 3", "row 1"]);
 }
 
 #[test]

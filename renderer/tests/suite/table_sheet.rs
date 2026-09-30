@@ -9,6 +9,7 @@ use crate::support::shown::{blank, shown};
 use fun_ci_renderer::grid::{Colour, Grid};
 use fun_ci_renderer::table::line::placed;
 use fun_ci_renderer::table::night::{self, ink};
+use fun_ci_renderer::table::leaders::Leaders;
 use fun_ci_renderer::table::sheet::{Paper, Sheet};
 use fun_ci_renderer::table::stack::Piece;
 use ratatui::text::Line;
@@ -22,7 +23,7 @@ fn word(column: usize, text: &str) -> Line<'static> {
 
 fn on_sheet(lines: &[Line<'static>], paper: Option<Paper>) -> Grid {
     let mut buffer = blank(WIDTH, 4);
-    Sheet { lines, paper }.render(buffer.area, &mut buffer);
+    Sheet { lines, paper, leaders: None }.render(buffer.area, &mut buffer);
     shown(&buffer)
 }
 
@@ -135,7 +136,7 @@ fn a_sheet_drawn_further_in_moves_its_block_with_it() {
     let run = failed();
     let mut buffer = blank(WIDTH, 4);
     let paper = block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]);
-    Sheet { lines: &[], paper }.render(ratatui::layout::Rect::new(3, 0, WIDTH - 3, 4), &mut buffer);
+    Sheet { lines: &[], paper, leaders: None }.render(ratatui::layout::Rect::new(3, 0, WIDTH - 3, 4), &mut buffer);
 
     assert_eq!(shown(&buffer).cells[0][COLUMNS.age_end + 2 + 1].text, "▄");
 }
@@ -155,4 +156,88 @@ fn the_block_s_sides_are_paper_too() {
     let grid = on_sheet(&[], block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]));
 
     assert_eq!((grid.cells[1][COLUMNS.margin].bg, grid.cells[1][COLUMNS.age_end + 1].bg), (rgb(night::WINE), rgb(night::WINE)));
+}
+
+const LEADER: [u8; 3] = [90, 90, 110];
+
+/// `lines` drawn with leaders down lines 1 and 2 from column 20.
+fn led(lines: &[Line<'static>]) -> Grid {
+    let mut buffer = blank(WIDTH, 4);
+    let leaders = Some(Leaders { lines: vec![1, 2], labels: Vec::new(), column: 20, colour: LEADER });
+    Sheet { lines, paper: None, leaders }.render(buffer.area, &mut buffer);
+    shown(&buffer)
+}
+
+fn rule() -> Line<'static> {
+    placed((0..60).map(|at| (at, "─".to_string(), ink(GREY))).collect())
+}
+
+#[test]
+fn a_leader_runs_down_a_blank_line_over_each_mark() {
+    let grid = led(&[Line::default(), Line::default(), Line::default()]);
+
+    assert_eq!([20, 22, 24, 26].map(|x| grid.cells[1][x].text.clone()), ["│", "│", "│", "│"]);
+}
+
+#[test]
+fn a_leader_is_drawn_in_its_own_colour() {
+    assert_eq!(led(&[Line::default(), Line::default()]).cells[1][22].fg, rgb(LEADER));
+}
+
+#[test]
+fn a_leader_crosses_a_rule() {
+    let grid = led(&[Line::default(), rule()]);
+
+    assert_eq!((grid.cells[1][20].text.as_str(), grid.cells[1][21].text.as_str()), ("┼", "─"));
+}
+
+/// `lines` drawn with leaders across a label on line 1 from column 20.
+fn labelled(lines: &[Line<'static>]) -> Grid {
+    let mut buffer = blank(WIDTH, 2);
+    let leaders = Some(Leaders { lines: Vec::new(), labels: vec![1], column: 20, colour: LEADER });
+    Sheet { lines, paper: None, leaders }.render(buffer.area, &mut buffer);
+    shown(&buffer)
+}
+
+#[test]
+fn a_leader_crosses_a_label_s_rule() {
+    assert_eq!(labelled(&[Line::default(), rule()]).cells[1][22].text, "┼");
+}
+
+#[test]
+fn a_leader_passes_behind_a_label_s_letter_spacing() {
+    assert_eq!(labelled(&[Line::default(), word(17, "K A T A")]).cells[1][20].text, " ");
+}
+
+#[test]
+fn a_leader_goes_behind_text() {
+    let grid = led(&[Line::default(), word(18, "S T R I N G S")]);
+
+    assert_eq!(grid.cells[1][20].text, "T");
+}
+
+#[test]
+fn leaders_run_only_down_their_lines() {
+    let grid = led(&[Line::default(), Line::default(), Line::default(), Line::default()]);
+
+    assert_eq!((grid.cells[0][20].text.as_str(), grid.cells[3][20].text.as_str()), ("", ""));
+}
+
+#[test]
+fn a_leader_stops_at_the_block_s_edge() {
+    let run = failed();
+    let mut buffer = blank(WIDTH, 4);
+    let leaders = Some(Leaders { lines: vec![0], labels: Vec::new(), column: 20, colour: LEADER });
+    Sheet { lines: &[], paper: block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]), leaders }.render(buffer.area, &mut buffer);
+
+    assert_eq!(shown(&buffer).cells[0][20].text, "▄");
+}
+
+#[test]
+fn leaders_are_drawn_on_the_sheet_s_own_lines_wherever_it_starts() {
+    let mut buffer = blank(WIDTH, 4);
+    let leaders = Some(Leaders { lines: vec![0], labels: Vec::new(), column: 20, colour: LEADER });
+    Sheet { lines: &[], paper: None, leaders }.render(ratatui::layout::Rect::new(3, 2, WIDTH - 3, 2), &mut buffer);
+
+    assert_eq!((shown(&buffer).cells[2][23].text.as_str(), shown(&buffer).cells[0][20].text.as_str()), ("│", ""));
 }

@@ -1,11 +1,14 @@
-//! The legend over the first row (design.md, The console): each stage's name
-//! above its own mark, with a line down to it from each name after, and what
-//! the stage is for, so the marks mean something to someone who has never
-//! seen fun-ci. When any description would run off the screen, all are left out.
+//! The legend at the top of the table, above every project (design.md, The
+//! console): each stage's name above its own column of marks, with a line
+//! down from each name after it (`leaders` carries them on through the
+//! table), and what the stage is for, so the marks mean something to someone
+//! who has never seen fun-ci. When any description would run off the screen,
+//! all are left out.
 
 
 use super::STAGES;
-use super::night::{LABEL, NIGHT, NOTE, blend, ink};
+use super::leaders;
+use super::night::{LABEL, NOTE, ink};
 use super::paint::{Paint, Part};
 use crate::format::columns;
 use crate::model::stage_name;
@@ -38,7 +41,7 @@ const APART: &str = " · ";
 #[must_use]
 pub fn legend(n: usize, paint: &Paint) -> Vec<Part> {
     let at = |i: usize| paint.columns.strip + 2 * i;
-    let mut parts: Vec<Part> = (0..n).map(|i| (at(i), "│".to_string(), ink(blend(NIGHT, LABEL, 0.6)))).collect();
+    let mut parts: Vec<Part> = (0..n).map(|i| (at(i), "│".to_string(), ink(leaders::colour()))).collect();
     let name = stage_name(STAGES[n]).to_string();
     let after = at(n) + columns(&name);
     parts.push((at(n), name, ink(LABEL).bold()));

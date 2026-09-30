@@ -1,7 +1,7 @@
 //! How the table fits a short screen (design.md, The console): it climbs down
 //! a ladder of rungs, folding its passed rows, then leaving the folded lines
 //! out, then closing up the rows, then dropping the labels, until it fits.
-//! The legend over the first row stays while folding the passed rows makes
+//! The legend at the top of the table stays while folding the passed rows makes
 //! room for it, but never at the cost of a row. When even the last rung is too
 //! long it keeps the lead's row on screen and says how many rows it can't show.
 

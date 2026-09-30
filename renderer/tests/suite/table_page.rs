@@ -21,7 +21,7 @@ fn row() -> Line<'static> {
 }
 
 fn drawn(table: usize, note: Option<&str>) -> Drawn {
-    Drawn { lines: vec![row(); table], rows: Vec::new(), columns: COLUMNS, unshown: 0, note: note.map(String::from), paper: None }
+    Drawn { lines: vec![row(); table], rows: Vec::new(), columns: COLUMNS, unshown: 0, note: note.map(String::from), paper: None, leaders: None }
 }
 
 /// Each line of the page, as the words it says.

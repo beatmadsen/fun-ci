@@ -56,7 +56,7 @@ fn rows(buf: &mut Buffer, board: &Board, frame: Frame) -> Places {
     let [sheet, footer] = Layout::vertical([Constraint::Fill(1), Constraint::Length(1)]).areas(below_header(buf.area));
     let drawn = draw(board, frame, usize::from(sheet.height).saturating_sub(UNDER_TABLE));
     let body = page(board, &drawn, frame, usize::from(sheet.height));
-    Sheet { lines: &body, paper: drawn.paper }.render(sheet, buf);
+    Sheet { lines: &body, paper: drawn.paper, leaders: drawn.leaders.clone() }.render(sheet, buf);
     footer_line(board, &drawn, frame).render(footer, buf);
     places(&drawn, body.len())
 }

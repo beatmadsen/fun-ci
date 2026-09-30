@@ -58,6 +58,7 @@ mod table_firefly;
 mod table_fit;
 mod table_footer;
 mod table_ladder;
+mod table_leaders;
 mod table_line;
 mod table_marks;
 mod table_page;

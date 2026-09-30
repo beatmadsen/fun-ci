@@ -12,6 +12,7 @@ use ratatui::text::Line;
 use ratatui::widgets::{Block, Borders, Widget};
 
 use super::columns::Columns;
+use super::leaders::Leaders;
 use super::night::ink;
 use super::stack::Piece;
 
@@ -70,10 +71,11 @@ impl Paper {
 }
 
 /// The table's lines from the top of an area, the paper behind the lead's.
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 pub struct Sheet<'a> {
     pub lines: &'a [Line<'static>],
     pub paper: Option<Paper>,
+    pub leaders: Option<Leaders>,
 }
 
 impl Widget for Sheet<'_> {
@@ -85,6 +87,9 @@ impl Widget for Sheet<'_> {
         for ((line, text), y) in (0..).zip(self.lines).zip(area.top()..area.bottom()) {
             let from = Rect { y, ..area };
             text.render(self.paper.map_or(from, |paper| paper.clip(line, from)), buf);
+        }
+        if let Some(leaders) = &self.leaders {
+            leaders.render(area, buf);
         }
     }
 }

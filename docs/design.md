@@ -202,30 +202,33 @@ sky carries on, dusky violet under the horizon and deepening to night, and
 each project's branches sit under the project's name, one row per branch:
 
 ```
-  S T R I N G S - K A T A   ──────────────────────────────────────────────────
-                        lint · checks the code without running it
-                        │ build · compiles the code and its tests
-                        │ │ fast suite · quick tests, after lint and the build
-                        │ │ │ slow suite · long tests, run in the background
-▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-▌   a-life-of-its-own   ✓─✓─◆─✓    the fast suite failed after 1.4s             6m
+                       lint · checks the code without running it
+                       │ build · compiles the code and its tests
+                       │ │ fast suite · quick tests, after lint and the build
+                       │ │ │ slow suite · long tests, run in the background
+                       │ │ │ │
+  S T R I N G S - K A T A   ─┼────────────────────────────────────────────────────
+▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+▌   a-life-of-its-own  ✓─✓─◆─✓  the fast suite failed after 1.4s              6m
 ▌     conflicts with main
-▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
-    main                ◌┄◌┄◌┄◌    waiting to start                            now
-
-
-  A G E N T - T O M E      trunk last fetched 2h ago   ──────────────────────
-
-▌   fix/crash           ✓─◆┄·┄·    the build failed after 0.9s                 40m
-
-▌   refactor/extract…   ✓─✓─◇─✓    the fast suite ran out of time after 10s    25m
-
-
-  F U N - C I   ──────────────────────────────────────────────────────────────
-
-▌   feat/search         ✓─✓─⠹─⠹    running the fast and slow suites · 7s       now
-
-    trunk-conflicts     ✓─✓─✓─✓    all four stages passed                      14m
+▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+    main               ◌┄◌┄◌┄◌  waiting to start                             now
+                       │ │ │ │
+                       │ │ │ │
+  A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────
+                       │ │ │ │
+▌   fix/crash          ✓─◆┄·┄·  the build failed after 0.9s                  40m
+                       │ │ │ │
+▌   refactor/extract…  ✓─✓─◇─✓  the fast suite ran out of time after 10s     25m
+                       │ │ │ │
+                       │ │ │ │
+  F U N - C I   ───────┼─┼─┼─┼────────────────────────────────────────────────────
+                       │ │ │ │
+▌   feat/search        ✓─✓─⠹─⠹  running the fast and slow suites · 7s        now
+                       │ │ │ │
+    trunk-conflicts    ✓─✓─✓─✓  all four stages passed                       14m
+                       │ │ │ │
+    main               ✓─✓─✓─✓  all four stages passed                        1h
 
 
    j/k  move     c  cancel     q  quit
@@ -250,13 +253,18 @@ each project's branches sit under the project's name, one row per branch:
   run. The marks come in lint, build, fast suite, slow suite order. A link leads into each mark, a line
   in half its colour once the stage was reached and a faint dotted one
   before, so a run fills its track from left to right.
-- A legend above the first row names each stage over its own mark, a line
-  running down from each name to the next, and says what each stage is for:
-  lint checks the code without running it, the build compiles the code and
-  its tests, the fast suite is the quick tests that run after lint and the
-  build, and the slow suite the long tests that run in the background.
-  The legend takes four lines, which the table finds by folding its passed
-  rows, never by leaving a row out; when it has no room for them, it says
+- A legend at the top of the table, above every project, names each stage
+  over its own column of marks and says what each stage is for: lint checks
+  the code without running it, the build compiles the code and its tests,
+  the fast suite is the quick tests that run after lint and the build, and
+  the slow suite the long tests that run in the background. It belongs to no
+  project: a line runs down from each name through the whole table, down
+  the blank lines and across every project's rule, so each column of marks
+  hangs from its stage's name. A project's name and note stand in front of
+  the lines, and the lines never cross a row, the block's edge or a line of
+  folded branches. The legend takes five lines, a blank
+  one and its own four, which the table finds by folding its passed rows,
+  never by leaving a row out; when it has no room for them, it says
   `marks, left to right: lint · build · fast suite · slow suite` on the line
   above the footer instead. On a screen too narrow for what every stage is
   for, the legend names the stages alone.

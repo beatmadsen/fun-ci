@@ -8,6 +8,7 @@ pub mod columns;
 pub mod firefly;
 pub mod footer;
 pub mod ladder;
+pub mod leaders;
 pub mod legend;
 pub mod line;
 pub mod marks;
@@ -56,6 +57,8 @@ pub struct Drawn {
     pub note: Option<String>,
     /// The lead's block this frame, where its row is on the screen.
     pub paper: Option<Paper>,
+    /// The lines down from the legend to the first row's marks.
+    pub leaders: Option<leaders::Leaders>,
 }
 
 /// A column more than the longest words, so the age stays put as a running
@@ -78,7 +81,8 @@ pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
     let lines = fitted.pieces.iter().map(|piece| paint(piece, &paint_with)).collect();
     let needs = board.runs.iter().any(|run| lead == Some(run.id) && needs_you(run));
     let paper = lead.and_then(|run| Paper::over(&fitted.pieces, run, columns, paper(frame.play_ms, needs)));
-    Drawn { lines, rows: rows(&fitted.pieces), columns, unshown: fitted.unshown, note, paper }
+    let leaders = leaders::Leaders::over(&fitted.pieces, columns.strip);
+    Drawn { lines, rows: rows(&fitted.pieces), columns, unshown: fitted.unshown, note, paper, leaders }
 }
 
 /// The fitted table, and the line it says above the footer: the stale
