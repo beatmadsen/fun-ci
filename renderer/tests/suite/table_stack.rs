@@ -1,9 +1,10 @@
 //! What the table is made of, top to bottom, before it is drawn: blank lines,
 //! a label per project, a row per branch and what goes with it.
 
+use crate::support::pieces::kind;
 use fun_ci_renderer::model::Run;
 use fun_ci_renderer::table::sections::sections;
-use fun_ci_renderer::table::stack::{Fold, Piece, Rung, stack};
+use fun_ci_renderer::table::stack::{Fold, Rung, stack};
 use serde_json::json;
 
 fn run(id: u64, project: &str, status: &str) -> Run {
@@ -25,18 +26,6 @@ fn conflicting(id: u64) -> Run {
     let mut run = run(id, "/a", "passed");
     run.trunk = serde_json::from_value(json!({"branch_state": "conflicts", "trunk": "main"})).unwrap();
     run
-}
-
-fn kind(piece: &Piece) -> String {
-    match piece {
-        Piece::Blank => "blank".into(),
-        Piece::Label(section) => format!("label {}", section.project),
-        Piece::Row(run) => format!("row {}", run.id),
-        Piece::Conflict(run) => format!("conflict {}", run.id),
-        Piece::Edge(top) => (if *top { "top" } else { "bottom" }).into(),
-        Piece::Folded(runs) => format!("folded {}", runs.len()),
-        Piece::More(count, _) => format!("{count} more"),
-    }
 }
 
 const SPACED: Rung = Rung { gap: true, labels: true, fold: Fold::Never, passed: true };

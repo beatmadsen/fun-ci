@@ -2,7 +2,7 @@
 //! stale trunk, a conflict, a cut name, a line of passed branches, a count of
 //! rows off the screen, and a flat row's project.
 
-use crate::support::paint::{COLUMNS, NOW, WIDTH, at, drawn, failed, fg, frame, passed, rgb, run, text};
+use crate::support::paint::{COLUMNS, NOW, WIDTH, at, drawn, failed, frame, passed, rgb, run, text};
 use fun_ci_renderer::grid::Emulator;
 use fun_ci_renderer::model::StaleTrunk;
 use fun_ci_renderer::table::night;
@@ -45,14 +45,15 @@ fn a_conflict_is_said_in_italics_two_columns_into_the_name() {
     run.trunk = serde_json::from_value(json!({"branch_state": "conflicts", "trunk": "main"})).unwrap();
     let grid = drawn(&Piece::Conflict(&run), None, &[]);
 
-    assert_eq!((at(&grid, 16).trim_end().to_string(), fg(&grid, 16)), ("conflicts with main".to_string(), rgb(night::CONFLICT)));
+    let cell = &grid.cells[0][COLUMNS.branch + 2];
+    assert_eq!((at(&grid, COLUMNS.branch + 2).trim_end().to_string(), cell.fg, cell.attrs.clone()), ("conflicts with main".to_string(), rgb(night::CONFLICT), vec!["italic"]));
 }
 
 #[test]
 fn a_branch_longer_than_its_room_is_cut_with_an_ellipsis() {
     let long = run(3, "refactor/extract-the-evidence-collector", "passed", &[]);
 
-    assert!(at(&drawn(&Piece::Row(&long), None, &[]), 14).starts_with("refactor/extract… "));
+    assert!(at(&drawn(&Piece::Row(&long), None, &[]), COLUMNS.branch).starts_with("refactor/extract… "));
 }
 
 #[test]
@@ -73,7 +74,7 @@ fn a_cancelled_row_has_no_marks_and_says_how_many_runs_were_cancelled() {
 
 #[test]
 fn rows_off_the_screen_below_are_counted_where_names_start() {
-    assert!(at(&drawn(&Piece::More(4, true), None, &[]), 14).starts_with("… 4 more below"));
+    assert!(at(&drawn(&Piece::More(4, true), None, &[]), COLUMNS.branch).starts_with("… 4 more below"));
 }
 
 #[test]
@@ -87,7 +88,7 @@ fn a_row_of_the_flat_layout_names_its_project_first_like_an_address() {
     let mut emulator = Emulator::new((WIDTH, 1));
     emulator.feed((WIDTH, 1), line.as_bytes());
 
-    assert!(at(&emulator.grid(), 14).starts_with("strings-kata  feat "));
+    assert!(at(&emulator.grid(), COLUMNS.branch).starts_with("strings-kata  feat "));
 }
 
 #[test]
@@ -100,9 +101,9 @@ fn a_folded_line_runs_on_past_the_rows_to_the_right_margin() {
 }
 
 #[test]
-fn a_folded_line_too_long_for_the_screen_says_passed_after_how_many_more() {
+fn a_folded_line_too_long_for_the_screen_counts_the_branches_it_could_not_name_then_says_passed() {
     let runs: Vec<_> = (0..12).map(|i| run(20 + i, &format!("feature/number-{i}"), "passed", &[])).collect();
     let line = text(&drawn(&Piece::Folded(runs.iter().collect()), None, &[]));
 
-    assert!(line.contains(" more     passed"), "{line}");
+    assert!(line.trim().ends_with("feature/number-2 6m     9 more     passed"), "{line}");
 }

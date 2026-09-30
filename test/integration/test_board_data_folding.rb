@@ -15,7 +15,6 @@ class TestBoardDataFolding < Minitest::Test
 
   def setup
     setup_test_db
-    3.times { |i| create_completed_run("main#{i}", "main") }
     5.times { |i| create_pipeline_run("rebase#{i}", "detached", "cancelled") }
     @board = FunCi::Console::BoardData.new(@db, page_size: 3)
   end
@@ -25,6 +24,6 @@ class TestBoardDataFolding < Minitest::Test
   end
 
   def test_should_fold_a_branch_s_consecutive_cancelled_runs_into_one_row
-    assert_equal 5, @board.runs.find { |run| run[:branch] == "detached" }[:folded]
+    assert_equal 5, @board.runs.first[:folded]
   end
 end

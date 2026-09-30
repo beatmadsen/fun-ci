@@ -13,11 +13,13 @@ class TestConsoleBoardRows < Minitest::Test
   include DatabaseTestSetup
   include PipelineTestHelpers
 
+  NOW = Time.utc(2026, 9, 30, 12)
+
   def setup
     setup_test_db
     board_data = FunCi::Console::BoardData.new(@db)
     view = FunCi::Console::View.new(key_handler: FunCi::Console::KeyHandler.new(board_data: board_data))
-    @console = FunCi::Console::ConsoleState.new(board_data: board_data, view: view, clock: -> { Time.now })
+    @console = FunCi::Console::ConsoleState.new(board_data: board_data, view: view, clock: -> { NOW })
     @console.resize(40)
   end
 
@@ -40,6 +42,13 @@ class TestConsoleBoardRows < Minitest::Test
     record_run("two-main", "main", "/src/two", "completed")
 
     assert_equal(%w[two-feat two-main one-new one-old], board_runs.map { |row| row[:sha] })
+  end
+
+  def test_should_show_a_failed_branch_run_before_a_page_of_newer_branches
+    record_run("old-failure", "old", "/src/app", "failed")
+    30.times { |i| record_run("new#{i}", "branch#{i}", "/src/app", "completed") }
+
+    assert_equal "old-failure", board_runs.first[:sha]
   end
 
   private

@@ -51,7 +51,7 @@ pub fn said(grid: &Grid) -> Vec<String> {
     lines.into_iter().filter(saying).map(|l| l.split("  ").next().unwrap_or_default().to_string()).collect()
 }
 
-/// The screen rows whose cell at the block's left edge is on the block's paper.
+/// Each screen row below the header with any cell on paper, by its first words.
 pub fn in_the_block(grid: &Grid) -> Vec<String> {
     let rows = grid.cells.iter().enumerate().skip(HEADER);
     let on_paper = rows.filter(|(_, cells)| cells.iter().any(|cell| cell.bg != Colour::Default));

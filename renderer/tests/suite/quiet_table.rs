@@ -38,5 +38,7 @@ fn a_board_where_nothing_needs_you_has_no_block() {
 fn on_sixty_columns_the_words_leave_a_short_branch_its_whole_name() {
     let runs = [failed(2, "fix/crash", "/src/app"), run(1, ("feature/login", "/src/app"), "running", &[stage("lint", "passed", 300)])];
 
-    assert!(said(&screen(&runs, (60, 30))).contains(&"fix/crash".to_string()), "{:?}", said(&screen(&runs, (60, 30))));
+    let lines = said(&screen(&runs, (60, 30)));
+
+    assert!(lines.contains(&"fix/crash".to_string()), "{lines:?}");
 }

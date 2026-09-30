@@ -43,10 +43,13 @@ class TestRowOrder < Minitest::Test
     assert_equal [2, 1], ids(rows)
   end
 
+  # Forty rows, as many as it takes Ruby's sort to reorder rows it finds equal.
   def test_should_keep_equally_urgent_branches_newest_first
-    rows = [row(3, "completed"), row(2, "completed"), row(1, "completed")]
+    rows = (1..40).map { |id| row(id, (id % 3).zero? ? "failed" : "completed") }
 
-    assert_equal [3, 2, 1], ids(rows)
+    assert_equal [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39,
+                  1, 2, 4, 5, 7, 8, 10, 11, 13, 14, 16, 17, 19, 20, 22, 23, 25, 26, 28, 29, 31, 32, 34, 35, 37, 38, 40],
+                 ids(rows)
   end
 
   def test_should_keep_a_project_s_branches_together
@@ -56,9 +59,9 @@ class TestRowOrder < Minitest::Test
   end
 
   def test_should_put_first_the_project_whose_branch_most_needs_you
-    rows = [row(1, "completed", project: "/a"), row(2, "failed", project: "/b")]
+    rows = [row(3, "running", project: "/a"), row(2, "completed", project: "/b"), row(1, "failed", project: "/b")]
 
-    assert_equal [2, 1], ids(rows)
+    assert_equal [1, 2, 3], ids(rows)
   end
 
   private

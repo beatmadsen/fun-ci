@@ -64,10 +64,15 @@ module FunCi
         query(db, "ORDER BY id DESC LIMIT ?", limit)
       end
 
-      # The newest run of each of the `limit` branches run most recently, newest first.
+      # How much a branch whose newest run has a status needs you: a failure most.
+      NEEDING = "CASE status WHEN 'failed' THEN 0 WHEN 'timed_out' THEN 1 WHEN 'running' THEN 2 " \
+                "WHEN 'scheduled' THEN 3 WHEN 'completed' THEN 4 ELSE 5 END"
+
+      # The newest run of each of `limit` branches: those that most need you,
+      # then those run most recently, in that order.
       def self.branch_heads(db, limit:)
         query(db, "WHERE id IN (SELECT MAX(id) FROM pipeline_runs GROUP BY project_path, branch) " \
-                  "ORDER BY id DESC LIMIT ?", limit)
+                  "ORDER BY #{NEEDING}, id DESC LIMIT ?", limit)
       end
 
       # A project's branch's runs, newest first.

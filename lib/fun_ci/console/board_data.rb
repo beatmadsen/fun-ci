@@ -40,7 +40,8 @@ module FunCi
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
 
-      # One row per branch, its newest run, in RowOrder: a run of cancelled
+      # One row per branch, its newest run, for the branches that most need you
+      # and then those run most recently, in RowOrder: a run of cancelled
       # runs folded into one, with its stages and the branch's standing against the trunk.
       def runs = RowOrder.of(Persistence::PipelineRun.branch_heads(@db, limit: @limit).map { |head| branch_row(head) })
 

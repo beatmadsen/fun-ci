@@ -38,6 +38,14 @@ class TestPipelineRunBranches < Minitest::Test
     assert_equal %w[three two], shas(FunCi::Persistence::PipelineRun.branch_heads(@db, limit: 2))
   end
 
+  def test_should_give_a_failed_branch_before_newer_branches_that_passed
+    failed = create("f1", "old")
+    FunCi::Persistence::PipelineRun.update_status(@db, failed, "failed")
+    %w[one two].each { |branch| FunCi::Persistence::PipelineRun.update_status(@db, create(branch, branch), "completed") }
+
+    assert_equal %w[f1 two], shas(FunCi::Persistence::PipelineRun.branch_heads(@db, limit: 2))
+  end
+
   def test_should_give_a_branch_s_runs_newest_first
     create("a1", "main", "/src/one")
     create("b1", "main", "/src/two")

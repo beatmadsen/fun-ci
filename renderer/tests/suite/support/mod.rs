@@ -6,6 +6,7 @@ pub mod input;
 pub mod live;
 pub mod plain_scenes;
 pub mod paint;
+pub mod pieces;
 pub mod pty;
 pub mod quiet;
 pub mod renderer;

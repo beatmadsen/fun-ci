@@ -24,12 +24,19 @@ fn a_board_where_everything_passed_has_one_firefly_below_the_table() {
     assert_eq!(fireflies(&screen(&runs, (120, 40))).len(), 1);
 }
 
-#[test]
-fn the_firefly_is_no_brighter_than_a_passed_branch_s_name() {
-    let runs = [passed(2, "feat", "/src/app"), passed(1, "main", "/src/app")];
-    let [r, g, b] = fun_ci_renderer::table::night::pale(fun_ci_renderer::table::night::BRANCH);
+/// The colour of the first cell of `word` on screen below the header.
+fn colour_of(grid: &Grid, word: &str) -> Colour {
+    let text = grid.text();
+    let (row, line) = text.lines().enumerate().skip(HEADER).find(|(_, line)| line.contains(word)).unwrap();
+    grid.cells[row][line[..line.find(word).unwrap()].chars().count()].fg
+}
 
-    assert!(fireflies(&screen(&runs, (120, 40))).into_iter().all(|fly| brightness(fly) <= brightness(Colour::Rgb(r, g, b))));
+#[test]
+fn the_firefly_on_screen_is_no_brighter_than_the_passed_names_beside_it() {
+    let grid = screen(&[passed(2, "feat", "/src/app"), passed(1, "main", "/src/app")], (120, 40));
+    let flies = fireflies(&grid);
+
+    assert!(flies.len() == 1 && brightness(flies[0]) <= brightness(colour_of(&grid, "feat")), "{flies:?}");
 }
 
 #[test]
@@ -43,7 +50,9 @@ fn a_board_with_a_run_still_running_has_no_firefly() {
 fn the_block_breathes_lighter_over_two_seconds() {
     let board = board(&[failed(1, "feat", "/src/app")], None);
 
-    assert_ne!(paper(&screen_after(&board, 1, (120, 40))), paper(&screen_after(&board, 20, (120, 40))));
+    let (first, later) = (paper(&screen_after(&board, 1, (120, 40))), paper(&screen_after(&board, 20, (120, 40))));
+
+    assert!(brightness(later) > brightness(first), "{first:?} then {later:?}");
 }
 
 #[test]

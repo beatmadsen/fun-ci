@@ -118,7 +118,9 @@ The full state to show. Always complete — never a diff.
   failure, then a timeout or a conflict, running, scheduled, passed and
   cancelled, newest first among equals. The renderer draws them in that order
   and starts a project's label wherever the project changes.
-- `runs` is one page: at most `rows - 18` rows for the terminal's `rows`,
+- `runs` is one page: at most `rows - 18` rows for the terminal's `rows`, the
+  branches whose newest run most needs you (by its status) and then the most
+  recently run,
   scrolled so the row under the cursor is on it; that many fit one line each
   under the 14-row header with room for the footer, and the renderer folds and
   closes up what it must to show them, keeping the cursor's row on screen.

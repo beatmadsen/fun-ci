@@ -83,13 +83,13 @@ fn an_effect_lands_exactly_on_its_stage_when_the_run_names_a_project() {
 #[test]
 fn the_build_sparkle_starts_two_frames_late() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "build"]))]), event("stage_passed", 1, "build")];
-    assert_eq!(colour_after(&lines, 1, ("b1", "build")), rgb(night::pale(night::PASSED)));
+    assert_eq!(colour_after(&lines, 1, ("b1", "build")), rgb([42, 69, 64]));
 }
 
 #[test]
 fn the_slow_sparkle_starts_six_frames_late() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "slow"]))]), event("stage_passed", 1, "slow")];
-    assert_eq!(colour_after(&lines, 5, ("b1", "slow")), rgb(night::pale(night::PASSED)));
+    assert_eq!(colour_after(&lines, 5, ("b1", "slow")), rgb([42, 69, 64]));
 }
 
 #[test]
@@ -113,5 +113,17 @@ fn an_effect_on_the_row_in_the_block_keeps_the_block_under_it() {
     let lines = [running.to_string(), event("stage_passed", 1, "build")];
     let screen = last_screen(&then_ticks(&lines, 1));
 
-    assert_eq!(mark(&screen, "b1", "build").bg, mark(&screen, "b1", "lint").bg);
+    assert_eq!(mark(&screen, "b1", "build").bg, rgb(night::WINE));
+}
+
+#[test]
+fn a_timeout_flashes_its_mark_at_once() {
+    let lines = [board(&[run(1, "timeout", &[("fast", "timeout")])]), event("stage_failed", 1, "fast")];
+    assert!(bold_after(&lines, 1, ("b1", "fast")));
+}
+
+#[test]
+fn the_build_sparkle_lights_its_mark_on_the_third_frame() {
+    let lines = [board(&[run(1, "passed", &passed(&["lint", "build"]))]), event("stage_passed", 1, "build")];
+    assert!(bold_after(&lines, 3, ("b1", "build")));
 }

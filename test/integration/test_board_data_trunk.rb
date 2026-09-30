@@ -18,7 +18,7 @@ class TestBoardDataTrunk < Minitest::Test
   def setup = setup_test_db
   def teardown = teardown_test_db
 
-  def test_should_keep_a_branch_s_conflict_on_its_row_while_its_newest_run_is_checked
+  def test_should_keep_a_branch_s_conflict_on_its_row_while_its_newest_run_has_no_check_yet
     check(begin_run("aaa"), MERGE.conflicts(["a.rb"], ahead: 1, behind: 1))
     begin_run("bbb")
 

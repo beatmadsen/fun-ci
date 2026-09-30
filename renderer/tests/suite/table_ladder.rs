@@ -3,6 +3,7 @@
 //! up the rows, then drops the labels; and when even that is too long, it
 //! keeps the lead's row on screen and says how many rows it can't show.
 
+use crate::support::pieces::kind;
 use fun_ci_renderer::model::Run;
 use fun_ci_renderer::table::ladder::fit;
 use fun_ci_renderer::table::sections::sections;
@@ -26,21 +27,10 @@ fn kinds(room: usize, lead: Option<u64>) -> Vec<String> {
     fit(&sections, lead, room, false).pieces.iter().map(kind).collect()
 }
 
-fn kind(piece: &Piece) -> String {
-    match piece {
-        Piece::Blank => "blank".into(),
-        Piece::Label(section) => format!("label {}", section.project),
-        Piece::Row(run) => format!("row {}", run.id),
-        Piece::Conflict(run) => format!("conflict {}", run.id),
-        Piece::Edge(top) => (if *top { "top" } else { "bottom" }).into(),
-        Piece::Folded(runs) => format!("folded {}", runs.len()),
-        Piece::More(count, below) => format!("{count} more {}", if *below { "below" } else { "above" }),
-    }
-}
-
 #[test]
 fn a_table_with_room_keeps_every_row_and_its_air() {
-    assert_eq!(kinds(40, None).iter().filter(|k| k.starts_with("row")).count(), 6);
+    assert_eq!(kinds(40, None), ["blank", "label a", "blank", "row 1", "blank", "row 2", "blank", "row 3", "blank",
+                                 "blank", "label b", "blank", "row 4", "blank", "row 5", "blank", "row 6", "blank"]);
 }
 
 #[test]

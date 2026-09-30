@@ -10,7 +10,10 @@ fn a_label_says_when_its_stale_trunk_was_last_fetched() {
     let mut board = board(&[failed(2, "feat", "/src/one"), passed(1, "main", "/src/two")], None);
     board["stale_trunks"] = json!([{"project": "/src/two", "since": NOW - 7_200}]);
 
-    assert!(screen_after(&board, 1, (120, 40)).text().contains("T W O      trunk last fetched 2h ago"));
+    let text = screen_after(&board, 1, (120, 40)).text();
+    let label = text.lines().find(|line| line.contains("T W O")).unwrap();
+
+    assert!(label.trim_end().ends_with("trunk last fetched 2h ago"), "{label}");
 }
 
 #[test]
