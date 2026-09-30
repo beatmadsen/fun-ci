@@ -4,7 +4,8 @@
 
 use super::Frame;
 use super::columns::Columns;
-use super::line::{Line, Style};
+pub use super::line::Part;
+use super::line::{Line, Paper, Style};
 use super::night::{CONFLICT, LABEL, NOTE, QUIET};
 use super::rows::{folded, row};
 use super::sections::{Section, spaced};
@@ -26,20 +27,17 @@ pub struct Paint<'a> {
     pub tags: Option<usize>,
 }
 
-/// A part of a line: where it starts, what it says and how.
-pub type Part = (usize, String, Style);
-
-/// `piece` as a line of escapes and text.
+/// `piece` as a line.
 #[must_use]
-pub fn paint(piece: &Piece, paint: &Paint) -> String {
+pub fn paint(piece: &Piece, paint: &Paint) -> Line {
     match piece {
         Piece::Row(run) => on_paper(paint, run, &row(run, paint)),
         Piece::Conflict(run) => on_paper(paint, run, &[conflict(run, paint.columns)]),
-        Piece::Label(section) => line(paint, &label(section, paint)),
-        Piece::Edge(top) => line(paint, &[edge(*top, paint)]),
-        Piece::Folded(runs) => line(paint, &folded(runs, paint)),
-        Piece::More(count, below) => line(paint, &[more(*count, *below, paint.columns)]),
-        Piece::Blank => line(paint, &[]),
+        Piece::Label(section) => plain(&label(section, paint)),
+        Piece::Edge(top) => plain(&[edge(*top, paint)]),
+        Piece::Folded(runs) => plain(&folded(runs, paint)),
+        Piece::More(count, below) => plain(&[more(*count, *below, paint.columns)]),
+        Piece::Blank => plain(&[]),
     }
 }
 
@@ -81,28 +79,22 @@ fn block(columns: Columns) -> (usize, usize) {
 }
 
 /// `parts` on the block's paper when `run` leads, else on a plain line.
-fn on_paper(paint: &Paint, run: &Run, parts: &[Part]) -> String {
+fn on_paper(paint: &Paint, run: &Run, parts: &[Part]) -> Line {
     if paint.lead != Some(run.id) {
-        return line(paint, parts);
+        return plain(parts);
     }
     let (start, end) = block(paint.columns);
-    let mut line = Line::new(end - start, Some(paint.paper));
-    place(&mut line, parts, start);
-    format!("{}{}", " ".repeat(start), line.encode(paint.frame.depth))
+    placed(Line::on(Paper { start, end, colour: paint.paper }), parts)
 }
 
-/// `parts` placed on a line as wide as the screen.
-fn line(paint: &Paint, parts: &[Part]) -> String {
-    let mut line = Line::new(usize::from(paint.frame.width), None);
-    place(&mut line, parts, 0);
-    line.encode(paint.frame.depth)
+/// `parts` on a plain line.
+fn plain(parts: &[Part]) -> Line {
+    placed(Line::default(), parts)
 }
 
-/// `parts` on `line`, which starts at screen column `start`, left to right.
-fn place(line: &mut Line, parts: &[Part], start: usize) {
-    let mut sorted: Vec<&Part> = parts.iter().collect();
-    sorted.sort_by_key(|part| part.0);
-    for (at, text, style) in sorted {
-        line.put(at.saturating_sub(start), text, *style);
+fn placed(mut line: Line, parts: &[Part]) -> Line {
+    for (at, text, style) in parts {
+        line.put(*at, text, *style);
     }
+    line
 }

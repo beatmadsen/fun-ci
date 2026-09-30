@@ -2,6 +2,9 @@
 
 use serde::Deserialize;
 
+/// The pipeline's stages in the order they run, whatever order a run lists them in.
+pub const STAGES: [&str; 4] = ["lint", "build", "fast", "slow"];
+
 /// The full state to show.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Deserialize)]
 pub struct Board {

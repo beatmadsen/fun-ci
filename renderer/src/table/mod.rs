@@ -21,7 +21,6 @@ pub mod words;
 use crate::art::cells::byte;
 use crate::art::float;
 use crate::art::math::Portable;
-use crate::art::output::Depth;
 use crate::model::{Board, Run};
 use columns::Columns;
 use ladder::{Fitted, fit};
@@ -29,25 +28,23 @@ use paint::{Paint, paint};
 use sections::{Section, sections};
 use stack::{Piece, conflicts};
 
-/// The stages in the order their marks come, whatever order a run lists them in.
-pub const STAGES: [&str; 4] = ["lint", "build", "fast", "slow"];
+pub use crate::model::STAGES;
 
 /// What a frame draws with: the board's clock, the animation clock, the
-/// spinner's frame, the terminal's width and colours.
+/// spinner's frame and the terminal's width.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Frame {
     pub now_ms: i64,
     pub play_ms: u64,
     pub spinner: char,
     pub width: u16,
-    pub depth: Depth,
 }
 
 /// The table as drawn: its lines, the line each run's row is on, the
 /// columns they share, and what its footer says about it.
 #[derive(Debug, Clone)]
 pub struct Drawn {
-    pub lines: Vec<String>,
+    pub lines: Vec<line::Line>,
     pub rows: Vec<(u64, usize)>,
     pub columns: Columns,
     /// How many passed rows the screen was too short for.

@@ -6,14 +6,13 @@ use super::backdrop::Backdrop;
 use super::caption::{caption, stamp};
 use super::lamp::lamp;
 use super::resting::Outcome;
-use super::film::Film;
 use super::queue::SceneQueue;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
-use crate::art::cells::{CELL_PIXELS, encode};
-use crate::art::output::Depth;
+use crate::art::cells::{CELL_PIXELS, Cell, encode};
 use crate::art::seconds;
-use crate::screen::Screen;
+use ratatui::buffer::Buffer;
+use ratatui::style::Color;
 
 /// Rows the header occupies.
 pub const HEADER_HEIGHT: usize = 14;
@@ -49,22 +48,17 @@ impl Player {
     }
 }
 
-/// Which scene shows, all of them moving on together, and what is on screen.
+/// Which scene shows, all of them moving on together.
 #[derive(Debug, Clone)]
 pub struct Header {
     backdrop: Backdrop,
     queue: SceneQueue,
-    film: Film,
 }
 
 impl Header {
     #[must_use]
     pub fn new(idle: &'static dyn Scene) -> Self {
-        Self { backdrop: Backdrop::new(idle), queue: SceneQueue::default(), film: Film::new(Depth::TrueColour) }
-    }
-
-    pub fn set_depth(&mut self, depth: Depth) {
-        self.film = Film::new(depth);
+        Self { backdrop: Backdrop::new(idle), queue: SceneQueue::default() }
     }
 
     /// Shows the `running` scene while there is one, else rests on `rest`
@@ -84,17 +78,16 @@ impl Header {
         self.queue.seek(play_ms);
     }
 
-    /// Paints the scene showing, writes `streak` over it, and draws the
-    /// cells that changed.
-    pub fn draw(&mut self, screen: &mut Screen, streak: Option<u32>) {
-        let mut canvas = Canvas::new(usize::from(screen.width()) * CELL_PIXELS.0, HEADER_HEIGHT * CELL_PIXELS.1);
+    /// Paints the scene showing across the top of `buf`, and writes `streak` over it.
+    pub fn draw(&self, buf: &mut Buffer, streak: Option<u32>) {
+        let mut canvas = Canvas::new(usize::from(buf.area.width) * CELL_PIXELS.0, HEADER_HEIGHT * CELL_PIXELS.1);
         self.paint(&mut canvas);
         canvas.tone();
         let mut cells = encode(&canvas);
         if let Some(words) = caption(streak) {
             stamp(&mut cells, &words);
         }
-        self.film.project(cells, screen);
+        put(buf, &cells);
     }
 
     /// Paints the scene showing, and the lamp over a resting one.
@@ -127,4 +120,19 @@ impl Header {
     fn active(&self) -> &Player {
         self.queue.playing().unwrap_or_else(|| self.backdrop.showing())
     }
+}
+
+/// `cells` into `buf` from its top left, as much of them as it holds.
+fn put(buf: &mut Buffer, cells: &[Vec<Cell>]) {
+    for (y, row) in (0u16..).zip(cells) {
+        for (x, cell) in (0u16..).zip(row) {
+            if let Some(target) = buf.cell_mut((buf.area.x + x, buf.area.y + y)) {
+                target.set_char(cell.glyph).set_fg(rgb(cell.fg)).set_bg(rgb(cell.bg));
+            }
+        }
+    }
+}
+
+fn rgb([r, g, b]: [u8; 3]) -> Color {
+    Color::Rgb(r, g, b)
 }

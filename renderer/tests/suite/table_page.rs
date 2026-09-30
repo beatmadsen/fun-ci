@@ -5,6 +5,7 @@
 use crate::support::paint::{COLUMNS, frame};
 use fun_ci_renderer::model::Board;
 use fun_ci_renderer::table::Drawn;
+use fun_ci_renderer::table::line::{Line, Style};
 use fun_ci_renderer::table::page::page;
 use serde_json::json;
 
@@ -13,12 +14,19 @@ fn busy_board() -> Board {
     serde_json::from_value(json!({"now": 0, "runs": [run]})).unwrap()
 }
 
-fn drawn(table: usize, note: Option<&str>) -> Drawn {
-    Drawn { lines: vec!["row".to_string(); table], rows: Vec::new(), columns: COLUMNS, unshown: 0, note: note.map(String::from), block: None }
+fn row() -> Line {
+    let mut line = Line::default();
+    line.put(0, "row", Style::plain([200, 200, 200]));
+    line
 }
 
+fn drawn(table: usize, note: Option<&str>) -> Drawn {
+    Drawn { lines: vec![row(); table], rows: Vec::new(), columns: COLUMNS, unshown: 0, note: note.map(String::from), block: None }
+}
+
+/// Each line of the page, as the words it says.
 fn laid_out(table: usize, note: Option<&str>) -> Vec<String> {
-    page(&busy_board(), &drawn(table, note), frame(), 10)
+    page(&busy_board(), &drawn(table, note), frame(), 10).iter().map(Line::text).collect()
 }
 
 #[test]

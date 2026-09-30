@@ -61,13 +61,13 @@ fn each_stale_trunk_is_named() {
 }
 
 fn footer_text(width: u16, unshown: usize) -> String {
-    use fun_ci_renderer::grid::Emulator;
+    use ratatui::widgets::Widget;
     let drawn = fun_ci_renderer::table::Drawn { lines: Vec::new(), rows: Vec::new(), columns: crate::support::paint::COLUMNS, unshown, note: None, block: None };
     let frame = fun_ci_renderer::table::Frame { width, ..crate::support::paint::frame() };
     let line = fun_ci_renderer::table::footer::footer_line(&board("passed", &json!({})), &drawn, frame);
-    let mut emulator = Emulator::new((width, 1));
-    emulator.feed((width, 1), line.as_bytes());
-    emulator.grid().text()
+    let mut buffer = crate::support::shown::blank(width, 1);
+    line.render(buffer.area, &mut buffer);
+    crate::support::shown::shown(&buffer).text()
 }
 
 #[test]

@@ -1,11 +1,14 @@
 //! Lines of the table painted one at a time on a 120-column screen, and
 //! what they show, for the painting tests.
 
-use fun_ci_renderer::art::output::Depth;
-use fun_ci_renderer::grid::{Colour, Emulator, Grid};
+use fun_ci_renderer::grid::{Colour, Grid};
+use ratatui::widgets::Widget;
+
+use super::shown::{blank, shown};
 use fun_ci_renderer::model::{Run, StaleTrunk};
 use fun_ci_renderer::table::Frame;
 use fun_ci_renderer::table::columns::Columns;
+use fun_ci_renderer::table::line::Line;
 use fun_ci_renderer::table::night;
 use fun_ci_renderer::table::paint::{Paint, paint};
 use fun_ci_renderer::table::stack::Piece;
@@ -35,14 +38,18 @@ pub fn passed() -> Run {
 pub const COLUMNS: Columns = Columns { margin: 10, label: 12, branch: 14, name: 17, gap: 4, strip: 35, words: 46, age_end: 81 };
 
 pub fn frame() -> Frame {
-    Frame { now_ms: NOW * 1000, play_ms: 0, spinner: '⠹', width: WIDTH, depth: Depth::TrueColour }
+    Frame { now_ms: NOW * 1000, play_ms: 0, spinner: '⠹', width: WIDTH }
 }
 
 pub fn drawn(piece: &Piece, lead: Option<u64>, stale: &[StaleTrunk]) -> Grid {
-    let line = paint(piece, &Paint { columns: COLUMNS, frame: frame(), lead, stale, paper: night::WINE, tags: None });
-    let mut emulator = Emulator::new((WIDTH, 1));
-    emulator.feed((WIDTH, 1), line.as_bytes());
-    emulator.grid()
+    on_screen(&paint(piece, &Paint { columns: COLUMNS, frame: frame(), lead, stale, paper: night::WINE, tags: None }))
+}
+
+/// `line` drawn across a screen `WIDTH` wide.
+pub fn on_screen(line: &Line) -> Grid {
+    let mut buffer = blank(WIDTH, 1);
+    line.render(buffer.area, &mut buffer);
+    shown(&buffer)
 }
 
 pub fn text(grid: &Grid) -> String {

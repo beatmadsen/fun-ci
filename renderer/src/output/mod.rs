@@ -4,3 +4,4 @@
 
 pub mod backend;
 pub mod depth;
+pub mod sgr;

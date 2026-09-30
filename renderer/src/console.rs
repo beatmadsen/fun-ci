@@ -72,8 +72,8 @@ impl Console {
     /// Draws one frame as of `at`: the bytes, and the header animation shown.
     pub fn frame(&mut self, at: Moment) -> (Vec<u8>, String) {
         self.view.begin_frame();
-        self.view.resize(self.size.0);
-        let showing = self.view.render(&self.board, at, self.size.1);
+        self.view.resize(self.size);
+        let showing = self.view.render(&self.board, at);
         (self.view.take(), showing)
     }
 }

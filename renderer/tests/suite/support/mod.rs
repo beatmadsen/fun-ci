@@ -11,6 +11,7 @@ pub mod pty;
 pub mod quiet;
 pub mod renderer;
 pub mod shades;
+pub mod shown;
 pub mod snapshot;
 
 use std::io;

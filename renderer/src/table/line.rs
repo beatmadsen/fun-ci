@@ -1,9 +1,15 @@
-//! One line of the table built cell by cell, so it can never be wider than
-//! the terminal: a line that wrapped would push the whole board up.
+//! One line of the table: parts of text, each at the column it starts at,
+//! and the block's paper behind it when its row leads. It draws itself into
+//! the screen's buffer cut where the screen or the paper ends, so a line can
+//! never wrap: a line that wrapped would push the whole board up.
 
-use crate::art::output::{Depth, escape};
+use ratatui::buffer::Buffer;
+use ratatui::layout::Rect;
+use ratatui::style::{Color, Modifier};
+use ratatui::widgets::Widget;
+use unicode_width::UnicodeWidthStr;
 
-/// How a cell's text is drawn.
+/// How a part's text is drawn.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Style {
     pub fg: [u8; 3],
@@ -28,68 +34,90 @@ impl Style {
     }
 }
 
-/// A line `width` cells wide, on the background `paper` when it has one.
-#[derive(Debug, Clone)]
+impl From<Style> for ratatui::style::Style {
+    fn from(style: Style) -> Self {
+        let [r, g, b] = style.fg;
+        let modifier = [(style.bold, Modifier::BOLD), (style.italic, Modifier::ITALIC)].iter().filter(|(on, _)| *on).fold(Modifier::empty(), |all, (_, one)| all | *one);
+        Self::default().fg(Color::Rgb(r, g, b)).add_modifier(modifier)
+    }
+}
+
+/// The block's paper: its colour, from column `start` up to `end`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Paper {
+    pub start: usize,
+    pub end: usize,
+    pub colour: [u8; 3],
+}
+
+/// A part of a line: where it starts, what it says and how.
+pub type Part = (usize, String, Style);
+
+/// The parts of one line, and the paper under them if it has one.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Line {
-    cells: Vec<(char, Style)>,
-    width: usize,
-    paper: Option<[u8; 3]>,
+    parts: Vec<Part>,
+    paper: Option<Paper>,
 }
 
 impl Line {
+    /// A line on `paper`, cut where the paper ends.
     #[must_use]
-    pub fn new(width: usize, paper: Option<[u8; 3]>) -> Self {
-        Self { cells: Vec::new(), width, paper }
+    pub fn on(paper: Paper) -> Self {
+        Self { parts: Vec::new(), paper: Some(paper) }
     }
 
-    /// `text` from 0-based column `column`, as much of it as fits.
+    /// `text` from column `column`, or straight after the part before it if that runs past `column`.
     pub fn put(&mut self, column: usize, text: &str, style: Style) {
-        self.fill_to(column);
-        let room = self.width.saturating_sub(self.cells.len());
-        self.cells.extend(text.chars().take(room).map(|c| (c, style)));
+        self.parts.push((column, text.to_string(), style));
     }
 
-    /// The line's escapes and text, in colours the terminal has.
+    /// Whether the line draws nothing.
     #[must_use]
-    pub fn encode(&self, depth: Depth) -> String {
-        let mut pen = Pen::new(depth, self.paper);
-        self.cells.iter().for_each(|&(c, style)| pen.draw(c, style));
-        if self.paper.is_some() {
-            (self.cells.len()..self.width).for_each(|_| pen.draw(' ', Style::plain([0; 3])));
-        }
-        pen.finish()
+    pub fn is_blank(&self) -> bool {
+        self.parts.is_empty() && self.paper.is_none()
     }
 
-    fn fill_to(&mut self, column: usize) {
-        let missing = column.min(self.width).saturating_sub(self.cells.len());
-        self.cells.extend(std::iter::repeat_n((' ', Style::plain([0; 3])), missing));
+    /// What the line says, each part where it lands, trailing blanks left off.
+    #[must_use]
+    pub fn text(&self) -> String {
+        let widest = self.parts.iter().map(|(at, _, _)| *at).max().unwrap_or(0) + self.parts.iter().map(|(_, text, _)| text.width()).sum::<usize>();
+        let mut buf = Buffer::empty(Rect::new(0, 0, column(widest), 1));
+        self.render(buf.area, &mut buf);
+        buf.content().iter().map(ratatui::buffer::Cell::symbol).collect::<String>().trim_end().to_string()
+    }
+
+    /// The parts left to right.
+    fn sorted(&self) -> Vec<&Part> {
+        let mut sorted: Vec<&Part> = self.parts.iter().collect();
+        sorted.sort_by_key(|part| part.0);
+        sorted
     }
 }
 
-/// The escapes written so far on a line, so each changes only what differs.
-struct Pen {
-    depth: Depth,
-    style: Option<Style>,
-    out: String,
+impl Widget for &Line {
+    fn render(self, area: Rect, buf: &mut Buffer) {
+        let end = self.paper.map_or(usize::from(area.width), |paper| paper.end.min(usize::from(area.width)));
+        if let Some(paper) = self.paper {
+            paint_paper(paper, area, buf);
+        }
+        let mut next = 0;
+        for (at, text, style) in self.sorted() {
+            let x = (*at).max(next);
+            if x < end {
+                next = usize::from(buf.set_stringn(area.x + column(x), area.y, text, end - x, *style).0 - area.x);
+            }
+        }
+    }
 }
 
-impl Pen {
-    fn new(depth: Depth, paper: Option<[u8; 3]>) -> Self {
-        let out = paper.map_or_else(String::new, |rgb| escape(48, rgb, depth));
-        Self { depth, style: None, out }
-    }
+/// The paper's colour over its columns of `area`'s first row.
+fn paint_paper(paper: Paper, area: Rect, buf: &mut Buffer) {
+    let [r, g, b] = paper.colour;
+    let span = Rect::new(area.x + column(paper.start), area.y, column(paper.end.saturating_sub(paper.start)), 1);
+    buf.set_style(span.intersection(area), ratatui::style::Style::default().bg(Color::Rgb(r, g, b)));
+}
 
-    fn draw(&mut self, c: char, style: Style) {
-        if c != ' ' && self.style != Some(style) {
-            self.out.push_str(if style.bold { "\u{1b}[1m" } else { "\u{1b}[22m" });
-            self.out.push_str(if style.italic { "\u{1b}[3m" } else { "\u{1b}[23m" });
-            self.out.push_str(&escape(38, style.fg, self.depth));
-            self.style = Some(style);
-        }
-        self.out.push(c);
-    }
-
-    fn finish(self) -> String {
-        self.out + "\u{1b}[0m"
-    }
+fn column(at: usize) -> u16 {
+    u16::try_from(at).unwrap_or(u16::MAX)
 }

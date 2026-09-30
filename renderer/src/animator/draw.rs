@@ -1,47 +1,50 @@
-//! Where each animation lands on the screen: a stage's effect over its mark
-//! on its run's row, and an effect's banner on the line under the table,
-//! both where the table put them (`Places`).
+//! Where each effect lands on the screen: a stage's effect on its mark, on
+//! its run's row, and an effect's banner on the line under the table, both
+//! where the board's layout says they are (`Places`). Effects know nothing of
+//! how the table is drawn, only where.
+
+use ratatui::buffer::Buffer;
+use ratatui::layout::Rect;
 
 use super::effect::Effect;
-use super::footer::footer_overlay;
-use super::overlay::{stage_overlay, stage_text};
-use crate::model::Run;
-use crate::screen::Screen;
-use crate::table::STAGES;
+use super::footer::banner;
+use super::overlay::restyle;
+use crate::model::{Run, STAGES};
 
-/// Where the table put things this frame, 1-based: each run's row, the
-/// column of its first mark, and the line under the table; and the run whose
-/// row is in the block, with the escape that paints the block's colour.
+/// Where things are on the screen this frame, from 0: each run's row, the
+/// column of the first of its marks, which come two apart, and the line
+/// under the table, if there is a table.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Places {
     pub rows: Vec<(u64, usize)>,
     pub strip: usize,
-    pub banner: usize,
-    pub block: Option<(u64, String)>,
+    pub banner: Option<usize>,
 }
 
 /// Each effect over its stage's mark, on its run's row.
-pub fn stages(screen: &mut Screen, effects: &[Effect], (runs, places): (&[Run], &Places)) {
-    for (row, col, text) in effects.iter().filter_map(|effect| placed(effect, runs, places)) {
-        screen.write_at(row, col, &text);
+pub fn stages(buf: &mut Buffer, effects: &[Effect], places: &Places) {
+    for effect in effects {
+        if let Some(cell) = mark(effect, places).and_then(|at| buf.cell_mut(at)) {
+            restyle(effect, cell);
+        }
     }
 }
 
-/// The banner of the most important effect that has one, on the line under the table.
-pub fn footer(screen: &mut Screen, effects: &[Effect], (runs, places): (&[Run], &Places)) {
-    let banner = most_important(effects).and_then(|effect| footer_overlay(effect, screen.width(), runs));
-    if let Some(text) = banner.filter(|_| places.banner > 0) {
-        screen.write_at(places.banner, 1, &format!("{text}\u{1b}[K"));
-    }
+/// The banner of the most important effect that has one, centred on the line under the table.
+pub fn footer(buf: &mut Buffer, effects: &[Effect], (runs, places): (&[Run], &Places)) {
+    let shown = most_important(effects).and_then(|effect| banner(effect, runs));
+    let (Some((text, style)), Some(y)) = (shown, places.banner.and_then(|y| u16::try_from(y).ok())) else { return };
+    let line = Rect::new(buf.area.x, y, buf.area.width, 1).intersection(buf.area);
+    line.positions().for_each(|at| buf[at].reset());
+    let pad = usize::from(line.width).saturating_sub(text.chars().count()) / 2;
+    buf.set_stringn(line.x + u16::try_from(pad).unwrap_or(0), line.y, text, usize::from(line.width), style);
 }
 
-fn placed(effect: &Effect, runs: &[Run], places: &Places) -> Option<(usize, usize, String)> {
-    let run = runs.iter().find(|run| run.id == effect.run_id)?;
+/// The cell of `effect`'s stage mark: its run's row, its stage's column.
+fn mark(effect: &Effect, places: &Places) -> Option<(u16, u16)> {
     let row = places.rows.iter().find(|(id, _)| *id == effect.run_id)?.1;
     let index = STAGES.iter().position(|stage| *stage == effect.stage)?;
-    let overlay = stage_overlay(effect, &stage_text(run, &effect.stage)?)?;
-    let paper = places.block.as_ref().filter(|(id, _)| *id == run.id).map_or("", |(_, escape)| escape.as_str());
-    Some((row, places.strip + 2 * index, format!("{paper}{overlay}")))
+    Some((u16::try_from(places.strip + 2 * index).ok()?, u16::try_from(row).ok()?))
 }
 
 fn most_important(effects: &[Effect]) -> Option<&Effect> {

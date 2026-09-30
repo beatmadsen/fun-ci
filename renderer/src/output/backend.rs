@@ -10,13 +10,10 @@ use std::fmt::Write;
 use ratatui::backend::{Backend, ClearType, WindowSize};
 use ratatui::buffer::Cell;
 use ratatui::layout::{Position, Size};
-use ratatui::style::{Color, Modifier};
 use unicode_width::UnicodeWidthStr;
 
-use super::depth::{Depth, escape};
-
-/// A cell's style as the pen last wrote it.
-type Pen = (Color, Color, Modifier);
+use super::depth::Depth;
+use super::sgr::{Pen, sgr};
 
 /// The bytes written so far, for a terminal of `size` with `depth`'s colours.
 #[derive(Debug)]
@@ -37,6 +34,12 @@ impl AnsiBackend {
     /// The terminal is `size` (cols, rows) from now on; ratatui redraws it all.
     pub fn resize(&mut self, size: (u16, u16)) {
         self.size = size;
+    }
+
+    /// The size the terminal is, (cols, rows).
+    #[must_use]
+    pub fn size_now(&self) -> (u16, u16) {
+        self.size
     }
 
     pub fn set_depth(&mut self, depth: Depth) {
@@ -66,37 +69,6 @@ impl AnsiBackend {
         let wide = u16::try_from(cell.symbol().width().max(1)).unwrap_or(1);
         self.at.0.x = x.saturating_add(wide);
     }
-}
-
-/// The escapes that set `pen`: a reset, then its attributes and colours.
-fn sgr((fg, bg, modifier): Pen, depth: Depth) -> String {
-    let attributes = [(Modifier::BOLD, "1"), (Modifier::DIM, "2"), (Modifier::ITALIC, "3"), (Modifier::UNDERLINED, "4"), (Modifier::REVERSED, "7")];
-    let mut out = "\u{1b}[0m".to_string();
-    for (_, code) in attributes.iter().filter(|(attribute, _)| modifier.contains(*attribute)) {
-        let _ = write!(out, "\u{1b}[{code}m");
-    }
-    out + &colour(38, fg, depth) + &colour(48, bg, depth)
-}
-
-/// The escape setting `layer` (38 text, 48 background) to `color`; none for the terminal's default.
-fn colour(layer: u8, color: Color, depth: Depth) -> String {
-    match (color, named(color)) {
-        (Color::Rgb(r, g, b), _) => escape(layer, [r, g, b], depth),
-        (Color::Indexed(n), _) => format!("\u{1b}[{layer};5;{n}m"),
-        (_, Some(n)) if n < 8 => format!("\u{1b}[{}m", u16::from(layer - 8) + u16::from(n)),
-        (_, Some(n)) => format!("\u{1b}[{}m", u16::from(layer - 8) + 60 + u16::from(n - 8)),
-        _ => String::new(),
-    }
-}
-
-/// The terminal's own number for a named colour, 0 to 15.
-fn named(color: Color) -> Option<u8> {
-    const NAMES: [Color; 16] = [
-        Color::Black, Color::Red, Color::Green, Color::Yellow, Color::Blue, Color::Magenta, Color::Cyan, Color::Gray,
-        Color::DarkGray, Color::LightRed, Color::LightGreen, Color::LightYellow, Color::LightBlue, Color::LightMagenta,
-        Color::LightCyan, Color::White,
-    ];
-    NAMES.iter().position(|name| *name == color).and_then(|n| u8::try_from(n).ok())
 }
 
 impl Backend for AnsiBackend {

@@ -46,13 +46,13 @@ fn confirming(board: &Board) -> Option<&Run> {
 /// The footer: the keys where the labels start, and beside them, quieter,
 /// how many passed rows the screen was too short for, cut if it must be.
 #[must_use]
-pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> String {
+pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line {
     let (width, keys) = (usize::from(frame.width), keys(board));
     let keys_end = drawn.columns.label + keys.chars().count() + APART;
     let aside = cut(&aside(drawn.unshown), width.saturating_sub(keys_end + drawn.columns.margin));
     let aside_at = width.saturating_sub(drawn.columns.margin + aside.chars().count()).max(keys_end);
-    let mut line = Line::new(width, None);
+    let mut line = Line::default();
     line.put(drawn.columns.label, &keys, Style::plain(QUIET));
     line.put(aside_at, &aside, Style::italic(NOTE));
-    line.encode(frame.depth)
+    line
 }

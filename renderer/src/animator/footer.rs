@@ -1,27 +1,38 @@
 //! The banner an effect shows in the footer: four looks, each held for eight
 //! frames, blank at either end.
 
+use ratatui::style::{Color, Modifier, Style};
+
 use super::effect::{Effect, Kind};
-use crate::ansi::RESET;
 use crate::model::Run;
 
 const HOLD: usize = 8;
 
-/// The footer line `effect` shows this frame, if any; `runs` name a conflict's branch and trunk.
+/// The banner `effect` shows this frame, if any, and how; `runs` name a conflict's branch and trunk.
 #[must_use]
-pub fn footer_overlay(effect: &Effect, width: u16, runs: &[Run]) -> Option<String> {
-    let (colour, text) = look(effect, runs)?;
-    let text: String = text.chars().take(usize::from(width)).collect();
-    let pad = usize::from(width).saturating_sub(text.chars().count()) / 2;
-    Some(format!("{}\u{1b}[{colour}m{text}{RESET}", " ".repeat(pad)))
+pub fn banner(effect: &Effect, runs: &[Run]) -> Option<(String, Style)> {
+    let (colour, weight, text) = look(effect, runs)?;
+    Some((text, Style::default().fg(colour).add_modifier(weight)))
 }
 
-fn look(effect: &Effect, runs: &[Run]) -> Option<(&'static str, String)> {
-    match effect.kind {
-        Kind::Failure => failure_look(effect.frame / HOLD, &effect.stage),
-        Kind::Success => success_look(effect.frame / HOLD),
-        Kind::Conflict => conflict_look(effect.frame / HOLD, &conflict(effect, runs)?),
-        Kind::Timeout | Kind::StagePass => None,
+type Look = (Color, Modifier, String);
+
+fn look(effect: &Effect, runs: &[Run]) -> Option<Look> {
+    let (colour, text) = match effect.kind {
+        Kind::Failure => (Color::Red, failure_text(effect.frame / HOLD, &effect.stage)?),
+        Kind::Success => (Color::Green, success_text(effect.frame / HOLD)?),
+        Kind::Conflict => (Color::Magenta, conflict_text(effect.frame / HOLD, &conflict(effect, runs)?)?),
+        Kind::Timeout | Kind::StagePass => return None,
+    };
+    Some((colour, weight(effect.frame / HOLD), text))
+}
+
+/// Bold, then plain, then dim.
+fn weight(look: usize) -> Modifier {
+    match look {
+        1 => Modifier::BOLD,
+        3 => Modifier::DIM,
+        _ => Modifier::empty(),
     }
 }
 
@@ -31,30 +42,29 @@ fn conflict(effect: &Effect, runs: &[Run]) -> Option<String> {
     Some(format!("{} conflicts with {}", run.commit.branch, run.trunk.as_ref()?.trunk))
 }
 
-fn conflict_look(look: usize, text: &str) -> Option<(&'static str, String)> {
+fn conflict_text(look: usize, text: &str) -> Option<String> {
     match look {
-        1 => Some(("1;35", text.to_uppercase())),
-        2 => Some(("35", text.to_string())),
-        3 => Some(("2;35", text.to_string())),
+        1 => Some(text.to_uppercase()),
+        2 | 3 => Some(text.to_string()),
         _ => None,
     }
 }
 
-fn failure_look(look: usize, stage: &str) -> Option<(&'static str, String)> {
+fn failure_text(look: usize, stage: &str) -> Option<String> {
     let (up, down) = (stage.to_uppercase(), stage.to_lowercase());
     match look {
-        1 => Some(("1;31", format!(">>> {up} FAILED <<<"))),
-        2 => Some(("31", format!(">> {down} failed <<"))),
-        3 => Some(("2;31", format!("> {down} failed <"))),
+        1 => Some(format!(">>> {up} FAILED <<<")),
+        2 => Some(format!(">> {down} failed <<")),
+        3 => Some(format!("> {down} failed <")),
         _ => None,
     }
 }
 
-fn success_look(look: usize) -> Option<(&'static str, String)> {
+fn success_text(look: usize) -> Option<String> {
     match look {
-        1 => Some(("1;32", "* * * NICE! * * *".to_string())),
-        2 => Some(("32", ". + . * NICE! * . + .".to_string())),
-        3 => Some(("2;32", "' . + .  nice  . + . '".to_string())),
+        1 => Some("* * * NICE! * * *".to_string()),
+        2 => Some(". + . * NICE! * . + .".to_string()),
+        3 => Some("' . + .  nice  . + . '".to_string()),
         _ => None,
     }
 }

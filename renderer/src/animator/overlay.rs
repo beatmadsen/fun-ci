@@ -1,49 +1,61 @@
-//! What an effect draws over a stage, and over the footer, frame by frame.
+//! How an effect restyles the mark of its stage, frame by frame. The mark is
+//! whatever the table drew there; an effect changes only how it looks, over
+//! the paper behind it.
+
+use ratatui::buffer::Cell;
+use ratatui::style::{Color, Modifier};
 
 use super::effect::{Effect, Kind};
-use crate::ansi::{RESET, strip};
-use crate::model::Run;
-use crate::table::STAGES;
-use crate::table::marks::marks;
 
-const STAGE_PASS_COLOURS: [&str; 3] = ["\u{1b}[1;33m", "\u{1b}[1;32m", "\u{1b}[32m"];
-const TIMEOUT_COLOURS: [&str; 4] = ["\u{1b}[1;33m", "\u{1b}[33m", "\u{1b}[1;33m", "\u{1b}[33m"];
+/// A colour, bold or not, and a background of its own if it has one.
+type Look = (Color, Modifier, Option<Color>);
+
+const BOLD: Modifier = Modifier::BOLD;
+const PLAIN: Modifier = Modifier::empty();
+
+const STAGE_PASS: [Look; 3] = [(Color::Yellow, BOLD, None), (Color::Green, BOLD, None), (Color::Green, PLAIN, None)];
+const TIMEOUT: [Look; 4] = [(Color::Yellow, BOLD, None), (Color::Yellow, PLAIN, None), (Color::Yellow, BOLD, None), (Color::Yellow, PLAIN, None)];
 /// A failed stage's cell flares red and cools, frame by frame, then shows as the row draws it.
-const FAILURE_GLOW: [&str; 6] = ["1;97;48;5;196", "1;97;48;5;160", "1;97;48;5;124", "1;91;48;5;88", "1;91;48;5;52", "1;91"];
+const FAILURE_GLOW: [Look; 6] = [
+    (Color::White, BOLD, Some(Color::Indexed(196))),
+    (Color::White, BOLD, Some(Color::Indexed(160))),
+    (Color::White, BOLD, Some(Color::Indexed(124))),
+    (Color::LightRed, BOLD, Some(Color::Indexed(88))),
+    (Color::LightRed, BOLD, Some(Color::Indexed(52))),
+    (Color::LightRed, BOLD, None),
+];
 
-/// The stage's mark as its row shows it once the stage has finished.
-#[must_use]
-pub fn stage_text(run: &Run, stage: &str) -> Option<String> {
-    run.stage(stage)?;
-    let index = STAGES.iter().position(|name| *name == stage)?;
-    Some(marks(run, ' ')[index].0.to_string())
+/// Restyles `cell`, the mark of `effect`'s stage, as the effect shows it this frame.
+pub fn restyle(effect: &Effect, cell: &mut Cell) {
+    if let Some((fg, modifier, bg)) = look(effect) {
+        cell.fg = fg;
+        cell.modifier = modifier;
+        cell.bg = bg.unwrap_or(cell.bg);
+    }
 }
 
-/// What `effect` draws over the stage text `text` this frame.
-#[must_use]
-pub fn stage_overlay(effect: &Effect, text: &str) -> Option<String> {
+fn look(effect: &Effect) -> Option<Look> {
     match effect.kind {
-        Kind::StagePass => Some(flash(effect.frame, text, &STAGE_PASS_COLOURS)),
-        Kind::Timeout => Some(flash(effect.frame, text, &TIMEOUT_COLOURS)),
-        Kind::Failure => glow(effect.frame, text),
-        Kind::Success => sparkle(effect, text),
+        Kind::StagePass => Some(held(effect.frame, &STAGE_PASS)),
+        Kind::Timeout => Some(held(effect.frame, &TIMEOUT)),
+        Kind::Failure => FAILURE_GLOW.get(effect.frame).copied(),
+        Kind::Success => sparkle(effect),
         Kind::Conflict => None,
     }
 }
 
-fn flash(frame: usize, text: &str, colours: &[&str]) -> String {
-    format!("{}{}{RESET}", colours[frame.min(colours.len() - 1)], strip(text))
+/// The look for `frame`, the last one held once they run out.
+fn held(frame: usize, looks: &[Look]) -> Look {
+    looks[frame.min(looks.len() - 1)]
 }
 
-fn glow(frame: usize, text: &str) -> Option<String> {
-    FAILURE_GLOW.get(frame).map(|code| format!("\u{1b}[{code}m{}{RESET}", strip(text)))
-}
-
-fn sparkle(effect: &Effect, text: &str) -> Option<String> {
-    let plain: Vec<char> = strip(text).chars().collect();
-    let position = effect.frame.checked_sub(stagger(&effect.stage)).filter(|p| *p <= plain.len())?;
-    let cell = |(i, c): (usize, &char)| format!("\u{1b}[{}m{c}", if i == position { "1;33" } else { "32" });
-    Some(format!("{}{RESET}", plain.iter().enumerate().map(cell).collect::<String>()))
+/// A spark on the mark when its turn in the stagger comes, green after it.
+fn sparkle(effect: &Effect) -> Option<Look> {
+    match effect.frame.checked_sub(stagger(&effect.stage))? {
+        0 => Some((Color::Yellow, BOLD, None)),
+        1 => Some((Color::Green, PLAIN, None)),
+        _ => None,
+    }
 }
 
 fn stagger(stage: &str) -> usize {

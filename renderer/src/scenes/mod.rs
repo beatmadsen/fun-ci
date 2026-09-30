@@ -16,6 +16,7 @@ mod island;
 mod lettering;
 mod leprechauns;
 mod level;
+mod rainbow;
 mod ripple;
 mod rocket;
 mod running;

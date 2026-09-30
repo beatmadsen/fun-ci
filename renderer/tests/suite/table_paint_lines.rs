@@ -2,8 +2,7 @@
 //! stale trunk, a conflict, a cut name, a line of passed branches, a count of
 //! rows off the screen, and a flat row's project.
 
-use crate::support::paint::{COLUMNS, NOW, WIDTH, at, drawn, failed, frame, passed, rgb, run, text};
-use fun_ci_renderer::grid::Emulator;
+use crate::support::paint::{COLUMNS, NOW, at, drawn, failed, frame, on_screen, passed, rgb, run, text};
 use fun_ci_renderer::model::StaleTrunk;
 use fun_ci_renderer::table::night;
 use fun_ci_renderer::table::paint::{Paint, paint};
@@ -85,10 +84,8 @@ fn rows_off_the_screen_above_are_counted_too() {
 #[test]
 fn a_row_of_the_flat_layout_names_its_project_first_like_an_address() {
     let line = paint(&Piece::Row(&failed()), &Paint { columns: COLUMNS, frame: frame(), lead: None, stale: &[], paper: night::WINE, tags: Some(12) });
-    let mut emulator = Emulator::new((WIDTH, 1));
-    emulator.feed((WIDTH, 1), line.as_bytes());
 
-    assert!(at(&emulator.grid(), COLUMNS.branch).starts_with("strings-kata  feat "));
+    assert!(at(&on_screen(&line), COLUMNS.branch).starts_with("strings-kata  feat "));
 }
 
 #[test]
@@ -113,8 +110,7 @@ fn a_flat_row_cuts_its_branch_to_leave_room_for_its_project() {
     let long = run(6, "refactor/extract-the-evidence", "failed", &[]);
     let columns = fun_ci_renderer::table::columns::Columns { name: 30, ..COLUMNS };
     let line = paint(&Piece::Row(&long), &Paint { columns, frame: frame(), lead: None, stale: &[], paper: night::WINE, tags: Some(12) });
-    let mut emulator = Emulator::new((WIDTH, 1));
-    emulator.feed((WIDTH, 1), line.as_bytes());
+    let grid = on_screen(&line);
 
-    assert!(at(&emulator.grid(), COLUMNS.branch).starts_with("strings-kata  refactor/extrac…"), "{}", text(&emulator.grid()));
+    assert!(at(&grid, COLUMNS.branch).starts_with("strings-kata  refactor/extrac…"), "{}", text(&grid));
 }

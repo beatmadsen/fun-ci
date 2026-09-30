@@ -6,7 +6,6 @@ mod caption;
 mod cast;
 mod draw;
 mod effect;
-pub mod film;
 mod footer;
 mod header;
 mod lamp;
@@ -24,9 +23,8 @@ pub use lamp::{LAMP_AT, lamp};
 pub use resting::{Outcome, Resting, resting};
 
 use crate::animation::Scene;
-use crate::art::output::Depth;
 use crate::model::{Board, Event, Moment, Run, Stage};
-use crate::screen::Screen;
+use ratatui::buffer::Buffer;
 use header::Header;
 
 /// Plays animations over the board.
@@ -45,12 +43,7 @@ impl Animator {
         Self { effects: Vec::new(), header: Header::new(cast.idle()), pending: Vec::new(), cast, places: Places::default() }
     }
 
-    /// Draws the header in `depth`'s colours from the next frame.
-    pub fn set_depth(&mut self, depth: Depth) {
-        self.header.set_depth(depth);
-    }
-
-    /// Where the table put each run's row and marks this frame, for the stage effects.
+    /// Where each run's row and marks are this frame, for the stage effects.
     pub fn set_places(&mut self, places: Places) {
         self.places = places;
     }
@@ -73,15 +66,15 @@ impl Animator {
         self.header.frame_ms()
     }
 
-    /// Draws this frame's animations over `board` as of `at`, then advances
-    /// the stage effects. Returns the name of the header animation drawn.
-    pub fn render(&mut self, screen: &mut Screen, board: &Board, at: Moment) -> String {
+    /// Draws this frame's animations into `buf` over `board` as of `at`, then
+    /// advances the stage effects. Returns the name of the header animation drawn.
+    pub fn render(&mut self, buf: &mut Buffer, board: &Board, at: Moment) -> String {
         let runs = &board.runs;
         self.take_events(runs);
         self.follow_runs(runs, at);
         self.header.seek(at.play_ms);
         let showing = self.header.showing().to_string();
-        self.draw(screen, board);
+        self.draw(buf, board);
         self.advance();
         showing
     }
@@ -132,12 +125,10 @@ impl Animator {
         }
     }
 
-    fn draw(&mut self, screen: &mut Screen, board: &Board) {
-        screen.save_cursor();
-        self.header.draw(screen, board.streak);
-        draw::stages(screen, &self.effects, (&board.runs, &self.places));
-        draw::footer(screen, &self.effects, (&board.runs, &self.places));
-        screen.restore_cursor();
+    fn draw(&self, buf: &mut Buffer, board: &Board) {
+        self.header.draw(buf, board.streak);
+        draw::stages(buf, &self.effects, &self.places);
+        draw::footer(buf, &self.effects, (&board.runs, &self.places));
     }
 
     fn advance(&mut self) {

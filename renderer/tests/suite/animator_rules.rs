@@ -4,7 +4,6 @@
 use fun_ci_renderer::animation::Library;
 use fun_ci_renderer::animator::{Animator, Cast, Kind};
 use fun_ci_renderer::model::Event;
-use fun_ci_renderer::ansi::strip;
 
 macro_rules! cases {
     ($($name:ident: $actual:expr => $expected:expr;)*) => {
@@ -26,9 +25,6 @@ cases! {
     a_run_event_has_no_stage_effect: Kind::for_event("run_passed", "passed", "passed") => None;
     pinning_a_scene_leaves_the_other_pools_to_pick_from: Cast::pool("run_passed").contains(&picked(&mut pinned("explosion"), "run_passed").as_str()) => true;
     an_unknown_pin_is_ignored: Cast::pool("run_passed").contains(&picked(&mut pinned("disco"), "run_passed").as_str()) => true;
-    strip_removes_sgr_escapes: strip("\u{1b}[1;31mBOOM\u{1b}[0m!") => "BOOM!";
-    strip_removes_other_csi_escapes: strip("a\u{1b}[2Kb") => "ab";
-    strip_keeps_an_escape_that_is_not_csi: strip("a\u{1b}Xb") => "a\u{1b}Xb";
 }
 
 fn picked(cast: &mut Cast, milestone: &str) -> String {
@@ -158,16 +154,16 @@ fn random_picks_spread_evenly_across_a_pool() {
 fn the_header_keeps_animating_while_a_queued_scene_plays() {
     let mut animator = Animator::new(Cast::new(Library::builtin(), 1));
     animator.queue(Event { name: "run_passed".into(), run_id: Some(1), stage: None, animation: Some("success".into()) });
-    let mut screen = fun_ci_renderer::screen::Screen::new(80);
-    animator.render(&mut screen, &fun_ci_renderer::model::Board::default(), fun_ci_renderer::model::Moment { board_ms: 0, play_ms: 0 });
+    let mut buffer = crate::support::shown::blank(80, 24);
+    animator.render(&mut buffer, &fun_ci_renderer::model::Board::default(), fun_ci_renderer::model::Moment { board_ms: 0, play_ms: 0 });
     assert!(animator.animating(), "the fireworks are still playing");
 }
 
 /// The header scene an animator shows for a board holding `runs`, one frame on.
 fn shown(animator: &mut Animator, runs: &[serde_json::Value], frame: u64) -> String {
     let board: fun_ci_renderer::model::Board = serde_json::from_value(serde_json::json!({ "runs": runs })).unwrap();
-    let mut screen = fun_ci_renderer::screen::Screen::new(80);
-    animator.render(&mut screen, &board, fun_ci_renderer::model::Moment { board_ms: 0, play_ms: frame * 100 })
+    let mut buffer = crate::support::shown::blank(80, 24);
+    animator.render(&mut buffer, &board, fun_ci_renderer::model::Moment { board_ms: 0, play_ms: frame * 100 })
 }
 
 /// The quiet scene shown once a run has run: a frame with it running, then one with nothing.

@@ -3,7 +3,6 @@
 
 pub mod animation;
 pub mod animator;
-pub mod ansi;
 pub mod art;
 pub mod board_view;
 pub mod cli;
@@ -21,7 +20,6 @@ pub mod protocol;
 pub mod replay;
 pub mod scenario;
 pub mod scenes;
-pub mod screen;
 pub mod session;
 pub mod slow_draws;
 pub mod spinner;

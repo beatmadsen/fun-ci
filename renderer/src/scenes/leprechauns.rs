@@ -7,7 +7,8 @@ use crate::art::canvas::Canvas;
 use crate::art::light::{glow, streak};
 use crate::art::noise::{dice, value};
 use crate::art::sprite::Sprite;
-use crate::art::{Shade, add, hue, mix, scale, seconds, smoothstep};
+use super::rainbow::rainbow;
+use crate::art::{Shade, add, mix, scale, seconds, smoothstep};
 
 const LENGTH_MS: u64 = 4400;
 const PIXEL: f64 = 2.4;
@@ -66,32 +67,6 @@ fn sky(canvas: &mut Canvas) {
         let sun = (-((x - width * 0.85).hypotenuse(y - height * 0.7) / 40.0).powi(2)).exponential();
         add(mix([0.14, 0.3, 0.62], [0.98, 0.7, 0.45], smoothstep(0.1, 0.9, k)), scale([1.0, 0.8, 0.45], sun * 0.8))
     });
-}
-
-/// The rainbow, revealed left to right over the first second.
-fn rainbow(canvas: &mut Canvas, t: f64) {
-    let (width, height) = canvas.size();
-    let (centre, radius) = ((width * 0.5, height * 1.35), (width * 0.45).min(150.0));
-    let reveal = std::f64::consts::PI * (1.0 - smoothstep(0.1, 1.2, t));
-    canvas.map(|x, y, pixel| {
-        let band = (radius - (x - centre.0).hypotenuse(y - centre.1)) / 20.0;
-        mix(pixel, spectrum(band), band_cover(band) * swept((centre.0 - x, centre.1 - y), reveal))
-    });
-}
-
-/// How much of the rainbow shows `band` of the way across it: soft at both edges.
-fn band_cover(band: f64) -> f64 {
-    smoothstep(0.0, 0.08, band) * smoothstep(1.0, 0.92, band) * 0.6
-}
-
-/// 1.0 where the arc has been drawn: from the left round to the angle `reveal`.
-fn swept((dx, dy): (f64, f64), reveal: f64) -> f64 {
-    f64::from(u8::from(dy.arctangent2(dx) >= reveal))
-}
-
-/// Red at the outside edge of the band (0.0) round to violet at the inside (1.0).
-fn spectrum(k: f64) -> Shade {
-    hue(k.clamp(0.0, 1.0) * 0.78)
 }
 
 fn hill(canvas: &mut Canvas) {
