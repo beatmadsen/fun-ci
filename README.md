@@ -4,7 +4,7 @@
 
 Opinionated local CI that checks your code before it leaves your machine. Every commit runs lint, build, a fast suite and a slow suite on your own computer, each held to a strict time budget, so the feedback stays fast.
 
-![The fun-ci console following a run: a rocket while it runs, then a scene as lint, the build, the fast suite and the whole run pass](docs/screenshots/console.png)
+![The fun-ci console following a run: a rocket while it runs, then a scene as lint, the build, the fast suite and the whole run pass](docs/screenshots/console.webp)
 
 Fun-CI has two goals. It should be extremely easy to tell whether all is well, and it should be fun. The design behind both is in [docs/design.md](docs/design.md).
 
@@ -253,7 +253,7 @@ bundle install
 bundle exec rake   # the gate: tests, the renderer's tests, the binary contract, rubocop, clippy
 ```
 
-How it is built is in [docs/architecture.md](docs/architecture.md), and the requirements are in [docs/acceptance-tests.md](docs/acceptance-tests.md). The renderer is written in Rust; install Rust with [rustup](https://rustup.rs), which picks up the version the repository pins in `rust-toolchain.toml`. `ruby script/readme_screenshots.rb` draws the pictures in this README again.
+How it is built is in [docs/architecture.md](docs/architecture.md), and the requirements are in [docs/acceptance-tests.md](docs/acceptance-tests.md). The renderer is written in Rust; install Rust with [rustup](https://rustup.rs), which picks up the version the repository pins in `rust-toolchain.toml`. `ruby script/readme_screenshots.rb` draws the pictures in this README again, on macOS, after `npm run --prefix script/screenshots/terminal setup` once.
 
 ## License
 

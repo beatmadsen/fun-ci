@@ -53,7 +53,7 @@ ruby script/record_evidence_fixture.rb rspec   # Record a preset's failing run i
 ruby script/bench_detection.rb   # Time choosing presets over a full output window; run it when a preset is added
 ruby script/check_evidence_presets.rb [NAME...]   # Record presets' runs again with each image's newest tag and report what changed; CI runs it weekly (evidence-presets.yml)
 ruby script/check_init_templates.rb [NAME...]   # Run the stage script `fun-ci init` writes on each preset's recorded project, in its pinned image, and check the preset reads what it prints, and that stages side by side (lint and build, the two suites) write nothing in common and the suites still run tests (`script/suites_apart.rb`); CI runs it weekly (evidence-presets.yml)
-ruby script/readme_screenshots.rb   # Draw the README's pictures of the console (docs/screenshots/) from pinned headless scenes; run it when what the console draws changes
+ruby script/readme_screenshots.rb   # Draw the README's pictures of the console (docs/screenshots/) from pinned headless scenes, replayed in xterm.js at high resolution (needs macOS for Menlo, and once `npm run --prefix script/screenshots/terminal setup`); run it when what the console draws changes
 ruby script/mutation_lanes.rb [SHA]   # Which mutation lanes the nightly workflow runs: those fed by a file changed since SHA
 ruby script/stacks_doc.rb   # Write docs/stacks.md (the stacks init detects, their scripts, the presets) from the code; run it when any of them changes
 cargo run --manifest-path renderer/Cargo.toml -- --headless --cols 80 --rows 24 --scenario contract/scenarios/running.jsonl --out "$(mktemp -d)"   # PNG frames, sheet, cast, stats

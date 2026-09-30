@@ -40,3 +40,6 @@ renderer/mutants.out.old/
 /libexec/
 renderer/mutants-shards/
 *.snap.new
+
+# The README pictures tool (script/screenshots/terminal)
+script/screenshots/terminal/node_modules/
