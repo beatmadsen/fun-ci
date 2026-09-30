@@ -40,10 +40,11 @@ impl Paper {
         Block::new().borders(self.borders).border_set(PROPORTIONAL_WIDE).style(Style::new().bg(self.colour.into())).border_style(edge)
     }
 
-    /// `row`, line `line` of the table, cut where the paper ends if it is on it.
-    fn clip(self, line: u16, row: Rect) -> Rect {
+    /// Where line `line` of the table is drawn from, `from`, cut where the
+    /// paper ends if the line is on it. A `Line` draws only its area's first row.
+    fn clip(self, line: u16, from: Rect) -> Rect {
         let on = (self.area.top()..self.area.bottom()).contains(&line);
-        if on { Rect { width: row.width.min(self.area.right()), ..row } } else { row }
+        if on { Rect { width: from.width.min(self.area.right()), ..from } } else { from }
     }
 }
 
@@ -61,8 +62,8 @@ impl Widget for Sheet<'_> {
             paper.block().render(at.intersection(area), buf);
         }
         for ((line, text), y) in (0..).zip(self.lines).zip(area.top()..area.bottom()) {
-            let row = Rect { y, height: 1, ..area };
-            text.render(self.paper.map_or(row, |paper| paper.clip(line, row)), buf);
+            let from = Rect { y, ..area };
+            text.render(self.paper.map_or(from, |paper| paper.clip(line, from)), buf);
         }
     }
 }

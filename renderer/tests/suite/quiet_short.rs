@@ -60,3 +60,17 @@ fn a_flat_row_on_a_screen_with_no_room_to_spare_keeps_its_whole_branch_name() {
 
     assert!(text.lines().any(|line| line.trim_start().starts_with("one  one-fix ")), "{text}");
 }
+
+/// The blank columns between `name` and what follows it on its row.
+fn space_after(text: &str, name: &str) -> usize {
+    let row = text.lines().find(|line| line.contains(name)).unwrap();
+    let after = &row[row.find(name).unwrap() + name.len()..];
+    after.len() - after.trim_start().len()
+}
+
+#[test]
+fn a_flat_row_keeps_as_much_space_before_its_marks_as_a_labelled_one() {
+    let (labelled, flat) = (screen(&two_crowded_projects(), (120, 40)).text(), screen(&two_crowded_projects(), (120, 22)).text());
+
+    assert_eq!(space_after(&flat, "one  one-fix"), space_after(&labelled, "one-fix"));
+}

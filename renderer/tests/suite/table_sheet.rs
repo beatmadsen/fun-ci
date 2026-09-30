@@ -128,3 +128,13 @@ fn there_is_no_block_when_the_lead_s_row_is_not_among_the_pieces() {
 
     assert_eq!(block(&[Piece::Row(&other), Piece::Blank]), None);
 }
+
+#[test]
+fn a_sheet_drawn_further_in_moves_its_block_with_it() {
+    let run = failed();
+    let mut buffer = blank(WIDTH, 4);
+    let paper = block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]);
+    Sheet { lines: &[], paper }.render(ratatui::layout::Rect::new(3, 0, WIDTH - 3, 4), &mut buffer);
+
+    assert_eq!(shown(&buffer).cells[0][COLUMNS.age_end + 2 + 2].text, "▄");
+}
