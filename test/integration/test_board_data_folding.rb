@@ -25,12 +25,6 @@ class TestBoardDataFolding < Minitest::Test
   end
 
   def test_should_fold_a_branch_s_consecutive_cancelled_runs_into_one_row
-    assert_equal 5, @board.runs.first[:folded]
-  end
-
-  def test_should_show_the_other_branches_after_the_folded_one
-    branches = @board.runs.map { |run| run[:branch] }
-
-    assert_equal %w[detached main], branches
+    assert_equal 5, @board.runs.find { |run| run[:branch] == "detached" }[:folded]
   end
 end

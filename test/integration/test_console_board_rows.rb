@@ -32,7 +32,22 @@ class TestConsoleBoardRows < Minitest::Test
     assert_equal(["new"], board_runs.map { |run| run[:sha] })
   end
 
+  # AT-12.2
+  def test_should_group_rows_by_project_the_project_that_most_needs_you_first
+    record_run("one-old", "main", "/src/one", "completed")
+    record_run("two-feat", "feat", "/src/two", "failed")
+    record_run("one-new", "topic", "/src/one", "running")
+    record_run("two-main", "main", "/src/two", "completed")
+
+    assert_equal(%w[two-feat two-main one-new one-old], board_runs.map { |row| row[:sha] })
+  end
+
   private
 
   def board_runs = @console.updates.last[:runs]
+
+  def record_run(sha, branch, project, status)
+    id = FunCi::Persistence::PipelineRun.create(@db, commit_hash: sha, branch: branch, project_path: project)
+    FunCi::Persistence::PipelineRun.update_status(@db, id, status)
+  end
 end

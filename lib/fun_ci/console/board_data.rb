@@ -8,6 +8,7 @@ require_relative "../pipeline/run_canceller"
 require_relative "streak_counter"
 require_relative "trunk_marks"
 require_relative "cancelled_folding"
+require_relative "row_order"
 
 module FunCi
   module Console
@@ -39,9 +40,9 @@ module FunCi
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
 
-      # One row per branch, its newest run, newest first: a run of cancelled
+      # One row per branch, its newest run, in RowOrder: a run of cancelled
       # runs folded into one, with its stages and the branch's standing against the trunk.
-      def runs = Persistence::PipelineRun.branch_heads(@db, limit: @limit).map { |head| branch_row(head) }
+      def runs = RowOrder.of(Persistence::PipelineRun.branch_heads(@db, limit: @limit).map { |head| branch_row(head) })
 
       # The projects among `runs` whose trunk is stale.
       def stale_trunks(runs, now:) = TrunkMarks.new(@db).stale(runs, now: now)
