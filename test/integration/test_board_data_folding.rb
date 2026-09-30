@@ -7,8 +7,8 @@ require "fun_ci/persistence/pipeline_run"
 require "fun_ci/persistence/stage_job"
 require "tmpdir"
 
-# The board folds a branch's runs cancelled one after another into one row,
-# and still fills its page (CancelledFolding decides what folds).
+# A branch whose newest runs were cancelled one after another shows as one
+# row that says how many it stands for (CancelledFolding decides what folds).
 class TestBoardDataFolding < Minitest::Test
   include DatabaseTestSetup
   include PipelineTestHelpers
@@ -28,13 +28,9 @@ class TestBoardDataFolding < Minitest::Test
     assert_equal 5, @board.runs.first[:folded]
   end
 
-  def test_should_fill_the_page_with_the_runs_after_the_folded_ones
+  def test_should_show_the_other_branches_after_the_folded_one
     branches = @board.runs.map { |run| run[:branch] }
 
-    assert_equal %w[detached main main], branches
-  end
-
-  def test_should_report_more_when_folded_rows_go_past_the_page
-    assert_predicate @board, :more?
+    assert_equal %w[detached main], branches
   end
 end

@@ -12,8 +12,9 @@ require_relative "cancelled_folding"
 module FunCi
   module Console
     class BoardData
-      # How many pages of runs are read, so a page is full once cancelled runs are folded.
-      WINDOW_PAGES = 4
+      # How many of a branch's runs are read to fold its cancelled ones and
+      # find its standing against the trunk.
+      BRANCH_WINDOW = 100
 
       def initialize(db, limit: 15, page_size: nil, run_canceller: Pipeline::RunCanceller.new)
         @db = db
@@ -32,21 +33,15 @@ module FunCi
         @limit = [@limit, page_size].max
       end
 
-      # Whether there are rows beyond those `runs` loads, folded or still unread.
-      def more?
-        window = Persistence::PipelineRun.recent(@db, limit: window_size + 1)
-        window.size > window_size || CancelledFolding.fold(window).size > @limit
-      end
+      # Whether there are branches beyond those `runs` loads.
+      def more? = Persistence::PipelineRun.branch_heads(@db, limit: @limit + 1).size > @limit
 
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
 
-      # Newest first, a branch's consecutive cancelled runs folded into one, each
-      # with its stages and, a branch's newest, the branch's standing against the trunk.
-      def runs
-        pipeline_runs = CancelledFolding.fold(Persistence::PipelineRun.recent(@db, limit: window_size)).first(@limit)
-        TrunkMarks.new(@db).mark(pipeline_runs.map { |run| enrich_with_stages(run) })
-      end
+      # One row per branch, its newest run, newest first: a run of cancelled
+      # runs folded into one, with its stages and the branch's standing against the trunk.
+      def runs = Persistence::PipelineRun.branch_heads(@db, limit: @limit).map { |head| branch_row(head) }
 
       # The projects among `runs` whose trunk is stale.
       def stale_trunks(runs, now:) = TrunkMarks.new(@db).stale(runs, now: now)
@@ -64,7 +59,11 @@ module FunCi
 
       private
 
-      def window_size = @limit * WINDOW_PAGES
+      def branch_row(head)
+        branch_runs = Persistence::PipelineRun.of_branch(@db, head[:project_path], head[:branch], limit: BRANCH_WINDOW)
+        row = CancelledFolding.fold(branch_runs).first
+        enrich_with_stages(row.merge(trunk: TrunkMarks.new(@db).mark(branch_runs).first[:trunk]))
+      end
 
       def enrich_with_stages(run)
         run.merge(stages: Persistence::StageJob.for_run(@db, run[:id]).map { |job| stage(job) })

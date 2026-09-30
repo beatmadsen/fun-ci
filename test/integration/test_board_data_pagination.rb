@@ -20,7 +20,7 @@ class TestBoardDataPagination < Minitest::Test
   end
 
   def test_should_respect_initial_limit_as_page_size
-    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "branch#{i}") }
     board = FunCi::Console::BoardData.new(@db, limit: 5)
     result = board.runs
 
@@ -28,23 +28,23 @@ class TestBoardDataPagination < Minitest::Test
   end
 
   def test_should_show_more_runs_after_load_more
-    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "branch#{i}") }
     board = FunCi::Console::BoardData.new(@db, limit: 5)
     board.load_more
 
     result = board.runs
     assert_equal 10, result.size,
-                 "Should show 10 runs after one load_more"
+                 "Should show 10 branches after one load_more"
   end
 
   def test_should_not_exceed_total_available_runs
-    7.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    7.times { |i| create_completed_run("hash#{format("%02d", i)}", "branch#{i}") }
     board = FunCi::Console::BoardData.new(@db, limit: 5)
     board.load_more
     board.load_more
     result = board.runs
     assert_equal 7, result.size,
-                 "Should not exceed total available runs"
+                 "Should not exceed the branches there are"
   end
 
   def test_should_load_a_page_of_the_new_size_once_resized
@@ -69,18 +69,18 @@ class TestBoardDataPagination < Minitest::Test
     assert_equal 5, board.runs.size
   end
 
-  def test_should_report_more_when_the_store_holds_runs_beyond_those_loaded
+  def test_should_report_more_when_the_store_holds_branches_beyond_those_loaded
     assert_predicate board_over(4, page_size: 3), :more?
   end
 
-  def test_should_report_no_more_when_every_run_is_loaded
+  def test_should_report_no_more_when_every_branch_is_loaded
     refute_predicate board_over(3, page_size: 3), :more?
   end
 
   private
 
   def board_over(count, page_size:)
-    count.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    count.times { |i| create_completed_run("hash#{format("%02d", i)}", "branch#{i}") }
     FunCi::Console::BoardData.new(@db, page_size: page_size)
   end
 end

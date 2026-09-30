@@ -64,8 +64,19 @@ module FunCi
         query(db, "ORDER BY id DESC LIMIT ?", limit)
       end
 
-      def self.query(db, clause, param)
-        db.execute("#{SELECT} #{clause}", [param]).map { |row| COLUMNS.zip(row).to_h }
+      # The newest run of each of the `limit` branches run most recently, newest first.
+      def self.branch_heads(db, limit:)
+        query(db, "WHERE id IN (SELECT MAX(id) FROM pipeline_runs GROUP BY project_path, branch) " \
+                  "ORDER BY id DESC LIMIT ?", limit)
+      end
+
+      # A project's branch's runs, newest first.
+      def self.of_branch(db, project_path, branch, limit:)
+        query(db, "WHERE project_path IS ? AND branch = ? ORDER BY id DESC LIMIT ?", project_path, branch, limit)
+      end
+
+      def self.query(db, clause, *params)
+        db.execute("#{SELECT} #{clause}", params).map { |row| COLUMNS.zip(row).to_h }
       end
       private_class_method :query
     end

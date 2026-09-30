@@ -51,9 +51,9 @@ class TestBoardData < Minitest::Test
     assert_equal 4, slow[:finished_order], "the fixture finishes lint, build, fast, then slow"
   end
 
-  def test_should_return_runs_in_reverse_chronological_order
+  def test_should_return_the_branch_run_most_recently_first
     create_completed_run("first11", "main")
-    create_completed_run("second2", "main")
+    create_completed_run("second2", "feat")
     board = FunCi::Console::BoardData.new(@db)
     result = board.runs
     assert_equal "second2", result[0][:commit_hash]
@@ -61,10 +61,10 @@ class TestBoardData < Minitest::Test
   end
 
   def test_should_limit_to_specified_count
-    5.times { |i| create_completed_run("hash#{i.to_s.rjust(3, "0")}", "main") }
+    5.times { |i| create_completed_run("hash#{i.to_s.rjust(3, "0")}", "branch#{i}") }
     board = FunCi::Console::BoardData.new(@db, limit: 3)
     result = board.runs
-    assert_equal 3, result.length, "Should limit to 3 runs"
+    assert_equal 3, result.length, "Should limit to 3 branches"
   end
 
   def test_should_compute_streak
@@ -75,14 +75,14 @@ class TestBoardData < Minitest::Test
   end
 
   def test_should_use_page_size_as_initial_limit
-    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "branch#{i}") }
     board = FunCi::Console::BoardData.new(@db, page_size: 3)
     result = board.runs
     assert_equal 3, result.length, "Should initially show page_size rows"
   end
 
   def test_should_show_more_after_load_more
-    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    10.times { |i| create_completed_run("hash#{format("%02d", i)}", "branch#{i}") }
     board = FunCi::Console::BoardData.new(@db, page_size: 3)
     board.load_more
     result = board.runs
@@ -90,12 +90,12 @@ class TestBoardData < Minitest::Test
   end
 
   def test_should_not_exceed_total_runs_after_load_more
-    5.times { |i| create_completed_run("hash#{format("%02d", i)}", "main") }
+    5.times { |i| create_completed_run("hash#{format("%02d", i)}", "branch#{i}") }
     board = FunCi::Console::BoardData.new(@db, page_size: 3)
     board.load_more
     board.load_more
     result = board.runs
-    assert_equal 5, result.length, "Should not exceed total runs"
+    assert_equal 5, result.length, "Should not exceed the branches there are"
   end
 
   def test_should_cancel_a_run
