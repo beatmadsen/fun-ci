@@ -41,28 +41,25 @@ frame 0001 at 200x50
   |
   |                                                          j/k move      c cancel      q quit
   :
-  :..........................................................aaaaaaaaaaaaaaaaaaaaaaaaa
+  :..........................................................a.a.a.a.a.a.a.a.a.a.a.a.a
   :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :........................................................ccccdddddddddddddddddddddddddeeffgggggggggggggggfffffffffffffffffffffffffffffffffffffgggg
+  :........................................................ccccdddddddddccccccccccccccccecfcgcgccccccccccccffffffcffcfffffcfcffffcccccccccccccccggcc
   :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :............................................................hhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
+  :............................................................hhhh.....................i.i.i.i............iiiiii...............................jj
   :
   :
-  :..........................................................aaaaaaaaaaa
+  :..........................................................a.a.a.a.a.a
   :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkkllllmmnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
+  :............................................................kkkk.....................l.l.m.n............mmmmm.mmm.mm.mmmm.m.mmm.............nnn
   :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkklllloonnnnnnnnnnnnnoooooooooooooooooooooooooooooooooooonnn
-  :
-  :
-  :..........................................................aaaaaaaaaaaaaaaaaaa
-  :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :
-  :............................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppppppppppnn
+  :............................................................kkkkkkkkkkkkk............l.l.o.n............ooooooo.oooo.o.oo...................nnn
   :
   :
+  :..........................................................a.a.a.a.a.a.a.a.a.a
   :
+  :............................................................kkkk.....................n.n.n.n............nnnnnnnnn...........................nnn
+  :
+  :............................................................nnnnn.......................................ppppppppp............................nn
   :
   :
   :
@@ -75,7 +72,10 @@ frame 0001 at 200x50
   :
   :
   :
-  :..........................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :
+  :
+  :..........................................................nnn.nnnn......n.nnnnnn......n.nnnn
 frame 0002 at 200x50
   header 8beb5269
   |
@@ -115,28 +115,25 @@ frame 0002 at 200x50
   |
   |                                                          j/k move      c cancel      q quit
   :
-  :..........................................................aaaaaaaaaaaaaaaaaaaaaaaaa
+  :..........................................................a.a.a.a.a.a.a.a.a.a.a.a.a
   :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :........................................................ccccdddddddddddddddddddddddddeeffgggggggggggggggfffffffffffffffffffffffffffffffffffffgggg
+  :........................................................ccccdddddddddccccccccccccccccecfcgcgccccccccccccffffffcffcfffffcfcffffcccccccccccccccggcc
   :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :............................................................hhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
+  :............................................................hhhh.....................i.i.i.i............iiiiii...............................jj
   :
   :
-  :..........................................................aaaaaaaaaaa
+  :..........................................................a.a.a.a.a.a
   :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkkllllmmnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
+  :............................................................kkkk.....................l.l.m.n............mmmmm.mmm.mm.mmmm.m.mmm.............nnn
   :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkklllloonnnnnnnnnnnnnoooooooooooooooooooooooooooooooooooonnn
-  :
-  :
-  :..........................................................aaaaaaaaaaaaaaaaaaa
-  :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :
-  :............................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppppppppppnn
+  :............................................................kkkkkkkkkkkkk............l.l.o.n............ooooooo.oooo.o.oo...................nnn
   :
   :
+  :..........................................................a.a.a.a.a.a.a.a.a.a
   :
+  :............................................................kkkk.....................n.n.n.n............nnnnnnnnn...........................nnn
+  :
+  :............................................................nnnnn.......................................ppppppppp............................nn
   :
   :
   :
@@ -149,7 +146,10 @@ frame 0002 at 200x50
   :
   :
   :
-  :..........................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :
+  :
+  :..........................................................nnn.nnnn......n.nnnnnn......n.nnnn
 frame 0003 at 200x50
   header 7d53d3d2
   |
@@ -189,28 +189,25 @@ frame 0003 at 200x50
   |
   |                                                          j/k move      c cancel      q quit
   :
-  :..........................................................aaaaaaaaaaaaaaaaaaaaaaaaa
+  :..........................................................a.a.a.a.a.a.a.a.a.a.a.a.a
   :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :........................................................ccccdddddddddddddddddddddddddeeffgggggggggggggggfffffffffffffffffffffffffffffffffffffgggg
+  :........................................................ccccdddddddddccccccccccccccccecfcgcgccccccccccccffffffcffcfffffcfcffffcccccccccccccccggcc
   :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :............................................................hhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
+  :............................................................hhhh.....................i.i.i.i............iiiiii...............................jj
   :
   :
-  :..........................................................aaaaaaaaaaa
+  :..........................................................a.a.a.a.a.a
   :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkkllllmmnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
+  :............................................................kkkk.....................l.l.m.n............mmmmm.mmm.mm.mmmm.m.mmm.............nnn
   :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkklllloonnnnnnnnnnnnnoooooooooooooooooooooooooooooooooooonnn
-  :
-  :
-  :..........................................................aaaaaaaaaaaaaaaaaaa
-  :
-  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :
-  :............................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppppppppppnn
+  :............................................................kkkkkkkkkkkkk............l.l.o.n............ooooooo.oooo.o.oo...................nnn
   :
   :
+  :..........................................................a.a.a.a.a.a.a.a.a.a
   :
+  :............................................................kkkk.....................n.n.n.n............nnnnnnnnn...........................nnn
+  :
+  :............................................................nnnnn.......................................ppppppppp............................nn
   :
   :
   :
@@ -223,7 +220,10 @@ frame 0003 at 200x50
   :
   :
   :
-  :..........................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :
+  :
+  :..........................................................nnn.nnnn......n.nnnnnn......n.nnnn
 legend
 a = fg Rgb(127, 122, 150), bg Default, []
 b = fg Rgb(46, 20, 26), bg Default, []

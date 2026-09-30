@@ -21,13 +21,13 @@ frame 0001 at 60x30
   |
   |    Cancel main (d54ede8)? y / n
   :
-  :......aaaaaaaaaaaaabbccdddddccccccccccccccccccccccccccccdd
+  :......aaaaaaaaa....b.c.d.d..cccccc.cc.ccccc.c.cccc......dd
   :
-  :......aaaaaaaaaaaaabbbbeedddeeeeeeeeeeeeeeeeeeeeeeeeeeeddd
+  :......aaaaaaaaaaa..b.b.e.d..eeeeeee.eeee.e.ee..........ddd
   :..ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  :..gggghhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :..gggghhhhgggggggggigigigiggiiiiiiiiiggggggggggggggggggiiigg
   :..ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  :......ddddddddddddddddddddddjjjjjjjjjjjjjjjjjjjjjjjjjjjjdd
+  :......ddddd.................jjjjjjjjj...................dd
   :
   :
   :
@@ -35,7 +35,7 @@ frame 0001 at 60x30
   :
   :
   :
-  :....dddddddddddddddddddddddddddddddddddddddddddddddddddddd
+  :....dddddd.dddd.dddddddddd.d.d.d
 frame 0002 at 60x30
   header dd4127e5
   |
@@ -55,13 +55,13 @@ frame 0002 at 60x30
   |
   |    Cancel main (d54ede8)? y / n
   :
-  :......aaaaaaaaaaaaabbccdddddccccccccccccccccccccccccccccdd
+  :......aaaaaaaaa....b.c.d.d..cccccc.cc.ccccc.c.cccc......dd
   :
-  :......aaaaaaaaaaaaabbbbeedddeeeeeeeeeeeeeeeeeeeeeeeeeeeddd
+  :......aaaaaaaaaaa..b.b.e.d..eeeeeee.eeee.e.ee..........ddd
   :..ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  :..gggghhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :..gggghhhhgggggggggigigigiggiiiiiiiiiggggggggggggggggggiiigg
   :..ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  :......ddddddddddddddddddddddjjjjjjjjjjjjjjjjjjjjjjjjjjjjdd
+  :......ddddd.................jjjjjjjjj...................dd
   :
   :
   :
@@ -69,7 +69,7 @@ frame 0002 at 60x30
   :
   :
   :
-  :....dddddddddddddddddddddddddddddddddddddddddddddddddddddd
+  :....dddddd.dddd.dddddddddd.d.d.d
 frame 0003 at 60x30
   header 59e05b0e
   |
@@ -89,13 +89,13 @@ frame 0003 at 60x30
   |
   |    Cancel main (d54ede8)? y / n
   :
-  :......aaaaaaaaaaaaabbccdddddccccccccccccccccccccccccccccdd
+  :......aaaaaaaaa....b.c.d.d..cccccc.cc.ccccc.c.cccc......dd
   :
-  :......aaaaaaaaaaaaabbbbeedddeeeeeeeeeeeeeeeeeeeeeeeeeeeddd
+  :......aaaaaaaaaaa..b.b.e.d..eeeeeee.eeee.e.ee..........ddd
   :..ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  :..gggghhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+  :..gggghhhhgggggggggigigigiggiiiiiiiiiggggggggggggggggggiiigg
   :..ffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-  :......ddddddddddddddddddddddjjjjjjjjjjjjjjjjjjjjjjjjjjjjdd
+  :......ddddd.................jjjjjjjjj...................dd
   :
   :
   :
@@ -103,7 +103,7 @@ frame 0003 at 60x30
   :
   :
   :
-  :....dddddddddddddddddddddddddddddddddddddddddddddddddddddd
+  :....dddddd.dddd.dddddddddd.d.d.d
 legend
 a = fg Rgb(216, 212, 232), bg Default, []
 b = fg Rgb(111, 184, 170), bg Default, []

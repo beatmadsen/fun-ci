@@ -21,7 +21,7 @@ frame 0001 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..............bbbbccccccccccccccccddddeefffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :..............bbbbccccbbbbbbbbbbbbdbdbebfbbbbbbbbbbbbeeeeeeebeeeebebeebbbbbbbbbbbbbfffbb
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
@@ -35,7 +35,7 @@ frame 0001 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0002 at 100x30
   header b6775f15
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -55,7 +55,7 @@ frame 0002 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..............bbbbccccccccccccccccddddeefffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :..............bbbbccccbbbbbbbbbbbbdbdbebfbbbbbbbbbbbbeeeeeeebeeeebebeebbbbbbbbbbbbbfffbb
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
@@ -69,7 +69,7 @@ frame 0002 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0003 at 100x30
   header 522ec8cf
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -89,7 +89,7 @@ frame 0003 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..............bbbbccccccccccccccccddddeefffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :..............bbbbccccbbbbbbbbbbbbdbdbebfbbbbbbbbbbbbeeeeeeebeeeebebeebbbbbbbbbbbbbfffbb
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
@@ -103,7 +103,7 @@ frame 0003 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0004 at 100x30
   header accf857c
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -123,7 +123,7 @@ frame 0004 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..............bbbbccccccccccccccccddddeefffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :..............bbbbccccbbbbbbbbbbbbdbdbebfbbbbbbbbbbbbeeeeeeebeeeebebeebbbbbbbbbbbbbfffbb
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
@@ -137,7 +137,7 @@ frame 0004 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0005 at 100x30
   header 133b76df
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -157,7 +157,7 @@ frame 0005 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..............bbbbccccccccccccccccddddeefffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :..............bbbbccccbbbbbbbbbbbbdbdbebfbbbbbbbbbbbbeeeeeeebeeeebebeebbbbbbbbbbbbbfffbb
   :..............aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
@@ -171,7 +171,7 @@ frame 0005 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0006 at 100x30
   header bec183d0
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -191,7 +191,7 @@ frame 0006 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..............iiiijjjjjjjjjjjjjjjjkkkkllmmmmmmmmmmmmmllllllllllllllllllllllllllllllmmmmm
+  :..............iiiijjjjiiiiiiiiiiiikikilimiiiiiiiiiiiilllllllillllililliiiiiiiiiiiiimmmii
   :..............hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
@@ -205,7 +205,7 @@ frame 0006 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0007 at 100x30
   header 63feebb7
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -225,7 +225,7 @@ frame 0007 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..............iiiijjjjjjjjjjjjjjjjkkkkllmmmmmmmmmmmmmllllllllllllllllllllllllllllllmmmmm
+  :..............iiiijjjjiiiiiiiiiiiikikilimiiiiiiiiiiiilllllllillllililliiiiiiiiiiiiimmmii
   :..............hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
@@ -239,7 +239,7 @@ frame 0007 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0008 at 100x30
   header 49873264
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -259,7 +259,7 @@ frame 0008 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..............iiiijjjjjjjjjjjjjjjjkkkkllmmmmmmmmmmmmmllllllllllllllllllllllllllllllmmmmm
+  :..............iiiijjjjiiiiiiiiiiiikikilimiiiiiiiiiiiilllllllillllililliiiiiiiiiiiiimmmii
   :..............hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
@@ -273,7 +273,7 @@ frame 0008 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0009 at 100x30
   header 6ed725d1
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -293,7 +293,7 @@ frame 0009 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..............iiiijjjjjjjjjjjjjjjjkkkkllmmmmmmmmmmmmmllllllllllllllllllllllllllllllmmmmm
+  :..............iiiijjjjiiiiiiiiiiiikikilimiiiiiiiiiiiilllllllillllililliiiiiiiiiiiiimmmii
   :..............hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
@@ -307,7 +307,7 @@ frame 0009 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0010 at 100x30
   header 67709551
   |              ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -327,7 +327,7 @@ frame 0010 at 100x30
   |
   |                j/k move      c cancel      q quit
   :..............nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :..............ooooppppppppppppppppqqqqrrsssssssssssssrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrsssss
+  :..............ooooppppooooooooooooqoqorosoooooooooooorrrrrrrorrrrororrooooooooooooosssoo
   :..............nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
@@ -341,7 +341,7 @@ frame 0010 at 100x30
   :
   :
   :
-  :................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :................ggg.gggg......g.gggggg......g.gggg
 frame 0011 at 100x30
   header 1f11c1bb
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -361,7 +361,7 @@ frame 0011 at 100x30
   |
   |                     j/k move      q quit
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :...................ooooppppppppppppppppqqqqqqsssssssssssssqqqqqqqqqqqqqqqqqqqsssss
+  :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
@@ -375,7 +375,7 @@ frame 0011 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0012 at 100x30
   header 43b97117
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -395,7 +395,7 @@ frame 0012 at 100x30
   |
   |                     j/k move      q quit
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :...................ooooppppppppppppppppqqqqqqsssssssssssssqqqqqqqqqqqqqqqqqqqsssss
+  :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
@@ -409,7 +409,7 @@ frame 0012 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0013 at 100x30
   header dbc091ef
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -429,7 +429,7 @@ frame 0013 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :
   :
@@ -443,7 +443,7 @@ frame 0013 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0014 at 100x30
   header 7eb304c0
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -463,7 +463,7 @@ frame 0014 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :
   :
@@ -477,7 +477,7 @@ frame 0014 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0015 at 100x30
   header 87813dc7
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -497,7 +497,7 @@ frame 0015 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyCyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywCwzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :
   :
@@ -511,7 +511,7 @@ frame 0015 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0016 at 100x30
   header a9a2b691
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -531,7 +531,7 @@ frame 0016 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyEyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywEwzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :
   :
@@ -545,7 +545,7 @@ frame 0016 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0017 at 100x30
   header ee53a827
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -565,7 +565,7 @@ frame 0017 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :
   :
@@ -579,7 +579,7 @@ frame 0017 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0018 at 100x30
   header 697bb9d7
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -599,7 +599,7 @@ frame 0018 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :
   :
@@ -613,7 +613,7 @@ frame 0018 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0019 at 100x30
   header 9c511181
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -633,9 +633,9 @@ frame 0019 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................MMMMMMMMMMMMMMMMM
+  :.........................................M.M.M.MMMMM.M.M.M
   :
   :
   :
@@ -647,7 +647,7 @@ frame 0019 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0020 at 100x30
   header 66a2957f
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -667,9 +667,9 @@ frame 0020 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................MMMMMMMMMMMMMMMMM
+  :.........................................M.M.M.MMMMM.M.M.M
   :
   :
   :
@@ -681,7 +681,7 @@ frame 0020 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0021 at 100x30
   header f33e431f
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -701,9 +701,9 @@ frame 0021 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................MMMMMMMMMMMMMMMMM
+  :.........................................M.M.M.MMMMM.M.M.M
   :
   :
   :
@@ -715,7 +715,7 @@ frame 0021 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0022 at 100x30
   header 28a33449
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -735,9 +735,9 @@ frame 0022 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................MMMMMMMMMMMMMMMMM
+  :.........................................M.M.M.MMMMM.M.M.M
   :
   :
   :
@@ -749,7 +749,7 @@ frame 0022 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0023 at 100x30
   header 7a2d0e44
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -769,9 +769,9 @@ frame 0023 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................MMMMMMMMMMMMMMMMM
+  :.........................................M.M.M.MMMMM.M.M.M
   :
   :
   :
@@ -783,7 +783,7 @@ frame 0023 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0024 at 100x30
   header 661e6e33
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -803,9 +803,9 @@ frame 0024 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................MMMMMMMMMMMMMMMMM
+  :.........................................M.M.M.MMMMM.M.M.M
   :
   :
   :
@@ -817,7 +817,7 @@ frame 0024 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0025 at 100x30
   header e1c1b72e
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -837,9 +837,9 @@ frame 0025 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIIIIIIIIIIIIIJJJJJJKKKKKKKKKKKKKJJJJJJJJJJJJJJJJJJJKKKKK
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................MMMMMMMMMMMMMMMMM
+  :.........................................M.M.M.MMMMM.M.M.M
   :
   :
   :
@@ -851,7 +851,7 @@ frame 0025 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0026 at 100x30
   header a510edb6
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -871,9 +871,9 @@ frame 0026 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :.........................................MMMMMMMMMMMMMMMMM
+  :.........................................M.M.M.MMMMM.M.M.M
   :
   :
   :
@@ -885,7 +885,7 @@ frame 0026 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0027 at 100x30
   header df828d63
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -905,9 +905,9 @@ frame 0027 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :.......................................PPPPPPPPPPPPPPPPPPPPP
+  :.......................................P.P.P.P.PPPPP.P.P.P.P
   :
   :
   :
@@ -919,7 +919,7 @@ frame 0027 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0028 at 100x30
   header f94d4cad
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -939,9 +939,9 @@ frame 0028 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :.......................................PPPPPPPPPPPPPPPPPPPPP
+  :.......................................P.P.P.P.PPPPP.P.P.P.P
   :
   :
   :
@@ -953,7 +953,7 @@ frame 0028 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0029 at 100x30
   header fd4c6a33
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -973,9 +973,9 @@ frame 0029 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :.......................................PPPPPPPPPPPPPPPPPPPPP
+  :.......................................P.P.P.P.PPPPP.P.P.P.P
   :
   :
   :
@@ -987,7 +987,7 @@ frame 0029 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0030 at 100x30
   header f0374c0d
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1007,9 +1007,9 @@ frame 0030 at 100x30
   |
   |                     j/k move      q quit
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :...................ooooppppppppppppppppqqqqqqsssssssssssssqqqqqqqqqqqqqqqqqqqsssss
+  :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :.......................................PPPPPPPPPPPPPPPPPPPPP
+  :.......................................P.P.P.P.PPPPP.P.P.P.P
   :
   :
   :
@@ -1021,7 +1021,7 @@ frame 0030 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0031 at 100x30
   header 48fe7cec
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1041,9 +1041,9 @@ frame 0031 at 100x30
   |
   |                     j/k move      q quit
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :...................ooooppppppppppppppppqqqqqqsssssssssssssqqqqqqqqqqqqqqqqqqqsssss
+  :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :.......................................PPPPPPPPPPPPPPPPPPPPP
+  :.......................................P.P.P.P.PPPPP.P.P.P.P
   :
   :
   :
@@ -1055,7 +1055,7 @@ frame 0031 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0032 at 100x30
   header 821fce66
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1075,9 +1075,9 @@ frame 0032 at 100x30
   |
   |                     j/k move      q quit
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :...................ooooppppppppppppppppqqqqqqsssssssssssssqqqqqqqqqqqqqqqqqqqsssss
+  :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :.......................................PPPPPPPPPPPPPPPPPPPPP
+  :.......................................P.P.P.P.PPPPP.P.P.P.P
   :
   :
   :
@@ -1089,7 +1089,7 @@ frame 0032 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0033 at 100x30
   header 306525c5
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1109,9 +1109,9 @@ frame 0033 at 100x30
   |
   |                     j/k move      q quit
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :...................iiiijjjjjjjjjjjjjjjjkkkkkkmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkmmmmm
+  :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :.......................................PPPPPPPPPPPPPPPPPPPPP
+  :.......................................P.P.P.P.PPPPP.P.P.P.P
   :
   :
   :
@@ -1123,7 +1123,7 @@ frame 0033 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0034 at 100x30
   header b0c7f364
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1143,9 +1143,9 @@ frame 0034 at 100x30
   |
   |                     j/k move      q quit
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :...................iiiijjjjjjjjjjjjjjjjkkkkkkmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkmmmmm
+  :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :.......................................PPPPPPPPPPPPPPPPPPPPP
+  :.......................................P.P.P.P.PPPPP.P.P.P.P
   :
   :
   :
@@ -1157,7 +1157,7 @@ frame 0034 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0035 at 100x30
   header 6317c1ba
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1177,9 +1177,9 @@ frame 0035 at 100x30
   |
   |                     j/k move      q quit
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :...................iiiijjjjjjjjjjjjjjjjkkkkkkmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkmmmmm
+  :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :.......................................YYYYYYYYYYYYYYYYYYYYYY
+  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
   :
   :
   :
@@ -1191,7 +1191,7 @@ frame 0035 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0036 at 100x30
   header 3bfc828c
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1211,9 +1211,9 @@ frame 0036 at 100x30
   |
   |                     j/k move      q quit
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :...................iiiijjjjjjjjjjjjjjjjkkkkkkmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkmmmmm
+  :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :.......................................YYYYYYYYYYYYYYYYYYYYYY
+  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
   :
   :
   :
@@ -1225,7 +1225,7 @@ frame 0036 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0037 at 100x30
   header 43b2bf11
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1245,9 +1245,9 @@ frame 0037 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................YYYYYYYYYYYYYYYYYYYYYY
+  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
   :
   :
   :
@@ -1259,7 +1259,7 @@ frame 0037 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0038 at 100x30
   header 046006d8
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1279,9 +1279,9 @@ frame 0038 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................YYYYYYYYYYYYYYYYYYYYYY
+  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
   :
   :
   :
@@ -1293,7 +1293,7 @@ frame 0038 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0039 at 100x30
   header 2c7acb03
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1313,9 +1313,9 @@ frame 0039 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................YYYYYYYYYYYYYYYYYYYYYY
+  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
   :
   :
   :
@@ -1327,7 +1327,7 @@ frame 0039 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0040 at 100x30
   header 8410ecb6
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1347,9 +1347,9 @@ frame 0040 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................YYYYYYYYYYYYYYYYYYYYYY
+  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
   :
   :
   :
@@ -1361,7 +1361,7 @@ frame 0040 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0041 at 100x30
   header a4270a0b
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1381,9 +1381,9 @@ frame 0041 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................YYYYYYYYYYYYYYYYYYYYYY
+  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
   :
   :
   :
@@ -1395,7 +1395,7 @@ frame 0041 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0042 at 100x30
   header d7acb8da
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1415,9 +1415,9 @@ frame 0042 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................YYYYYYYYYYYYYYYYYYYYYY
+  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
   :
   :
   :
@@ -1429,7 +1429,7 @@ frame 0042 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0043 at 100x30
   header b00fa3e2
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1449,7 +1449,7 @@ frame 0043 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
@@ -1463,7 +1463,7 @@ frame 0043 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0044 at 100x30
   header 25b6717a
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1483,7 +1483,7 @@ frame 0044 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
@@ -1497,7 +1497,7 @@ frame 0044 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0045 at 100x30
   header b8d0d3fb
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1517,7 +1517,7 @@ frame 0045 at 100x30
   |
   |                     j/k move      q quit
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :...................bbbbccccccccccccccccddddddfffffffffffffdddddddddddddddddddfffff
+  :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
@@ -1531,7 +1531,7 @@ frame 0045 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0046 at 100x30
   header 7cb5beeb
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1551,7 +1551,7 @@ frame 0046 at 100x30
   |
   |                     j/k move      q quit
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :...................iiiijjjjjjjjjjjjjjjjkkkkkkmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkmmmmm
+  :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
@@ -1565,7 +1565,7 @@ frame 0046 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0047 at 100x30
   header e41cc2f8
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1585,7 +1585,7 @@ frame 0047 at 100x30
   |
   |                     j/k move      q quit
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :...................iiiijjjjjjjjjjjjjjjjkkkkkkmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkmmmmm
+  :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
@@ -1599,7 +1599,7 @@ frame 0047 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0048 at 100x30
   header d596bd16
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1619,7 +1619,7 @@ frame 0048 at 100x30
   |
   |                     j/k move      q quit
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :...................iiiijjjjjjjjjjjjjjjjkkkkkkmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkmmmmm
+  :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
@@ -1633,7 +1633,7 @@ frame 0048 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0049 at 100x30
   header 8405b347
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1653,7 +1653,7 @@ frame 0049 at 100x30
   |
   |                     j/k move      q quit
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :...................iiiijjjjjjjjjjjjjjjjkkkkkkmmmmmmmmmmmmmkkkkkkkkkkkkkkkkkkkmmmmm
+  :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
@@ -1667,7 +1667,7 @@ frame 0049 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0050 at 100x30
   header 6972f3c5
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1687,7 +1687,7 @@ frame 0050 at 100x30
   |
   |                     j/k move      q quit
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :...................ooooppppppppppppppppqqqqqqsssssssssssssqqqqqqqqqqqqqqqqqqqsssss
+  :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
@@ -1701,7 +1701,7 @@ frame 0050 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0051 at 100x30
   header 80f49b90
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1721,7 +1721,7 @@ frame 0051 at 100x30
   |
   |                     j/k move      q quit
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :...................ooooppppppppppppppppqqqqqqsssssssssssssqqqqqqqqqqqqqqqqqqqsssss
+  :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
@@ -1735,7 +1735,7 @@ frame 0051 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0052 at 100x30
   header 55e4dfe7
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1755,7 +1755,7 @@ frame 0052 at 100x30
   |
   |                     j/k move      q quit
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :...................ooooppppppppppppppppqqqqqqsssssssssssssqqqqqqqqqqqqqqqqqqqsssss
+  :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
@@ -1769,7 +1769,7 @@ frame 0052 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0053 at 100x30
   header 2de62d32
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1789,7 +1789,7 @@ frame 0053 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :
   :
@@ -1803,7 +1803,7 @@ frame 0053 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0054 at 100x30
   header c00c5209
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1823,7 +1823,7 @@ frame 0054 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :
   :
@@ -1837,7 +1837,7 @@ frame 0054 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 frame 0055 at 100x30
   header 1fb5c4e7
   |                   ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -1857,7 +1857,7 @@ frame 0055 at 100x30
   |
   |                     j/k move      q quit
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :...................wwwwxxxxxxxxxxxxxxxxyyyyyyzzzzzzzzzzzzzyyyyyyyyyyyyyyyyyyyzzzzz
+  :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :
   :
@@ -1871,7 +1871,7 @@ frame 0055 at 100x30
   :
   :
   :
-  :.....................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.....................ggg.gggg......g.gggg
 legend
 a = fg Rgb(46, 20, 26), bg Default, []
 b = fg Default, bg Rgb(46, 20, 26), []

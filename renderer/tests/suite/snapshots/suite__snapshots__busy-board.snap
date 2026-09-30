@@ -31,31 +31,31 @@ frame 0001 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddddddddddddddddddddddddeeeeffeeeeeeeeeefffffffffffffffffffffffffffffffffffffffgggg
-  :..........cccccchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
+  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0002 at 120x40
   header ededf082
   |
@@ -85,31 +85,31 @@ frame 0002 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddddddddddddddddddddddddeeeeffeeeeeeeeeefffffffffffffffffffffffffffffffffffffffgggg
-  :..........cccccchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
+  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0003 at 120x40
   header 9be72d1b
   |
@@ -139,31 +139,31 @@ frame 0003 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddddddddddddddddddddddddeeeeffeeeeeeeeeefffffffffffffffffffffffffffffffffffffffgggg
-  :..........cccccchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
+  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0004 at 120x40
   header 4f9c585c
   |
@@ -193,31 +193,31 @@ frame 0004 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddddddddddddddddddddddddeeeeffeeeeeeeeeefffffffffffffffffffffffffffffffffffffffgggg
-  :..........cccccchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
+  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0005 at 120x40
   header 1fd334dd
   |
@@ -247,31 +247,31 @@ frame 0005 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddddddddddddddddddddddddeeeeffeeeeeeeeeefffffffffffffffffffffffffffffffffffffffgggg
-  :..........cccccchhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
+  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
   :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0006 at 120x40
   header 0edfbd24
   |
@@ -301,31 +301,31 @@ frame 0006 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..........ttttuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuvvvvwwvvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxx
-  :..........ttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+  :..........ttttuuuuuuuuuuuuuuuuuttttttttttttttttttttttvtvtwtvtttttttttwwwwwwtwwtwwwwtwtwwwwttttttttttttttttttxxtt
+  :..........ttttttyyyyyyyyytyyyytyyyyttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0007 at 120x40
   header e3cf3023
   |
@@ -355,31 +355,31 @@ frame 0007 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..........ttttuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuvvvvwwvvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxx
-  :..........ttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+  :..........ttttuuuuuuuuuuuuuuuuuttttttttttttttttttttttvtvtwtvtttttttttwwwwwwtwwtwwwwtwtwwwwttttttttttttttttttxxtt
+  :..........ttttttyyyyyyyyytyyyytyyyyttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0008 at 120x40
   header 3d2d36ab
   |
@@ -409,31 +409,31 @@ frame 0008 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..........ttttuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuvvvvwwvvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxx
-  :..........ttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+  :..........ttttuuuuuuuuuuuuuuuuuttttttttttttttttttttttvtvtwtvtttttttttwwwwwwtwwtwwwwtwtwwwwttttttttttttttttttxxtt
+  :..........ttttttyyyyyyyyytyyyytyyyyttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0009 at 120x40
   header 5dbad92e
   |
@@ -463,31 +463,31 @@ frame 0009 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..........ttttuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuvvvvwwvvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwxxxx
-  :..........ttttttyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+  :..........ttttuuuuuuuuuuuuuuuuuttttttttttttttttttttttvtvtwtvtttttttttwwwwwwtwwtwwwwtwtwwwwttttttttttttttttttxxtt
+  :..........ttttttyyyyyyyyytyyyytyyyyttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
   :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0010 at 120x40
   header 1c6cc3e6
   |
@@ -517,31 +517,31 @@ frame 0010 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..........AAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCDDCCCCCCCCCCDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDEEEE
-  :..........AAAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+  :..........AAAABBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAAAACACADACAAAAAAAAADDDDDDADDADDDDADADDDDAAAAAAAAAAAAAAAAAAEEAA
+  :..........AAAAAAFFFFFFFFFAFFFFAFFFFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0011 at 120x40
   header b0e33ac1
   |
@@ -571,31 +571,31 @@ frame 0011 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..........AAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCDDCCCCCCCCCCDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDEEEE
-  :..........AAAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+  :..........AAAABBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAAAACACADACAAAAAAAAADDDDDDADDADDDDADADDDDAAAAAAAAAAAAAAAAAAEEAA
+  :..........AAAAAAFFFFFFFFFAFFFFAFFFFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 frame 0012 at 120x40
   header 2c663ac5
   |
@@ -625,31 +625,31 @@ frame 0012 at 120x40
   |
   |            j/k move      c cancel      q quit
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaa
+  :............a.a.a.a.a.a.a.a.a.a.a.a
   :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..........AAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCDDCCCCCCCCCCDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDEEEE
-  :..........AAAAAAFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+  :..........AAAABBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAAAACACADACAAAAAAAAADDDDDDADDADDDDADADDDDAAAAAAAAAAAAAAAAAAEEAA
+  :..........AAAAAAFFFFFFFFFAFFFFAFFFFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
   :
   :
-  :............aaaaaaaaaaaaaaaaaaaaaaaaakkkkkkkkkkkkkkkkkkkkkkkkk
+  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillmmjjjjjjjjjjjjmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmjjj
+  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
   :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiillllnnllllllllllnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnjjj
-  :
-  :
-  :............aaaaaaaaaaa
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiilllloooooooooooooooooooooooooooooooooooooooooooooooooojjj
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrrr
-  :
-  :..............pppppppppppppppppppppppppppppppppppppppqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqrr
+  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :............a.a.a.a.a.a
+  :
+  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
+  :
+  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
+  :
+  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
+  :
+  :
+  :............jjj.jjjj......j.jjjjjj......j.jjjj
 legend
 a = fg Rgb(127, 122, 150), bg Default, []
 b = fg Rgb(46, 20, 26), bg Default, []

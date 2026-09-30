@@ -21,7 +21,7 @@ frame 0001 at 80x24
   :
   :
   :
-  :aaaaaaaa
+  :..a.aaaa
   :
   :
 frame 0002 at 80x24
@@ -43,7 +43,7 @@ frame 0002 at 80x24
   :
   :
   :
-  :aaaaaaaa
+  :..a.aaaa
   :
   :
 frame 0003 at 80x24
@@ -65,7 +65,7 @@ frame 0003 at 80x24
   :
   :
   :
-  :aaaaaaaa
+  :..a.aaaa
   :
   :
 frame 0004 at 80x24
@@ -87,7 +87,7 @@ frame 0004 at 80x24
   :
   :
   :
-  :aaaaaaaa
+  :..a.aaaa
   :
   :
 frame 0005 at 80x24
@@ -109,7 +109,7 @@ frame 0005 at 80x24
   :
   :
   :
-  :aaaaaaaa
+  :..a.aaaa
   :
   :
 frame 0006 at 80x24
@@ -131,7 +131,7 @@ frame 0006 at 80x24
   :
   :
   :
-  :aaaaaaaa
+  :..a.aaaa
   :
   :
 frame 0007 at 80x24
@@ -153,7 +153,7 @@ frame 0007 at 80x24
   :
   :
   :
-  :aaaaaaaa
+  :..a.aaaa
   :
   :
 frame 0008 at 80x24
@@ -175,7 +175,7 @@ frame 0008 at 80x24
   :
   :
   :
-  :aaaaaaaa
+  :..a.aaaa
   :
   :
 legend

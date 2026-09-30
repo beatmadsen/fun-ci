@@ -31,9 +31,9 @@ frame 0001 at 120x40
   |
   |                          j/k move      q quit
   :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :........................bbbbcccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddeeeee
+  :........................bbbbccccbbbbbbbbbbbbbbbbbbbbbbbdbdbdbdbbbbbbbbbbbbddddddbbbbbbbbbbbbbeeebb
   :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :............................ffffffffffffgggggggffffffffffggggggggggggggggggghhhhhh
+  :............................fffffffffff.gg.....fffffffff.ggg.....g.gggg.....hhhhhh
   :
   :
   :
@@ -55,7 +55,7 @@ frame 0001 at 120x40
   :
   :
   :
-  :..........................jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..........................jjj.jjjj......j.jjjj
 frame 0002 at 120x40
   header d14c0c5e
   |                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -85,9 +85,9 @@ frame 0002 at 120x40
   |
   |                          j/k move      q quit
   :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :........................bbbbcccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddeeeee
+  :........................bbbbccccbbbbbbbbbbbbbbbbbbbbbbbdbdbdbdbbbbbbbbbbbbddddddbbbbbbbbbbbbbeeebb
   :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :............................ffffffffffffgggggggffffffffffggggggggggggggggggghhhhhh
+  :............................fffffffffff.gg.....fffffffff.ggg.....g.gggg.....hhhhhh
   :
   :
   :
@@ -109,7 +109,7 @@ frame 0002 at 120x40
   :
   :
   :
-  :..........................jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..........................jjj.jjjj......j.jjjj
 frame 0003 at 120x40
   header eabd8959
   |                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
@@ -139,9 +139,9 @@ frame 0003 at 120x40
   |
   |                          j/k move      q quit
   :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :........................bbbbcccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddeeeee
+  :........................bbbbccccbbbbbbbbbbbbbbbbbbbbbbbdbdbdbdbbbbbbbbbbbbddddddbbbbbbbbbbbbbeeebb
   :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :............................ffffffffffffgggggggffffffffffggggggggggggggggggghhhhhh
+  :............................fffffffffff.gg.....fffffffff.ggg.....g.gggg.....hhhhhh
   :
   :
   :
@@ -163,7 +163,7 @@ frame 0003 at 120x40
   :
   :
   :
-  :..........................jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..........................jjj.jjjj......j.jjjj
 legend
 a = fg Rgb(46, 20, 26), bg Default, []
 b = fg Default, bg Rgb(46, 20, 26), []

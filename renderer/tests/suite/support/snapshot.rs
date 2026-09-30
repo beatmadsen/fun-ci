@@ -1,7 +1,10 @@
 //! A scenario's frames as text a reviewer can read in a diff: each frame's
 //! characters, then the same grid with a letter per cell for its style (`.`
 //! for the terminal's default), and at the end a legend for the letters.
-//! Trailing blanks in the default style are left off. The header's rows, a
+//! Trailing blanks in the default style are left off. A blank shows only its
+//! background and any underline or inverse, so the rest of its style is not
+//! recorded: how a frame happens to write its blanks is no change to review.
+//! The header's rows, a
 //! picture in 24-bit colour, are one digest of their cells per frame instead:
 //! the frames themselves are reviewed as headless PNGs.
 
@@ -20,7 +23,7 @@ struct Styles(Vec<Style>);
 
 impl Styles {
     fn letter(&mut self, cell: &Cell) -> char {
-        let style = (cell.fg, cell.bg, cell.attrs.clone());
+        let style = visible(cell);
         if style == (Colour::Default, Colour::Default, Vec::new()) {
             return '.';
         }
@@ -35,6 +38,15 @@ impl Styles {
         let line = |(letter, (fg, bg, attrs)): (char, &Style)| format!("{letter} = fg {fg:?}, bg {bg:?}, {attrs:?}\n");
         LETTERS.chars().zip(&self.0).map(line).collect()
     }
+}
+
+/// The style a cell shows: a blank's text colour, weight and slant show nothing.
+fn visible(cell: &Cell) -> Style {
+    if !cell.text.trim().is_empty() {
+        return (cell.fg, cell.bg, cell.attrs.clone());
+    }
+    let seen = cell.attrs.iter().copied().filter(|attr| matches!(*attr, "underline" | "inverse")).collect();
+    (Colour::Default, cell.bg, seen)
 }
 
 /// `frames` as snapshot text.
