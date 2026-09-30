@@ -256,10 +256,14 @@ branches sit under the project's name, one row per branch:
   failed, amber for timed out, blue for running, lilac for a conflict,
   violet-greys for names and labels. No two states share a hue.
 - The marks, the words and the age follow the longest branch name, so each row
-  reads as one phrase and the block is only as wide as what it holds. Nothing
-  wraps, and nothing that says what happened is cut: as the terminal
-  narrows, the gaps close, then the margins, and only then is a branch name cut
-  with `…`. It works from 60 columns wide up.
+  reads as one phrase and the block is only as wide as what it holds. A wider
+  terminal widens the table by up to 24 columns, a third of them to the
+  names, a third between the marks and the words and a third before the age;
+  past that the table sits in the middle, so a row never stretches beyond a
+  measure the eye takes in at once. Nothing wraps, and nothing that says what
+  happened is cut: as the terminal narrows, the gaps close, then the margins,
+  and only then is a branch name cut with `…`. It works from 60 columns wide
+  up.
 - On a short screen the table gives up, in this order: the passed rows fold
   into one line per project; the folded lines go, counted beside the keys
   (`2 passed not shown`); the blank lines between rows close up; the labels

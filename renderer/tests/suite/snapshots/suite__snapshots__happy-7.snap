@@ -4,10 +4,10 @@ expression: "render(& frames(\"happy-7\"))"
 ---
 frame 0001 at 120x40
   header f32b8ad8
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main               ✓ ✓ ✓ ✓    passed     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              feat/search 5m     fix/crash 15m     docs/readme 1h     3 more     passed
+  |                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                            main                       ✓ ✓ ✓ ✓            passed             now
+  |                        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                            feat/search 5m     fix/crash 15m     4 more     passed
   |
   |
   |
@@ -29,11 +29,11 @@ frame 0001 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbcccccccccccccccccccddddddddddddddddddddddeeeee
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..............ffffffffffffgggggggffffffffffggggggggffffffffffffgggggggggggggggggghhhhhh
+  |                          j/k move      q quit
+  :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........................bbbbcccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddeeeee
+  :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............................ffffffffffffgggggggffffffffffggggggggggggggggggghhhhhh
   :
   :
   :
@@ -55,13 +55,13 @@ frame 0001 at 120x40
   :
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..........................jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0002 at 120x40
   header d14c0c5e
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main               ✓ ✓ ✓ ✓    passed     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              feat/search 5m     fix/crash 15m     docs/readme 1h     3 more     passed
+  |                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                            main                       ✓ ✓ ✓ ✓            passed             now
+  |                        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                            feat/search 5m     fix/crash 15m     4 more     passed
   |
   |
   |
@@ -83,11 +83,11 @@ frame 0002 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbcccccccccccccccccccddddddddddddddddddddddeeeee
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..............ffffffffffffgggggggffffffffffggggggggffffffffffffgggggggggggggggggghhhhhh
+  |                          j/k move      q quit
+  :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........................bbbbcccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddeeeee
+  :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............................ffffffffffffgggggggffffffffffggggggggggggggggggghhhhhh
   :
   :
   :
@@ -109,13 +109,13 @@ frame 0002 at 120x40
   :
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..........................jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0003 at 120x40
   header eabd8959
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main               ✓ ✓ ✓ ✓    passed     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              feat/search 5m     fix/crash 15m     docs/readme 1h     3 more     passed
+  |                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                            main                       ✓ ✓ ✓ ✓            passed             now
+  |                        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                            feat/search 5m     fix/crash 15m     4 more     passed
   |
   |
   |
@@ -137,11 +137,11 @@ frame 0003 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbcccccccccccccccccccddddddddddddddddddddddeeeee
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..............ffffffffffffgggggggffffffffffggggggggffffffffffffgggggggggggggggggghhhhhh
+  |                          j/k move      q quit
+  :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........................bbbbcccccccccccccccccccccccccccddddddddddddddddddddddddddddddddddddddeeeee
+  :........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............................ffffffffffffgggggggffffffffffggggggggggggggggggghhhhhh
   :
   :
   :
@@ -163,7 +163,7 @@ frame 0003 at 120x40
   :
   :
   :
-  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :..........................jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 legend
 a = fg Rgb(46, 20, 26), bg Default, []
 b = fg Default, bg Rgb(46, 20, 26), []

@@ -4,9 +4,9 @@ expression: "render(& frames(\"resize-mid-animation\"))"
 ---
 frame 0001 at 80x30
   header 6b696585
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠙ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠙ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -20,9 +20,9 @@ frame 0001 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :......bbbbccccccccddddeefffffeeeeeeeeeeeeeeeeeeeeeefffff
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......bbbbccccccccccccccddddeefffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
   :
@@ -38,9 +38,9 @@ frame 0001 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0002 at 80x30
   header df254129
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠹ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠹ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -54,9 +54,9 @@ frame 0002 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :......bbbbccccccccddddeefffffeeeeeeeeeeeeeeeeeeeeeefffff
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......bbbbccccccccccccccddddeefffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
   :
@@ -72,9 +72,9 @@ frame 0002 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0003 at 80x30
   header 41536c44
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠸ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠸ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -88,9 +88,9 @@ frame 0003 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :......bbbbccccccccddddeefffffeeeeeeeeeeeeeeeeeeeeeefffff
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......bbbbccccccccccccccddddeefffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
   :
@@ -106,9 +106,9 @@ frame 0003 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0004 at 80x30
   header 848f2f79
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠼ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠼ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -122,9 +122,9 @@ frame 0004 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :......bbbbccccccccddddeefffffeeeeeeeeeeeeeeeeeeeeeefffff
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......bbbbccccccccccccccddddeefffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
   :
@@ -140,9 +140,9 @@ frame 0004 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0005 at 80x30
   header 78dc4295
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠴ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠴ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -156,9 +156,9 @@ frame 0005 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :......bbbbccccccccddddeefffffeeeeeeeeeeeeeeeeeeeeeefffff
-  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :......bbbbccccccccccccccddddeefffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefffff
+  :......aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
   :
@@ -174,9 +174,9 @@ frame 0005 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0006 at 80x30
   header 24ec4eca
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠦ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠦ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -190,9 +190,9 @@ frame 0006 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :......iiiijjjjjjjjkkkkllmmmmmllllllllllllllllllllllmmmmm
-  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :......iiiijjjjjjjjjjjjjjkkkkllmmmmmmmmmmmllllllllllllllllllllllllllllllmmmmm
+  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -208,9 +208,9 @@ frame 0006 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0007 at 80x30
   header d1db05a8
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠧ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠧ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -224,9 +224,9 @@ frame 0007 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :......iiiijjjjjjjjkkkkllmmmmmllllllllllllllllllllllmmmmm
-  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :......iiiijjjjjjjjjjjjjjkkkkllmmmmmmmmmmmllllllllllllllllllllllllllllllmmmmm
+  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -242,9 +242,9 @@ frame 0007 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0008 at 80x30
   header 2d604919
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠇ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠇ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -258,9 +258,9 @@ frame 0008 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :......iiiijjjjjjjjkkkkllmmmmmllllllllllllllllllllllmmmmm
-  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :......iiiijjjjjjjjjjjjjjkkkkllmmmmmmmmmmmllllllllllllllllllllllllllllllmmmmm
+  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -276,9 +276,9 @@ frame 0008 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0009 at 80x30
   header df4514df
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠏ ·    running fast · 2s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠏ ·          running fast · 2s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -292,9 +292,9 @@ frame 0009 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :......iiiijjjjjjjjkkkkllmmmmmllllllllllllllllllllllmmmmm
-  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :......iiiijjjjjjjjjjjjjjkkkkllmmmmmmmmmmmllllllllllllllllllllllllllllllmmmmm
+  :......hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -310,9 +310,9 @@ frame 0009 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0010 at 80x30
   header 339fc508
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ⠋ ·    running fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ⠋ ·          running fast · 3s             now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -326,9 +326,9 @@ frame 0010 at 80x30
   |
   |
   |        j/k move      c cancel      q quit
-  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :......ooooppppppppqqqqrrsssssrrrrrrrrrrrrrrrrrrrrrrsssss
-  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :......ooooppppppppppppppqqqqrrsssssssssssrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrsssss
+  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
   :
@@ -344,9 +344,9 @@ frame 0010 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0011 at 80x30
   header d7c18cd6
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -360,9 +360,9 @@ frame 0011 at 80x30
   |
   |
   |        j/k move      q quit
-  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :......ooooppppppppqqqqtusssssuuuuuuuuuuuuuuuuuuuuuuuusssss
-  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :......ooooppppppppppppppqqqqtusssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
   :
@@ -378,9 +378,9 @@ frame 0011 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0012 at 80x30
   header 6c0fbe65
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -394,9 +394,9 @@ frame 0012 at 80x30
   |
   |
   |        j/k move      q quit
-  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :......ooooppppppppqqqqvusssssuuuuuuuuuuuuuuuuuuuuuuuusssss
-  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :......ooooppppppppppppppqqqqvusssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  :......nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
   :
@@ -412,9 +412,9 @@ frame 0012 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0013 at 80x30
   header af79705f
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -428,9 +428,9 @@ frame 0013 at 80x30
   |
   |
   |        j/k move      q quit
-  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :......xxxxyyyyyyyyzzzzABCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :......xxxxyyyyyyyyyyyyyyzzzzABCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :
   :
   :
@@ -446,9 +446,9 @@ frame 0013 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0014 at 80x30
   header 6dd05436
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -462,9 +462,9 @@ frame 0014 at 80x30
   |
   |
   |        j/k move      q quit
-  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :......xxxxyyyyyyyyzzzzDBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :......xxxxyyyyyyyyyyyyyyzzzzDBCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :
   :
   :
@@ -480,9 +480,9 @@ frame 0014 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0015 at 80x30
   header 57a3a42f
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -496,9 +496,9 @@ frame 0015 at 80x30
   |
   |
   |        j/k move      q quit
-  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :......xxxxyyyyyyyyzzzzEBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :......xxxxyyyyyyyyyyyyyyzzzzEBCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :
   :
   :
@@ -514,9 +514,9 @@ frame 0015 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0016 at 80x30
   header 8136edd9
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -530,9 +530,9 @@ frame 0016 at 80x30
   |
   |
   |        j/k move      q quit
-  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :......xxxxyyyyyyyyzzzzFBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :......xxxxyyyyyyyyyyyyyyzzzzFBCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :......wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :
   :
   :
@@ -548,9 +548,9 @@ frame 0016 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0017 at 80x30
   header 47ad910c
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -564,9 +564,9 @@ frame 0017 at 80x30
   |
   |
   |        j/k move      q quit
-  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :......HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :......HHHHIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :
   :
   :
@@ -582,9 +582,9 @@ frame 0017 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0018 at 80x30
   header d75edd3a
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -598,9 +598,9 @@ frame 0018 at 80x30
   |
   |
   |        j/k move      q quit
-  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :......HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :......HHHHIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :
   :
   :
@@ -616,9 +616,9 @@ frame 0018 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0019 at 80x30
   header fa8a1f3c
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                              >>> FAST FAILED <<<
   |
   |
@@ -632,9 +632,9 @@ frame 0019 at 80x30
   |
   |
   |        j/k move      q quit
-  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :......HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :......HHHHIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :..............................MMMMMMMMMMMMMMMMMMM
   :
   :
@@ -650,9 +650,9 @@ frame 0019 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0020 at 80x30
   header 7e835637
-  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |          main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |      ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |          main          ✓ ✓ ◆ ·          failed in fast · 3s           now
+  |      ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                              >>> FAST FAILED <<<
   |
   |
@@ -666,9 +666,9 @@ frame 0020 at 80x30
   |
   |
   |        j/k move      q quit
-  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :......HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :......HHHHIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :......GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :..............................MMMMMMMMMMMMMMMMMMM
   :
   :
@@ -684,9 +684,9 @@ frame 0020 at 80x30
   :........gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0021 at 120x40
   header 8c68e974
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                  >>> FAST FAILED <<<
   |
   |
@@ -709,10 +709,10 @@ frame 0021 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :..........HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  |                         j/k move      q quit
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :.......................HHHHIIIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :..................................................MMMMMMMMMMMMMMMMMMM
   :
   :
@@ -735,12 +735,12 @@ frame 0021 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0022 at 120x40
   header 4b9d684e
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                  >>> FAST FAILED <<<
   |
   |
@@ -763,10 +763,10 @@ frame 0022 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :..........HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  |                         j/k move      q quit
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :.......................HHHHIIIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :..................................................MMMMMMMMMMMMMMMMMMM
   :
   :
@@ -789,12 +789,12 @@ frame 0022 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0023 at 120x40
   header 738efa74
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                  >>> FAST FAILED <<<
   |
   |
@@ -817,10 +817,10 @@ frame 0023 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :..........HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  |                         j/k move      q quit
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :.......................HHHHIIIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :..................................................MMMMMMMMMMMMMMMMMMM
   :
   :
@@ -843,12 +843,12 @@ frame 0023 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0024 at 120x40
   header 50f19c5b
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                  >>> FAST FAILED <<<
   |
   |
@@ -871,10 +871,10 @@ frame 0024 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :..........HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  |                         j/k move      q quit
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :.......................HHHHIIIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :..................................................MMMMMMMMMMMMMMMMMMM
   :
   :
@@ -897,12 +897,12 @@ frame 0024 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0025 at 120x40
   header 68dae91e
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                  >>> FAST FAILED <<<
   |
   |
@@ -925,10 +925,10 @@ frame 0025 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :..........HHHHIIIIIIIIJJJJKKLLLLLKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
-  :..........GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  |                         j/k move      q quit
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+  :.......................HHHHIIIIIIIIIIIIIIIIJJJJKKLLLLLLLLLLLLLKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKLLLLL
+  :.......................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :..................................................MMMMMMMMMMMMMMMMMMM
   :
   :
@@ -951,12 +951,12 @@ frame 0025 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0026 at 120x40
   header b3994bbc
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                  >>> FAST FAILED <<<
   |
   |
@@ -979,10 +979,10 @@ frame 0026 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :..........xxxxyyyyyyyyzzzzBBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  |                         j/k move      q quit
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :.......................xxxxyyyyyyyyyyyyyyyyzzzzBBCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :..................................................MMMMMMMMMMMMMMMMMMM
   :
   :
@@ -1005,12 +1005,12 @@ frame 0026 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0027 at 120x40
   header f296fb1a
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                   >> fast failed <<
   |
   |
@@ -1033,10 +1033,10 @@ frame 0027 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :..........xxxxyyyyyyyyzzzzBBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  |                         j/k move      q quit
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :.......................xxxxyyyyyyyyyyyyyyyyzzzzBBCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :...................................................NNNNNNNNNNNNNNNNN
   :
   :
@@ -1059,12 +1059,12 @@ frame 0027 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0028 at 120x40
   header 54b03916
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                   >> fast failed <<
   |
   |
@@ -1087,10 +1087,10 @@ frame 0028 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :..........xxxxyyyyyyyyzzzzBBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  |                         j/k move      q quit
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :.......................xxxxyyyyyyyyyyyyyyyyzzzzBBCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :...................................................NNNNNNNNNNNNNNNNN
   :
   :
@@ -1113,12 +1113,12 @@ frame 0028 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0029 at 120x40
   header 7a8ab45e
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                   >> fast failed <<
   |
   |
@@ -1141,10 +1141,10 @@ frame 0029 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :..........xxxxyyyyyyyyzzzzBBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  |                         j/k move      q quit
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :.......................xxxxyyyyyyyyyyyyyyyyzzzzBBCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :...................................................NNNNNNNNNNNNNNNNN
   :
   :
@@ -1167,12 +1167,12 @@ frame 0029 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0030 at 120x40
   header 5eb49289
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                   >> fast failed <<
   |
   |
@@ -1195,10 +1195,10 @@ frame 0030 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :..........ooooppppppppqqqquusssssuuuuuuuuuuuuuuuuuuuuuuuusssss
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  |                         j/k move      q quit
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :.......................ooooppppppppppppppppqqqquusssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :...................................................NNNNNNNNNNNNNNNNN
   :
   :
@@ -1221,12 +1221,12 @@ frame 0030 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0031 at 120x40
   header f2659b30
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                   >> fast failed <<
   |
   |
@@ -1249,10 +1249,10 @@ frame 0031 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :..........ooooppppppppqqqquusssssuuuuuuuuuuuuuuuuuuuuuuuusssss
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  |                         j/k move      q quit
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :.......................ooooppppppppppppppppqqqquusssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :...................................................NNNNNNNNNNNNNNNNN
   :
   :
@@ -1275,12 +1275,12 @@ frame 0031 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0032 at 120x40
   header 489de145
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                   >> fast failed <<
   |
   |
@@ -1303,10 +1303,10 @@ frame 0032 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :..........ooooppppppppqqqquusssssuuuuuuuuuuuuuuuuuuuuuuuusssss
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  |                         j/k move      q quit
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :.......................ooooppppppppppppppppqqqquusssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :...................................................NNNNNNNNNNNNNNNNN
   :
   :
@@ -1329,12 +1329,12 @@ frame 0032 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0033 at 120x40
   header 31509850
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                   >> fast failed <<
   |
   |
@@ -1357,10 +1357,10 @@ frame 0033 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..........iiiijjjjjjjjkkkkOOmmmmmOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  |                         j/k move      q quit
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :.......................iiiijjjjjjjjjjjjjjjjkkkkOOmmmmmmmmmmmmmOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :...................................................NNNNNNNNNNNNNNNNN
   :
   :
@@ -1383,12 +1383,12 @@ frame 0033 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0034 at 120x40
   header e97029a9
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                   >> fast failed <<
   |
   |
@@ -1411,10 +1411,10 @@ frame 0034 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..........iiiijjjjjjjjkkkkOOmmmmmOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  |                         j/k move      q quit
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :.......................iiiijjjjjjjjjjjjjjjjkkkkOOmmmmmmmmmmmmmOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :...................................................NNNNNNNNNNNNNNNNN
   :
   :
@@ -1437,12 +1437,12 @@ frame 0034 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0035 at 120x40
   header af6380c4
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                    > fast failed <
   |
   |
@@ -1465,10 +1465,10 @@ frame 0035 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..........iiiijjjjjjjjkkkkOOmmmmmOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  |                         j/k move      q quit
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :.......................iiiijjjjjjjjjjjjjjjjkkkkOOmmmmmmmmmmmmmOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :....................................................PPPPPPPPPPPPPPP
   :
   :
@@ -1491,12 +1491,12 @@ frame 0035 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0036 at 120x40
   header f1cc6dba
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                    > fast failed <
   |
   |
@@ -1519,10 +1519,10 @@ frame 0036 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..........iiiijjjjjjjjkkkkOOmmmmmOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  |                         j/k move      q quit
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :.......................iiiijjjjjjjjjjjjjjjjkkkkOOmmmmmmmmmmmmmOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :....................................................PPPPPPPPPPPPPPP
   :
   :
@@ -1545,12 +1545,12 @@ frame 0036 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0037 at 120x40
   header 94ccf453
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                    > fast failed <
   |
   |
@@ -1573,10 +1573,10 @@ frame 0037 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :....................................................PPPPPPPPPPPPPPP
   :
   :
@@ -1599,12 +1599,12 @@ frame 0037 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0038 at 120x40
   header 4096f3dc
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                    > fast failed <
   |
   |
@@ -1627,10 +1627,10 @@ frame 0038 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :....................................................PPPPPPPPPPPPPPP
   :
   :
@@ -1653,12 +1653,12 @@ frame 0038 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0039 at 120x40
   header 9c78f812
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                    > fast failed <
   |
   |
@@ -1681,10 +1681,10 @@ frame 0039 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :....................................................PPPPPPPPPPPPPPP
   :
   :
@@ -1707,12 +1707,12 @@ frame 0039 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0040 at 120x40
   header a87e9d0c
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                    > fast failed <
   |
   |
@@ -1735,10 +1735,10 @@ frame 0040 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :....................................................PPPPPPPPPPPPPPP
   :
   :
@@ -1761,12 +1761,12 @@ frame 0040 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0041 at 120x40
   header 59d937ef
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                    > fast failed <
   |
   |
@@ -1789,10 +1789,10 @@ frame 0041 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :....................................................PPPPPPPPPPPPPPP
   :
   :
@@ -1815,12 +1815,12 @@ frame 0041 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0042 at 120x40
   header a87aa022
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |                                                    > fast failed <
   |
   |
@@ -1843,10 +1843,10 @@ frame 0042 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :....................................................PPPPPPPPPPPPPPP
   :
   :
@@ -1869,12 +1869,12 @@ frame 0042 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0043 at 120x40
   header 83aaa07c
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -1897,10 +1897,10 @@ frame 0043 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
   :
@@ -1923,12 +1923,12 @@ frame 0043 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0044 at 120x40
   header 7e02528a
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -1951,10 +1951,10 @@ frame 0044 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
   :
@@ -1977,12 +1977,12 @@ frame 0044 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0045 at 120x40
   header 30cfeeed
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2005,10 +2005,10 @@ frame 0045 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :..........bbbbccccccccddddQQfffffQQQQQQQQQQQQQQQQQQQQQQQQfffff
-  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  |                         j/k move      q quit
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :.......................bbbbccccccccccccccccddddQQfffffffffffffQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQfffff
+  :.......................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :
   :
   :
@@ -2031,12 +2031,12 @@ frame 0045 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0046 at 120x40
   header 83100601
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2059,10 +2059,10 @@ frame 0046 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..........iiiijjjjjjjjkkkkOOmmmmmOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  |                         j/k move      q quit
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :.......................iiiijjjjjjjjjjjjjjjjkkkkOOmmmmmmmmmmmmmOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -2085,12 +2085,12 @@ frame 0046 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0047 at 120x40
   header 30cfeeed
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2113,10 +2113,10 @@ frame 0047 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..........iiiijjjjjjjjkkkkOOmmmmmOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  |                         j/k move      q quit
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :.......................iiiijjjjjjjjjjjjjjjjkkkkOOmmmmmmmmmmmmmOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -2139,12 +2139,12 @@ frame 0047 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0048 at 120x40
   header 7e02528a
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2167,10 +2167,10 @@ frame 0048 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..........iiiijjjjjjjjkkkkOOmmmmmOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  |                         j/k move      q quit
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :.......................iiiijjjjjjjjjjjjjjjjkkkkOOmmmmmmmmmmmmmOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -2193,12 +2193,12 @@ frame 0048 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0049 at 120x40
   header 83aaa07c
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2221,10 +2221,10 @@ frame 0049 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :..........iiiijjjjjjjjkkkkOOmmmmmOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
-  :..........hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  |                         j/k move      q quit
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  :.......................iiiijjjjjjjjjjjjjjjjkkkkOOmmmmmmmmmmmmmOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOmmmmm
+  :.......................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :
   :
   :
@@ -2247,12 +2247,12 @@ frame 0049 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0050 at 120x40
   header 05eb6f9d
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2275,10 +2275,10 @@ frame 0050 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :..........ooooppppppppqqqquusssssuuuuuuuuuuuuuuuuuuuuuuuusssss
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  |                         j/k move      q quit
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :.......................ooooppppppppppppppppqqqquusssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
   :
@@ -2301,12 +2301,12 @@ frame 0050 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0051 at 120x40
   header 037b9997
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2329,10 +2329,10 @@ frame 0051 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :..........ooooppppppppqqqquusssssuuuuuuuuuuuuuuuuuuuuuuuusssss
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  |                         j/k move      q quit
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :.......................ooooppppppppppppppppqqqquusssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
   :
@@ -2355,12 +2355,12 @@ frame 0051 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0052 at 120x40
   header 785f8aaf
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2383,10 +2383,10 @@ frame 0052 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :..........ooooppppppppqqqquusssssuuuuuuuuuuuuuuuuuuuuuuuusssss
-  :..........nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  |                         j/k move      q quit
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :.......................ooooppppppppppppppppqqqquusssssssssssssuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuusssss
+  :.......................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :
   :
   :
@@ -2409,12 +2409,12 @@ frame 0052 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0053 at 120x40
   header cabf8dde
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2437,10 +2437,10 @@ frame 0053 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :..........xxxxyyyyyyyyzzzzBBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  |                         j/k move      q quit
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :.......................xxxxyyyyyyyyyyyyyyyyzzzzBBCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :
   :
   :
@@ -2463,12 +2463,12 @@ frame 0053 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0054 at 120x40
   header 70ccbfc5
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2491,10 +2491,10 @@ frame 0054 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :..........xxxxyyyyyyyyzzzzBBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  |                         j/k move      q quit
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :.......................xxxxyyyyyyyyyyyyyyyyzzzzBBCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :
   :
   :
@@ -2517,12 +2517,12 @@ frame 0054 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 frame 0055 at 120x40
   header 79b0d06f
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              main    ✓ ✓ ◆ ·    failed in fast · 3s     now
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                           main            ✓ ✓ ◆ ·            failed in fast · 3s             now
+  |                       ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
   |
   |
   |
@@ -2545,10 +2545,10 @@ frame 0055 at 120x40
   |
   |
   |
-  |            j/k move      q quit
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-  :..........xxxxyyyyyyyyzzzzBBCCCCCBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
-  :..........wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  |                         j/k move      q quit
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :.......................xxxxyyyyyyyyyyyyyyyyzzzzBBCCCCCCCCCCCCCBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCC
+  :.......................wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
   :
   :
   :
@@ -2571,7 +2571,7 @@ frame 0055 at 120x40
   :
   :
   :
-  :............gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
+  :.........................gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 legend
 a = fg Rgb(46, 20, 26), bg Default, []
 b = fg Default, bg Rgb(46, 20, 26), []

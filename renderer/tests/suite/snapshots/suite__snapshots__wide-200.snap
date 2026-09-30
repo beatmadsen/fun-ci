@@ -5,28 +5,25 @@ expression: "render(& frames(\"wide-200\"))"
 frame 0001 at 200x50
   header 243af840
   |
-  |                  I N T E N T - R E C O R D
-  |                ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |                    fix/crash        ✓ ◆ · ·    failed in build · 0.9s       4m
-  |                ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |                    main             ✓ ✓ ✓ ✓    passed                       1d
+  |                                                          I N T E N T - R E C O R D
+  |                                                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                                                            fix/crash                ✓ ◆ · ·            failed in build · 0.9s               4m
+  |                                                        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                                                            main                     ✓ ✓ ✓ ✓            passed                               1d
   |
   |
-  |                  F U N - C I
+  |                                                          F U N - C I
   |
-  |                    main             ✓ ✓ ◇ ·    timed out in fast · 10s     25m
+  |                                                            main                     ✓ ✓ ◇ ·            timed out in fast · 10s             25m
   |
-  |                    feature/login    ✓ ✓ ⠙ ·    running fast · 5s           now
-  |
-  |
-  |                  A G E N T - T O M E
-  |
-  |                    main             ◌ ◌ ◌ ◌    scheduled                   now
-  |
-  |                    spike                       cancelled                    1h
+  |                                                            feature/login            ✓ ✓ ⠙ ·            running fast · 5s                   now
   |
   |
+  |                                                          A G E N T - T O M E
   |
+  |                                                            main                     ◌ ◌ ◌ ◌            scheduled                           now
+  |
+  |                                                            spike                                       cancelled                            1h
   |
   |
   |
@@ -39,32 +36,30 @@ frame 0001 at 200x50
   |
   |
   |
-  |                  j/k move      c cancel      q quit
+  |
+  |
+  |
+  |                                                          j/k move      c cancel      q quit
   :
-  :..................aaaaaaaaaaaaaaaaaaaaaaaaa
-  :................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :................ccccdddddddddddddddddeeffgggggggfffffffffffffffffffffffffffffgggg
-  :................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :....................hhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
-  :
-  :
-  :..................aaaaaaaaaaa
-  :
-  :....................kkkkkkkkkkkkkkkkkllllmmnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
-  :
-  :....................kkkkkkkkkkkkkkkkklllloonnnnnoooooooooooooooooooooooooooonnn
+  :..........................................................aaaaaaaaaaaaaaaaaaaaaaaaa
+  :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :........................................................ccccdddddddddddddddddddddddddeeffgggggggggggggggfffffffffffffffffffffffffffffffffffffgggg
+  :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :............................................................hhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
   :
   :
-  :..................aaaaaaaaaaaaaaaaaaa
+  :..........................................................aaaaaaaaaaa
   :
-  :....................kkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkkllllmmnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
   :
-  :....................nnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppnn
-  :
-  :
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkklllloonnnnnnnnnnnnnoooooooooooooooooooooooooooooooooooonnn
   :
   :
+  :..........................................................aaaaaaaaaaaaaaaaaaa
   :
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :............................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppppppppppnn
   :
   :
   :
@@ -75,32 +70,34 @@ frame 0001 at 200x50
   :
   :
   :
-  :..................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :
+  :
+  :
+  :
+  :..........................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0002 at 200x50
   header 8beb5269
   |
-  |                  I N T E N T - R E C O R D
-  |                ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |                    fix/crash        ✓ ◆ · ·    failed in build · 0.9s       4m
-  |                ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |                    main             ✓ ✓ ✓ ✓    passed                       1d
+  |                                                          I N T E N T - R E C O R D
+  |                                                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                                                            fix/crash                ✓ ◆ · ·            failed in build · 0.9s               4m
+  |                                                        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                                                            main                     ✓ ✓ ✓ ✓            passed                               1d
   |
   |
-  |                  F U N - C I
+  |                                                          F U N - C I
   |
-  |                    main             ✓ ✓ ◇ ·    timed out in fast · 10s     25m
+  |                                                            main                     ✓ ✓ ◇ ·            timed out in fast · 10s             25m
   |
-  |                    feature/login    ✓ ✓ ⠹ ·    running fast · 5s           now
-  |
-  |
-  |                  A G E N T - T O M E
-  |
-  |                    main             ◌ ◌ ◌ ◌    scheduled                   now
-  |
-  |                    spike                       cancelled                    1h
+  |                                                            feature/login            ✓ ✓ ⠹ ·            running fast · 5s                   now
   |
   |
+  |                                                          A G E N T - T O M E
   |
+  |                                                            main                     ◌ ◌ ◌ ◌            scheduled                           now
+  |
+  |                                                            spike                                       cancelled                            1h
   |
   |
   |
@@ -113,32 +110,30 @@ frame 0002 at 200x50
   |
   |
   |
-  |                  j/k move      c cancel      q quit
+  |
+  |
+  |
+  |                                                          j/k move      c cancel      q quit
   :
-  :..................aaaaaaaaaaaaaaaaaaaaaaaaa
-  :................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :................ccccdddddddddddddddddeeffgggggggfffffffffffffffffffffffffffffgggg
-  :................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :....................hhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
-  :
-  :
-  :..................aaaaaaaaaaa
-  :
-  :....................kkkkkkkkkkkkkkkkkllllmmnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
-  :
-  :....................kkkkkkkkkkkkkkkkklllloonnnnnoooooooooooooooooooooooooooonnn
+  :..........................................................aaaaaaaaaaaaaaaaaaaaaaaaa
+  :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :........................................................ccccdddddddddddddddddddddddddeeffgggggggggggggggfffffffffffffffffffffffffffffffffffffgggg
+  :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :............................................................hhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
   :
   :
-  :..................aaaaaaaaaaaaaaaaaaa
+  :..........................................................aaaaaaaaaaa
   :
-  :....................kkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkkllllmmnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
   :
-  :....................nnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppnn
-  :
-  :
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkklllloonnnnnnnnnnnnnoooooooooooooooooooooooooooooooooooonnn
   :
   :
+  :..........................................................aaaaaaaaaaaaaaaaaaa
   :
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :............................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppppppppppnn
   :
   :
   :
@@ -149,32 +144,34 @@ frame 0002 at 200x50
   :
   :
   :
-  :..................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :
+  :
+  :
+  :
+  :..........................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0003 at 200x50
   header 7d53d3d2
   |
-  |                  I N T E N T - R E C O R D
-  |                ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |                    fix/crash        ✓ ◆ · ·    failed in build · 0.9s       4m
-  |                ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |                    main             ✓ ✓ ✓ ✓    passed                       1d
+  |                                                          I N T E N T - R E C O R D
+  |                                                        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |                                                            fix/crash                ✓ ◆ · ·            failed in build · 0.9s               4m
+  |                                                        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |                                                            main                     ✓ ✓ ✓ ✓            passed                               1d
   |
   |
-  |                  F U N - C I
+  |                                                          F U N - C I
   |
-  |                    main             ✓ ✓ ◇ ·    timed out in fast · 10s     25m
+  |                                                            main                     ✓ ✓ ◇ ·            timed out in fast · 10s             25m
   |
-  |                    feature/login    ✓ ✓ ⠸ ·    running fast · 5s           now
-  |
-  |
-  |                  A G E N T - T O M E
-  |
-  |                    main             ◌ ◌ ◌ ◌    scheduled                   now
-  |
-  |                    spike                       cancelled                    1h
+  |                                                            feature/login            ✓ ✓ ⠸ ·            running fast · 5s                   now
   |
   |
+  |                                                          A G E N T - T O M E
   |
+  |                                                            main                     ◌ ◌ ◌ ◌            scheduled                           now
+  |
+  |                                                            spike                                       cancelled                            1h
   |
   |
   |
@@ -187,32 +184,30 @@ frame 0003 at 200x50
   |
   |
   |
-  |                  j/k move      c cancel      q quit
+  |
+  |
+  |
+  |                                                          j/k move      c cancel      q quit
   :
-  :..................aaaaaaaaaaaaaaaaaaaaaaaaa
-  :................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :................ccccdddddddddddddddddeeffgggggggfffffffffffffffffffffffffffffgggg
-  :................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :....................hhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
-  :
-  :
-  :..................aaaaaaaaaaa
-  :
-  :....................kkkkkkkkkkkkkkkkkllllmmnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
-  :
-  :....................kkkkkkkkkkkkkkkkklllloonnnnnoooooooooooooooooooooooooooonnn
+  :..........................................................aaaaaaaaaaaaaaaaaaaaaaaaa
+  :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :........................................................ccccdddddddddddddddddddddddddeeffgggggggggggggggfffffffffffffffffffffffffffffffffffffgggg
+  :........................................................bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :............................................................hhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijj
   :
   :
-  :..................aaaaaaaaaaaaaaaaaaa
+  :..........................................................aaaaaaaaaaa
   :
-  :....................kkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkkllllmmnnnnnnnnnnnnnmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmnnn
   :
-  :....................nnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppnn
-  :
-  :
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkklllloonnnnnnnnnnnnnoooooooooooooooooooooooooooooooooooonnn
   :
   :
+  :..........................................................aaaaaaaaaaaaaaaaaaa
   :
+  :............................................................kkkkkkkkkkkkkkkkkkkkkkkkknnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :............................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnpppppppppppppppppppppppppppppppppppppnn
   :
   :
   :
@@ -223,7 +218,12 @@ frame 0003 at 200x50
   :
   :
   :
-  :..................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :
+  :
+  :
+  :
+  :
+  :..........................................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 legend
 a = fg Rgb(127, 122, 150), bg Default, []
 b = fg Rgb(46, 20, 26), bg Default, []
