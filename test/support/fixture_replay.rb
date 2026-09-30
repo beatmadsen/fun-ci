@@ -3,6 +3,8 @@
 require "json"
 require "fun_ci/console/console_session"
 require "fun_ci/console/streak_counter"
+require "fun_ci/console/cancelled_folding"
+require "fun_ci/console/row_order"
 require_relative "console_fakes"
 
 # Replays a contract fixture (contract/fixtures/*.jsonl) against
@@ -10,17 +12,23 @@ require_relative "console_fakes"
 # (each after the first is a poll), `renderer` lines are fed in, and the
 # conversation is the renderer lines with every message Ruby sent in between.
 class FixtureReplay
-  # BoardData over the fixture's runs, as SQLite would return them, all of
-  # them loaded.
+  # BoardData over the fixture's runs, the database's runs newest first, all
+  # of them loaded: one row per branch, as BoardData makes them.
   class Store
-    attr_accessor :runs, :now, :stale
+    attr_writer :runs
+    attr_accessor :now, :stale
 
     def initialize
       @runs = []
       @now = 0
     end
 
-    def streak = FunCi::Console::StreakCounter.count(runs)
+    def runs
+      branches = @runs.group_by { |run| run.values_at(:project_path, :branch) }.values
+      FunCi::Console::RowOrder.of(branches.map { |branch| FunCi::Console::CancelledFolding.fold(branch).first })
+    end
+
+    def streak = FunCi::Console::StreakCounter.count(@runs)
     def load_more = nil
     def resize(_page_size) = nil
     def more? = false
