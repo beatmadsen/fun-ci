@@ -15,6 +15,7 @@ pub mod page;
 pub mod paint;
 pub mod rows;
 pub mod sections;
+pub mod sheet;
 pub mod stack;
 pub mod words;
 
@@ -25,6 +26,7 @@ use columns::Columns;
 use ladder::{Fitted, fit};
 use paint::{Paint, paint};
 use sections::{Section, sections};
+use sheet::Paper;
 use stack::{Piece, conflicts};
 
 pub use crate::model::STAGES;
@@ -43,15 +45,15 @@ pub struct Frame {
 /// columns they share, and what its footer says about it.
 #[derive(Debug, Clone)]
 pub struct Drawn {
-    pub lines: Vec<line::Line>,
+    pub lines: Vec<ratatui::text::Line<'static>>,
     pub rows: Vec<(u64, usize)>,
     pub columns: Columns,
     /// How many passed rows the screen was too short for.
     pub unshown: usize,
     /// Which trunks are stale, said above the footer when no label can say it.
     pub note: Option<String>,
-    /// The run whose row is in the block, and the block's colour this frame.
-    pub block: Option<(u64, [u8; 3])>,
+    /// The lead's block this frame, where its row is on the screen.
+    pub paper: Option<Paper>,
 }
 
 /// A column more than the longest words, so the age stays put as a running
@@ -70,10 +72,10 @@ pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
     let (fitted, note) = fitted(board, &sections, (lead, room), frame.now_ms);
     let tags = (fitted.flat && sections.len() > 1).then(|| widest_project(&sections));
     let columns = Columns::fit(frame.width, longest_name(board) + tags.map_or(0, |tag| tag + 2), longest_words(board, frame));
-    let paint_with = Paint { columns, frame, lead, stale: &board.stale_trunks, paper: paper(frame.play_ms), tags };
+    let paint_with = Paint { columns, frame, lead, stale: &board.stale_trunks, tags };
     let lines = fitted.pieces.iter().map(|piece| paint(piece, &paint_with)).collect();
-    let block = lead.map(|run| (run, paint_with.paper));
-    Drawn { lines, rows: rows(&fitted.pieces), columns, unshown: fitted.unshown, note, block }
+    let paper = lead.and_then(|run| Paper::over(&fitted.pieces, run, columns, paper(frame.play_ms)));
+    Drawn { lines, rows: rows(&fitted.pieces), columns, unshown: fitted.unshown, note, paper }
 }
 
 /// The fitted table, and the stale trunks' note when it had to go flat, which takes a line.

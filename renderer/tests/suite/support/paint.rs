@@ -2,14 +2,13 @@
 //! what they show, for the painting tests.
 
 use fun_ci_renderer::grid::{Colour, Grid};
+use ratatui::text::Line;
 use ratatui::widgets::Widget;
 
 use super::shown::{blank, shown};
 use fun_ci_renderer::model::{Run, StaleTrunk};
 use fun_ci_renderer::table::Frame;
 use fun_ci_renderer::table::columns::Columns;
-use fun_ci_renderer::table::line::Line;
-use fun_ci_renderer::table::night;
 use fun_ci_renderer::table::paint::{Paint, paint};
 use fun_ci_renderer::table::stack::Piece;
 use serde_json::{Value, json};
@@ -42,7 +41,7 @@ pub fn frame() -> Frame {
 }
 
 pub fn drawn(piece: &Piece, lead: Option<u64>, stale: &[StaleTrunk]) -> Grid {
-    on_screen(&paint(piece, &Paint { columns: COLUMNS, frame: frame(), lead, stale, paper: night::WINE, tags: None }))
+    on_screen(&paint(piece, &Paint { columns: COLUMNS, frame: frame(), lead, stale, tags: None }))
 }
 
 /// `line` drawn across a screen `WIDTH` wide.
@@ -66,8 +65,4 @@ pub fn rgb([r, g, b]: [u8; 3]) -> Colour {
 
 pub fn fg(grid: &Grid, column: usize) -> Colour {
     grid.cells[0][column].fg
-}
-
-pub fn bg(grid: &Grid, column: usize) -> Colour {
-    grid.cells[0][column].bg
 }

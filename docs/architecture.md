@@ -76,7 +76,11 @@ frame's and hands the cells that changed to `AnsiBackend`
 where a cell does not follow the one before, a style escape only where the
 style changes, and colours in 24-bit or the nearest of xterm's 256. The live
 session sends those bytes to the terminal and the headless replay keeps them,
-so both draw the same bytes for the same state and clock.
+so both draw the same bytes for the same state and clock. The table draws in
+ratatui's own terms: each line is a `Line` of styled spans placed at its
+columns, and the lead's block is a `Block` with the `PROPORTIONAL_WIDE` border
+set, its top and bottom edges only, drawn behind the lead's lines
+(`renderer/src/table/sheet.rs`).
 
 **Decision: ratatui, drawing through a byte backend of our own.** ratatui
 brings the buffer, the diff between frames and text measured by the columns it

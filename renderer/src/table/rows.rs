@@ -1,9 +1,10 @@
 //! A branch's row as one phrase, name, four marks, what happened and when,
 //! pale once it passed; and a project's passed branches on one line.
 
-use super::line::Style;
+use ratatui::style::Style;
+
 use super::marks::marks;
-use super::night::{BRANCH, CURSOR, FAILED, LABEL, PASSED, QUIET, RUNNING, TIMED_OUT, pale};
+use super::night::{BRANCH, CURSOR, FAILED, LABEL, PASSED, QUIET, RUNNING, TIMED_OUT, ink, pale};
 use super::paint::{Paint, Part};
 use super::words::said;
 use crate::format::{age, columns, cut, project_name};
@@ -19,24 +20,24 @@ pub fn row(run: &Run, paint: &Paint) -> Vec<Part> {
     let (columns, leads) = (paint.columns, paint.lead == Some(run.id));
     let tone = |colour: [u8; 3]| if run.status() == "passed" && !leads { pale(colour) } else { colour };
     let name = match run.status() {
-        _ if leads => Style::bold(CURSOR),
-        "cancelled" => Style::plain(QUIET),
-        _ => Style::plain(tone(BRANCH)),
+        _ if leads => ink(CURSOR).bold(),
+        "cancelled" => ink(QUIET),
+        _ => ink(tone(BRANCH)),
     };
     let mut parts = named(run, paint, name);
     if run.status() != "cancelled" {
         parts.extend(strip(run, paint, &tone));
     }
-    let words = if run.status() == "cancelled" { Style::italic(QUIET) } else { Style::plain(tone(outcome(run))) };
+    let words = if run.status() == "cancelled" { ink(QUIET).italic() } else { ink(tone(outcome(run))) };
     parts.push((columns.words, said(run, paint.frame.now_ms), words));
-    parts.push((columns.age_end - 4, format!("{:>4}", when(run, paint)), Style::plain(tone(QUIET))));
+    parts.push((columns.age_end - 4, format!("{:>4}", when(run, paint)), ink(tone(QUIET))));
     parts
 }
 
 /// The four marks, two columns apart, in the row's tone.
 fn strip(run: &Run, paint: &Paint, tone: &dyn Fn([u8; 3]) -> [u8; 3]) -> Vec<Part> {
     let marks = marks(run, paint.frame.spinner).into_iter().enumerate();
-    marks.map(|(i, (mark, colour))| (paint.columns.strip + 2 * i, mark.to_string(), Style::plain(tone(colour)))).collect()
+    marks.map(|(i, (mark, colour))| (paint.columns.strip + 2 * i, mark.to_string(), ink(tone(colour)))).collect()
 }
 
 /// The branch's name, after its project's in the flat layout, cut to its room.
@@ -45,7 +46,7 @@ fn named(run: &Run, paint: &Paint, style: Style) -> Vec<Part> {
     let Some(tag) = paint.tags else { return vec![(columns.branch, cut(&run.commit.branch, columns.name), style)] };
     let project = run.commit.project.as_deref().map(project_name).unwrap_or_default();
     let room = columns.name.saturating_sub(tag + 2).max(4);
-    vec![(columns.branch, project, Style::plain(LABEL)), (columns.branch + tag + 2, cut(&run.commit.branch, room), style)]
+    vec![(columns.branch, project, ink(LABEL)), (columns.branch + tag + 2, cut(&run.commit.branch, room), style)]
 }
 
 /// Passed branches on one line, each name pale with its age beside it, as
@@ -62,7 +63,7 @@ pub fn folded(runs: &[&Run], paint: &Paint) -> Vec<Part> {
         parts.push(count);
         at = after;
     }
-    parts.push((paint.columns.words.max(at), "passed".to_string(), Style::plain(pale(PASSED))));
+    parts.push((paint.columns.words.max(at), "passed".to_string(), ink(pale(PASSED))));
     parts
 }
 
@@ -87,14 +88,14 @@ fn wide(run: &Run, paint: &Paint) -> usize {
 fn more(count: usize, at: usize) -> (Part, usize) {
     let text = format!("{count} more");
     let after = at + columns(&text) + 5;
-    ((at, text, Style::plain(pale(QUIET))), after)
+    ((at, text, ink(pale(QUIET))), after)
 }
 
 /// A folded branch at `at`: its name pale, its age quieter beside it.
 fn one_folded(run: &Run, paint: &Paint, at: usize) -> [Part; 2] {
     let name = run.commit.branch.clone();
     let age_at = at + columns(&name) + 1;
-    [(at, name, Style::plain(pale(BRANCH))), (age_at, when(run, paint), Style::plain(pale(QUIET)))]
+    [(at, name, ink(pale(BRANCH))), (age_at, when(run, paint), ink(pale(QUIET)))]
 }
 
 fn when(run: &Run, paint: &Paint) -> String {

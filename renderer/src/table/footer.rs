@@ -2,8 +2,10 @@
 //! now, or the prompt to confirm a cancel; what a short screen left out; and
 //! in the flat layout, where no label can say it, which trunks are stale.
 
-use super::line::{Line, Style};
-use super::night::{NOTE, QUIET};
+use ratatui::text::Line;
+
+use super::line::placed;
+use super::night::{NOTE, QUIET, ink};
 use super::paint::fetched;
 use super::{Drawn, Frame};
 use crate::format::{columns, cut, project_name, short_sha};
@@ -46,13 +48,10 @@ fn confirming(board: &Board) -> Option<&Run> {
 /// The footer: the keys where the labels start, and beside them, quieter,
 /// how many passed rows the screen was too short for, cut if it must be.
 #[must_use]
-pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line {
+pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line<'static> {
     let (width, keys) = (usize::from(frame.width), keys(board));
     let keys_end = drawn.columns.label + columns(&keys) + APART;
     let aside = cut(&aside(drawn.unshown), width.saturating_sub(keys_end + drawn.columns.margin));
     let aside_at = width.saturating_sub(drawn.columns.margin + columns(&aside)).max(keys_end);
-    let mut line = Line::default();
-    line.put(drawn.columns.label, &keys, Style::plain(QUIET));
-    line.put(aside_at, &aside, Style::italic(NOTE));
-    line
+    placed(vec![(drawn.columns.label, keys, ink(QUIET)), (aside_at, aside, ink(NOTE).italic())])
 }

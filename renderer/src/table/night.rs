@@ -2,7 +2,10 @@
 //! console): moonlit teal for passed, nebula violet-greys for names and
 //! labels, a dusty coral for failed, amber for timed out, blue for running
 //! and lilac for a conflict; each a hue of its own, so no two states can be
-//! mistaken for each other.
+//! mistaken for each other. Each is red, green and blue, which ratatui takes
+//! as a colour, so the table can pale and mix them.
+
+use ratatui::style::Style;
 
 pub const BRANCH: [u8; 3] = [0xD8, 0xD4, 0xE8];
 /// The name of the row the cursor is on.
@@ -33,4 +36,10 @@ const PALE_PERCENT: u16 = 38;
 #[must_use]
 pub fn pale(colour: [u8; 3]) -> [u8; 3] {
     colour.map(|c| u8::try_from(u16::from(c) * PALE_PERCENT / 100).unwrap_or(u8::MAX))
+}
+
+/// Text in `colour`, which ratatui's `Stylize` makes bold or italic.
+#[must_use]
+pub fn ink(colour: [u8; 3]) -> Style {
+    Style::new().fg(colour.into())
 }

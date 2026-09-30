@@ -63,6 +63,7 @@ mod table_page;
 mod table_paint;
 mod table_paint_lines;
 mod table_sections;
+mod table_sheet;
 mod table_stack;
 mod table_words;
 mod scene_pools;

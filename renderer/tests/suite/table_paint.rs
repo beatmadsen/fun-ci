@@ -1,9 +1,8 @@
 //! Each row of the table as it is drawn: one phrase, name, marks, words and
-//! age; pale once passed, quiet once cancelled; the lead's row on the block's
-//! paper between the block's edges.
+//! age; pale once passed, quiet once cancelled; the lead's name bold. The
+//! block behind the lead's row is the sheet's (`table_sheet.rs`).
 
-use crate::support::paint::{COLUMNS, at, bg, drawn, failed, fg, passed, rgb, run, text};
-use fun_ci_renderer::grid::Colour;
+use crate::support::paint::{COLUMNS, at, drawn, failed, fg, passed, rgb, run, text};
 use fun_ci_renderer::table::night;
 use fun_ci_renderer::table::stack::Piece;
 
@@ -42,25 +41,6 @@ fn the_lead_s_name_is_bold_in_the_cursor_s_colour() {
 #[test]
 fn the_lead_s_row_is_not_pale() {
     assert_eq!(fg(&drawn(&Piece::Row(&passed()), Some(2), &[]), COLUMNS.strip), rgb(night::PASSED));
-}
-
-#[test]
-fn the_lead_s_row_is_on_the_block_s_paper_from_the_margin_to_two_past_its_age() {
-    let grid = drawn(&Piece::Row(&failed()), Some(1), &[]);
-
-    assert_eq!([COLUMNS.margin - 1, COLUMNS.margin, COLUMNS.age_end + 1, COLUMNS.age_end + 2].map(|column| bg(&grid, column)), [Colour::Default, rgb(night::WINE), rgb(night::WINE), Colour::Default]);
-}
-
-#[test]
-fn the_block_s_top_edge_is_a_row_of_lower_half_blocks_in_its_colour() {
-    let grid = drawn(&Piece::Edge(true), Some(1), &[]);
-
-    assert_eq!((at(&grid, 10).chars().next(), fg(&grid, 10)), (Some('▄'), rgb(night::WINE)));
-}
-
-#[test]
-fn the_block_s_edges_span_the_block() {
-    assert_eq!(text(&drawn(&Piece::Edge(false), Some(1), &[])).trim().chars().count(), 83 - 10);
 }
 
 #[test]
