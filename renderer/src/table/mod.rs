@@ -16,10 +16,11 @@ pub mod paint;
 pub mod rows;
 pub mod sections;
 pub mod sheet;
+pub mod sky;
 pub mod stack;
 pub mod words;
 
-use crate::maths::{Portable, byte, float};
+use crate::maths::{Portable, float};
 use crate::format::columns;
 use crate::model::{Board, Run};
 use columns::Columns;
@@ -74,7 +75,8 @@ pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
     let columns = Columns::fit(frame.width, longest_name(board) + tags.map_or(0, |tag| tag + 2), longest_words(board, frame));
     let paint_with = Paint { columns, frame, lead, stale: &board.stale_trunks, tags };
     let lines = fitted.pieces.iter().map(|piece| paint(piece, &paint_with)).collect();
-    let paper = lead.and_then(|run| Paper::over(&fitted.pieces, run, columns, paper(frame.play_ms)));
+    let needs = board.runs.iter().any(|run| lead == Some(run.id) && needs_you(run));
+    let paper = lead.and_then(|run| Paper::over(&fitted.pieces, run, columns, paper(frame.play_ms, needs)));
     Drawn { lines, rows: rows(&fitted.pieces), columns, unshown: fitted.unshown, note, paper }
 }
 
@@ -100,19 +102,15 @@ pub fn needs_you(run: &Run) -> bool {
     matches!(run.status(), "failed" | "timeout") || conflicts(run)
 }
 
-/// The block's colour at `play_ms`: deep wine, lightening and easing once
-/// every four seconds, in `SHADES` steps.
+/// The block's colour at `play_ms`: deep wine when its row needs you, else
+/// deep indigo, lightening and easing once every four seconds, in `SHADES` steps.
 #[must_use]
-pub fn paper(play_ms: u64) -> [u8; 3] {
+pub fn paper(play_ms: u64, needs: bool) -> [u8; 3] {
     let turn = float(usize::try_from(play_ms % BREATH_MS).unwrap_or(0)) / float(usize::try_from(BREATH_MS).unwrap_or(1));
     let level = 0.5 - 0.5 * (turn * std::f64::consts::TAU).cosine();
     let step = (0..SHADES).map(|n| float(n) / float(SHADES - 1)).min_by(|a, b| (a - level).abs().total_cmp(&(b - level).abs())).unwrap_or(0.0);
-    std::array::from_fn(|i| mix(night::WINE[i], night::WINE_BREATH[i], step))
-}
-
-fn mix(low: u8, high: u8, level: f64) -> u8 {
-    let (low, high) = (f64::from(low), f64::from(high));
-    byte((low + (high - low) * level) / 255.0)
+    let (deep, light) = if needs { (night::WINE, night::WINE_BREATH) } else { (night::INDIGO, night::INDIGO_BREATH) };
+    night::blend(deep, light, step)
 }
 
 fn rows(pieces: &[Piece]) -> Vec<(u64, usize)> {

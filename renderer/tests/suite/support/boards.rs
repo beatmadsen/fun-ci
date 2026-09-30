@@ -41,9 +41,10 @@ pub fn last_screen(lines: &[String]) -> Grid {
     emulate(&frames(lines)).pop().unwrap()
 }
 
-/// The screen row of `branch`'s row: the line that starts with its name.
+/// The screen row of `branch`'s row: the line that starts with its name,
+/// after the stripe a row that needs you or runs has.
 pub fn row_of(screen: &Grid, branch: &str) -> usize {
-    let starts = |line: &str| line.split_whitespace().next() == Some(branch);
+    let starts = |line: &str| line.split_whitespace().find(|word| *word != "▌") == Some(branch);
     screen.text().lines().position(starts).unwrap_or_else(|| panic!("no row for {branch:?} in\n{}", screen.text()))
 }
 

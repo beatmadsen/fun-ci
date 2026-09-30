@@ -77,9 +77,10 @@ where a cell does not follow the one before, a style escape only where the
 style changes, and colours in 24-bit or the nearest of xterm's 256. The live
 session sends those bytes to the terminal and the headless replay keeps them,
 so both draw the same bytes for the same state and clock. The table draws in
-ratatui's own terms: each line is a `Line` of styled spans placed at its
-columns, and the lead's block is a `Block` with the `PROPORTIONAL_WIDE` border
-set, its top and bottom edges only, drawn behind the lead's lines
+ratatui's own terms: the sky under the header is a widget filling each row
+with its shade (`renderer/src/table/sky.rs`), each line is a `Line` of styled
+spans placed at its columns, and the lead's block is a `Block` with a border
+set of half blocks and quadrant corners, drawn behind the lead's lines
 (`renderer/src/table/sheet.rs`).
 
 **Decision: ratatui, drawing through a byte backend of our own.** ratatui
@@ -96,15 +97,15 @@ that changed and leave the rest in the old colours.
 *Revisit if* the renderer stops needing its frames as bytes.
 
 **Decision: the table and the animations never see each other.** The table
-(`renderer/src/table/`) draws its lines and says where it put each run's row
-and the first of its marks; `board_view` hands that to the animator as
-`Places`, and the effects land there. The animator (`animator/`, `animation/`,
+(`renderer/src/table/`) draws its lines and says where it put each run's row,
+the columns a row spans and the first of its marks; `board_view` hands that to
+the animator as `Places`, and the effects land there. The animator (`animator/`, `animation/`,
 `art/`, `scenes/`) knows where a mark is, never how the table drew it: an
 effect changes the colour of the cell the table drew, and leaves its glyph and
 the paper behind it alone. What both need, the model, the portable maths and
 the output, has a module of its own. `tests/suite/decoupling.rs` fails on an
 import either way.
-*Revisit if* an effect needs more of the table than where a mark is.
+*Revisit if* an effect needs more of the table than where a row and its marks are.
 
 **Decision: stage effects are tachyonfx fades, timed by the clock.** An effect
 on a stage's mark lights it in a colour of its own and fades, over a few
@@ -118,8 +119,19 @@ start its next step a frame late whenever the last one ended on a frame.
 tachyonfx is built without `std`, which would ease some curves with the
 platform's `powf` and break the snapshots across platforms;
 `tests/suite/portable_maths.rs` checks the build.
-*Revisit if* an effect needs tachyonfx's own sequencing, or a pattern across
-a whole row.
+*Revisit if* an effect needs tachyonfx's own sequencing.
+
+**Decision: row effects are tachyonfx too, and leave the marks alone.** A
+run's end washes its row: `fx::fade_from` in the colour of how it ended, with
+a left-to-right `SweepPattern`, so the colour drains across the row. A running
+row carries a band of light, an `fx::effect_fn` repeated for as long as the
+run runs and cancelled when it stops. Both play on a `RefRect` that follows
+the row, and both skip the marks through a `CellFilter` on a second
+`RefRect`, since the marks' own effects say which stage it was. The band
+lifts colours in four steps and the headings' rules fade in six, so a frame
+changes few cells and a 256-colour terminal shows no banding; the band's
+maths is additions and rounding only, the same on every machine.
+*Revisit if* a row effect needs to change a mark.
 
 ## Animations as scenes
 

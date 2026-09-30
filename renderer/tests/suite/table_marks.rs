@@ -4,7 +4,7 @@
 
 use fun_ci_renderer::headless::palette::hue_sector;
 use fun_ci_renderer::model::Run;
-use fun_ci_renderer::table::marks::marks;
+use fun_ci_renderer::table::marks::{links, marks};
 use fun_ci_renderer::table::night;
 use serde_json::{Value, json};
 
@@ -73,4 +73,34 @@ fn passed_failed_timed_out_running_and_a_conflict_are_five_different_hues() {
     let hues = [night::PASSED, night::FAILED, night::TIMED_OUT, night::RUNNING, night::CONFLICT].map(hue_sector);
 
     assert!(hues.iter().enumerate().all(|(i, hue)| hue.is_some() && !hues[..i].contains(hue)), "{hues:?}");
+}
+
+fn stages(statuses: [&str; 4]) -> Vec<Value> {
+    ["lint", "build", "fast", "slow"].iter().zip(statuses).map(|(stage, status)| json!({"stage": stage, "status": status})).collect()
+}
+
+fn link_glyphs(run: &Run) -> [char; 3] {
+    links(&marks(run, '⠹')).map(|(glyph, _)| glyph)
+}
+
+#[test]
+fn a_link_into_a_stage_that_was_reached_is_a_line() {
+    assert_eq!(link_glyphs(&run("failed", &stages(["passed", "passed", "failed", "cancelled"])))[..2], ['─', '─']);
+}
+
+#[test]
+fn a_link_into_a_stage_that_was_not_reached_is_dotted() {
+    assert_eq!(link_glyphs(&run("failed", &stages(["passed", "failed", "cancelled", "cancelled"]))), ['─', '┄', '┄']);
+}
+
+#[test]
+fn a_link_into_a_stage_waiting_to_run_is_dotted() {
+    assert_eq!(link_glyphs(&run("pending", &stages(["pending", "pending", "pending", "pending"]))), ['┄', '┄', '┄']);
+}
+
+#[test]
+fn a_link_takes_half_the_colour_of_the_stage_it_leads_into() {
+    let failed = run("failed", &stages(["passed", "failed", "cancelled", "cancelled"]));
+
+    assert_eq!(links(&marks(&failed, '⠹'))[0].1, night::blend(night::NIGHT, night::FAILED, 0.5));
 }

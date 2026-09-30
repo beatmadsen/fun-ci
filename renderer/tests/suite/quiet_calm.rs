@@ -59,5 +59,5 @@ fn the_block_breathes_lighter_over_two_seconds() {
 fn when_nothing_needs_you_a_project_s_passed_branches_fold_into_one_line() {
     let runs = [passed(3, "feat", "/src/app"), passed(2, "fix", "/src/app"), passed(1, "main", "/src/app")];
 
-    assert_eq!(said(&screen(&runs, (120, 40))).first().map(String::as_str), Some("feat 6m"));
+    assert_eq!(said(&screen(&runs, (120, 40))).first().map(String::as_str), Some("✓ feat 6m"));
 }

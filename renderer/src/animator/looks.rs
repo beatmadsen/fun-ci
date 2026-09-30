@@ -17,6 +17,22 @@ pub const FLARE: [u8; 3] = [215, 40, 50];
 /// A failed stage's mark on the flare.
 pub const WHITE: [u8; 3] = [255, 255, 255];
 
+/// The light travelling along a running row.
+pub const GLOW: [u8; 3] = [0xE4, 0xF0, 0xFF];
+
+/// How a run's end washes its row: the text's colour and the paper's as
+/// the wash begins, before they drain back to the row's own. A stage that
+/// passes without ending the run washes nothing.
+#[must_use]
+pub fn washed(kind: Kind) -> Option<([u8; 3], [u8; 3])> {
+    match kind {
+        Kind::Success => Some(([0xE8, 0xFF, 0xF4], [0x1E, 0x4A, 0x42])),
+        Kind::Failure => Some(([0xFF, 0xE4, 0xDC], [0x6A, 0x22, 0x24])),
+        Kind::Timeout => Some(([0xFF, 0xF0, 0xD8], [0x5A, 0x3E, 0x16])),
+        Kind::StagePass | Kind::Conflict => None,
+    }
+}
+
 /// How long a stage's mark takes to fade back after passing, in milliseconds.
 const PASS_MS: u32 = 300;
 /// How long each of a timeout's two pulses takes.

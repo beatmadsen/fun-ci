@@ -197,33 +197,34 @@ fails once, however many of its stages fail.
 
 `fun-ci console` is one screen: you look, you know, you go, and it stays calm
 to look at even when something broke, since a failure is feedback, not an
-alarm. An animated picture fills the top 14 rows; below it, each project's
-branches sit under the project's name, one row per branch:
+alarm. An animated picture fills the top 14 rows; below it the header's night
+sky carries on, dusky violet under the horizon and deepening to night, and
+each project's branches sit under the project's name, one row per branch:
 
 ```
-  S T R I N G S - K A T A
-▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-    a-life-of-its-own                 ✓ ✓ ◆ ✓    failed in fast · 1.4s       6m
-      conflicts with main
-▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-    main                              ◌ ◌ ◌ ◌    scheduled                  now
+  S T R I N G S - K A T A   ─────────────────────────────────────────────
+▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+▌   a-life-of-its-own                 ✓─✓─◆─✓    failed in fast · 1.4s       6m
+▌     conflicts with main
+▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+    main                              ◌┄◌┄◌┄◌    scheduled                  now
 
 
-  A G E N T - T O M E      trunk last fetched 2h ago
+  A G E N T - T O M E      trunk last fetched 2h ago   ────────────────
 
-    fix/crash                         ✓ ◆ · ·    failed in build · 0.9s     40m
+▌   fix/crash                         ✓─◆┄·┄·    failed in build · 0.9s     40m
 
-    refactor/extract-the-evidence…    ✓ ✓ ◇ ✓    timed out in fast · 10s    25m
-
-
-  F U N - C I
-
-    feat/search                       ✓ ✓ ⠹ ⠹    running fast and slow · 7s now
-
-    trunk-conflicts                   ✓ ✓ ✓ ✓    passed                     14m
+▌   refactor/extract-the-evidence…    ✓─✓─◇─✓    timed out in fast · 10s    25m
 
 
-  j/k move      c cancel      q quit
+  F U N - C I   ─────────────────────────────────────────────────────────
+
+▌   feat/search                       ✓─✓─⠹─⠹    running fast and slow · 7s now
+
+    trunk-conflicts                   ✓─✓─✓─✓    passed                     14m
+
+
+   j/k  move     c  cancel     q  quit
 ```
 
 - A branch has one row, its newest run's, so the table says where each branch
@@ -238,20 +239,31 @@ branches sit under the project's name, one row per branch:
   `◆` failed, `◇` timed out, a spinner while it runs, `·` not reached (a
   stage a failure stopped too), `◌` waiting to run, `–` cancelled with its
   run. Without column headings the marks come in lint, build, fast, slow
-  order, and the words name the stage.
-- A project's rows sit under its name in letter-spaced capitals. The project
+  order, and the words name the stage. A link leads into each mark, a line
+  in half its colour once the stage was reached and a faint dotted one
+  before, so a run fills its track from left to right.
+- A row that needs you or is running has a stripe down its left edge in the
+  colour of why: coral for a failure, amber for a timeout, lilac for a
+  conflict, blue while it runs. Counting the stripes is the glance.
+- A project's rows sit under its name in letter-spaced capitals, followed by
+  a rule that fades out where the rows end. The project
   that most needs you comes first, and within a project a failure, then a
   timeout or a conflict with the trunk, then running, scheduled, passed and
   cancelled rows, newest first among equals. With one project there is no
   label.
-- One deep wine block holds the row the cursor is on, or, with no cursor,
-  the first row that needs you: a failure, a timeout, a conflict. When nothing
-  needs you there is no block. The block breathes, lightening and easing once
-  every four seconds; besides it only a running stage's spinner moves.
+- One deep block, a card with rounded corners, holds the row the cursor is
+  on, or, with no cursor, the first row that needs you: a failure, a timeout,
+  a conflict. It is wine when its row needs you and indigo when the cursor
+  only rests on a calm row, so the card never looks like trouble without
+  cause. When nothing needs you and there is no cursor there is no block.
+  The block breathes, lightening and easing once every four seconds.
+- Along a running row a soft band of light travels, over and over, so a run
+  in progress reads from the corner of the eye; it leaves the marks alone,
+  where the spinner already moves.
 - Passed rows are pale, at about a third of their brightness. When nothing
   needs you, a project's passed branches fold into one pale line, each with
   its age (`main 1h   kata/strings 5h   passed`); the rows come back when
-  something needs you. A board where everything has passed gets one firefly,
+  something needs you. Each folded branch has a pale `✓`. A board where everything has passed gets one firefly,
   no brighter than a pale name, wandering in the open space below the table.
 - The colours come from the header's night scenes: teal for passed, coral for
   failed, amber for timed out, blue for running, lilac for a conflict,
@@ -273,9 +285,10 @@ branches sit under the project's name, one row per branch:
   stays on screen, the rows it pushed off counted (`… 4 more below`).
 - `j` and `k` (or the arrows) move the cursor, which takes the block; `c`
   cancels the run under it, and is offered only while a run is running or
-  waits to start; `q` quits. Cancelling a scheduled run happens at once; a
-  running one asks first, naming it (`Cancel feat/search (d4e5f67)? y / n`),
-  because a process gets killed.
+  waits to start; `q` quits. The footer shows each key on a cap with what it
+  does beside it. Cancelling a scheduled run happens at once; a running one
+  asks first, naming it (`Cancel feat/search (d4e5f67)?` with `y yes` and
+  `n no`), because a process gets killed.
 - The board is always live, so there is no refresh key. With no runs yet it
   says `No runs yet.`
 - The streak counts consecutive passed runs; a running run neither breaks nor
@@ -334,6 +347,12 @@ so the two small ones can be told apart without reading.
 was: a failed stage flares white on red and cools into its row, a timed-out
 one pulses amber twice, and a passed one lights gold and fades back. When the
 last stage passes, its mark lights on its turn, a fifth of a second a stage.
+
+**Row washes** play across the whole row of a run that has just ended: it
+flushes in the colour of how it ended, teal for a pass, coral for a failure,
+amber for a timeout, and the colour drains away from left to right over a
+second and a half. The wash leaves the marks to their stage effects, so a
+pass still lights them gold one after another.
 
 **The footer** joins in for a failure (`>>> FAST FAILED <<<`, fading) and for a
 pass (`* * * NICE! * * *`).

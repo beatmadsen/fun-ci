@@ -14,6 +14,7 @@ mod marks;
 mod playing;
 mod queue;
 mod resting;
+mod rows;
 
 use std::mem;
 

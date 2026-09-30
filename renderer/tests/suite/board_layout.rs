@@ -70,13 +70,13 @@ fn should_keep_the_empty_state_below_the_header_when_the_terminal_is_too_short_f
 #[test]
 fn a_screen_with_one_row_under_the_header_shows_the_keys_there() {
     let screen = last_screen_on(&[board(&[run(1, "passed", "passed")]), TICK.into()], (80, 15));
-    assert!(screen.text().lines().nth(14).unwrap().contains("q quit"), "{}", screen.text());
+    assert!(screen.text().lines().nth(14).unwrap().contains(" q  quit"), "{}", screen.text());
 }
 
 #[test]
 fn the_empty_state_on_a_screen_just_tall_enough_ends_with_the_quit_key_on_the_last_row() {
     let screen = last_screen_on(&[board(&[]), TICK.into()], (80, 22));
-    assert!(screen.text().lines().nth(21).unwrap().contains("q quit"), "{}", screen.text());
+    assert!(screen.text().lines().nth(21).unwrap().contains(" q  quit"), "{}", screen.text());
 }
 
 /// A board with as many runs as Ruby pages for `rows` rows (renderer-protocol.md, `board`).
@@ -87,6 +87,6 @@ fn full_page(rows: u16) -> Grid {
 
 #[test]
 fn a_full_page_ends_with_the_footer_on_the_last_row() {
-    assert!(full_page(30).text().lines().nth(29).unwrap().contains("q quit"));
+    assert!(full_page(30).text().lines().nth(29).unwrap().contains(" q  quit"));
 }
 

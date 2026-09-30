@@ -23,9 +23,9 @@ fn find(screen: &Grid, text: &str) -> (usize, usize) {
 }
 
 #[test]
-fn the_footer_s_keys_are_quiet() {
+fn the_footer_s_words_are_quiet() {
     let screen = last_screen(&then_ticks(&[board(&two_runs())], 1));
-    let (row, column) = find(&screen, "j/k move");
+    let (row, column) = find(&screen, "move");
     let [r, g, b] = fun_ci_renderer::table::night::QUIET;
     assert_eq!(screen.cells[row][column].fg, fun_ci_renderer::grid::Colour::Rgb(r, g, b));
 }
@@ -33,7 +33,15 @@ fn the_footer_s_keys_are_quiet() {
 #[test]
 fn an_empty_board_offers_only_quit() {
     let screen = last_screen(&then_ticks(&[board(&[])], 1));
-    assert_eq!([screen.text().contains("q quit"), screen.text().contains("j/k move")], [true, false]);
+    assert_eq!([screen.text().contains(" q  quit"), screen.text().contains(" j/k  move")], [true, false]);
+}
+
+#[test]
+fn the_footer_s_keys_sit_on_caps() {
+    let screen = last_screen(&then_ticks(&[board(&two_runs())], 1));
+    let (row, column) = find(&screen, " j/k ");
+    let [r, g, b] = fun_ci_renderer::table::night::CAP;
+    assert_eq!(screen.cells[row][column].bg, fun_ci_renderer::grid::Colour::Rgb(r, g, b));
 }
 
 #[test]

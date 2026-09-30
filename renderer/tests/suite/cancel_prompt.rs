@@ -21,15 +21,15 @@ fn footer(cursor: &str, confirming: bool) -> String {
 
 #[test]
 fn the_prompt_names_the_branch_and_short_sha_of_the_run_under_the_cursor() {
-    assert_eq!(footer("0", true), "Cancel feat/search (d4e5f67)? y / n");
+    assert_eq!(footer("0", true), "Cancel feat/search (d4e5f67)?   y  yes     n  no");
 }
 
 #[test]
 fn without_a_run_under_the_cursor_there_is_nothing_to_confirm() {
-    assert_eq!(footer("5", true), "j/k move      c cancel      q quit");
+    assert_eq!(footer("5", true), "j/k  move     c  cancel     q  quit");
 }
 
 #[test]
 fn a_board_that_is_not_confirming_shows_the_key_bindings() {
-    assert_eq!(footer("0", false), "j/k move      c cancel      q quit");
+    assert_eq!(footer("0", false), "j/k  move     c  cancel     q  quit");
 }

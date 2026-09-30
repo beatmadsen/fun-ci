@@ -4,8 +4,8 @@
 //! between two lines of the open space below the table, never jumping.
 
 use super::needs_you;
-use super::night::{FIREFLY, FIREFLY_LOW};
-use crate::maths::{Portable, byte, float};
+use super::night::{FIREFLY, FIREFLY_LOW, blend};
+use crate::maths::{Portable, float};
 use crate::model::Board;
 
 /// How many columns the firefly wanders either side of its place.
@@ -33,7 +33,7 @@ pub fn mote(width: u16, play_ms: u64) -> Mote {
     let offset = (-WANDER..=WANDER).min_by(|a, b| (f64::from(*a) - wander).abs().total_cmp(&(f64::from(*b) - wander).abs())).unwrap_or(0);
     let column = (usize::from(width) * 62 / 100).saturating_add_signed(isize::try_from(offset).unwrap_or(0));
     let level = 0.5 + 0.5 * (t * 0.9).sine();
-    let colour = std::array::from_fn(|i| byte((f64::from(FIREFLY_LOW[i]) + (f64::from(FIREFLY[i]) - f64::from(FIREFLY_LOW[i])) * level) / 255.0));
+    let colour = blend(FIREFLY_LOW, FIREFLY, level);
     Mote { column, colour }
 }
 

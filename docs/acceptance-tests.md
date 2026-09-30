@@ -910,7 +910,8 @@ before one without, and the cursor walks them in that order.
 
 ### 12.4 One block for what needs you
 **Then** the cursor's row, or with no cursor the first row that needs you,
-sits in one deep block; a board where nothing needs you has none.
+sits in one deep block, wine when its row needs you and indigo when it does
+not; a board where nothing needs you has none.
 
 ### 12.5 The words leave a short name whole
 **Then** on 60 columns a nine-letter branch keeps its whole name.

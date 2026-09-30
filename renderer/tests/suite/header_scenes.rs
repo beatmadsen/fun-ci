@@ -78,8 +78,9 @@ fn should_paint_the_header_to_its_bottom_right_cell_when_a_scene_shows() {
 }
 
 #[test]
-fn should_leave_the_row_below_the_header_unpainted() {
-    assert_eq!(screen(&idle_then(1)).cells[14][0].bg, Colour::Default);
+fn should_leave_the_row_below_the_header_to_the_sky() {
+    let [r, g, b] = fun_ci_renderer::table::sky::shade(0);
+    assert_eq!(screen(&idle_then(1)).cells[14][0].bg, Colour::Rgb(r, g, b));
 }
 
 #[test]

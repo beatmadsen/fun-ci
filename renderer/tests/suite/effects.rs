@@ -142,7 +142,7 @@ fn an_effect_on_the_row_in_the_block_keeps_the_block_under_it() {
     let lines = [running.to_string(), event("stage_passed", 1, "build")];
     let screen = last_screen(&then_ticks(&lines, 1));
 
-    assert_eq!(mark(&screen, "b1", "build").bg, rgb(night::WINE));
+    assert_eq!(mark(&screen, "b1", "build").bg, rgb(night::INDIGO));
 }
 
 #[test]

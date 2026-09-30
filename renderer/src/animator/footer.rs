@@ -20,9 +20,9 @@ type Look = (Color, Modifier, String);
 
 fn look(effect: &Effect, runs: &[Run], look_at: usize) -> Option<Look> {
     let (colour, text) = match effect.kind {
-        Kind::Failure => (Color::Red, failure_text(look_at, &effect.stage)?),
-        Kind::Success => (Color::Green, success_text(look_at)?),
-        Kind::Conflict => (Color::Magenta, conflict_text(look_at, &conflict(effect, runs)?)?),
+        Kind::Failure => (Color::Rgb(0xFF, 0x9C, 0x8C), failure_text(look_at, &effect.stage)?),
+        Kind::Success => (Color::Rgb(0x9C, 0xF0, 0xCC), success_text(look_at)?),
+        Kind::Conflict => (Color::Rgb(0xDA, 0xB4, 0xFF), conflict_text(look_at, &conflict(effect, runs)?)?),
         Kind::Timeout | Kind::StagePass => return None,
     };
     Some((colour, weight(look_at), text))

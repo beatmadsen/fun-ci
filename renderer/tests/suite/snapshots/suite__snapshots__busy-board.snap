@@ -5,681 +5,729 @@ expression: "render(& frames(\"busy-board\"))"
 frame 0001 at 120x40
   header 3814a9d4
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠙ ⠙         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
-  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠙─⠙         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
+  :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0002 at 120x40
   header 0e365346
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠹ ⠹         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
-  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠹─⠹         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
+  :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBB1BBB2LLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0003 at 120x40
   header 850051e8
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠸ ⠸         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
-  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠸─⠸         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
+  :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBB3BBB44222LLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0004 at 120x40
   header 8233c3c2
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠼ ⠼         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
-  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠼─⠼         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
+  :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBB5BBB4677642222LBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0005 at 120x40
   header 2759b828
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠴ ⠴         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..........ccccdddddddddddddddddccccccccccccccccccccccececfcecccccccccffffffcffcffffcfcffffccccccccccccccccccggcc
-  :..........cccccchhhhhhhhhchhhhchhhhccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-  :..........bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠴─⠴         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkjjjjjjjj
+  :llllllllllmnnnooooooooooooooooonnnnnnnnnnnnnnnnnnnnnnpqprmqpnnnnnnnnnmmmmmmnmmnmmmmnmnmmmmnnnnnnnnnnnnnnnnnnssnnllllllll
+  :ttttttttttmnnnnnuuuuuuuuunuuuunuuuunnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnntttttttt
+  :vvvvvvvvvvwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBB22224677644BBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0006 at 120x40
   header d88e7d42
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠦ ⠦         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..........ttttuuuuuuuuuuuuuuuuuttttttttttttttttttttttvtvtwtvtttttttttwwwwwwtwwtwwwwtwtwwwwttttttttttttttttttxxtt
-  :..........ttttttyyyyyyyyytyyyytyyyyttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-  :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠦─⠦         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjj888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888jjjjjjjj
+  :llllllllll9αααβββββββββββββββββααααααααααααααααααααααγδγε9δγααααααααα999999α99α9999α9α9999ααααααααααααααααααζζααllllllll
+  :tttttttttt9αααααηηηηηηηηηαηηηηαηηηηαααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααtttttttt
+  :vvvvvvvvvvθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLL222446BBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0007 at 120x40
   header cbfdfa10
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠧ ⠧         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..........ttttuuuuuuuuuuuuuuuuuttttttttttttttttttttttvtvtwtvtttttttttwwwwwwtwwtwwwwtwtwwwwttttttttttttttttttxxtt
-  :..........ttttttyyyyyyyyytyyyytyyyyttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-  :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠧─⠧         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjj888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888jjjjjjjj
+  :llllllllll9αααβββββββββββββββββααααααααααααααααααααααγδγε9δγααααααααα999999α99α9999α9α9999ααααααααααααααααααζζααllllllll
+  :tttttttttt9αααααηηηηηηηηηαηηηηαηηηηαααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααtttttttt
+  :vvvvvvvvvvθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLL22BBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0008 at 120x40
   header 6dd907f3
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠇ ⠇         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..........ttttuuuuuuuuuuuuuuuuuttttttttttttttttttttttvtvtwtvtttttttttwwwwwwtwwtwwwwtwtwwwwttttttttttttttttttxxtt
-  :..........ttttttyyyyyyyyytyyyytyyyyttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-  :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠇─⠇         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjj888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888jjjjjjjj
+  :llllllllll9αααβββββββββββββββββααααααααααααααααααααααγδγε9δγααααααααα999999α99α9999α9α9999ααααααααααααααααααζζααllllllll
+  :tttttttttt9αααααηηηηηηηηηαηηηηαηηηηαααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααtttttttt
+  :vvvvvvvvvvθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0009 at 120x40
   header 50bc542e
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠏ ⠏         running fast and slow · 6s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..........ttttuuuuuuuuuuuuuuuuuttttttttttttttttttttttvtvtwtvtttttttttwwwwwwtwwtwwwwtwtwwwwttttttttttttttttttxxtt
-  :..........ttttttyyyyyyyyytyyyytyyyyttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-  :..........ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠏─⠏         running fast and slow · 6s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjj888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888jjjjjjjj
+  :llllllllll9αααβββββββββββββββββααααααααααααααααααααααγδγε9δγααααααααα999999α99α9999α9α9999ααααααααααααααααααζζααllllllll
+  :tttttttttt9αααααηηηηηηηηηαηηηηαηηηηαααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααααtttttttt
+  :vvvvvvvvvvθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθθvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0010 at 120x40
   header 87248e72
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠋ ⠋         running fast and slow · 7s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..........AAAABBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAAAACACADACAAAAAAAAADDDDDDADDADDDDADADDDDAAAAAAAAAAAAAAAAAAEEAA
-  :..........AAAAAAFFFFFFFFFAFFFFAFFFFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠋─⠋         running fast and slow · 7s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjjιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιjjjjjjjj
+  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλλλλλκκκκκκλκκλκκκκλκλκκκκλλλλλλλλλλλλλλλλλλππλλllllllll
+  :ttttttttttκλλλλλρρρρρρρρρλρρρρλρρρρλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλtttttttt
+  :vvvvvvvvvvσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0011 at 120x40
   header f3c2804f
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠙ ⠙         running fast and slow · 7s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..........AAAABBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAAAACACADACAAAAAAAAADDDDDDADDADDDDADADDDDAAAAAAAAAAAAAAAAAAEEAA
-  :..........AAAAAAFFFFFFFFFAFFFFAFFFFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠙─⠙         running fast and slow · 7s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjjιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιjjjjjjjj
+  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλλλλλκκκκκκλκκλκκκκλκλκκκκλλλλλλλλλλλλλλλλλλππλλllllllll
+  :ttttttttttκλλλλλρρρρρρρρρλρρρρλρρρρλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλtttttttt
+  :vvvvvvvvvvσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0012 at 120x40
   header 08ea6782
   |
-  |            S T R I N G S - K A T A
-  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
-  |              a-life-of-its-own                      ✓ ✓ ◆ ✓         failed in fast · 1.4s                  6m
-  |                conflicts with main
-  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-  |              main                                   ◌ ◌ ◌ ◌         scheduled                             now
+  |            S T R I N G S - K A T A   ──────────────────────────────────────────────────────────────────────────
+  |          ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |          ▌   a-life-of-its-own                      ✓─✓─◆─✓         failed in fast · 1.4s                  6m
+  |          ▌     conflicts with main
+  |          ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |              main                                   ◌┄◌┄◌┄◌         scheduled                             now
   |
   |
-  |            A G E N T - T O M E      trunk last fetched 2h ago
+  |            A G E N T - T O M E      trunk last fetched 2h ago   ───────────────────────────────────────────────
   |
-  |              fix/crash                              ✓ ◆ · ·         failed in build · 0.9s                40m
+  |          ▌   fix/crash                              ✓─◆┄·┄·         failed in build · 0.9s                40m
   |
-  |              refactor/extract-the-evidence-coll…    ✓ ✓ ◇ ✓         timed out in fast · 10s               25m
-  |
-  |
-  |            F U N - C I
-  |
-  |              feat/search                            ✓ ✓ ⠹ ⠹         running fast and slow · 7s            now
-  |
-  |              trunk-conflicts                        ✓ ✓ ✓ ✓         passed                                14m
-  |
-  |              main                                   ✓ ✓ ✓ ✓         passed                                 1h
+  |          ▌   refactor/extract-the-evidence-coll…    ✓─✓─◇─✓         timed out in fast · 10s               25m
   |
   |
-  |            j/k move      c cancel      q quit
-  :
-  :............a.a.a.a.a.a.a.a.a.a.a.a
-  :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..........AAAABBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAAAACACADACAAAAAAAAADDDDDDADDADDDDADADDDDAAAAAAAAAAAAAAAAAAEEAA
-  :..........AAAAAAFFFFFFFFFAFFFFAFFFFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  :..........zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :..............iiii...................................j.j.j.j.........jjjjjjjjj.............................jjj
-  :
-  :
-  :............a.a.a.a.a.a.a.a.a.a......kkkkk.kkkk.kkkkkkk.kk.kkk
-  :
-  :..............iiiiiiiii..............................l.m.j.j.........mmmmmm.mm.mmmmm.m.mmmm................jjj
-  :
-  :..............iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii....l.l.n.l.........nnnnn.nnn.nn.nnnn.n.nnn...............jjj
-  :
-  :
-  :............a.a.a.a.a.a
-  :
-  :..............iiiiiiiiiii............................l.l.o.o.........ooooooo.oooo.ooo.oooo.o.oo............jjj
-  :
-  :..............ppppppppppppppp........................q.q.q.q.........qqqqqq................................rrr
-  :
-  :..............pppp...................................q.q.q.q.........qqqqqq.................................rr
-  :
-  :
-  :............jjj.jjjj......j.jjjjjj......j.jjjj
+  |            F U N - C I   ──────────────────────────────────────────────────────────────────────────────────────
+  |
+  |          ▌   feat/search                            ✓─✓─⠹─⠹         running fast and slow · 7s            now
+  |
+  |              trunk-conflicts                        ✓─✓─✓─✓         passed                                14m
+  |
+  |              main                                   ✓─✓─✓─✓         passed                                 1h
+  |
+  |
+  |             j/k  move     c  cancel     q  quit
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbcbcbcbcbcbcbcbcbcbcbcbcbbbdddddddddddddeeeeeeeeeeeeffffffffffffggggggggggggghhhhhhhhhhhhiiiiiiiiiiiibbbbbbbb
+  :jjjjjjjjjjιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιιjjjjjjjj
+  :llllllllllκλλλμμμμμμμμμμμμμμμμμλλλλλλλλλλλλλλλλλλλλλλνξνοκξνλλλλλλλλλκκκκκκλκκλκκκκλκλκκκκλλλλλλλλλλλλλλλλλλππλλllllllll
+  :ttttttttttκλλλλλρρρρρρρρρλρρρρλρρρρλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλλtttttttt
+  :vvvvvvvvvvσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσvvvvvvvv
+  :xxxxxxxxxxxxxxyyyyxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzAzAzAzxxxxxxxxxzzzzzzzzzxxxxxxxxxxxxxxxxxxxxxxxxxxxxxzzzxxxxxxxxxx
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBCBCBCBCBBBBBBDDDDDBDDDDBDDDDDDDBDDBDDDBBBEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHHIIIIIIIIJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBKBBBLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBMNKOPOPBBBBBBBBBKKKKKKBKKBKKKKKBKBKKKKBBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBQBBBLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLBBBBMRMSQRMBBBBBBBBBQQQQQBQQQBQQBQQQQBQBQQQBBBBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBCBCBCBCBCBCBBBEEEEEEEEEEEEEEEFFFFFFFFFFFFFFGGGGGGGGGGGGGGHHHHHHHHHHHHHHHIIIIIIIIIIIIIIJJJJJJJJJJJJJJBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTBBBLLLLLLLLLLLBBBBBBBBBBBBBBBBBBBBBBBBBBBBMRMUTUTBBBBBBBBBTTTTTTTBTTTTBTTTBTTTTBTBTTBBBBBBBBBBBBPPPBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVVVVVVVVVVVVBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBWXWXWXWBBBBBBBBBWWWWWWBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBYYBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBZ000ZBPPPPBBBBZ0ZBPPPPPPBBBBZ0ZBPPPPBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 legend
-a = fg Rgb(127, 122, 150), bg Default, []
-b = fg Rgb(46, 20, 26), bg Default, []
-c = fg Default, bg Rgb(46, 20, 26), []
-d = fg Rgb(242, 239, 250), bg Rgb(46, 20, 26), ["bold"]
-e = fg Rgb(111, 184, 170), bg Rgb(46, 20, 26), []
-f = fg Rgb(220, 132, 118), bg Rgb(46, 20, 26), []
-g = fg Rgb(85, 82, 104), bg Rgb(46, 20, 26), []
-h = fg Rgb(200, 156, 232), bg Rgb(46, 20, 26), ["italic"]
-i = fg Rgb(216, 212, 232), bg Default, []
-j = fg Rgb(85, 82, 104), bg Default, []
-k = fg Rgb(146, 140, 170), bg Default, ["italic"]
-l = fg Rgb(111, 184, 170), bg Default, []
-m = fg Rgb(220, 132, 118), bg Default, []
-n = fg Rgb(224, 174, 112), bg Default, []
-o = fg Rgb(143, 184, 222), bg Default, []
-p = fg Rgb(82, 80, 88), bg Default, []
-q = fg Rgb(42, 69, 64), bg Default, []
-r = fg Rgb(32, 31, 39), bg Default, []
-s = fg Rgb(52, 23, 30), bg Default, []
-t = fg Default, bg Rgb(52, 23, 30), []
-u = fg Rgb(242, 239, 250), bg Rgb(52, 23, 30), ["bold"]
-v = fg Rgb(111, 184, 170), bg Rgb(52, 23, 30), []
-w = fg Rgb(220, 132, 118), bg Rgb(52, 23, 30), []
-x = fg Rgb(85, 82, 104), bg Rgb(52, 23, 30), []
-y = fg Rgb(200, 156, 232), bg Rgb(52, 23, 30), ["italic"]
-z = fg Rgb(58, 25, 33), bg Default, []
-A = fg Default, bg Rgb(58, 25, 33), []
-B = fg Rgb(242, 239, 250), bg Rgb(58, 25, 33), ["bold"]
-C = fg Rgb(111, 184, 170), bg Rgb(58, 25, 33), []
-D = fg Rgb(220, 132, 118), bg Rgb(58, 25, 33), []
-E = fg Rgb(85, 82, 104), bg Rgb(58, 25, 33), []
-F = fg Rgb(200, 156, 232), bg Rgb(58, 25, 33), ["italic"]
+a = fg Default, bg Rgb(31, 21, 44), []
+b = fg Default, bg Rgb(27, 18, 38), []
+c = fg Rgb(127, 122, 150), bg Rgb(27, 18, 38), []
+d = fg Rgb(64, 60, 78), bg Rgb(27, 18, 38), []
+e = fg Rgb(55, 52, 68), bg Rgb(27, 18, 38), []
+f = fg Rgb(47, 44, 58), bg Rgb(27, 18, 38), []
+g = fg Rgb(38, 35, 48), bg Rgb(27, 18, 38), []
+h = fg Rgb(29, 27, 39), bg Rgb(27, 18, 38), []
+i = fg Rgb(21, 18, 29), bg Rgb(27, 18, 38), []
+j = fg Default, bg Rgb(23, 16, 33), []
+k = fg Rgb(46, 20, 26), bg Rgb(23, 16, 33), []
+l = fg Default, bg Rgb(19, 14, 29), []
+m = fg Rgb(220, 132, 118), bg Rgb(46, 20, 26), []
+n = fg Default, bg Rgb(46, 20, 26), []
+o = fg Rgb(242, 239, 250), bg Rgb(46, 20, 26), ["bold"]
+p = fg Rgb(111, 184, 170), bg Rgb(46, 20, 26), []
+q = fg Rgb(62, 97, 95), bg Rgb(46, 20, 26), []
+r = fg Rgb(116, 71, 69), bg Rgb(46, 20, 26), []
+s = fg Rgb(85, 82, 104), bg Rgb(46, 20, 26), []
+t = fg Default, bg Rgb(17, 13, 25), []
+u = fg Rgb(200, 156, 232), bg Rgb(46, 20, 26), ["italic"]
+v = fg Default, bg Rgb(15, 12, 23), []
+w = fg Rgb(46, 20, 26), bg Rgb(15, 12, 23), []
+x = fg Default, bg Rgb(13, 11, 21), []
+y = fg Rgb(216, 212, 232), bg Rgb(13, 11, 21), []
+z = fg Rgb(85, 82, 104), bg Rgb(13, 11, 21), []
+A = fg Rgb(49, 46, 62), bg Rgb(13, 11, 21), []
+B = fg Default, bg Rgb(12, 10, 19), []
+C = fg Rgb(127, 122, 150), bg Rgb(12, 10, 19), []
+D = fg Rgb(146, 140, 170), bg Rgb(12, 10, 19), ["italic"]
+E = fg Rgb(64, 60, 78), bg Rgb(12, 10, 19), []
+F = fg Rgb(55, 52, 68), bg Rgb(12, 10, 19), []
+G = fg Rgb(47, 44, 58), bg Rgb(12, 10, 19), []
+H = fg Rgb(38, 35, 48), bg Rgb(12, 10, 19), []
+I = fg Rgb(29, 27, 39), bg Rgb(12, 10, 19), []
+J = fg Rgb(21, 18, 29), bg Rgb(12, 10, 19), []
+K = fg Rgb(220, 132, 118), bg Rgb(12, 10, 19), []
+L = fg Rgb(216, 212, 232), bg Rgb(12, 10, 19), []
+M = fg Rgb(111, 184, 170), bg Rgb(12, 10, 19), []
+N = fg Rgb(116, 71, 69), bg Rgb(12, 10, 19), []
+O = fg Rgb(49, 46, 62), bg Rgb(12, 10, 19), []
+P = fg Rgb(85, 82, 104), bg Rgb(12, 10, 19), []
+Q = fg Rgb(224, 174, 112), bg Rgb(12, 10, 19), []
+R = fg Rgb(62, 97, 95), bg Rgb(12, 10, 19), []
+S = fg Rgb(118, 92, 66), bg Rgb(12, 10, 19), []
+T = fg Rgb(143, 184, 222), bg Rgb(12, 10, 19), []
+U = fg Rgb(78, 97, 121), bg Rgb(12, 10, 19), []
+V = fg Rgb(82, 80, 88), bg Rgb(12, 10, 19), []
+W = fg Rgb(42, 69, 64), bg Rgb(12, 10, 19), []
+X = fg Rgb(23, 36, 36), bg Rgb(12, 10, 19), []
+Y = fg Rgb(32, 31, 39), bg Rgb(12, 10, 19), []
+Z = fg Default, bg Rgb(38, 33, 56), []
+0 = fg Rgb(207, 200, 232), bg Rgb(38, 33, 56), []
+1 = fg Rgb(166, 199, 231), bg Rgb(12, 10, 19), []
+2 = fg Rgb(218, 216, 235), bg Rgb(12, 10, 19), []
+3 = fg Rgb(178, 207, 236), bg Rgb(12, 10, 19), []
+4 = fg Rgb(219, 220, 238), bg Rgb(12, 10, 19), []
+5 = fg Rgb(155, 192, 227), bg Rgb(12, 10, 19), []
+6 = fg Rgb(221, 224, 241), bg Rgb(12, 10, 19), []
+7 = fg Rgb(223, 227, 245), bg Rgb(12, 10, 19), []
+8 = fg Rgb(52, 23, 30), bg Rgb(23, 16, 33), []
+9 = fg Rgb(220, 132, 118), bg Rgb(52, 23, 30), []
+α = fg Default, bg Rgb(52, 23, 30), []
+β = fg Rgb(242, 239, 250), bg Rgb(52, 23, 30), ["bold"]
+γ = fg Rgb(111, 184, 170), bg Rgb(52, 23, 30), []
+δ = fg Rgb(62, 97, 95), bg Rgb(52, 23, 30), []
+ε = fg Rgb(116, 71, 69), bg Rgb(52, 23, 30), []
+ζ = fg Rgb(85, 82, 104), bg Rgb(52, 23, 30), []
+η = fg Rgb(200, 156, 232), bg Rgb(52, 23, 30), ["italic"]
+θ = fg Rgb(52, 23, 30), bg Rgb(15, 12, 23), []
+ι = fg Rgb(58, 25, 33), bg Rgb(23, 16, 33), []
+κ = fg Rgb(220, 132, 118), bg Rgb(58, 25, 33), []
+λ = fg Default, bg Rgb(58, 25, 33), []
+μ = fg Rgb(242, 239, 250), bg Rgb(58, 25, 33), ["bold"]
+ν = fg Rgb(111, 184, 170), bg Rgb(58, 25, 33), []
+ξ = fg Rgb(62, 97, 95), bg Rgb(58, 25, 33), []
+ο = fg Rgb(116, 71, 69), bg Rgb(58, 25, 33), []
+π = fg Rgb(85, 82, 104), bg Rgb(58, 25, 33), []
+ρ = fg Rgb(200, 156, 232), bg Rgb(58, 25, 33), ["italic"]
+σ = fg Rgb(58, 25, 33), bg Rgb(15, 12, 23), []

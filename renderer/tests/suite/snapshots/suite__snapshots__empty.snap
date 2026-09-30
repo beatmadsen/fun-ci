@@ -8,175 +8,189 @@ frame 0001 at 80x24
   |
   |          No runs yet.
   |
-  |          Set it up:    fun-ci init --everything
-  |          Then commit:  each commit starts a run
+  |          Set it up      fun-ci init --everything
+  |          Then commit    each commit starts a run
   |
-  |  q quit
+  |   q  quit
   |
   |
-  :
-  :
-  :
-  :
-  :
-  :
-  :
-  :..a.aaaa
-  :
-  :
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ccccccccccddcddddcddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :ffffffffffgggfggfggfffffhiiiiiihiiiihiiiiiiiiiiiihffffffffffffffffffffffffffffff
+  :jjjjjjjjjjkkkkjkkkkkkjjjjlllljlllllljlllllljljllljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :nnhihnoooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0002 at 80x24
   header dbd571e7
   |
   |
   |          No runs yet.
   |
-  |          Set it up:    fun-ci init --everything
-  |          Then commit:  each commit starts a run
+  |          Set it up      fun-ci init --everything
+  |          Then commit    each commit starts a run
   |
-  |  q quit
+  |   q  quit
   |
   |
-  :
-  :
-  :
-  :
-  :
-  :
-  :
-  :..a.aaaa
-  :
-  :
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ccccccccccddcddddcddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :ffffffffffgggfggfggfffffhiiiiiihiiiihiiiiiiiiiiiihffffffffffffffffffffffffffffff
+  :jjjjjjjjjjkkkkjkkkkkkjjjjlllljlllllljlllllljljllljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :nnhihnoooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0003 at 80x24
   header 0e960a24
   |
   |
   |          No runs yet.
   |
-  |          Set it up:    fun-ci init --everything
-  |          Then commit:  each commit starts a run
+  |          Set it up      fun-ci init --everything
+  |          Then commit    each commit starts a run
   |
-  |  q quit
+  |   q  quit
   |
   |
-  :
-  :
-  :
-  :
-  :
-  :
-  :
-  :..a.aaaa
-  :
-  :
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ccccccccccddcddddcddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :ffffffffffgggfggfggfffffhiiiiiihiiiihiiiiiiiiiiiihffffffffffffffffffffffffffffff
+  :jjjjjjjjjjkkkkjkkkkkkjjjjlllljlllllljlllllljljllljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :nnhihnoooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0004 at 80x24
   header 0579dcbc
   |
   |
   |          No runs yet.
   |
-  |          Set it up:    fun-ci init --everything
-  |          Then commit:  each commit starts a run
+  |          Set it up      fun-ci init --everything
+  |          Then commit    each commit starts a run
   |
-  |  q quit
+  |   q  quit
   |
   |
-  :
-  :
-  :
-  :
-  :
-  :
-  :
-  :..a.aaaa
-  :
-  :
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ccccccccccddcddddcddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :ffffffffffgggfggfggfffffhiiiiiihiiiihiiiiiiiiiiiihffffffffffffffffffffffffffffff
+  :jjjjjjjjjjkkkkjkkkkkkjjjjlllljlllllljlllllljljllljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :nnhihnoooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0005 at 80x24
   header 31c91b72
   |
   |
   |          No runs yet.
   |
-  |          Set it up:    fun-ci init --everything
-  |          Then commit:  each commit starts a run
+  |          Set it up      fun-ci init --everything
+  |          Then commit    each commit starts a run
   |
-  |  q quit
+  |   q  quit
   |
   |
-  :
-  :
-  :
-  :
-  :
-  :
-  :
-  :..a.aaaa
-  :
-  :
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ccccccccccddcddddcddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :ffffffffffgggfggfggfffffhiiiiiihiiiihiiiiiiiiiiiihffffffffffffffffffffffffffffff
+  :jjjjjjjjjjkkkkjkkkkkkjjjjlllljlllllljlllllljljllljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :nnhihnoooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0006 at 80x24
   header 5895fa28
   |
   |
   |          No runs yet.
   |
-  |          Set it up:    fun-ci init --everything
-  |          Then commit:  each commit starts a run
+  |          Set it up      fun-ci init --everything
+  |          Then commit    each commit starts a run
   |
-  |  q quit
+  |   q  quit
   |
   |
-  :
-  :
-  :
-  :
-  :
-  :
-  :
-  :..a.aaaa
-  :
-  :
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ccccccccccddcddddcddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :ffffffffffgggfggfggfffffhiiiiiihiiiihiiiiiiiiiiiihffffffffffffffffffffffffffffff
+  :jjjjjjjjjjkkkkjkkkkkkjjjjlllljlllllljlllllljljllljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :nnhihnoooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0007 at 80x24
   header 2d1b7727
   |
   |
   |          No runs yet.
   |
-  |          Set it up:    fun-ci init --everything
-  |          Then commit:  each commit starts a run
+  |          Set it up      fun-ci init --everything
+  |          Then commit    each commit starts a run
   |
-  |  q quit
+  |   q  quit
   |
   |
-  :
-  :
-  :
-  :
-  :
-  :
-  :
-  :..a.aaaa
-  :
-  :
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ccccccccccddcddddcddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :ffffffffffgggfggfggfffffhiiiiiihiiiihiiiiiiiiiiiihffffffffffffffffffffffffffffff
+  :jjjjjjjjjjkkkkjkkkkkkjjjjlllljlllllljlllllljljllljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :nnhihnoooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 frame 0008 at 80x24
   header d5aa645c
   |
   |
   |          No runs yet.
   |
-  |          Set it up:    fun-ci init --everything
-  |          Then commit:  each commit starts a run
+  |          Set it up      fun-ci init --everything
+  |          Then commit    each commit starts a run
   |
-  |  q quit
+  |   q  quit
   |
   |
-  :
-  :
-  :
-  :
-  :
-  :
-  :
-  :..a.aaaa
-  :
-  :
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :ccccccccccddcddddcddddcccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :ffffffffffgggfggfggfffffhiiiiiihiiiihiiiiiiiiiiiihffffffffffffffffffffffffffffff
+  :jjjjjjjjjjkkkkjkkkkkkjjjjlllljlllllljlllllljljllljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :nnhihnoooonnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+  :nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
 legend
-a = fg Default, bg Default, ["dim"]
+a = fg Default, bg Rgb(31, 21, 44), []
+b = fg Default, bg Rgb(27, 18, 38), []
+c = fg Default, bg Rgb(23, 16, 33), []
+d = fg Rgb(242, 239, 250), bg Rgb(23, 16, 33), ["bold"]
+e = fg Default, bg Rgb(19, 14, 29), []
+f = fg Default, bg Rgb(17, 13, 25), []
+g = fg Rgb(127, 122, 150), bg Rgb(17, 13, 25), []
+h = fg Default, bg Rgb(38, 33, 56), []
+i = fg Rgb(207, 200, 232), bg Rgb(38, 33, 56), []
+j = fg Default, bg Rgb(15, 12, 23), []
+k = fg Rgb(127, 122, 150), bg Rgb(15, 12, 23), []
+l = fg Rgb(146, 140, 170), bg Rgb(15, 12, 23), ["italic"]
+m = fg Default, bg Rgb(13, 11, 21), []
+n = fg Default, bg Rgb(12, 10, 19), []
+o = fg Rgb(85, 82, 104), bg Rgb(12, 10, 19), []

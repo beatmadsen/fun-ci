@@ -15,6 +15,11 @@ use fun_ci_renderer::grid::{Cell, Colour, Grid};
 
 const LETTERS: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789αβγδεζηθικλμνξοπρστυφχψω";
 
+/// The letters after `LETTERS` run out, for the many shades an effect sweeps through: Latin ones with accents.
+fn letters() -> impl Iterator<Item = char> {
+    LETTERS.chars().chain(('À'..='ɏ').filter(|letter| !matches!(letter, '×' | '÷')))
+}
+
 type Style = (Colour, Colour, Vec<&'static str>);
 
 /// The styles met so far, lettered in the order they were met.
@@ -31,12 +36,12 @@ impl Styles {
             self.0.push(style);
             self.0.len() - 1
         });
-        LETTERS.chars().nth(index).expect("more styles than a snapshot has letters for")
+        letters().nth(index).expect("more styles than a snapshot has letters for")
     }
 
     fn legend(&self) -> String {
         let line = |(letter, (fg, bg, attrs)): (char, &Style)| format!("{letter} = fg {fg:?}, bg {bg:?}, {attrs:?}\n");
-        LETTERS.chars().zip(&self.0).map(line).collect()
+        letters().zip(&self.0).map(line).collect()
     }
 }
 

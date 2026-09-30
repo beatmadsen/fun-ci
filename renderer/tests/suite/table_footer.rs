@@ -3,7 +3,7 @@
 //! layout, which projects' trunks are stale.
 
 use fun_ci_renderer::model::Board;
-use fun_ci_renderer::table::footer::{aside, keys, stale};
+use fun_ci_renderer::table::footer::{Offer, aside, keys, offered, stale};
 use serde_json::{Value, json};
 
 const NOW: i64 = 1_790_000_000;
@@ -18,22 +18,62 @@ fn board(status: &str, extra: &Value) -> Board {
 
 #[test]
 fn the_keys_offer_cancel_while_a_run_is_running() {
-    assert_eq!(keys(&board("running", &json!({}))), "j/k move      c cancel      q quit");
+    assert_eq!(keys(&board("running", &json!({}))).keys, [("j/k", "move"), ("c", "cancel"), ("q", "quit")]);
 }
 
 #[test]
 fn the_keys_offer_cancel_while_a_run_waits_to_start() {
-    assert!(keys(&board("pending", &json!({}))).contains("c cancel"));
+    assert!(keys(&board("pending", &json!({}))).keys.contains(&("c", "cancel")));
 }
 
 #[test]
 fn the_keys_leave_cancel_out_when_nothing_can_be_cancelled() {
-    assert_eq!(keys(&board("passed", &json!({}))), "j/k move      q quit");
+    assert_eq!(keys(&board("passed", &json!({}))).keys, [("j/k", "move"), ("q", "quit")]);
 }
 
 #[test]
-fn confirming_a_cancel_names_the_branch_and_short_sha() {
-    assert_eq!(keys(&board("running", &json!({"confirming": true}))), "Cancel feat/search (d4e5f67)? y / n");
+fn the_keys_ask_no_question_when_nothing_is_being_confirmed() {
+    assert_eq!(keys(&board("running", &json!({}))).question, None);
+}
+
+#[test]
+fn confirming_a_cancel_asks_about_the_branch_and_short_sha() {
+    assert_eq!(keys(&board("running", &json!({"confirming": true}))).question.as_deref(), Some("Cancel feat/search (d4e5f67)?"));
+}
+
+#[test]
+fn confirming_a_cancel_is_answered_with_y_or_n() {
+    assert_eq!(keys(&board("running", &json!({"confirming": true}))).keys, [("y", "yes"), ("n", "no")]);
+}
+
+#[test]
+fn each_key_sits_on_its_cap_with_its_word_beside_it() {
+    let (parts, _) = offered(&Offer { question: None, keys: vec![("q", "quit")] }, 2);
+    let placed: Vec<(usize, &str)> = parts.iter().map(|(at, text, _)| (*at, text.as_str())).collect();
+
+    assert_eq!(placed, [(2, " q "), (6, "quit")]);
+}
+
+#[test]
+fn a_key_s_cap_is_lighter_than_the_night() {
+    let (parts, _) = offered(&Offer { question: None, keys: vec![("q", "quit")] }, 2);
+
+    assert_eq!(parts[0].2.bg, Some(fun_ci_renderer::table::night::CAP.into()));
+}
+
+#[test]
+fn the_keys_end_after_the_last_word() {
+    let (_, end) = offered(&Offer { question: None, keys: vec![("j/k", "move"), ("q", "quit")] }, 2);
+
+    assert_eq!(end, 2 + " j/k ".len() + 1 + "move".len() + 4 + " q ".len() + 1 + "quit".len());
+}
+
+#[test]
+fn the_question_comes_before_the_keys_that_answer_it() {
+    let (parts, _) = offered(&Offer { question: Some("Cancel?".into()), keys: vec![("y", "yes")] }, 0);
+    let placed: Vec<(usize, &str)> = parts.iter().map(|(at, text, _)| (*at, text.as_str())).collect();
+
+    assert_eq!(placed, [(0, "Cancel?"), (9, " y "), (13, "yes")]);
 }
 
 #[test]
@@ -79,7 +119,7 @@ fn what_was_left_out_ends_at_the_right_margin() {
 fn what_was_left_out_keeps_five_columns_from_the_keys() {
     let text = footer_text(60, 2);
 
-    assert_eq!(text.find("2 passed"), Some(12 + "j/k move      q quit".len() + 5));
+    assert_eq!(text.find("2 passed"), Some(12 + " j/k  move    ".len() + " q  quit".len() + 5));
 }
 
 #[test]

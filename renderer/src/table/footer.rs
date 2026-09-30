@@ -1,11 +1,13 @@
 //! The footer's words (design.md, The console): the keys that do something
-//! now, or the prompt to confirm a cancel; what a short screen left out; and
-//! in the flat layout, where no label can say it, which trunks are stale.
+//! now, each on a cap, or the question confirming a cancel and the keys that
+//! answer it; what a short screen left out; and in the flat layout, where no
+//! label can say it, which trunks are stale.
 
 use ratatui::text::Line;
 
 use super::line::placed;
-use super::night::{NOTE, QUIET, ink};
+use super::line::Part;
+use super::night::{CAP, KEY, NOTE, QUIET, ink};
 use super::paint::fetched;
 use super::{Drawn, Frame};
 use crate::format::{columns, cut, project_name, short_sha};
@@ -14,18 +16,46 @@ use crate::model::{Board, Run};
 /// The least space between the keys and what the footer says beside them.
 const APART: usize = 5;
 
-const KEYS: &str = "j/k move      c cancel      q quit";
-const KEYS_WITHOUT_CANCEL: &str = "j/k move      q quit";
+/// The space between one key's word and the next key's cap.
+const BETWEEN: usize = 4;
+
+/// A key and what it does: `("q", "quit")`.
+pub type Key = (&'static str, &'static str);
+
+const MOVE: Key = ("j/k", "move");
+const CANCEL: Key = ("c", "cancel");
+pub const QUIT: Key = ("q", "quit");
+
+/// What the footer offers: the question it asks, if it asks one, and the keys.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Offer {
+    pub question: Option<String>,
+    pub keys: Vec<Key>,
+}
 
 /// The keys, `c cancel` among them only while a run is running or waits to
-/// start; or the prompt naming the run the cursor would cancel.
+/// start; or the question naming the run the cursor would cancel, `y` and `n`.
 #[must_use]
-pub fn keys(board: &Board) -> String {
+pub fn keys(board: &Board) -> Offer {
     if let Some(run) = confirming(board) {
-        return format!("Cancel {} ({})? y / n", run.commit.branch, short_sha(&run.commit.sha));
+        let question = format!("Cancel {} ({})?", run.commit.branch, short_sha(&run.commit.sha));
+        return Offer { question: Some(question), keys: vec![("y", "yes"), ("n", "no")] };
     }
     let cancellable = board.runs.iter().any(|run| matches!(run.status(), "running" | "pending"));
-    (if cancellable { KEYS } else { KEYS_WITHOUT_CANCEL }).to_string()
+    Offer { question: None, keys: if cancellable { vec![MOVE, CANCEL, QUIT] } else { vec![MOVE, QUIT] } }
+}
+
+/// `offer` from column `at`: the question, then each key on its cap with
+/// its word beside it; and the column after it all.
+#[must_use]
+pub fn offered(offer: &Offer, at: usize) -> (Vec<Part>, usize) {
+    let mut parts: Vec<Part> = offer.question.iter().map(|question| (at, question.clone(), ink(KEY))).collect();
+    let mut next = offer.question.as_ref().map_or(at, |question| at + columns(question) + 2);
+    for (key, word) in &offer.keys {
+        parts.extend([(next, format!(" {key} "), ink(KEY).bg(CAP.into())), (next + columns(key) + 3, (*word).to_string(), ink(QUIET))]);
+        next += columns(key) + 3 + columns(word) + BETWEEN;
+    }
+    (parts, next.saturating_sub(BETWEEN))
 }
 
 /// `2 passed not shown`, or nothing when nothing was left out.
@@ -49,9 +79,11 @@ fn confirming(board: &Board) -> Option<&Run> {
 /// how many passed rows the screen was too short for, cut if it must be.
 #[must_use]
 pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line<'static> {
-    let (width, keys) = (usize::from(frame.width), keys(board));
-    let keys_end = drawn.columns.label + columns(&keys) + APART;
+    let width = usize::from(frame.width);
+    let (mut parts, end) = offered(&keys(board), drawn.columns.label);
+    let keys_end = end + APART;
     let aside = cut(&aside(drawn.unshown), width.saturating_sub(keys_end + drawn.columns.margin));
     let aside_at = width.saturating_sub(drawn.columns.margin + columns(&aside)).max(keys_end);
-    placed(vec![(drawn.columns.label, keys, ink(QUIET)), (aside_at, aside, ink(NOTE).italic())])
+    parts.push((aside_at, aside, ink(NOTE).italic()));
+    placed(parts)
 }

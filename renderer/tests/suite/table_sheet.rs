@@ -1,7 +1,8 @@
 //! The table's lines drawn one under another, and the lead's block behind
-//! its own (design.md, The console): deep paper from the margin to two past
-//! the age, between a top edge of lower half blocks and a bottom edge of
-//! upper ones in the paper's colour, with no paper behind the edges.
+//! its own (design.md, The console): a card of deep paper from the margin to
+//! two past the age, between a top edge of lower half blocks and a bottom
+//! edge of upper ones in the paper's colour, its corners rounded with
+//! quadrants, and whatever is behind it showing past its edges.
 
 use crate::support::paint::{COLUMNS, WIDTH, failed, passed, rgb};
 use crate::support::shown::{blank, shown};
@@ -62,7 +63,7 @@ fn the_block_s_top_edge_is_a_row_of_lower_half_blocks_in_its_colour() {
     let run = failed();
     let grid = on_sheet(&[], block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]));
 
-    assert_eq!((grid.cells[0][COLUMNS.margin].text.as_str(), grid.cells[0][COLUMNS.margin].fg), ("▄", rgb(night::WINE)));
+    assert_eq!((grid.cells[0][COLUMNS.margin + 1].text.as_str(), grid.cells[0][COLUMNS.margin + 1].fg), ("▄", rgb(night::WINE)));
 }
 
 #[test]
@@ -70,11 +71,11 @@ fn the_block_s_bottom_edge_is_a_row_of_upper_half_blocks_in_its_colour() {
     let run = failed();
     let grid = on_sheet(&[], block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]));
 
-    assert_eq!((grid.cells[2][COLUMNS.margin].text.as_str(), grid.cells[2][COLUMNS.margin].fg), ("▀", rgb(night::WINE)));
+    assert_eq!((grid.cells[2][COLUMNS.margin + 1].text.as_str(), grid.cells[2][COLUMNS.margin + 1].fg), ("▀", rgb(night::WINE)));
 }
 
 #[test]
-fn the_block_s_edges_have_no_paper_behind_them() {
+fn the_block_s_edges_leave_what_is_behind_them_showing() {
     let run = failed();
     let grid = on_sheet(&[], block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]));
 
@@ -119,7 +120,7 @@ fn the_block_takes_in_the_lead_s_conflict() {
     let run = failed();
     let grid = on_sheet(&[], block(&[Piece::Edge(true), Piece::Row(&run), Piece::Conflict(&run), Piece::Edge(false)]));
 
-    assert_eq!((grid.cells[2][COLUMNS.margin].bg, grid.cells[3][COLUMNS.margin].text.as_str()), (rgb(night::WINE), "▀"));
+    assert_eq!((grid.cells[2][COLUMNS.margin].bg, grid.cells[3][COLUMNS.margin + 1].text.as_str()), (rgb(night::WINE), "▀"));
 }
 
 #[test]
@@ -136,5 +137,22 @@ fn a_sheet_drawn_further_in_moves_its_block_with_it() {
     let paper = block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]);
     Sheet { lines: &[], paper }.render(ratatui::layout::Rect::new(3, 0, WIDTH - 3, 4), &mut buffer);
 
-    assert_eq!(shown(&buffer).cells[0][COLUMNS.age_end + 2 + 2].text, "▄");
+    assert_eq!(shown(&buffer).cells[0][COLUMNS.age_end + 2 + 1].text, "▄");
+}
+
+#[test]
+fn the_block_s_corners_are_rounded_with_quadrants() {
+    let run = failed();
+    let grid = on_sheet(&[], block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]));
+    let (left, right) = (COLUMNS.margin, COLUMNS.age_end + 1);
+
+    assert_eq!([&grid.cells[0][left].text, &grid.cells[0][right].text, &grid.cells[2][left].text, &grid.cells[2][right].text], ["▗", "▖", "▝", "▘"]);
+}
+
+#[test]
+fn the_block_s_sides_are_paper_too() {
+    let run = failed();
+    let grid = on_sheet(&[], block(&[Piece::Edge(true), Piece::Row(&run), Piece::Edge(false)]));
+
+    assert_eq!((grid.cells[1][COLUMNS.margin].bg, grid.cells[1][COLUMNS.age_end + 1].bg), (rgb(night::WINE), rgb(night::WINE)));
 }

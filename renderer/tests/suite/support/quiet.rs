@@ -7,6 +7,7 @@ use fun_ci_renderer::grid::{Colour, Grid};
 use fun_ci_renderer::headless::emulate;
 use fun_ci_renderer::protocol::parse;
 use fun_ci_renderer::replay::replay;
+use fun_ci_renderer::table::sky::shade;
 use serde_json::{Value, json};
 
 pub const NOW: i64 = 1_790_000_000;
@@ -44,18 +45,35 @@ pub fn screen_with(board: &Value, (cols, rows): (u16, u16)) -> Grid {
 
 /// The screen's lines below the header that say something, trimmed, each cut
 /// at its first wide gap: a label whole, a row by its branch. The block's
-/// edges, lines of half blocks, say nothing.
+/// edges, lines of half blocks and quadrants, say nothing, nor does a row's stripe.
 pub fn said(grid: &Grid) -> Vec<String> {
-    let lines: Vec<String> = grid.text().lines().skip(HEADER).map(|l| l.trim().to_string()).collect();
-    let saying = |line: &String| line.chars().any(|c| !matches!(c, '▄' | '▀' | ' '));
-    lines.into_iter().filter(saying).map(|l| l.split("  ").next().unwrap_or_default().to_string()).collect()
+    let lines: Vec<String> = grid.text().lines().skip(HEADER).map(words).collect();
+    lines.into_iter().filter(|line| !line.is_empty()).collect()
+}
+
+/// What `line` says up to its first wide gap, its stripe and any block edge left out.
+fn words(line: &str) -> String {
+    let saying = line.trim().trim_start_matches('▌').trim();
+    let edge = saying.chars().all(|c| matches!(c, '▄' | '▀' | '▗' | '▖' | '▝' | '▘'));
+    if edge { String::new() } else { saying.split("  ").next().unwrap_or_default().to_string() }
+}
+
+/// Whether `cells`, screen row `row`, has any cell on the block's paper
+/// rather than the sky or a key's cap.
+fn on_paper((row, cells): &(usize, &Vec<fun_ci_renderer::grid::Cell>)) -> bool {
+    let ([r, g, b], [cr, cg, cb]) = (shade(row - HEADER), fun_ci_renderer::table::night::CAP);
+    cells.iter().any(|cell| cell.bg != Colour::Rgb(r, g, b) && cell.bg != Colour::Rgb(cr, cg, cb))
+}
+
+/// `line` without its leading blanks or the stripe of a row that needs you or runs.
+pub fn unstriped(line: &str) -> &str {
+    line.trim_start().trim_start_matches('▌').trim_start()
 }
 
 /// Each screen row below the header with any cell on paper, by its first words.
 pub fn in_the_block(grid: &Grid) -> Vec<String> {
-    let rows = grid.cells.iter().enumerate().skip(HEADER);
-    let on_paper = rows.filter(|(_, cells)| cells.iter().any(|cell| cell.bg != Colour::Default));
-    on_paper.map(|(row, _)| grid.text().lines().nth(row).unwrap().trim().split("  ").next().unwrap().to_string()).collect()
+    let rows = grid.cells.iter().enumerate().skip(HEADER).filter(on_paper);
+    rows.map(|(row, _)| words(grid.text().lines().nth(row).unwrap())).filter(|said| !said.is_empty()).collect()
 }
 
 pub fn board(runs: &[Value], cursor: Option<usize>) -> Value {
@@ -69,9 +87,13 @@ pub fn screen_after(board: &Value, ticks: usize, (cols, rows): (u16, u16)) -> Gr
     emulate(&replay(&messages, &Library::builtin(), (cols, rows), Depth::TrueColour)).pop().unwrap()
 }
 
-/// The colour of the block's paper on screen.
+/// The colour of the block's paper on screen: the first background below the header that is not the sky.
 pub fn paper(grid: &Grid) -> Colour {
-    grid.cells.iter().skip(HEADER).flatten().map(|cell| cell.bg).find(|bg| *bg != Colour::Default).unwrap()
+    let off_sky = |(row, cells): (usize, &Vec<fun_ci_renderer::grid::Cell>)| {
+        let [r, g, b] = shade(row - HEADER);
+        cells.iter().map(|cell| cell.bg).find(|bg| *bg != Colour::Rgb(r, g, b))
+    };
+    grid.cells.iter().enumerate().skip(HEADER).find_map(off_sky).unwrap()
 }
 
 /// Two projects of six branches, a failure and five passes each.

@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- The console's table has a look of its own. The header's night sky carries
+  on below it; a row that needs you or is running has a stripe in the colour
+  of why; each row's marks are joined into a track that fills from left to
+  right (`✓─✓─◆┄·`); project names have a fading rule; passed branches folded
+  into one line each have a `✓`; and the keys sit on caps. The block is a
+  card with rounded corners, wine when its row needs you and indigo when the
+  cursor only rests there.
+- A run that ends washes its row in teal, coral or amber, draining from left
+  to right, and a band of light travels along each running row.
+- The failure and pass banners keep the sky behind them and take their
+  colours from the table's.
+
 ## [2.1.0] - 2026-09-30
 
 ### Added

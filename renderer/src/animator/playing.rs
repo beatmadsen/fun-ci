@@ -8,13 +8,15 @@ use super::draw::{self, Places};
 use super::effect::{Effect, Kind};
 use super::looks::mark_effects;
 use super::marks::Marks;
+use super::rows::Rows;
 use crate::model::Run;
 
-/// The effects playing, their marks' effects, and where the board put things.
+/// The effects playing, their marks' and rows' effects, and where the board put things.
 #[derive(Debug, Default)]
 pub struct Playing {
     effects: Vec<Effect>,
     marks: Marks,
+    rows: Rows,
     places: Places,
 }
 
@@ -23,6 +25,7 @@ impl Playing {
     pub fn start(&mut self, kind: Kind, (run_id, stage): (u64, &str), play_ms: u64) {
         self.effects.retain(|effect| !effect.is_for(kind, run_id, stage));
         self.effects.push(Effect::new(kind, (run_id, stage), play_ms));
+        self.rows.wash(kind, run_id, (&self.places, play_ms));
         let mark = (run_id, stage.to_string());
         self.marks.cancel(&mark);
         for (after_ms, effect) in mark_effects(kind, stage) {
@@ -38,12 +41,14 @@ impl Playing {
     /// Whether any effect is still playing.
     #[must_use]
     pub fn busy(&self) -> bool {
-        !self.effects.is_empty() || self.marks.playing()
+        !self.effects.is_empty() || self.marks.playing() || self.rows.washing()
     }
 
     /// Draws every effect as of `play_ms` into `buf`, over `runs`' board.
     pub fn draw(&mut self, buf: &mut Buffer, runs: &[Run], play_ms: u64) {
         self.effects.retain(|effect| !effect.finished(play_ms));
+        self.rows.follow(runs, &self.places);
+        self.rows.draw(buf, &self.places, play_ms);
         self.marks.draw(buf, &self.places, play_ms);
         draw::footer(buf, &self.effects, (runs, &self.places), play_ms);
     }

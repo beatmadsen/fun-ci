@@ -1,18 +1,32 @@
 //! The page's lines drawn one under another, and the lead's block behind its
-//! own (design.md, The console): ratatui's `Block` with the proportional wide
-//! border set, its top and bottom edges only, lower half blocks above the
-//! lead's row and upper ones below it in the paper's colour, and the paper
-//! between them from the margin to two past the age.
+//! own (design.md, The console): a card of ratatui's `Block`, lower half
+//! blocks above the lead's row and upper ones below it in the paper's colour,
+//! quadrants rounding its corners, and the paper between them from the margin
+//! to two past the age. The sky shows past its edges.
 
 use ratatui::buffer::Buffer;
 use ratatui::layout::Rect;
-use ratatui::style::{Color, Style};
-use ratatui::symbols::border::PROPORTIONAL_WIDE;
+use ratatui::style::Style;
+use ratatui::symbols::border;
 use ratatui::text::Line;
 use ratatui::widgets::{Block, Borders, Widget};
 
 use super::columns::Columns;
+use super::night::ink;
 use super::stack::Piece;
+
+/// The card's edges: half blocks along the top and bottom, a quadrant at
+/// each corner, and blank sides the paper shows through.
+const CARD: border::Set = border::Set {
+    top_left: "▗",
+    top_right: "▖",
+    bottom_left: "▝",
+    bottom_right: "▘",
+    vertical_left: " ",
+    vertical_right: " ",
+    horizontal_top: "▄",
+    horizontal_bottom: "▀",
+};
 
 /// The lead's block: where it lies in the table, which of its edges are on
 /// the screen, and its colour.
@@ -35,9 +49,16 @@ impl Paper {
         Some(Self { area, borders: edges(&pieces[first], &pieces[last]), colour })
     }
 
-    fn block(self) -> Block<'static> {
-        let edge = Style::new().fg(self.colour.into()).bg(Color::Reset);
-        Block::new().borders(self.borders).border_set(PROPORTIONAL_WIDE).style(Style::new().bg(self.colour.into())).border_style(edge)
+    /// The card on `at`: the paper between its edges, then the edges over what is behind them.
+    fn render(self, at: Rect, buf: &mut Buffer) {
+        buf.set_style(self.between_edges(at), Style::new().bg(self.colour.into()));
+        Block::new().borders(self.borders | Borders::LEFT | Borders::RIGHT).border_set(CARD).border_style(ink(self.colour)).render(at, buf);
+    }
+
+    /// The rows of `at` between the edges the card shows.
+    fn between_edges(self, at: Rect) -> Rect {
+        let (top, bottom) = (u16::from(self.borders.contains(Borders::TOP)), u16::from(self.borders.contains(Borders::BOTTOM)));
+        Rect { y: at.y + top, height: at.height.saturating_sub(top + bottom), ..at }
     }
 
     /// Where line `line` of the table is drawn from, `from`, cut where the
@@ -59,7 +80,7 @@ impl Widget for Sheet<'_> {
     fn render(self, area: Rect, buf: &mut Buffer) {
         if let Some(paper) = self.paper {
             let at = Rect { x: area.x.saturating_add(paper.area.x), y: area.y.saturating_add(paper.area.y), ..paper.area };
-            paper.block().render(at.intersection(area), buf);
+            paper.render(at.intersection(area), buf);
         }
         for ((line, text), y) in (0..).zip(self.lines).zip(area.top()..area.bottom()) {
             let from = Rect { y, ..area };
