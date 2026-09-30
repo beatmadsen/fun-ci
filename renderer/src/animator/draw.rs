@@ -9,6 +9,7 @@ use ratatui::layout::Rect;
 use super::effect::Effect;
 use super::footer::banner;
 use super::overlay::restyle;
+use crate::format::columns;
 use crate::model::{Run, STAGES};
 
 /// Where things are on the screen this frame, from 0: each run's row, the
@@ -36,7 +37,7 @@ pub fn footer(buf: &mut Buffer, effects: &[Effect], (runs, places): (&[Run], &Pl
     let (Some((text, style)), Some(y)) = (shown, places.banner.and_then(|y| u16::try_from(y).ok())) else { return };
     let line = Rect::new(buf.area.x, y, buf.area.width, 1).intersection(buf.area);
     line.positions().for_each(|at| buf[at].reset());
-    let pad = usize::from(line.width).saturating_sub(text.chars().count()) / 2;
+    let pad = usize::from(line.width).saturating_sub(columns(&text)) / 2;
     buf.set_stringn(line.x + u16::try_from(pad).unwrap_or(0), line.y, text, usize::from(line.width), style);
 }
 

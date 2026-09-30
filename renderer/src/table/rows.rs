@@ -6,7 +6,7 @@ use super::marks::marks;
 use super::night::{BRANCH, CURSOR, FAILED, LABEL, PASSED, QUIET, RUNNING, TIMED_OUT, pale};
 use super::paint::{Paint, Part};
 use super::words::said;
-use crate::format::{age, cut, project_name};
+use crate::format::{age, columns, cut, project_name};
 use crate::model::Run;
 
 /// Room kept on a folded line for how many more it could not name, `3 more`.
@@ -80,20 +80,20 @@ fn starts(runs: &[&Run], paint: &Paint) -> Vec<usize> {
 
 /// A folded branch's name, a space and its age.
 fn wide(run: &Run, paint: &Paint) -> usize {
-    run.commit.branch.chars().count() + 1 + when(run, paint).chars().count()
+    columns(&run.commit.branch) + 1 + columns(&when(run, paint))
 }
 
 /// `3 more` at `at`, quietly, and where what follows it may start.
 fn more(count: usize, at: usize) -> (Part, usize) {
     let text = format!("{count} more");
-    let after = at + text.chars().count() + 5;
+    let after = at + columns(&text) + 5;
     ((at, text, Style::plain(pale(QUIET))), after)
 }
 
 /// A folded branch at `at`: its name pale, its age quieter beside it.
 fn one_folded(run: &Run, paint: &Paint, at: usize) -> [Part; 2] {
     let name = run.commit.branch.clone();
-    let age_at = at + name.chars().count() + 1;
+    let age_at = at + columns(&name) + 1;
     [(at, name, Style::plain(pale(BRANCH))), (age_at, when(run, paint), Style::plain(pale(QUIET)))]
 }
 

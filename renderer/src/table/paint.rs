@@ -10,7 +10,7 @@ use super::night::{CONFLICT, LABEL, NOTE, QUIET};
 use super::rows::{folded, row};
 use super::sections::{Section, spaced};
 use super::stack::Piece;
-use crate::format::{age, project_name};
+use crate::format::{age, columns, project_name};
 use crate::model::{Run, StaleTrunk};
 
 /// What every line of one screen is drawn with.
@@ -50,7 +50,7 @@ fn edge(top: bool, paint: &Paint) -> Part {
 /// A project's name letter-spaced, and when its trunk was last fetched if that was long ago.
 fn label(section: &Section, paint: &Paint) -> Vec<Part> {
     let name = spaced(&section.project);
-    let note_at = paint.columns.label + name.chars().count() + 6;
+    let note_at = paint.columns.label + columns(&name) + 6;
     let mut parts = vec![(paint.columns.label, name, Style::plain(LABEL))];
     let stale = paint.stale.iter().find(|trunk| project_name(&trunk.project) == section.project);
     parts.extend(stale.map(|trunk| (note_at, fetched(trunk, paint.frame.now_ms), Style::italic(NOTE))));

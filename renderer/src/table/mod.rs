@@ -19,6 +19,7 @@ pub mod stack;
 pub mod words;
 
 use crate::maths::{Portable, byte, float};
+use crate::format::columns;
 use crate::model::{Board, Run};
 use columns::Columns;
 use ladder::{Fitted, fit};
@@ -117,13 +118,13 @@ fn rows(pieces: &[Piece]) -> Vec<(u64, usize)> {
 }
 
 fn longest_name(board: &Board) -> usize {
-    board.runs.iter().map(|run| run.commit.branch.chars().count()).max().unwrap_or(0)
+    board.runs.iter().map(|run| columns(&run.commit.branch)).max().unwrap_or(0)
 }
 
 fn longest_words(board: &Board, frame: Frame) -> usize {
-    board.runs.iter().map(|run| words::said(run, frame.now_ms).chars().count()).max().unwrap_or(0) + WORDS_SPARE
+    board.runs.iter().map(|run| columns(&words::said(run, frame.now_ms))).max().unwrap_or(0) + WORDS_SPARE
 }
 
 fn widest_project(sections: &[Section]) -> usize {
-    sections.iter().map(|section| section.project.chars().count()).max().unwrap_or(0)
+    sections.iter().map(|section| columns(&section.project)).max().unwrap_or(0)
 }

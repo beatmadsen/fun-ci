@@ -2,7 +2,7 @@
 //! `RelativeTime`, `RowFormatter.format_project`); expected values were
 //! produced by running the Ruby code.
 
-use fun_ci_renderer::format::{age, duration, project_name, short_sha};
+use fun_ci_renderer::format::{age, columns, cut, duration, project_name, short_sha};
 
 macro_rules! cases {
     ($($name:ident: $actual:expr => $expected:expr;)*) => {
@@ -11,6 +11,11 @@ macro_rules! cases {
 }
 
 cases! {
+    a_name_that_fits_its_room_is_left_whole: cut("main", 4) => "main";
+    a_name_too_long_for_its_room_ends_in_an_ellipsis: cut("feature", 4) => "fea…";
+    a_wide_name_is_cut_by_the_columns_it_fills: cut("機能検索", 5) => "機能…";
+    a_wide_character_that_would_cross_the_room_s_edge_is_left_out: cut("機能検索", 6) => "機能…";
+    a_wide_character_fills_two_columns: columns("機能") => 4;
     a_duration_under_a_second_shows_tenths: duration(300) => "0.3s";
     a_whole_second_duration_has_no_decimals: duration(1000) => "1s";
     a_tie_rounds_to_even_like_sprintf: duration(1250) => "1.2s";

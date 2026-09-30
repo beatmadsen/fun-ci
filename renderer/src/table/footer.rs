@@ -6,7 +6,7 @@ use super::line::{Line, Style};
 use super::night::{NOTE, QUIET};
 use super::paint::fetched;
 use super::{Drawn, Frame};
-use crate::format::{cut, project_name, short_sha};
+use crate::format::{columns, cut, project_name, short_sha};
 use crate::model::{Board, Run};
 
 /// The least space between the keys and what the footer says beside them.
@@ -48,9 +48,9 @@ fn confirming(board: &Board) -> Option<&Run> {
 #[must_use]
 pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line {
     let (width, keys) = (usize::from(frame.width), keys(board));
-    let keys_end = drawn.columns.label + keys.chars().count() + APART;
+    let keys_end = drawn.columns.label + columns(&keys) + APART;
     let aside = cut(&aside(drawn.unshown), width.saturating_sub(keys_end + drawn.columns.margin));
-    let aside_at = width.saturating_sub(drawn.columns.margin + aside.chars().count()).max(keys_end);
+    let aside_at = width.saturating_sub(drawn.columns.margin + columns(&aside)).max(keys_end);
     let mut line = Line::default();
     line.put(drawn.columns.label, &keys, Style::plain(QUIET));
     line.put(aside_at, &aside, Style::italic(NOTE));

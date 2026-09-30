@@ -67,3 +67,4 @@ mod scene_pools;
 mod scenes;
 mod terminal_restore;
 mod trunk_events;
+mod wide_names;

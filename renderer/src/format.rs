@@ -42,11 +42,23 @@ pub fn project_name(path: &str) -> String {
     Path::new(path).file_name().map_or(String::new(), |n| n.to_string_lossy().into_owned())
 }
 
+/// How many columns `text` fills on screen: two for each character of
+/// Chinese, Japanese or Korean, and the like; one for most others.
+#[must_use]
+pub fn columns(text: &str) -> usize {
+    unicode_width::UnicodeWidthStr::width(text)
+}
+
 /// `text` in at most `room` columns, its end replaced by `…` when cut.
 #[must_use]
 pub fn cut(text: &str, room: usize) -> String {
-    if text.chars().count() <= room {
+    if columns(text) <= room {
         return text.to_string();
     }
-    text.chars().take(room.saturating_sub(1)).chain(['…']).collect()
+    let mut filled = 0;
+    let fitting = text.chars().take_while(|c| {
+        filled += unicode_width::UnicodeWidthChar::width(*c).unwrap_or(0);
+        filled < room
+    });
+    fitting.chain(['…']).collect()
 }
