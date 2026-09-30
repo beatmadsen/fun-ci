@@ -1,7 +1,7 @@
 //! Success: fireworks over the hills. Shells climb on trails of sparks,
 //! burst into falling, crackling stars, and PASSED shines out below.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use super::lettering::{Style, title};
 use super::sky::{hills, sky, stars};
 use crate::animation::Scene;

@@ -1,7 +1,7 @@
 //! Rough fieldstones set in mortar, as a medieval mason laid them: rounded,
 //! irregular stones of different sizes and shades, no two alike.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::art::noise::{dice, value};
 use crate::art::{Shade, mix, scale, smoothstep};
 

@@ -1,7 +1,7 @@
 //! Success: a gold trophy on a turning sunburst, a glint sweeping over it,
 //! sparkles around it and confetti tumbling down.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::{square, streak};

@@ -1,7 +1,7 @@
 //! Lint passed: a spirit level. Its bubble wobbles along the vial, settles
 //! dead centre between the marks, and a teal tick lights up above it.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::{glow, haze, streak};

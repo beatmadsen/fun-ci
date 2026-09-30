@@ -1,7 +1,7 @@
 //! Resting after a pass: a still, deep teal dusk with a soft band of light
 //! along the horizon that breathes very slowly, and a steady tick above it.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::{Shade, add, mix, scale, seconds};

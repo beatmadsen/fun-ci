@@ -2,7 +2,7 @@
 //! cracks race out jagged from the point with a ring round it, the pane
 //! flushes red, and shards break off and fall.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::{glow, streak};

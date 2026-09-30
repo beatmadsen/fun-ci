@@ -5,7 +5,6 @@
 pub mod canvas;
 pub mod cells;
 pub mod light;
-pub mod math;
 pub mod noise;
 pub mod output;
 pub mod sprite;
@@ -14,11 +13,7 @@ pub mod sprite;
 /// a canvas may go above 1.0 until it is toned.
 pub type Shade = [f64; 3];
 
-/// A pixel position or size as a float.
-#[must_use]
-pub fn float(n: usize) -> f64 {
-    f64::from(u32::try_from(n).unwrap_or(u32::MAX))
-}
+pub use crate::maths::float;
 
 /// Seconds in `t_ms` milliseconds.
 #[must_use]

@@ -2,7 +2,7 @@
 //! snow on their boughs, on a soft slope under a clouded night, the moon a
 //! pale smudge behind the clouds.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::{glow, haze};

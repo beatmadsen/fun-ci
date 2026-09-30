@@ -1,7 +1,7 @@
 //! Idle: a quiet night. Stars twinkle over rolling hills, a crescent moon
 //! glows, a cottage keeps its window lit, and now and then a star falls.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use super::sky::{hills, sky, stars};
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;

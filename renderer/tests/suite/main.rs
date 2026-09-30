@@ -17,6 +17,7 @@ mod cli_options;
 mod clocks;
 mod console_depth;
 mod contract_fixtures;
+mod decoupling;
 mod effects;
 mod fireplace;
 mod format;

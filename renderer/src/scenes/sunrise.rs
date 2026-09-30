@@ -2,7 +2,7 @@
 //! warms from deep blue through rose to gold, rays fan out and turn slowly,
 //! and a few birds flap across the new day.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::{glow, streak};

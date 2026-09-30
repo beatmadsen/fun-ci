@@ -3,7 +3,7 @@
 //! `tight` goes to one. The trunk's scenes draw them (architecture.md, Checking against the trunk).
 
 use crate::art::canvas::Canvas;
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::art::{Shade, add, scale};
 
 /// How far the strands have come in from their edges (0 to 1), how tightly they wind (0 to 1), and their light.

@@ -1,7 +1,7 @@
 //! The storm outside the fireplace's window: rain slanting past a small
 //! arched window, and now and then lightning that lights the whole room.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::art::canvas::Canvas;
 use crate::art::light::streak;
 use crate::art::noise::dice;

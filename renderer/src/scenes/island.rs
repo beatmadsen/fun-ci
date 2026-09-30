@@ -2,7 +2,7 @@
 //! sand, its fronds swaying in the breeze, surf laps the shore, and the full
 //! moon lays a glittering path across the sea.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use super::sky::stars;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;

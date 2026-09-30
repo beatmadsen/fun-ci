@@ -2,7 +2,7 @@
 //! stripe and fins, a porthole with a pilot who blinks, and a nozzle.
 //! Painted per pixel from shapes, in units of `scale` canvas pixels.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::art::canvas::Canvas;
 use crate::art::{Shade, add, mix, scale, smoothstep};
 

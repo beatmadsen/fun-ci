@@ -1,7 +1,7 @@
 //! Running: a rocket flies right through space on a plume of fire, stars
 //! streaming past, a ringed planet drifting by far behind.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use super::rocket::rocket;
 use super::sky::{sky, stars};
 use crate::animation::Scene;

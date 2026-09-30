@@ -1,7 +1,7 @@
 //! Lint passed: a tick of teal light appears in the dark, and rings of light
 //! spread out from it one after another, fading as they go.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::{Shade, add, float, scale, seconds, smoothstep};

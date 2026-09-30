@@ -1,6 +1,6 @@
 //! Pixels to paint light on.
 
-use super::math::Portable;
+use crate::maths::Portable;
 use super::{Shade, float, mix};
 
 /// Where the tone curve starts to bend: light below it shows as it is.

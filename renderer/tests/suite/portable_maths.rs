@@ -1,6 +1,7 @@
-//! Scenes paint the same pixels on every platform only if their maths is the
-//! same everywhere: art and scene code calls `art::math::Portable`, never the
-//! standard library's platform-dependent transcendental functions.
+//! Scenes paint the same pixels, and the table breathes the same shades, on
+//! every platform only if their maths is the same everywhere: art, scene and
+//! table code calls `maths::Portable`, never the standard library's
+//! platform-dependent transcendental functions.
 
 use std::fs;
 use std::path::Path;
@@ -12,7 +13,7 @@ fn offences(dir: &str) -> Vec<String> {
     let sources = fs::read_dir(&root).unwrap().map(|entry| entry.unwrap().path());
     let read = |path: std::path::PathBuf| (path.display().to_string(), fs::read_to_string(&path).unwrap());
     let calls = |(path, text): (String, String)| PLATFORM_CALLS.iter().filter(|call| text.contains(*call)).map(|call| format!("{path}: {call}")).collect::<Vec<_>>();
-    sources.filter(|path| !path.ends_with("math.rs")).map(read).flat_map(calls).collect()
+    sources.map(read).flat_map(calls).collect()
 }
 
 #[test]
@@ -23,4 +24,9 @@ fn should_find_no_platform_maths_in_the_art_code() {
 #[test]
 fn should_find_no_platform_maths_in_the_scenes() {
     assert_eq!(offences("src/scenes"), Vec::<String>::new());
+}
+
+#[test]
+fn should_find_no_platform_maths_in_the_table() {
+    assert_eq!(offences("src/table"), Vec::<String>::new());
 }

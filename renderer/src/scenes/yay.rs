@@ -1,7 +1,7 @@
 //! Success: YAY! Big rainbow letters, extruded and bouncing in turn, over a
 //! sunset full of rays, with shiny balloons drifting up on wavy strings.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use super::lettering::{Style, title};
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;

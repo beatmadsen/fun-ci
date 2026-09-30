@@ -18,9 +18,7 @@ pub mod sections;
 pub mod stack;
 pub mod words;
 
-use crate::art::cells::byte;
-use crate::art::float;
-use crate::art::math::Portable;
+use crate::maths::{Portable, byte, float};
 use crate::model::{Board, Run};
 use columns::Columns;
 use ladder::{Fitted, fit};

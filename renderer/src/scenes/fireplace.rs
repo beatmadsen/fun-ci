@@ -3,7 +3,7 @@
 //! and through a small window the storm rages: rain slants past and lightning
 //! now and then lights the room.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use super::stonework::stone;
 use super::storm::{in_window, lightning, outside, rain};
 use crate::animation::Scene;

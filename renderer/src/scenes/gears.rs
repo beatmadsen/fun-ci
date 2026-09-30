@@ -3,7 +3,7 @@
 
 use std::f64::consts::TAU;
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::glow;

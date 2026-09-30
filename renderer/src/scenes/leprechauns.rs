@@ -1,7 +1,7 @@
 //! Success: two leprechauns dance a jig on a green hill at golden hour, a
 //! rainbow sweeps across the sky, and coins leap from the pot of gold.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::{glow, streak};

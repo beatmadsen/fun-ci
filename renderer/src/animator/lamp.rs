@@ -4,7 +4,7 @@
 use super::resting::Outcome;
 use crate::art::canvas::Canvas;
 use crate::art::light::glow;
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::art::{Shade, scale};
 
 /// Where the lamp sits: from the left edge, and up from the bottom, in pixels.

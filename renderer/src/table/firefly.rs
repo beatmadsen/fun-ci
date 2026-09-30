@@ -5,9 +5,7 @@
 
 use super::needs_you;
 use super::night::{FIREFLY, FIREFLY_LOW};
-use crate::art::cells::byte;
-use crate::art::float;
-use crate::art::math::Portable;
+use crate::maths::{Portable, byte, float};
 use crate::model::Board;
 
 /// How many columns the firefly wanders either side of its place.

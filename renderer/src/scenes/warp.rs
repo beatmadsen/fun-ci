@@ -2,7 +2,7 @@
 //! rush out from the middle, a flash at full speed, and they settle back
 //! into points as the ship arrives.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::{glow, streak};

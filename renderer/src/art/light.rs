@@ -2,7 +2,7 @@
 //! haze and anti-aliased squares. Pixel (x, y) is lit at its centre,
 //! (x + 0.5, y + 0.5).
 
-use super::math::Portable;
+use crate::maths::Portable;
 use super::canvas::Canvas;
 use super::{Shade, float, index_past, scale};
 

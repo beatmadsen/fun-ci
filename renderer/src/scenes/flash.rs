@@ -1,7 +1,7 @@
 //! Success: a storm. Clouds churn, lightning forks down and lights them up,
 //! and where it strikes a neon check mark buzzes into being in the rain.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
 use crate::art::light::{glow, streak};

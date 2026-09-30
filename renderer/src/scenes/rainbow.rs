@@ -2,7 +2,7 @@
 //! drawn in from the left.
 
 use crate::art::canvas::Canvas;
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::art::{Shade, hue, mix, smoothstep};
 
 /// The rainbow, revealed left to right over the first second.

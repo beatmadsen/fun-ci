@@ -2,7 +2,7 @@
 //! `sin`, `exp` and the like call the platform's maths library, which rounds
 //! differently on macOS and Linux, and a last-bit difference can tip a cell
 //! from one glyph or colour to another; `libm` is plain Rust, so a scene paints
-//! the same pixels wherever it runs. Art and scene code uses these instead.
+//! the same pixels wherever it runs. Art, scene and table code uses these instead.
 
 /// Transcendental functions on `f64` that are identical on every platform.
 pub trait Portable {

@@ -14,6 +14,7 @@ pub mod inputs;
 pub mod keys;
 pub mod live;
 pub mod live_io;
+pub mod maths;
 pub mod model;
 pub mod output;
 pub mod protocol;

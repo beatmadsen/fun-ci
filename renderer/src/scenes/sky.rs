@@ -1,7 +1,7 @@
 //! The night sky several scenes share: a deep gradient to a violet horizon,
 //! faint nebulae drifting through it, and stars that twinkle.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use crate::art::canvas::Canvas;
 use crate::art::light::{glow, streak};
 use crate::art::noise::{dice, fbm, value};

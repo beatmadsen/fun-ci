@@ -1,7 +1,7 @@
 //! Failure: BOOM. A flash, a turbulent fireball that cools into rising
 //! smoke, a shockwave, sparks flung out on trails, and a comic-book title.
 
-use crate::art::math::Portable;
+use crate::maths::Portable;
 use super::lettering::{Style, title};
 use crate::animation::Scene;
 use crate::art::canvas::Canvas;
