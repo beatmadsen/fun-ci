@@ -9,7 +9,9 @@ mod effect;
 mod footer;
 mod header;
 mod lamp;
-mod overlay;
+pub mod looks;
+mod marks;
+mod playing;
 mod queue;
 mod resting;
 
@@ -26,26 +28,26 @@ use crate::animation::Scene;
 use crate::model::{Board, Event, Moment, Run, Stage};
 use ratatui::buffer::Buffer;
 use header::Header;
+use playing::Playing;
 
 /// Plays animations over the board.
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Animator {
-    effects: Vec<Effect>,
+    playing: Playing,
     header: Header,
     pending: Vec<Event>,
     cast: Cast,
-    places: Places,
 }
 
 impl Animator {
     #[must_use]
     pub fn new(cast: Cast) -> Self {
-        Self { effects: Vec::new(), header: Header::new(cast.idle()), pending: Vec::new(), cast, places: Places::default() }
+        Self { playing: Playing::default(), header: Header::new(cast.idle()), pending: Vec::new(), cast }
     }
 
     /// Where each run's row and marks are this frame, for the stage effects.
     pub fn set_places(&mut self, places: Places) {
-        self.places = places;
+        self.playing.set_places(places);
     }
 
     /// Takes an event into account at the next frame, against that frame's runs.
@@ -57,7 +59,7 @@ impl Animator {
     /// playing, or an event waits to be played.
     #[must_use]
     pub fn animating(&self) -> bool {
-        !self.pending.is_empty() || !self.effects.is_empty() || self.header.playing_event()
+        !self.pending.is_empty() || self.playing.busy() || self.header.playing_event()
     }
 
     /// How often the header needs drawing when nothing else moves, in milliseconds.
@@ -70,38 +72,33 @@ impl Animator {
     /// advances the stage effects. Returns the name of the header animation drawn.
     pub fn render(&mut self, buf: &mut Buffer, board: &Board, at: Moment) -> String {
         let runs = &board.runs;
-        self.take_events(runs);
+        self.take_events(runs, at.play_ms);
         self.follow_runs(runs, at);
         self.header.seek(at.play_ms);
         let showing = self.header.showing().to_string();
-        self.draw(buf, board);
-        self.advance();
+        self.header.draw(buf, board.streak);
+        self.playing.draw(buf, runs, at.play_ms);
         showing
     }
 
-    fn take_events(&mut self, runs: &[Run]) {
+    fn take_events(&mut self, runs: &[Run], play_ms: u64) {
         for event in &mem::take(&mut self.pending) {
-            self.apply(event, runs);
+            self.apply(event, runs, play_ms);
         }
     }
 
-    fn apply(&mut self, event: &Event, runs: &[Run]) {
+    fn apply(&mut self, event: &Event, runs: &[Run], play_ms: u64) {
         event.animation.iter().for_each(|name| self.cast.pin(name));
         if let Some(scene) = self.cast.for_milestone(&event.name) {
             self.header.trigger(scene);
         }
         if let (Some(Kind::Conflict), Some(run_id)) = (Kind::for_event(&event.name, "", ""), event.run_id) {
-            self.add(Kind::Conflict, run_id, "");
+            self.playing.start(Kind::Conflict, (run_id, ""), play_ms);
         }
         let Some((run, stage)) = target(event, runs) else { return };
         if let Some(kind) = Kind::for_event(&event.name, &stage.status, run.status()) {
-            self.add(kind, run.id, &stage.stage);
+            self.playing.start(kind, (run.id, &stage.stage), play_ms);
         }
-    }
-
-    fn add(&mut self, kind: Kind, run_id: u64, stage: &str) {
-        self.effects.retain(|effect| !effect.is_for(kind, run_id, stage));
-        self.effects.push(Effect::new(kind, run_id, stage));
     }
 
     /// Shows the rocket while a run runs, and rests on the latest outcome,
@@ -123,17 +120,6 @@ impl Animator {
             Resting::Warning => self.cast.rest("failed"),
             Resting::Quiet(_) => self.cast.quiet(play_ms),
         }
-    }
-
-    fn draw(&self, buf: &mut Buffer, board: &Board) {
-        self.header.draw(buf, board.streak);
-        draw::stages(buf, &self.effects, &self.places);
-        draw::footer(buf, &self.effects, (&board.runs, &self.places));
-    }
-
-    fn advance(&mut self) {
-        self.effects.iter_mut().for_each(|effect| effect.frame += 1);
-        self.effects.retain(|effect| !effect.finished());
     }
 }
 

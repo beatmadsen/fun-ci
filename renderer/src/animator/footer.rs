@@ -1,30 +1,31 @@
-//! The banner an effect shows in the footer: four looks, each held for eight
-//! frames, blank at either end.
+//! The banner an effect shows in the footer: four looks, each held for 0.8
+//! seconds, blank at either end.
 
 use ratatui::style::{Color, Modifier, Style};
 
 use super::effect::{Effect, Kind};
 use crate::model::Run;
 
-const HOLD: usize = 8;
+const HOLD_MS: u64 = 800;
 
-/// The banner `effect` shows this frame, if any, and how; `runs` name a conflict's branch and trunk.
+/// The banner `effect` shows at `play_ms`, if any, and how; `runs` name a conflict's branch and trunk.
 #[must_use]
-pub fn banner(effect: &Effect, runs: &[Run]) -> Option<(String, Style)> {
-    let (colour, weight, text) = look(effect, runs)?;
+pub fn banner(effect: &Effect, runs: &[Run], play_ms: u64) -> Option<(String, Style)> {
+    let look_at = usize::try_from(effect.elapsed_ms(play_ms) / HOLD_MS).unwrap_or(usize::MAX);
+    let (colour, weight, text) = look(effect, runs, look_at)?;
     Some((text, Style::default().fg(colour).add_modifier(weight)))
 }
 
 type Look = (Color, Modifier, String);
 
-fn look(effect: &Effect, runs: &[Run]) -> Option<Look> {
+fn look(effect: &Effect, runs: &[Run], look_at: usize) -> Option<Look> {
     let (colour, text) = match effect.kind {
-        Kind::Failure => (Color::Red, failure_text(effect.frame / HOLD, &effect.stage)?),
-        Kind::Success => (Color::Green, success_text(effect.frame / HOLD)?),
-        Kind::Conflict => (Color::Magenta, conflict_text(effect.frame / HOLD, &conflict(effect, runs)?)?),
+        Kind::Failure => (Color::Red, failure_text(look_at, &effect.stage)?),
+        Kind::Success => (Color::Green, success_text(look_at)?),
+        Kind::Conflict => (Color::Magenta, conflict_text(look_at, &conflict(effect, runs)?)?),
         Kind::Timeout | Kind::StagePass => return None,
     };
-    Some((colour, weight(effect.frame / HOLD), text))
+    Some((colour, weight(look_at), text))
 }
 
 /// Bold, then plain, then dim.

@@ -30,3 +30,13 @@ fn should_find_no_platform_maths_in_the_scenes() {
 fn should_find_no_platform_maths_in_the_table() {
     assert_eq!(offences("src/table"), Vec::<String>::new());
 }
+
+/// tachyonfx with its `std` feature eases some curves with the platform's
+/// `powf`; without it, with its own maths.
+#[test]
+fn should_build_tachyonfx_without_the_platform_s_maths() {
+    let manifest = fs::read_to_string(Path::new(env!("CARGO_MANIFEST_DIR")).join("Cargo.toml")).unwrap();
+    let line = manifest.lines().find(|line| line.starts_with("tachyonfx")).unwrap_or_default();
+
+    assert!(line.contains("default-features = false") && !line.contains("\"std\""), "{line}");
+}

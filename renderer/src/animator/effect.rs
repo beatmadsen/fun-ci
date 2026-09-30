@@ -1,5 +1,6 @@
 //! A short animation over one stage of one run's row, or, for a conflict
-//! with the trunk, over none of its stages, in the footer alone.
+//! with the trunk, over none of its stages, in the footer alone; timed from
+//! the frame it starts on, by the animation clock.
 
 /// What an effect celebrates or mourns.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -25,12 +26,13 @@ impl Kind {
         }
     }
 
+    /// How long it plays, in milliseconds.
     #[must_use]
-    pub fn total_frames(self) -> usize {
+    pub fn lasts_ms(self) -> u64 {
         match self {
-            Self::Failure | Self::Success | Self::Conflict => 40,
-            Self::Timeout => 4,
-            Self::StagePass => 3,
+            Self::Failure | Self::Success | Self::Conflict => 4_000,
+            Self::Timeout => 400,
+            Self::StagePass => 300,
         }
     }
 
@@ -50,24 +52,30 @@ impl Kind {
     }
 }
 
-/// One playing effect.
+/// One playing effect, and the animation clock when it started.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Effect {
     pub kind: Kind,
     pub run_id: u64,
     pub stage: String,
-    pub frame: usize,
+    pub started_ms: u64,
 }
 
 impl Effect {
     #[must_use]
-    pub fn new(kind: Kind, run_id: u64, stage: &str) -> Self {
-        Self { kind, run_id, stage: stage.to_string(), frame: 0 }
+    pub fn new(kind: Kind, (run_id, stage): (u64, &str), started_ms: u64) -> Self {
+        Self { kind, run_id, stage: stage.to_string(), started_ms }
+    }
+
+    /// How long it has played by `play_ms`.
+    #[must_use]
+    pub fn elapsed_ms(&self, play_ms: u64) -> u64 {
+        play_ms.saturating_sub(self.started_ms)
     }
 
     #[must_use]
-    pub fn finished(&self) -> bool {
-        self.frame >= self.kind.total_frames()
+    pub fn finished(&self, play_ms: u64) -> bool {
+        self.elapsed_ms(play_ms) >= self.kind.lasts_ms()
     }
 
     #[must_use]

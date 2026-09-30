@@ -43,7 +43,7 @@ fn the_first_frame_starts_by_clearing_the_screen() {
     assert!(frames[0].bytes.starts_with(b"\x1b[2J\x1b[H"));
 }
 
-/// Lint passes, then a frame later build passes while lint still flashes.
+/// Lint passes, then a frame later build passes while lint is still lit.
 fn two_stages_passing() -> Vec<String> {
     vec![
         board(&[run(1, "running", "pending")]), TICK.into(),
@@ -54,9 +54,11 @@ fn two_stages_passing() -> Vec<String> {
 
 #[test]
 fn a_stage_effect_keeps_playing_when_another_stage_starts_one() {
-    let screen = last_screen(&two_stages_passing());
-    let lint = &crate::support::boards::mark(&screen, "b1", "lint");
-    assert_eq!((lint.text.as_str(), lint.attrs.clone()), ("✓", vec!["bold"]));
+    let lines = two_stages_passing();
+    let unlit: Vec<String> = lines.iter().filter(|line| !line.contains("\"event\"")).cloned().collect();
+    let lint = |lines: &[String]| crate::support::boards::mark(&last_screen(lines), "b1", "lint").fg;
+
+    assert_ne!(lint(&lines), lint(&unlit));
 }
 
 #[test]

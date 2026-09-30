@@ -1,7 +1,10 @@
 //! Stage effects and footer banners in situations the golden scenarios do not
-//! reach: several runs, several effects at once, projects, late stages.
+//! reach: several runs, several effects at once, projects, late stages. A
+//! mark's effect lights it in its own colour and fades back to how its row
+//! draws it; the frames here are 100 ms apart, the first at the event.
 
 use crate::support::boards::{board, event, last_screen, mark, row_of, run, then_ticks};
+use fun_ci_renderer::animator::looks::{AMBER, FLARE, GOLD, WHITE};
 use fun_ci_renderer::grid::Colour;
 use fun_ci_renderer::table::night;
 
@@ -12,9 +15,9 @@ fn row_after(lines: &[String], ticks: usize) -> String {
     screen.text().lines().nth(row_of(&screen, "b1")).unwrap().to_string()
 }
 
-/// Whether `branch`'s `stage` mark is bold after `lines` and `ticks` ticks.
-fn bold_after(lines: &[String], ticks: usize, (branch, stage): (&str, &str)) -> bool {
-    mark(&last_screen(&then_ticks(lines, ticks)), branch, stage).attrs.contains(&"bold")
+/// The background of `branch`'s `stage` mark after `lines` and `ticks` ticks.
+fn paper_after(lines: &[String], ticks: usize, (branch, stage): (&str, &str)) -> Colour {
+    mark(&last_screen(&then_ticks(lines, ticks)), branch, stage).bg
 }
 
 /// The colour of `branch`'s `stage` mark after `lines` and `ticks` ticks.
@@ -31,10 +34,36 @@ fn passed(stages: &[&'static str]) -> Vec<(&'static str, &'static str)> {
 }
 
 #[test]
-fn an_effect_on_the_second_run_flashes_the_second_row() {
+fn an_effect_on_the_second_run_lights_the_second_row() {
     let lines = [board(&[run(1, "passed", &passed(&["lint"])), run(2, "running", &passed(&["lint"]))]),
                  event("stage_passed", 2, "lint")];
-    assert!(bold_after(&lines, 1, ("b2", "lint")));
+    assert_eq!(colour_after(&lines, 1, ("b2", "lint")), rgb(GOLD));
+}
+
+#[test]
+fn a_stage_passing_mid_run_is_back_to_its_own_colour_after_three_tenths_of_a_second() {
+    let lines = [board(&[run(1, "running", &passed(&["lint"]))]), event("stage_passed", 1, "lint")];
+    assert_eq!(colour_after(&lines, 4, ("b1", "lint")), colour_after(&lines[..1], 4, ("b1", "lint")));
+}
+
+#[test]
+fn a_stage_passing_mid_run_fades_from_gold_rather_than_jumping_back() {
+    let lines = [board(&[run(1, "running", &passed(&["lint"]))]), event("stage_passed", 1, "lint")];
+    let halfway = colour_after(&lines, 2, ("b1", "lint"));
+    assert!(halfway != rgb(GOLD) && halfway != colour_after(&lines[..1], 2, ("b1", "lint")), "{halfway:?}");
+}
+
+#[test]
+fn a_failed_stage_flares_white_on_red_at_once() {
+    let lines = [board(&[run(1, "failed", &[("fast", "failed")])]), event("stage_failed", 1, "fast")];
+    assert_eq!((colour_after(&lines, 1, ("b1", "fast")), paper_after(&lines, 1, ("b1", "fast"))), (rgb(WHITE), rgb(FLARE)));
+}
+
+#[test]
+fn a_failed_stage_cools_to_how_its_row_draws_it_within_a_second() {
+    let lines = [board(&[run(1, "failed", &[("fast", "failed")])]), event("stage_failed", 1, "fast")];
+    let cooled = (colour_after(&lines, 11, ("b1", "fast")), paper_after(&lines, 11, ("b1", "fast")));
+    assert_eq!(cooled, (colour_after(&lines[..1], 11, ("b1", "fast")), paper_after(&lines[..1], 11, ("b1", "fast"))));
 }
 
 #[test]
@@ -60,7 +89,7 @@ fn a_timeout_flash_does_not_hide_a_success_banner() {
 }
 
 #[test]
-fn a_timeout_flash_ends_after_four_frames() {
+fn a_timeout_is_back_to_its_own_colour_after_four_tenths_of_a_second() {
     let lines = [board(&[run(1, "timeout", &[("fast", "timeout")])]), event("stage_failed", 1, "fast")];
     assert_eq!(colour_after(&lines, 6, ("b1", "fast")), rgb(night::TIMED_OUT));
 }
@@ -81,21 +110,21 @@ fn an_effect_lands_exactly_on_its_stage_when_the_run_names_a_project() {
 }
 
 #[test]
-fn the_build_sparkle_starts_two_frames_late() {
+fn the_build_mark_waits_its_turn() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "build"]))]), event("stage_passed", 1, "build")];
     assert_eq!(colour_after(&lines, 1, ("b1", "build")), rgb([42, 69, 64]));
 }
 
 #[test]
-fn the_slow_sparkle_starts_six_frames_late() {
+fn the_slow_mark_waits_its_turn() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "slow"]))]), event("stage_passed", 1, "slow")];
     assert_eq!(colour_after(&lines, 5, ("b1", "slow")), rgb([42, 69, 64]));
 }
 
 #[test]
-fn the_slow_sparkle_lights_its_first_letter_on_the_seventh_frame() {
+fn the_slow_mark_lights_gold_on_its_turn_six_tenths_of_a_second_in() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "slow"]))]), event("stage_passed", 1, "slow")];
-    assert!(bold_after(&lines, 7, ("b1", "slow")));
+    assert_eq!(colour_after(&lines, 7, ("b1", "slow")), rgb(GOLD));
 }
 
 #[test]
@@ -117,15 +146,21 @@ fn an_effect_on_the_row_in_the_block_keeps_the_block_under_it() {
 }
 
 #[test]
-fn a_timeout_flashes_its_mark_at_once() {
+fn a_timeout_lights_its_mark_amber_at_once() {
     let lines = [board(&[run(1, "timeout", &[("fast", "timeout")])]), event("stage_failed", 1, "fast")];
-    assert!(bold_after(&lines, 1, ("b1", "fast")));
+    assert_eq!(colour_after(&lines, 1, ("b1", "fast")), rgb(AMBER));
 }
 
 #[test]
-fn the_build_sparkle_lights_its_mark_on_the_third_frame() {
+fn a_timeout_lights_its_mark_amber_again_two_tenths_of_a_second_in() {
+    let lines = [board(&[run(1, "timeout", &[("fast", "timeout")])]), event("stage_failed", 1, "fast")];
+    assert_eq!(colour_after(&lines, 3, ("b1", "fast")), rgb(AMBER));
+}
+
+#[test]
+fn the_build_mark_lights_gold_on_its_turn_two_tenths_of_a_second_in() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "build"]))]), event("stage_passed", 1, "build")];
-    assert!(bold_after(&lines, 3, ("b1", "build")));
+    assert_eq!(colour_after(&lines, 3, ("b1", "build")), rgb(GOLD));
 }
 
 #[test]

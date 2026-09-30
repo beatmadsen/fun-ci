@@ -1,5 +1,6 @@
 ---
 source: tests/suite/snapshots.rs
+assertion_line: 32
 expression: "render(& frames(\"success-fireworks\"))"
 ---
 frame 0001 at 100x30
@@ -565,7 +566,7 @@ frame 0017 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHKHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :
   :
@@ -573,7 +574,7 @@ frame 0017 at 100x30
   :
   :
   :
-  :..................................................................L
+  :..................................................................M
   :
   :
   :
@@ -599,7 +600,7 @@ frame 0018 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
   :
   :
@@ -607,7 +608,7 @@ frame 0018 at 100x30
   :
   :
   :
-  :..................................................................L
+  :..................................................................M
   :
   :
   :
@@ -633,15 +634,15 @@ frame 0019 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................M.M.M.MMMMM.M.M.M
+  :.........................................N.N.N.NNNNN.N.N.N
   :
   :
   :
   :
   :
-  :..................................................................L
+  :..................................................................M
   :
   :
   :
@@ -667,15 +668,15 @@ frame 0020 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................M.M.M.MMMMM.M.M.M
+  :.........................................N.N.N.NNNNN.N.N.N
   :
   :
   :
   :
   :
-  :..................................................................L
+  :..................................................................M
   :
   :
   :
@@ -701,9 +702,9 @@ frame 0021 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................M.M.M.MMMMM.M.M.M
+  :.........................................N.N.N.NNNNN.N.N.N
   :
   :
   :
@@ -735,9 +736,9 @@ frame 0022 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................M.M.M.MMMMM.M.M.M
+  :.........................................N.N.N.NNNNN.N.N.N
   :
   :
   :
@@ -769,9 +770,9 @@ frame 0023 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................M.M.M.MMMMM.M.M.M
+  :.........................................N.N.N.NNNNN.N.N.N
   :
   :
   :
@@ -803,9 +804,9 @@ frame 0024 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................M.M.M.MMMMM.M.M.M
+  :.........................................N.N.N.NNNNN.N.N.N
   :
   :
   :
@@ -837,15 +838,15 @@ frame 0025 at 100x30
   |
   |                     j/k move      q quit
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHKHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHKKKHH
+  :...................HHHHIIIIHHHHHHHHHHHHJHJHJHLHHHHHHHHHHHHJJJJJJHHHHHHHHHHHHHLLLHH
   :...................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
-  :.........................................M.M.M.MMMMM.M.M.M
+  :.........................................N.N.N.NNNNN.N.N.N
   :
   :
   :
   :
   :
-  :...................................................................N
+  :...................................................................O
   :
   :
   :
@@ -873,13 +874,13 @@ frame 0026 at 100x30
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :.........................................M.M.M.MMMMM.M.M.M
+  :.........................................N.N.N.NNNNN.N.N.N
   :
   :
   :
   :
   :
-  :...................................................................O
+  :...................................................................P
   :
   :
   :
@@ -907,13 +908,13 @@ frame 0027 at 100x30
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :.......................................P.P.P.P.PPPPP.P.P.P.P
+  :.......................................Q.Q.Q.Q.QQQQQ.Q.Q.Q.Q
   :
   :
   :
   :
   :
-  :....................................................................Q
+  :....................................................................R
   :
   :
   :
@@ -941,13 +942,13 @@ frame 0028 at 100x30
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :.......................................P.P.P.P.PPPPP.P.P.P.P
+  :.......................................Q.Q.Q.Q.QQQQQ.Q.Q.Q.Q
   :
   :
   :
   :
   :
-  :....................................................................R
+  :....................................................................S
   :
   :
   :
@@ -975,13 +976,13 @@ frame 0029 at 100x30
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   :...................wwwwxxxxwwwwwwwwwwwwywywywzwwwwwwwwwwwwyyyyyywwwwwwwwwwwwwzzzww
   :...................vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-  :.......................................P.P.P.P.PPPPP.P.P.P.P
+  :.......................................Q.Q.Q.Q.QQQQQ.Q.Q.Q.Q
   :
   :
   :
   :
   :
-  :....................................................................S
+  :....................................................................T
   :
   :
   :
@@ -1009,13 +1010,13 @@ frame 0030 at 100x30
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :.......................................P.P.P.P.PPPPP.P.P.P.P
+  :.......................................Q.Q.Q.Q.QQQQQ.Q.Q.Q.Q
   :
   :
   :
   :
   :
-  :....................................................................T
+  :....................................................................U
   :
   :
   :
@@ -1043,13 +1044,13 @@ frame 0031 at 100x30
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :.......................................P.P.P.P.PPPPP.P.P.P.P
+  :.......................................Q.Q.Q.Q.QQQQQ.Q.Q.Q.Q
   :
   :
   :
   :
   :
-  :....................................................................U
+  :....................................................................V
   :
   :
   :
@@ -1077,13 +1078,13 @@ frame 0032 at 100x30
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
   :...................ooooppppooooooooooooqoqoqosooooooooooooqqqqqqooooooooooooosssoo
   :...................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :.......................................P.P.P.P.PPPPP.P.P.P.P
+  :.......................................Q.Q.Q.Q.QQQQQ.Q.Q.Q.Q
   :
   :
   :
   :
   :
-  :....................................................................V
+  :....................................................................W
   :
   :
   :
@@ -1111,13 +1112,13 @@ frame 0033 at 100x30
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :.......................................P.P.P.P.PPPPP.P.P.P.P
+  :.......................................Q.Q.Q.Q.QQQQQ.Q.Q.Q.Q
   :
   :
   :
   :
   :
-  :.....................................................................W
+  :.....................................................................X
   :
   :
   :
@@ -1145,13 +1146,13 @@ frame 0034 at 100x30
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :.......................................P.P.P.P.PPPPP.P.P.P.P
+  :.......................................Q.Q.Q.Q.QQQQQ.Q.Q.Q.Q
   :
   :
   :
   :
   :
-  :.....................................................................X
+  :.....................................................................Y
   :
   :
   :
@@ -1179,13 +1180,13 @@ frame 0035 at 100x30
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
+  :.......................................Z.Z.Z.Z..ZZZZ..Z.Z.Z.Z
   :
   :
   :
   :
   :
-  :.....................................................................Z
+  :.....................................................................0
   :
   :
   :
@@ -1213,13 +1214,13 @@ frame 0036 at 100x30
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   :...................iiiijjjjiiiiiiiiiiiikikikimiiiiiiiiiiiikkkkkkiiiiiiiiiiiiimmmii
   :...................hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
+  :.......................................Z.Z.Z.Z..ZZZZ..Z.Z.Z.Z
   :
   :
   :
   :
   :
-  :.....................................................................0
+  :.....................................................................1
   :
   :
   :
@@ -1247,13 +1248,13 @@ frame 0037 at 100x30
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
+  :.......................................Z.Z.Z.Z..ZZZZ..Z.Z.Z.Z
   :
   :
   :
   :
   :
-  :.....................................................................1
+  :.....................................................................2
   :
   :
   :
@@ -1281,13 +1282,13 @@ frame 0038 at 100x30
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
+  :.......................................Z.Z.Z.Z..ZZZZ..Z.Z.Z.Z
   :
   :
   :
   :
   :
-  :.....................................................................2
+  :.....................................................................3
   :
   :
   :
@@ -1315,13 +1316,13 @@ frame 0039 at 100x30
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
+  :.......................................Z.Z.Z.Z..ZZZZ..Z.Z.Z.Z
   :
   :
   :
   :
   :
-  :.....................................................................3
+  :.....................................................................4
   :
   :
   :
@@ -1349,13 +1350,13 @@ frame 0040 at 100x30
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
+  :.......................................Z.Z.Z.Z..ZZZZ..Z.Z.Z.Z
   :
   :
   :
   :
   :
-  :.....................................................................4
+  :.....................................................................5
   :
   :
   :
@@ -1383,13 +1384,13 @@ frame 0041 at 100x30
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
+  :.......................................Z.Z.Z.Z..ZZZZ..Z.Z.Z.Z
   :
   :
   :
   :
   :
-  :.....................................................................5
+  :.....................................................................6
   :
   :
   :
@@ -1417,13 +1418,13 @@ frame 0042 at 100x30
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :...................bbbbccccbbbbbbbbbbbbdbdbdbfbbbbbbbbbbbbddddddbbbbbbbbbbbbbfffbb
   :...................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :.......................................Y.Y.Y.Y..YYYY..Y.Y.Y.Y
+  :.......................................Z.Z.Z.Z..ZZZZ..Z.Z.Z.Z
   :
   :
   :
   :
   :
-  :......................................................................6
+  :......................................................................7
   :
   :
   :
@@ -1457,7 +1458,7 @@ frame 0043 at 100x30
   :
   :
   :
-  :......................................................................7
+  :......................................................................8
   :
   :
   :
@@ -1491,7 +1492,7 @@ frame 0044 at 100x30
   :
   :
   :
-  :......................................................................8
+  :......................................................................9
   :
   :
   :
@@ -1525,7 +1526,7 @@ frame 0045 at 100x30
   :
   :
   :
-  :......................................................................9
+  :......................................................................α
   :
   :
   :
@@ -1559,7 +1560,7 @@ frame 0046 at 100x30
   :
   :
   :
-  :......................................................................α
+  :......................................................................β
   :
   :
   :
@@ -1593,7 +1594,7 @@ frame 0047 at 100x30
   :
   :
   :
-  :......................................................................β
+  :......................................................................γ
   :
   :
   :
@@ -1627,7 +1628,7 @@ frame 0048 at 100x30
   :
   :
   :
-  :......................................................................γ
+  :......................................................................δ
   :
   :
   :
@@ -1661,7 +1662,7 @@ frame 0049 at 100x30
   :
   :
   :
-  :......................................................................δ
+  :......................................................................ε
   :
   :
   :
@@ -1695,7 +1696,7 @@ frame 0050 at 100x30
   :
   :
   :
-  :......................................................................ε
+  :......................................................................ζ
   :
   :
   :
@@ -1729,7 +1730,7 @@ frame 0051 at 100x30
   :
   :
   :
-  :......................................................................ζ
+  :......................................................................η
   :
   :
   :
@@ -1763,7 +1764,7 @@ frame 0052 at 100x30
   :
   :
   :
-  :......................................................................η
+  :......................................................................θ
   :
   :
   :
@@ -1797,7 +1798,7 @@ frame 0053 at 100x30
   :
   :
   :
-  :......................................................................η
+  :......................................................................θ
   :
   :
   :
@@ -1831,7 +1832,7 @@ frame 0054 at 100x30
   :
   :
   :
-  :......................................................................η
+  :......................................................................θ
   :
   :
   :
@@ -1865,7 +1866,7 @@ frame 0055 at 100x30
   :
   :
   :
-  :......................................................................η
+  :......................................................................θ
   :
   :
   :
@@ -1901,44 +1902,45 @@ y = fg Rgb(111, 184, 170), bg Rgb(64, 28, 37), []
 z = fg Rgb(85, 82, 104), bg Rgb(64, 28, 37), []
 A = fg Rgb(50, 85, 77), bg Default, []
 B = fg Rgb(51, 86, 78), bg Default, []
-C = fg Idx(3), bg Rgb(64, 28, 37), ["bold"]
+C = fg Rgb(255, 205, 90), bg Rgb(64, 28, 37), []
 D = fg Rgb(51, 87, 79), bg Default, []
-E = fg Idx(2), bg Rgb(64, 28, 37), []
+E = fg Rgb(113, 220, 98), bg Rgb(64, 28, 37), []
 F = fg Rgb(52, 87, 79), bg Default, []
 G = fg Rgb(70, 30, 40), bg Default, []
 H = fg Default, bg Rgb(70, 30, 40), []
 I = fg Rgb(242, 239, 250), bg Rgb(70, 30, 40), ["bold"]
 J = fg Rgb(111, 184, 170), bg Rgb(70, 30, 40), []
-K = fg Rgb(85, 82, 104), bg Rgb(70, 30, 40), []
-L = fg Rgb(52, 88, 80), bg Default, []
-M = fg Idx(2), bg Default, ["bold"]
-N = fg Rgb(49, 83, 76), bg Default, []
-O = fg Rgb(48, 82, 75), bg Default, []
-P = fg Idx(2), bg Default, []
-Q = fg Rgb(47, 80, 73), bg Default, []
-R = fg Rgb(46, 79, 72), bg Default, []
-S = fg Rgb(45, 77, 70), bg Default, []
-T = fg Rgb(44, 75, 68), bg Default, []
-U = fg Rgb(43, 73, 66), bg Default, []
-V = fg Rgb(42, 70, 64), bg Default, []
-W = fg Rgb(40, 68, 62), bg Default, []
-X = fg Rgb(39, 66, 60), bg Default, []
-Y = fg Idx(2), bg Default, ["dim"]
-Z = fg Rgb(37, 63, 58), bg Default, []
-0 = fg Rgb(36, 61, 56), bg Default, []
-1 = fg Rgb(34, 58, 54), bg Default, []
-2 = fg Rgb(33, 56, 52), bg Default, []
-3 = fg Rgb(32, 54, 49), bg Default, []
-4 = fg Rgb(30, 51, 47), bg Default, []
-5 = fg Rgb(29, 49, 45), bg Default, []
-6 = fg Rgb(28, 47, 43), bg Default, []
-7 = fg Rgb(26, 45, 42), bg Default, []
-8 = fg Rgb(25, 43, 40), bg Default, []
-9 = fg Rgb(24, 41, 38), bg Default, []
-α = fg Rgb(23, 40, 37), bg Default, []
-β = fg Rgb(23, 38, 36), bg Default, []
-γ = fg Rgb(22, 37, 35), bg Default, []
-δ = fg Rgb(21, 36, 34), bg Default, []
-ε = fg Rgb(21, 35, 33), bg Default, []
-ζ = fg Rgb(20, 35, 33), bg Default, []
-η = fg Rgb(20, 34, 32), bg Default, []
+K = fg Rgb(107, 194, 157), bg Rgb(70, 30, 40), []
+L = fg Rgb(85, 82, 104), bg Rgb(70, 30, 40), []
+M = fg Rgb(52, 88, 80), bg Default, []
+N = fg Idx(2), bg Default, ["bold"]
+O = fg Rgb(49, 83, 76), bg Default, []
+P = fg Rgb(48, 82, 75), bg Default, []
+Q = fg Idx(2), bg Default, []
+R = fg Rgb(47, 80, 73), bg Default, []
+S = fg Rgb(46, 79, 72), bg Default, []
+T = fg Rgb(45, 77, 70), bg Default, []
+U = fg Rgb(44, 75, 68), bg Default, []
+V = fg Rgb(43, 73, 66), bg Default, []
+W = fg Rgb(42, 70, 64), bg Default, []
+X = fg Rgb(40, 68, 62), bg Default, []
+Y = fg Rgb(39, 66, 60), bg Default, []
+Z = fg Idx(2), bg Default, ["dim"]
+0 = fg Rgb(37, 63, 58), bg Default, []
+1 = fg Rgb(36, 61, 56), bg Default, []
+2 = fg Rgb(34, 58, 54), bg Default, []
+3 = fg Rgb(33, 56, 52), bg Default, []
+4 = fg Rgb(32, 54, 49), bg Default, []
+5 = fg Rgb(30, 51, 47), bg Default, []
+6 = fg Rgb(29, 49, 45), bg Default, []
+7 = fg Rgb(28, 47, 43), bg Default, []
+8 = fg Rgb(26, 45, 42), bg Default, []
+9 = fg Rgb(25, 43, 40), bg Default, []
+α = fg Rgb(24, 41, 38), bg Default, []
+β = fg Rgb(23, 40, 37), bg Default, []
+γ = fg Rgb(23, 38, 36), bg Default, []
+δ = fg Rgb(22, 37, 35), bg Default, []
+ε = fg Rgb(21, 36, 34), bg Default, []
+ζ = fg Rgb(21, 35, 33), bg Default, []
+η = fg Rgb(20, 35, 33), bg Default, []
+θ = fg Rgb(20, 34, 32), bg Default, []
