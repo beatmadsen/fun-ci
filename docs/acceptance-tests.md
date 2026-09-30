@@ -925,3 +925,11 @@ shows one firefly no brighter than a pale name, and a running board none.
 **Then** a stale trunk is said beside its project's name; a short screen keeps
 the failures and their projects' names and counts the passed rows it left
 out; a screen too short for the names says the stale trunk on its own line.
+
+### 12.8 It reads to someone who has never seen fun-ci
+**Then** each row names its stage in full (`the fast suite failed after
+1.4s`), briefly on a narrow screen but never in shorthand; a legend above
+every project names each stage over its column of marks and says what it is
+for, its lines running down to the last project; and a screen with no room
+for the legend names the marks on one line above the keys
+(`renderer/tests/suite/quiet_table.rs`, `table_words.rs`, `table_leaders.rs`).

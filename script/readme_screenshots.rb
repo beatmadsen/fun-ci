@@ -38,10 +38,13 @@ def capture(shot, dir)
   system("node", CAPTURE, File.join(dir, "frames.cast"), out, *shot.frames.map(&:to_s), exception: true)
 end
 
-# A still as a PNG; an animation as a lossless animated WebP.
+# A still as a PNG; an animation as a lossless animated WebP, and its first
+# frame as a PNG too: the renderer crates already published show
+# docs/screenshots/console.png from main on crates.io, so that path stays.
 def save(shot, dir)
   frames = shot.frames.map { |frame| File.join(dir, "terminal", format("%04d.png", frame)) }
-  frames.one? ? FileUtils.cp(frames.first, target(shot)) : animate(shot, frames)
+  FileUtils.cp(frames.first, File.join(OUT, "#{shot.name}.png"))
+  animate(shot, frames) unless frames.one?
 end
 
 # Each frame shown as long as the ticks between them, 100 ms a tick.

@@ -21,7 +21,7 @@ module FunCi
 
       Commands:
         trigger        Run CI pipeline for a commit
-        console        Launch the admin TUI dashboard
+        console        Watch your runs as they happen, in the terminal
         init           Initialize .fun-ci/ with template scripts
         install-hooks  Install post-commit and pre-push git hooks
         check          Verify project setup

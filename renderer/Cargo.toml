@@ -1,6 +1,6 @@
 [package]
 name = "fun-ci-renderer"
-version = "2.1.0"
+version = "2.1.1"
 edition = "2024"
 # The oldest Rust that builds it; the gems workflow builds it with this one.
 rust-version = "1.88"

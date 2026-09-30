@@ -259,8 +259,9 @@ each project's branches sit under the project's name, one row per branch:
   the fast suite is the quick tests that run after lint and the build, and
   the slow suite the long tests that run in the background. It belongs to no
   project: a line runs down from each name through the whole table, down
-  the blank lines and across every project's rule, so each column of marks
-  hangs from its stage's name. A project's name and note stand in front of
+  the blank lines and across every project's rule to the last project, even
+  one whose branches are folded, so each column of marks hangs from its
+  stage's name. A project's name and note stand in front of
   the lines, and the lines never cross a row, the block's edge or a line of
   folded branches. The legend takes five lines, a blank
   one and its own four, which the table finds by folding its passed rows,

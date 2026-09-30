@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.1] - 2026-09-30
+
+### Fixed
+- The console's legend belongs to every project, but after a failure,
+  when the projects below it had folded their passed branches onto one line
+  each, its lines stopped at the failed branch and it looked like that
+  project's alone. They now run down to the last project, whatever it shows.
+- `fun-ci --help` called the console "the admin TUI dashboard". It says what
+  it is for: watching your runs as they happen, in the terminal.
+
+### Changed
+- The README's pictures of the console are drawn in a real terminal, in a
+  real font, 1500 pixels wide instead of 800, and its animation is an
+  animated WebP.
+
 ## [2.1.0] - 2026-09-30
 
 ### Added

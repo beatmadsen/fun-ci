@@ -96,7 +96,7 @@ Keys:
 - `c` cancels the run under the cursor: one waiting to start at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start
 - `q` quits
 
-The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above come from the renderer's headless mode, drawn with its own bitmap font; in your terminal the text is in your terminal's font.
+The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above are the renderer's output replayed in a terminal emulator, set in Menlo; in your terminal the text is in your terminal's font.
 
 The drawing is done by a separate program, `fun-ci-renderer`, written in Rust. The gem for Linux (x86_64, aarch64, musl) and macOS (arm64, x86_64) includes it. On other Unix-like systems you get the plain gem, where every command except `console` works; install the renderer with `cargo install fun-ci-renderer` (Rust 1.88 or newer), or point `FUN_CI_RENDERER` at a copy you built. Windows is not supported, because fun-ci forks its background pipeline, but WSL runs the Linux gem. When something goes wrong between the two, the details are in `.fun-ci/console.log`.
 
