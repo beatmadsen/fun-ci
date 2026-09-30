@@ -885,7 +885,42 @@ trunk is stale.
 ### 11.47 A contract fixture holds the trunk conversation on both sides
 
 ### 11.48 The renderer draws the marker, the stale note and the two scenes
-**Then** `conflicts <trunk>` in bold magenta after the branch, before the
-stages, which effects still land on; a dim `trunk stale:` note in the footer;
-a scene from each trunk pool and a fading conflict banner, without changing the
-resting outcome, the lamp or the streak.
+**Then** `conflicts with <trunk>` in lilac italics on the line under the
+branch, whose marks effects still land on; the stale trunk beside its
+project's name (section 12); a scene from each trunk pool and a fading
+conflict banner, without changing the resting outcome, the lamp or the streak.
+
+## 12. The quiet table
+
+The table under the header, drawn anew after a search that built and compared
+candidates five at a time (design.md, The console). The Ruby side is in
+`test/integration/test_console_board_rows.rb`, the renderer's in
+`renderer/tests/suite/quiet_*.rs`; the parts each rests on have tests of their
+own (`test_row_order.rb`, `renderer/tests/suite/table_*.rs`).
+
+### 12.1 One row per branch
+**Given** a branch run twice **Then** the board carries only its newest run.
+
+### 12.2 Rows in the order that needs you
+**Then** a project's branches come together, the project with a failure
+before one without, and the cursor walks them in that order.
+
+### 12.3 A project's branches under its name
+**Then** each project's rows sit under its name in letter-spaced capitals.
+
+### 12.4 One block for what needs you
+**Then** the cursor's row, or with no cursor the first row that needs you,
+sits in one deep block; a board where nothing needs you has none.
+
+### 12.5 The words leave a short name whole
+**Then** on 60 columns a nine-letter branch keeps its whole name.
+
+### 12.6 The block breathes, and a still board rests
+**Then** the block lightens over two seconds; with nothing needing you, a
+project's passed branches fold into one line; a board where everything passed
+shows one firefly no brighter than a pale name, and a running board none.
+
+### 12.7 A short screen keeps what needs you and counts the rest
+**Then** a stale trunk is said beside its project's name; a short screen keeps
+the failures and their projects' names and counts the passed rows it left
+out; a screen too short for the names says the stale trunk on its own line.

@@ -59,7 +59,7 @@ Results are kept in SQLite under `$XDG_STATE_HOME/fun-ci/` (`~/.local/state/fun-
 fun-ci console
 ```
 
-The console lists your runs across branches, newest first, one row each: the commit, the branch, each stage with its time, and the outcome. Above them is a picture that tells you what is happening without reading a word.
+The console shows where each branch stands, one row per branch under its project's name: a mark for each stage, what happened (`failed in fast · 1.4s`) and when. What needs you comes first, in one deep block; passed rows stay pale. Above them is a picture that tells you what is happening without reading a word.
 
 While a run runs, a rocket flies. Each milestone a run passes has its own set of scenes, so you can tell which one it was from across the room, and a failure has its own.
 

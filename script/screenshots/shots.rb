@@ -10,10 +10,11 @@ module Screenshots
   # The README's pictures. Each scene is pinned, so the pictures come out the
   # same every time and a changed picture means the renderer draws differently.
   module Shots
+    # The other branches, one run each as the board carries them, newest first.
     HISTORY = [
       Run.of(11, "feature/search", "lint:0.5 build:1.4 fast:2.3 slow:51", ago: 1500),
-      Run.of(10, "main", "lint:0.4 build:1.3 fast:2.0 slow:49", ago: 3600),
-      Run.of(9, "fix/login", "lint:0.4 build:1.2 fast:fail@2.8 slow:47", ago: 7300)
+      Run.of(10, "docs/readme", "lint:0.4 build:1.3 fast:2.0 slow:49", ago: 3600),
+      Run.of(9, "fix/login", "lint:0.4 build:1.2 fast:2.8 slow:47", ago: 7300)
     ].freeze
     # A run going from start to pass: its stages, the stage that just passed,
     # the milestone that makes and its scene, and how many frames to show.

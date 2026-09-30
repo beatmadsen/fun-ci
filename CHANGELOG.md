@@ -21,25 +21,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - fun-ci fetches the trunk itself, at most every five minutes, into
   `refs/fun-ci/trunk/`, touching none of your refs, and says so the first time.
   `trunk_fetch: false` stops it, and `trunk: none` turns the check off.
-- The console marks a branch that conflicts with the trunk, `conflicts main`
-  in magenta, and plays a knot tying, and later untying, in the header.
+- The console says when a branch conflicts with the trunk, `conflicts with
+  main` under it, and plays a knot tying, and later untying, in the header.
   This needs renderer 2.1.0, which the platform gems bring; with an older
   renderer, as `cargo install` left it, the console works but shows no
   conflicts.
 - `fun-ci --help` lists `--raw`, which it left out.
 
 ### Changed
-- The console's table is drawn anew. Each stage has a column of its own,
-  always lint, build, fast, slow, with a mark that says its state by shape as
-  well as colour (`✓ 1.2s`, `✗ 1.4s`, `▲ 10s`, a spinner while it runs).
-  The newest run of each branch carries its state in a bar at the left edge;
-  a run a newer one replaced is dimmed, so a failure you fixed stops shouting;
-  a current failure or timeout gets a dark band of its colour. Runs take one
-  row each, so twice as many fit, and a branch's runs cancelled one after
-  another, as a rebase leaves them, fold into one row (`detached ×25`).
-  Project names are grey rather than in colours that looked like states, and
-  show only when the board holds more than one project. The cursor is a white
-  `❯` that lifts its row.
+- The console's table is quieter. Each branch has one row, its newest run's,
+  under its project's name, and reads as one phrase: the branch, a mark each
+  for lint, build, fast and slow (`✓ ✓ ◆ ✓`), what happened in fun-ci's words
+  (`failed in fast · 1.4s`, `running fast and slow · 7s`) and when. What needs
+  you, a failure, a timeout or a conflict, comes first, and the first of it,
+  or the row under the cursor, sits in one deep block that breathes; passed
+  rows are pale, and fold into one line per project when nothing needs you.
+  The colours come from the header's night scenes. On a short screen the table
+  folds and closes up before it leaves anything out, and says how many passed
+  rows it left out. `c cancel` shows only when there is something to cancel.
 
 ### Fixed
 - A console row wider than the terminal, from a long branch name or a

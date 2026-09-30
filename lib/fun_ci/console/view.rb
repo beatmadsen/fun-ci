@@ -2,13 +2,14 @@
 
 module FunCi
   module Console
-    # What the user sees of the runs and does with them: KeyHandler's cursor
-    # and cancel confirmation, and one page of runs, as many as the terminal
-    # fits, scrolled so the run under the cursor is on it (renderer-protocol.md,
-    # `board`).
+    # What the user sees of the rows and does with them: KeyHandler's cursor
+    # and cancel confirmation, and one page of rows, one per branch, as many as
+    # the terminal fits, scrolled so the row under the cursor is on it
+    # (renderer-protocol.md, `board`).
     class View
-      # The renderer's 14-row header, a blank line, the stages' names, a blank
-      # line and the footer (renderer-protocol.md, `board`).
+      # The renderer's 14-row header, the footer and the lines around the
+      # table: a page this many rows short of the terminal fits one line per
+      # row, however the renderer spaces them (renderer-protocol.md, `board`).
       CHROME_ROWS = 18
 
       def initialize(key_handler:)

@@ -41,6 +41,14 @@ milliseconds, full SHAs). "2m" must keep ticking between Ruby pushes, and
 the renderer owns the clock, so it owns the formatting.
 *Revisit if* formatting rules start needing data only Ruby has.
 
+**Decision: Ruby orders the rows.** The table shows a branch's newest run,
+grouped by project with what needs you first (design.md, The console). Which
+row comes next is also where `j` moves the cursor and what `c` cancels, and
+the cursor lives in Ruby, so Ruby sends one run per branch in the order they
+are shown, and the renderer draws them as they come, only choosing how much
+air and how many passed rows fit.
+*Revisit if* the renderer comes to own the cursor.
+
 ## Process model and protocol
 
 `fun-ci console` (Ruby) spawns `fun-ci-renderer` as a child process.
