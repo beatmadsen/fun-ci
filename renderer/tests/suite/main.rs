@@ -5,6 +5,7 @@
 mod support;
 
 mod animator_rules;
+mod ansi_backend;
 mod binary_handshake;
 mod board_layout;
 mod board_look;

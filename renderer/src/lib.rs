@@ -16,6 +16,7 @@ pub mod keys;
 pub mod live;
 pub mod live_io;
 pub mod model;
+pub mod output;
 pub mod protocol;
 pub mod replay;
 pub mod scenario;
