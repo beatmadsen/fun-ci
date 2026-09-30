@@ -37,7 +37,9 @@ impl Style {
 impl From<Style> for ratatui::style::Style {
     fn from(style: Style) -> Self {
         let [r, g, b] = style.fg;
-        let modifier = [(style.bold, Modifier::BOLD), (style.italic, Modifier::ITALIC)].iter().filter(|(on, _)| *on).fold(Modifier::empty(), |all, (_, one)| all | *one);
+        let mut modifier = Modifier::empty();
+        modifier.set(Modifier::BOLD, style.bold);
+        modifier.set(Modifier::ITALIC, style.italic);
         Self::default().fg(Color::Rgb(r, g, b)).add_modifier(modifier)
     }
 }
@@ -104,9 +106,7 @@ impl Widget for &Line {
         let mut next = 0;
         for (at, text, style) in self.sorted() {
             let x = (*at).max(next);
-            if x < end {
-                next = usize::from(buf.set_stringn(area.x + column(x), area.y, text, end - x, *style).0 - area.x);
-            }
+            next = usize::from(buf.set_stringn(area.x + column(x), area.y, text, end.saturating_sub(x), *style).0 - area.x);
         }
     }
 }

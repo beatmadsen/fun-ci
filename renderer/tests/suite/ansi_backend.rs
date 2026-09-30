@@ -112,3 +112,77 @@ fn taking_the_bytes_empties_the_backend() {
 
     assert!(backend.take().is_empty());
 }
+
+#[test]
+fn a_colour_of_the_256_is_written_as_that_colour() {
+    let grid = drawn(Depth::TrueColour, &[(0, 0, cell("x", Color::Indexed(208), Modifier::empty()))]);
+
+    assert_eq!(grid.cells[0][0].fg, Colour::Idx(208));
+}
+
+#[test]
+fn a_bright_named_colour_is_the_terminal_s_bright_one() {
+    let grid = drawn(Depth::TrueColour, &[(0, 0, cell("x", Color::LightRed, Modifier::empty()))]);
+
+    assert_eq!(grid.cells[0][0].fg, Colour::Idx(9));
+}
+
+#[test]
+fn dark_grey_is_the_first_of_the_bright_colours() {
+    let grid = drawn(Depth::TrueColour, &[(0, 0, cell("x", Color::DarkGray, Modifier::empty()))]);
+
+    assert_eq!(grid.cells[0][0].fg, Colour::Idx(8));
+}
+
+#[test]
+fn a_cell_drawn_after_a_clear_lands_where_it_belongs() {
+    let mut backend = AnsiBackend::new((10, 3), Depth::TrueColour);
+    let red = cell("x", Color::Red, Modifier::empty());
+    backend.draw([(0, 0, &red)].into_iter()).unwrap();
+    backend.clear_region(ClearType::All).unwrap();
+    backend.draw([(1, 0, &cell("y", Color::Red, Modifier::empty()))].into_iter()).unwrap();
+    let mut emulator = Emulator::new((10, 3));
+    emulator.feed((10, 3), &backend.take());
+
+    assert_eq!((emulator.grid().cells[0][1].text.as_str(), emulator.grid().cells[0][1].fg), ("y", Colour::Idx(1)));
+}
+
+#[test]
+fn clearing_the_whole_terminal_writes_the_clear() {
+    let mut backend = AnsiBackend::new((10, 3), Depth::TrueColour);
+    Backend::clear(&mut backend).unwrap();
+
+    assert!(backend.take().starts_with(b"\x1b[2J"));
+}
+
+#[test]
+fn hiding_the_cursor_writes_the_escape_that_hides_it() {
+    let mut backend = AnsiBackend::new((10, 3), Depth::TrueColour);
+    backend.hide_cursor().unwrap();
+
+    assert_eq!(backend.take(), b"\x1b[?25l");
+}
+
+#[test]
+fn showing_the_cursor_writes_the_escape_that_shows_it() {
+    let mut backend = AnsiBackend::new((10, 3), Depth::TrueColour);
+    backend.show_cursor().unwrap();
+
+    assert_eq!(backend.take(), b"\x1b[?25h");
+}
+
+#[test]
+fn the_cursor_is_where_it_was_last_put() {
+    let mut backend = AnsiBackend::new((10, 3), Depth::TrueColour);
+    backend.set_cursor_position(ratatui::layout::Position { x: 4, y: 2 }).unwrap();
+
+    assert_eq!(backend.get_cursor_position().unwrap(), ratatui::layout::Position { x: 4, y: 2 });
+}
+
+#[test]
+fn putting_the_cursor_somewhere_moves_the_terminal_s_cursor_there() {
+    let mut backend = AnsiBackend::new((10, 3), Depth::TrueColour);
+    backend.set_cursor_position(ratatui::layout::Position { x: 4, y: 2 }).unwrap();
+
+    assert_eq!(backend.take(), b"\x1b[3;5H");
+}

@@ -15,6 +15,8 @@ mod cancel_prompt;
 mod canvas;
 mod cli_options;
 mod clocks;
+mod console_busy;
+mod console_clears;
 mod console_depth;
 mod contract_fixtures;
 mod decoupling;

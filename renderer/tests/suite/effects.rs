@@ -170,3 +170,45 @@ fn a_banner_is_not_drawn_over_a_board_emptied_while_it_plays() {
 
     assert!(!last_screen(&emptied).text().contains("FAILED <<<"));
 }
+
+#[test]
+fn a_mark_waiting_its_turn_still_lights_when_another_run_s_stage_passes_meanwhile() {
+    let finished = [board(&[run(1, "passed", &passed(&["lint", "slow"])), run(2, "running", &passed(&["lint"]))]),
+                    event("stage_passed", 1, "slow")];
+    let lines = [then_ticks(&finished, 1), vec![event("stage_passed", 2, "lint")]].concat();
+    assert_eq!(colour_after(&lines, 6, ("b1", "slow")), rgb(GOLD));
+}
+
+#[test]
+fn a_new_effect_on_a_mark_drops_what_the_one_before_it_had_still_to_play() {
+    let timed_out = [board(&[run(1, "timeout", &[("fast", "timeout")])]), event("stage_failed", 1, "fast")];
+    let failed = [board(&[run(1, "failed", &[("fast", "failed")])]), event("stage_failed", 1, "fast")];
+    let lines = [then_ticks(&timed_out, 1), failed.to_vec()].concat();
+    assert_ne!(colour_after(&lines, 2, ("b1", "fast")), rgb(AMBER));
+}
+
+/// Run 1's fast suite failing, flared; then `then`, a frame each; then a board
+/// with run 3 above run 1, so every row after the first moves down one.
+fn rows_moving_under(then: &[String]) -> Vec<String> {
+    let failing = [run(1, "failed", &[("fast", "failed")]), run(2, "failed", &[("fast", "failed")])];
+    let moved = board(&[run(3, "passed", &passed(&["fast"])), failing[0].clone(), failing[1].clone()]);
+    let start = [board(&failing), event("stage_failed", 1, "fast")];
+    [then_ticks(&start, 1), then.iter().flat_map(|line| then_ticks(std::slice::from_ref(line), 1)).collect(), vec![moved]].concat()
+}
+
+/// The same lines with no events: how each mark looks at rest.
+fn at_rest(lines: &[String]) -> Vec<String> {
+    lines.iter().filter(|line| !line.contains("\"event\"")).cloned().collect()
+}
+
+#[test]
+fn an_effect_follows_its_mark_when_the_rows_move() {
+    let lines = rows_moving_under(&[event("stage_failed", 2, "fast")]);
+    assert_ne!(paper_after(&lines, 1, ("b1", "fast")), paper_after(&at_rest(&lines), 1, ("b1", "fast")));
+}
+
+#[test]
+fn an_effect_replaced_on_its_mark_leaves_nothing_where_the_mark_was_when_the_rows_move() {
+    let lines = rows_moving_under(&[event("stage_failed", 1, "fast")]);
+    assert_eq!(paper_after(&lines, 1, ("b3", "fast")), paper_after(&at_rest(&lines), 1, ("b3", "fast")));
+}

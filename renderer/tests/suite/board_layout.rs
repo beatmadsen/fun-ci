@@ -68,10 +68,15 @@ fn should_keep_the_empty_state_below_the_header_when_the_terminal_is_too_short_f
 }
 
 #[test]
-fn should_not_write_the_footer_when_its_newline_would_scroll_the_screen() {
-    let messages: Vec<Inbound> = [board(&[run(1, "passed", "passed")]), TICK.into()].iter().map(|line| parse(line).unwrap()).collect();
-    let frame = replay(&messages, &Library::builtin(), (80, 15), Depth::TrueColour).pop().unwrap();
-    assert!(!String::from_utf8(frame.bytes).unwrap().contains("q quit"));
+fn a_screen_with_one_row_under_the_header_shows_the_keys_there() {
+    let screen = last_screen_on(&[board(&[run(1, "passed", "passed")]), TICK.into()], (80, 15));
+    assert!(screen.text().lines().nth(14).unwrap().contains("q quit"), "{}", screen.text());
+}
+
+#[test]
+fn the_empty_state_on_a_screen_just_tall_enough_ends_with_the_quit_key_on_the_last_row() {
+    let screen = last_screen_on(&[board(&[]), TICK.into()], (80, 22));
+    assert!(screen.text().lines().nth(21).unwrap().contains("q quit"), "{}", screen.text());
 }
 
 /// A board with as many runs as Ruby pages for `rows` rows (renderer-protocol.md, `board`).

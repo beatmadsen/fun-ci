@@ -98,3 +98,22 @@ fn a_line_with_a_part_is_not_blank() {
 
     assert!(!line.is_blank());
 }
+
+#[test]
+fn a_part_both_bold_and_italic_is_drawn_both() {
+    let mut line = Line::default();
+    line.put(0, "note", Style { fg: GREY, bold: true, italic: true });
+
+    assert_eq!(drawn(&line, 20).cells[0][0].attrs, vec!["bold", "italic"]);
+}
+
+#[test]
+fn a_line_drawn_further_in_starts_its_parts_from_there() {
+    let mut line = Line::default();
+    line.put(0, "longer", Style::plain(GREY));
+    line.put(3, "next", Style::plain(GREY));
+    let mut buffer = blank(20, 1);
+    line.render(ratatui::layout::Rect::new(4, 0, 16, 1), &mut buffer);
+
+    assert_eq!(row(&shown(&buffer)), "    longernext");
+}

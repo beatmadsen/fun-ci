@@ -35,9 +35,9 @@ pub fn body(buf: &mut Buffer, board: &Board, frame: Frame) -> Places {
     rows(buf, board, frame)
 }
 
-/// The empty state's lines, as many as fit below the header with a line to spare.
+/// The empty state's lines, as many as fit below the header.
 fn empty(buf: &mut Buffer) {
-    let fitting = usize::from(buf.area.height).saturating_sub(HEADER_HEIGHT + 1);
+    let fitting = usize::from(buf.area.height).saturating_sub(HEADER_HEIGHT);
     let lines = EMPTY_STATE.iter().map(|text| (*text, Style::default())).chain([("  q quit", Style::default().add_modifier(Modifier::DIM))]);
     for (y, (text, style)) in (HEADER_HEIGHT..).zip(lines.take(fitting)) {
         let at = line_at(buf.area, y);
@@ -53,8 +53,8 @@ fn rows(buf: &mut Buffer, board: &Board, frame: Frame) -> Places {
     for (y, line) in (HEADER_HEIGHT..).zip(&body) {
         line.render(line_at(buf.area, y), buf);
     }
-    if height > 1 {
-        footer_line(board, &drawn, frame).render(line_at(buf.area, usize::from(buf.area.height) - 1), buf);
+    if let Some(last) = (HEADER_HEIGHT..usize::from(buf.area.height)).last() {
+        footer_line(board, &drawn, frame).render(line_at(buf.area, last), buf);
     }
     places(&drawn, body.len())
 }
