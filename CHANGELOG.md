@@ -7,27 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-- The console's table has a look of its own. The header's night sky carries
-  on below it; a row that needs you or is running has a stripe in the colour
-  of why; each row's marks are joined into a track that fills from left to
-  right (`✓─✓─◆┄·`); project names have a fading rule; passed branches folded
-  into one line each have a `✓`; and the keys sit on caps. The block is a
-  card with rounded corners, wine when its row needs you and indigo when the
-  cursor only rests there.
-- A run that ends washes its row in teal, coral or amber, draining from left
-  to right, and a band of light travels along each running row.
-- The failure and pass banners keep the sky behind them and take their
-  colours from the table's, and name the stage in full (`>>> THE FAST SUITE
-  FAILED <<<`).
-- The table reads to someone who has never seen fun-ci. Each stage is named
-  in full (`the fast suite failed after 1.4s`, `running the fast and slow
-  suites · 7s`, `all four stages passed`, `waiting to start`), and a legend
-  at the top of the table, above every project, names each stage and says
-  what it is for, a line running down from each name through every project
-  to its column of marks.
-  When the legend has no room, one line above the keys names the marks.
-
 ## [2.1.0] - 2026-09-30
 
 ### Added
@@ -50,22 +29,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `fun-ci --help` lists `--raw`, which it left out.
 
 ### Changed
-- The console's table is quieter. Each branch has one row, its newest run's,
+- The console's table is new. Each branch has one row, its newest run's,
   under its project's name, and reads as one phrase: the branch, a mark each
-  for lint, build, fast and slow (`✓ ✓ ◆ ✓`), what happened in fun-ci's words
-  (`failed in fast · 1.4s`, `running fast and slow · 7s`) and when. What needs
-  you, a failure, a timeout or a conflict, comes first, and the first of it,
-  or the row under the cursor, sits in one deep block that breathes; passed
-  rows are pale, and fold into one line per project when nothing needs you.
-  The colours come from the header's night scenes. On a wide terminal the
-  table widens a little and sits in the middle; on a short one it folds and
-  closes up before it leaves anything out, and says how many passed rows it
-  left out. `c cancel` shows only when there is something to cancel.
+  for lint, the build, the fast suite and the slow suite, joined into a track
+  that fills from left to right (`✓─✓─◆┄·`), what happened (`the fast suite
+  failed after 1.4s`, `running the fast and slow suites · 7s`) and when. A
+  legend at the top of the table names each stage and says what it is for,
+  with a line from each name down through every project to its column of
+  marks; when there is no room for it, one line above the keys names the
+  marks. What needs you, a failure, a timeout or a conflict, comes first, with
+  a stripe in the colour of why, and the first of it, or the row under the
+  cursor, sits in one card that breathes: wine when its row needs you, indigo
+  when the cursor only rests there. Passed rows are pale, and fold into one
+  line per project when nothing needs you. The header's night sky carries on
+  below the table, and the keys sit on caps. On a wide terminal the table
+  widens a little and sits in the middle; on a short one it folds and closes
+  up before it leaves anything out, and says how many passed rows it left out.
+  `c cancel` shows only when there is something to cancel.
 - A stage's mark lights up and fades back when something happens to it. A
   pass glows gold and eases back to the mark's own colour, a timeout pulses
   amber twice, and a failure flares white on red and cools into the row. They
   last as long however often the console redraws; they used to run faster
   when boards arrived quickly.
+- A run that ends washes its row in teal, coral or amber, draining from left
+  to right, and a band of light travels along each running row.
+- The failure and pass banners keep the sky behind them, take their colours
+  from the table's, and name the stage in full (`>>> THE FAST SUITE FAILED
+  <<<`).
+
+### Deprecated
+- `fun-ci trigger --no-validate`, the old name for `--background`, now goes
+  in 3.0 rather than 2.1 as 2.0 said: removing a flag in a minor release
+  would break the scripts and hooks that still pass it. It still works, and
+  says so on stderr.
 
 ### Fixed
 - A console row wider than the terminal, from a long branch name or a

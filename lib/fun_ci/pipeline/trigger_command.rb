@@ -6,10 +6,10 @@ require_relative "pipeline_forker"
 module FunCi
   module Pipeline
     # `fun-ci trigger [--background] <commit-hash> <branch>`. --no-validate is
-    # the 1.x name for --background, kept for one release.
+    # the 1.x name for --background, kept until 3.0.
     class TriggerCommand
       BACKGROUND = %w[--background --no-validate].freeze
-      DEPRECATED = "fun-ci: --no-validate is now --background; the old name goes in 2.1."
+      DEPRECATED = "fun-ci: --no-validate is now --background; the old name goes in 3.0."
 
       def initialize(io:, recorder:, pipeline_forker:, project: Dir.pwd)
         @io = io

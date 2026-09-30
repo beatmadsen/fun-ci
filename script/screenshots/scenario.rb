@@ -44,6 +44,23 @@ module Screenshots
     end
   end
 
+  # A scenario the contract already records (contract/scenarios/), replayed
+  # on a screen of its own size.
+  class Replayed
+    def initialize(name, cols:, rows:)
+      @path = File.expand_path("../../contract/scenarios/#{name}.jsonl", __dir__)
+      @size = [cols, rows]
+    end
+
+    attr_reader :size
+
+    def to_s
+      resize = JSON.generate({ t: "resize", cols: @size.first, rows: @size.last })
+      kept = File.readlines(@path).reject { |line| JSON.parse(line)["t"] == "resize" }
+      "#{resize}\n#{kept.join}"
+    end
+  end
+
   # A scenario for fun-ci-renderer's headless mode (docs/renderer-protocol.md,
   # Scenario files): boards, events and ticks, one JSON line each.
   class Scenario

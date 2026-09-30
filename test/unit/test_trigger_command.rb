@@ -82,7 +82,7 @@ class TestTriggerCommand < Minitest::Test
   def test_should_say_no_validate_is_deprecated_in_one_line
     run_command(["--no-validate", "abc1234", "main"])
 
-    assert_equal "fun-ci: --no-validate is now --background; the old name goes in 2.1.\n", @stderr.string
+    assert_equal "fun-ci: --no-validate is now --background; the old name goes in 3.0.\n", @stderr.string
   end
 
   def test_should_say_nothing_on_stderr_for_background

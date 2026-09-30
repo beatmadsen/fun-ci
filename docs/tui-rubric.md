@@ -31,20 +31,24 @@ What reports a state must read from the corner of the eye. These weigh most.
 6. **Each state looks like one state.** Passed, failed, timed out, running,
    scheduled, cancelled and conflicting are each unmistakable, and a timeout
    never reads as a failure.
+7. **Readable with no prior knowledge.** Someone who has never seen fun-ci
+   can tell what each mark stands for and what each stage is for, from the
+   screen alone. The words name every stage in full, `the fast suite`, never
+   shorthand such as `failed in fast`.
 
 ## Craft
 
-7. **Hierarchy and rhythm.** Clear levels of emphasis, consistent spacing,
+8. **Hierarchy and rhythm.** Clear levels of emphasis, consistent spacing,
    alignment that holds at 60, 80, 120 and 200 columns.
-8. **Palette.** Restrained, deliberate colour that belongs with the header's
+9. **Palette.** Restrained, deliberate colour that belongs with the header's
    painted scenes; no colour used for two meanings; enough contrast on a
    black background.
-9. **Selection and prompts.** The row under the cursor is obvious without
+10. **Selection and prompts.** The row under the cursor is obvious without
    hiding its state; the footer's keys and notes are there when looked for.
 
 ## Fun
 
-10. **It is a pleasure to watch, and calm.** Decoration is welcome where it
+11. **It is a pleasure to watch, and calm.** Decoration is welcome where it
     never hides a status (goal 2), and it fits the header's look. Even a
     failure reads as feedback, not an alarm: exact words, no shouting.
 

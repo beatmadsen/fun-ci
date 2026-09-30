@@ -50,7 +50,14 @@ module Screenshots
 
     def self.all
       stills = STILLS.map { |name, spec| still(name, spec) }
-      [console, failure, *stills, *QUIET.map { |name, spec| quiet(name, spec) }]
+      [console, table, failure, *stills, *QUIET.map { |name, spec| quiet(name, spec) }]
+    end
+
+    # The table on a busy board, tall enough for the legend over every
+    # project: a failure that conflicts with the trunk, a timeout, a run
+    # going, and a stale trunk.
+    def self.table
+      Shot.new("table", Replayed.new("busy-board", cols: 100, rows: 46), [12])
     end
 
     def self.console

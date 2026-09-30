@@ -59,7 +59,9 @@ Results are kept in SQLite under `$XDG_STATE_HOME/fun-ci/` (`~/.local/state/fun-
 fun-ci console
 ```
 
-The console shows where each branch stands, one row per branch under its project's name: a mark for each stage (lint, the build, the fast suite and the slow suite, named in a legend over the marks), what happened (`the fast suite failed after 1.4s`) and when. What needs you comes first, in one deep block; passed rows stay pale. Above them is a picture that tells you what is happening without reading a word.
+The console shows where each branch stands, one row per branch under its project's name: a mark for each stage (lint, the build, the fast suite and the slow suite, named in a legend at the top of the table), what happened (`the fast suite failed after 1.4s`) and when. What needs you comes first, in one deep block; passed rows stay pale. Above them is a picture that tells you what is happening without reading a word.
+
+![The console's table on a busy board: a legend naming lint, the build, the fast suite and the slow suite over their columns of marks, three projects, a failed branch that conflicts with main in a deep red card, a timeout, a running branch and two pale passed ones](docs/screenshots/table.png)
 
 While a run runs, a rocket flies. Each milestone a run passes has its own set of scenes, so you can tell which one it was from across the room, and a failure has its own.
 
@@ -91,7 +93,7 @@ A branch that conflicts with the trunk says so on the line under its name, `conf
 Keys:
 
 - `j` and `k`, or the arrow keys, move the cursor down and up
-- `c` cancels the run under the cursor: a scheduled one at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start
+- `c` cancels the run under the cursor: one waiting to start at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start
 - `q` quits
 
 The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above come from the renderer's headless mode, drawn with its own bitmap font; in your terminal the text is in your terminal's font.
@@ -239,7 +241,7 @@ fun-ci prune                                    Remove fun-ci's worktrees when n
 - Run `fun-ci install-hooks` again. The background pipeline now runs after the commit (`post-commit`), so it tests the commit you just made; the `pre-commit` hook tested the one before it. Until you do, each run tests the commit before yours, and `fun-ci check` warns you. Installing removes the `pre-commit` hook fun-ci 1.x wrote and leaves a hook of your own alone (`fun-ci check` warns if yours still calls fun-ci). The new `pre-push` hook waits for the verdict instead of running the pipeline again.
 - The stages run in a worktree at the commit, not in your checkout. A script that relied on uncommitted files in your checkout won't see them any more.
 - The database moved from `$TMPDIR` to `$XDG_STATE_HOME/fun-ci/`. Runs recorded by 1.x are not carried over.
-- `fun-ci-trigger` and `fun-ci-tui` are gone; use `fun-ci trigger` and `fun-ci console`. `fun-ci trigger --no-validate` still works until 2.1, as the old name for `--background`.
+- `fun-ci-trigger` and `fun-ci-tui` are gone; use `fun-ci trigger` and `fun-ci console`. `fun-ci trigger --no-validate` still works until 3.0, as the old name for `--background`.
 - The console needs `fun-ci-renderer`, which the platform gems include (see [Watching: the console](#watching-the-console)).
 
 The whole list is in [CHANGELOG.md](CHANGELOG.md).
