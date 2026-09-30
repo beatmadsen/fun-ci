@@ -66,6 +66,57 @@ isolation, a renderer that runs and is tested headless on its own, and no C
 toolchain at install time. *Revisit if* the per-frame JSON cost ever shows up
 in a profile (it won't at 10 fps and ≤200 rows).
 
+## Drawing the console
+
+Each frame is composed in one ratatui buffer (`renderer/src/board_view/`): the
+header's scene across the top 14 rows, the table and its footer below it, then
+the effects over both. A ratatui `Terminal` compares the buffer with the last
+frame's and hands the cells that changed to `AnsiBackend`
+(`renderer/src/output/backend.rs`), which writes them as bytes: a cursor move
+where a cell does not follow the one before, a style escape only where the
+style changes, and colours in 24-bit or the nearest of xterm's 256. The live
+session sends those bytes to the terminal and the headless replay keeps them,
+so both draw the same bytes for the same state and clock.
+
+**Decision: ratatui, drawing through a byte backend of our own.** ratatui
+brings the buffer, the diff between frames and text measured by the columns it
+fills, all of which the renderer used to do by hand: a line printer, a second
+diff for the header alone, and names measured in characters, which put a
+Chinese or Japanese branch name out of line with the rows around it. Its
+crossterm backend writes to the terminal itself, and the renderer needs the
+bytes, for the headless replay and its tests, in a colour depth it chooses. So
+ratatui is built without its default features and draws into `AnsiBackend`.
+A clear, a change of colour depth and a resize in one frame clear the screen
+once, and a new depth clears it, since ratatui would redraw only the cells
+that changed and leave the rest in the old colours.
+*Revisit if* the renderer stops needing its frames as bytes.
+
+**Decision: the table and the animations never see each other.** The table
+(`renderer/src/table/`) draws its lines and says where it put each run's row
+and the first of its marks; `board_view` hands that to the animator as
+`Places`, and the effects land there. The animator (`animator/`, `animation/`,
+`art/`, `scenes/`) knows where a mark is, never how the table drew it: an
+effect changes the colour of the cell the table drew, and leaves its glyph and
+the paper behind it alone. What both need, the model, the portable maths and
+the output, has a module of its own. `tests/suite/decoupling.rs` fails on an
+import either way.
+*Revisit if* an effect needs more of the table than where a mark is.
+
+**Decision: stage effects are tachyonfx fades, timed by the clock.** An effect
+on a stage's mark lights it in a colour of its own and fades, over a few
+tenths of a second, back to however the row draws it: gold for a pass, amber
+twice for a timeout, white on red cooling for a failure. tachyonfx plays each
+on the one cell of its mark, which follows the board as rows move, and one at
+a time on a mark. Effects and banners are timed by the animation clock, so a
+key press or a board arriving between ticks does not speed them up. Each step
+of an effect starts at the exact time it is due; a tachyonfx sequence would
+start its next step a frame late whenever the last one ended on a frame.
+tachyonfx is built without `std`, which would ease some curves with the
+platform's `powf` and break the snapshots across platforms;
+`tests/suite/portable_maths.rs` checks the build.
+*Revisit if* an effect needs tachyonfx's own sequencing, or a pattern across
+a whole row.
+
 ## Animations as scenes
 
 In 1.x each animation was a Ruby module of ANSI strings, and 2.0 first carried
@@ -96,11 +147,11 @@ Requirements in `acceptance-tests.md` §7.
 *Revisit if* the queue falls so far behind that a scene is taken for a later
 run's.
 
-**Decision: portable maths.** Scene code calls `art::math::Portable` (the
-`libm` crate) instead of `f64::sin` and friends, which call the platform's
-maths library and differ in the last bit between macOS and Linux; one such
-difference tips a cell to another glyph, and a snapshot recorded on one
-platform fails on the other. `tests/suite/portable_maths.rs` holds the rule.
+**Decision: portable maths.** Scene, art and table code calls
+`maths::Portable` (the `libm` crate) instead of `f64::sin` and friends, which
+call the platform's maths library and differ in the last bit between macOS
+and Linux; one such difference tips a cell to another glyph, and a snapshot
+recorded on one platform fails on the other. `tests/suite/portable_maths.rs` holds the rule.
 *Revisit if* the snapshots stop pinning the header's cells.
 
 ## Distribution

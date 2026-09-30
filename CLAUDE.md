@@ -85,7 +85,7 @@ fun-ci extract STAGE --output FILE [--exit N | --timed-out] [--json]  # Try a st
 - Minitest, run in parallel processes by ActiveSupport's executor (serially under `MUTATION_TESTING`); RuboCop; mutineer for the mutation lane (Ruby >= 3.4 only).
 - Prism, in tests, to read Ruby sources for the code-limit and call scans.
 - Rust pinned to one release in `renderer/rust-toolchain.toml` (the root `rust-toolchain.toml` links to it); raise it on purpose, with the gate green on the new release. The crate's `rust-version` is apart from it: the oldest Rust that builds the renderer for `cargo install`, which the gems workflow's `crate-msrv` job builds with; code that needs a newer standard library raises it, and the READMEs with it.
-- 2.0 adds a Rust renderer (`fun-ci-renderer`) that Ruby drives over JSON Lines; `docs/architecture.md` decides the boundary: Ruby decides what is true, Rust decides how it looks.
+- 2.0 adds a Rust renderer (`fun-ci-renderer`) that Ruby drives over JSON Lines; `docs/architecture.md` decides the boundary: Ruby decides what is true, Rust decides how it looks. The renderer composes each frame in a ratatui buffer drawn through its own byte backend, and plays the stage effects with tachyonfx, built without `std` (architecture.md, Drawing the console).
 
 ## Layout
 
@@ -149,7 +149,7 @@ Seams tests use in place of the real thing:
 
 ## Gotchas
 
-- The renderer runs the terminal in raw mode, where `\n` alone does not return the carriage: write `\r\n` (`Screen::println` in `renderer/src/screen.rs` does).
+- The renderer runs the terminal in raw mode, where `\n` alone does not return the carriage. The console never writes a newline: `AnsiBackend` (`renderer/src/output/backend.rs`) moves the cursor to each cell it writes. Anything else written to the terminal writes `\r\n`.
 - The renderer's integration tests are one binary, `renderer/tests/suite/`: add a module to `main.rs`, not a new `tests/*.rs` file, because `rake mutation:rust` relinks and launches every test binary once per mutant. Tests find the scenarios and fixtures through `support::contract_dir()` (`FUN_CI_CONTRACT`, which the lane sets, since cargo-mutants copies only `renderer/`). Real-process terminal tests use `support::pty`, which makes pty fds close-on-exec and takes turns at `openpty`/`ttyname_r`: on macOS both go through shared state and fail under parallel tests otherwise.
 - A renderer test that needs SIGWINCH makes the pty the child's controlling terminal (`setsid` and `TIOCSCTTY` before exec, `renderer/tests/suite/live_binary.rs`). When that child exits, macOS revokes every handle open on the pty, so `Pty::is_raw` reads the modes through a fresh one.
 - A mutant that turns a loop's exit test to `true` makes it run until the mutant times out, and `rake mutation:rust` runs several mutants at once, each with several tests. So a fake that records every call (a `Vec` it pushes to) must fail a caller that reads on past its end, as the live `Script` does, or that mutant fills memory (about 150 MB/s per test) and takes the machine down. The same goes for production code: a loop that ends only when a callee makes progress is bounded by the input's size (`keys::decode`), or a mutant that stops the progress fills memory from inside the code under test. Likewise every wait on a child process has a deadline (`support::renderer`, and `ProcessDeadline` on the Ruby side), or a mutant hangs the test until the tool's timeout and the child outlives it.

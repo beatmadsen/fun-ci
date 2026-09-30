@@ -330,9 +330,10 @@ The pools today:
 Lint's scenes are teal and move across or settle, build's are amber and stack, turn or strike,
 so the two small ones can be told apart without reading.
 
-**Stage effects** play over a single stage's column and show *which* stage it
-was: a failed stage is flanked by blasts, a timed-out one pulses yellow, and a
-passed one flashes.
+**Stage effects** play on a single stage's mark and show *which* stage it
+was: a failed stage flares white on red and cools into its row, a timed-out
+one pulses amber twice, and a passed one lights gold and fades back. When the
+last stage passes, its mark lights on its turn, a fifth of a second a stage.
 
 **The footer** joins in for a failure (`>>> FAST FAILED <<<`, fading) and for a
 pass (`* * * NICE! * * *`).

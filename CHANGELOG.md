@@ -40,12 +40,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   table widens a little and sits in the middle; on a short one it folds and
   closes up before it leaves anything out, and says how many passed rows it
   left out. `c cancel` shows only when there is something to cancel.
+- A stage's mark lights up and fades back when something happens to it. A
+  pass glows gold and eases back to the mark's own colour, a timeout pulses
+  amber twice, and a failure flares white on red and cools into the row. They
+  last as long however often the console redraws; they used to run faster
+  when boards arrived quickly.
 
 ### Fixed
 - A console row wider than the terminal, from a long branch name or a
   failure word, wrapped onto the next line and pushed the board up, hiding
   the newest run under the header. Rows are now cut to fit, the branch first,
   and never wrap; the footer too.
+- A branch named in Chinese, Japanese or Korean fills two columns a
+  character, but the console counted one, so its marks slid out of line with
+  the other rows' and a long name ran into them. Names are now measured, and
+  cut, by the columns they fill.
 - `.fun-ci/console.log`, where the console notes what went wrong between it
   and the renderer, was left for `git add` to sweep into a commit. The console
   now writes a `.fun-ci/.gitignore` naming it, unless the project has one there.
