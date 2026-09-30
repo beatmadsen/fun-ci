@@ -75,3 +75,8 @@ fn the_firefly_at_its_brightest_is_no_brighter_than_a_passed_branch_s_name() {
 
     assert!(sum(night::FIREFLY) <= sum(night::pale(night::BRANCH)));
 }
+
+#[test]
+fn a_single_open_line_takes_the_firefly_all_the_while() {
+    assert!(a_minute().all(|ms| line(&[20], ms) == Some(20)));
+}

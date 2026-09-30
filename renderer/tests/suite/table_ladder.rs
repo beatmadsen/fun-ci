@@ -85,3 +85,8 @@ fn a_calm_board_folds_a_project_s_passed_rows_even_with_room() {
 
     assert!(fit(&sections, None, 40, true).pieces.iter().any(|piece| matches!(piece, Piece::Folded(_))));
 }
+
+#[test]
+fn a_lead_between_other_rows_keeps_a_line_under_its_block_to_count_those_below() {
+    assert_eq!(troubled(4, Some(3)), ["2 more above", "row 3", "bottom", "3 more below"]);
+}

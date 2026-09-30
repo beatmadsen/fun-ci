@@ -127,3 +127,11 @@ fn the_build_sparkle_lights_its_mark_on_the_third_frame() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "build"]))]), event("stage_passed", 1, "build")];
     assert!(bold_after(&lines, 3, ("b1", "build")));
 }
+
+#[test]
+fn a_banner_is_not_drawn_over_a_board_emptied_while_it_plays() {
+    let lines = [board(&[run(1, "failed", &[("fast", "failed")])]), event("stage_failed", 1, "fast")];
+    let emptied = [then_ticks(&lines, 9), then_ticks(&[board(&[])], 2)].concat();
+
+    assert!(!last_screen(&emptied).text().contains("FAILED <<<"));
+}

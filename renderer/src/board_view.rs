@@ -102,8 +102,9 @@ impl BoardView {
     }
 
     /// The empty state's lines, as many as fit below the header without the
-    /// last newline scrolling the screen.
+    /// last newline scrolling the screen; no table, so nowhere for an effect.
     fn render_empty(&mut self, rows: u16) {
+        self.animator.set_places(Places::default());
         let quit = paint(DIM, "  q quit");
         let fitting = usize::from(rows).saturating_sub(HEADER_HEIGHT + 1);
         for line in EMPTY_STATE.iter().copied().chain([quit.as_str()]).take(fitting) {

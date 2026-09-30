@@ -92,3 +92,8 @@ fn a_screen_with_room_for_a_little_more_gives_it_all_to_the_gaps() {
 fn a_screen_the_table_fills_is_not_widened() {
     assert_eq!(Columns::fit(80, 17, 26), Columns::packed(80, 17, 26));
 }
+
+#[test]
+fn closing_the_gaps_keeps_the_margin() {
+    assert_eq!(Columns::packed(70, 17, 26).margin, 70 / 12);
+}

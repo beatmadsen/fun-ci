@@ -59,3 +59,30 @@ fn each_stale_trunk_is_named() {
 
     assert_eq!(stale(&board("passed", &trunks), NOW * 1000), "one: trunk could not be fetched · two: trunk last fetched 1m ago");
 }
+
+fn footer_text(width: u16, unshown: usize) -> String {
+    use fun_ci_renderer::grid::Emulator;
+    let drawn = fun_ci_renderer::table::Drawn { lines: Vec::new(), rows: Vec::new(), columns: crate::support::paint::COLUMNS, unshown, note: None, block: None };
+    let frame = fun_ci_renderer::table::Frame { width, ..crate::support::paint::frame() };
+    let line = fun_ci_renderer::table::footer::footer_line(&board("passed", &json!({})), &drawn, frame);
+    let mut emulator = Emulator::new((width, 1));
+    emulator.feed((width, 1), line.as_bytes());
+    emulator.grid().text()
+}
+
+#[test]
+fn what_was_left_out_ends_at_the_right_margin() {
+    assert_eq!(footer_text(120, 2).trim_end().chars().count(), 120 - 10);
+}
+
+#[test]
+fn what_was_left_out_keeps_five_columns_from_the_keys() {
+    let text = footer_text(60, 2);
+
+    assert_eq!(text.find("2 passed"), Some(12 + "j/k move      q quit".len() + 5));
+}
+
+#[test]
+fn what_was_left_out_is_cut_rather_than_run_past_the_margin() {
+    assert!(footer_text(60, 2).trim_end().chars().count() <= 60 - 10);
+}

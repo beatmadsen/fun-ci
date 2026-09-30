@@ -35,6 +35,25 @@ marks! {
     the_block_s_bottom_edge_is_drawn: "▀";
 }
 
+/// The leftmost lit pixel on pixel row `y` of a one-cell image, if any.
+fn leftmost(pixels: &[u8], y: usize) -> Option<usize> {
+    let background = &pixels[..3];
+    (0..8).find(|x| &pixels[(y * 8 + x) * 3..(y * 8 + x) * 3 + 3] != background)
+}
+
+fn italic(text: &str) -> Vec<u8> {
+    let cell = Cell { text: text.to_string(), fg: Colour::Default, bg: Colour::Default, attrs: vec!["italic"] };
+    render(&Grid { cols: 1, rows: 1, cells: vec![vec![cell]] }).pixels
+}
+
+#[test]
+fn an_italic_cell_leans_two_pixels_right_at_the_top_one_in_the_middle_and_none_at_the_foot() {
+    let (upright, leaning) = (drawn("l"), italic("l"));
+    let lean = |y: usize| leftmost(&leaning, y).zip(leftmost(&upright, y)).map(|(a, b)| a - b);
+
+    assert_eq!([lean(2), lean(8), lean(12)], [Some(2), Some(1), Some(0)]);
+}
+
 #[test]
 fn an_italic_cell_is_drawn_slanted() {
     let italic = Cell { text: "l".into(), fg: Colour::Default, bg: Colour::Default, attrs: vec!["italic"] };

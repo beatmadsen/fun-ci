@@ -32,7 +32,7 @@ pub fn fit<'a>(sections: &'a [Section<'a>], lead: Option<u64>, room: usize, calm
     let first = Rung { fold: if calm { Fold::Many } else { Fold::Never }, ..RUNGS[0] };
     let rungs = std::iter::once(first).chain(RUNGS.into_iter().skip(1));
     let chosen = rungs.clone().find(|rung| stack(sections, lead, *rung).len() <= room).unwrap_or(RUNGS[5]);
-    let pieces = window(stack(sections, lead, chosen), lead, room);
+    let pieces = window(stack(sections, lead, chosen), room);
     Fitted { pieces, unshown: unshown(sections, lead, chosen), flat: !chosen.labels }
 }
 
@@ -47,12 +47,12 @@ fn unshown(sections: &[Section], lead: Option<u64>, rung: Rung) -> usize {
 
 /// `pieces` cut to `room` lines around the lead's row, the first or last
 /// line saying how many rows are off the screen that way.
-fn window(mut pieces: Vec<Piece<'_>>, lead: Option<u64>, room: usize) -> Vec<Piece<'_>> {
+fn window(mut pieces: Vec<Piece<'_>>, room: usize) -> Vec<Piece<'_>> {
     let total = pieces.len();
     if total <= room || room == 0 {
         return pieces;
     }
-    let end = lead_end(&pieces, lead).map_or(0, |at| at + 1 + usize::from(at + 1 < total));
+    let end = block_end(&pieces).map_or(0, |at| at + 1 + usize::from(at + 1 < total));
     let start = end.saturating_sub(room);
     let shown: Vec<Piece> = pieces.drain(start..start + room).collect();
     marked(shown, rows(&pieces[..start]), rows(&pieces[start..]))
@@ -73,10 +73,9 @@ fn marked(mut shown: Vec<Piece<'_>>, above: usize, below: usize) -> Vec<Piece<'_
     shown
 }
 
-/// The last line of the lead's row: its block's bottom edge.
-fn lead_end(pieces: &[Piece], lead: Option<u64>) -> Option<usize> {
-    let row = pieces.iter().position(|piece| matches!(piece, Piece::Row(run) if Some(run.id) == lead))?;
-    pieces[row..].iter().position(|piece| *piece == Piece::Edge(false)).map(|at| row + at)
+/// The last line of the lead's row: the block's bottom edge, the only one.
+fn block_end(pieces: &[Piece]) -> Option<usize> {
+    pieces.iter().position(|piece| *piece == Piece::Edge(false))
 }
 
 fn rows(pieces: &[Piece]) -> usize {

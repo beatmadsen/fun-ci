@@ -38,3 +38,18 @@ fn a_screen_too_short_for_labels_says_the_stale_trunk_on_its_own_line() {
 
     assert!(grid.text().lines().any(|line| line.trim() == "two: trunk last fetched 2h ago"), "{}", grid.text());
 }
+
+#[test]
+fn a_screen_too_short_for_labels_names_each_row_s_project_first() {
+    let text = screen(&two_crowded_projects(), (80, 22)).text();
+
+    assert!(text.lines().any(|line| line.trim_start().starts_with("one  one-fix")), "{text}");
+}
+
+#[test]
+fn a_flat_screen_of_one_project_names_no_project() {
+    let runs: Vec<_> = two_crowded_projects().into_iter().take(6).collect();
+    let text = screen(&runs, (80, 18)).text();
+
+    assert!(text.lines().any(|line| line.trim_start().starts_with("one-fix")), "{text}");
+}

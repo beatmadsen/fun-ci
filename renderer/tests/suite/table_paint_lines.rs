@@ -107,3 +107,14 @@ fn a_folded_line_too_long_for_the_screen_counts_the_branches_it_could_not_name_t
 
     assert!(line.trim().ends_with("feature/number-2 6m     9 more     passed"), "{line}");
 }
+
+#[test]
+fn a_flat_row_cuts_its_branch_to_leave_room_for_its_project() {
+    let long = run(6, "refactor/extract-the-evidence", "failed", &[]);
+    let columns = fun_ci_renderer::table::columns::Columns { name: 30, ..COLUMNS };
+    let line = paint(&Piece::Row(&long), &Paint { columns, frame: frame(), lead: None, stale: &[], paper: night::WINE, tags: Some(12) });
+    let mut emulator = Emulator::new((WIDTH, 1));
+    emulator.feed((WIDTH, 1), line.as_bytes());
+
+    assert!(at(&emulator.grid(), COLUMNS.branch).starts_with("strings-kata  refactor/extrac…"), "{}", text(&emulator.grid()));
+}

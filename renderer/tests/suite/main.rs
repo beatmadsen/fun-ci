@@ -55,6 +55,7 @@ mod table_footer;
 mod table_ladder;
 mod table_line;
 mod table_marks;
+mod table_page;
 mod table_paint;
 mod table_paint_lines;
 mod table_sections;

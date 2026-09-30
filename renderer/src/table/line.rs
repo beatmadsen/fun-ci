@@ -49,11 +49,6 @@ impl Line {
         self.cells.extend(text.chars().take(room).map(|c| (c, style)));
     }
 
-    /// `text` ending at the 0-based column `end`, exclusive.
-    pub fn put_right(&mut self, end: usize, text: &str, style: Style) {
-        self.put(end.saturating_sub(text.chars().count()), text, style);
-    }
-
     /// The line's escapes and text, in colours the terminal has.
     #[must_use]
     pub fn encode(&self, depth: Depth) -> String {
