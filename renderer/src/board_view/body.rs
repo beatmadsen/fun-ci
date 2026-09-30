@@ -3,7 +3,7 @@
 //! the last line; or, with no runs, how to get some.
 
 use ratatui::buffer::Buffer;
-use ratatui::layout::Rect;
+use ratatui::layout::{Constraint, Layout, Rect};
 use ratatui::style::Stylize;
 use ratatui::text::{Line, Text};
 use ratatui::widgets::Widget;
@@ -25,8 +25,8 @@ const EMPTY_STATE: [&str; 7] = [
     "",
 ];
 
-/// The footer and the blank line above it.
-const BELOW_TABLE: usize = 2;
+/// The blank line between the table and the footer.
+const UNDER_TABLE: usize = 1;
 
 /// Draws what goes below the header into `buf`, and says where the effects land.
 pub fn body(buf: &mut Buffer, board: &Board, frame: Frame) -> Places {
@@ -45,25 +45,19 @@ fn empty(buf: &mut Buffer) {
 
 /// The table and its page down to the footer, and the footer on the last line.
 fn rows(buf: &mut Buffer, board: &Board, frame: Frame) -> Places {
-    let height = usize::from(buf.area.height).saturating_sub(HEADER_HEIGHT);
-    let drawn = draw(board, frame, height.saturating_sub(BELOW_TABLE));
-    let body = page(board, &drawn, frame, height.saturating_sub(1));
-    Sheet { lines: &body, paper: drawn.paper }.render(below_header(buf.area), buf);
-    if let Some(last) = (HEADER_HEIGHT..usize::from(buf.area.height)).last() {
-        footer_line(board, &drawn, frame).render(line_at(buf.area, last), buf);
-    }
+    let [sheet, footer] = Layout::vertical([Constraint::Fill(1), Constraint::Length(1)]).areas(below_header(buf.area));
+    let drawn = draw(board, frame, usize::from(sheet.height).saturating_sub(UNDER_TABLE));
+    let body = page(board, &drawn, frame, usize::from(sheet.height));
+    Sheet { lines: &body, paper: drawn.paper }.render(sheet, buf);
+    footer_line(board, &drawn, frame).render(footer, buf);
     places(&drawn, body.len())
 }
 
 /// What of `area` is below the header.
 fn below_header(area: Rect) -> Rect {
     let header = u16::try_from(HEADER_HEIGHT).unwrap_or(u16::MAX);
-    Rect { y: area.y.saturating_add(header), height: area.height.saturating_sub(header), ..area }
-}
-
-/// Line `y` of `area`, from 0.
-fn line_at(area: Rect, y: usize) -> Rect {
-    Rect::new(area.x, area.y.saturating_add(u16::try_from(y).unwrap_or(u16::MAX)), area.width, 1).intersection(area)
+    let [_, below] = Layout::vertical([Constraint::Length(header), Constraint::Fill(1)]).areas(area);
+    below
 }
 
 /// Where the table's rows and marks landed, for the stage effects, and the
