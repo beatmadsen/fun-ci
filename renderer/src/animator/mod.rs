@@ -17,6 +17,7 @@ mod resting;
 use std::mem;
 
 pub use cast::{Cast, MILESTONES, seed_at};
+pub use draw::Places;
 pub use effect::{Effect, Kind};
 pub use header::HEADER_HEIGHT;
 pub use lamp::{LAMP_AT, lamp};
@@ -35,17 +36,23 @@ pub struct Animator {
     header: Header,
     pending: Vec<Event>,
     cast: Cast,
+    places: Places,
 }
 
 impl Animator {
     #[must_use]
     pub fn new(cast: Cast) -> Self {
-        Self { effects: Vec::new(), header: Header::new(cast.idle()), pending: Vec::new(), cast }
+        Self { effects: Vec::new(), header: Header::new(cast.idle()), pending: Vec::new(), cast, places: Places::default() }
     }
 
     /// Draws the header in `depth`'s colours from the next frame.
     pub fn set_depth(&mut self, depth: Depth) {
         self.header.set_depth(depth);
+    }
+
+    /// Where the table put each run's row and marks this frame, for the stage effects.
+    pub fn set_places(&mut self, places: Places) {
+        self.places = places;
     }
 
     /// Takes an event into account at the next frame, against that frame's runs.
@@ -128,8 +135,8 @@ impl Animator {
     fn draw(&mut self, screen: &mut Screen, board: &Board) {
         screen.save_cursor();
         self.header.draw(screen, board.streak);
-        draw::stages(screen, &self.effects, &board.runs);
-        draw::footer(screen, &self.effects, &board.runs);
+        draw::stages(screen, &self.effects, (&board.runs, &self.places));
+        draw::footer(screen, &self.effects, (&board.runs, &self.places));
         screen.restore_cursor();
     }
 

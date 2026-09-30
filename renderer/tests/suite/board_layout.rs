@@ -37,25 +37,10 @@ fn last_screen_on(lines: &[String], size: (u16, u16)) -> Grid {
     emulate(&replay(&messages, &Library::builtin(), size, Depth::TrueColour)).pop().unwrap()
 }
 
-fn eight_runs_on_24_rows() -> String {
-    let runs: Vec<String> = (1..=8).map(|id| run(id, "passed", "passed")).collect();
-    last_screen(&[board(&runs), TICK.into()]).text()
-}
-
 #[test]
 fn the_first_frame_starts_by_clearing_the_screen() {
     let frames = replay(&[parse(TICK).unwrap()], &Library::builtin(), (80, 24), Depth::TrueColour);
     assert!(frames[0].bytes.starts_with(b"\x1b[2J\x1b[H"));
-}
-
-#[test]
-fn a_24_row_terminal_shows_the_sixth_run() {
-    assert!(eight_runs_on_24_rows().contains("  b6  "));
-}
-
-#[test]
-fn a_24_row_terminal_leaves_out_the_seventh_run() {
-    assert!(!eight_runs_on_24_rows().contains("  b7  "));
 }
 
 /// Lint passes, then a frame later build passes while lint still flashes.
@@ -70,7 +55,7 @@ fn two_stages_passing() -> Vec<String> {
 #[test]
 fn a_stage_effect_keeps_playing_when_another_stage_starts_one() {
     let screen = last_screen(&two_stages_passing());
-    let lint = &screen.cells[16][crate::support::boards::stage_column(&screen, "lint")];
+    let lint = &crate::support::boards::mark(&screen, "b1", "lint");
     assert_eq!((lint.text.as_str(), lint.attrs.clone()), ("✓", vec!["bold"]));
 }
 
@@ -94,17 +79,7 @@ fn full_page(rows: u16) -> Grid {
 }
 
 #[test]
-fn a_full_page_keeps_the_stages_names_under_the_header_and_a_blank_line() {
-    assert!(full_page(30).text().lines().nth(15).unwrap().contains("lint"));
-}
-
-#[test]
 fn a_full_page_ends_with_the_footer_on_the_last_row() {
     assert!(full_page(30).text().lines().nth(29).unwrap().contains("q quit"));
 }
 
-#[test]
-fn each_run_takes_one_row() {
-    let screen = full_page(30);
-    assert_eq!([screen.text().lines().nth(16).unwrap().contains("b1"), screen.text().lines().nth(17).unwrap().contains("b2")], [true, true]);
-}

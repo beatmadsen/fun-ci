@@ -1,16 +1,15 @@
-//! The status board: header space, one row per run, footer, and the
-//! animations over them, laid out as the 1.x `BoardRenderer` laid them out.
+//! The status board: header space, the table (`table`) and its footer, and
+//! the animations over them.
 
-use crate::animator::{Animator, HEADER_HEIGHT};
-use crate::ansi::{DIM, RESET, paint};
+use crate::animator::{Animator, HEADER_HEIGHT, Places};
+use crate::ansi::{DIM, paint};
 use crate::art::output::{Depth, escape};
-use crate::format::{age, cut, project_name, short_sha};
-use crate::model::{Board, Run, StaleTrunk};
+use crate::model::Board;
 use crate::screen::Screen;
 use crate::spinner::Spinner;
-use crate::table::layout::conflict_marker;
-use crate::table::palette::SECONDARY;
-use crate::table::{Frame, draw};
+use crate::table::footer::footer_line;
+use crate::table::page::page;
+use crate::table::{Drawn, Frame, draw};
 
 const EMPTY_STATE: [&str; 7] = [
     "",
@@ -24,36 +23,8 @@ const EMPTY_STATE: [&str; 7] = [
 
 pub use crate::model::Moment;
 
-/// The rows under the header that are not runs: a blank line, the stages'
-/// names, a blank line and the footer (renderer-protocol.md, `board`).
-const CHROME_BELOW_HEADER: usize = 4;
-
-/// The footer's keys, and what is left of them when its notes need the room.
-const KEYS: &str = "  j/k move   c cancel   q quit";
-const SHORT_KEYS: &str = "  j/k c q";
-
-/// What the footer adds when a conflict is shown as `↯ main` rather than in
-/// words, and its shorter form.
-const ZIGZAG_LEGEND: &str = "   ↯ conflicts with trunk";
-const SHORT_ZIGZAG_LEGEND: &str = "   ↯ conflict";
-
-/// What the footer says beside the keys: what `↯` means, when it is on
-/// screen, and which trunks are stale.
-struct Notes {
-    zigzag: bool,
-    stale: String,
-}
-
-impl Notes {
-    fn text(&self, short: bool) -> String {
-        let legend = match (self.zigzag, short) {
-            (false, _) => "",
-            (true, false) => ZIGZAG_LEGEND,
-            (true, true) => SHORT_ZIGZAG_LEGEND,
-        };
-        format!("{legend}{}", self.stale)
-    }
-}
+/// The footer and the blank line above it.
+const BELOW_TABLE: usize = 2;
 
 /// Draws boards into a frame buffer.
 #[derive(Debug)]
@@ -62,12 +33,14 @@ pub struct BoardView {
     spinner: Spinner,
     animator: Animator,
     depth: Depth,
+    /// The animation clock at the first frame, where the table's own clock starts.
+    started_ms: Option<u64>,
 }
 
 impl BoardView {
     #[must_use]
     pub fn new(animator: Animator) -> Self {
-        Self { screen: Screen::new(80), spinner: Spinner::default(), animator, depth: Depth::TrueColour }
+        Self { screen: Screen::new(80), spinner: Spinner::default(), animator, depth: Depth::TrueColour, started_ms: None }
     }
 
     /// Draws the header and the table in `depth`'s colours from the next frame.
@@ -138,71 +111,29 @@ impl BoardView {
         }
     }
 
-    /// A blank line, the stages' names, one line per run that fits, a blank
-    /// line, and the footer on the line after.
+    /// The table, blank lines down to the footer, the stale trunks' note
+    /// above it when the table had to go flat, and the footer on the last row.
     fn render_rows(&mut self, board: &Board, at: Moment, rows: u16) {
-        let (lines, zigzag) = self.lines(board, at, rows);
-        if !lines.is_empty() {
-            self.screen.println("");
-            for line in &lines {
-                self.screen.println(line);
-            }
-            self.screen.println("");
+        let height = usize::from(rows).saturating_sub(HEADER_HEIGHT);
+        let play_ms = at.play_ms.saturating_sub(*self.started_ms.get_or_insert(at.play_ms));
+        let frame = Frame { now_ms: at.board_ms, play_ms, spinner: self.spinner.current(), width: self.screen.width(), depth: self.depth };
+        let drawn = draw(board, frame, height.saturating_sub(BELOW_TABLE));
+        let body = page(board, &drawn, frame, height.saturating_sub(1));
+        for line in &body {
+            self.screen.println(line);
         }
-        let (keys, stale) = footer(board, at.board_ms);
-        self.render_footer(&keys, &Notes { zigzag, stale }, rows);
-    }
-
-    /// The footer below the header, if a row is left for it: the keys dim, and
-    /// the notes in a grey no state uses. When they don't fit, the keys and the
-    /// legend shorten, and then the notes are cut.
-    fn render_footer(&mut self, keys: &str, notes: &Notes, rows: u16) {
-        if usize::from(rows) > HEADER_HEIGHT + 1 {
-            let width = usize::from(self.screen.width());
-            let crowded = keys == KEYS && KEYS.chars().count() + notes.text(false).chars().count() > width;
-            let keys = cut(if crowded { SHORT_KEYS } else { keys }, width);
-            let note = notes.text(crowded);
-            let note = cut(&note, width - keys.chars().count());
-            let note_colour = escape(38, SECONDARY, self.depth);
-            self.screen.print_last(&format!("{}{note_colour}{note}{RESET}", paint(DIM, &keys)));
+        self.animator.set_places(places(&drawn, body.len(), self.depth));
+        if height > 1 {
+            self.screen.print_last(&footer_line(board, &drawn, frame));
         }
     }
-
-    /// The table's heading and as many runs as fit, or nothing when not even
-    /// one does; and whether a conflict among them is shown as a zigzag.
-    fn lines(&self, board: &Board, at: Moment, rows: u16) -> (Vec<String>, bool) {
-        let fitting = usize::from(rows).saturating_sub(HEADER_HEIGHT + CHROME_BELOW_HEADER);
-        let frame = Frame { now_ms: at.board_ms, play_ms: at.play_ms, spinner: self.spinner.current(), width: self.screen.width(), depth: self.depth };
-        let drawn = draw(board, frame);
-        let zigzag = !drawn.layout.words && board.runs.iter().take(fitting).any(|run| conflict_marker(run, false).is_some());
-        (if fitting == 0 { Vec::new() } else { drawn.lines.into_iter().take(fitting + 1).collect() }, zigzag)
-    }
-
 }
 
-/// The footer's keys or prompt, and its note on stale trunks.
-fn footer(board: &Board, now_ms: i64) -> (String, String) {
-    match confirming(board) {
-        Some(run) => (format!("  Cancel {} ({})? y / n", run.commit.branch, short_sha(&run.commit.sha)), String::new()),
-        None => (KEYS.to_string(), stale_note(&board.stale_trunks, now_ms)),
-    }
-}
-
-/// Which projects' trunks are stale, said once here rather than on every row.
-fn stale_note(stale: &[StaleTrunk], now_ms: i64) -> String {
-    if stale.is_empty() {
-        return String::new();
-    }
-    let projects: Vec<String> = stale.iter().map(|trunk| stale_project(trunk, now_ms)).collect();
-    format!("   {}", projects.join("; "))
-}
-
-/// `app: trunk 3h old`, from its last good fetch, or `app: trunk fetch failed`.
-fn stale_project(trunk: &StaleTrunk, now_ms: i64) -> String {
-    let fetched = trunk.since.map_or_else(|| "fetch failed".to_string(), |since| format!("{} old", age(since, now_ms)));
-    format!("{}: trunk {fetched}", project_name(&trunk.project))
-}
-
-fn confirming(board: &Board) -> Option<&Run> {
-    board.view.cursor.filter(|_| board.view.confirming).and_then(|index| board.runs.get(index))
+/// Where the table's rows and marks landed, 1-based, for the stage effects,
+/// and the line under the table for an effect's banner.
+fn places(drawn: &Drawn, body: usize, depth: Depth) -> Places {
+    let top = HEADER_HEIGHT + 1;
+    let rows = drawn.rows.iter().map(|(run, line)| (*run, top + line)).collect();
+    let block = drawn.block.map(|(run, paper)| (run, escape(48, paper, depth)));
+    Places { rows, strip: drawn.columns.strip + 1, banner: top + drawn.lines.len().min(body), block }
 }

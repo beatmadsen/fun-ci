@@ -1,21 +1,13 @@
 ---
 source: tests/suite/snapshots.rs
-assertion_line: 32
 expression: "render(& frames(\"happy-7\"))"
 ---
 frame 0001 at 120x40
   header f32b8ad8
-  |
-  |                  lint     build    fast     slow
-  |▌❯ d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
-  |   f7cf32d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 44s    passed      5m
-  |   d54ede8  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 48s    passed     15m
-  |   f731578  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 52s    passed      1h
-  |   8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 56s    passed      2h
-  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 1m00   passed      3h
-  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 1m04   passed      1d
-  |
-  |  j/k move   c cancel   q quit
+  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |              main               ✓ ✓ ✓ ✓    passed     now
+  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |              feat/search 5m     fix/crash 15m     docs/readme 1h     3 more     passed
   |
   |
   |
@@ -26,23 +18,22 @@ frame 0001 at 120x40
   |
   |
   |
+  |                                                                          •
   |
   |
   |
   |
   |
-  :
-  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeeedddd
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffgggggggggggggggggggggggggggggggggggggggggggggggfff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :
-  :hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :
+  |
+  |
+  |
+  |
+  |
+  |            j/k move      q quit
+  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :..........bbbbcccccccccccccccccccddddddddddddddddddddddeeeee
+  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :..............ffffffffffffgggggggffffffffffggggggggffffffffffffgggggggggggggggggghhhhhh
   :
   :
   :
@@ -53,23 +44,24 @@ frame 0001 at 120x40
   :
   :
   :
+  :..........................................................................i
   :
   :
   :
   :
+  :
+  :
+  :
+  :
+  :
+  :
+  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0002 at 120x40
   header d14c0c5e
-  |
-  |                  lint     build    fast     slow
-  |▌❯ d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
-  |   f7cf32d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 44s    passed      5m
-  |   d54ede8  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 48s    passed     15m
-  |   f731578  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 52s    passed      1h
-  |   8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 56s    passed      2h
-  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 1m00   passed      3h
-  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 1m04   passed      1d
-  |
-  |  j/k move   c cancel   q quit
+  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |              main               ✓ ✓ ✓ ✓    passed     now
+  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |              feat/search 5m     fix/crash 15m     docs/readme 1h     3 more     passed
   |
   |
   |
@@ -81,22 +73,21 @@ frame 0002 at 120x40
   |
   |
   |
+  |                                                                          •
   |
   |
   |
   |
-  :
-  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeeedddd
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffgggggggggggggggggggggggggggggggggggggggggggggggfff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :
-  :hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :
+  |
+  |
+  |
+  |
+  |
+  |            j/k move      q quit
+  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :..........bbbbcccccccccccccccccccddddddddddddddddddddddeeeee
+  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :..............ffffffffffffgggggggffffffffffggggggggffffffffffffgggggggggggggggggghhhhhh
   :
   :
   :
@@ -108,22 +99,23 @@ frame 0002 at 120x40
   :
   :
   :
+  :..........................................................................k
   :
   :
   :
+  :
+  :
+  :
+  :
+  :
+  :
+  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0003 at 120x40
   header eabd8959
-  |
-  |                  lint     build    fast     slow
-  |▌❯ d699a82  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 40s    PASSED     now
-  |   f7cf32d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 44s    passed      5m
-  |   d54ede8  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 48s    passed     15m
-  |   f731578  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 52s    passed      1h
-  |   8d552d0  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 56s    passed      2h
-  |   c67191d  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 1m00   passed      3h
-  |   1767828  main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 1m04   passed      1d
-  |
-  |  j/k move   c cancel   q quit
+  |          ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |              main               ✓ ✓ ✓ ✓    passed     now
+  |          ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |              feat/search 5m     fix/crash 15m     docs/readme 1h     3 more     passed
   |
   |
   |
@@ -135,22 +127,21 @@ frame 0003 at 120x40
   |
   |
   |
+  |                                                                          •
   |
   |
   |
   |
-  :
-  :..................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbeeeeeeeeeeedddd
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffgggggggggggggggggggggggggggggggggggggggggggggggfff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :...fffffffffffffffggggggggggggggggggggggggggggggggggggggggggggggggff
-  :
-  :hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-  :
+  |
+  |
+  |
+  |
+  |
+  |            j/k move      q quit
+  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :..........bbbbcccccccccccccccccccddddddddddddddddddddddeeeee
+  :..........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :..............ffffffffffffgggggggffffffffffggggggggffffffffffffgggggggggggggggggghhhhhh
   :
   :
   :
@@ -162,15 +153,27 @@ frame 0003 at 120x40
   :
   :
   :
+  :..........................................................................l
   :
   :
   :
+  :
+  :
+  :
+  :
+  :
+  :
+  :............jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 legend
-a = fg Rgb(75, 81, 92), bg Default, []
-b = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), []
-c = fg Rgb(255, 255, 255), bg Rgb(29, 39, 51), ["bold"]
-d = fg Rgb(110, 117, 130), bg Rgb(29, 39, 51), []
-e = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), ["bold"]
-f = fg Rgb(82, 87, 94), bg Default, []
-g = fg Rgb(57, 126, 84), bg Default, []
-h = fg Default, bg Default, ["dim"]
+a = fg Rgb(46, 20, 26), bg Default, []
+b = fg Default, bg Rgb(46, 20, 26), []
+c = fg Rgb(242, 239, 250), bg Rgb(46, 20, 26), ["bold"]
+d = fg Rgb(111, 184, 170), bg Rgb(46, 20, 26), []
+e = fg Rgb(85, 82, 104), bg Rgb(46, 20, 26), []
+f = fg Rgb(82, 80, 88), bg Default, []
+g = fg Rgb(32, 31, 39), bg Default, []
+h = fg Rgb(42, 69, 64), bg Default, []
+i = fg Rgb(36, 61, 56), bg Default, []
+j = fg Rgb(85, 82, 104), bg Default, []
+k = fg Rgb(37, 63, 58), bg Default, []
+l = fg Rgb(39, 66, 60), bg Default, []

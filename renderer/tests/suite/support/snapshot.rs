@@ -10,7 +10,7 @@ use std::fmt::Write;
 use fun_ci_renderer::animator::HEADER_HEIGHT;
 use fun_ci_renderer::grid::{Cell, Colour, Grid};
 
-const LETTERS: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const LETTERS: &str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789αβγδεζηθικλμνξοπρστυφχψω";
 
 type Style = (Colour, Colour, Vec<&'static str>);
 

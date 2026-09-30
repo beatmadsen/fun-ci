@@ -1,15 +1,29 @@
 //! Stage effects and footer banners in situations the golden scenarios do not
 //! reach: several runs, several effects at once, projects, late stages.
 
-use crate::support::boards::{board, bold_at_stage, event, last_screen, run, then_ticks};
-
-const FIRST_ROW: usize = 16;
-const SECOND_ROW: usize = 17;
+use crate::support::boards::{board, event, last_screen, mark, row_of, run, then_ticks};
+use fun_ci_renderer::grid::Colour;
+use fun_ci_renderer::table::night;
 
 /// The first run's row after `lines` and `ticks` ticks, as text: the same with
-/// and without an effect when the effect lands exactly on its stage's cell.
+/// and without an effect when the effect lands exactly on its stage's mark.
 fn row_after(lines: &[String], ticks: usize) -> String {
-    last_screen(&then_ticks(lines, ticks)).text().lines().nth(FIRST_ROW).unwrap().to_string()
+    let screen = last_screen(&then_ticks(lines, ticks));
+    screen.text().lines().nth(row_of(&screen, "b1")).unwrap().to_string()
+}
+
+/// Whether `branch`'s `stage` mark is bold after `lines` and `ticks` ticks.
+fn bold_after(lines: &[String], ticks: usize, (branch, stage): (&str, &str)) -> bool {
+    mark(&last_screen(&then_ticks(lines, ticks)), branch, stage).attrs.contains(&"bold")
+}
+
+/// The colour of `branch`'s `stage` mark after `lines` and `ticks` ticks.
+fn colour_after(lines: &[String], ticks: usize, (branch, stage): (&str, &str)) -> Colour {
+    mark(&last_screen(&then_ticks(lines, ticks)), branch, stage).fg
+}
+
+fn rgb([r, g, b]: [u8; 3]) -> Colour {
+    Colour::Rgb(r, g, b)
 }
 
 fn passed(stages: &[&'static str]) -> Vec<(&'static str, &'static str)> {
@@ -20,7 +34,7 @@ fn passed(stages: &[&'static str]) -> Vec<(&'static str, &'static str)> {
 fn an_effect_on_the_second_run_flashes_the_second_row() {
     let lines = [board(&[run(1, "passed", &passed(&["lint"])), run(2, "running", &passed(&["lint"]))]),
                  event("stage_passed", 2, "lint")];
-    assert!(bold_at_stage(&last_screen(&then_ticks(&lines, 1)), SECOND_ROW, "lint"));
+    assert!(bold_after(&lines, 1, ("b2", "lint")));
 }
 
 #[test]
@@ -48,7 +62,7 @@ fn a_timeout_flash_does_not_hide_a_success_banner() {
 #[test]
 fn a_timeout_flash_ends_after_four_frames() {
     let lines = [board(&[run(1, "timeout", &[("fast", "timeout")])]), event("stage_failed", 1, "fast")];
-    assert!(bold_at_stage(&last_screen(&then_ticks(&lines, 6)), FIRST_ROW, "fast"));
+    assert_eq!(colour_after(&lines, 6, ("b1", "fast")), rgb(night::TIMED_OUT));
 }
 
 #[test]
@@ -69,19 +83,19 @@ fn an_effect_lands_exactly_on_its_stage_when_the_run_names_a_project() {
 #[test]
 fn the_build_sparkle_starts_two_frames_late() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "build"]))]), event("stage_passed", 1, "build")];
-    assert!(!bold_at_stage(&last_screen(&then_ticks(&lines, 1)), FIRST_ROW, "build"));
+    assert_eq!(colour_after(&lines, 1, ("b1", "build")), rgb(night::pale(night::PASSED)));
 }
 
 #[test]
 fn the_slow_sparkle_starts_six_frames_late() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "slow"]))]), event("stage_passed", 1, "slow")];
-    assert!(!bold_at_stage(&last_screen(&then_ticks(&lines, 5)), FIRST_ROW, "slow"));
+    assert_eq!(colour_after(&lines, 5, ("b1", "slow")), rgb(night::pale(night::PASSED)));
 }
 
 #[test]
 fn the_slow_sparkle_lights_its_first_letter_on_the_seventh_frame() {
     let lines = [board(&[run(1, "passed", &passed(&["lint", "slow"]))]), event("stage_passed", 1, "slow")];
-    assert!(bold_at_stage(&last_screen(&then_ticks(&lines, 7)), FIRST_ROW, "slow"));
+    assert!(bold_after(&lines, 7, ("b1", "slow")));
 }
 
 #[test]
@@ -90,4 +104,14 @@ fn an_effect_lands_exactly_on_its_stage_when_the_run_conflicts_with_the_trunk() 
     conflicting["trunk"] = serde_json::json!({"branch_state": "conflicts", "trunk": "main"});
     let lines = [board(&[conflicting]), event("stage_passed", 1, "lint")];
     assert_eq!(row_after(&lines, 1), row_after(&lines[..1], 1));
+}
+
+#[test]
+fn an_effect_on_the_row_in_the_block_keeps_the_block_under_it() {
+    let mut running: serde_json::Value = serde_json::from_str(&board(&[run(1, "running", &[("lint", "passed"), ("build", "passed")])])).unwrap();
+    running["cursor"] = serde_json::json!(0);
+    let lines = [running.to_string(), event("stage_passed", 1, "build")];
+    let screen = last_screen(&then_ticks(&lines, 1));
+
+    assert_eq!(mark(&screen, "b1", "build").bg, mark(&screen, "b1", "lint").bg);
 }

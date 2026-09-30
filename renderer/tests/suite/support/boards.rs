@@ -3,7 +3,7 @@
 
 use fun_ci_renderer::animation::Library;
 use fun_ci_renderer::art::output::Depth;
-use fun_ci_renderer::grid::Grid;
+use fun_ci_renderer::grid::{Cell, Grid};
 use fun_ci_renderer::headless::emulate;
 use fun_ci_renderer::protocol::{Inbound, parse};
 use fun_ci_renderer::replay::{TickFrame, replay};
@@ -41,16 +41,20 @@ pub fn last_screen(lines: &[String]) -> Grid {
     emulate(&frames(lines)).pop().unwrap()
 }
 
-/// The screen row of the table's heading, which names each stage over its column.
-pub const HEADING_ROW: usize = 15;
-
-/// The column `stage`'s cells start at, as the heading names it.
-pub fn stage_column(screen: &Grid, stage: &str) -> usize {
-    let heading = screen.text().lines().nth(HEADING_ROW).unwrap().to_string();
-    heading[..heading.find(stage).unwrap_or_else(|| panic!("no {stage:?} in {heading:?}"))].chars().count()
+/// The screen row of `branch`'s row: the line that starts with its name.
+pub fn row_of(screen: &Grid, branch: &str) -> usize {
+    let starts = |line: &str| line.split_whitespace().next() == Some(branch);
+    screen.text().lines().position(starts).unwrap_or_else(|| panic!("no row for {branch:?} in\n{}", screen.text()))
 }
 
-/// Whether the first cell of `stage`'s column on screen row `row` is bold.
-pub fn bold_at_stage(screen: &Grid, row: usize, stage: &str) -> bool {
-    screen.cells[row][stage_column(screen, stage)].attrs.contains(&"bold")
+/// The cell of `stage`'s mark on `branch`'s row: the four marks start at the
+/// first cell after the name, lint, build, fast and slow, two columns apart.
+pub fn mark(screen: &Grid, branch: &str, stage: &str) -> Cell {
+    let row = row_of(screen, branch);
+    let line = screen.text().lines().nth(row).unwrap().to_string();
+    let name_end = line[..line.find(branch).unwrap()].chars().count() + branch.chars().count();
+    let text: Vec<char> = line.chars().collect();
+    let first = (name_end..text.len()).find(|&column| text[column] != ' ').unwrap();
+    let index = ["lint", "build", "fast", "slow"].iter().position(|name| *name == stage).unwrap();
+    screen.cells[row][first + 2 * index].clone()
 }

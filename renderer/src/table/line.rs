@@ -8,17 +8,23 @@ use crate::art::output::{Depth, escape};
 pub struct Style {
     pub fg: [u8; 3],
     pub bold: bool,
+    pub italic: bool,
 }
 
 impl Style {
     #[must_use]
     pub fn plain(fg: [u8; 3]) -> Self {
-        Self { fg, bold: false }
+        Self { fg, bold: false, italic: false }
     }
 
     #[must_use]
     pub fn bold(fg: [u8; 3]) -> Self {
-        Self { fg, bold: true }
+        Self { fg, bold: true, italic: false }
+    }
+
+    #[must_use]
+    pub fn italic(fg: [u8; 3]) -> Self {
+        Self { fg, bold: false, italic: true }
     }
 }
 
@@ -81,6 +87,7 @@ impl Pen {
     fn draw(&mut self, c: char, style: Style) {
         if c != ' ' && self.style != Some(style) {
             self.out.push_str(if style.bold { "\u{1b}[1m" } else { "\u{1b}[22m" });
+            self.out.push_str(if style.italic { "\u{1b}[3m" } else { "\u{1b}[23m" });
             self.out.push_str(&escape(38, style.fg, self.depth));
             self.style = Some(style);
         }

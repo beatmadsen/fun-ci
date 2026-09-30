@@ -1,17 +1,14 @@
 ---
 source: tests/suite/snapshots.rs
-assertion_line: 32
 expression: "render(& frames(\"trunk-conflict\"))"
 ---
 frame 0001 at 100x30
   header 82b4dfb0
-  |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
-  |
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
@@ -21,15 +18,13 @@ frame 0001 at 100x30
   |
   |
   |
-  :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
-  :
+  |
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........bbbbbbffffffffffffffffffffffffffffffffffffffff
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
@@ -37,15 +32,17 @@ frame 0001 at 100x30
   :
   :
   :
+  :
+  :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0002 at 100x30
   header 530fa1e3
-  |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
-  |
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
@@ -55,15 +52,13 @@ frame 0002 at 100x30
   |
   |
   |
-  :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
-  :
+  |
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........bbbbbbffffffffffffffffffffffffffffffffffffffff
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
@@ -71,15 +66,17 @@ frame 0002 at 100x30
   :
   :
   :
+  :
+  :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0003 at 100x30
   header f83362e8
-  |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
-  |
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
@@ -89,15 +86,13 @@ frame 0003 at 100x30
   |
   |
   |
-  :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
-  :
+  |
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........bbbbbbffffffffffffffffffffffffffffffffffffffff
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
@@ -105,15 +100,17 @@ frame 0003 at 100x30
   :
   :
   :
+  :
+  :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0004 at 100x30
   header ae4fcf39
-  |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
-  |
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
@@ -123,15 +120,13 @@ frame 0004 at 100x30
   |
   |
   |
-  :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
-  :
+  |
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........bbbbbbffffffffffffffffffffffffffffffffffffffff
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
@@ -139,15 +134,17 @@ frame 0004 at 100x30
   :
   :
   :
+  :
+  :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0005 at 100x30
   header 72379bac
-  |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
-  |
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
@@ -157,15 +154,13 @@ frame 0005 at 100x30
   |
   |
   |
-  :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
-  :
+  |
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........bbbbbbffffffffffffffffffffffffffffffffffffffff
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
@@ -173,15 +168,17 @@ frame 0005 at 100x30
   :
   :
   :
+  :
+  :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0006 at 100x30
   header 844ffb89
-  |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
-  |
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
@@ -191,15 +188,13 @@ frame 0006 at 100x30
   |
   |
   |
-  :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
-  :
+  |
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........llllllpppppppppppppppppppppppppppppppppppppppp
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
@@ -207,15 +202,17 @@ frame 0006 at 100x30
   :
   :
   :
+  :
+  :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0007 at 100x30
   header 92a199d1
-  |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
-  |
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
@@ -225,15 +222,13 @@ frame 0007 at 100x30
   |
   |
   |
-  :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
-  :
+  |
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........llllllpppppppppppppppppppppppppppppppppppppppp
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
@@ -241,15 +236,17 @@ frame 0007 at 100x30
   :
   :
   :
+  :
+  :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0008 at 100x30
   header 118fcfc0
-  |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
-  |
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
@@ -259,15 +256,13 @@ frame 0008 at 100x30
   |
   |
   |
-  :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
-  :
+  |
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........llllllpppppppppppppppppppppppppppppppppppppppp
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
@@ -275,14 +270,19 @@ frame 0008 at 100x30
   :
   :
   :
+  :
+  :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0009 at 100x30
   header a1873899
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -291,16 +291,14 @@ frame 0009 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........llllllpppppppppppppppppppppppppppppppppppppppp
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   :
   :
   :
@@ -309,14 +307,16 @@ frame 0009 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0010 at 100x30
   header ce4e93d6
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -325,16 +325,14 @@ frame 0010 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........sssssswwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   :
   :
   :
@@ -343,14 +341,16 @@ frame 0010 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0011 at 100x30
   header 65e92616
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -359,16 +359,14 @@ frame 0011 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........sssssswwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   :
   :
   :
@@ -377,14 +375,16 @@ frame 0011 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0012 at 100x30
   header 613a6efd
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -393,16 +393,14 @@ frame 0012 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........sssssswwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   :
   :
   :
@@ -411,14 +409,16 @@ frame 0012 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0013 at 100x30
   header b0d2e445
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -427,16 +427,14 @@ frame 0013 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........yyyyyyCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   :
   :
   :
@@ -445,14 +443,16 @@ frame 0013 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0014 at 100x30
   header 8635ef18
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -461,16 +461,14 @@ frame 0014 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........yyyyyyCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   :
   :
   :
@@ -479,14 +477,16 @@ frame 0014 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0015 at 100x30
   header be8550f5
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -495,16 +495,14 @@ frame 0015 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........yyyyyyCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   :
   :
   :
@@ -513,14 +511,16 @@ frame 0015 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0016 at 100x30
   header 82b826ac
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  FEAT/SEARCH CONFLICTS WITH MAIN
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -529,16 +529,14 @@ frame 0016 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........yyyyyyCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
   :
   :
   :
@@ -547,14 +545,16 @@ frame 0016 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0017 at 100x30
   header 77831529
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -563,16 +563,14 @@ frame 0017 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
   :
   :
   :
@@ -581,14 +579,16 @@ frame 0017 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0018 at 100x30
   header 881df296
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -597,16 +597,14 @@ frame 0018 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
   :
   :
   :
@@ -615,14 +613,16 @@ frame 0018 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0019 at 100x30
   header 037ebc0b
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -631,16 +631,14 @@ frame 0019 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
   :
   :
   :
@@ -649,14 +647,16 @@ frame 0019 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0020 at 100x30
   header 037ebc0b
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -665,16 +665,14 @@ frame 0020 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
   :
   :
   :
@@ -683,14 +681,16 @@ frame 0020 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0021 at 100x30
   header 037ebc0b
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -699,16 +699,14 @@ frame 0021 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
   :
   :
   :
@@ -717,14 +715,16 @@ frame 0021 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0022 at 100x30
   header 037ebc0b
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -733,16 +733,14 @@ frame 0022 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
   :
   :
   :
@@ -751,14 +749,16 @@ frame 0022 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0023 at 100x30
   header 1bdd8091
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -767,16 +767,14 @@ frame 0023 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
   :
   :
   :
@@ -785,14 +783,16 @@ frame 0023 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0024 at 100x30
   header 70071055
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -801,16 +801,14 @@ frame 0024 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ
   :
   :
   :
@@ -819,14 +817,16 @@ frame 0024 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0025 at 100x30
   header f0d4db50
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -835,16 +835,14 @@ frame 0025 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :........EEEEFFFFFFFFFFFFFFFGGGGGGGGGGGGGGGGGGGGGGHHHHH
+  :........EEEEEEIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
+  :........DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................ooooooooooooooooooooooooooooooo
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
   :
   :
   :
@@ -853,14 +851,16 @@ frame 0025 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0026 at 100x30
   header 393a16e3
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -869,16 +869,14 @@ frame 0026 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........yyyyyyCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................ooooooooooooooooooooooooooooooo
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
   :
   :
   :
@@ -887,14 +885,16 @@ frame 0026 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0027 at 100x30
   header 9d264b79
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -903,16 +903,14 @@ frame 0027 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........yyyyyyCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................ooooooooooooooooooooooooooooooo
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
   :
   :
   :
@@ -921,14 +919,16 @@ frame 0027 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0028 at 100x30
   header bf3ed0f1
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |              conflicts with main
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
-  |                                        lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search conflicts main  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main                        ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
   |                                  feat/search conflicts with main
-  |  j/k move   c cancel   q quit   fun-ci: trunk 3h old
   |
   |
   |
@@ -937,16 +937,14 @@ frame 0028 at 100x30
   |
   |
   |
-  |
-  |
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........yyyyyyCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
-  :........................................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccceeeeeeeeeeeeeeeebbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiiiiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :..................................ooooooooooooooooooooooooooooooo
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkklllllllllllllllllllllll
-  :
-  :
+  :..................................KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
   :
   :
   :
@@ -955,903 +953,950 @@ frame 0028 at 100x30
   :
   :
   :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0029 at 100x30
   header abfe3bf5
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                    •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :....................................................................L
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0030 at 100x30
   header b5f1cbcb
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                    •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :....................................................................M
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0031 at 100x30
   header b6bf9a66
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                    •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :....................................................................N
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0032 at 100x30
   header 87ea6a6b
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                    •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :....................................................................O
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0033 at 100x30
   header f566572f
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................P
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0034 at 100x30
   header 407cd3c4
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................Q
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0035 at 100x30
   header bca5b64b
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................R
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0036 at 100x30
   header f261450b
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................S
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0037 at 100x30
   header c91e3a99
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................T
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0038 at 100x30
   header f084bd0a
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................U
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0039 at 100x30
   header 84fffe80
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................V
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0040 at 100x30
   header 84fffe80
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................W
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0041 at 100x30
   header 6d17def2
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                     •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :.....................................................................X
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0042 at 100x30
   header b2be4a65
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................Y
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0043 at 100x30
   header 5050ab77
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................Z
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0044 at 100x30
   header 14374e2b
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................0
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0045 at 100x30
   header ec1428bf
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :........bbbbcccccccccccccccddddddddddddddddddddddeeeee
+  :........aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................1
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0046 at 100x30
   header 26bd75dd
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................2
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0047 at 100x30
   header 28562d8b
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................3
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0048 at 100x30
   header 6f82ba2d
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................4
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0049 at 100x30
   header b4c8ced7
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :........llllmmmmmmmmmmmmmmmnnnnnnnnnnnnnnnnnnnnnnooooo
+  :........kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................5
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0050 at 100x30
   header c87578f5
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................6
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0051 at 100x30
   header 1e333ebf
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................7
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0052 at 100x30
   header ba0d2d6e
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :........sssstttttttttttttttuuuuuuuuuuuuuuuuuuuuuuvvvvv
+  :........rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................8
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0053 at 100x30
   header 5df0a39b
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................8
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 frame 0054 at 100x30
   header 891acd11
-  |
-  |                         lint     build    fast     slow
-  |▌❯ 8d552d0  feat/search  ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     now
-  |▌  c67191d  main         ✓ 0.3s   ✓ 1.2s   ✓ 1.8s   ✓ 47s    PASSED     10m
-  |
-  |  j/k move   c cancel   q quit
+  |        ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+  |            feat/search    ✓ ✓ ✓ ✓    passed     now
+  |        ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+  |            main           ✓ ✓ ✓ ✓    passed     10m
   |
   |
   |
   |
   |
   |
+  |                                                                      •
   |
   |
   |
   |
-  :
-  :.........................aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-  :bccdddddddddcccccccccccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbfffffffffffdddd
-  :ggghhhhhhhhhiiiiiiiiiiiiiggggggggggggggggggggggggggggggggggggjjjjjjjjjjjhhh
-  :
-  :kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-  :
+  |          j/k move      q quit
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :........yyyyzzzzzzzzzzzzzzzAAAAAAAAAAAAAAAAAAAAAABBBBB
+  :........xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :............ggggggggggggggghhhhhhhhhhhhhhhhhhhhhhiii
   :
   :
   :
   :
   :
   :
+  :......................................................................8
   :
   :
   :
+  :
+  :..........jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 legend
-a = fg Rgb(75, 81, 92), bg Default, []
-b = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), []
-c = fg Rgb(255, 255, 255), bg Rgb(29, 39, 51), ["bold"]
-d = fg Rgb(110, 117, 130), bg Rgb(29, 39, 51), []
-e = fg Rgb(226, 124, 245), bg Rgb(29, 39, 51), ["bold"]
-f = fg Rgb(95, 211, 141), bg Rgb(29, 39, 51), ["bold"]
-g = fg Rgb(95, 211, 141), bg Default, []
-h = fg Rgb(110, 117, 130), bg Default, []
-i = fg Rgb(201, 206, 214), bg Default, []
-j = fg Rgb(95, 211, 141), bg Default, ["bold"]
-k = fg Default, bg Default, ["dim"]
-l = fg Rgb(138, 145, 158), bg Default, []
-m = fg Idx(5), bg Default, ["bold"]
-n = fg Idx(5), bg Default, []
-o = fg Idx(5), bg Default, ["dim"]
+a = fg Rgb(46, 20, 26), bg Default, []
+b = fg Default, bg Rgb(46, 20, 26), []
+c = fg Rgb(242, 239, 250), bg Rgb(46, 20, 26), ["bold"]
+d = fg Rgb(111, 184, 170), bg Rgb(46, 20, 26), []
+e = fg Rgb(85, 82, 104), bg Rgb(46, 20, 26), []
+f = fg Rgb(200, 156, 232), bg Rgb(46, 20, 26), ["italic"]
+g = fg Rgb(82, 80, 88), bg Default, []
+h = fg Rgb(42, 69, 64), bg Default, []
+i = fg Rgb(32, 31, 39), bg Default, []
+j = fg Rgb(85, 82, 104), bg Default, []
+k = fg Rgb(52, 23, 30), bg Default, []
+l = fg Default, bg Rgb(52, 23, 30), []
+m = fg Rgb(242, 239, 250), bg Rgb(52, 23, 30), ["bold"]
+n = fg Rgb(111, 184, 170), bg Rgb(52, 23, 30), []
+o = fg Rgb(85, 82, 104), bg Rgb(52, 23, 30), []
+p = fg Rgb(200, 156, 232), bg Rgb(52, 23, 30), ["italic"]
+q = fg Idx(5), bg Default, ["bold"]
+r = fg Rgb(58, 25, 33), bg Default, []
+s = fg Default, bg Rgb(58, 25, 33), []
+t = fg Rgb(242, 239, 250), bg Rgb(58, 25, 33), ["bold"]
+u = fg Rgb(111, 184, 170), bg Rgb(58, 25, 33), []
+v = fg Rgb(85, 82, 104), bg Rgb(58, 25, 33), []
+w = fg Rgb(200, 156, 232), bg Rgb(58, 25, 33), ["italic"]
+x = fg Rgb(64, 28, 37), bg Default, []
+y = fg Default, bg Rgb(64, 28, 37), []
+z = fg Rgb(242, 239, 250), bg Rgb(64, 28, 37), ["bold"]
+A = fg Rgb(111, 184, 170), bg Rgb(64, 28, 37), []
+B = fg Rgb(85, 82, 104), bg Rgb(64, 28, 37), []
+C = fg Rgb(200, 156, 232), bg Rgb(64, 28, 37), ["italic"]
+D = fg Rgb(70, 30, 40), bg Default, []
+E = fg Default, bg Rgb(70, 30, 40), []
+F = fg Rgb(242, 239, 250), bg Rgb(70, 30, 40), ["bold"]
+G = fg Rgb(111, 184, 170), bg Rgb(70, 30, 40), []
+H = fg Rgb(85, 82, 104), bg Rgb(70, 30, 40), []
+I = fg Rgb(200, 156, 232), bg Rgb(70, 30, 40), ["italic"]
+J = fg Idx(5), bg Default, []
+K = fg Idx(5), bg Default, ["dim"]
+L = fg Rgb(45, 77, 70), bg Default, []
+M = fg Rgb(44, 75, 68), bg Default, []
+N = fg Rgb(43, 73, 66), bg Default, []
+O = fg Rgb(42, 70, 64), bg Default, []
+P = fg Rgb(40, 68, 62), bg Default, []
+Q = fg Rgb(39, 66, 60), bg Default, []
+R = fg Rgb(37, 63, 58), bg Default, []
+S = fg Rgb(36, 61, 56), bg Default, []
+T = fg Rgb(34, 58, 54), bg Default, []
+U = fg Rgb(33, 56, 52), bg Default, []
+V = fg Rgb(32, 54, 49), bg Default, []
+W = fg Rgb(30, 51, 47), bg Default, []
+X = fg Rgb(29, 49, 45), bg Default, []
+Y = fg Rgb(28, 47, 43), bg Default, []
+Z = fg Rgb(26, 45, 42), bg Default, []
+0 = fg Rgb(25, 43, 40), bg Default, []
+1 = fg Rgb(24, 41, 38), bg Default, []
+2 = fg Rgb(23, 40, 37), bg Default, []
+3 = fg Rgb(23, 38, 36), bg Default, []
+4 = fg Rgb(22, 37, 35), bg Default, []
+5 = fg Rgb(21, 36, 34), bg Default, []
+6 = fg Rgb(21, 35, 33), bg Default, []
+7 = fg Rgb(20, 35, 33), bg Default, []
+8 = fg Rgb(20, 34, 32), bg Default, []

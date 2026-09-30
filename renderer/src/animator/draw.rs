@@ -1,37 +1,47 @@
-//! Where each animation lands on the screen.
+//! Where each animation lands on the screen: a stage's effect over its mark
+//! on its run's row, and an effect's banner on the line under the table,
+//! both where the table put them (`Places`).
 
 use super::effect::Effect;
 use super::footer::footer_overlay;
-use super::header::HEADER_HEIGHT;
 use super::overlay::{stage_overlay, stage_text};
 use crate::model::Run;
 use crate::screen::Screen;
-use crate::table::layout::Layout;
+use crate::table::STAGES;
 
-/// The screen row of the table's first run, under the header, a blank line and the stages' names.
-pub const FIRST_RUN_ROW: usize = HEADER_HEIGHT + 3;
+/// Where the table put things this frame, 1-based: each run's row, the
+/// column of its first mark, and the line under the table; and the run whose
+/// row is in the block, with the escape that paints the block's colour.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct Places {
+    pub rows: Vec<(u64, usize)>,
+    pub strip: usize,
+    pub banner: usize,
+    pub block: Option<(u64, String)>,
+}
 
-/// Each effect over its stage's cell, on its run's row.
-pub fn stages(screen: &mut Screen, effects: &[Effect], runs: &[Run]) {
-    let layout = Layout::fit(runs, screen.width());
-    for (row, col, text) in effects.iter().filter_map(|effect| placed(effect, runs, &layout)) {
+/// Each effect over its stage's mark, on its run's row.
+pub fn stages(screen: &mut Screen, effects: &[Effect], (runs, places): (&[Run], &Places)) {
+    for (row, col, text) in effects.iter().filter_map(|effect| placed(effect, runs, places)) {
         screen.write_at(row, col, &text);
     }
 }
 
-/// The footer banner of the most important effect that has one, on the line
-/// below the last run.
-pub fn footer(screen: &mut Screen, effects: &[Effect], runs: &[Run]) {
+/// The banner of the most important effect that has one, on the line under the table.
+pub fn footer(screen: &mut Screen, effects: &[Effect], (runs, places): (&[Run], &Places)) {
     let banner = most_important(effects).and_then(|effect| footer_overlay(effect, screen.width(), runs));
-    if let Some(text) = banner {
-        screen.write_at(FIRST_RUN_ROW + runs.len(), 1, &format!("{text}\u{1b}[K"));
+    if let Some(text) = banner.filter(|_| places.banner > 0) {
+        screen.write_at(places.banner, 1, &format!("{text}\u{1b}[K"));
     }
 }
 
-fn placed(effect: &Effect, runs: &[Run], layout: &Layout) -> Option<(usize, usize, String)> {
-    let index = runs.iter().position(|run| run.id == effect.run_id)?;
-    let overlay = stage_overlay(effect, &stage_text(&runs[index], &effect.stage, layout)?)?;
-    Some((FIRST_RUN_ROW + index, layout.stage_column(&effect.stage)? + 1, overlay))
+fn placed(effect: &Effect, runs: &[Run], places: &Places) -> Option<(usize, usize, String)> {
+    let run = runs.iter().find(|run| run.id == effect.run_id)?;
+    let row = places.rows.iter().find(|(id, _)| *id == effect.run_id)?.1;
+    let index = STAGES.iter().position(|stage| *stage == effect.stage)?;
+    let overlay = stage_overlay(effect, &stage_text(run, &effect.stage)?)?;
+    let paper = places.block.as_ref().filter(|(id, _)| *id == run.id).map_or("", |(_, escape)| escape.as_str());
+    Some((row, places.strip + 2 * index, format!("{paper}{overlay}")))
 }
 
 fn most_important(effects: &[Effect]) -> Option<&Effect> {

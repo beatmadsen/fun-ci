@@ -53,7 +53,9 @@ pub fn render(grid: &Grid) -> Image {
 fn paint(image: &mut Image, (left, top): (usize, usize), cell: &Cell) {
     let (fg, bg) = cell_colours(cell);
     let glyph = glyph(cell.text.chars().next().unwrap_or(' '));
+    let italic = cell.attrs.contains(&"italic");
     for (y, bits) in glyph.iter().enumerate() {
+        let bits = if italic { bits << slant(y) } else { *bits };
         for x in 0..CELL.0 {
             image.set(left + x, top + y, if bits & (1 << x) == 0 { bg } else { fg });
         }
@@ -61,6 +63,15 @@ fn paint(image: &mut Image, (left, top): (usize, usize), cell: &Cell) {
 }
 
 /// Sixteen rows of eight pixels, bit 0 leftmost.
+/// How far right an italic cell's pixel row `y` leans: its top the most.
+fn slant(y: usize) -> u8 {
+    match y {
+        0..5 => 2,
+        5..11 => 1,
+        _ => 0,
+    }
+}
+
 fn glyph(ch: char) -> [u8; 16] {
     if ('\u{2800}'..='\u{28FF}').contains(&ch) {
         return braille(u32::from(ch) & 0xFF);

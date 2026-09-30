@@ -3,19 +3,20 @@
 use super::effect::{Effect, Kind};
 use crate::ansi::{RESET, strip};
 use crate::model::Run;
-use crate::table::layout::Layout;
-use crate::table::stage_cell::stage_cell;
+use crate::table::STAGES;
+use crate::table::marks::marks;
 
 const STAGE_PASS_COLOURS: [&str; 3] = ["\u{1b}[1;33m", "\u{1b}[1;32m", "\u{1b}[32m"];
 const TIMEOUT_COLOURS: [&str; 4] = ["\u{1b}[1;33m", "\u{1b}[33m", "\u{1b}[1;33m", "\u{1b}[33m"];
 /// A failed stage's cell flares red and cools, frame by frame, then shows as the row draws it.
 const FAILURE_GLOW: [&str; 6] = ["1;97;48;5;196", "1;97;48;5;160", "1;97;48;5;124", "1;91;48;5;88", "1;91;48;5;52", "1;91"];
 
-/// The stage's cell as its row shows it once the stage has finished.
+/// The stage's mark as its row shows it once the stage has finished.
 #[must_use]
-pub fn stage_text(run: &Run, stage: &str, layout: &Layout) -> Option<String> {
+pub fn stage_text(run: &Run, stage: &str) -> Option<String> {
     run.stage(stage)?;
-    Some(stage_cell(run, stage, ' ', 0).text.chars().take(layout.cell()).collect())
+    let index = STAGES.iter().position(|name| *name == stage)?;
+    Some(marks(run, ' ')[index].0.to_string())
 }
 
 /// What `effect` draws over the stage text `text` this frame.

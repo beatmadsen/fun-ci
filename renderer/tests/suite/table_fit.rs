@@ -1,8 +1,8 @@
 //! The table fits its terminal: nothing is drawn past the last column, where
 //! a terminal would wrap it onto the next line and push the board up, and the
-//! newest run sits right under the header. Checked on the busy board, whose
-//! long branch names and conflict markers are what overflowed, at the widths
-//! the console supports.
+//! first row Ruby sends, the one that most needs you, is on screen. Checked on
+//! the busy board, whose long branch names and conflicts are what overflowed,
+//! at the widths the console supports.
 
 use fun_ci_renderer::animation::Library;
 use fun_ci_renderer::art::output::Depth;
@@ -41,13 +41,13 @@ fn spilled(width: u16) -> Vec<(usize, usize)> {
     spilled
 }
 
-/// The first run's line, under the 14-row header, a blank line and the stages' names, on a terminal just `width` wide.
-fn first_row(width: u16) -> String {
-    last_screen(width, 0).text().lines().nth(16).unwrap_or_default().to_string()
+/// What the table shows below the 14-row header, on a terminal just `width` wide.
+fn below_header(width: u16) -> String {
+    last_screen(width, 0).text().lines().skip(14).collect::<Vec<_>>().join("\n")
 }
 
 macro_rules! widths {
-    ($($fits:ident, $newest:ident: $width:literal;)*) => {
+    ($($fits:ident, $first:ident: $width:literal;)*) => {
         $(
             #[test]
             fn $fits() {
@@ -55,16 +55,16 @@ macro_rules! widths {
             }
 
             #[test]
-            fn $newest() {
-                assert!(first_row($width).contains("feat/search"), "{:?}", first_row($width));
+            fn $first() {
+                assert!(below_header($width).contains("a-life"), "{}", below_header($width));
             }
         )*
     };
 }
 
 widths! {
-    nothing_is_drawn_past_sixty_columns, the_newest_run_is_under_the_header_at_sixty_columns: 60;
-    nothing_is_drawn_past_eighty_columns, the_newest_run_is_under_the_header_at_eighty_columns: 80;
-    nothing_is_drawn_past_a_hundred_and_twenty_columns, the_newest_run_is_under_the_header_at_a_hundred_and_twenty_columns: 120;
-    nothing_is_drawn_past_two_hundred_columns, the_newest_run_is_under_the_header_at_two_hundred_columns: 200;
+    nothing_is_drawn_past_sixty_columns, the_first_row_is_on_screen_at_sixty_columns: 60;
+    nothing_is_drawn_past_eighty_columns, the_first_row_is_on_screen_at_eighty_columns: 80;
+    nothing_is_drawn_past_a_hundred_and_twenty_columns, the_first_row_is_on_screen_at_a_hundred_and_twenty_columns: 120;
+    nothing_is_drawn_past_two_hundred_columns, the_first_row_is_on_screen_at_two_hundred_columns: 200;
 }

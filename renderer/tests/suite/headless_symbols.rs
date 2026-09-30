@@ -24,12 +24,21 @@ macro_rules! marks {
 
 marks! {
     the_tick_is_drawn: "✓";
-    the_cross_is_drawn: "✗";
-    the_warning_triangle_is_drawn: "▲";
+    the_diamond_is_drawn: "◆";
+    the_hollow_diamond_is_drawn: "◇";
     the_hollow_circle_is_drawn: "◌";
-    the_conflict_zigzag_is_drawn: "↯";
-    the_cursor_mark_is_drawn: "❯";
     the_ellipsis_is_drawn: "…";
     the_dash_is_drawn: "–";
     the_dot_is_drawn: "·";
+    the_firefly_is_drawn: "•";
+    the_block_s_top_edge_is_drawn: "▄";
+    the_block_s_bottom_edge_is_drawn: "▀";
+}
+
+#[test]
+fn an_italic_cell_is_drawn_slanted() {
+    let italic = Cell { text: "l".into(), fg: Colour::Default, bg: Colour::Default, attrs: vec!["italic"] };
+    let slanted = render(&Grid { cols: 1, rows: 1, cells: vec![vec![italic]] }).pixels;
+
+    assert_ne!(slanted, drawn("l"));
 }
