@@ -1,6 +1,6 @@
 //! The lines down from the legend through the whole table (design.md, The
 //! console): the legend belongs to no project, so its leaders run down every
-//! blank line and across every project's rule to the last row, and each
+//! blank line and across every project's rule to the last project, and each
 //! column of marks hangs from its stage's name. A project's name and note
 //! stand in front of them, letter spacing and all, and they never cross a
 //! row, a block's edge, a conflict, a line of folded branches or a count.
@@ -37,12 +37,13 @@ fn line(at: usize) -> u16 {
 
 impl Leaders {
     /// The leaders for `pieces`, down each blank line and label from the
-    /// legend to the last row, from the column of the first mark; none
-    /// without a legend.
+    /// legend to the last row or line of folded branches, so they reach the
+    /// last project whatever it shows, from the column of the first mark;
+    /// none without a legend.
     #[must_use]
     pub fn over(pieces: &[Piece], column: usize) -> Option<Self> {
         let first = pieces.iter().rposition(|piece| matches!(piece, Piece::Legend(_)))? + 1;
-        let end = pieces.iter().rposition(|piece| matches!(piece, Piece::Row(_)))?;
+        let end = pieces.iter().rposition(|piece| matches!(piece, Piece::Row(_) | Piece::Folded(_)))?;
         let lines = |kind: fn(&Piece) -> bool| (first..end).filter(|at| kind(&pieces[*at])).map(line).collect();
         Some(Self { lines: lines(blank), labels: lines(label), column: line(column), colour: colour() })
     }

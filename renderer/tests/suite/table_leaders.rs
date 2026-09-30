@@ -1,6 +1,6 @@
 //! Which lines of the table the legend's leaders run down (design.md, The
-//! console): the blank lines from the legend to the last row, and across the
-//! rule of each project's label between, so each column of marks hangs from
+//! console): the blank lines from the legend down to the last project's
+//! last line, and across the rule of each project's label between, so each column of marks hangs from
 //! its stage's name in every project; never a row, a block's edge, a
 //! conflict, a folded line or a count.
 
@@ -79,3 +79,13 @@ fn leaders_are_the_legend_s_own_lines_colour() {
     assert_eq!(Leaders::over(&with_legend(stack(&sections, None, SPACED)), 30).map(|leaders| leaders.colour), Some(fun_ci_renderer::table::leaders::colour()));
 }
 
+
+#[test]
+fn leaders_run_down_past_projects_whose_branches_are_folded() {
+    let runs = [run(1, "/a", "failed"), run(2, "/b", "passed"), run(3, "/b", "passed")];
+    let sections = sections(&runs);
+    let pieces = with_legend(stack(&sections, Some(1), Rung { fold: Fold::All, ..SPACED }));
+    let leaders = Leaders::over(&pieces, 30).unwrap();
+    // blank, legend x4, blank, label a, top, row 1, bottom, blank, label b, blank, folded 2, blank
+    assert_eq!((leaders.lines, leaders.labels), (vec![5, 10, 12], vec![6, 11]));
+}
