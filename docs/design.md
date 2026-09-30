@@ -21,7 +21,8 @@ them.
    is there for when they choose to look.
 2. **It is fun.** fun-ci is a CI you want to watch. A pass is celebrated, a
    failure gets a proper explosion, the scenes take their time, and a run of
-   passes builds a streak.
+   passes builds a streak. It stays calm to look at even when something
+   breaks: a failure is feedback, not an alarm.
 
 The two meet in the animations. An animation that reports a state (a stage
 failed, the run passed) must read at a glance; one that is only there for fun

@@ -86,12 +86,12 @@ Five minutes after the latest run finished, the header goes quiet: a starry nigh
 |---|---|
 | ![A fire in a stone hearth, with a green lamp in the corner](docs/screenshots/quiet-fireplace.png) | ![A moonlit island with a palm, with a red lamp in the corner](docs/screenshots/quiet-island.png) |
 
-A branch that conflicts with the trunk says so after its name, `conflicts main` in magenta, and the header plays two strands braiding into a knot; when a later commit on the branch merges cleanly, the knot unties. The footer names any project whose trunk fun-ci last fetched over an hour ago, or couldn't fetch.
+A branch that conflicts with the trunk says so on the line under its name, `conflicts with main`, and the header plays two strands braiding into a knot; when a later commit on the branch merges cleanly, the knot unties. A project whose trunk fun-ci last fetched over an hour ago, or couldn't fetch, says so beside its name.
 
 Keys:
 
 - `j` and `k`, or the arrow keys, move the cursor down and up
-- `c` cancels the run under the cursor: a scheduled one at once, a running one once you answer `y` (`n` or `Esc` keeps it running)
+- `c` cancels the run under the cursor: a scheduled one at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start
 - `q` quits
 
 The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above come from the renderer's headless mode, drawn with its own bitmap font; in your terminal the text is in your terminal's font.

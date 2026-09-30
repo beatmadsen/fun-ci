@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.1.0] - 2026-09-29
+## [2.1.0] - 2026-09-30
 
 ### Added
 - Each run checks whether its commit would merge cleanly with the trunk:
@@ -36,9 +36,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   you, a failure, a timeout or a conflict, comes first, and the first of it,
   or the row under the cursor, sits in one deep block that breathes; passed
   rows are pale, and fold into one line per project when nothing needs you.
-  The colours come from the header's night scenes. On a short screen the table
-  folds and closes up before it leaves anything out, and says how many passed
-  rows it left out. `c cancel` shows only when there is something to cancel.
+  The colours come from the header's night scenes. On a wide terminal the
+  table widens a little and sits in the middle; on a short one it folds and
+  closes up before it leaves anything out, and says how many passed rows it
+  left out. `c cancel` shows only when there is something to cancel.
 
 ### Fixed
 - A console row wider than the terminal, from a long branch name or a

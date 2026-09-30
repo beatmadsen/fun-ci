@@ -19,15 +19,15 @@ What reports a state must read from the corner of the eye. These weigh most.
    timeout, then a conflict with the trunk. A run in progress is the normal
    state, so it shows by motion rather than alarm, and is found at once when
    looked for. Nothing else competes with them.
-3. **Nothing drowns.** What is old, cancelled, superseded or merely
-   identifying (SHA, project, age) recedes. A screen of routine rows still
-   lets the one row that needs attention stand out.
+3. **Nothing drowns.** What is settled, cancelled or merely identifying
+   (a passed row, a project's name, an age) recedes. A screen of routine rows
+   still lets the one row that needs attention stand out.
 4. **The same thing is in the same place.** A stage, the outcome and the
    age sit in the same column on every row, so the eye scans down a column
    rather than reading along each row.
-5. **Nothing is lost.** No row wraps or runs past the edge; no run is pushed
-   off screen; what is cut to fit is the least important, and a cut shows it
-   was cut.
+5. **Nothing is lost.** No row wraps or runs past the edge; nothing that
+   says what happened is cut; what a short screen leaves out is the least
+   important, and the screen says how much it left out.
 6. **Each state looks like one state.** Passed, failed, timed out, running,
    scheduled, cancelled and conflicting are each unmistakable, and a timeout
    never reads as a failure.
@@ -44,8 +44,9 @@ What reports a state must read from the corner of the eye. These weigh most.
 
 ## Fun
 
-10. **It is a pleasure to watch.** Decoration is welcome where it never hides
-    a status (goal 2), and it fits the header's look.
+10. **It is a pleasure to watch, and calm.** Decoration is welcome where it
+    never hides a status (goal 2), and it fits the header's look. Even a
+    failure reads as feedback, not an alarm: exact words, no shouting.
 
 ## Findings
 
