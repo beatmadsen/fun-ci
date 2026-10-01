@@ -52,7 +52,7 @@ module FunCi
           id INTEGER PRIMARY KEY,
           project_path TEXT, job TEXT, cadence TEXT, commit_hash TEXT, branch TEXT,
           status TEXT, started_at TEXT, completed_at TEXT, lock_file TEXT, pid INTEGER, group_pid INTEGER,
-          exit_status INTEGER, signal TEXT, output_tail TEXT, evidence TEXT
+          exit_status INTEGER, signal TEXT, output_tail TEXT, evidence TEXT, budget INTEGER
         )
       SQL
 
@@ -73,7 +73,7 @@ module FunCi
                        %w[pipeline_runs waited_at TEXT], %w[stage_jobs exit_status INTEGER],
                        %w[stage_jobs signal TEXT], %w[stage_jobs budget INTEGER], %w[stage_jobs pruned INTEGER],
                        %w[stage_jobs evidence TEXT], %w[pipeline_runs fetch_pgid INTEGER],
-                       %w[pipeline_runs trunk_started_at TEXT]].freeze
+                       %w[pipeline_runs trunk_started_at TEXT], %w[job_runs budget INTEGER]].freeze
 
       TABLES = [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE, TRUNK_FETCHES_TABLE, JOB_RUNS_TABLE].freeze
 

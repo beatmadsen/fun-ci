@@ -28,10 +28,6 @@ module FunCi
         !@confirm_cancel.nil?
       end
 
-      def confirmation_run
-        @confirm_cancel&.last
-      end
-
       private
 
       def act(key)

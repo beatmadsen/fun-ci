@@ -960,7 +960,7 @@ cancelled a minute ago, or none
 **Then** it is due at 24 h, when cancelled and when it never ran, and not
 before; a weekly job likewise at 7 days.
 
-### 13.4 Starting a job is claimed in one statement
+### 13.4 Starting a job is claimed in one transaction
 **Given** two claims of the same due job, one after the other
 **Then** one run is recorded; the second claim finds it running and starts nothing.
 

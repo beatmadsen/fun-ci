@@ -50,8 +50,13 @@ fn a_board_with_a_running_job_is_not_still() {
 }
 
 #[test]
-fn a_board_whose_jobs_passed_or_are_due_is_still() {
+fn a_board_whose_job_is_due_is_still() {
     assert!(still(&with_job(&["passed"], "due")));
+}
+
+#[test]
+fn a_board_whose_job_passed_is_still() {
+    assert!(still(&with_job(&["passed"], "passed")));
 }
 
 #[test]

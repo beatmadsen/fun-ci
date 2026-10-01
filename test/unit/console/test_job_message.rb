@@ -59,7 +59,7 @@ class TestJobMessage < Minitest::Test
   end
 
   def test_should_leave_out_what_a_job_that_never_ran_lacks
-    assert_equal %i[project name cadence status], job_message(status: "due", run: nil).keys
+    assert_equal %i[cadence name project status], job_message(status: "due", run: nil).keys.sort
   end
 
   private

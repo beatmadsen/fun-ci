@@ -31,6 +31,10 @@ class TestJobOrder < Minitest::Test
     assert_equal %w[a b], names([row("b", "completed"), row("a", "completed")])
   end
 
+  def test_should_put_a_job_of_a_status_it_does_not_know_last
+    assert_equal %w[b a], names([row("a", "paused"), row("b", "completed")])
+  end
+
   private
 
   def names(rows) = FunCi::Console::JobOrder.of(rows, projects: %w[/first /second]).map { |job| job[:name] }

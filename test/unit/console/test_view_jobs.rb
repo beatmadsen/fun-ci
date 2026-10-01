@@ -9,7 +9,8 @@ require "fun_ci/console/key_handler"
 # last page of runs above it (acceptance-tests.md, AT-13.15, AT-13.16).
 class TestViewJobs < Minitest::Test
   RUNS = (1..6).map { |id| ConsoleFakes.run_row(id) }
-  JOBS = [ConsoleFakes.job_row("soak"), ConsoleFakes.job_row("mutation")].freeze
+  # Three, so a page's two lines for the section can't be told from one a job.
+  JOBS = [ConsoleFakes.job_row("soak"), ConsoleFakes.job_row("mutation"), ConsoleFakes.job_row("audit")].freeze
 
   def setup
     @board_data = ConsoleFakes::BoardData.new(RUNS)

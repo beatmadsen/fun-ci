@@ -16,7 +16,7 @@ module JobRunKit
   PASSED = ["", FakeStatus.new(true, 0)].freeze
   NOW = Time.utc(2026, 10, 1, 12)
 
-  # Remembers each [path, sha] checked out, or raises the error it was told to.
+  # Makes and remembers each [path, sha] checked out, or raises the error it was told to.
   class FakeWorktrees
     attr_reader :checked_out
 
@@ -29,6 +29,7 @@ module JobRunKit
     def check_out(path, sha)
       raise @error if @error
 
+      FileUtils.mkdir_p(path)
       @checked_out << [path, sha]
     end
   end
@@ -46,8 +47,9 @@ module JobRunKit
     FileUtils.remove_entry(@dir)
   end
 
-  def run_job(runner: ->(_cmd) { PASSED })
-    seams = FunCi::Pipeline::Seams.new(command_runner: runner, stage_dir: -> { FakeStageDir.new }, environment: {})
+  def run_job(runner: ->(_cmd) { PASSED }, job: self.job, time_budgets: {})
+    seams = FunCi::Pipeline::Seams.new(command_runner: runner, stage_dir: -> { FakeStageDir.new }, environment: {},
+                                       time_budgets: time_budgets)
     FunCi::Jobs::JobRun.new(job, FunCi::Pipeline::Commit.new(sha: SHA, branch: "main"), site, seams).start
   end
 

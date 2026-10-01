@@ -48,7 +48,7 @@ module FunCi
       end
 
       def execute(slot, id)
-        recorder.started_by(id, Process.pid)
+        recorder.started_by(id, Process.pid, budget: budget)
         @site.worktrees.check_out(slot.path, @commit.sha)
         execution(slot).run(@job.stage, command(slot.path), recorder, id)
         id
@@ -58,8 +58,11 @@ module FunCi
 
       # The script holds the job's lock too, so the job reads as alive while
       # any of it runs, its runner gone or not.
+      # A day for every job, unless a test says otherwise.
+      def seams = @seams.with(time_budgets: { @job.stage => Job::BUDGET }.merge(@seams.time_budgets))
+      def budget = seams.budgets[@job.stage]
+
       def execution(slot)
-        seams = @seams.with(time_budgets: { @job.stage => Job::BUDGET }.merge(@seams.time_budgets))
         Pipeline::StageExecution.new(seams: seams, dir: slot.path, commit: @commit,
                                      launching: { env: { "FUN_CI_JOB" => @job.name }, held: [slot.lock] })
       end

@@ -14,8 +14,8 @@ require "fun_ci/persistence/job_runs"
 class TestJobFork < Minitest::Test
   include ProcessDeadline
 
-  # What the job's script writes down: its name, where it runs, its commit and its session.
-  TOLD = "$FUN_CI_JOB $(pwd -P) $1 $(ruby -e 'print Process.getsid')"
+  # What the job's script writes down: its name, where it runs, its commit, its session and its process group.
+  TOLD = "$FUN_CI_JOB $(pwd -P) $1 $(ruby -e 'print Process.getsid') $(ruby -e 'print Process.getpgrp')"
 
   def setup
     @dir = Dir.mktmpdir("job-fork")
@@ -82,6 +82,13 @@ class TestJobFork < Minitest::Test
     forked_to_the_end { state = within_deadline { Fifo.read(fifo) } }
 
     assert_equal "held", state
+  end
+
+  # What a cancel kills.
+  def test_should_record_the_process_group_the_job_s_script_runs_in
+    forked_to_the_end
+
+    assert_equal File.read(seen).split[4].to_i, latest[:group_pid]
   end
 
   def test_should_start_no_job_that_is_not_due

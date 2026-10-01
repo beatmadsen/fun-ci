@@ -45,6 +45,10 @@ class TestJobDue < Minitest::Test
     assert_equal NOW + 3600, due(latest("completed", DAY - 3600), DAY).at
   end
 
+  def test_should_say_nothing_of_when_it_is_due_while_it_still_runs
+    assert_nil due(latest("running", 60), DAY).at
+  end
+
   def test_should_say_nothing_of_when_it_is_due_while_it_is_due_now
     assert_nil due(nil, DAY).at
   end

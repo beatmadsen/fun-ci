@@ -46,9 +46,9 @@ class TestKeyHandlerJobs < Minitest::Test
 
   def test_should_reach_the_jobs_when_there_are_no_runs
     @board_data.runs = []
-    press("j")
+    press("j", "c")
 
-    assert_equal 0, @handler.cursor_index
+    assert_predicate @handler, :confirming?
   end
 
   private

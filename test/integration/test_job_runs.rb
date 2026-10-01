@@ -3,6 +3,7 @@
 require_relative "../test_helper"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
+require "fun_ci/persistence/active_jobs"
 require "fun_ci/persistence/job_recorder"
 require "fun_ci/jobs/job"
 
@@ -63,7 +64,7 @@ class TestJobRuns < Minitest::Test
   end
 
   def test_should_claim_a_job_again_at_once_when_its_latest_run_was_cancelled
-    @runs.cancelled(claim(NOW))
+    FunCi::Persistence::ActiveJobs.cancelled(@db, claim(NOW))
 
     assert claim(NOW + 60)
   end
@@ -90,7 +91,7 @@ class TestJobRuns < Minitest::Test
 
   def test_should_leave_a_cancelled_run_cancelled_when_it_ends_after_the_cancel
     id = claim(NOW)
-    @runs.cancelled(id)
+    FunCi::Persistence::ActiveJobs.cancelled(@db, id)
     finish(id, "failed")
 
     assert_equal "cancelled", @runs.latest("mutation")[:status]

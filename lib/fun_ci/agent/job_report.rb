@@ -80,7 +80,8 @@ module FunCi
       end
 
       def stage(job, row)
-        RunReport::Stage.from_row(job.name, row.merge(budget: Jobs::Job::BUDGET, raw_bytes: raw.bytes(row[:id])))
+        RunReport::Stage.from_row(job.name, row.merge(budget: row[:budget] || Jobs::Job::BUDGET,
+                                                      raw_bytes: raw.bytes(row[:id])))
       end
     end
   end

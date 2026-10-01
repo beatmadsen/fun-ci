@@ -4,6 +4,7 @@ require_relative "../test_helper"
 require "fun_ci/console/job_rows"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
+require "fun_ci/persistence/active_jobs"
 require "fun_ci/persistence/job_recorder"
 
 # The job section's rows: each job of the board's projects, as its latest
@@ -26,7 +27,7 @@ class TestJobRows < Minitest::Test
   end
 
   def test_should_show_a_job_whose_latest_run_was_cancelled_due
-    FunCi::Persistence::JobRuns.new(@db, @project).cancelled(claim("mutation", NOW - 60))
+    FunCi::Persistence::ActiveJobs.cancelled(@db, claim("mutation", NOW - 60))
 
     assert_equal "due", row("mutation")[:status]
   end

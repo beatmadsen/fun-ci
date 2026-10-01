@@ -3,6 +3,7 @@
 require_relative "../test_helper"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
+require "fun_ci/persistence/active_jobs"
 require "fun_ci/persistence/raw_outputs"
 require "fun_ci/jobs/job"
 
@@ -64,7 +65,7 @@ class TestJobRunsRetention < Minitest::Test
 
   def cancelled_run
     id = @runs.claim(MUTATION, commit: COMMIT, lock_file: "/l", now: NOW)
-    @runs.cancelled(id)
+    FunCi::Persistence::ActiveJobs.cancelled(@db, id)
     id
   end
 end

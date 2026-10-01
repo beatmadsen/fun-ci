@@ -44,5 +44,5 @@ class TestJobLocks < Minitest::Test
 
   private
 
-  def open_files = ObjectSpace.each_object(File).count { |file| !file.closed? }
+  def open_files = Dir.children("/dev/fd").size
 end
