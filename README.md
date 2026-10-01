@@ -107,6 +107,8 @@ Five minutes after the latest run finished, the header goes quiet: a starry nigh
 
 The daily and weekly jobs have a section of their own under the last project: each job's name, how often it runs, its mark, what its last run did on which branch and commit, and when it is due again (`passed on main 3a1f9c2 · due in 14h`), or that it runs on your next commit. When none of them failed or runs, the section folds into one pale line.
 
+![The daily and weekly jobs under the table: soak failed a day ago on wip/foo, with a red stripe, mutation running for over an hour, with a blue one, deps-audit passed and due again in 14 hours, and lint-deep due on the next commit](docs/screenshots/jobs.png)
+
 A branch that conflicts with the trunk says so on the line under its name, `conflicts with main`, and the header plays two strands braiding into a knot; when a later commit on the branch merges cleanly, the knot unties. A project whose trunk fun-ci last fetched over an hour ago, or couldn't fetch, says so beside its name.
 
 Keys:

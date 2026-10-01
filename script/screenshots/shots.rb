@@ -50,7 +50,13 @@ module Screenshots
 
     def self.all
       stills = STILLS.map { |name, spec| still(name, spec) }
-      [console, table, failure, *stills, *QUIET.map { |name, spec| quiet(name, spec) }]
+      [console, table, jobs, failure, *stills, *QUIET.map { |name, spec| quiet(name, spec) }]
+    end
+
+    # The daily and weekly jobs under the table: one failed, one running, the
+    # rest passed or due, before the cursor reaches them.
+    def self.jobs
+      Shot.new("jobs", Replayed.new("jobs", cols: 100, rows: 32), [2])
     end
 
     # The table on a busy board, tall enough for the legend over every
