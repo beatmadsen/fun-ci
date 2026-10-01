@@ -41,6 +41,24 @@ pub struct Board {
     pub jobs: Vec<Job>,
 }
 
+/// How a daily or weekly job stands (renderer-protocol.md, `board`).
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum JobStatus {
+    /// It never ran, or its latest run was cancelled: the next commit starts it.
+    Due,
+    Running,
+    Passed,
+    Failed,
+    /// It ran out of time.
+    Timeout,
+    /// Its process died before it said how the run ended.
+    Lost,
+    /// A state a newer fun-ci, sharing the database, sent.
+    #[serde(other)]
+    Unknown,
+}
+
 /// A daily or weekly job: how often it runs, and its latest run, or that it
 /// is due (renderer-protocol.md, `board`). Times are epoch seconds.
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
@@ -49,9 +67,7 @@ pub struct Job {
     pub project: Option<String>,
     pub name: String,
     pub cadence: String,
-    /// `due`, `running`, `passed`, `failed`, `timeout` or `lost` (its process
-    /// died before it said how the run ended).
-    pub status: String,
+    pub status: JobStatus,
     #[serde(default)]
     pub run_id: Option<u64>,
     #[serde(default)]

@@ -12,7 +12,7 @@ use super::jobs;
 use super::paint::fetched;
 use super::{Drawn, Frame};
 use crate::format::{columns, cut, project_name, short_sha};
-use crate::model::{Board, Run};
+use crate::model::{Board, JobStatus, Run};
 
 /// The least space between the keys and what the footer says beside them.
 const APART: usize = 5;
@@ -44,7 +44,7 @@ pub fn keys(board: &Board) -> Offer {
         return Offer { question: Some(question), keys: vec![("y", "yes"), ("n", "no")] };
     }
     let runs = board.runs.iter().any(|run| matches!(run.status(), "running" | "pending"));
-    let cancellable = runs || board.jobs.iter().any(|job| job.status == "running");
+    let cancellable = runs || board.jobs.iter().any(|job| job.status == JobStatus::Running);
     Offer { question: None, keys: if cancellable { vec![MOVE, CANCEL, QUIT] } else { vec![MOVE, QUIT] } }
 }
 

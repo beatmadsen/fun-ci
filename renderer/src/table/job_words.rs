@@ -6,35 +6,37 @@
 //! `passed · due in 14h`, `due · next commit`.
 
 use crate::format::{seconds_since, short_sha};
-use crate::model::Job;
+use crate::model::{Job, JobStatus};
+
+/// What a job says whose state this fun-ci doesn't know.
+const UNKNOWN: &str = "in a state this fun-ci doesn't know";
 
 /// What `job` says, at the clock `now_ms`.
 #[must_use]
 pub fn said(job: &Job, now_ms: i64) -> String {
-    match job.status.as_str() {
-        "due" => "due · runs on your next commit".to_string(),
-        "lost" => format!("stopped without a result on {} · {}", commit(job), due(job, now_ms)),
-        "running" => format!("running on {} · {}", commit(job), span(seconds_since(job.started_at.unwrap_or(0), now_ms))),
-        "passed" => format!("passed on {} · {}", commit(job), due(job, now_ms)),
-        status => format!("{} after {} on {} · {}", ended(status), span(ran_for(job)), commit(job), due(job, now_ms)),
+    match job.status {
+        JobStatus::Due => "due · runs on your next commit".to_string(),
+        JobStatus::Lost => format!("stopped without a result on {} · {}", commit(job), due(job, now_ms)),
+        JobStatus::Running => format!("running on {} · {}", commit(job), span(seconds_since(job.started_at.unwrap_or(0), now_ms))),
+        JobStatus::Passed => format!("passed on {} · {}", commit(job), due(job, now_ms)),
+        JobStatus::Failed => format!("failed after {} on {} · {}", span(ran_for(job)), commit(job), due(job, now_ms)),
+        JobStatus::Timeout => format!("ran out of time after {} on {} · {}", span(ran_for(job)), commit(job), due(job, now_ms)),
+        JobStatus::Unknown => UNKNOWN.to_string(),
     }
 }
 
 /// What `job` says, briefly, for a narrow screen.
 #[must_use]
 pub fn said_briefly(job: &Job, now_ms: i64) -> String {
-    match job.status.as_str() {
-        "due" => "due · next commit".to_string(),
-        "lost" => "stopped · no result".to_string(),
-        "running" => format!("running · {}", span(seconds_since(job.started_at.unwrap_or(0), now_ms))),
-        "passed" => format!("passed · {}", due(job, now_ms)),
-        "timeout" => format!("timed out · {}", span(ran_for(job))),
-        status => format!("{status} · {}", span(ran_for(job))),
+    match job.status {
+        JobStatus::Due => "due · next commit".to_string(),
+        JobStatus::Lost => "stopped · no result".to_string(),
+        JobStatus::Running => format!("running · {}", span(seconds_since(job.started_at.unwrap_or(0), now_ms))),
+        JobStatus::Passed => format!("passed · {}", due(job, now_ms)),
+        JobStatus::Failed => format!("failed · {}", span(ran_for(job))),
+        JobStatus::Timeout => format!("timed out · {}", span(ran_for(job))),
+        JobStatus::Unknown => "state unknown".to_string(),
     }
-}
-
-fn ended(status: &str) -> &str {
-    if status == "timeout" { "ran out of time" } else { status }
 }
 
 /// `wip/foo 9e0b1d4`: the branch and commit the run tested.

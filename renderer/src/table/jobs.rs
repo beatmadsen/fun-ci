@@ -6,7 +6,7 @@
 
 use super::stack::Piece;
 use crate::format::project_name;
-use crate::model::{Board, Job};
+use crate::model::{Board, Job, JobStatus};
 
 /// The section's label, by the cadences of its jobs.
 #[must_use]
@@ -58,13 +58,13 @@ pub fn name(job: &Job, named: bool) -> String {
 /// Whether a job needs you: its latest run failed, ran out of time, or stopped without a result.
 #[must_use]
 pub fn needs_you(job: &Job) -> bool {
-    matches!(job.status.as_str(), "failed" | "timeout" | "lost")
+    matches!(job.status, JobStatus::Failed | JobStatus::Timeout | JobStatus::Lost)
 }
 
 /// Whether nothing in the section needs you or runs.
 #[must_use]
 pub fn quiet(jobs: &[Job]) -> bool {
-    jobs.iter().all(|job| matches!(job.status.as_str(), "passed" | "due"))
+    jobs.iter().all(|job| matches!(job.status, JobStatus::Passed | JobStatus::Due))
 }
 
 /// The index of the job under the cursor: past the last run.
