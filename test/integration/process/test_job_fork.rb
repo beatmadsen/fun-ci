@@ -10,12 +10,15 @@ require "fun_ci/persistence/job_runs"
 
 # The post-commit hook's `trigger --background` starts each due job of the
 # project in a process of its own, beside the pipeline, which runs it in the
-# job's own worktree, checked out at the commit (acceptance-tests.md, AT-13.7, AT-13.8).
+# job's own worktree (acceptance-tests.md, AT-13.7, AT-13.8). Only what
+# crosses the fork is here: what the job is told, which jobs are due and
+# what a run records are each pinned where they are decided
+# (test_job_run.rb, test_due_jobs.rb, test_job_recorder.rb).
 class TestJobFork < Minitest::Test
   include ProcessDeadline
 
-  # What the job's script writes down: its name, where it runs, its commit, its session and its process group.
-  TOLD = "$FUN_CI_JOB $(pwd -P) $1 $(ruby -e 'print Process.getsid') $(ruby -e 'print Process.getpgrp')"
+  # What the job's script writes down: where it runs, its session and its process group.
+  TOLD = "$(pwd -P) $(ruby -e 'print Process.getsid') $(ruby -e 'print Process.getpgrp')"
 
   def setup
     @dir = Dir.mktmpdir("job-fork")
@@ -42,28 +45,10 @@ class TestJobFork < Minitest::Test
     assert_equal "completed", latest[:status]
   end
 
-  def test_should_record_the_commit_the_job_run_tested
-    forked_to_the_end
-
-    assert_equal @sha, latest[:commit_hash]
-  end
-
-  def test_should_tell_the_job_its_name
-    forked_to_the_end
-
-    assert_equal "mutation", told[:name]
-  end
-
   def test_should_run_the_job_in_its_own_worktree
     forked_to_the_end
 
     assert_equal File.join(@project.common_dir, "fun-ci", "jobs", "mutation"), told[:worktree]
-  end
-
-  def test_should_give_the_job_the_commit
-    forked_to_the_end
-
-    assert_equal @sha, told[:commit]
   end
 
   # So that closing the terminal of the commit doesn't end a job that can run for hours.
@@ -74,6 +59,12 @@ class TestJobFork < Minitest::Test
   end
 
   # As when mutineer runs the tests: $stdout and $stderr are StringIOs, not the process's own streams.
+  def test_should_record_the_process_group_the_job_s_script_runs_in
+    forked_to_the_end
+
+    assert_equal told[:group].to_i, latest[:group_pid]
+  end
+
   def test_should_run_the_job_while_the_caller_s_streams_are_no_files
     capture_io { forked_to_the_end }
 
@@ -90,27 +81,12 @@ class TestJobFork < Minitest::Test
     assert_equal "held", state
   end
 
-  # What a cancel kills.
-  def test_should_record_the_process_group_the_job_s_script_runs_in
-    forked_to_the_end
-
-    assert_equal told[:group].to_i, latest[:group_pid]
-  end
-
-  def test_should_start_no_job_that_is_not_due
-    forked_to_the_end
-    File.delete(seen)
-    forked_to_the_end
-
-    refute_path_exists seen
-  end
-
   private
 
   def fifo = File.join(@dir, "lock-state")
 
   # What the job's script wrote down (TOLD), by name.
-  def told = %i[name worktree commit session group].zip(File.read(seen).split).to_h
+  def told = %i[worktree session group].zip(File.read(seen).split).to_h
 
   # A job whose script kills the process running it, then says whether the job's lock is still held.
   def job_that_kills_its_runner
