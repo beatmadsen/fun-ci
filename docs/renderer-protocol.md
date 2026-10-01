@@ -112,6 +112,21 @@ The full state to show. Always complete — never a diff.
   good fetch (epoch seconds) or null when the last fetch failed. The renderer
   says so beside the project's name, or on a line above the footer when the
   screen is too short for names. Ruby leaves it out when no trunk is stale.
+- `jobs` (optional) is the section of daily and weekly jobs below the table
+  (`design.md`, Daily and weekly jobs), one per job of the projects on the
+  board, in the order shown:
+  `{"project": "/src/app", "name": "soak", "cadence": "weekly",
+  "status": "failed", "run_id": 9, "sha": "9e0b1d4...", "branch": "wip/foo",
+  "started_at": 1789988000, "updated_at": 1789999520, "due_at": 1790592800}`.
+  `cadence` is `daily` or `weekly`. `status` is `due` (the job never ran, or
+  its latest run was cancelled), `running`, `passed`, `failed` or `timeout`.
+  The run's fields are those of the job's latest run, and are left out for a
+  job that never ran; `updated_at` is when it ended, or started while it
+  runs. `due_at` is when the job is due again, left out while it is due now
+  or runs. Ruby leaves `jobs` out when there are none. `cursor` goes on past
+  the last run into the jobs: `cursor` equal to `runs`' length is the first
+  job. `runs` is then two shorter than a page, leaving the job section its
+  blank line and one line.
 - `runs` holds one run per branch, the branch's newest, in the order the rows
   are shown, which is the order the cursor moves in: a project's branches
   together, the project that most needs you first, and within a project a

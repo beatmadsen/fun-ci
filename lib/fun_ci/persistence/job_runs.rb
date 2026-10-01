@@ -3,6 +3,7 @@
 require "time"
 require_relative "../jobs/due"
 require_relative "raw_outputs"
+require_relative "active_jobs"
 
 module FunCi
   module Persistence
@@ -35,10 +36,7 @@ module FunCi
       # The job's newest run, or nil when it never ran.
       def latest(name) = query("WHERE project_path = ? AND job = ? ORDER BY id DESC LIMIT 1", @project, name).first
 
-      def cancelled(id)
-        @db.execute("UPDATE job_runs SET status = 'cancelled', completed_at = ? WHERE id = ? AND status = 'running'",
-                    [stamp(Time.now), id])
-      end
+      def cancelled(id) = ActiveJobs.cancelled(@db, id)
 
       # Records failed the job's runs still running, whose process is known to be gone.
       def died(name)

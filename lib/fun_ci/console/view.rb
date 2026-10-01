@@ -11,6 +11,8 @@ module FunCi
       # table: a page this many rows short of the terminal fits one line per
       # row, however the renderer spaces them (renderer-protocol.md, `board`).
       CHROME_ROWS = 18
+      # A blank line and one for the job section, the least the renderer folds it to.
+      JOB_LINES = 2
 
       def initialize(key_handler:)
         @key_handler = key_handler
@@ -25,23 +27,31 @@ module FunCi
       # :quit when the key ends the session.
       def press(key) = @key_handler.handle_key(key)
 
-      # `more`: whether the store holds runs beyond `runs`.
-      def page(runs, more:)
-        first = first_shown
-        { cursor: cursor_on_page(first), confirming: @key_handler.confirming?,
-          has_more: more || first + @page_size < runs.size, runs: runs[first, @page_size] || [] }
+      # `more`: whether the store holds runs beyond `runs`. `jobs`: the job
+      # section's rows, below the page, which the cursor reaches after the runs.
+      def page(runs, more:, jobs: [])
+        size = jobs.empty? ? @page_size : [@page_size - JOB_LINES, 0].max
+        first = first_shown(runs.size, size)
+        { cursor: cursor_on_page(first, size, runs.size), confirming: @key_handler.confirming?,
+          has_more: more || first + size < runs.size, runs: runs[first, size] || [] }
       end
 
       private
 
-      def first_shown
+      # The last page of runs while the cursor is on a job.
+      def first_shown(count, size)
         cursor = @key_handler.cursor_index
-        cursor ? [cursor - @page_size + 1, 0].max : 0
+        return 0 unless cursor
+
+        [[cursor, count - 1].min - size + 1, 0].max
       end
 
-      def cursor_on_page(first)
+      # Past the page's runs while the cursor is on a job.
+      def cursor_on_page(first, size, count)
         cursor = @key_handler.cursor_index
-        cursor - first if cursor && @page_size.positive?
+        return nil unless cursor && size.positive?
+
+        cursor < count ? cursor - first : [count - first, size].min + cursor - count
       end
     end
   end

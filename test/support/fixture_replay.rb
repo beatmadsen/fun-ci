@@ -13,10 +13,11 @@ require_relative "console_fakes"
 # conversation is the renderer lines with every message Ruby sent in between.
 class FixtureReplay
   # BoardData over the fixture's runs, the database's runs newest first, all
-  # of them loaded: one row per branch, as BoardData makes them.
+  # of them loaded: one row per branch, as BoardData makes them; and its job
+  # rows, as JobRows makes them.
   class Store
     attr_writer :runs
-    attr_accessor :now, :stale
+    attr_accessor :now, :stale, :job_rows
 
     def initialize
       @runs = []
@@ -33,7 +34,10 @@ class FixtureReplay
     def resize(_page_size) = nil
     def more? = false
     def record_dead_slow_suites = nil
+    def record_dead_jobs = nil
     def cancel_run(_id) = nil
+    def cancel_job(_id) = nil
+    def jobs(_runs) = job_rows || []
     def stale_trunks(_runs, now:) = now && (stale || [])
   end
 
@@ -73,6 +77,7 @@ class FixtureReplay
     @store.runs = state["runs"].map { |run| JSON.parse(JSON.generate(run), symbolize_names: true) }
     @store.now = state["now"]
     @store.stale = state.fetch("stale_trunks", []).map { |stale| stale.transform_keys(&:to_sym) }
+    @store.job_rows = JSON.parse(JSON.generate(state.fetch("jobs", [])), symbolize_names: true)
     index.zero? ? session.start : session.refresh
   end
 end

@@ -2,9 +2,10 @@
 
 module FunCi
   module Console
-    # What a key means for the runs BoardData loads: moving the cursor,
-    # quitting, and cancelling the run under the cursor (a running one after
-    # the user confirms with `y`).
+    # What a key means for the runs BoardData loads, and the daily and weekly
+    # jobs after them: moving the cursor through both, quitting, and
+    # cancelling the run or job under the cursor (a running one after the
+    # user confirms with `y`).
     class KeyHandler
       CONFIRMATION_ANSWERS = ["y", "n", :escape].freeze
 
@@ -28,7 +29,7 @@ module FunCi
       end
 
       def confirmation_run
-        @confirm_cancel
+        @confirm_cancel&.last
       end
 
       private
@@ -41,15 +42,16 @@ module FunCi
         end
       end
 
-      # Onto the last run loaded, which loads the next page.
+      # Onto the last run loaded, which loads the next page, then into the jobs.
       def move_cursor_down
-        last = @board_data.runs.length - 1
+        runs = @board_data.runs
+        last = runs.length + @board_data.jobs(runs).length - 1
         return if last.negative?
         return @cursor_index = 0 if @cursor_index.nil?
         return unless @cursor_index < last
 
         @cursor_index += 1
-        @board_data.load_more if @cursor_index == last
+        @board_data.load_more if @cursor_index == runs.length - 1
       end
 
       def move_cursor_up
@@ -57,17 +59,28 @@ module FunCi
       end
 
       def initiate_cancel
-        run = @cursor_index && @board_data.runs[@cursor_index]
-        return unless run
+        kind, row = under_cursor
+        return unless row
 
-        @board_data.cancel_run(run[:id]) if run[:status] == "scheduled"
-        @confirm_cancel = run if run[:status] == "running"
+        @board_data.cancel_run(row[:id]) if row[:status] == "scheduled"
+        @confirm_cancel = [kind, row] if row[:status] == "running"
+      end
+
+      # [:run, the run] or [:job, the job row] under the cursor, or none.
+      def under_cursor
+        runs = @board_data.runs
+        return [] unless @cursor_index
+        return [:run, runs[@cursor_index]] if @cursor_index < runs.length
+
+        [:job, @board_data.jobs(runs)[@cursor_index - runs.length]]
       end
 
       def confirm(key)
-        @board_data.cancel_run(@confirm_cancel[:id]) if key == "y"
+        cancel(*@confirm_cancel) if key == "y"
         @confirm_cancel = nil if CONFIRMATION_ANSWERS.include?(key)
       end
+
+      def cancel(kind, row) = kind == :job ? @board_data.cancel_job(row[:run][:id]) : @board_data.cancel_run(row[:id])
     end
   end
 end

@@ -9,6 +9,9 @@ require_relative "streak_counter"
 require_relative "trunk_marks"
 require_relative "cancelled_folding"
 require_relative "row_order"
+require_relative "paging"
+require_relative "job_rows"
+require_relative "../persistence/active_jobs"
 
 module FunCi
   module Console
@@ -17,39 +20,54 @@ module FunCi
       # find its standing against the trunk.
       BRANCH_WINDOW = 100
 
-      def initialize(db, limit: 15, page_size: nil, run_canceller: Pipeline::RunCanceller.new)
+      # `clock` answers the time now, which decides which jobs are due.
+      def initialize(db, page_size: 15, run_canceller: Pipeline::RunCanceller.new, clock: -> { Time.now })
         @db = db
-        @page_size = page_size || limit
-        @limit = @page_size
+        @paging = Paging.new(page_size)
         @run_canceller = run_canceller
+        @clock = clock
       end
 
-      def load_more
-        @limit += @page_size
-      end
+      def load_more = @paging.load_more
 
       # Pages by `page_size` from now on, loading at least one such page.
-      def resize(page_size)
-        @page_size = page_size
-        @limit = [@limit, page_size].max
-      end
+      def resize(page_size) = @paging.resize(page_size)
 
       # Whether there are branches beyond those `runs` loads.
-      def more? = Persistence::PipelineRun.branch_heads(@db, limit: @limit + 1).size > @limit
+      def more? = Persistence::PipelineRun.branch_heads(@db, limit: @paging.limit + 1).size > @paging.limit
 
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
 
+      # The job section's rows (JobRows): the jobs of the projects among `runs`.
+      def jobs(runs)
+        JobRows.new(@db).of(runs.map { |run| run[:project_path] }.uniq.compact, now: @clock.call)
+      end
+
+      # Records failed each job whose process died (acceptance-tests.md, AT-13.6).
+      def record_dead_jobs = @run_canceller.record_dead_jobs(@db)
+
+      # Stops a daily or weekly job's processes, then records it cancelled,
+      # unless it has finished meanwhile.
+      def cancel_job(id)
+        Persistence::ActiveJobs.with_id(@db, id).each do |job|
+          @run_canceller.stop(job)
+          Persistence::ActiveJobs.cancelled(@db, id)
+        end
+      end
+
       # One row per branch, its newest run, for the branches that most need you
       # and then those run most recently, in RowOrder: a run of cancelled
       # runs folded into one, with its stages and the branch's standing against the trunk.
-      def runs = RowOrder.of(Persistence::PipelineRun.branch_heads(@db, limit: @limit).map { |head| branch_row(head) })
+      def runs
+        RowOrder.of(Persistence::PipelineRun.branch_heads(@db, limit: @paging.limit).map { |head| branch_row(head) })
+      end
 
       # The projects among `runs` whose trunk is stale.
       def stale_trunks(runs, now:) = TrunkMarks.new(@db).stale(runs, now: now)
 
       def streak
-        pipeline_runs = Persistence::PipelineRun.recent(@db, limit: @limit)
+        pipeline_runs = Persistence::PipelineRun.recent(@db, limit: @paging.limit)
         StreakCounter.count(pipeline_runs)
       end
 

@@ -62,7 +62,7 @@ class TestBoardData < Minitest::Test
 
   def test_should_limit_to_specified_count
     5.times { |i| create_completed_run("hash#{i.to_s.rjust(3, "0")}", "branch#{i}") }
-    board = FunCi::Console::BoardData.new(@db, limit: 3)
+    board = FunCi::Console::BoardData.new(@db, page_size: 3)
     result = board.runs
     assert_equal 3, result.length, "Should limit to 3 branches"
   end

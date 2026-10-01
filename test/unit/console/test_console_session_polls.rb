@@ -25,11 +25,12 @@ class TestConsoleSessionPolls < Minitest::Test
   end
 
   def test_should_look_for_dead_slow_suites_on_every_refresh
-    checks_so_far = @board_data.dead_checks
+    checks_so_far = @board_data.dead_checks.count(:slow_suites)
 
     @session.refresh
 
-    assert_equal checks_so_far + 1, @board_data.dead_checks, "each poll records slow suites that died (AT-8.3)"
+    assert_equal checks_so_far + 1, @board_data.dead_checks.count(:slow_suites),
+                 "each poll records slow suites that died (AT-8.3)"
   end
 
   def test_should_send_a_stage_s_event_before_the_board_on_refresh

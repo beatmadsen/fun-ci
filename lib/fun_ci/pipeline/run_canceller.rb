@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../persistence/active_runs"
+require_relative "../persistence/active_jobs"
 require_relative "../persistence/run_status"
 require_relative "../persistence/write_trouble"
 require_relative "slot_lock"
@@ -32,6 +33,15 @@ module FunCi
           Persistence::ActiveRuns.slow_suite_died(db, job_id)
           Persistence::RunStatus.settle(db, run_id)
         end
+      rescue SQLite3::BusyException, *Persistence::WriteTrouble::UNWRITABLE
+        # The next poll looks again.
+      end
+
+      # Records failed each daily or weekly job still running whose lock
+      # nobody holds: its process is gone (acceptance-tests.md, AT-13.6).
+      def record_dead_jobs(db)
+        Persistence::ActiveJobs.running(db).filter_map { |id, lock| id unless @slot_held.call(lock) }
+                               .each { |id| Persistence::ActiveJobs.died(db, id) }
       rescue SQLite3::BusyException, *Persistence::WriteTrouble::UNWRITABLE
         # The next poll looks again.
       end
