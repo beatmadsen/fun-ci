@@ -4,6 +4,7 @@ require "shellwords"
 require_relative "settings"
 require_relative "../evidence/settings"
 require_relative "../evidence/start"
+require_relative "../jobs/folders"
 
 module FunCi
   module Setup
@@ -36,6 +37,11 @@ module FunCi
       # The presets without markers, which read what any project's output
       # may hold, such as JSON logs.
       def any_project_presets = preset_candidates.reject(&:because).map { |found| found.preset.name }
+
+      # The daily and weekly jobs that can run, and why any other can't
+      # (design.md, Daily and weekly jobs); neither stops a pipeline.
+      def jobs = Jobs::Folders.new(@project_root).jobs
+      def job_errors = Jobs::Folders.new(@project_root).errors
 
       def worktree_slots = settings.worktree_slots
       def trunk = settings.trunk

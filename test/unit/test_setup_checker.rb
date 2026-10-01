@@ -6,7 +6,9 @@ require "stringio"
 
 # `fun-ci check`: report what ProjectConfig found wrong, or that all is well.
 class TestSetupChecker < Minitest::Test
-  Config = Struct.new(:validate, :evidence_errors, :presets, :any_project_presets, keyword_init: true)
+  Config = Struct.new(:validate, :evidence_errors, :job_errors, :jobs, :presets, :any_project_presets,
+                      keyword_init: true)
+  Job = Data.define(:name, :cadence)
   Hooks = Struct.new(:warnings)
   Trunk = Struct.new(:lines)
   PROBLEMS = [".fun-ci/lint.sh is not found", ".fun-ci/fast.sh is not executable"].freeze
@@ -71,11 +73,28 @@ class TestSetupChecker < Minitest::Test
     assert_equal 0, check([], trunk: ["Warning: no trunk found"])
   end
 
+  def test_should_list_a_job_that_cannot_run_as_a_problem
+    check([], job_errors: [".fun-ci/daily/mutation.sh is not executable"])
+
+    assert_equal ".fun-ci/daily/mutation.sh is not executable\n", @stdout.string
+  end
+
+  def test_should_fail_when_a_job_cannot_run
+    assert_equal 1, check([], job_errors: [".fun-ci/daily/mutation.sh is not executable"])
+  end
+
+  def test_should_list_each_job_with_how_often_it_runs
+    check([], jobs: [Job.new(name: "mutation", cadence: "daily"), Job.new(name: "soak", cadence: "weekly")])
+
+    assert_equal "All OK. The project is configured.\nJobs: mutation (daily), soak (weekly)\n", @stdout.string
+  end
+
   private
 
   def check(problems, warnings: [], trunk: [], **given)
     @stdout = StringIO.new
-    config = Config.new(validate: problems, evidence_errors: [], presets: [], any_project_presets: [], **given)
+    config = Config.new(validate: problems, evidence_errors: [], job_errors: [], jobs: [], presets: [],
+                        any_project_presets: [], **given)
     FunCi::Setup::SetupChecker.new(config: config, hooks: Hooks.new(warnings), stdout: @stdout, trunk: Trunk.new(trunk))
                               .run
   end

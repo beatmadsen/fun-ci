@@ -22,10 +22,11 @@ module FunCi
 
       # Warnings are printed but don't fail the check.
       def run
-        errors = @config.validate + @config.evidence_errors
+        errors = @config.validate + @config.evidence_errors + @config.job_errors
         @stdout.puts(errors.empty? ? "All OK. The project is configured." : errors)
         @stdout.puts(@trunk.lines)
         list_presets
+        list_jobs
         @hooks.warnings.each { |warning| @stdout.puts "Warning: #{warning}" }
         errors.empty? ? 0 : 1
       end
@@ -35,6 +36,11 @@ module FunCi
       def list_presets
         lists = { "this project" => @config.presets, "any project's output" => @config.any_project_presets }
         lists.each { |what, names| @stdout.puts "Evidence presets for #{what}: #{names.join(", ")}" if names.any? }
+      end
+
+      def list_jobs
+        jobs = @config.jobs
+        @stdout.puts "Jobs: #{jobs.map { |job| "#{job.name} (#{job.cadence})" }.join(", ")}" if jobs.any?
       end
     end
   end

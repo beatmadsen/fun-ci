@@ -188,7 +188,7 @@ status, no streak and no exit code; it has its own section in the console.
   the weekly job `soak`. Like a stage it gets the commit's hash as its first
   argument, its exit code decides pass or fail, and `FUN_CI_JOB` names it.
   Nothing else is configured. Two jobs may not share a name, and
-  `fun-ci check` says so, and lists each job with when it is next due.
+  `fun-ci check` says so, and lists each job with how often it runs.
 - Commits start jobs. When the post-commit hook runs a pipeline, it also
   starts each of that project's jobs that is due, each in a process of its
   own beside the pipeline, testing the commit just made, on whatever branch.

@@ -950,9 +950,9 @@ as its script with the commit's hash.
 
 ### 13.2 `check` lists the jobs and refuses what can't run
 **Given** the jobs of 13.1, one of them not executable, or a name in both folders
-**Then** `check` lists each job with how often it runs and when it is next
-due, names a script that isn't executable, and names a job in both folders;
-the last two fail `check`, and no pipeline is stopped for them.
+**Then** `check` lists each job with how often it runs, names a script that
+isn't executable, and names a job in both folders; the last two fail `check`,
+and no pipeline is stopped for them.
 
 ### 13.3 A job is due when it never ran, was cancelled, or ran a period ago
 **Given** a daily job whose latest run started 23 h 59 min ago, 24 h ago, was
