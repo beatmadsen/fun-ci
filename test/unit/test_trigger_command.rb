@@ -8,6 +8,7 @@ require "fun_ci/pipeline/trigger"
 # and handing a --background run to the forker. --no-validate is the 1.x
 # name for --background, kept for one release.
 class TestTriggerCommand < Minitest::Test
+  HOW_TO_WAIT = "fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all --follow-branch\n"
   USAGE = "fun-ci: commit hash and branch name are required.\nUsage: fun-ci trigger <commit-hash> <branch>\n"
 
   FORKED = FunCi::Pipeline::PipelineForker::Forked.new(notice: nil)
@@ -94,15 +95,14 @@ class TestTriggerCommand < Minitest::Test
   def test_should_say_how_to_get_the_verdict_of_the_run_it_started
     run_command(["--background", "3f9c2ab0c4d1e2f3", "main"])
 
-    assert_equal "fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all\n", @stdout.string
+    assert_equal HOW_TO_WAIT, @stdout.string
   end
 
   def test_should_say_what_the_forker_says_of_a_first_fetch_after_how_to_get_the_verdict
     @forker = ->(**) { FORKED.with(notice: "fun-ci: fetching origin/main") }
     run_command(["--background", "3f9c2ab0c4d1e2f3", "main"])
 
-    assert_equal "fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all\nfun-ci: fetching origin/main\n",
-                 @stdout.string
+    assert_equal "#{HOW_TO_WAIT}fun-ci: fetching origin/main\n", @stdout.string
   end
 
   def test_should_say_why_the_jobs_did_not_start_where_the_commit_shows_errors

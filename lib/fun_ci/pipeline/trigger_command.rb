@@ -68,7 +68,9 @@ module FunCi
         @io.stderr.puts(forked.jobs) if forked.jobs
       end
 
-      def say_how_to_wait(sha) = @io.stdout.puts("fun-ci: testing #{sha}. Verdict: fun-ci wait #{sha} --need all")
+      def say_how_to_wait(sha)
+        @io.stdout.puts("fun-ci: testing #{sha}. Verdict: fun-ci wait #{sha} --need all --follow-branch")
+      end
     end
   end
 end

@@ -250,7 +250,10 @@ commands that ask about commits (`lib/fun_ci/agent/`).
 - **A waiter protects its run by a heartbeat**, `pipeline_runs.waited_at`,
   set on each poll; the stale canceller skips a run marked in the last 10
   seconds, and never cancels a run of the new run's own commit. A timestamp
-  needs no liveness check, so the canceller sends no extra signals.
+  needs no liveness check, so the canceller sends no extra signals. A waiter
+  that follows the branch sets none: it asked to move on to a newer commit,
+  and agents, told to wait after every commit, follow it, so their runs don't
+  keep each other going.
 - **Evidence is kept only for failures**: the last 200 lines (64 KB) of a
   failed or over-budget stage's output, and what the extractors picked out,
   pruned to a project's 50 newest runs. How much more is kept, and how, is the

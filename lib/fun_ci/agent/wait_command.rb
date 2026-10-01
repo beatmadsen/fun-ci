@@ -52,9 +52,10 @@ module FunCi
         ExitCode::FOR.fetch(report.verdict)
       end
 
+      # A waiter keeps its run from being superseded, unless it follows the branch to the newer commit.
       def poll(sha, options)
         @context.pipeline.watch(@context.db)
-        reports.mark_waited(sha, @context.clock.now)
+        reports.mark_waited(sha, @context.clock.now) unless options.follow_branch
         report_for(sha, options) || start_after_grace(sha)
       end
 

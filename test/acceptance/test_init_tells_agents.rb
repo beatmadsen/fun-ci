@@ -14,6 +14,15 @@ class TestInitTellsAgents < Minitest::Test
     assert_includes read("AGENTS.md").tr("\n", " "), "run the `fun-ci wait` command it prints, in the background"
   end
 
+  # A wait that follows the branch lets a newer commit cancel the older run
+  # rather than run its slow suite beside it (AT-9.12).
+  def test_should_tell_agents_a_newer_commit_moves_the_wait_on_to_its_run
+    init
+
+    assert_includes read("AGENTS.md").tr("\n", " "),
+                    "A newer commit on the branch cancels the run and the wait moves on to"
+  end
+
   def test_should_tell_agents_to_integrate_the_trunk_before_calling_work_done
     init
 

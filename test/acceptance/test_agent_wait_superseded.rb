@@ -4,8 +4,8 @@ require_relative "trigger_cli_shared"
 require_relative "agent_client"
 require "json"
 
-# A run is only superseded by a newer commit nobody is waiting past
-# (acceptance-tests.md, AT-9.12).
+# A run is only superseded by a newer commit nobody is waiting past, unless
+# they follow the branch to it (acceptance-tests.md, AT-9.12).
 class TestAgentWaitSuperseded < Minitest::Test
   OLD = "aaa1111aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   NEW = "bbb2222bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
@@ -26,6 +26,15 @@ class TestAgentWaitSuperseded < Minitest::Test
     @agent.wait(OLD, "--within", "2")
 
     assert_equal "running", FunCi::Persistence::PipelineRun.find(@agent.db, @old_run)[:status]
+  end
+
+  # It asked to move on to a newer commit, so it keeps no run from being
+  # superseded: each would run its slow suite beside the newest's.
+  def test_should_cancel_a_run_an_agent_follows_the_branch_from_when_a_newer_commit_starts
+    @agent.clock.then_do { @pipeline.trigger(commit_hash: NEW, branch: "main") }
+    @agent.wait(OLD, "--follow-branch", "--within", "2")
+
+    assert_equal "cancelled", FunCi::Persistence::PipelineRun.find(@agent.db, @old_run)[:status]
   end
 
   def test_should_cancel_a_run_nobody_is_waiting_on_when_a_newer_commit_starts

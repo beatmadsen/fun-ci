@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- An agent that waited on each commit, as `fun-ci init` tells it to, kept
+  every run it made from being cancelled by the next, so their slow suites
+  ran side by side. `wait --follow-branch` no longer keeps its run going, and
+  the command a commit prints, which agents are told to run, follows the
+  branch. The section `fun-ci init` wrote before says `4 superseded`; it can
+  be removed and written again with `fun-ci init`.
 - `fun-ci status` said `trunk unknown, the check never finished` for a run
   whose lint, build or fast suite took longer than 25 seconds, while the
   check was only waiting for them to end before it was recorded.

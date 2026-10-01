@@ -128,10 +128,10 @@ The drawing is done by a separate program, `fun-ci-renderer`, written in Rust. T
 Every commit's output ends with the command that gets its verdict:
 
 ```
-fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all
+fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all --follow-branch
 ```
 
-The section `fun-ci init` writes into `AGENTS.md` tells an agent to run that command in the background after each commit. Agent harnesses wake the agent when a background command exits, so it hears about a failure without having to remember to ask.
+The section `fun-ci init` writes into `AGENTS.md` tells an agent to run that command in the background after each commit. Agent harnesses wake the agent when a background command exits, so it hears about a failure without having to remember to ask. With `--follow-branch`, a newer commit on the branch cancels the older run, and the wait moves on to the newer run's verdict.
 
 `status` says where a commit's run stands and `wait` blocks until it is decided. Both exit with the verdict for the stages you need: `--need build` (lint and build), `fast` (the default) or `all` (the slow suite too).
 

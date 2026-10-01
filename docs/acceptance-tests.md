@@ -515,12 +515,14 @@ deadline, `wait` says so and exits 3.
 ### 9.12 A run is only superseded by a newer commit nobody is waiting past
 **Given** an unfinished run
 **When** a pipeline starts for a newer commit on the same branch
-**Then** the run is cancelled unless an agent is waiting on it, and a run for
-the same commit is never cancelled
+**Then** the run is cancelled unless an agent is waiting on it without
+`--follow-branch`, and a run for the same commit is never cancelled
 **And** `wait` on a cancelled run returns 4 and names the newer commit, and
 `wait --follow-branch` moves on to the newest run on the branch and says so.
 *Note:* a waiter marks the run each time it polls; a run marked in the last
-10 seconds counts as waited on.
+10 seconds counts as waited on. One that follows the branch marks nothing:
+it asked to move on, and an agent told to wait after every commit would
+otherwise keep every run it made going, each slow suite beside the next.
 
 ### 9.13 The pre-push hook waits for the fast verdict of what is pushed
 **Given** hooks installed
@@ -533,7 +535,7 @@ it is pushing, and the push stops if any is not 0
 **Given** hooks installed in a project fun-ci is set up for
 **When** a commit is made
 **Then** its output ends with
-`fun-ci: testing <sha7>. Verdict: fun-ci wait <sha7> --need all`
+`fun-ci: testing <sha7>. Verdict: fun-ci wait <sha7> --need all --follow-branch`
 **And** nothing is printed when the project isn't set up and no run starts.
 
 ### 9.15 `fun-ci init` tells agents what to do after a commit
