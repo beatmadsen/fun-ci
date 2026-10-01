@@ -380,15 +380,18 @@ each project's branches sit under the project's name, one row per branch:
   branch's would be. A job that has run says when it is due again, and one
   that is due says it runs on your next commit, since only a commit starts
   it. With more than one project on the board, each row names its project
-  first (`fun-ci · soak`). The rows go failed, ran out of time, running, due,
-  passed. When nothing in the section needs you or runs, it folds into one
-  pale line, `4 passed · mutation due in 6h`; on a short screen it gives up
-  its lines before any branch does, keeping one, `daily & weekly: 1 failed,
-  3 passed`, until that one would cost a branch its place on the screen,
-  when the jobs give way to the branches. The cursor moves on from the last branch into the jobs, and `c`
-  cancels a running job, asking first; on a job that needs you, the footer
-  says `fun-ci why --job NAME`. Jobs play no scene and touch neither
-  the streak nor the lamp: the header tells the story of the commits.
+  first (`fun-ci · soak`), unless the screen is too narrow for both, when
+  the job's own name tells it apart. The rows go failed, ran out of time,
+  running, due, passed. When nothing in the section needs you or runs, it
+  folds into one pale line, `4 passed · mutation due in 6h`; on a short
+  screen it gives up its lines before any branch does, keeping one,
+  `daily & weekly: 1 failed, 3 passed`, until that one would cost a branch
+  its place on the screen, when the jobs give way to the branches. The
+  cursor moves on from the last branch into the jobs, and `c` cancels a
+  running job, asking first; on a job that needs you, the footer says
+  `fun-ci why --job NAME`, or the line above it does when the keys leave the
+  command too little room to be read whole. Jobs play no scene and touch
+  neither the streak nor the lamp: the header tells the story of the commits.
 - The streak counts consecutive passed runs; a running run neither breaks nor
   extends it. It sits at the top right of the header, `7 in a row!` in green,
   or `streak broken` in plain white after a failure, since the header shouldn't

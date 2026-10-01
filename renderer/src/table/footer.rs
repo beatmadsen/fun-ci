@@ -9,6 +9,7 @@ use super::line::placed;
 use super::line::Part;
 use super::night::{CAP, KEY, NOTE, QUIET, ink};
 use super::jobs;
+use super::columns::Columns;
 use super::paint::fetched;
 use super::{Drawn, Frame};
 use crate::format::{columns, cut, project_name, short_sha};
@@ -88,15 +89,24 @@ pub fn why_job(board: &Board) -> Option<String> {
     Some(format!("fun-ci why --job {}", job.name))
 }
 
+/// That command, when it fits whole beside the footer's keys on a screen
+/// `width` wide laid out in `layout`. A command cut short is one that can't
+/// be typed, so one that doesn't fit goes above the footer instead.
+#[must_use]
+pub fn why_job_beside(board: &Board, layout: Columns, width: usize) -> Option<String> {
+    let (_, end) = offered(&keys(board), layout.label);
+    why_job(board).filter(|command| end + APART + columns(command) + layout.margin <= width)
+}
+
 /// The footer: the keys where the labels start, and beside them, quieter,
-/// the command that says why the job under the cursor failed, or how many
-/// passed rows the screen was too short for, cut if it must be.
+/// the command that says why the job under the cursor failed if it fits, or
+/// how many passed rows the screen was too short for, cut if it must be.
 #[must_use]
 pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line<'static> {
     let width = usize::from(frame.width);
     let (mut parts, end) = offered(&keys(board), drawn.columns.label);
     let keys_end = end + APART;
-    let said = why_job(board).unwrap_or_else(|| aside(drawn.unshown));
+    let said = why_job_beside(board, drawn.columns, width).unwrap_or_else(|| aside(drawn.unshown));
     let aside = cut(&said, width.saturating_sub(keys_end + drawn.columns.margin));
     let aside_at = width.saturating_sub(drawn.columns.margin + columns(&aside)).max(keys_end);
     parts.push((aside_at, aside, ink(NOTE).italic()));

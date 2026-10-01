@@ -82,6 +82,7 @@ pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
     let pieces: Vec<Piece> = fitted.pieces.iter().cloned().chain(section).collect();
     let tags = (fitted.flat && sections.len() > 1).then(|| widest_project(&sections));
     let (columns, brief) = laid_out(board, frame, longest_name(board, named) + tags.map_or(0, |tag| tag + 2));
+    let note = above_footer(board, columns, frame).or(note);
     let paint_with = Paint { columns, frame, lead, stale: &board.stale_trunks, tags, brief };
     let lines = pieces.iter().map(|piece| paint(piece, &paint_with)).collect();
     let paper = Paper::over(&pieces, lead, columns, paper(frame.play_ms, lead_needs_you(board, lead, job_lead)));
@@ -116,6 +117,13 @@ fn with_jobs<'a>((board, frame): (&Board, Frame), sections: &'a [Section<'a>], (
 /// rows it left out, and those it paged off.
 fn hidden(table: &Fitted) -> usize {
     table.unshown + table.pieces.iter().map(|piece| if let Piece::More(rows, _) = piece { *rows } else { 0 }).sum::<usize>()
+}
+
+/// The command for the failed job under the cursor, when it is too long to
+/// go whole beside the footer's keys: it takes the line above the footer.
+fn above_footer(board: &Board, columns: Columns, frame: Frame) -> Option<String> {
+    let width = usize::from(frame.width);
+    footer::why_job(board).filter(|_| footer::why_job_beside(board, columns, width).is_none())
 }
 
 /// Whether the row in the block needs you, which makes the block wine.

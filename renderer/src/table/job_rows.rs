@@ -9,13 +9,16 @@ use super::job_words::{due_in, said, said_briefly};
 use super::jobs::needs_you;
 use super::night::{BRANCH, CURSOR, FAILED, LABEL, NOTE, PASSED, QUIET, RUNNING, TIMED_OUT, ink, pale};
 use super::paint::{Paint, Part};
-use crate::format::{age, cut};
+use crate::format::{age, columns as width_of, cut};
 use crate::model::{Job, JobStatus};
 
-/// The row of `job`, named `name`, bold in the cursor's colour when it `leads`.
+/// The row of `job`, named `name`, bold in the cursor's colour when it
+/// `leads`; by its own name alone when `name` (its project's, then its own)
+/// is too long for the column, since its own is the one that tells it apart.
 #[must_use]
 pub fn row(job: &Job, name: &str, leads: bool, paint: &Paint) -> Vec<Part> {
     let columns = paint.columns;
+    let name = if width_of(name) > columns.name { job.name.as_str() } else { name };
     let tone = |colour: [u8; 3]| if job.status == JobStatus::Passed && !leads { pale(colour) } else { colour };
     let style = if leads { ink(CURSOR).bold() } else { ink(tone(BRANCH)) };
     let (mark, colour) = mark(job, paint.frame.spinner);

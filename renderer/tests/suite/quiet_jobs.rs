@@ -197,6 +197,29 @@ fn a_short_screen_keeps_the_rows_of_the_jobs_the_cursor_is_on() {
     assert!(lines.contains(&"soak".to_string()), "{lines:?}");
 }
 
+// Two projects, one of them running, and their jobs on a 60-column screen,
+// where the footer's three keys leave little room beside them.
+fn narrow(cursor: Option<usize>) -> Grid {
+    let runs = [failed(2, "feat", "/src/app"), passed(1, "main", "/src/tool")];
+    let mut drift = job("drift", "weekly", "failed");
+    drift["project"] = json!("/src/tool");
+    shown(&runs, &[job("mutation", "daily", "running"), drift], cursor, (60, 30))
+}
+
+#[test]
+fn on_a_narrow_screen_a_job_too_long_to_name_with_its_project_is_named_alone() {
+    let lines = said(&narrow(Some(3)));
+
+    assert!(lines.contains(&"mutation".to_string()), "{lines:?}");
+}
+
+#[test]
+fn on_a_narrow_screen_the_command_for_a_failed_job_is_shown_whole() {
+    let grid = narrow(Some(3));
+
+    assert!(grid.text().contains("fun-ci why --job drift"), "{}", grid.text());
+}
+
 #[test]
 fn one_blank_line_parts_the_jobs_from_the_block_s_lower_edge() {
     let grid = two_branches_and_two_jobs_at(30, Some(1));
@@ -238,6 +261,38 @@ fn with_more_than_one_project_a_job_names_its_project() {
     let grid = shown(&runs, &needing(), None, (120, 40));
 
     assert!(line_of(&grid, "app · soak").contains("weekly"), "{}", grid.text());
+}
+
+// At 65 columns the name column is exactly as wide as `app · mutation`, the
+// narrowest screen where it is (at 64 the job goes by `mutation` alone).
+#[test]
+fn a_job_whose_name_with_its_project_just_fits_keeps_its_project() {
+    let runs = [failed(2, "feat", "/src/app"), passed(1, "main", "/src/tool")];
+    let jobs = [job("soak", "weekly", "failed"), job("mutation", "daily", "passed")];
+
+    let lines = said(&shown(&runs, &jobs, Some(2), (65, 40)));
+
+    assert!(lines.contains(&"app · mutation".to_string()), "{lines:?}");
+}
+
+// A failed job under the cursor, with a run going so the footer has all
+// three keys: its command fits beside them from 76 columns.
+fn failed_job_under_the_cursor(cols: u16) -> String {
+    let jobs = [job("soak", "weekly", "failed"), job("mutation", "daily", "running")];
+    shown(&[failed(2, "feat", "/src/app")], &jobs, Some(1), (cols, 40)).text()
+}
+
+#[test]
+fn the_command_for_a_failed_job_goes_beside_the_keys_where_it_fits() {
+    assert!(failed_job_under_the_cursor(76).lines().last().unwrap().contains("fun-ci why --job soak"));
+}
+
+#[test]
+fn the_command_for_a_failed_job_goes_above_the_footer_a_column_short_of_that() {
+    let text = failed_job_under_the_cursor(75);
+    let lines: Vec<&str> = text.lines().collect();
+
+    assert_eq!(lines.iter().position(|line| line.contains("fun-ci why --job soak")), Some(lines.len() - 3), "{text}");
 }
 
 #[test]
