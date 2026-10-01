@@ -213,7 +213,7 @@ checksum = "875488b8711a968268c7cf5d139578713097ca4635a76044e8fe8eedf831d07e"
 
 [[package]]
 name = "fun-ci-renderer"
-version = "2.1.1"
+version = "2.2.0"
 dependencies = [
  "crc32fast",
  "font8x8",

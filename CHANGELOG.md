@@ -7,12 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-10-01
+
 ### Added
 - Daily and weekly jobs, for checks too long for a stage's budget. A script
   in `.fun-ci/daily/` or `.fun-ci/weekly/` runs at most once a day or once a
   week, started by your commits, in a worktree of its own, with 24 hours to
   finish. The console shows them in a section of their own under the table,
-  and `c` cancels a running one. `fun-ci check` lists them.
+  and `c` cancels a running one; on a screen too short for both, the jobs
+  give way to the branches. `fun-ci check` lists them.
+- The console's job section needs renderer 2.2.0, which the platform gems
+  bring. With an older renderer, as `cargo install` left it, the console
+  works but shows no jobs.
 - `fun-ci prune` removes the jobs' worktrees too.
 - Agents ask about jobs: `fun-ci jobs` lists them, `fun-ci why --job NAME`
   prints what was kept about one's last run, `fun-ci status` names the jobs
