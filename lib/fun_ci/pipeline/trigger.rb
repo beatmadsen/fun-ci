@@ -31,6 +31,7 @@ module FunCi
         return handle_config_errors(config) if config.validate.any?
         return unknown_commit unless known_commit?
 
+        config.settings_errors.each { |e| @io.stdout.puts "fun-ci: #{e}" }
         start_run
         checking_the_trunk { run_in(workspace.acquire(@commit.sha)) }
       end

@@ -8,6 +8,15 @@ require "fun_ci/evidence/settings"
 # read as settings gives the defaults, so collecting evidence still works;
 # `fun-ci check` is where a mistake in it is reported.
 class TestEvidenceSettingsFile < Minitest::Test
+  SHARED_ENTRIES = <<~YAML
+    evidence:
+      stages:
+        lint: &shared
+          - use: grep
+            patterns: ["FAIL"]
+        fast: *shared
+  YAML
+
   def setup = @dir = Dir.mktmpdir
   def teardown = FileUtils.remove_entry(@dir)
 
@@ -28,6 +37,13 @@ class TestEvidenceSettingsFile < Minitest::Test
     File.write(File.join(@dir, "config"), "evidence: [\n")
 
     assert_empty FunCi::Evidence::Settings.load(File.join(@dir, "config")).errors
+  end
+
+  def test_should_give_a_stage_the_entries_it_shares_through_an_alias
+    File.write(File.join(@dir, "config"), SHARED_ENTRIES)
+
+    assert_equal [{ "use" => "grep", "patterns" => ["FAIL"] }],
+                 FunCi::Evidence::Settings.load(File.join(@dir, "config")).entries("fast")
   end
 
   def test_should_give_the_defaults_for_a_file_that_holds_a_list

@@ -60,8 +60,10 @@ module FunCi
         0
       end
 
-      # The first fetch's notice, and on stderr, why the jobs didn't start.
+      # The config's mistakes and the first fetch's notice, and on stderr, why
+      # the jobs didn't start; the run itself prints nowhere.
       def say(forked)
+        Setup::ProjectConfig.new(@project).settings_errors.each { |e| @io.stdout.puts "fun-ci: #{e}" }
         @io.stdout.puts(forked.notice) if forked.notice
         @io.stderr.puts(forked.jobs) if forked.jobs
       end

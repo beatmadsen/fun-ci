@@ -20,11 +20,16 @@ module FunCi
         Dir.exist?(@fun_ci_dir)
       end
 
+      # What stops a pipeline: no .fun-ci/, or a stage script it can't run.
       def validate
         return ["No .fun-ci/ folder found in #{@project_root}"] unless folder_exists?
 
-        REQUIRED_SCRIPTS.flat_map { |script| script_errors(script) } + settings.errors
+        REQUIRED_SCRIPTS.flat_map { |script| script_errors(script) }
       end
+
+      # Mistakes in .fun-ci/config, which never stop a pipeline: the setting
+      # takes its default instead.
+      def settings_errors = settings.errors
 
       # Mistakes in the `evidence` key, which `fun-ci check` reports but which
       # never stop a pipeline: the entry with the mistake is left out instead.

@@ -18,7 +18,7 @@ module FunCi
 
       # The settings in the config file at `path`, or the defaults without one.
       def self.load(path)
-        new(File.exist?(path) ? (YAML.safe_load_file(path) || {})["evidence"] : nil)
+        new(File.exist?(path) ? (YAML.safe_load_file(path, aliases: true) || {})["evidence"] : nil)
       rescue Psych::Exception, NoMethodError, TypeError
         new(nil)
       end

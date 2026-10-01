@@ -6,7 +6,7 @@ require "stringio"
 
 # `fun-ci check`: report what ProjectConfig found wrong, or that all is well.
 class TestSetupChecker < Minitest::Test
-  Config = Struct.new(:validate, :evidence_errors, :job_errors, :jobs, :presets, :any_project_presets,
+  Config = Struct.new(:validate, :settings_errors, :evidence_errors, :job_errors, :jobs, :presets, :any_project_presets,
                       keyword_init: true)
   Job = Data.define(:name, :cadence)
   Hooks = Struct.new(:warnings)
@@ -83,6 +83,10 @@ class TestSetupChecker < Minitest::Test
     assert_equal 1, check([], job_errors: [".fun-ci/daily/mutation.sh is not executable"])
   end
 
+  def test_should_fail_when_the_config_has_a_mistake
+    assert_equal 1, check([], settings_errors: [".fun-ci/config: worktree_slots must be a whole number above 0, not 0"])
+  end
+
   def test_should_list_each_job_with_how_often_it_runs
     check([], jobs: [Job.new(name: "mutation", cadence: "daily"), Job.new(name: "soak", cadence: "weekly")])
 
@@ -93,8 +97,8 @@ class TestSetupChecker < Minitest::Test
 
   def check(problems, warnings: [], trunk: [], **given)
     @stdout = StringIO.new
-    config = Config.new(validate: problems, evidence_errors: [], job_errors: [], jobs: [], presets: [],
-                        any_project_presets: [], **given)
+    config = Config.new(validate: problems, settings_errors: [], evidence_errors: [], job_errors: [], jobs: [],
+                        presets: [], any_project_presets: [], **given)
     FunCi::Setup::SetupChecker.new(config: config, hooks: Hooks.new(warnings), stdout: @stdout, trunk: Trunk.new(trunk))
                               .run
   end

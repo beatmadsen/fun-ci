@@ -67,14 +67,21 @@ class TestProjectConfig < Minitest::Test
     write_scripts(*SCRIPTS)
     File.write(File.join(fun_ci_dir, "config"), "worktree_slots: 0\n")
 
-    assert_equal [".fun-ci/config: worktree_slots must be a whole number above 0, not 0"], config.validate
+    assert_equal [".fun-ci/config: worktree_slots must be a whole number above 0, not 0"], config.settings_errors
+  end
+
+  def test_should_not_count_a_mistake_in_the_config_among_what_stops_a_pipeline
+    write_scripts(*SCRIPTS)
+    File.write(File.join(fun_ci_dir, "config"), "worktree_slots: 0\n")
+
+    assert_empty config.validate
   end
 
   def test_should_name_a_config_file_that_is_not_a_mapping
     write_scripts(*SCRIPTS)
     File.write(File.join(fun_ci_dir, "config"), "- worktree_slots\n")
 
-    assert_equal [".fun-ci/config must be a mapping such as `worktree_slots: 2`"], config.validate
+    assert_equal [".fun-ci/config must be a mapping such as `worktree_slots: 2`"], config.settings_errors
   end
 
   # `fun-ci check` and every hook's `fun-ci trigger` ask this; a typo in the
@@ -83,7 +90,7 @@ class TestProjectConfig < Minitest::Test
     write_scripts(*SCRIPTS)
     File.write(File.join(fun_ci_dir, "config"), "worktree_slots: 2\nevidence: [\n")
 
-    assert_match(%r{\A\.fun-ci/config is not YAML: .+ \(line 3\)\z}, config.validate.join("\n"))
+    assert_match(%r{\A\.fun-ci/config is not YAML: .+ \(line 3\)\z}, config.settings_errors.join("\n"))
   end
 
   def test_should_take_the_default_worktree_slots_when_the_config_is_not_yaml

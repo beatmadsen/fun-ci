@@ -22,7 +22,7 @@ module FunCi
 
       # Warnings are printed but don't fail the check.
       def run
-        errors = @config.validate + @config.evidence_errors + @config.job_errors
+        errors = problems
         @stdout.puts(errors.empty? ? "All OK. The project is configured." : errors)
         @stdout.puts(@trunk.lines)
         list_presets
@@ -32,6 +32,8 @@ module FunCi
       end
 
       private
+
+      def problems = @config.validate + @config.settings_errors + @config.evidence_errors + @config.job_errors
 
       def list_presets
         lists = { "this project" => @config.presets, "any project's output" => @config.any_project_presets }

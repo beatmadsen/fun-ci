@@ -470,6 +470,7 @@ digging into internals: the cause obvious, the next step clear.
 | A stage overruns its budget | `Fast suite killed -- exceeded 10s time budget.` and advice on what to do | non-zero |
 | fun-ci isn't installed | The hook says so and how to install it; the commit or push goes ahead | 0 |
 | No `.fun-ci/`, or a script missing or not executable | `fun-ci: ...` naming the problem, then `Commit will proceed without CI.` | 0 |
+| A mistake in `.fun-ci/config`, or YAML it can't read | `fun-ci: .fun-ci/config ...` naming it; each setting it spoils takes its default and the run goes ahead | the pipeline's own |
 | The commit doesn't exist | `fun-ci: commit <sha> not found in this repository.` | non-zero |
 | The commit or branch is missing | `fun-ci: commit hash and branch name are required.` and the usage | non-zero |
 | A newer commit on the same branch | `Cancelled stale pipeline for <old>. Starting fresh for <new>.` | carries on |

@@ -6,7 +6,8 @@ module FunCi
   module Setup
     # .fun-ci/config: settings for this machine's runs, as YAML. Each one left
     # out takes its default; one that is wrong is reported and the default used,
-    # as are all of them when the file isn't YAML.
+    # as are all of them when the file can't be read as YAML. Anchors and
+    # aliases are YAML, so they are read.
     class Settings
       DEFAULTS = { "worktree_slots" => 2 }.freeze
       FETCH_EVERY = 300
@@ -38,21 +39,27 @@ module FunCi
       end
 
       def errors
+        setting_errors
+      rescue Psych::SyntaxError => e
+        [".fun-ci/config is not YAML: #{e.problem} (line #{e.line})"]
+      rescue Psych::Exception => e
+        [".fun-ci/config can't be read: #{e.message}"]
+      end
+
+      private
+
+      def setting_errors
         return [".fun-ci/config must be a mapping such as `worktree_slots: 2`"] unless raw.is_a?(Hash)
 
         slots = values["worktree_slots"]
         return [] if slots.is_a?(Integer) && slots.positive?
 
         [".fun-ci/config: worktree_slots must be a whole number above 0, not #{slots.inspect}"]
-      rescue Psych::SyntaxError => e
-        [".fun-ci/config is not YAML: #{e.problem} (line #{e.line})"]
       end
-
-      private
 
       def setting(key)
         raw.is_a?(Hash) ? raw[key] : nil
-      rescue Psych::SyntaxError
+      rescue Psych::Exception
         nil
       end
 
@@ -61,7 +68,7 @@ module FunCi
         match && (match[1].to_i * UNITS.fetch(match[2]))
       end
 
-      def raw = (@text && YAML.safe_load(@text)) || {}
+      def raw = (@text && YAML.safe_load(@text, aliases: true)) || {}
       def values = DEFAULTS.merge(raw)
     end
   end

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- A mistake in `.fun-ci/config` no longer stops a commit's run, which let the
+  push through untested: the trigger names the mistake, the setting takes its
+  default, and the run goes ahead. `fun-ci check` still fails on it.
+- YAML anchors and aliases in `.fun-ci/config` are read, so stages can share
+  one list of evidence entries. Before, an alias made `fun-ci check` and
+  `fun-ci trigger` die with a stack trace, and the evidence settings were
+  quietly dropped. YAML that holds a value settings can't (a date, say) is
+  named as the file's mistake instead of raised.
+
 ## [2.2.0] - 2026-10-01
 
 ### Added
