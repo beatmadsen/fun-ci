@@ -8,6 +8,7 @@ require "tmpdir"
 require "fun_ci/pipeline/slot_run"
 require "fun_ci/pipeline/slot"
 require "fun_ci/setup/project_config"
+require "fun_ci/pipeline/priorities"
 
 # The contract with a project's stage scripts, run as real processes in the
 # slot a pipeline was given (AT-1.1): each runs there, gets the commit hash
@@ -57,21 +58,35 @@ class TestSlotRunProcesses < Minitest::Test
     assert_equal(0, run_stages { |_stage| "true" })
   end
 
+  # So it gives way to the fast suite beside it (AT-13.27).
+  def test_should_run_the_slow_suite_at_the_slow_priority
+    run_stages(slow_priority: "nice -n 7 ") { |stage| %(echo $(ps -o nice= -p $$) > #{@record}/#{stage}) }
+
+    assert_equal "7", recorded.last
+  end
+
+  def test_should_run_the_fast_suite_at_the_priority_fun_ci_runs_at
+    run_stages(slow_priority: "nice -n 7 ") { |stage| %(echo $(ps -o nice= -p $$) > #{@record}/#{stage}) }
+
+    assert_equal Process.getpriority(Process::PRIO_PROCESS, 0).to_s, recorded[2]
+  end
+
   private
 
   def recorded = STAGES.map { |stage| File.read(File.join(@record, stage)).chomp }
 
   # Writes each stage's script from the block, and runs the pipeline with the slow suite inline.
-  def run_stages
+  def run_stages(slow_priority: "")
     STAGES.each { |stage| write_script(stage, yield(stage)) }
-    within_deadline { slot_run.run(FunCi::Setup::ProjectConfig.new(@slot)) }
+    within_deadline { slot_run(slow_priority).run(FunCi::Setup::ProjectConfig.new(@slot)) }
   end
 
   def write_script(stage, body) = BodyScript.write(File.join(@slot, ".fun-ci", "#{stage}.sh"), body)
 
-  def slot_run
+  def slot_run(slow_priority)
     launcher = ->(job_id:, executor:, **) { executor.call(FakeRecorder.new, job_id) }
-    seams = FunCi::Pipeline::Seams.new(recorder: FakeRecorder.new, background_launcher: launcher)
+    seams = FunCi::Pipeline::Seams.new(recorder: FakeRecorder.new, background_launcher: launcher,
+                                       priorities: FunCi::Pipeline::Priorities.new(job: "", slow: slow_priority))
     FunCi::Pipeline::SlotRun.new(commit: FunCi::Pipeline::Commit.new(sha: SHA, branch: "main"),
                                  io: FunCi::Pipeline::Io.new(stdout: @stdout, stderr: @stdout), seams: seams,
                                  slot: FunCi::Pipeline::Slot.new(@slot, Lock.new(false)))

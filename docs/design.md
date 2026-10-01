@@ -197,6 +197,13 @@ status, no streak and no exit code; it has its own section in the console.
   (weekly). A project nobody commits to runs no jobs, which is the point: a
   project you work on gets its checks, and one you left alone isn't tested
   every day for nothing.
+- A job gives way to the stages. It has a day and a stage has seconds, so a
+  job never needs a core a stage wants: on macOS it runs under the utility
+  QoS clamp (`taskpolicy -c utility`), which lets it use every idle core and
+  yields them to the stages, and elsewhere at `nice -n 19`. The slow suite
+  gives way to the fast suite beside it, at `nice -n 10`, except on macOS,
+  where nice moves nothing and the clamp would leave it crawling beside the
+  jobs.
 - A job runs once at a time. It holds a lock while it runs, and is started
   only by the process that holds it, so two commits a moment apart start it
   once. It runs in a worktree of its own (`.git/fun-ci/jobs/<name>`), never

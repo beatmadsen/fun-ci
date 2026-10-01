@@ -24,13 +24,15 @@ module FunCi
 
       # Where the command runs, what it finds in its environment besides
       # fun-ci's own, the window what it prints is written to, what to do
-      # with its pid when it runs over budget, before it is killed, and the
-      # open files it holds as long as it runs, such as a lock.
-      Launch = Data.define(:chdir, :env, :output, :before_kill, :held)
+      # with its pid when it runs over budget, before it is killed, the
+      # open files it holds as long as it runs, such as a lock, and what it
+      # is run under (a Priorities prefix, "" for fun-ci's own priority).
+      Launch = Data.define(:chdir, :env, :output, :before_kill, :held, :priority)
 
       class Launch
         def initialize(**given)
-          super(chdir: Dir.pwd, env: {}, output: OutputWindow.in_memory, before_kill: nil, held: [], **given)
+          super(chdir: Dir.pwd, env: {}, output: OutputWindow.in_memory, before_kill: nil, held: [], priority: "",
+                **given)
         end
       end
 
@@ -77,7 +79,7 @@ module FunCi
       end
 
       def spawn_gated(cmd, writer, gate, launch)
-        Process.spawn(GitEnvironment::CLEAN.merge(launch.env), format(GATED, cmd),
+        Process.spawn(GitEnvironment::CLEAN.merge(launch.env), format(GATED, "#{launch.priority}#{cmd}"),
                       out: writer, err: writer, 9 => gate.child_end, pgroup: true, chdir: launch.chdir, **held(launch))
       end
 

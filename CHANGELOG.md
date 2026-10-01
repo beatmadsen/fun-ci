@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Daily and weekly jobs run at a lower priority than the stages: on macOS
+  under `taskpolicy -c utility`, elsewhere at `nice -n 19`. Before, four due
+  jobs could leave a build a fraction of the cores and push it over its
+  budget. The slow suite runs at `nice -n 10` beside the fast suite, except
+  on macOS, where nice has no measurable effect.
+
 ### Added
 - `fun-ci cancel --job NAME` stops a daily or weekly job's run, as `c` on its
   row does in the console, so an agent can too. The job runs again on the

@@ -64,7 +64,8 @@ module FunCi
 
       def execution(slot)
         Pipeline::StageExecution.new(seams: seams, dir: slot.path, commit: @commit,
-                                     launching: { env: { "FUN_CI_JOB" => @job.name }, held: [slot.lock] })
+                                     launching: { env: { "FUN_CI_JOB" => @job.name }, held: [slot.lock],
+                                                  priority: seams.priorities.job })
       end
 
       # The commit's own copy of the script when it has one, as a pipeline's stages are.
