@@ -410,6 +410,48 @@ would still be fine merged with everyone else's work. §11 of
 stale; a console timer that fetches and checks would fix that, and would be
 the console's first git call.
 
+## Daily and weekly jobs
+
+Problem: some checks take longer than the time between commits, and a stage's
+budget exists to keep feedback fast. §13 of `acceptance-tests.md` runs them as
+jobs (`lib/fun_ci/jobs/`); what the developer sees is in `design.md` (Daily and
+weekly jobs).
+
+**Decisions:**
+
+- **Commits start jobs; there is no scheduler.** fun-ci has no daemon, and a
+  launchd or cron entry would be one more thing to install per platform. The
+  post-commit hook's `trigger --background` starts the committing project's
+  due jobs, so the hooks people already installed start them. A project nobody
+  commits to runs none. *Revisit if* people want checks on projects they no
+  longer touch.
+- **Due is read from the latest run alone**: none, cancelled, or started a
+  period (24 h, 7 days) ago. A cancelled run doesn't count as a run, so
+  cancelling is how a developer asks for another.
+- **The lock decides who starts a job, the database records it.** Each job
+  has a lock file beside its worktree (`<git-common-dir>/fun-ci/jobs/<name>.lock`),
+  held for the whole run. A process starts a job only once it holds the lock
+  (non-blocking; one that can't, leaves), and then claims the run with one
+  `INSERT ... WHERE` that checks it is due. Holding the lock also proves a
+  `running` row of that job is dead, so it is recorded failed before the claim.
+  The trigger reads which jobs are due before forking, so a commit forks
+  nothing when none is; the child, under the lock, decides.
+- **A job is a process of its own, forked and detached from the trigger**,
+  like the slow suite, since the trigger exits when its pipeline ends. It
+  forks before the pipeline opens its recorder, and opens its own connection.
+- **A worktree per job**, under `fun-ci/jobs/`, never a pipeline slot: a job
+  can take hours, and a pool of two would be one for hours.
+- **One budget, 24 hours, for daily and weekly jobs**, enforced by
+  `ProcessRunner` like a stage's. A newer commit's run cancels pipelines only.
+- **Rows in `job_runs`, apart from `pipeline_runs`**, so no query about runs
+  (the board, the streak, the agent commands) can see a job. A job runs through
+  the same `StageExecution` as a stage, with a recorder of its own, so its
+  evidence is collected the same way; its raw output is kept beside the
+  stages' under `raw-jobs/`, whose ids are its own.
+- **Ruby decides the job section, the renderer draws it.** `board` carries
+  `jobs` in the order shown, each with its words' facts (status, commit,
+  branch, times, when due); the cursor indexes runs, then jobs.
+
 ## Quality standards (from intent-record)
 
 - `rake` (default) is the gate: the Ruby tests, the Rust tests, the binary

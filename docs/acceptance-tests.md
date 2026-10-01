@@ -933,3 +933,100 @@ every project names each stage over its column of marks and says what it is
 for, its lines running down to the last project; and a screen with no room
 for the legend names the marks on one line above the keys
 (`renderer/tests/suite/quiet_table.rs`, `table_words.rs`, `table_leaders.rs`).
+
+## 13. Daily and weekly jobs
+
+Checks too long for a stage's budget run as jobs, at most once a day or once a
+week, started by commits (`design.md`, Daily and weekly jobs; `architecture.md`,
+Daily and weekly jobs). A job is no part of a run: nothing here changes a
+stage, a run status, the streak or an exit code. "Process" marks the tests in
+`test/integration/process/`.
+
+### 13.1 A script in `daily/` or `weekly/` is a job
+**Given** `.fun-ci/daily/mutation.sh` and `.fun-ci/weekly/soak.sh`
+**Then** the project's jobs are `mutation`, daily, and `soak`, weekly, each run
+as its script with the commit's hash.
+**And** a project without either folder has no jobs, and is valid as before.
+
+### 13.2 `check` lists the jobs and refuses what can't run
+**Given** the jobs of 13.1, one of them not executable, or a name in both folders
+**Then** `check` lists each job with how often it runs and when it is next
+due, names a script that isn't executable, and names a job in both folders;
+the last two fail `check`, and no pipeline is stopped for them.
+
+### 13.3 A job is due when it never ran, was cancelled, or ran a period ago
+**Given** a daily job whose latest run started 23 h 59 min ago, 24 h ago, was
+cancelled a minute ago, or none
+**Then** it is due at 24 h, when cancelled and when it never ran, and not
+before; a weekly job likewise at 7 days.
+
+### 13.4 Starting a job is claimed in one statement
+**Given** two claims of the same due job, one after the other
+**Then** one run is recorded; the second claim finds it running and starts nothing.
+
+### 13.5 A job runs once at a time (process)
+**Given** a job running in one process
+**When** a second process tries it
+**Then** the second can't take the job's lock and starts nothing.
+*Bites:* two commits a moment apart ran the same job twice.
+
+### 13.6 A job whose process died is recorded failed
+**Given** a running job whose lock nobody holds
+**When** a claim or the console looks at it
+**Then** it is recorded failed, and the claim then follows 13.3.
+
+### 13.7 A background trigger starts the project's due jobs
+**Given** a project with a due job, one not due, and another project's due job
+**When** `fun-ci trigger --background` runs for a commit of the first project
+**Then** only the first project's due job is started, with that commit and
+branch, and the pipeline runs as before.
+
+### 13.8 A job runs in a worktree of its own at the commit (process)
+**Then** it runs in `<git-common-dir>/fun-ci/jobs/<name>`, checked out at the
+commit, with `FUN_CI_JOB` set, and records passed or failed with its exit
+status; no pipeline slot is taken.
+
+### 13.9 A job past 24 hours is killed and has run out of time
+**Then** with its budget replaced by a test's, an overrunning job is killed
+with its process group and recorded `timed_out`, a weekly one as a daily one.
+
+### 13.10 A failed job keeps its evidence
+**Then** a failed job's evidence and raw output are kept as a failed stage's
+are, with `evidence: jobs: <name>:` entries applied, and collecting it never
+changes the outcome.
+
+### 13.11 A newer commit cancels no job
+**Given** a running job and a new commit on the branch it tests
+**Then** the old pipeline is cancelled and the job runs on.
+
+### 13.12 Each job keeps its 10 newest runs
+**Then** an eleventh run deletes the oldest, with its raw output.
+
+### 13.13 `prune` removes the jobs' worktrees too
+**Then** it removes them when no job runs, and refuses while one does.
+
+### 13.14 The board carries the jobs
+**Then** `board` carries `jobs`: each job of the board's projects, by its
+latest run or as due, in the order failed, timed out, running, due, passed,
+with when each is due again.
+
+### 13.15 The cursor reaches the jobs, and `c` cancels a running one
+**Then** the cursor moves on from the last branch into the jobs, and `c` on a
+running job asks first, then kills its processes and records it cancelled.
+
+### 13.16 The page leaves room for the jobs
+**Then** a page holds as many branches as fit beside the job section's lines.
+
+### 13.17 A contract fixture holds the jobs conversation on both sides
+
+### 13.18 The renderer draws the job section
+**Then** the section is below the last project, the legend's lines end
+above it, and each row has its name, how often, its mark and stripe, its
+words and its age.
+
+### 13.19 A quiet section folds, and a short screen keeps one line
+**Then** with nothing needing you or running it folds to one pale line; on a
+short screen it goes to one line before any branch row is folded.
+
+### 13.20 Jobs play no scene
+**Then** no event is sent for a job, and the streak and lamp follow runs alone.

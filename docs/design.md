@@ -175,6 +175,41 @@ and cheap to resolve.
   elsewhere, never a force push), and `fun-ci why <sha> trunk`, which shows the
   conflicted regions. `--trunk` makes a conflict exit 6 and waits for the check.
 
+## Daily and weekly jobs
+
+Some checks take longer than the time between two commits: a mutation run, a
+soak test, a full dependency audit. They can't be stages, whose budgets keep
+feedback fast, so a project runs them as jobs, at most once a day or once a
+week. A job is not part of any run. Its result changes no stage, no run
+status, no streak and no exit code; it has its own section in the console.
+
+- A job is an executable script in `.fun-ci/daily/` or `.fun-ci/weekly/`,
+  and its name is the script's, without `.sh`: `.fun-ci/weekly/soak.sh` is
+  the weekly job `soak`. Like a stage it gets the commit's hash as its first
+  argument, its exit code decides pass or fail, and `FUN_CI_JOB` names it.
+  Nothing else is configured. Two jobs may not share a name, and
+  `fun-ci check` says so, and lists each job with when it is next due.
+- Commits start jobs. When the post-commit hook runs a pipeline, it also
+  starts each of that project's jobs that is due, each in a process of its
+  own beside the pipeline, testing the commit just made, on whatever branch.
+  A job is due when it has never run, when its latest run was cancelled, or
+  when its latest run started at least a day ago (daily) or a week ago
+  (weekly). A project nobody commits to runs no jobs, which is the point: a
+  project you work on gets its checks, and one you left alone isn't tested
+  every day for nothing.
+- A job runs once at a time. It holds a lock while it runs, and is started
+  only by the process that holds it, so two commits a moment apart start it
+  once. It runs in a worktree of its own (`.git/fun-ci/jobs/<name>`), never
+  in a pipeline's, so a long job doesn't hold up a commit's run, and its
+  ignored caches stay from one run to the next as a pipeline's do.
+- Every job has 24 hours, the weekly ones too. One still running then is
+  killed and has run out of time. A newer commit never cancels a job; you can,
+  from the console, and a cancelled job is due again at the next commit. A
+  job whose process died is recorded failed when fun-ci next looks.
+- A failed job keeps its evidence the way a failed stage does, with
+  `evidence: jobs: <name>:` in `.fun-ci/config` for what else to keep. Each
+  job keeps its 10 newest runs.
+
 ## A run's states
 
 A stage is `scheduled`, `running`, then `completed`, `failed`, `timed_out` or
@@ -318,6 +353,31 @@ each project's branches sit under the project's name, one row per branch:
   `n no`), because a process gets killed.
 - The board is always live, so there is no refresh key. With no runs yet it
   says `No runs yet.`
+- Daily and weekly jobs have a section of their own below the last project,
+  under `D A I L Y   &   W E E K L Y` (or the one of the two the board has),
+  so the legend's lines end before it:
+
+  ```
+    D A I L Y   &   W E E K L Y   ─────────────────────────────────────────────
+  ▌   soak          weekly  ◆  failed after 3h12m on wip/foo 9e0b1d4        2d
+  ▌   mutation      daily   ⠹  running on main 3a1f9c2 · 1h12m             now
+      deps-audit    daily   ✓  passed on main 3a1f9c2 · due in 14h         10h
+      lint-deep     daily   ◌  due · runs on your next commit
+  ```
+
+  A job's row reads like a branch's: its name, how often it runs, one mark
+  in the stage marks' shapes and colours, what happened with the branch and
+  commit it tested, and when. Its stripe is coral, amber or blue, as a
+  branch's would be. A job that has run says when it is due again, and one
+  that is due says it runs on your next commit, since only a commit starts
+  it. With more than one project on the board, each row names its project
+  first (`fun-ci · soak`). The rows go failed, ran out of time, running, due,
+  passed. When nothing in the section needs you or runs, it folds into one
+  pale line, `4 passed · mutation due in 6h`; on a short screen it gives up
+  its lines before any branch does, keeping one, `daily & weekly: 1 failed,
+  3 passed`. The cursor moves on from the last branch into the jobs, and `c`
+  cancels a running job, asking first. Jobs play no scene and touch neither
+  the streak nor the lamp: the header tells the story of the commits.
 - The streak counts consecutive passed runs; a running run neither breaks nor
   extends it. It sits at the top right of the header, `7 in a row!` in green,
   or `streak broken` in plain white after a failure, since the header shouldn't
