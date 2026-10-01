@@ -34,6 +34,13 @@ module FunCi
         end
       end
 
+      # Where the first file a command holds is open in it: past the gate's 9.
+      FIRST_HELD = 10
+
+      # { descriptor in the command => file } for the files it holds. Not their
+      # own descriptors, which in a process with few files open may be the gate's.
+      def self.held_descriptors(files) = files.each_with_index.to_h { |file, index| [FIRST_HELD + index, file] }
+
       # A command started and let go, and the pipe that carries what it prints.
       Started = Data.define(:pid, :reader)
 
@@ -74,8 +81,7 @@ module FunCi
                       out: writer, err: writer, 9 => gate.child_end, pgroup: true, chdir: launch.chdir, **held(launch))
       end
 
-      # Each file the command holds, open in it at the same descriptor.
-      def held(launch) = launch.held.to_h { |file| [file, file] }
+      def held(launch) = ProcessRunner.held_descriptors(launch.held)
 
       # The reader may be closed while this thread still reads, once a killed
       # command's output has drained or stopped coming.
