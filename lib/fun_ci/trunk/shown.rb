@@ -8,8 +8,9 @@ module FunCi
     # rather than stored, how many seconds ago its trunk tip was seen (nil
     # when it had none), the project's last fetch (a LastFetch, nil if none), and
     # the SHA the trunk has moved to since, if it has.
-    # A run whose check hasn't been recorded is checking until its fetch and
-    # merge are past their time, and then unknown.
+    # A run whose check hasn't been recorded is checking while its foreground
+    # stages run and until its fetch and merge are past their time, and then
+    # unknown.
     Shown = Data.define(:state, :check, :age, :fetch, :moved_to)
 
     class Shown
@@ -21,8 +22,10 @@ module FunCi
             fetch: fetch, moved_to: moved_to)
       end
 
-      def self.unchecked(started:, now:)
-        if now - started <= FETCH_DEADLINE + CHECK_BUDGET
+      # stages_running: whether the run's foreground stages, which the check
+      # is recorded after, are still going.
+      def self.unchecked(started:, now:, stages_running: false)
+        if stages_running || now - started <= FETCH_DEADLINE + CHECK_BUDGET
           return new(state: "checking", check: nil, age: nil, fetch: nil, moved_to: nil)
         end
 

@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- `fun-ci status` said `trunk unknown, the check never finished` for a run
+  whose lint, build or fast suite took longer than 25 seconds, while the
+  check was only waiting for them to end before it was recorded.
 - In a Git LFS repository, `fun-ci install-hooks` installed nothing, since
   git-lfs had written post-commit and pre-push already, and no commit was
   tested. It now writes hooks that run fun-ci's and then git-lfs's, giving

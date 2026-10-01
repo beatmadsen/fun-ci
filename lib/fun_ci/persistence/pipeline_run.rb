@@ -5,7 +5,8 @@ require "time"
 module FunCi
   module Persistence
     module PipelineRun
-      COLUMNS = %i[id commit_hash branch status pid project_path created_at updated_at trunk_started_at].freeze
+      COLUMNS = %i[id commit_hash branch status pid project_path created_at updated_at trunk_started_at
+                   trigger_pid].freeze
       SELECT = "SELECT #{COLUMNS.join(", ")} FROM pipeline_runs".freeze
 
       def self.create(db, commit_hash:, branch:, project_path: nil)

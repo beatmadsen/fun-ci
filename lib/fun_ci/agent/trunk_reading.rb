@@ -28,7 +28,8 @@ module FunCi
         return shown(check) if check
 
         started = run[:trunk_started_at]
-        started && Trunk::Shown.unchecked(started: Time.parse(started), now: @clock.now)
+        started && Trunk::Shown.unchecked(started: Time.parse(started), now: @clock.now,
+                                          stages_running: !run[:trigger_pid].nil?)
       end
 
       # Checks the commit against where the trunk is now, without fetching, and keeps the check,

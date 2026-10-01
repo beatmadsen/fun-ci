@@ -36,6 +36,17 @@ class TestTriggerTrunkCheck < Minitest::Test
     assert_includes @client.stdout, "fun-ci: fetching origin/main\n"
   end
 
+  # Until then an agent asking is told the check is still going, however
+  # long the stages took (AT-11.24).
+  def test_should_record_the_check_before_saying_the_foreground_is_done
+    recorder = FakeRecorder.new
+    @client = TriggerCliClient.open(command_runner: INSTANT_SUCCESS_RUNNER, trunk: FakeTrunk.new(CONFLICTS),
+                                    recorder: recorder)
+    @client.trigger(commit_hash: "abc1234", branch: "feat/cart")
+
+    assert_equal %i[trunk_checked foreground_done], recorder.calls.map(&:first).last(2)
+  end
+
   private
 
   def trigger(runner)

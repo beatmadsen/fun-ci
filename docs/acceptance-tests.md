@@ -834,6 +834,7 @@ nothing is written to stderr.
 ### 11.24 A check that never finished shows as unknown
 **Given** a run that began a check and recorded none by the fetch deadline plus the merge budget
 **Then** it shows `unknown`, "the check never finished".
+**But** while the run's lint, build or fast suite is still going, it shows the check as still going: the check is recorded once they are done, which a cold build can take longer than.
 
 ### 11.25 A run that finds the trunk moved checks the other branches
 **Then** each other branch's newest checked run is checked against the new tip;

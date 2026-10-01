@@ -62,6 +62,12 @@ class AgentClient
     FunCi::Persistence::PipelineRun.trunk_started(db, run[:id], clock.now)
   end
 
+  # The commit's newest run's trigger still runs its stages, as the pipeline records it until they are done.
+  def stages_still_running(sha)
+    run = FunCi::Persistence::PipelineRun.find_by_commit(db, sha).first
+    FunCi::Persistence::PipelineRun.store_trigger_pid(db, run[:id], 4242)
+  end
+
   # A fetch of the project's trunk, as the pipeline would record it.
   def record_trunk_fetch(fetched)
     FunCi::Persistence::TrunkFetches.new(db, @workspace.project_dir).finished(fetched, at: clock.now)

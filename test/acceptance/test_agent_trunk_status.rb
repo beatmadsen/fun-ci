@@ -56,6 +56,17 @@ class TestAgentTrunkStatus < Minitest::Test
     assert_includes @client.stdout, "  trunk  unknown      the check never finished\n"
   end
 
+  # As with a cold build that outlasts the fetch deadline and the merge budget.
+  def test_should_print_no_trunk_line_while_the_run_s_stages_outlast_the_check_s_time
+    @client.start_trunk_check(SHA)
+    @client.stages_still_running(SHA)
+    @client.clock.pause(60)
+
+    @client.status
+
+    refute_includes @client.stdout, "trunk"
+  end
+
   def test_should_mark_a_trunk_fetched_over_an_hour_ago_stale
     @client.record_trunk_check(SHA, MERGE.clean(ahead: 1, behind: 1), seen: @client.clock.now - 7200)
 

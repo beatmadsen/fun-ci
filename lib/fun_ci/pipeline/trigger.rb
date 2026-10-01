@@ -31,8 +31,7 @@ module FunCi
         return handle_config_errors(config) if config.validate.any?
         return unknown_commit unless known_commit?
 
-        config.settings_errors.each { |e| @io.stdout.puts "fun-ci: #{e}" }
-        start_run
+        start_run(config)
         checking_the_trunk { run_in(workspace.acquire(@commit.sha)) }
       end
 
@@ -57,11 +56,16 @@ module FunCi
         committed.folder_exists? ? committed : Setup::ProjectConfig.new(@project)
       end
 
-      # The check is recorded by the recorder the run holds once its stages are done.
+      # The check is recorded by the recorder the run holds once its stages are
+      # done, and before the run says its foreground is: until then, a reader
+      # takes a check not yet recorded to be still going.
       def checking_the_trunk
         trunk = TrunkRun.start(@seams.trunk || Trunk::Checker.for(@project), @commit.sha, recorder)
         @io.stdout.puts(trunk.notice) if trunk.notice
-        yield.tap { trunk.finish(recorder) }
+        yield.tap do
+          trunk.finish(recorder)
+          recorder.foreground_done
+        end
       end
 
       def handle_config_errors(config)
@@ -78,7 +82,9 @@ module FunCi
         1
       end
 
-      def start_run
+      # A mistake in the config is named, and its defaults used.
+      def start_run(config)
+        config.settings_errors.each { |e| @io.stdout.puts "fun-ci: #{e}" }
         recorder.report_trouble_to(@io.stdout)
         cancel_stale_pipelines
         recorder.create_run(commit_hash: @commit.sha, branch: @commit.branch, project_path: @project)
