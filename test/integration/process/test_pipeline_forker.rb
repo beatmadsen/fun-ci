@@ -7,16 +7,15 @@ require "fun_ci/pipeline/pipeline_forker"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/pipeline_run"
 require "fun_ci/persistence/stage_job"
-require "fun_ci/persistence/job_runs"
 
 # `trigger --background` hands the run to PipelineForker, which starts one
 # only in a project set up for fun-ci, and says whether it did (AT-9.14).
 class TestPipelineForker < Minitest::Test
   include ProcessDeadline
 
-  # What starts the jobs here, unless a test says otherwise: nothing. Run in
-  # every test, the real jobs would cost each mutant of the jobs' code a
-  # second of mutineer's 10 s; one test starts them, test_job_fork.rb the rest.
+  # What starts the jobs here, unless a test says otherwise: nothing.
+  # Mutineer runs every file that covers a mutant within 10 s, so the real
+  # jobs start in test_pipeline_forker_jobs.rb, apart from these tests.
   NO_JOBS = ->(*) {}
 
   def setup
@@ -64,14 +63,6 @@ class TestPipelineForker < Minitest::Test
     assert_equal "completed", recorded_status(sha)
   end
 
-  # The post-commit hook's `trigger --background` starts the project's due jobs beside the run (AT-13.7).
-  def test_should_start_the_project_s_due_jobs_beside_the_run
-    sha = project_passing_every_stage { @project.write(".fun-ci/daily/mutation.sh", "#!/bin/sh\n", mode: 0o755) }
-    forked_to_the_end(sha, jobs: FunCi::Pipeline::PipelineForker.method(:start_due_jobs))
-
-    assert_equal "completed", job_status("mutation")
-  end
-
   def test_should_say_why_the_jobs_did_not_start
     sha = project_passing_every_stage
     forked = forked_to_the_end(sha, jobs: ->(*) { raise SQLite3::BusyException, "database is locked" })
@@ -105,19 +96,10 @@ class TestPipelineForker < Minitest::Test
     db&.close
   end
 
-  # A block given adds to the project before its commit.
   def project_passing_every_stage
     @project = GitProject.create
     @project.write_stage_scripts { "exit 0" }
-    yield if block_given?
     @project.commit("Add stages")
-  end
-
-  def job_status(name)
-    db = FunCi::Persistence::Database.connection(@db_path)
-    FunCi::Persistence::JobRuns.new(db, Dir.chdir(@project.dir) { Dir.pwd }).latest(name)&.dig(:status)
-  ensure
-    db&.close
   end
 
   # Every process the run forks inherits a pipe this holds, whose end comes

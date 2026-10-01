@@ -14,7 +14,7 @@ require "fun_ci/persistence/job_runs"
 # crosses the fork is here: what the job is told, which jobs are due and
 # what a run records are each pinned where they are decided
 # (test_job_run.rb, test_due_jobs.rb, test_job_recorder.rb), and that the
-# post-commit hook's `trigger --background` starts them in test_pipeline_forker.rb.
+# post-commit hook's `trigger --background` starts them in test_pipeline_forker_jobs.rb.
 class TestJobFork < Minitest::Test
   include ProcessDeadline
 
