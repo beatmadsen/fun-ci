@@ -103,6 +103,20 @@ class TestAgentJobs < Minitest::Test
     assert_equal 1, @agent.pipeline.watched
   end
 
+  def test_should_say_a_running_job_is_running
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "running"))
+    @agent.jobs
+
+    assert_match(/  running\z/, line_of("soak"))
+  end
+
+  def test_should_say_a_job_that_ran_within_its_period_is_not_due_as_json
+    @agent.record_job_run("mutation", SHA, PASSED)
+    @agent.jobs("--json")
+
+    assert_equal false, JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "mutation" }["due"]
+  end
+
   def test_should_exit_zero
     assert_equal 0, @agent.jobs
   end

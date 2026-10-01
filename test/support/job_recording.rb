@@ -11,10 +11,11 @@ require "fun_ci/evidence/document"
 module JobRecording
   # A run's facts: status as job_runs keeps it, when it started (seconds before
   # the clock's now), how long it ran, and what it printed.
-  JobRunFacts = Data.define(:status, :ago, :seconds, :output, :exit_status)
+  # `extractor` names what kept the output's excerpt.
+  JobRunFacts = Data.define(:status, :ago, :seconds, :output, :exit_status, :extractor)
 
   class JobRunFacts
-    DEFAULTS = { ago: 3600, seconds: 2, output: nil, exit_status: nil }.freeze
+    DEFAULTS = { ago: 3600, seconds: 2, output: nil, exit_status: nil, extractor: "output-tail" }.freeze
 
     def initialize(**given) = super(**DEFAULTS, **given)
   end
@@ -34,7 +35,7 @@ module JobRecording
                "completed_at, exit_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                [job_project, name, cadence_of(name), sha, branch, facts.status, stamp(started), ended && stamp(ended),
                 facts.exit_status])
-    db.last_insert_row_id.tap { |id| keep_output(id, facts.output) }
+    db.last_insert_row_id.tap { |id| keep_output(id, facts.output, facts.extractor) }
   end
 
   private
@@ -42,10 +43,11 @@ module JobRecording
   def cadence_of(name) = Dir.glob("*/#{name}.sh", base: File.join(job_project, ".fun-ci")).first.split("/").first
   def stamp(time) = time.utc.iso8601(3)
 
-  def keep_output(id, output)
+  def keep_output(id, output, extractor)
     return unless output
 
-    document = FunCi::Evidence::Document.legacy(tail: output, failures: [])
+    tail = FunCi::Evidence::Document.legacy(tail: output, failures: [])
+    document = tail.with(excerpts: tail.excerpts.map { |excerpt| excerpt.merge(extractor: extractor) })
     db.execute("UPDATE job_runs SET evidence = ?, output_tail = ? WHERE id = ?",
                [JSON.generate(document.to_h), output, id])
     FunCi::Persistence::RawOutputs.for_jobs(db.filename("main")).write(id, output)

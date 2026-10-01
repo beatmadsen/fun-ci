@@ -9,6 +9,14 @@ class TestSpan < Minitest::Test
     assert_equal "42s", FunCi::Agent::Span.words(42.4)
   end
 
+  def test_should_count_a_minute_in_minutes
+    assert_equal "1m", FunCi::Agent::Span.words(60)
+  end
+
+  def test_should_count_an_hour_in_hours
+    assert_equal "1h", FunCi::Agent::Span.words(3600)
+  end
+
   def test_should_count_a_run_under_an_hour_in_minutes
     assert_equal "50m", FunCi::Agent::Span.words(3000)
   end

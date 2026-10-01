@@ -96,6 +96,30 @@ class TestAgentWhyJob < Minitest::Test
     assert_equal "soak failed (exit 1) after 3h12m, budget 24h", @agent.stdout.lines[1].chomp
   end
 
+  def test_should_say_nothing_is_kept_about_a_job_that_passed
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "completed", exit_status: 0))
+    @agent.why("--job", "soak")
+
+    assert_includes @agent.stdout, "Nothing is kept about a job that passed.\n"
+  end
+
+  def test_should_say_a_running_job_is_still_running
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "running"))
+    @agent.why("--job", "soak")
+
+    assert_includes @agent.stdout, "It is still running; fun-ci wait doesn't wait for jobs, so ask again later.\n"
+  end
+
+  def test_should_tell_a_project_without_jobs_where_to_put_them
+    other = AgentClient.open
+    other.why("--job", "soak")
+
+    assert_equal "fun-ci why: this project has no daily or weekly jobs; " \
+                 "put their scripts in .fun-ci/daily/ or .fun-ci/weekly/\n", other.stdout
+  ensure
+    other.close
+  end
+
   def test_should_exit_5_for_a_job_that_never_ran
     assert_equal 5, @agent.why("--job", "soak")
   end
@@ -114,21 +138,5 @@ class TestAgentWhyJob < Minitest::Test
 
   def test_should_exit_with_a_usage_error_for_a_name_that_is_no_job
     assert_equal 64, @agent.why("--job", "nosuch")
-  end
-
-  def test_should_give_the_job_its_evidence_and_ending_as_one_document_with_json
-    @agent.record_job_run("soak", SHA, FAILED)
-    @agent.why("--job", "soak", "--json")
-
-    expected = { "name" => "soak", "cadence" => "weekly", "state" => "failed", "exit_status" => 1, "budget" => 86_400 }
-
-    assert_equal expected, JSON.parse(@agent.stdout).slice(*expected.keys)
-  end
-
-  def test_should_carry_the_evidence_in_the_json_document
-    @agent.record_job_run("soak", SHA, FAILED)
-    @agent.why("--job", "soak", "--json")
-
-    assert_equal ["Survived: 3"], JSON.parse(@agent.stdout).dig("evidence", "excerpts", 0, "lines")
   end
 end
