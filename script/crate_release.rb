@@ -11,8 +11,16 @@ require "net/http"
 module CrateRelease
   MANIFEST = File.expand_path("../renderer/Cargo.toml", __dir__)
   VERSIONS = URI("https://crates.io/api/v1/crates/fun-ci-renderer")
-  CARGO_PUBLISH = ->(_version) { system("cargo", "publish", "--locked", "--manifest-path", MANIFEST, exception: true) }
+  CARGO_PUBLISH = ->(_version) { commands(MANIFEST).each { |command| system(*command, exception: true) } }
   DRY_RUN = ->(version) { puts "Would publish fun-ci-renderer #{version}" }
+
+  # Publishing, then cleaning the renderer cargo publish left built from the
+  # crate's packaged copy, which cargo would count as fresh however
+  # renderer/src changes.
+  def self.commands(manifest)
+    [["cargo", "publish", "--locked", "--manifest-path", manifest],
+     ["cargo", "clean", "--manifest-path", manifest, "-p", "fun-ci-renderer"]]
+  end
 
   def self.version(manifest) = manifest[/^\[package\]\n(?:[^\[].*\n)*?version = "([^"]+)"/, 1]
 

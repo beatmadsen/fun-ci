@@ -45,6 +45,18 @@ class TestCrateRelease < Minitest::Test
     assert_same CrateRelease::DRY_RUN, CrateRelease.publisher({ "DRY_RUN" => "1" })
   end
 
+  def test_should_publish_the_crate_with_cargo
+    assert_equal ["cargo", "publish", "--locked", "--manifest-path", "/r/Cargo.toml"],
+                 CrateRelease.commands("/r/Cargo.toml").first
+  end
+
+  # cargo publish verifies the crate in renderer/target, which leaves the
+  # binary built from its packaged copy and counted fresh (renderer/tools/renderer_build.rb).
+  def test_should_clean_the_renderer_publishing_left_built_from_its_packaged_copy
+    assert_equal ["cargo", "clean", "--manifest-path", "/r/Cargo.toml", "-p", "fun-ci-renderer"],
+                 CrateRelease.commands("/r/Cargo.toml").last
+  end
+
   def test_should_publish_with_cargo_otherwise
     assert_same CrateRelease::CARGO_PUBLISH, CrateRelease.publisher({})
   end
