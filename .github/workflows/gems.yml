@@ -23,7 +23,7 @@ jobs:
           - { platform: arm64-darwin, target: aarch64-apple-darwin, runner: macos-14, smoke: true }
           - { platform: x86_64-darwin, target: x86_64-apple-darwin, runner: macos-15-intel, smoke: true }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: sudo apt-get install -y musl-tools
         if: matrix.target == 'x86_64-unknown-linux-musl'
       - run: rustup toolchain install && rustup target add ${{ matrix.target }}
@@ -34,7 +34,7 @@ jobs:
       - run: ruby script/platform_gem.rb ${{ matrix.platform }} renderer/target/${{ matrix.target }}/release/fun-ci-renderer pkg
       - run: script/smoke-platform-gem.sh pkg/*.gem
         if: matrix.smoke
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: gem-${{ matrix.platform }}
           path: pkg/*.gem
@@ -46,8 +46,8 @@ jobs:
     container: ruby:3.4-alpine
     steps:
       - run: apk add --no-cache bash
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v7
         with:
           name: gem-x86_64-linux-musl
           path: pkg
@@ -56,7 +56,7 @@ jobs:
   plain:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.4"
@@ -68,7 +68,7 @@ jobs:
   crate-msrv:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: echo "MSRV=$(sed -n 's/^rust-version = "\(.*\)"$/\1/p' renderer/Cargo.toml)" >> "$GITHUB_ENV"
       - run: rustup toolchain install "$MSRV" --profile minimal
       - run: cargo +"$MSRV" build --locked --manifest-path renderer/Cargo.toml
@@ -79,7 +79,7 @@ jobs:
   cargo-install:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: rustup toolchain install
       - run: cargo publish --dry-run --locked --manifest-path renderer/Cargo.toml
       - run: cargo install --locked --path renderer --root "$RUNNER_TEMP/cargo"
