@@ -29,6 +29,17 @@ class TestConsoleSessionJobs < Minitest::Test
     refute @port.sent.last.key?("jobs")
   end
 
+  # The header tells the story of the commits (design.md, The console).
+  def test_should_send_no_event_when_a_job_ends
+    @board_data.job_rows = [ConsoleFakes.job_row("soak", status: "running", id: 7)]
+    @session.refresh
+    before = @port.sent.size
+    @board_data.job_rows = [ConsoleFakes.job_row("soak", status: "failed", id: 7)]
+    @session.refresh
+
+    assert_equal(["board"], @port.sent.drop(before).map { |message| message["t"] })
+  end
+
   def test_should_look_for_dead_jobs_on_every_refresh
     checks_so_far = @board_data.dead_checks.count(:jobs)
     @session.refresh

@@ -3,6 +3,7 @@
 //! names, in a dim teal from the header; wandering right of the middle
 //! between two lines of the open space below the table, never jumping.
 
+use super::jobs;
 use super::needs_you;
 use super::night::{FIREFLY, FIREFLY_LOW, blend};
 use crate::maths::{Portable, float};
@@ -18,11 +19,13 @@ pub struct Mote {
     pub colour: [u8; 3],
 }
 
-/// Whether the board is still: runs on it, each passed or cancelled, none needing you.
+/// Whether the board is still: runs on it, each passed or cancelled, none
+/// needing you, and every job quiet.
 #[must_use]
 pub fn still(board: &Board) -> bool {
     let settled = |status: &str| matches!(status, "passed" | "cancelled");
-    !board.runs.is_empty() && board.runs.iter().all(|run| settled(run.status()) && !needs_you(run))
+    let runs = !board.runs.is_empty() && board.runs.iter().all(|run| settled(run.status()) && !needs_you(run));
+    runs && jobs::quiet(&board.jobs)
 }
 
 /// The firefly at `play_ms` on a screen `width` wide.

@@ -39,10 +39,11 @@ pub struct Paper {
 }
 
 impl Paper {
-    /// The block behind `lead`'s row and conflict among `pieces`, and its
-    /// edges, from the margin of `columns` to two past the age.
+    /// The block behind `lead`'s row and conflict among `pieces`, or behind
+    /// the job between its edges when no run leads, and its edges, from the
+    /// margin of `columns` to two past the age.
     #[must_use]
-    pub fn over(pieces: &[Piece], lead: u64, columns: Columns, colour: [u8; 3]) -> Option<Self> {
+    pub fn over(pieces: &[Piece], lead: Option<u64>, columns: Columns, colour: [u8; 3]) -> Option<Self> {
         let first = pieces.iter().position(|piece| on_block(piece, lead))?;
         let last = pieces.iter().rposition(|piece| on_block(piece, lead))?;
         let (x, width) = (cell(columns.margin), cell(columns.age_end + 2 - columns.margin));
@@ -94,12 +95,12 @@ impl Widget for Sheet<'_> {
     }
 }
 
-/// Whether `piece` bounds `lead`'s block: an edge or its row. Its conflict
-/// is always between its row and its bottom edge.
-fn on_block(piece: &Piece, lead: u64) -> bool {
+/// Whether `piece` bounds the block: an edge, the lead's row, or the job
+/// that leads. A conflict is always between its row and its bottom edge.
+fn on_block(piece: &Piece, lead: Option<u64>) -> bool {
     match piece {
-        Piece::Edge(_) => true,
-        Piece::Row(run) => run.id == lead,
+        Piece::Edge(_) | Piece::Job(_, _, true) => true,
+        Piece::Row(run) => Some(run.id) == lead,
         _ => false,
     }
 }

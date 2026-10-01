@@ -3,7 +3,7 @@
 //! down until the table fits its screen.
 
 use super::sections::Section;
-use crate::model::Run;
+use crate::model::{Job, Run};
 
 /// One line of the table, before it is drawn.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -21,6 +21,14 @@ pub enum Piece<'a> {
     More(usize, bool),
     /// Line `n` of the legend that names each stage over its mark.
     Legend(usize),
+    /// The label over the daily and weekly jobs, `daily & weekly`, `daily` or `weekly`.
+    JobsLabel(&'static str),
+    /// A job's row: the job, its name as shown, and whether it leads.
+    Job(&'a Job, String, bool),
+    /// The jobs on one pale line, when none needs you or runs.
+    JobsFolded(&'a [Job]),
+    /// The jobs counted on one line, on a short screen, under their label's words.
+    JobsCounted(&'a [Job], &'static str),
 }
 
 /// Which passed rows fold into one line per project: none, a project's

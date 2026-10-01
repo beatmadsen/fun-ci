@@ -8,6 +8,7 @@ use ratatui::text::Line;
 use super::line::placed;
 use super::line::Part;
 use super::night::{CAP, KEY, NOTE, QUIET, ink};
+use super::jobs;
 use super::paint::fetched;
 use super::{Drawn, Frame};
 use crate::format::{columns, cut, project_name, short_sha};
@@ -34,14 +35,16 @@ pub struct Offer {
 }
 
 /// The keys, `c cancel` among them only while a run is running or waits to
-/// start; or the question naming the run the cursor would cancel, `y` and `n`.
+/// start, or a job runs; or the question naming the run or job the cursor
+/// would cancel, `y` and `n`.
 #[must_use]
 pub fn keys(board: &Board) -> Offer {
-    if let Some(run) = confirming(board) {
-        let question = format!("Cancel {} ({})?", run.commit.branch, short_sha(&run.commit.sha));
+    if let Some((name, sha)) = confirming(board) {
+        let question = format!("Cancel {name} ({})?", short_sha(sha));
         return Offer { question: Some(question), keys: vec![("y", "yes"), ("n", "no")] };
     }
-    let cancellable = board.runs.iter().any(|run| matches!(run.status(), "running" | "pending"));
+    let runs = board.runs.iter().any(|run| matches!(run.status(), "running" | "pending"));
+    let cancellable = runs || board.jobs.iter().any(|job| job.status == "running");
     Offer { question: None, keys: if cancellable { vec![MOVE, CANCEL, QUIT] } else { vec![MOVE, QUIT] } }
 }
 
@@ -71,8 +74,11 @@ pub fn stale(board: &Board, now_ms: i64) -> String {
     named.collect::<Vec<_>>().join(" · ")
 }
 
-fn confirming(board: &Board) -> Option<&Run> {
-    board.view.cursor.filter(|_| board.view.confirming).and_then(|index| board.runs.get(index))
+/// The name and commit of the run or job the cursor would cancel, while a cancel is being confirmed.
+fn confirming(board: &Board) -> Option<(&str, &str)> {
+    let index = board.view.cursor.filter(|_| board.view.confirming)?;
+    let run = board.runs.get(index).map(|run: &Run| (run.commit.branch.as_str(), run.commit.sha.as_str()));
+    run.or_else(|| jobs::lead(board).and_then(|at| board.jobs.get(at)).map(|job| (job.name.as_str(), job.sha.as_deref().unwrap_or_default())))
 }
 
 /// The footer: the keys where the labels start, and beside them, quieter,

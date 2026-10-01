@@ -28,7 +28,7 @@ fn on_sheet(lines: &[Line<'static>], paper: Option<Paper>) -> Grid {
 }
 
 fn block(pieces: &[Piece]) -> Option<Paper> {
-    Paper::over(pieces, 1, COLUMNS, night::WINE)
+    Paper::over(pieces, Some(1), COLUMNS, night::WINE)
 }
 
 fn row(grid: &Grid, y: usize) -> String {

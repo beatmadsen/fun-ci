@@ -36,6 +36,35 @@ pub struct Board {
     /// The projects whose trunk is stale, for the footer (architecture.md, Checking against the trunk).
     #[serde(default)]
     pub stale_trunks: Vec<StaleTrunk>,
+    /// The daily and weekly jobs, below the table, in the order shown (design.md, Daily and weekly jobs).
+    #[serde(default)]
+    pub jobs: Vec<Job>,
+}
+
+/// A daily or weekly job: how often it runs, and its latest run, or that it
+/// is due (renderer-protocol.md, `board`). Times are epoch seconds.
+#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
+pub struct Job {
+    #[serde(default)]
+    pub project: Option<String>,
+    pub name: String,
+    pub cadence: String,
+    /// `due`, `running`, `passed`, `failed` or `timeout`.
+    pub status: String,
+    #[serde(default)]
+    pub run_id: Option<u64>,
+    #[serde(default)]
+    pub sha: Option<String>,
+    #[serde(default)]
+    pub branch: Option<String>,
+    #[serde(default)]
+    pub started_at: Option<i64>,
+    /// When its latest run ended, or started while it runs.
+    #[serde(default)]
+    pub updated_at: Option<i64>,
+    /// When it is due again; none while it is due now, or runs.
+    #[serde(default)]
+    pub due_at: Option<i64>,
 }
 
 /// A project whose trunk is stale: its last good fetch (epoch seconds), or none when its last fetch failed.

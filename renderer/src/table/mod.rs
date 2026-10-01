@@ -7,6 +7,9 @@
 pub mod columns;
 pub mod firefly;
 pub mod footer;
+pub mod job_rows;
+pub mod job_words;
+pub mod jobs;
 pub mod ladder;
 pub mod leaders;
 pub mod legend;
@@ -69,20 +72,43 @@ const BREATH_MS: u64 = 4_000;
 /// How many shades the block breathes through, deepest and lightest among them.
 const SHADES: usize = 5;
 
-/// The table for `board` in at most `room` lines.
+/// The table for `board` in at most `room` lines, the daily and weekly jobs under it.
 #[must_use]
 pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
     let sections = sections(&board.runs);
-    let lead = lead(board);
-    let (fitted, note) = fitted(board, &sections, (lead, room), frame);
+    let (lead, job_lead) = (lead(board), jobs::lead(board));
+    let named = jobs::many_projects(board);
+    let (fitted, note, section) = with_jobs((board, frame), &sections, (lead, room), jobs::shapes(board, job_lead, named));
+    let pieces: Vec<Piece> = fitted.pieces.iter().cloned().chain(section).collect();
     let tags = (fitted.flat && sections.len() > 1).then(|| widest_project(&sections));
-    let (columns, brief) = laid_out(board, frame, longest_name(board) + tags.map_or(0, |tag| tag + 2));
+    let (columns, brief) = laid_out(board, frame, longest_name(board, named) + tags.map_or(0, |tag| tag + 2));
     let paint_with = Paint { columns, frame, lead, stale: &board.stale_trunks, tags, brief };
-    let lines = fitted.pieces.iter().map(|piece| paint(piece, &paint_with)).collect();
-    let needs = board.runs.iter().any(|run| lead == Some(run.id) && needs_you(run));
-    let paper = lead.and_then(|run| Paper::over(&fitted.pieces, run, columns, paper(frame.play_ms, needs)));
-    let leaders = leaders::Leaders::over(&fitted.pieces, columns.strip);
-    Drawn { lines, rows: rows(&fitted.pieces), columns, unshown: fitted.unshown, note, paper, leaders }
+    let lines = pieces.iter().map(|piece| paint(piece, &paint_with)).collect();
+    let paper = Paper::over(&pieces, lead, columns, paper(frame.play_ms, lead_needs_you(board, lead, job_lead)));
+    let leaders = leaders::Leaders::over(&pieces, columns.strip);
+    Drawn { lines, rows: rows(&pieces), columns, unshown: fitted.unshown, note, paper, leaders }
+}
+
+/// The table fitted with the most of the job section it has room for while
+/// it keeps all its own lines: the section gives up its lines before any
+/// branch does. When even its last shape leaves the table too little, the
+/// table climbs down its own ladder.
+fn with_jobs<'a>((board, frame): (&Board, Frame), sections: &'a [Section<'a>], (lead, room): (Option<u64>, usize), shapes: Vec<Vec<Piece<'a>>>) -> (Fitted<'a>, Option<String>, Vec<Piece<'a>>) {
+    let whole = fitted(board, sections, (lead, usize::MAX), frame).0.pieces;
+    let apart = |shape: &[Piece]| usize::from(!shape.is_empty() && whole.last() != Some(&Piece::Blank));
+    let last = shapes.len() - 1;
+    let chosen = shapes.iter().position(|shape| whole.len() + apart(shape) + shape.len() <= room).unwrap_or(last);
+    let section = shapes.into_iter().nth(chosen).unwrap_or_default();
+    let reserved = apart(&section);
+    let (fitted, note) = fitted(board, sections, (lead, room.saturating_sub(section.len() + reserved)), frame);
+    let blank = reserved == 1 && fitted.pieces.last() != Some(&Piece::Blank);
+    (fitted, note, blank.then_some(Piece::Blank).into_iter().chain(section).collect())
+}
+
+/// Whether the row in the block needs you, which makes the block wine.
+fn lead_needs_you(board: &Board, lead: Option<u64>, job_lead: Option<usize>) -> bool {
+    let run = board.runs.iter().any(|run| lead == Some(run.id) && needs_you(run));
+    run || job_lead.and_then(|index| board.jobs.get(index)).is_some_and(jobs::needs_you)
 }
 
 /// The fitted table, and the line it says above the footer: the stale
@@ -102,8 +128,12 @@ fn fitted<'a>(board: &Board, sections: &'a [Section<'a>], (lead, room): (Option<
 /// About where a note above the footer starts: the labels' column on a narrow screen.
 const NOTE_AT: usize = 4;
 
-/// The row in the block: the cursor's, else the first that needs you.
+/// The row in the block: the cursor's, else the first that needs you; none
+/// while the cursor is on a job.
 fn lead(board: &Board) -> Option<u64> {
+    if jobs::lead(board).is_some() {
+        return None;
+    }
     let cursor = board.view.cursor.and_then(|index| board.runs.get(index));
     cursor.or_else(|| board.runs.iter().find(|run| needs_you(run))).map(|run| run.id)
 }
@@ -129,8 +159,9 @@ fn rows(pieces: &[Piece]) -> Vec<(u64, usize)> {
     pieces.iter().enumerate().filter_map(|(line, piece)| if let Piece::Row(run) = piece { Some((run.id, line)) } else { None }).collect()
 }
 
-fn longest_name(board: &Board) -> usize {
-    board.runs.iter().map(|run| columns(&run.commit.branch)).max().unwrap_or(0)
+fn longest_name(board: &Board, named: bool) -> usize {
+    let jobs = board.jobs.iter().map(|job| columns(&jobs::name(job, named)));
+    board.runs.iter().map(|run| columns(&run.commit.branch)).chain(jobs).max().unwrap_or(0)
 }
 
 /// The columns for names `names` wide, and whether the words must be brief
@@ -144,7 +175,9 @@ fn laid_out(board: &Board, frame: Frame, names: usize) -> (Columns, bool) {
 }
 
 fn longest_words(board: &Board, frame: Frame, brief: bool) -> usize {
-    board.runs.iter().map(|run| columns(&words::phrase(run, frame.now_ms, brief))).max().unwrap_or(0) + WORDS_SPARE
+    let said = |job| if brief { job_words::said_briefly(job, frame.now_ms) } else { job_words::said(job, frame.now_ms) };
+    let jobs = board.jobs.iter().map(|job| columns(&said(job)));
+    board.runs.iter().map(|run| columns(&words::phrase(run, frame.now_ms, brief))).chain(jobs).max().unwrap_or(0) + WORDS_SPARE
 }
 
 fn widest_project(sections: &[Section]) -> usize {
