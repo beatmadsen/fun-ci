@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Daily and weekly jobs, for checks too long for a stage's budget. A script
+  in `.fun-ci/daily/` or `.fun-ci/weekly/` runs at most once a day or once a
+  week, started by your commits, in a worktree of its own, with 24 hours to
+  finish. The console shows them in a section of their own under the table,
+  and `c` cancels a running one. `fun-ci check` lists them.
+- `fun-ci prune` removes the jobs' worktrees too.
+
 ## [2.1.1] - 2026-09-30
 
 ### Fixed

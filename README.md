@@ -53,6 +53,21 @@ Each run happens in a git worktree of its own under `.git/fun-ci/worktrees/`, ch
 
 Results are kept in SQLite under `$XDG_STATE_HOME/fun-ci/` (`~/.local/state/fun-ci/` by default), shared by every project on the machine.
 
+## Daily and weekly jobs
+
+Some checks take longer than the time between two commits: a mutation run, a soak test, a full audit of your dependencies. Put each in a script of its own under `.fun-ci/daily/` or `.fun-ci/weekly/`:
+
+```
+.fun-ci/daily/mutation.sh
+.fun-ci/weekly/soak.sh
+```
+
+The script's name is the job's name. Like a stage, it gets the commit's hash as its first argument and passes when it exits 0, and `FUN_CI_JOB` tells it which job it is. There is nothing else to configure.
+
+Commits start jobs. When the `post-commit` hook runs a pipeline, it also starts each of the project's jobs that is due, beside the pipeline, on the commit just made. A job is due when it has never run, when its last run was cancelled, or a day (daily) or a week (weekly) after its last run started. A project nobody commits to runs no jobs. Each job runs once at a time, in a worktree of its own under `.git/fun-ci/jobs/`, so it never holds up a commit's run, and has 24 hours before it is stopped. A newer commit never cancels a job. A job's result changes no run, no streak and no exit code.
+
+A failed job keeps its evidence as a failed stage does; add entries under `evidence: jobs: <name>:` in `.fun-ci/config` to keep more. `fun-ci check` lists the jobs it found, and says which scripts it can't run.
+
 ## Watching: the console
 
 ```bash
@@ -88,12 +103,14 @@ Five minutes after the latest run finished, the header goes quiet: a starry nigh
 |---|---|
 | ![A fire in a stone hearth, with a green lamp in the corner](docs/screenshots/quiet-fireplace.png) | ![A moonlit island with a palm, with a red lamp in the corner](docs/screenshots/quiet-island.png) |
 
+The daily and weekly jobs have a section of their own under the last project: each job's name, how often it runs, its mark, what its last run did on which branch and commit, and when it is due again (`passed on main 3a1f9c2 · due in 14h`), or that it runs on your next commit. When none of them failed or runs, the section folds into one pale line.
+
 A branch that conflicts with the trunk says so on the line under its name, `conflicts with main`, and the header plays two strands braiding into a knot; when a later commit on the branch merges cleanly, the knot unties. A project whose trunk fun-ci last fetched over an hour ago, or couldn't fetch, says so beside its name.
 
 Keys:
 
 - `j` and `k`, or the arrow keys, move the cursor down and up
-- `c` cancels the run under the cursor: one waiting to start at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start
+- `c` cancels the run under the cursor: one waiting to start at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start. The cursor moves on past the last branch into the jobs, and `c` cancels a running job the same way; a cancelled job runs again on your next commit
 - `q` quits
 
 The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above are the renderer's output replayed in a terminal emulator, set in Menlo; in your terminal the text is in your terminal's font.
