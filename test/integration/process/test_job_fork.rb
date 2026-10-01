@@ -66,6 +66,13 @@ class TestJobFork < Minitest::Test
     refute_equal Process.getsid.to_s, File.read(seen).split[3]
   end
 
+  # As when mutineer runs the tests: $stdout and $stderr are StringIOs, not the process's own streams.
+  def test_should_run_the_job_while_the_caller_s_streams_are_no_files
+    capture_io { forked_to_the_end }
+
+    assert_path_exists seen
+  end
+
   def test_should_start_no_job_that_is_not_due
     forked_to_the_end
     File.delete(seen)

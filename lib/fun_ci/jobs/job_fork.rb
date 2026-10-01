@@ -24,9 +24,13 @@ module FunCi
         db&.close
       end
 
-      # Onto an open /dev/null, since reopening by path can't change a stream's access mode.
+      # The process's own descriptors, whatever $stdout and $stderr stand for
+      # (a test's StringIO, a guard's file), onto an open /dev/null, since
+      # reopening by path can't change a stream's access mode.
       def self.silence
-        File.open(File::NULL, File::RDWR) { |null| [$stdin, $stdout, $stderr].each { |io| io.reopen(null) } }
+        File.open(File::NULL, File::RDWR) do |null|
+          (0..2).each { |fd| IO.for_fd(fd, autoclose: false).reopen(null) }
+        end
       end
 
       def self.site(project, db)
