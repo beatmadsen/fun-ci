@@ -30,6 +30,17 @@ fn a_short_screen_keeps_the_failures_and_their_projects() {
     assert_eq!(lines[..4], ["O N E", "one-fix", "T W O", "two-fix"]);
 }
 
+// A project whose passed rows were all left out has nothing for its label to
+// head: the label goes too, and its rows are still counted beside the keys.
+#[test]
+fn a_short_screen_names_no_project_it_shows_no_row_of() {
+    let runs = [failed(3, "feat", "/src/one"), passed(2, "main", "/src/one"), passed(1, "main", "/src/two")];
+
+    let lines = said(&screen(&runs, (80, 24)));
+
+    assert!(!lines.contains(&"T W O".to_string()), "{lines:?}");
+}
+
 #[test]
 fn a_screen_too_short_for_labels_says_the_stale_trunk_on_its_own_line() {
     let mut board = board(&two_crowded_projects(), None);

@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   says when a job starts and finishes. The instructions `fun-ci init` writes
   for agents mention them.
 
+### Fixed
+- On a short screen, a project whose branches had all passed and were left
+  out (counted beside the keys) kept its label, with nothing under it. The
+  label now goes with them.
+
 ## [2.1.1] - 2026-09-30
 
 ### Fixed

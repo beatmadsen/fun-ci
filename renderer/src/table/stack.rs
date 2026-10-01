@@ -53,12 +53,14 @@ pub struct Rung {
 /// How many lines the legend takes: one a stage.
 pub const LEGEND_LINES: usize = 4;
 
-/// The pieces of `sections` on `rung`, the row `lead` in the block.
+/// The pieces of `sections` on `rung`, the row `lead` in the block. A
+/// section the rung leaves nothing of, its passed rows left out, takes no
+/// line: a label with nothing under it would head nothing.
 #[must_use]
 pub fn stack<'a>(sections: &'a [Section<'a>], lead: Option<u64>, rung: Rung) -> Vec<Piece<'a>> {
     let labelled = rung.labels && sections.len() > 1;
     let mut out = Vec::new();
-    for section in sections {
+    for section in sections.iter().filter(|section| shows(section, lead, rung)) {
         if rung.labels {
             out.push(Piece::Blank);
         }
@@ -80,6 +82,11 @@ pub fn with_legend(pieces: Vec<Piece<'_>>) -> Vec<Piece<'_>> {
         return pieces;
     }
     std::iter::once(Piece::Blank).chain((0..LEGEND_LINES).map(Piece::Legend)).chain(pieces).collect()
+}
+
+/// Whether `rung` shows anything of `section`: a row, or its folded line.
+fn shows(section: &Section, lead: Option<u64>, rung: Rung) -> bool {
+    rung.passed || folded(section, lead, rung.fold).len() < section.runs.len()
 }
 
 fn rows<'a>(out: &mut Vec<Piece<'a>>, section: &'a Section<'a>, lead: Option<u64>, rung: Rung) {

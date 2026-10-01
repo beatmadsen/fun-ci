@@ -350,7 +350,8 @@ each project's branches sit under the project's name, one row per branch:
   up.
 - On a short screen the table gives up, in this order: the passed rows fold
   into one line per project; the folded lines go, counted beside the keys
-  (`2 passed not shown`); the blank lines between rows close up; the labels
+  (`2 passed not shown`), and with them the label of a project left with no
+  row; the blank lines between rows close up; the labels
   go, each row then naming its project first (`strings-kata  a-life…`), and a
   stale trunk takes a line of its own above the keys. The cursor's row always
   stays on screen, the rows it pushed off counted (`… 4 more below`).
