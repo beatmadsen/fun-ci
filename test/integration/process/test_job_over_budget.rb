@@ -5,17 +5,12 @@ require_relative "../../support/job_run_kit"
 require_relative "../../support/body_script"
 require_relative "../../support/process_deadline"
 
-# A job past its budget is killed with its process group and has run out of
-# time, its script run by the real process runner (acceptance-tests.md, AT-13.9).
+# A job past its budget is killed with its process group, its script run by
+# the real process runner (acceptance-tests.md, AT-13.9). That it is recorded
+# out of time is decided in memory (test_job_run.rb).
 class TestJobOverBudget < Minitest::Test
   include JobRunKit
   include ProcessDeadline
-
-  def test_should_record_a_job_past_its_budget_out_of_time
-    overrun
-
-    assert_equal "timed_out", latest[:status]
-  end
 
   def test_should_kill_the_process_a_job_past_its_budget_started
     overrun

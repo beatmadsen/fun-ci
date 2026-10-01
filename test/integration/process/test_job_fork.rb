@@ -75,8 +75,9 @@ class TestJobFork < Minitest::Test
   # job must not read as dead and start again there (code review, finding 1).
   def test_should_keep_the_job_s_lock_held_while_its_script_outlives_its_runner
     @sha = job_that_kills_its_runner
-    state = nil
-    forked_to_the_end { state = within_deadline { Fifo.read(fifo) } }
+    forked_to_the_end
+    flunk "No job started, so none writes the lock's state" unless latest
+    state = within_deadline { Fifo.read(fifo) }
 
     assert_equal "held", state
   end
@@ -101,15 +102,14 @@ class TestJobFork < Minitest::Test
   def seen = File.join(@dir, "seen")
 
   # Every process the trigger forks inherits a pipe this holds, whose end
-  # comes when the last of them, the job's included, has exited.
-  # A block given runs once the processes are started, before waiting for them.
+  # comes when the last of them, the job's included, has exited. The job's
+  # script holds none of it: its runner's descriptors close on exec.
   def forked_to_the_end
     ended, held = IO.pipe
     Dir.chdir(@project.dir) do
       FunCi::Pipeline::PipelineForker.fork_pipeline(commit_hash: @sha, branch: "main", db_path: @db_path)
     end
     held.close
-    yield if block_given?
     within_deadline { ended.read }
   end
 
