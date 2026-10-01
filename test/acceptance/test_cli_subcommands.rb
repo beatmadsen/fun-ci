@@ -60,7 +60,7 @@ class TestCliTriggerSubcommand < Minitest::Test
   def test_trigger_sets_up_its_database_before_anything_else
     run_cli("trigger", "abc1234", "main")
 
-    assert_equal %w[pipeline_runs stage_jobs trunk_checks trunk_fetches],
+    assert_equal %w[job_runs pipeline_runs stage_jobs trunk_checks trunk_fetches],
                  table_names(File.join(@dir, "db", "db.sqlite3"))
   end
 

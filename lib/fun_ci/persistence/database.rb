@@ -46,6 +46,16 @@ module FunCi
         )
       SQL
 
+      # Each run of a project's daily and weekly jobs (architecture.md, Daily and weekly jobs).
+      JOB_RUNS_TABLE = <<~SQL
+        CREATE TABLE IF NOT EXISTS job_runs (
+          id INTEGER PRIMARY KEY,
+          project_path TEXT, job TEXT, cadence TEXT, commit_hash TEXT, branch TEXT,
+          status TEXT, started_at TEXT, completed_at TEXT, lock_file TEXT, pid INTEGER, group_pid INTEGER,
+          exit_status INTEGER, signal TEXT, output_tail TEXT, evidence TEXT
+        )
+      SQL
+
       # Opening and migrating hold an exclusive lock on a file beside the
       # database, so fun-ci processes starting at once set it up one at a time.
       # SQLite's busy timeout doesn't cover the switch to WAL, and a column can
@@ -65,11 +75,11 @@ module FunCi
                        %w[stage_jobs evidence TEXT], %w[pipeline_runs fetch_pgid INTEGER],
                        %w[pipeline_runs trunk_started_at TEXT]].freeze
 
+      TABLES = [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE, TRUNK_FETCHES_TABLE, JOB_RUNS_TABLE].freeze
+
       def self.migrate!(db)
         with_setup_lock(db.filename("main")) do
-          [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE, TRUNK_FETCHES_TABLE].each do |table|
-            db.execute(table)
-          end
+          TABLES.each { |table| db.execute(table) }
           ADDED_COLUMNS.each { |table, column, type| add_column_if_missing(db, table, column, type) }
           db.execute(NAME_DETACHED)
         end

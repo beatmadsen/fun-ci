@@ -11,6 +11,9 @@ module FunCi
     class RawOutputs
       def self.beside(db_path) = new(File.join(File.dirname(db_path), "raw"))
 
+      # What failed daily and weekly jobs printed, apart, since their ids are their own.
+      def self.for_jobs(db_path) = new(File.join(File.dirname(db_path), "raw-jobs"))
+
       def initialize(dir)
         @dir = dir
       end
