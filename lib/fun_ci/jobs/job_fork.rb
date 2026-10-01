@@ -2,6 +2,7 @@
 
 require_relative "job_run"
 require_relative "../persistence/database"
+require_relative "../pipeline/worktrees"
 
 module FunCi
   module Jobs

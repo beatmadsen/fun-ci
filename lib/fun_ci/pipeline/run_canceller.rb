@@ -37,6 +37,17 @@ module FunCi
         # The next poll looks again.
       end
 
+      # Stops a daily or weekly job's processes and records it cancelled,
+      # unless it has finished meanwhile; a group its runner recorded while
+      # this looked is stopped once the runner is dead, as a run's late stages are.
+      def cancel_job(db, id)
+        Persistence::ActiveJobs.with_id(db, id).each do |job|
+          stop(job)
+          Persistence::ActiveJobs.with_id(db, id).each { |now| kill_late(job, now) }
+          Persistence::ActiveJobs.cancelled(db, id)
+        end
+      end
+
       # Records failed each daily or weekly job still running whose lock
       # nobody holds: its process is gone (acceptance-tests.md, AT-13.6).
       def record_dead_jobs(db)
@@ -62,6 +73,9 @@ module FunCi
           (now.stage_groups - run.stage_groups).each { |group| kill(-group) }
         end
       end
+
+      # The groups recorded since `before` was read.
+      def kill_late(before, now) = (now.stage_groups - before.stage_groups).each { |group| kill(-group) }
 
       def alive?(run) = run.slot_lock.nil? || @slot_held.call(run.slot_lock)
 

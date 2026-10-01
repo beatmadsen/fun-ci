@@ -7,7 +7,6 @@ require_relative "../persistence/job_runs"
 require_relative "../persistence/job_recorder"
 require_relative "../pipeline/stage_execution"
 require_relative "../pipeline/trigger_params"
-require_relative "../pipeline/worktrees"
 require_relative "../evidence/document"
 
 module FunCi
@@ -51,15 +50,18 @@ module FunCi
       def execute(slot, id)
         recorder.started_by(id, Process.pid)
         @site.worktrees.check_out(slot.path, @commit.sha)
-        execution(slot.path).run(@job.stage, command(slot.path), recorder, id)
+        execution(slot).run(@job.stage, command(slot.path), recorder, id)
         id
-      rescue Pipeline::Worktrees::GitError => e
+      rescue StandardError => e
         failed(id, e.message)
       end
 
-      def execution(dir)
+      # The script holds the job's lock too, so the job reads as alive while
+      # any of it runs, its runner gone or not.
+      def execution(slot)
         seams = @seams.with(time_budgets: { @job.stage => Job::BUDGET }.merge(@seams.time_budgets))
-        Pipeline::StageExecution.new(seams: seams, dir: dir, commit: @commit, env: { "FUN_CI_JOB" => @job.name })
+        Pipeline::StageExecution.new(seams: seams, dir: slot.path, commit: @commit,
+                                     launching: { env: { "FUN_CI_JOB" => @job.name }, held: [slot.lock] })
       end
 
       # The commit's own copy of the script when it has one, as a pipeline's stages are.
@@ -68,6 +70,8 @@ module FunCi
         (File.exist?(committed) ? @job.with(script: committed) : @job).command(@commit.sha)
       end
 
+      # Whatever stopped the run, so it isn't left running: a run left running
+      # is only found dead once its lock is free, and then says nothing of why.
       def failed(id, problem)
         recorder.keep_evidence(id, Evidence::Document.broken(problem))
         recorder.end_stage(id, "failed")

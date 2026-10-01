@@ -6,7 +6,7 @@ module FunCi
     # file. The fast suite and the slow suite each hold it; it frees when the
     # last of them lets go. A process that dies lets go with it.
     class Slot
-      attr_reader :path, :lock_file
+      attr_reader :path, :lock_file, :lock
 
       # +lock_file+ names the lock on disk; nil for a slot with nothing to lock.
       def initialize(path, lock, lock_file = nil)

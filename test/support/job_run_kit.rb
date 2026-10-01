@@ -5,6 +5,7 @@ require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
 require "fun_ci/jobs/job_run"
 require "fun_ci/pipeline/slot_lock"
+require "fun_ci/pipeline/worktrees"
 require_relative "fake_stage_dir"
 
 # A project with the daily job `mutation`, a database, the job's lock
@@ -23,10 +24,10 @@ module JobRunKit
       @checked_out = []
     end
 
-    def fail_with(message) = @error = message
+    def fail_with(message, error: FunCi::Pipeline::Worktrees::GitError) = @error = error.new(message)
 
     def check_out(path, sha)
-      raise FunCi::Pipeline::Worktrees::GitError, @error if @error
+      raise @error if @error
 
       @checked_out << [path, sha]
     end

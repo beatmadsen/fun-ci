@@ -49,12 +49,7 @@ module FunCi
 
       # Stops a daily or weekly job's processes, then records it cancelled,
       # unless it has finished meanwhile.
-      def cancel_job(id)
-        Persistence::ActiveJobs.with_id(@db, id).each do |job|
-          @run_canceller.stop(job)
-          Persistence::ActiveJobs.cancelled(@db, id)
-        end
-      end
+      def cancel_job(id) = @run_canceller.cancel_job(@db, id)
 
       # One row per branch, its newest run, for the branches that most need you
       # and then those run most recently, in RowOrder: a run of cancelled

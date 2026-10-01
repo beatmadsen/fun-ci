@@ -104,6 +104,13 @@ class TestJobRun < Minitest::Test
     assert_equal "failed", latest[:status]
   end
 
+  def test_should_record_failed_a_job_that_could_not_start_for_any_reason
+    @worktrees.fail_with("the disk is full", error: Errno::ENOSPC)
+    run_job
+
+    assert_equal "failed", latest[:status]
+  end
+
   def test_should_keep_why_the_job_s_worktree_could_not_be_checked_out
     @worktrees.fail_with("git checkout: no such commit")
     run_job

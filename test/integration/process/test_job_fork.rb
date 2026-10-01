@@ -3,6 +3,7 @@
 require_relative "../../test_helper"
 require_relative "../../support/git_project"
 require_relative "../../support/process_deadline"
+require_relative "../../support/fifo"
 require "fun_ci/pipeline/pipeline_forker"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
@@ -73,6 +74,16 @@ class TestJobFork < Minitest::Test
     assert_path_exists seen
   end
 
+  # Its runner gone, a job's script still runs in the job's worktree, so the
+  # job must not read as dead and start again there (code review, finding 1).
+  def test_should_keep_the_job_s_lock_held_while_its_script_outlives_its_runner
+    @sha = job_that_kills_its_runner
+    state = nil
+    forked_to_the_end { state = within_deadline { Fifo.read(fifo) } }
+
+    assert_equal "held", state
+  end
+
   def test_should_start_no_job_that_is_not_due
     forked_to_the_end
     File.delete(seen)
@@ -83,16 +94,30 @@ class TestJobFork < Minitest::Test
 
   private
 
+  def fifo = File.join(@dir, "lock-state")
+
+  # A job whose script kills the process running it, then says whether the job's lock is still held.
+  def job_that_kills_its_runner
+    File.mkfifo(fifo)
+    lock = '"$(git rev-parse --git-common-dir)/fun-ci/jobs/mutation.lock"'
+    look = "ruby -e 'print(File.open(ARGV[0]).flock(File::LOCK_EX | File::LOCK_NB) ? \"free\" : \"held\")'"
+    @project.write(".fun-ci/daily/mutation.sh", "#!/bin/sh\nkill -9 $PPID\nsleep 1\n#{look} #{lock} > '#{fifo}'\n",
+                   mode: 0o755)
+    @project.commit("A job that outlives its runner")
+  end
+
   def seen = File.join(@dir, "seen")
 
   # Every process the trigger forks inherits a pipe this holds, whose end
   # comes when the last of them, the job's included, has exited.
+  # A block given runs once the processes are started, before waiting for them.
   def forked_to_the_end
     ended, held = IO.pipe
     Dir.chdir(@project.dir) do
       FunCi::Pipeline::PipelineForker.fork_pipeline(commit_hash: @sha, branch: "main", db_path: @db_path)
     end
     held.close
+    yield if block_given?
     within_deadline { ended.read }
   end
 

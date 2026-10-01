@@ -23,13 +23,14 @@ module FunCi
       DRAIN_SECONDS = 1
 
       # Where the command runs, what it finds in its environment besides
-      # fun-ci's own, the window what it prints is written to, and what to do
-      # with its pid when it runs over budget, before it is killed.
-      Launch = Data.define(:chdir, :env, :output, :before_kill)
+      # fun-ci's own, the window what it prints is written to, what to do
+      # with its pid when it runs over budget, before it is killed, and the
+      # open files it holds as long as it runs, such as a lock.
+      Launch = Data.define(:chdir, :env, :output, :before_kill, :held)
 
       class Launch
         def initialize(**given)
-          super(chdir: Dir.pwd, env: {}, output: OutputWindow.in_memory, before_kill: nil, **given)
+          super(chdir: Dir.pwd, env: {}, output: OutputWindow.in_memory, before_kill: nil, held: [], **given)
         end
       end
 
@@ -70,8 +71,11 @@ module FunCi
 
       def spawn_gated(cmd, writer, gate, launch)
         Process.spawn(GitEnvironment::CLEAN.merge(launch.env), format(GATED, cmd),
-                      out: writer, err: writer, 9 => gate.child_end, pgroup: true, chdir: launch.chdir)
+                      out: writer, err: writer, 9 => gate.child_end, pgroup: true, chdir: launch.chdir, **held(launch))
       end
+
+      # Each file the command holds, open in it at the same descriptor.
+      def held(launch) = launch.held.to_h { |file| [file, file] }
 
       # The reader may be closed while this thread still reads, once a killed
       # command's output has drained or stopped coming.

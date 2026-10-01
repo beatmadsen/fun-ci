@@ -42,6 +42,17 @@ class TestBoardDataJobs < Minitest::Test
     assert_equal [["KILL", 100], ["KILL", -200]], @signals
   end
 
+  # The runner records its script's group while the cancel reads, so the cancel looks again once the runner is dead.
+  def test_should_stop_a_script_s_group_recorded_after_the_cancel_first_looked
+    recording_late = lambda do |signal, pid|
+      FunCi::Persistence::JobRecorder.new(@db).stage_process(@id, 300) if pid == 100
+      @signals << [signal, pid]
+    end
+    board(lock_held: true, killer: recording_late).cancel_job(@id)
+
+    assert_includes @signals, ["KILL", -300]
+  end
+
   def test_should_record_a_job_it_cancels_cancelled
     board(lock_held: true).cancel_job(@id)
 
@@ -94,9 +105,8 @@ class TestBoardDataJobs < Minitest::Test
 
   def status = @runs.latest("soak")[:status]
 
-  def board(lock_held:, db: @db)
-    canceller = FunCi::Pipeline::RunCanceller.new(killer: ->(signal, pid) { @signals << [signal, pid] },
-                                                  slot_held: ->(_path) { lock_held })
+  def board(lock_held:, db: @db, killer: ->(signal, pid) { @signals << [signal, pid] })
+    canceller = FunCi::Pipeline::RunCanceller.new(killer: killer, slot_held: ->(_path) { lock_held })
     FunCi::Console::BoardData.new(db, run_canceller: canceller)
   end
 end

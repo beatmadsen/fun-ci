@@ -10,13 +10,15 @@ module FunCi
     # for every stage, the slow suite in its forked child included, and for
     # a daily or weekly job.
     class StageExecution
-      # env: what the script is told about itself; by default, its stage's name
-      # in FUN_CI_STAGE (acceptance-tests.md, AT-10.7).
-      def initialize(seams:, dir:, commit:, env: nil)
+      # launching: what the script is launched with besides its output window
+      # (ProcessRunner::Launch): what it is told about itself, by default its
+      # stage's name in FUN_CI_STAGE (acceptance-tests.md, AT-10.7), and the
+      # files it holds open.
+      def initialize(seams:, dir:, commit:, launching: {})
         @seams = seams
         @dir = dir
         @commit = commit
-        @env = env
+        @launching = launching
       end
 
       # Answers [the outcome recorded, what the stage printed].
@@ -42,7 +44,7 @@ module FunCi
 
       def execute(stage, command, stage_dir, before_kill, &)
         window = stage_dir.window
-        launch = ProcessRunner::Launch.new(env: @env || { "FUN_CI_STAGE" => stage }, output: window,
+        launch = ProcessRunner::Launch.new(env: { "FUN_CI_STAGE" => stage }, **@launching, output: window,
                                            before_kill: before_kill)
         @seams.executor(@dir).call(command, @seams.budgets[stage], launch, &)
       ensure
