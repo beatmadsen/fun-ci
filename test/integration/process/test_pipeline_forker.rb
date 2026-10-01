@@ -13,6 +13,11 @@ require "fun_ci/persistence/stage_job"
 class TestPipelineForker < Minitest::Test
   include ProcessDeadline
 
+  # What starts the jobs here, unless a test says otherwise: nothing. The real
+  # jobs start through the forker in test_job_fork.rb; run here as well, they
+  # only cost each mutant of the jobs' code a second of its 10 s.
+  NO_JOBS = ->(*) {}
+
   def setup
     @dir = Dir.mktmpdir("pipeline-forker")
     @db_path = File.join(@dir, "db.sqlite3")
@@ -99,9 +104,9 @@ class TestPipelineForker < Minitest::Test
 
   # Every process the run forks inherits a pipe this holds, whose end comes
   # when the last of them, the slow suite's included, has exited.
-  def forked_to_the_end(sha, **)
+  def forked_to_the_end(sha, jobs: NO_JOBS)
     ended, held = IO.pipe
-    forked = Dir.chdir(@project.dir) { forked(sha, **) }
+    forked = Dir.chdir(@project.dir) { forked(sha, jobs: jobs) }
     held.close
     within_deadline { ended.read }
     forked
