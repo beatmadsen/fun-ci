@@ -44,6 +44,10 @@ and reported as timed out:
 A timeout is a design signal ("your fast suite has grown too heavy"), not a bug
 in the code, so it looks different from a failure: yellow, not red.
 
+A worktree fun-ci has just made has none of the caches the lint and build
+budgets count on, so its first run is no such signal: there lint and build
+get the slow suite's budget, and fun-ci says so.
+
 **Simple.** One screen, three keys, no drill-down. A new user understands a row
 the first time they see one.
 
@@ -73,7 +77,7 @@ finished goes through at once.
 Each run happens in a git worktree of its own, checked out at the commit it
 tests, so the developer keeps editing while it runs. A newer commit on the same
 branch cancels the older run if it hasn't finished, unless an agent is waiting
-on it: the latest commit wins. A run is never cancelled by another run of its
+on it without following the branch: the latest commit wins. A run is never cancelled by another run of its
 own commit.
 
 ## Stages side by side

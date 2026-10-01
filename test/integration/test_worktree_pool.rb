@@ -5,12 +5,15 @@ require "fun_ci/pipeline/worktree_pool"
 
 # The pool's locking, against real lock files and a stand-in for git.
 class TestWorktreePool < Minitest::Test
-  # Checking out the commit `unknown` fails, as git would.
+  # Checking out the commit `unknown` fails, as git would. It answers
+  # whether it made the slot's worktree, as it does for the first checkout there.
   FakeWorktrees = Struct.new(:root, :checked_out) do
     def check_out(path, sha)
       raise FunCi::Pipeline::Worktrees::GitError, "unknown revision" if sha == "unknown"
 
+      made = checked_out.none? { |name, _| name == File.basename(path) }
       checked_out << [File.basename(path), sha]
+      made
     end
   end
 
@@ -29,6 +32,17 @@ class TestWorktreePool < Minitest::Test
     hold(pool.acquire("abc1234"))
 
     assert_equal [%w[slot-0 abc1234]], @worktrees.checked_out
+  end
+
+  # Its caches are empty, so its build is no measure of the project's.
+  def test_hands_out_a_slot_whose_worktree_it_just_made_as_cold
+    assert_predicate hold(pool.acquire("abc1234")), :cold?
+  end
+
+  def test_hands_out_a_slot_whose_worktree_was_made_before_as_warm
+    pool(size: 1).acquire("abc1234").release
+
+    refute_predicate hold(pool(size: 1).acquire("def5678")), :cold?
   end
 
   def test_a_second_pipeline_gets_a_slot_of_its_own

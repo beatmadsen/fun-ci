@@ -27,6 +27,16 @@ class TestWorktrees < Minitest::Test
     assert_equal File.join(@project.dir, ".git", "fun-ci", "jobs"), @worktrees.jobs_root
   end
 
+  def test_should_say_it_made_the_slot_s_worktree_the_first_time
+    assert @worktrees.check_out(slot, @first)
+  end
+
+  def test_should_say_it_made_nothing_when_it_reuses_a_slot
+    @worktrees.check_out(slot, @first)
+
+    refute @worktrees.check_out(slot, @second)
+  end
+
   def test_should_check_out_the_commit_asked_for_not_head
     @worktrees.check_out(slot, @first)
 

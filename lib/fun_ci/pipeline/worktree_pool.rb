@@ -20,10 +20,10 @@ module FunCi
         @waiter = waiter
       end
 
+      # A ColdSlot when the slot's worktree had to be made.
       def acquire(sha)
         slot = wait_for_free_slot
-        @worktrees.check_out(slot.path, sha)
-        slot
+        @worktrees.check_out(slot.path, sha) ? slot.as_cold : slot
       rescue StandardError
         slot&.release
         raise

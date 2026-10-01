@@ -25,6 +25,17 @@ module FunCi
         @holders -= 1
         @lock.close if @holders.zero? && !@lock.closed?
       end
+
+      # Whether its worktree was just made, so has no caches yet.
+      def cold? = false
+
+      # The same slot, before anyone shares it, in a worktree just made.
+      def as_cold = ColdSlot.new(path, lock, lock_file)
+    end
+
+    # A slot whose worktree was just made: its build starts from nothing.
+    class ColdSlot < Slot
+      def cold? = true
     end
   end
 end

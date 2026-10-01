@@ -17,6 +17,10 @@ module FunCi
         @stdout.puts "fun-ci: fast #{result_marker(passed)}"
       end
 
+      def cold_slot(seconds)
+        @stdout.puts "fun-ci: a new worktree, whose caches are empty, so lint and build have #{seconds}s this once."
+      end
+
       def slow_launched
         @stdout.puts "fun-ci: slow (running in background)"
       end

@@ -20,11 +20,13 @@ module FunCi
 
       # Leaves +path+ as a clean detached checkout of +sha+. Ignored files stay,
       # so caches such as vendor/bundle survive between runs in the same slot.
+      # Answers whether it made the worktree, which then has no caches.
       def check_out(path, sha)
-        return add(path, sha) unless File.exist?(File.join(path, ".git"))
+        return add(path, sha).then { true } unless File.exist?(File.join(path, ".git"))
 
         git(path, "checkout", "--detach", "--force", sha)
         git(path, "clean", "-fd")
+        false
       end
 
       # Has git forget the worktrees whose directories are gone.

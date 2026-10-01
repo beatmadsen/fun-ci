@@ -34,7 +34,10 @@ module FunCi
 
       def recorder = @seams.recorder
       def progress = ProgressReporter.new(stdout: @io.stdout)
-      def stage_runner = StageRunner.new(commit: @commit, stdout: @io.stdout, seams: @seams, dir: @slot.path)
+
+      def stage_runner(seams = @seams)
+        StageRunner.new(commit: @commit, stdout: @io.stdout, seams: seams, dir: @slot.path)
+      end
 
       # This process's part is over; the slow suite may still be running.
       def released(exit_code)
@@ -43,10 +46,22 @@ module FunCi
       end
 
       def phase_one_passed?(config)
-        results = %w[lint build].to_h { |stage| [stage, Thread.new { stage_runner.passes?(config, stage) }] }
+        runner = stage_runner(phase_one_seams)
+        results = %w[lint build].to_h { |stage| [stage, Thread.new { runner.passes?(config, stage) }] }
                                 .transform_values(&:value)
         progress.phase_one_result(results)
         results.values.all?
+      end
+
+      # A worktree just made has no caches, so its lint and build are no
+      # measure of the project's: they get the slow suite's budget, this once.
+      def phase_one_seams
+        return @seams unless @slot.cold?
+
+        cold = @seams.budgets["slow"]
+        progress.cold_slot(cold)
+        longer = %w[lint build].to_h { |stage| [stage, [@seams.budgets[stage], cold].max] }
+        @seams.with(time_budgets: @seams.time_budgets.merge(longer))
       end
 
       def fast_passed?(config)
