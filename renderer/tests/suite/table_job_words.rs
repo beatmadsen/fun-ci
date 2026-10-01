@@ -72,6 +72,16 @@ fn what_is_still_to_come_is_rounded_up() {
 }
 
 #[test]
+fn a_day_less_a_few_seconds_away_is_a_day() {
+    assert_eq!(words(&ran("passed", 36_000, 35_000, Some(86_395))), "passed on wip/foo 9e0b1d4 · due in 1d");
+}
+
+#[test]
+fn an_hour_less_a_few_seconds_away_is_an_hour() {
+    assert_eq!(words(&ran("passed", 36_000, 35_000, Some(3_595))), "passed on wip/foo 9e0b1d4 · due in 1h");
+}
+
+#[test]
 fn briefly_a_failed_job_says_how_long_it_ran() {
     assert_eq!(said_briefly(&ran("failed", 20_000, 8_480, Some(3 * 86_400)), NOW * 1000), "failed · 3h12m");
 }

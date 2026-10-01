@@ -69,13 +69,16 @@ pub fn span(seconds: i64) -> String {
     }
 }
 
-/// How long until something, in its largest unit, rounded up, since it is
-/// still to come: `45m`, `14h`, `3d`.
+/// How long until something, rounded up, since it is still to come, in the
+/// largest unit it reaches once rounded: `45m`, `14h`, `3d`.
 fn roughly(seconds: i64) -> String {
     let up = |unit: i64| (seconds + unit - 1) / unit;
-    match seconds {
-        ..3600 => format!("{}m", up(60).max(1)),
-        3600..86_400 => format!("{}h", up(3600)),
-        _ => format!("{}d", up(86_400)),
+    let (minutes, hours) = (up(60).max(1), up(3600));
+    if minutes < 60 {
+        format!("{minutes}m")
+    } else if hours < 24 {
+        format!("{hours}h")
+    } else {
+        format!("{}d", up(86_400))
     }
 }
