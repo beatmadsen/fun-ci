@@ -3,9 +3,13 @@
 require "open3"
 require "tmpdir"
 require "fileutils"
+require_relative "stray_processes"
 
 # A temporary git repository with .fun-ci/ stage scripts, for process tests.
 class GitProject
+  # A process the test left running in the project, which removing it killed.
+  class LeftRunning < StandardError; end
+
   STAGES = %w[lint build fast slow].freeze
 
   attr_reader :dir
@@ -57,5 +61,12 @@ class GitProject
   end
 
   def common_dir = File.realpath(File.expand_path(git("rev-parse", "--git-common-dir").strip, @dir))
-  def remove = FileUtils.rm_rf(@dir)
+
+  # Fails the test that left a process running in the project, such as a
+  # script blocked on a FIFO it never got to read, once it is killed.
+  def remove
+    stray = StrayProcesses.stop([@dir, File.realpath(@dir)].uniq)
+    FileUtils.rm_rf(@dir)
+    raise LeftRunning, "processes left running in #{@dir}, now killed: #{stray.join("; ")}" if stray.any?
+  end
 end

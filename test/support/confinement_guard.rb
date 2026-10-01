@@ -3,6 +3,7 @@
 require "tmpdir"
 require "fileutils"
 require_relative "confinement_hooks"
+require_relative "stray_processes"
 
 # Tests touch only a temp root private to this run. Its name is short because
 # the parallel executor puts a Unix socket in it, and socket paths are capped
@@ -20,13 +21,16 @@ module ConfinementGuard
 
     def install
       remove_roots_of_finished_runs
-      short = File.join(Dir.tmpdir, "fci-#{Process.pid}")
-      Dir.mkdir(short, 0o700)
-      @root = File.realpath(short)
-      ENV["TMPDIR"] = short
-      ENV["XDG_STATE_HOME"] = File.join(short, "state")
+      @short = File.join(Dir.tmpdir, "fci-#{Process.pid}")
+      Dir.mkdir(@short, 0o700)
+      @root = File.realpath(@short)
+      ENV["TMPDIR"] = @short
+      ENV["XDG_STATE_HOME"] = File.join(@short, "state")
       ConfinementHooks.install
     end
+
+    # The root as TMPDIR names it, and as its real path: a command line may hold either.
+    def roots = [@short, @root].uniq
 
     def installed? = !@root.nil? && ConfinementHooks.installed?
 
@@ -45,11 +49,19 @@ module ConfinementGuard
     private
 
     # A root outlives its run: the parallel executor's socket in it is only
-    # removed as the process exits. The next run clears it.
+    # removed as the process exits, and a run that never reached its end
+    # (the mutation lane, one cut short) may have left processes running in
+    # it. The next run stops those and clears it.
     def remove_roots_of_finished_runs
-      Dir.glob(File.join(Dir.tmpdir, "fci-*")).each do |root|
-        FileUtils.rm_rf(root) unless alive?(root[/fci-(\d+)\z/, 1].to_i)
-      end
+      Dir.glob(File.join(Dir.tmpdir, "fci-*")).reject { |root| alive?(root[/fci-(\d+)\z/, 1].to_i) }
+         .each { |root| remove_root(root) }
+    end
+
+    # Another run may be removing the same root, so its real path is taken
+    # from its parent, which stays.
+    def remove_root(root)
+      StrayProcesses.stop([root, File.join(File.realpath(File.dirname(root)), File.basename(root))].uniq)
+      FileUtils.rm_rf(root)
     end
 
     def alive?(pid)
