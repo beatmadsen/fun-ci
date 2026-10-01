@@ -23,6 +23,10 @@ class TestWorktrees < Minitest::Test
     assert_equal File.join(@project.dir, ".git", "fun-ci", "worktrees"), @worktrees.root
   end
 
+  def test_should_keep_the_jobs_worktrees_beside_the_slots
+    assert_equal File.join(@project.dir, ".git", "fun-ci", "jobs"), @worktrees.jobs_root
+  end
+
   def test_should_check_out_the_commit_asked_for_not_head
     @worktrees.check_out(slot, @first)
 

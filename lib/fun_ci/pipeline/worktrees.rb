@@ -13,10 +13,10 @@ module FunCi
         @project_root = project_root
       end
 
-      def root
-        File.join(File.expand_path(git(@project_root, "rev-parse", "--git-common-dir").strip, @project_root),
-                  "fun-ci", "worktrees")
-      end
+      def root = File.join(fun_ci_dir, "worktrees")
+
+      # Where each daily and weekly job has a worktree of its own (Jobs::Locks).
+      def jobs_root = File.join(fun_ci_dir, "jobs")
 
       # Leaves +path+ as a clean detached checkout of +sha+. Ignored files stay,
       # so caches such as vendor/bundle survive between runs in the same slot.
@@ -31,6 +31,10 @@ module FunCi
       def prune = git(@project_root, "worktree", "prune")
 
       private
+
+      def fun_ci_dir
+        File.join(File.expand_path(git(@project_root, "rev-parse", "--git-common-dir").strip, @project_root), "fun-ci")
+      end
 
       def add(path, sha) = git(@project_root, "worktree", "add", "--detach", "--force", path, sha)
 
