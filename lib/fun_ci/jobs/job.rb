@@ -16,6 +16,9 @@ module FunCi
       # Seconds from one run's start until the job is due again.
       def period = PERIODS.fetch(cadence)
 
+      # What evidence knows it by: `evidence: jobs: <name>:` in .fun-ci/config.
+      def stage = "jobs/#{name}"
+
       # The shell command that runs it on a commit, its path quoted.
       def command(sha) = "#{Shellwords.escape(script)} #{sha}"
     end

@@ -15,6 +15,9 @@ module FunCi
         @db = db
       end
 
+      # The process that runs the job, which a cancel stops first.
+      def started_by(id, pid) = set(id, pid: pid)
+
       # The job's script, which leads a process group of its own.
       def stage_process(id, pid) = set(id, group_pid: pid)
 

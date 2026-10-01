@@ -8,7 +8,7 @@ module FunCi
     # What is wrong with the `evidence` key of .fun-ci/config, each as a line
     # `fun-ci check` prints.
     class SettingsCheck
-      KNOWN = %w[budget detect skip mask masking stages].freeze
+      KNOWN = %w[budget detect skip mask masking stages jobs].freeze
       STAGES = %w[all lint build fast slow].freeze
 
       # "2", 2, 2.5 or "2s" as seconds, or nil.
@@ -28,7 +28,7 @@ module FunCi
         return [] if @raw.nil?
         return ["evidence must be a mapping, not #{@raw.inspect}"] unless @raw.is_a?(Hash)
 
-        unknown + budget + stages
+        unknown + budget + stages + jobs
       end
 
       private
@@ -48,12 +48,23 @@ module FunCi
         lists.flat_map { |stage, entries| stage_errors(stage, entries) }
       end
 
+      def jobs
+        lists = @raw.fetch("jobs", {})
+        return ["evidence.jobs must be a mapping of job to entries"] unless lists.is_a?(Hash)
+
+        lists.flat_map { |job, entries| entry_errors("evidence.jobs.#{job}", entries) }
+      end
+
+      def entry_errors(where, entries)
+        Array(entries).filter_map { |entry| refusal(entry) }.map { |message| "#{where}: #{message}" }
+      end
+
       def stage_errors(stage, entries)
         unless STAGES.include?(stage)
           return ["evidence.stages has no stage '#{stage}': use all, lint, build, fast or slow"]
         end
 
-        Array(entries).filter_map { |entry| refusal(entry) }.map { |message| "evidence.stages.#{stage}: #{message}" }
+        entry_errors("evidence.stages.#{stage}", entries)
       end
 
       def refusal(entry)

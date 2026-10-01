@@ -13,7 +13,9 @@ module FunCi
     # what is wrong, for `fun-ci check`.
     class Settings
       DEFAULTS = { "budget" => 2, "detect" => true, "skip" => [], "mask" => [], "masking" => true,
-                   "stages" => {} }.freeze
+                   "stages" => {}, "jobs" => {} }.freeze
+      # How a daily or weekly job is named where a stage would be: its entries are under `jobs:`.
+      JOB = "jobs/"
 
       # The settings in the config file at `path`, or the defaults without one.
       def self.load(path)
@@ -36,8 +38,11 @@ module FunCi
                             .then { |sources| Patterns.compile(sources) }
       end
 
-      # The raw entries for `stage`: those for every stage, then its own.
-      def entries(stage) = stage_list("all") + stage_list(stage)
+      # The raw entries for `stage`: those for every stage, then its own; for
+      # a job (`jobs/<name>`), those under `jobs:`.
+      def entries(stage)
+        stage_list("all") + (stage.start_with?(JOB) ? list("jobs", stage.delete_prefix(JOB)) : stage_list(stage))
+      end
 
       # The globs whose files are stamped when the stage starts, so what it
       # wrote to them can be told from what was there before.
@@ -54,10 +59,12 @@ module FunCi
       def values = @raw.is_a?(Hash) ? DEFAULTS.merge(@raw) : DEFAULTS
       def value(key) = values[key]
 
-      def stage_list(stage)
-        stages = value("stages")
-        list = stages[stage] if stages.is_a?(Hash)
-        list.is_a?(Array) ? list : []
+      def stage_list(stage) = list("stages", stage)
+
+      def list(setting, name)
+        lists = value(setting)
+        found = lists[name] if lists.is_a?(Hash)
+        found.is_a?(Array) ? found : []
       end
     end
   end

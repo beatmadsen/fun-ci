@@ -31,6 +31,12 @@ class TestJobRecorder < Minitest::Test
     assert_equal 4321, job_run[:group_pid]
   end
 
+  def test_should_record_the_process_that_runs_the_job
+    @recorder.started_by(@id, 1234)
+
+    assert_equal 1234, job_run[:pid]
+  end
+
   def test_should_record_how_the_job_ended
     @recorder.end_stage(@id, "failed")
 
