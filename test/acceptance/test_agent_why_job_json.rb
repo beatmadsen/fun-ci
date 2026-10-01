@@ -25,6 +25,21 @@ class TestAgentWhyJobJson < Minitest::Test
     assert_equal expected, JSON.parse(@agent.stdout).slice(*expected.keys)
   end
 
+  def test_should_give_the_budget_the_job_ran_to_as_json
+    @agent.record_job_run("soak", SHA, FAILED.with(budget: 3600))
+    @agent.why("--job", "soak", "--json")
+
+    assert_equal 3600, JSON.parse(@agent.stdout)["budget"]
+  end
+
+  # A run kept before job runs had a budget ran to a job's only one, a day.
+  def test_should_give_a_run_kept_without_a_budget_a_day_as_json
+    @agent.record_job_run("soak", SHA, FAILED.with(budget: nil))
+    @agent.why("--job", "soak", "--json")
+
+    assert_equal 86_400, JSON.parse(@agent.stdout)["budget"]
+  end
+
   def test_should_give_a_job_that_never_ran_no_commit_as_json
     @agent.why("--job", "soak", "--json")
 
