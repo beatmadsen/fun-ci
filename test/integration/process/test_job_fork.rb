@@ -6,6 +6,7 @@ require_relative "../../support/process_deadline"
 require_relative "../../support/fifo"
 require "fun_ci/jobs/folders"
 require "fun_ci/jobs/job_fork"
+require "fun_ci/pipeline/priorities"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
 
@@ -105,12 +106,13 @@ class TestJobFork < Minitest::Test
 
   # The job's process inherits a pipe this holds, whose end comes when it
   # has exited. The job's script holds none of it: its runner's descriptors
-  # close on exec.
+  # close on exec. It runs at the test's own priority: a job's own lets the
+  # parallel workers starve it past the deadline (test_job_priority.rb pins it).
   def forked_to_the_end
     ended, held = IO.pipe
     job = FunCi::Jobs::Folders.new(project).jobs.first
-    FunCi::Jobs::JobFork.start(job, FunCi::Pipeline::Commit.new(sha: @sha, branch: "main"), project: project,
-                                                                                            db_path: @db_path)
+    FunCi::Jobs::JobFork.new(project: project, db_path: @db_path, priorities: FunCi::Pipeline::Priorities::NONE)
+                        .start(job, FunCi::Pipeline::Commit.new(sha: @sha, branch: "main"))
     held.close
     within_deadline { ended.read }
   end

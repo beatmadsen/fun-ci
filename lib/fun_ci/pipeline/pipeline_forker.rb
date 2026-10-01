@@ -52,7 +52,8 @@ module FunCi
 
       # Which jobs are due is read before any fork, which must not inherit the connection.
       def self.start_due_jobs(commit, db_path)
-        due_jobs(db_path).each { |job| Jobs::JobFork.start(job, commit, project: Dir.pwd, db_path: db_path) }
+        fork = Jobs::JobFork.new(project: Dir.pwd, db_path: db_path)
+        due_jobs(db_path).each { |job| fork.start(job, commit) }
       end
 
       def self.due_jobs(db_path)

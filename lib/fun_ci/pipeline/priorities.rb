@@ -13,6 +13,8 @@ module FunCi
     class Priorities
       MACOS = new(job: "taskpolicy -c utility ", slow: "")
       OTHER = new(job: "nice -n 19 ", slow: "nice -n 10 ")
+      # fun-ci's own priority, for both.
+      NONE = new(job: "", slow: "")
 
       # platform: as RUBY_PLATFORM names it.
       def self.for(platform) = platform.include?("darwin") ? MACOS : OTHER

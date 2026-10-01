@@ -43,17 +43,31 @@ module ProcessDeadline
     flunk "an earlier wait on a process hung, so this one is not waited on"
   end
 
+  # Names what was still running, each child and its group, before stopping it.
   def give_up
     ProcessDeadline.hung = MUTATING
+    running = still_running
     stop_children
-    flunk "still waiting on a process after #{SECONDS} s"
+    flunk "still waiting on a process after #{SECONDS} s; running: #{running.join("; ")}"
   end
 
   def stop_children = children.each { |pid| kill_group(pid) }
 
-  def children
-    `ps -A -o pid= -o ppid=`.lines.map { |line| line.split.map(&:to_i) }
-                            .select { |_, parent| parent == Process.pid }.map(&:first)
+  def children = table.select { |_, parent| parent == Process.pid }.map(&:first)
+
+  # [pid, ppid, pgid, "pid stat elapsed command"] of every process.
+  def table
+    `ps -A -o pid= -o ppid= -o pgid= -o stat= -o etime= -o command=`.lines.map do |line|
+      pid, ppid, pgid, rest = line.strip.split(" ", 4)
+      [pid.to_i, ppid.to_i, pgid.to_i, "#{pid} #{rest}"]
+    end
+  end
+
+  # Not the ps that lists them.
+  def still_running
+    groups = children
+    table.select { |_, parent, group, _| parent == Process.pid || groups.include?(group) }.map(&:last)
+         .grep_v(/\A\d+ \S+ \S+ ps -A /)
   end
 
   # A child that leads no group of its own is killed alone; one already gone,
