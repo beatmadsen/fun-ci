@@ -32,7 +32,7 @@ module FunCi
       def page(runs, more:, jobs: [])
         size = jobs.empty? ? @page_size : [@page_size - JOB_LINES, 0].max
         first = first_shown(runs.size, size)
-        { cursor: cursor_on_page(first, size, runs.size), confirming: @key_handler.confirming?,
+        { cursor: cursor_on_page(first, size), confirming: @key_handler.confirming?,
           has_more: more || first + size < runs.size, runs: runs[first, size] || [] }
       end
 
@@ -46,12 +46,11 @@ module FunCi
         [[cursor, count - 1].min - size + 1, 0].max
       end
 
-      # Past the page's runs while the cursor is on a job.
-      def cursor_on_page(first, size, count)
+      # Past the page's runs while the cursor is on a job: a page that holds
+      # a job's cursor ends at the last run.
+      def cursor_on_page(first, size)
         cursor = @key_handler.cursor_index
-        return nil unless cursor && size.positive?
-
-        cursor < count ? cursor - first : [count - first, size].min + cursor - count
+        cursor - first if cursor && size.positive?
       end
     end
   end

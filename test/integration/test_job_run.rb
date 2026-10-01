@@ -104,6 +104,13 @@ class TestJobRun < Minitest::Test
     assert_equal "failed", latest[:status]
   end
 
+  def test_should_keep_why_the_job_s_worktree_could_not_be_checked_out
+    @worktrees.fail_with("git checkout: no such commit")
+    run_job
+
+    assert_includes latest[:evidence], "git checkout: no such commit"
+  end
+
   def test_should_let_go_of_the_job_s_lock_once_it_has_run
     run_job
 

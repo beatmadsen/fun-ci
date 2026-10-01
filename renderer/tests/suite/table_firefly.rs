@@ -32,6 +32,28 @@ fn a_board_with_a_run_waiting_to_start_is_not_still() {
     assert!(!still(&board(&["passed", "pending"])));
 }
 
+/// `statuses`' board, with a job whose latest run ended `status`.
+fn with_job(statuses: &[&str], status: &str) -> Board {
+    let mut board = board(statuses);
+    board.jobs = vec![serde_json::from_value(serde_json::json!({"name": "soak", "cadence": "weekly", "status": status})).unwrap()];
+    board
+}
+
+#[test]
+fn a_board_with_a_failed_job_is_not_still() {
+    assert!(!still(&with_job(&["passed"], "failed")));
+}
+
+#[test]
+fn a_board_with_a_running_job_is_not_still() {
+    assert!(!still(&with_job(&["passed"], "running")));
+}
+
+#[test]
+fn a_board_whose_jobs_passed_or_are_due_is_still() {
+    assert!(still(&with_job(&["passed"], "due")));
+}
+
 #[test]
 fn an_empty_board_is_not_still() {
     assert!(!still(&board(&[])));
