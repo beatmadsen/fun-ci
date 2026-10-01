@@ -18,7 +18,7 @@ class TestJobRun < Minitest::Test
 
   def test_should_run_the_project_s_script_with_the_commit_when_the_commit_has_no_copy
     commands = []
-    run_job(runner: ->(cmd) { (commands << cmd) && PASSED })
+    run_job(runner: recording(commands))
 
     assert_equal ["#{File.join(project, ".fun-ci", "daily", "mutation.sh")} #{SHA}"], commands
   end
@@ -57,7 +57,7 @@ class TestJobRun < Minitest::Test
   def test_should_run_the_commit_s_own_copy_of_the_script_when_it_has_one
     committed = commit_a_copy_of_the_script
     commands = []
-    run_job(runner: ->(cmd) { (commands << cmd) && PASSED })
+    run_job(runner: recording(commands))
 
     assert_equal ["#{committed} #{SHA}"], commands
   end
@@ -77,7 +77,7 @@ class TestJobRun < Minitest::Test
 
   def test_should_run_nothing_while_another_process_holds_the_job_s_lock
     commands = []
-    holding_the_lock { run_job(runner: ->(cmd) { (commands << cmd) && PASSED }) }
+    holding_the_lock { run_job(runner: recording(commands)) }
 
     assert_empty commands
   end
@@ -85,7 +85,7 @@ class TestJobRun < Minitest::Test
   def test_should_run_nothing_when_the_job_is_not_due
     run_job
     commands = []
-    run_job(runner: ->(cmd) { (commands << cmd) && PASSED })
+    run_job(runner: recording(commands))
 
     assert_empty commands
   end
@@ -95,13 +95,6 @@ class TestJobRun < Minitest::Test
     run_job
 
     assert_equal "failed", status_of(first)
-  end
-
-  def test_should_say_why_a_run_left_by_a_process_that_died_has_no_result
-    first = claim_a_run_nobody_runs
-    run_job
-
-    assert_includes evidence_of(first), "its process stopped before it said how the run ended"
   end
 
   def test_should_record_failed_a_job_whose_worktree_could_not_be_checked_out

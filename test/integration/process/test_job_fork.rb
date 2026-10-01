@@ -36,35 +36,41 @@ class TestJobFork < Minitest::Test
     @project.remove
   end
 
-  def test_should_record_the_job_run_on_the_commit
+  def test_should_record_the_job_run_completed
     forked_to_the_end
 
-    assert_equal ["completed", @sha], latest.values_at(:status, :commit_hash)
+    assert_equal "completed", latest[:status]
+  end
+
+  def test_should_record_the_commit_the_job_run_tested
+    forked_to_the_end
+
+    assert_equal @sha, latest[:commit_hash]
   end
 
   def test_should_tell_the_job_its_name
     forked_to_the_end
 
-    assert_equal "mutation", File.read(seen).split[0]
+    assert_equal "mutation", told[:name]
   end
 
   def test_should_run_the_job_in_its_own_worktree
     forked_to_the_end
 
-    assert_equal File.join(@project.common_dir, "fun-ci", "jobs", "mutation"), File.read(seen).split[1]
+    assert_equal File.join(@project.common_dir, "fun-ci", "jobs", "mutation"), told[:worktree]
   end
 
   def test_should_give_the_job_the_commit
     forked_to_the_end
 
-    assert_equal @sha, File.read(seen).split[2]
+    assert_equal @sha, told[:commit]
   end
 
   # So that closing the terminal of the commit doesn't end a job that can run for hours.
   def test_should_run_the_job_in_a_session_of_its_own
     forked_to_the_end
 
-    refute_equal Process.getsid.to_s, File.read(seen).split[3]
+    refute_equal Process.getsid.to_s, told[:session]
   end
 
   # As when mutineer runs the tests: $stdout and $stderr are StringIOs, not the process's own streams.
@@ -88,7 +94,7 @@ class TestJobFork < Minitest::Test
   def test_should_record_the_process_group_the_job_s_script_runs_in
     forked_to_the_end
 
-    assert_equal File.read(seen).split[4].to_i, latest[:group_pid]
+    assert_equal told[:group].to_i, latest[:group_pid]
   end
 
   def test_should_start_no_job_that_is_not_due
@@ -102,6 +108,9 @@ class TestJobFork < Minitest::Test
   private
 
   def fifo = File.join(@dir, "lock-state")
+
+  # What the job's script wrote down (TOLD), by name.
+  def told = %i[name worktree commit session group].zip(File.read(seen).split).to_h
 
   # A job whose script kills the process running it, then says whether the job's lock is still held.
   def job_that_kills_its_runner

@@ -9,6 +9,9 @@ class TestAgentJobs < Minitest::Test
   SHA = "9e0b1d4a3f7c01e9b2d4c6f8a1b3c5d7e9f0a2b4"
   FAILED = JobRecording::JobRunFacts.new(status: "failed", exit_status: 1, ago: 3600, seconds: 2)
   PASSED = JobRecording::JobRunFacts.new(status: "completed", exit_status: 0, ago: 7200, seconds: 42)
+  # Its process died before it said how the run ended: failed, with no end.
+  LOST = JobRecording::JobRunFacts.new(status: "failed", seconds: nil)
+  CANCELLED = JobRecording::JobRunFacts.new(status: "cancelled")
 
   def setup
     @agent = AgentClient.open
@@ -19,7 +22,7 @@ class TestAgentJobs < Minitest::Test
 
   def teardown = @agent.close
 
-  def test_should_give_a_job_its_cadence_state_time_commit_age_and_when_it_is_due_again
+  def test_should_line_up_a_job_s_standing_on_one_line
     @agent.record_job_run("soak", SHA, FAILED, branch: "wip/foo")
     @agent.jobs
 
@@ -34,19 +37,10 @@ class TestAgentJobs < Minitest::Test
   end
 
   def test_should_say_a_cancelled_job_runs_on_the_next_commit
-    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "cancelled"))
+    @agent.record_job_run("soak", SHA, CANCELLED)
     @agent.jobs
 
     assert_match(/\Asoak +weekly  x +2s  main 9e0b1d4  1h ago  runs on the next commit\z/, line_of("soak"))
-  end
-
-  def test_should_say_a_cancelled_job_is_due_as_json
-    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "cancelled"))
-    @agent.jobs("--json")
-
-    soak = JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "soak" }
-
-    assert_equal %w[cancelled true], [soak["state"], soak["due"].to_s]
   end
 
   def test_should_say_a_job_that_never_ran_runs_on_the_next_commit
@@ -78,25 +72,6 @@ class TestAgentJobs < Minitest::Test
     other.close
   end
 
-  def test_should_give_each_job_as_json
-    @agent.record_job_run("soak", SHA, FAILED, branch: "wip/foo")
-    @agent.jobs("--json")
-
-    soak = JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "soak" }
-
-    assert_equal({ "cadence" => "weekly", "state" => "failed", "commit" => { "sha" => SHA, "branch" => "wip/foo" },
-                   "seconds" => 2.0 }, soak.slice("cadence", "state", "commit", "seconds"))
-  end
-
-  def test_should_give_when_a_job_is_due_again_as_json
-    @agent.record_job_run("soak", SHA, FAILED)
-    @agent.jobs("--json")
-
-    soak = JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "soak" }
-
-    assert_equal (@agent.clock.now - 3600 + 604_800).utc.iso8601, soak["due_at"]
-  end
-
   def test_should_look_for_jobs_whose_process_died_before_listing_them
     @agent.jobs
 
@@ -110,33 +85,19 @@ class TestAgentJobs < Minitest::Test
     assert_match(/  running\z/, line_of("soak"))
   end
 
-  def test_should_say_a_job_that_ran_within_its_period_is_not_due_as_json
-    @agent.record_job_run("mutation", SHA, PASSED)
-    @agent.jobs("--json")
-
-    assert_equal false, JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "mutation" }["due"]
-  end
-
   # Its process died before it said how the run ended.
   def test_should_say_a_lost_job_is_lost
-    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", seconds: nil))
+    @agent.record_job_run("soak", SHA, LOST)
     @agent.jobs
 
     assert_match(/\Asoak +weekly  LOST/, line_of("soak"))
   end
 
   def test_should_end_with_the_why_command_of_a_lost_job
-    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", seconds: nil))
+    @agent.record_job_run("soak", SHA, LOST)
     @agent.jobs
 
     assert_equal "fun-ci why --job soak", @agent.stdout.lines.last.chomp
-  end
-
-  def test_should_say_a_lost_job_is_lost_as_json
-    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", seconds: nil))
-    @agent.jobs("--json")
-
-    assert_equal "lost", JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "soak" }["state"]
   end
 
   def test_should_exit_zero

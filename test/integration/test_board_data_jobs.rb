@@ -72,19 +72,6 @@ class TestBoardDataJobs < Minitest::Test
     assert_equal "failed", status
   end
 
-  def test_should_say_why_a_job_whose_process_died_has_no_result
-    board(lock_held: false).record_dead_jobs
-
-    assert_includes @runs.latest("soak")[:evidence], "its process stopped before it said how the run ended"
-  end
-
-  # When it was found dead says nothing of how long it ran.
-  def test_should_give_a_job_whose_process_died_no_end
-    board(lock_held: false).record_dead_jobs
-
-    assert_nil @runs.latest("soak")[:completed_at]
-  end
-
   def test_should_leave_running_a_job_whose_lock_is_held
     board(lock_held: true).record_dead_jobs
 

@@ -55,11 +55,19 @@ module JobRunKit
 
   def project = File.join(@dir, "project")
   def locks_root = File.join(@dir, "jobs")
+
+  # A runner that passes, keeping each command it was given in `commands`.
+  def recording(commands)
+    lambda do |command|
+      commands << command
+      PASSED
+    end
+  end
+
   def job = FunCi::Jobs::Folders.new(project).jobs.first
   def runs = FunCi::Persistence::JobRuns.new(@db, project)
   def latest = runs.latest("mutation")
   def status_of(id) = @db.execute("SELECT status FROM job_runs WHERE id = ?", [id]).first.first
-  def evidence_of(id) = @db.execute("SELECT evidence FROM job_runs WHERE id = ?", [id]).first.first.to_s
 
   def site
     FunCi::Jobs::Site.new(project: project, db: @db, worktrees: @worktrees,

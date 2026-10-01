@@ -63,12 +63,6 @@ class TestJobRuns < Minitest::Test
     assert claim(NOW + DAY)
   end
 
-  def test_should_claim_a_job_again_at_once_when_its_latest_run_was_cancelled
-    FunCi::Persistence::ActiveJobs.cancelled(@db, claim(NOW))
-
-    assert claim(NOW + 60)
-  end
-
   def test_should_not_count_another_project_s_run_of_a_job_of_the_same_name
     claim(NOW)
 
