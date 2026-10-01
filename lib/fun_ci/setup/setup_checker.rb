@@ -2,13 +2,22 @@
 
 require_relative "project_config"
 require_relative "legacy_hooks"
+require_relative "installed_hooks"
 require_relative "trunk_report"
 
 module FunCi
   module Setup
     class SetupChecker
-      def self.run(project_root:, stdout: $stdout)
-        new(config: ProjectConfig.new(project_root), hooks: LegacyHooks.new(project_root), stdout: stdout,
+      # The hooks it warns of: fun-ci 1.x's, and any in `hooks_dir` that
+      # doesn't run fun-ci.
+      Hooks = Data.define(:sources) do
+        def warnings = sources.flat_map(&:warnings)
+      end
+
+      # hooks_dir: where git runs the project's hooks from; nil outside a git repository.
+      def self.run(project_root:, stdout: $stdout, hooks_dir: nil)
+        hooks = Hooks.new([LegacyHooks.new(project_root), InstalledHooks.new(hooks_dir)])
+        new(config: ProjectConfig.new(project_root), hooks: hooks, stdout: stdout,
             trunk: TrunkReport.new(project_root)).run
       end
 

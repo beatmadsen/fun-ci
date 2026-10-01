@@ -157,6 +157,12 @@ own, so killing that pid would leave `slow.sh` running. `StalePipelineCanceller`
 has the same hole, which AT-1.6 closes. Both need the process group of the
 whole pipeline recorded per run.
 
+### 1.13 A repository's hooks run fun-ci, or `fun-ci check` says they don't
+**Given** a post-commit or pre-push hook that doesn't run fun-ci, or none
+**When** `fun-ci check` runs
+**Then** it warns that no commit is tested, or that no push waits for a verdict, and says how to fix it (the warning doesn't fail the check).
+**And** when the hooks are those `git lfs install` writes, `fun-ci install-hooks` writes fun-ci's in their place, which run fun-ci's and then git-lfs's; a push gives git-lfs every byte of the ref list git sent, and a push fun-ci stops sends no LFS objects.
+
 ---
 
 ## 2. Protocol and golden corpus (still Ruby-only)

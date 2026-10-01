@@ -7,11 +7,15 @@ module FunCi
       MARKER = "# fun-ci-managed-hook"
       NULL_SHA = "0" * 40
 
+      NOT_INSTALLED = %(echo "fun-ci is not installed or not on PATH, so this runs without CI. ) +
+                      %(Install it with: gem install fun_ci" >&2)
+      INSTALLED = "command -v fun-ci >/dev/null 2>&1"
+
       GUARD = <<~SH.freeze
         #!/bin/sh
         #{MARKER}
-        if ! command -v fun-ci >/dev/null 2>&1; then
-          echo "fun-ci is not installed or not on PATH, so this runs without CI. Install it with: gem install fun_ci" >&2
+        if ! #{INSTALLED}; then
+          #{NOT_INSTALLED}
           exit 0
         fi
       SH
@@ -26,7 +30,7 @@ module FunCi
       # Before a push: the fast verdict of each commit git says it pushes
       # (acceptance-tests.md, AT-9.13). A deleted ref pushes the null SHA, and
       # exit 5 is a project not set up for fun-ci, which pushes without CI.
-      PRE_PUSH = <<~SH.freeze
+      PRE_PUSH_WAITS = <<~SH.freeze
         status=0
         while read -r local_ref local_sha remote_ref remote_sha; do
           [ "$local_sha" = "#{NULL_SHA}" ] && continue
@@ -34,8 +38,9 @@ module FunCi
           code=$?
           [ "$code" -eq 0 ] || [ "$code" -eq 5 ] || status=1
         done
-        exit $status
       SH
+
+      PRE_PUSH = "#{PRE_PUSH_WAITS}exit $status\n".freeze
 
       BODIES = { "post-commit" => POST_COMMIT, "pre-push" => PRE_PUSH }.freeze
 

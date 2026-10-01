@@ -49,6 +49,8 @@ A stage that overruns its budget is killed and reported as over budget, in yello
 
 After each commit, the `post-commit` hook starts the pipeline in the background and returns at once, so a commit is never held up. The `pre-push` hook waits for the verdict of each commit you push and stops the push if lint, build or the fast suite failed. A commit whose run has already finished goes straight through. If fun-ci isn't installed, both hooks say so and let git carry on.
 
+`install-hooks` leaves a hook another tool wrote alone, and `fun-ci check` warns that no commit is tested until that hook calls fun-ci. Git LFS's own hooks are the exception: fun-ci writes its hooks in their place, and they run git-lfs's after fun-ci's, so LFS objects still reach the remote.
+
 Each run happens in a git worktree of its own under `.git/fun-ci/worktrees/`, checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. Two runs can go at once; set `worktree_slots: 3` in `.fun-ci/config` for more, and `fun-ci prune` removes the worktrees when you want the space back. A newer commit on a branch cancels the older run that is still going, unless an agent is waiting on it.
 
 Results are kept in SQLite under `$XDG_STATE_HOME/fun-ci/` (`~/.local/state/fun-ci/` by default), shared by every project on the machine.

@@ -202,6 +202,11 @@ same problem if you switch branches while it runs.
 - The non-blocking hook becomes **post-commit** (the SHA exists then).
   `install-hooks` replaces a fun-ci pre-commit hook it owns; `check` warns
   about a legacy one. Pre-push stays.
+- `install-hooks` leaves another tool's hook alone, except git-lfs's own
+  (recognised by its shape, as its wording changes between versions): fun-ci
+  writes a hook that runs fun-ci's and then git-lfs's, keeping a push's ref
+  list in a file so both read it. `check` warns of a post-commit or pre-push
+  hook that doesn't run fun-ci.
 - Each pipeline runs in a **pooled worktree** under
   `$(git rev-parse --git-common-dir)/fun-ci/worktrees/slot-N`. A run takes a
   free slot (lock file), `git checkout --detach <sha>`, `git clean -fd`

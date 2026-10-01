@@ -2,6 +2,7 @@
 
 require "fileutils"
 require_relative "hook_script"
+require_relative "lfs_hook"
 
 module FunCi
   module Setup
@@ -23,8 +24,9 @@ module FunCi
         return reject("Unknown hook type: #{@hook_type}") unless HookScript.types.include?(@hook_type)
         return skip("Hook #{@hook_type} already exists from another tool, so it was left alone.") if foreign_hook?
 
-        write_hook
-        @stdout.puts "Installed #{@hook_type} hook."
+        lfs = lfs?
+        write_hook(lfs ? LfsHook.script(@hook_type) : HookScript.for(@hook_type))
+        @stdout.puts "Installed #{@hook_type} hook#{", which runs git-lfs's too" if lfs}."
         0
       end
 
@@ -33,13 +35,19 @@ module FunCi
       def git_repo? = !@hooks_dir.nil?
       def hook_path = File.join(@hooks_dir, @hook_type)
 
+      def existing = File.exist?(hook_path) ? File.read(hook_path) : ""
+
+      # git-lfs's own hook is not left alone: fun-ci's runs it.
       def foreign_hook?
-        File.exist?(hook_path) && !HookScript.managed?(File.read(hook_path))
+        script = existing
+        !script.empty? && !HookScript.managed?(script) && !LfsHook.stock?(script, @hook_type)
       end
 
-      def write_hook
+      def lfs? = LfsHook.runs_lfs?(existing, @hook_type)
+
+      def write_hook(script)
         FileUtils.mkdir_p(@hooks_dir)
-        File.write(hook_path, HookScript.for(@hook_type))
+        File.write(hook_path, script)
         File.chmod(0o755, hook_path)
       end
 

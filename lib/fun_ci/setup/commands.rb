@@ -32,7 +32,9 @@ module FunCi
         install(args.any? ? [args.first] : HookScript.types)
       end
 
-      def check(_args) = SetupChecker.run(project_root: @project_root, stdout: @stdout)
+      def check(_args)
+        SetupChecker.run(project_root: @project_root, stdout: @stdout, hooks_dir: @hooks_dir.call(@project_root))
+      end
 
       private
 

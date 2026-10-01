@@ -3,6 +3,22 @@
 require_relative "../../test_helper"
 require_relative "../../support/cli_project"
 
+# `check` asks git where the hooks it looks at are.
+class TestCliCheckSubcommand < Minitest::Test
+  include CliProject
+  include FunCiTestProject
+
+  def test_check_succeeds_for_configured_project
+    make_project_with_scripts(@dir)
+
+    assert_equal 0, run_cli("check")
+  end
+
+  def test_check_fails_when_scripts_missing
+    assert_equal 1, run_cli("check")
+  end
+end
+
 class TestCliInstallHooks < Minitest::Test
   include CliProject
 

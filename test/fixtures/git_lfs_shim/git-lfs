@@ -1,0 +1,8 @@
+#!/bin/sh
+# A stand-in git-lfs for process tests of the hooks fun-ci writes over
+# git-lfs's: records what it was asked in $GIT_LFS_SHIM_ASKED and what it read
+# on stdin in $GIT_LFS_SHIM_STDIN, and exits 0. Tracked rather than written
+# per test, since macOS scans each new executable on its first exec (see
+# Gotchas in CLAUDE.md).
+echo "$*" >> "$GIT_LFS_SHIM_ASKED"
+cat >> "$GIT_LFS_SHIM_STDIN"

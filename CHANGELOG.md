@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- In a Git LFS repository, `fun-ci install-hooks` installed nothing, since
+  git-lfs had written post-commit and pre-push already, and no commit was
+  tested. It now writes hooks that run fun-ci's and then git-lfs's, giving
+  git-lfs the push's ref list as git sent it.
+- `fun-ci check` warns when the post-commit or pre-push hook doesn't run
+  fun-ci, instead of saying all is well while no commit is tested.
 - A mistake in `.fun-ci/config` no longer stops a commit's run, which let the
   push through untested: the trigger names the mistake, the setting takes its
   default, and the run goes ahead. `fun-ci check` still fails on it.

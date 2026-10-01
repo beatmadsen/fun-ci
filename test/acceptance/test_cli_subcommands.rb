@@ -3,7 +3,8 @@
 require_relative "../test_helper"
 require_relative "../support/cli_project"
 
-# Subcommands that need no git repository. The ones that ask git are in
+# Subcommands that ask git nothing. The ones that do, `check` and
+# `install-hooks` among them, are in
 # test/integration/process/test_cli_hook_subcommands.rb.
 class TestCliInitSubcommand < Minitest::Test
   include CliProject
@@ -26,21 +27,6 @@ class TestCliInitSubcommand < Minitest::Test
     Dir.mkdir(File.join(@dir, ".fun-ci"))
 
     assert_equal 0, run_cli("init")
-  end
-end
-
-class TestCliCheckSubcommand < Minitest::Test
-  include CliProject
-  include FunCiTestProject
-
-  def test_check_succeeds_for_configured_project
-    make_project_with_scripts(@dir)
-
-    assert_equal 0, run_cli("check")
-  end
-
-  def test_check_fails_when_scripts_missing
-    assert_equal 1, run_cli("check")
   end
 end
 
