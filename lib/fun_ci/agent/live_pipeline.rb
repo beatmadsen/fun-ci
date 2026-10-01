@@ -28,8 +28,13 @@ module FunCi
         Process.detach(pid).join
       end
 
-      # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
-      def watch(db) = Pipeline::RunCanceller.new.record_dead(db)
+      # Records failed each slow suite and each daily or weekly job whose
+      # process died (acceptance-tests.md, AT-8.3, AT-13.6).
+      def watch(db)
+        canceller = Pipeline::RunCanceller.new
+        canceller.record_dead(db)
+        canceller.record_dead_jobs(db)
+      end
     end
   end
 end

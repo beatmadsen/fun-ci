@@ -6,16 +6,20 @@ require_relative "run_report"
 require_relative "events"
 require_relative "trunk_reading"
 require_relative "trunk_json"
+require_relative "job_events"
+require_relative "../persistence/job_runs"
 
 module FunCi
   module Agent
     # Looks at the newest runs of the project git names, as `events` compares
-    # them: { run id => Events::RunState }.
+    # them: { run id => Events::RunState }; and at its newest daily and weekly
+    # job runs: { job run id => JobEvents::JobState }.
     class Snapshots
       def initialize(db, git, clock)
         project = git.toplevel
         @db = db
         @runs = Persistence::ProjectRuns.new(db, project)
+        @job_runs = Persistence::JobRuns.new(db, project)
         @trunk = TrunkReading.new(db, project, clock, TrunkReading::UNREAD)
       end
 
@@ -23,7 +27,17 @@ module FunCi
         @runs.recent(limit: limit, branch: nil).to_h { |run| [run[:id], state_of(run)] }
       end
 
+      def jobs(limit:)
+        @job_runs.recent(limit: limit).to_h { |run| [run[:id], job_state(run)] }
+      end
+
       private
+
+      def job_state(run)
+        JobEvents::JobState.new(id: run[:id], job: run[:job], cadence: run[:cadence], sha: run[:commit_hash],
+                                branch: run[:branch], status: run[:status],
+                                seconds: Persistence::StageJob.elapsed_duration(run)&.round(1))
+      end
 
       def state_of(run)
         superseded_by = run[:status] == "cancelled" ? @runs.superseded_by(run) : nil

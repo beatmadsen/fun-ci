@@ -33,6 +33,9 @@ module FunCi
         end
       end
 
+      # The project's newest job runs, newest first.
+      def recent(limit:) = query("WHERE project_path = ? ORDER BY id DESC LIMIT ?", @project, limit)
+
       # The job's newest run, or nil when it never ran.
       def latest(name) = query("WHERE project_path = ? AND job = ? ORDER BY id DESC LIMIT 1", @project, name).first
 

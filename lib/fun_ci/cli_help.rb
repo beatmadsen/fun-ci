@@ -51,7 +51,7 @@ module FunCi
         -n N           (runs) How many runs to list (default 10)
         --branch NAME  (runs) Only runs on this branch
         --follow       (events) Keep printing events as they happen, until stopped
-        --only failures  (events) Print only failed stages and superseded runs
+        --only failures  (events) Print only failed stages, superseded runs and failed jobs
         --json         Print JSON instead of text (events always print JSON lines)
         Exit codes: 0 passed, 1 failed, 2 over budget, 3 undecided,
         4 superseded, 5 no run, 6 conflicts with the trunk (--trunk), 64 usage error
