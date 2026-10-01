@@ -11,7 +11,14 @@ module FunCi
 
       def self.from(row)
         { project: row[:project], name: row[:name], cadence: row[:cadence],
-          status: STATUS.fetch(row[:status], row[:status]), **run(row[:run]), due_at: row[:due_at]&.to_i }.compact
+          status: status(row), **run(row[:run]), due_at: row[:due_at]&.to_i }.compact
+      end
+
+      # `lost` for a run that failed with no end: its process died before it said how it ended.
+      def self.status(row)
+        return "lost" if row[:status] == "failed" && row.dig(:run, :completed_at).nil?
+
+        STATUS.fetch(row[:status], row[:status])
       end
 
       # What the latest run says: which, on what, and when.
@@ -23,7 +30,7 @@ module FunCi
       end
 
       def self.epoch(iso) = Time.parse(iso).to_i
-      private_class_method :run, :epoch
+      private_class_method :status, :run, :epoch
     end
   end
 end

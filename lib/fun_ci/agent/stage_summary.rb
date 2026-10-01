@@ -7,8 +7,9 @@ module FunCi
     module StageSummary
       WORDS = { "over_budget" => "ran over budget" }.freeze
 
-      def self.line(stage)
-        "#{stage.name} #{WORDS.fetch(stage.state, stage.state)}#{ending(stage)}#{took(stage)}"
+      # seconds: how a length of time is said; in seconds by default, `1.4s`.
+      def self.line(stage, seconds: ->(time) { "#{time}s" })
+        "#{stage.name} #{WORDS.fetch(stage.state, stage.state)}#{ending(stage)}#{took(stage, seconds)}"
       end
 
       def self.ending(stage)
@@ -18,11 +19,11 @@ module FunCi
         ""
       end
 
-      def self.took(stage)
+      def self.took(stage, seconds)
         return "" unless stage.seconds
 
         budget = stage.budget ? ", budget #{budget(stage.budget)}" : ""
-        " after #{stage.seconds}s#{budget}"
+        " after #{seconds.call(stage.seconds)}#{budget}"
       end
 
       # In hours when it is whole hours, as a job's day is: `24h`; else in seconds, `10s`.

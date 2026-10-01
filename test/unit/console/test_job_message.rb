@@ -25,6 +25,11 @@ class TestJobMessage < Minitest::Test
     assert_equal "timeout", job_message(status: "timed_out")[:status]
   end
 
+  # Its process died before it said how the run ended.
+  def test_should_say_lost_for_a_failed_job_whose_run_has_no_end
+    assert_equal "lost", job_message(status: "failed", run: RUN.merge(status: "failed", completed_at: nil))[:status]
+  end
+
   def test_should_say_due_for_a_job_that_is_due
     assert_equal "due", job_message(status: "due", run: nil)[:status]
   end

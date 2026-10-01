@@ -28,7 +28,7 @@ class TestAgentWhyJob < Minitest::Test
     @agent.record_job_run("soak", SHA, FAILED)
     @agent.why("--job", "soak")
 
-    assert_equal "soak failed (exit 1) after 2.0s, budget 24h", @agent.stdout.lines[1].chomp
+    assert_equal "soak failed (exit 1) after 2s, budget 24h", @agent.stdout.lines[1].chomp
   end
 
   def test_should_print_the_evidence_kept
@@ -80,6 +80,20 @@ class TestAgentWhyJob < Minitest::Test
     @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "running"))
 
     assert_equal 3, @agent.why("--job", "soak")
+  end
+
+  def test_should_say_a_job_whose_last_run_was_cancelled_runs_again_on_the_next_commit
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "cancelled"))
+    @agent.why("--job", "soak")
+
+    assert_includes @agent.stdout, "It was cancelled; it runs again on the next commit.\n"
+  end
+
+  def test_should_say_hours_and_minutes_for_a_long_run
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", exit_status: 1, seconds: 11_520))
+    @agent.why("--job", "soak")
+
+    assert_equal "soak failed (exit 1) after 3h12m, budget 24h", @agent.stdout.lines[1].chomp
   end
 
   def test_should_exit_5_for_a_job_that_never_ran

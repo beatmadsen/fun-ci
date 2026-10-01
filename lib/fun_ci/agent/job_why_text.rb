@@ -2,6 +2,7 @@
 
 require_relative "stage_summary"
 require_relative "evidence_text"
+require_relative "span"
 
 module FunCi
   module Agent
@@ -11,9 +12,11 @@ module FunCi
     module JobWhyText
       PASSED = "Nothing is kept about a job that passed."
       RUNNING = "It is still running; fun-ci wait doesn't wait for jobs, so ask again later."
+      CANCELLED = "It was cancelled; it runs again on the next commit."
 
       def self.lines(report)
-        [header(report), StageSummary.line(report.stage), *body(report.stage), *raw(report), *only_tail(report)]
+        summary = StageSummary.line(report.stage, seconds: Span.method(:words))
+        [header(report), summary, *body(report.stage), *raw(report), *only_tail(report)]
       end
 
       def self.header(report) = "fun-ci: job #{report.name} (#{report.cadence}) on #{report.branch} #{report.sha[0, 7]}"
@@ -25,6 +28,7 @@ module FunCi
       def self.body(stage)
         return [PASSED] if stage.state == "passed"
         return [RUNNING] if stage.state == "running"
+        return [CANCELLED] if stage.state == "cancelled"
 
         EvidenceText.lines(stage.evidence)
       end

@@ -84,6 +84,21 @@ class TestJobFolders < Minitest::Test
     assert_equal ["the job soak is in both .fun-ci/daily/ and .fun-ci/weekly/: rename one"], folders.errors
   end
 
+  # Its name goes into commands an agent pastes: fun-ci why --job NAME.
+  def test_should_leave_out_a_job_whose_name_a_command_line_would_split
+    write_job("daily", "my soak.sh")
+
+    assert_empty folders.jobs
+  end
+
+  def test_should_name_a_job_whose_name_a_command_line_would_split
+    write_job("daily", "my soak.sh")
+
+    expected = "the job 'my soak' needs a name of letters, digits, '.', '_' and '-': rename .fun-ci/daily/my soak.sh"
+
+    assert_equal [expected], folders.errors
+  end
+
   def test_should_find_nothing_wrong_with_executable_jobs_of_their_own_names
     write_job("daily", "mutation.sh")
 

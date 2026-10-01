@@ -59,8 +59,11 @@ module ConsoleFakes
   def self.job_row(name, status: "completed", id: 1)
     { project: "/p", name: name, cadence: "daily", status: status, due_at: nil,
       run: id && { id: id, commit_hash: "b" * 40, branch: "main", status: status,
-                   started_at: "2026-09-25T09:00:00.000Z", completed_at: nil } }
+                   started_at: "2026-09-25T09:00:00.000Z", completed_at: ended(status) } }
   end
+
+  # When a fake job run ended: never while it runs.
+  def self.ended(status) = status == "running" ? nil : "2026-09-25T09:30:00.000Z"
 
   # A run whose `fast` stage has `status`.
   def self.fast_stage(id, status)

@@ -42,10 +42,7 @@ module FunCi
       def cancelled(id) = ActiveJobs.cancelled(@db, id)
 
       # Records failed the job's runs still running, whose process is known to be gone.
-      def died(name)
-        @db.execute("UPDATE job_runs SET status = 'failed', completed_at = ? " \
-                    "WHERE project_path = ? AND job = ? AND status = 'running'", [stamp(Time.now), @project, name])
-      end
+      def died(name) = ActiveJobs.running_of(@db, @project, name).each { |id| ActiveJobs.died(@db, id) }
 
       private
 

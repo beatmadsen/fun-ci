@@ -1,6 +1,7 @@
 //! What a daily or weekly job's row says (design.md, Daily and weekly jobs):
 //! `failed after 3h12m on wip/foo 9e0b1d4 · due in 3d`, `running on main
-//! 3a1f9c2 · 1h12m`, `passed on main 3a1f9c2 · due in 14h`, `due · runs on
+//! 3a1f9c2 · 1h12m`, `stopped without a result on main 3a1f9c2 · due in 3d`
+//! (its process died before it said how the run ended), `passed on main 3a1f9c2 · due in 14h`, `due · runs on
 //! your next commit`. On a narrow screen the same, briefly: `failed · 3h12m`,
 //! `passed · due in 14h`, `due · next commit`.
 
@@ -12,6 +13,7 @@ use crate::model::Job;
 pub fn said(job: &Job, now_ms: i64) -> String {
     match job.status.as_str() {
         "due" => "due · runs on your next commit".to_string(),
+        "lost" => format!("stopped without a result on {} · {}", commit(job), due(job, now_ms)),
         "running" => format!("running on {} · {}", commit(job), span(seconds_since(job.started_at.unwrap_or(0), now_ms))),
         "passed" => format!("passed on {} · {}", commit(job), due(job, now_ms)),
         status => format!("{} after {} on {} · {}", ended(status), span(ran_for(job)), commit(job), due(job, now_ms)),
@@ -23,6 +25,7 @@ pub fn said(job: &Job, now_ms: i64) -> String {
 pub fn said_briefly(job: &Job, now_ms: i64) -> String {
     match job.status.as_str() {
         "due" => "due · next commit".to_string(),
+        "lost" => "stopped · no result".to_string(),
         "running" => format!("running · {}", span(seconds_since(job.started_at.unwrap_or(0), now_ms))),
         "passed" => format!("passed · {}", due(job, now_ms)),
         "timeout" => format!("timed out · {}", span(ran_for(job))),

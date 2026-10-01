@@ -13,7 +13,7 @@ module FunCi
     # everything kept about the job's latest run, exiting as `why` does for a
     # stage in the same state; a job that never ran has no verdict.
     class JobWhy
-      NO_JOBS = "this project has no daily or weekly jobs; put their scripts in .fun-ci/daily/ or weekly/"
+      NO_JOBS = "this project has no daily or weekly jobs; put their scripts in .fun-ci/daily/ or .fun-ci/weekly/"
 
       def initialize(context, jobs)
         @context = context

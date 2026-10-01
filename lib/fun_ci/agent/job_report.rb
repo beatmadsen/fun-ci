@@ -23,11 +23,14 @@ module FunCi
       def name = job.name
       def cadence = job.cadence
 
-      # Its latest run's state; `due` when it never ran or that run was cancelled.
-      def state = stage && stage.state != "cancelled" ? stage.state : "due"
+      # Its latest run's state, or `due` when it never ran.
+      def state = stage ? stage.state : "due"
 
-      # As `status` would exit for a stage in this state; a job that is due has no verdict.
+      # As `status` would exit for a stage in this state; a job that never ran, or was cancelled, has none.
       def verdict = VERDICTS.fetch(state, :unknown)
+
+      # Whether the next commit starts it.
+      def due? = state != "running" && due_at.nil?
     end
 
     # The daily and weekly jobs of a project, as JobReports.

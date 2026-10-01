@@ -23,14 +23,30 @@ class TestAgentJobs < Minitest::Test
     @agent.record_job_run("soak", SHA, FAILED, branch: "wip/foo")
     @agent.jobs
 
-    assert_equal "soak       weekly  FAIL     2.0s  wip/foo 9e0b1d4  1h ago  due in 7d", line_of("soak")
+    assert_equal "soak       weekly  FAIL      2s  wip/foo 9e0b1d4  1h ago  due in 7d", line_of("soak")
   end
 
-  def test_should_say_a_passed_job_is_due_in_hours_rounded_up
+  def test_should_say_when_a_passed_job_is_due_again_in_hours
     @agent.record_job_run("mutation", SHA, PASSED)
     @agent.jobs
 
-    assert_match(/  ok      42\.0s  main 9e0b1d4  2h ago  due in 22h\z/, line_of("mutation"))
+    assert_match(/  ok       42s  main 9e0b1d4  2h ago  due in 22h\z/, line_of("mutation"))
+  end
+
+  def test_should_say_a_cancelled_job_runs_on_the_next_commit
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "cancelled"))
+    @agent.jobs
+
+    assert_match(/\Asoak +weekly  x +2s  main 9e0b1d4  1h ago  runs on the next commit\z/, line_of("soak"))
+  end
+
+  def test_should_say_a_cancelled_job_is_due_as_json
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "cancelled"))
+    @agent.jobs("--json")
+
+    soak = JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "soak" }
+
+    assert_equal %w[cancelled true], [soak["state"], soak["due"].to_s]
   end
 
   def test_should_say_a_job_that_never_ran_runs_on_the_next_commit
@@ -56,8 +72,8 @@ class TestAgentJobs < Minitest::Test
     other = AgentClient.open
     other.jobs
 
-    assert_equal "fun-ci: this project has no daily or weekly jobs; put their scripts in .fun-ci/daily/ or weekly/\n",
-                 other.stdout
+    assert_equal "fun-ci: this project has no daily or weekly jobs; " \
+                 "put their scripts in .fun-ci/daily/ or .fun-ci/weekly/\n", other.stdout
   ensure
     other.close
   end

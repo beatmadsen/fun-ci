@@ -2,6 +2,7 @@
 
 require_relative "age"
 require_relative "due_in"
+require_relative "span"
 
 module FunCi
   module Agent
@@ -13,7 +14,7 @@ module FunCi
     # command of each job that failed or ran over budget.
     module JobsText
       WORDS = { "passed" => "ok", "failed" => "FAIL", "over_budget" => "OVER", "running" => "...",
-                "due" => "due" }.freeze
+                "due" => "due", "cancelled" => "x" }.freeze
       NEEDS_YOU = %w[failed over_budget].freeze
 
       # now: the time the ages and due times count from.
@@ -36,12 +37,12 @@ module FunCi
       # `wip/foo 9e0b1d4  1h ago`
       def self.tested(report, now) = "#{report.branch} #{report.sha[0, 7]}  #{Age.words(now - report.started_at)}"
 
-      def self.seconds(stage) = stage.seconds ? format("%6.1fs", stage.seconds) : " " * 7
+      def self.seconds(stage) = (stage.seconds ? Span.words(stage.seconds) : "").rjust(6)
 
       def self.due(report, now)
         return "running" if report.state == "running"
 
-        report.due_at ? "due in #{DueIn.words(report.due_at - now)}" : "due, runs on the next commit"
+        report.due_at ? "due in #{DueIn.words(report.due_at - now)}" : "runs on the next commit"
       end
       private_class_method :whys, :line, :tested, :seconds, :due
     end

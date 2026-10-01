@@ -57,6 +57,7 @@ module JobRunKit
   def runs = FunCi::Persistence::JobRuns.new(@db, project)
   def latest = runs.latest("mutation")
   def status_of(id) = @db.execute("SELECT status FROM job_runs WHERE id = ?", [id]).first.first
+  def evidence_of(id) = @db.execute("SELECT evidence FROM job_runs WHERE id = ?", [id]).first.first.to_s
 
   def site
     FunCi::Jobs::Site.new(project: project, db: @db, worktrees: @worktrees,

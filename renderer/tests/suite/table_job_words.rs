@@ -82,6 +82,16 @@ fn an_hour_less_a_few_seconds_away_is_an_hour() {
 }
 
 #[test]
+fn a_lost_job_says_it_stopped_without_a_result() {
+    assert_eq!(words(&ran("lost", 20_000, 20_000, Some(3 * 86_400))), "stopped without a result on wip/foo 9e0b1d4 · due in 3d");
+}
+
+#[test]
+fn briefly_a_lost_job_says_it_has_no_result() {
+    assert_eq!(said_briefly(&ran("lost", 20_000, 20_000, None), NOW * 1000), "stopped · no result");
+}
+
+#[test]
 fn briefly_a_failed_job_says_how_long_it_ran() {
     assert_eq!(said_briefly(&ran("failed", 20_000, 8_480, Some(3 * 86_400)), NOW * 1000), "failed · 3h12m");
 }

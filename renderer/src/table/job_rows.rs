@@ -47,7 +47,7 @@ fn words_style(job: &Job, tone: &dyn Fn([u8; 3]) -> [u8; 3]) -> Style {
 #[must_use]
 pub fn accent(job: &Job) -> Option<[u8; 3]> {
     match job.status.as_str() {
-        "failed" => Some(FAILED),
+        "failed" | "lost" => Some(FAILED),
         "timeout" => Some(TIMED_OUT),
         "running" => Some(RUNNING),
         _ => None,
@@ -58,7 +58,7 @@ pub fn accent(job: &Job) -> Option<[u8; 3]> {
 fn mark(job: &Job, spinner: char) -> (char, [u8; 3]) {
     match job.status.as_str() {
         "passed" => ('✓', PASSED),
-        "failed" => ('◆', FAILED),
+        "failed" | "lost" => ('◆', FAILED),
         "timeout" => ('◇', TIMED_OUT),
         "running" => (spinner, RUNNING),
         _ => ('◌', QUIET),
@@ -68,7 +68,7 @@ fn mark(job: &Job, spinner: char) -> (char, [u8; 3]) {
 fn outcome(job: &Job) -> [u8; 3] {
     match job.status.as_str() {
         "passed" => PASSED,
-        "failed" => FAILED,
+        "failed" | "lost" => FAILED,
         "timeout" => TIMED_OUT,
         "running" => RUNNING,
         _ => QUIET,
@@ -97,7 +97,7 @@ pub fn counted(jobs: &[Job], title: &str, paint: &Paint) -> Vec<Part> {
 
 /// How many jobs are in each state, most urgent first: `1 failed, 3 passed`.
 fn counts(jobs: &[Job]) -> String {
-    let states = [("failed", "failed"), ("timeout", "ran out of time"), ("running", "running"), ("due", "due"), ("passed", "passed")];
+    let states = [("failed", "failed"), ("lost", "stopped"), ("timeout", "ran out of time"), ("running", "running"), ("due", "due"), ("passed", "passed")];
     let count = |status: &str| jobs.iter().filter(|job| job.status == status).count();
     let said: Vec<String> = states.iter().filter(|(status, _)| count(status) > 0).map(|(status, word)| format!("{} {word}", count(status))).collect();
     said.join(", ")

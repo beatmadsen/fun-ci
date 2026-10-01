@@ -73,6 +73,16 @@ fn a_failed_job_has_a_stripe_in_the_failed_colour() {
 }
 
 #[test]
+fn a_lost_job_has_a_stripe_in_the_failed_colour() {
+    let grid = shown(&[failed(1, "feat", "/src/app")], &[job("soak", "weekly", "lost")], None, (120, 40));
+    let row = row_index(&grid, "soak");
+
+    let stripe = grid.cells[row].iter().find(|cell| cell.text == "▌").unwrap();
+
+    assert_eq!(stripe.fg, Colour::Rgb(FAILED[0], FAILED[1], FAILED[2]));
+}
+
+#[test]
 fn the_legend_s_lines_end_above_the_jobs() {
     let grid = shown(&[failed(2, "feat", "/src/app"), passed(1, "main", "/src/app")], &needing(), None, (120, 40));
     let label = row_index(&grid, "D A I L Y");

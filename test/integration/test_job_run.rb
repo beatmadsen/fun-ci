@@ -97,6 +97,13 @@ class TestJobRun < Minitest::Test
     assert_equal "failed", status_of(first)
   end
 
+  def test_should_say_why_a_run_left_by_a_process_that_died_has_no_result
+    first = claim_a_run_nobody_runs
+    run_job
+
+    assert_includes evidence_of(first), "its process stopped before it said how the run ended"
+  end
+
   def test_should_record_failed_a_job_whose_worktree_could_not_be_checked_out
     @worktrees.fail_with("git checkout: no such commit")
     run_job

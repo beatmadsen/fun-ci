@@ -22,7 +22,7 @@ pub fn title(jobs: &[Job]) -> &'static str {
 /// The ways the section can be drawn, most room first: its rows, or folded
 /// when it is quiet; then, last, one line counting its jobs. The job under
 /// the cursor, `lead` (its index), keeps the rows. None when there are no
-/// jobs. The blank line above the section is the table's to give.
+/// jobs (one shape, empty). The blank line above the section is the table's to give.
 #[must_use]
 pub fn shapes(board: &Board, lead: Option<usize>, named: bool) -> Vec<Vec<Piece<'_>>> {
     let jobs = &board.jobs;
@@ -55,10 +55,10 @@ pub fn name(job: &Job, named: bool) -> String {
     }
 }
 
-/// Whether a job needs you: its latest run failed or ran out of time.
+/// Whether a job needs you: its latest run failed, ran out of time, or stopped without a result.
 #[must_use]
 pub fn needs_you(job: &Job) -> bool {
-    matches!(job.status.as_str(), "failed" | "timeout")
+    matches!(job.status.as_str(), "failed" | "timeout" | "lost")
 }
 
 /// Whether nothing in the section needs you or runs.

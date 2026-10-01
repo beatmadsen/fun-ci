@@ -49,7 +49,8 @@ pub struct Job {
     pub project: Option<String>,
     pub name: String,
     pub cadence: String,
-    /// `due`, `running`, `passed`, `failed` or `timeout`.
+    /// `due`, `running`, `passed`, `failed`, `timeout` or `lost` (its process
+    /// died before it said how the run ended).
     pub status: String,
     #[serde(default)]
     pub run_id: Option<u64>,
