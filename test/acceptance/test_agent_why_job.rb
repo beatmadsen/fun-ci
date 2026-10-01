@@ -64,6 +64,12 @@ class TestAgentWhyJob < Minitest::Test
     assert_equal 1, @agent.why("--job", "soak")
   end
 
+  def test_should_exit_1_for_a_job_whose_process_died
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", seconds: nil))
+
+    assert_equal 1, @agent.why("--job", "soak")
+  end
+
   def test_should_exit_2_for_a_job_that_ran_over_budget
     @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "timed_out", seconds: 86_400))
 

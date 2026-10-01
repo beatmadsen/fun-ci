@@ -3,18 +3,15 @@
 require "time"
 require_relative "report_stage"
 require_relative "verdict"
-require_relative "../jobs/folders"
-require_relative "../jobs/due"
-require_relative "../persistence/job_runs"
+require_relative "../jobs/standings"
 require_relative "../persistence/raw_outputs"
 
 module FunCi
   module Agent
-    # A daily or weekly job as an agent is told it: the job, the commit and
-    # branch its latest run tested, that run as a RunReport::Stage named after
-    # the job (nil while it never ran), when that run started, and when the
-    # job is due again.
-    JobReport = Data.define(:job, :sha, :branch, :stage, :started_at, :due_at)
+    # A daily or weekly job as an agent is told it: where it stands
+    # (Jobs::Standing), and its latest run as a RunReport::Stage named after
+    # the job, nil while it never ran.
+    JobReport = Data.define(:standing, :stage)
 
     # The jobs `status` names for a commit: those whose latest run tested it,
     # and those failing on another commit, which an agent would not hear of otherwise.
@@ -25,23 +22,25 @@ module FunCi
     end
 
     class JobReport
-      VERDICTS = { "passed" => :passed, "failed" => :failed, "over_budget" => :over_budget,
+      VERDICTS = { "passed" => :passed, "failed" => :failed, "lost" => :failed, "over_budget" => :over_budget,
                    "running" => :undecided }.freeze
-      NEEDS_YOU = %w[failed over_budget].freeze
 
-      def name = job.name
-      def cadence = job.cadence
+      def name = standing.name
+      def cadence = standing.cadence
+      def state = standing.state
+      def needs_you? = standing.needs_you?
+      def due_at = standing.due_at
 
-      # Its latest run's state, or `due` when it never ran.
-      def state = stage ? stage.state : "due"
+      # Whether the next commit starts it.
+      def due? = standing.due_now?
+
+      # The commit and branch its latest run tested, and when that started.
+      def sha = standing.run&.dig(:commit_hash)
+      def branch = standing.run&.dig(:branch)
+      def started_at = standing.run && Time.parse(standing.run[:started_at])
 
       # As `status` would exit for a stage in this state; a job that never ran, or was cancelled, has none.
       def verdict = VERDICTS.fetch(state, :unknown)
-
-      def needs_you? = NEEDS_YOU.include?(state)
-
-      # Whether the next commit starts it.
-      def due? = state != "running" && due_at.nil?
     end
 
     # The daily and weekly jobs of a project, as JobReports.
@@ -53,7 +52,7 @@ module FunCi
       end
 
       # By name.
-      def all = Jobs::Folders.new(@project).jobs.map { |job| report(job) }
+      def all = Jobs::Standings.new(@db, @project, now: @clock.now).all.map { |standing| report(standing) }
 
       # The job named, or nil when the project has no such job.
       def named(name) = all.find { |report| report.name == name }
@@ -72,16 +71,14 @@ module FunCi
 
       def raw = Persistence::RawOutputs.for_jobs(@db.filename("main"))
 
-      def report(job)
-        row = Persistence::JobRuns.new(@db, @project).latest(job.name)
-        JobReport.new(job: job, sha: row&.dig(:commit_hash), branch: row&.dig(:branch), stage: row && stage(job, row),
-                      started_at: row && Time.parse(row[:started_at]),
-                      due_at: Jobs::Due.new(row, job.period, now: @clock.now).at)
+      def report(standing)
+        run = standing.run
+        JobReport.new(standing: standing, stage: run && stage(standing.name, run))
       end
 
-      def stage(job, row)
-        RunReport::Stage.from_row(job.name, row.merge(budget: row[:budget] || Jobs::Job::BUDGET,
-                                                      raw_bytes: raw.bytes(row[:id])))
+      def stage(name, run)
+        RunReport::Stage.from_row(name,
+                                  run.merge(budget: run[:budget] || Jobs::Job::BUDGET, raw_bytes: raw.bytes(run[:id])))
       end
     end
   end

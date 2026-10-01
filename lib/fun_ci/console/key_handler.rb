@@ -58,8 +58,18 @@ module FunCi
         kind, row = under_cursor
         return unless row
 
-        @board_data.cancel_run(row[:id]) if row[:status] == "scheduled"
-        @confirm_cancel = [kind, row] if row[:status] == "running"
+        kind == :job ? offer_job_cancel(row) : offer_run_cancel(row)
+      end
+
+      # A run waiting to start is cancelled at once; a running one once the user confirms.
+      def offer_run_cancel(run)
+        @board_data.cancel_run(run[:id]) if run[:status] == "scheduled"
+        @confirm_cancel = [:run, run] if run[:status] == "running"
+      end
+
+      # A running job (a Jobs::Standing) once the user confirms.
+      def offer_job_cancel(job)
+        @confirm_cancel = [:job, job] if job.state == "running"
       end
 
       # [:run, the run] or [:job, the job row] under the cursor, or none.
@@ -76,7 +86,7 @@ module FunCi
         @confirm_cancel = nil if CONFIRMATION_ANSWERS.include?(key)
       end
 
-      def cancel(kind, row) = kind == :job ? @board_data.cancel_job(row[:run][:id]) : @board_data.cancel_run(row[:id])
+      def cancel(kind, row) = kind == :job ? @board_data.cancel_job(row.run[:id]) : @board_data.cancel_run(row[:id])
     end
   end
 end

@@ -4,21 +4,18 @@ require "time"
 
 module FunCi
   module Console
-    # A job row (JobRows) as the protocol's `board` carries it under `jobs`:
-    # protocol status names and epoch seconds. Formatting them is the renderer's job.
+    # Where a job stands (Jobs::Standing) as the protocol's `board` carries it
+    # under `jobs`: protocol status names and epoch seconds. Formatting them
+    # is the renderer's job.
     module JobMessage
-      STATUS = { "completed" => "passed", "timed_out" => "timeout" }.freeze
+      # The protocol's word for a Jobs::State, where it has one of its own:
+      # a cancelled job is due again, and one it can't read is shown due.
+      STATUS = { "over_budget" => "timeout", "cancelled" => "due", "unknown" => "due" }.freeze
 
-      def self.from(row)
-        { project: row[:project], name: row[:name], cadence: row[:cadence],
-          status: status(row), **run(row[:run]), due_at: row[:due_at]&.to_i }.compact
-      end
-
-      # `lost` for a run that failed with no end: its process died before it said how it ended.
-      def self.status(row)
-        return "lost" if row[:status] == "failed" && row.dig(:run, :completed_at).nil?
-
-        STATUS.fetch(row[:status], row[:status])
+      def self.from(standing)
+        { project: standing.project, name: standing.name, cadence: standing.cadence,
+          status: STATUS.fetch(standing.state, standing.state), **run(standing.run),
+          due_at: standing.due_at&.to_i }.compact
       end
 
       # What the latest run says: which, on what, and when.
@@ -30,7 +27,7 @@ module FunCi
       end
 
       def self.epoch(iso) = Time.parse(iso).to_i
-      private_class_method :status, :run, :epoch
+      private_class_method :run, :epoch
     end
   end
 end

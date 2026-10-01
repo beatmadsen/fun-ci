@@ -30,7 +30,7 @@ module JobRecording
   # Records a run of `name` on `sha`, answering its id.
   def record_job_run(name, sha, facts, branch: "main")
     started = clock.now - facts.ago
-    ended = facts.status == "running" ? nil : started + facts.seconds
+    ended = facts.status == "running" || facts.seconds.nil? ? nil : started + facts.seconds
     db.execute("INSERT INTO job_runs (project_path, job, cadence, commit_hash, branch, status, started_at, " \
                "completed_at, exit_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                [job_project, name, cadence_of(name), sha, branch, facts.status, stamp(started), ended && stamp(ended),

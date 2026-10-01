@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "folders"
-require_relative "due"
-require_relative "../persistence/job_runs"
+require_relative "standings"
 require_relative "../pipeline/run_canceller"
 
 module FunCi
@@ -21,8 +19,7 @@ module FunCi
 
       def list
         Pipeline::RunCanceller.new.record_dead_jobs(@db)
-        runs = Persistence::JobRuns.new(@db, @project)
-        Folders.new(@project).jobs.select { |job| Due.new(runs.latest(job.name), job.period, now: @now).now? }
+        Standings.new(@db, @project, now: @now).all.select(&:due_now?).map(&:job)
       end
     end
   end

@@ -11,7 +11,7 @@ module FunCi
     # A run report as text: the commit, a line per stage with what went wrong
     # in capitals, then the evidence of each needed stage that failed.
     module StatusText
-      WORDS = { "failed" => "FAILED", "over_budget" => "OVER BUDGET" }.freeze
+      WORDS = { "failed" => "FAILED", "over_budget" => "OVER BUDGET", "lost" => "LOST" }.freeze
 
       # trunk: whether the agent asked about the trunk, which says so while its
       # check is going; jobs: the commit's CommitJobs, which change nothing
@@ -30,7 +30,7 @@ module FunCi
       # commit it tested when that is another.
       def self.job_line(job, where = "")
         said = "  #{job.name} (#{job.cadence} job) #{WORDS.fetch(job.state, job.state)}#{where}"
-        WORDS.key?(job.state) ? "#{said}  fun-ci why --job #{job.name}" : said
+        job.needs_you? ? "#{said}  fun-ci why --job #{job.name}" : said
       end
 
       # The trunk lines; nothing while the check is going, unless asked about

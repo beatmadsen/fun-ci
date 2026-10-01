@@ -41,6 +41,13 @@ class TestAgentEventsJobs < Minitest::Test
     assert_equal([%w[job_finished failed]], finished.map { |event| event.first(2) })
   end
 
+  def test_should_say_a_job_whose_process_died_finished_lost
+    @client.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", seconds: nil))
+    @client.events
+
+    assert_equal [["job_finished", "lost", nil]], finished
+  end
+
   def test_should_keep_a_failed_job_among_the_failures
     @client.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed"))
     @client.events("--only", "failures")

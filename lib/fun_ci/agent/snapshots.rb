@@ -7,6 +7,7 @@ require_relative "events"
 require_relative "trunk_reading"
 require_relative "trunk_json"
 require_relative "job_events"
+require_relative "../jobs/state"
 require_relative "../persistence/job_runs"
 
 module FunCi
@@ -35,7 +36,7 @@ module FunCi
 
       def job_state(run)
         JobEvents::JobState.new(id: run[:id], job: run[:job], cadence: run[:cadence], sha: run[:commit_hash],
-                                branch: run[:branch], status: run[:status],
+                                branch: run[:branch], state: Jobs::State.of(run),
                                 seconds: Persistence::StageJob.elapsed_duration(run)&.round(1))
       end
 

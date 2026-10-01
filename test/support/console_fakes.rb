@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require "fun_ci/jobs/standings"
 
 # Stand-ins for ConsoleSession's collaborators: a BoardData that serves
 # fixed runs and job rows and counts cancels, pages loaded and checks for
@@ -56,10 +57,14 @@ module ConsoleFakes
   end
 
   # A job row as BoardData answers it, its latest run's id `id` (nil: it never ran).
+  # Where a job stands, as BoardData answers it: its latest run's status as
+  # job_runs keeps it and its id `id` (nil: it never ran).
   def self.job_row(name, status: "completed", id: 1)
-    { project: "/p", name: name, cadence: "daily", status: status, due_at: nil,
-      run: id && { id: id, commit_hash: "b" * 40, branch: "main", status: status,
-                   started_at: "2026-09-25T09:00:00.000Z", completed_at: ended(status) } }
+    run = id && { id: id, commit_hash: "b" * 40, branch: "main", status: status,
+                  started_at: "2026-09-25T09:00:00.000Z", completed_at: ended(status) }
+    job = FunCi::Jobs::Job.new(name: name, cadence: "daily", script: "/p/.fun-ci/daily/#{name}.sh")
+    FunCi::Jobs::Standing.new(project: "/p", job: job, run: run,
+                              due: FunCi::Jobs::Due.new(run, job.period, now: Time.utc(2026, 9, 25, 10)))
   end
 
   # When a fake job run ended: never while it runs.

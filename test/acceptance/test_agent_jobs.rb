@@ -117,6 +117,28 @@ class TestAgentJobs < Minitest::Test
     assert_equal false, JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "mutation" }["due"]
   end
 
+  # Its process died before it said how the run ended.
+  def test_should_say_a_lost_job_is_lost
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", seconds: nil))
+    @agent.jobs
+
+    assert_match(/\Asoak +weekly  LOST/, line_of("soak"))
+  end
+
+  def test_should_end_with_the_why_command_of_a_lost_job
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", seconds: nil))
+    @agent.jobs
+
+    assert_equal "fun-ci why --job soak", @agent.stdout.lines.last.chomp
+  end
+
+  def test_should_say_a_lost_job_is_lost_as_json
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed", seconds: nil))
+    @agent.jobs("--json")
+
+    assert_equal "lost", JSON.parse(@agent.stdout)["jobs"].find { |job| job["name"] == "soak" }["state"]
+  end
+
   def test_should_exit_zero
     assert_equal 0, @agent.jobs
   end

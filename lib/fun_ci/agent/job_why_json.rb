@@ -8,7 +8,6 @@ module FunCi
     # names; a change bumps SCHEMA.
     module JobWhyJson
       SCHEMA = 1
-      FAILED = %w[failed over_budget].freeze
 
       def self.document(report)
         stage = report.stage
@@ -19,7 +18,7 @@ module FunCi
 
       # The evidence of a run that failed or ran over budget, or else why there is none.
       def self.evidence(report)
-        failed = FAILED.include?(report.state)
+        failed = report.needs_you?
         { evidence: failed ? report.stage.evidence.to_h : nil, no_evidence: failed ? nil : report.state }
       end
 

@@ -13,9 +13,8 @@ module FunCi
     # due again; then the `why --job`
     # command of each job that failed or ran over budget.
     module JobsText
-      WORDS = { "passed" => "ok", "failed" => "FAIL", "over_budget" => "OVER", "running" => "...",
+      WORDS = { "passed" => "ok", "failed" => "FAIL", "lost" => "LOST", "over_budget" => "OVER", "running" => "...",
                 "due" => "due", "cancelled" => "x" }.freeze
-      NEEDS_YOU = %w[failed over_budget].freeze
 
       # now: the time the ages and due times count from.
       def self.lines(reports, now)
@@ -24,11 +23,12 @@ module FunCi
       end
 
       def self.whys(reports)
-        reports.select { |report| NEEDS_YOU.include?(report.state) }.map { |report| "fun-ci why --job #{report.name}" }
+        reports.select(&:needs_you?).map { |report| "fun-ci why --job #{report.name}" }
       end
 
       def self.line(report, width, now)
-        head = "#{report.name.ljust(width)}  #{report.cadence.ljust(6)}  #{WORDS.fetch(report.state).ljust(4)}"
+        head = "#{report.name.ljust(width)}  #{report.cadence.ljust(6)}  #{WORDS.fetch(report.state,
+                                                                                       report.state).ljust(4)}"
         return "#{head}  never ran  runs on the next commit" unless report.stage
 
         "#{head}  #{seconds(report.stage)}  #{tested(report, now)}  #{due(report, now)}"

@@ -102,7 +102,7 @@ class TestBoardDataJobs < Minitest::Test
     FunCi::Persistence::PipelineRun.create(@db, commit_hash: "abc1234", branch: "main", project_path: project)
     board = FunCi::Console::BoardData.new(@db, clock: -> { Time.now })
 
-    assert_equal(["soak"], board.jobs(board.runs).map { |job| job[:name] })
+    assert_equal(["soak"], board.jobs(board.runs).map(&:name))
   end
 
   private
