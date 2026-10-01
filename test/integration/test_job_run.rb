@@ -16,7 +16,7 @@ class TestJobRun < Minitest::Test
             patterns: ["^Survived"]
   YAML
 
-  def test_should_run_the_job_s_script_with_the_commit
+  def test_should_run_the_project_s_script_with_the_commit_when_the_commit_has_no_copy
     commands = []
     run_job(runner: ->(cmd) { (commands << cmd) && PASSED })
 
