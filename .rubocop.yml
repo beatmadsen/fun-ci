@@ -1,4 +1,11 @@
+inherit_mode:
+  merge:
+    - Include
+
 AllCops:
+  # The daily job written in Ruby, whose name a job needs to end in .sh.
+  Include:
+    - ".fun-ci/daily/nightly-mutation.sh"
   TargetRubyVersion: 3.2
   NewCops: enable
   SuggestExtensions: false
