@@ -138,6 +138,27 @@ fn confirming_a_cancel_on_a_job_names_the_job_and_its_commit() {
 }
 
 #[test]
+fn the_cursor_on_a_job_that_needs_you_shows_the_command_that_says_why() {
+    let grid = shown(&[passed(1, "main", "/src/app")], &needing(), Some(1), (120, 40));
+
+    assert!(grid.text().lines().last().unwrap().trim_end().ends_with("fun-ci why --job soak"), "{}", grid.text());
+}
+
+#[test]
+fn the_cursor_on_a_passed_job_shows_no_command() {
+    let grid = shown(&[passed(1, "main", "/src/app")], &needing(), Some(2), (120, 40));
+
+    assert!(!grid.text().contains("fun-ci why"), "{}", grid.text());
+}
+
+#[test]
+fn on_sixty_columns_a_job_says_what_happened_briefly() {
+    let grid = shown(&[failed(1, "feat", "/src/app")], &needing(), None, (60, 30));
+
+    assert!(line_of(&grid, "soak").contains("failed · 3h12m"), "{}", grid.text());
+}
+
+#[test]
 fn a_running_job_offers_the_cancel_key() {
     let jobs = [json!({"project": "/src/app", "name": "soak", "cadence": "weekly", "status": "running", "run_id": 9, "sha": SHA,
                        "branch": "main", "started_at": NOW - 600, "updated_at": NOW - 600})];

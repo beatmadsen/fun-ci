@@ -81,14 +81,23 @@ fn confirming(board: &Board) -> Option<(&str, &str)> {
     run.or_else(|| jobs::lead(board).and_then(|at| board.jobs.get(at)).map(|job| (job.name.as_str(), job.sha.as_deref().unwrap_or_default())))
 }
 
+/// The command that says why the job under the cursor failed, when it needs you.
+#[must_use]
+pub fn why_job(board: &Board) -> Option<String> {
+    let job = jobs::lead(board).and_then(|index| board.jobs.get(index)).filter(|job| jobs::needs_you(job))?;
+    Some(format!("fun-ci why --job {}", job.name))
+}
+
 /// The footer: the keys where the labels start, and beside them, quieter,
-/// how many passed rows the screen was too short for, cut if it must be.
+/// the command that says why the job under the cursor failed, or how many
+/// passed rows the screen was too short for, cut if it must be.
 #[must_use]
 pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line<'static> {
     let width = usize::from(frame.width);
     let (mut parts, end) = offered(&keys(board), drawn.columns.label);
     let keys_end = end + APART;
-    let aside = cut(&aside(drawn.unshown), width.saturating_sub(keys_end + drawn.columns.margin));
+    let said = why_job(board).unwrap_or_else(|| aside(drawn.unshown));
+    let aside = cut(&said, width.saturating_sub(keys_end + drawn.columns.margin));
     let aside_at = width.saturating_sub(drawn.columns.margin + columns(&aside)).max(keys_end);
     parts.push((aside_at, aside, ink(NOTE).italic()));
     placed(parts)
