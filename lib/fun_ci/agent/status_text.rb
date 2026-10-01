@@ -12,11 +12,19 @@ module FunCi
     module StatusText
       WORDS = { "failed" => "FAILED", "over_budget" => "OVER BUDGET" }.freeze
 
-      # trunk: whether the agent asked about the trunk, which says so while its check is going.
-      def self.lines(report, trunk: false)
+      # trunk: whether the agent asked about the trunk, which says so while its
+      # check is going; jobs: the JobReports of the jobs whose latest run tested
+      # the commit, which change nothing about the verdict.
+      def self.lines(report, trunk: false, jobs: [])
         needed = Verdict::LEVELS.fetch(report.need)
         [header(report), *report.stages.map { |stage| stage_line(stage, needed) }, *Digest.lines(report.stages, needed),
-         *trunk(report, trunk), *footer(report)]
+         *jobs.map { |job| job_line(job) }, *trunk(report, trunk), *footer(report)]
+      end
+
+      # `  soak (weekly job) FAILED  fun-ci why --job soak`
+      def self.job_line(job)
+        said = "  #{job.name} (#{job.cadence} job) #{WORDS.fetch(job.state, job.state)}"
+        WORDS.key?(job.state) ? "#{said}  fun-ci why --job #{job.name}" : said
       end
 
       # The trunk lines; nothing while the check is going, unless asked about
@@ -42,7 +50,7 @@ module FunCi
 
         ["Superseded by #{report.superseded_by[0, 7]}."]
       end
-      private_class_method :stage_line, :footer
+      private_class_method :stage_line, :footer, :job_line
     end
   end
 end

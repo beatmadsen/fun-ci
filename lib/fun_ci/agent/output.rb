@@ -9,6 +9,7 @@ require_relative "runs_text"
 require_relative "exit_code"
 require_relative "evidence_text"
 require_relative "trunk_why_json"
+require_relative "job_json"
 
 module FunCi
   module Agent
@@ -24,8 +25,11 @@ module FunCi
         @trunk = trunk
       end
 
-      def report(report)
-        @json ? print_json(StatusJson.document(report)) : print_lines(StatusText.lines(report, trunk: @trunk))
+      # jobs: the JobReports of the jobs whose latest run tested the commit, when asked about.
+      def report(report, jobs: nil)
+        return print_json(with_jobs(StatusJson.document(report), jobs)) if @json
+
+        print_lines(StatusText.lines(report, trunk: @trunk, jobs: jobs || []))
       end
 
       # Everything kept about the stage named, or says no stage decided the verdict.
@@ -86,6 +90,8 @@ module FunCi
       end
 
       private
+
+      def with_jobs(document, jobs) = jobs ? document.merge(jobs: jobs.map { |job| JobJson.document(job) }) : document
 
       def print_json(document) = @stdout.puts(JSON.generate(document))
       def print_lines(lines) = lines.each { |line| @stdout.puts line }

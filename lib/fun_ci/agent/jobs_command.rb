@@ -4,6 +4,7 @@ require "json"
 require_relative "command_support"
 require_relative "jobs_text"
 require_relative "job_why"
+require_relative "job_json"
 
 module FunCi
   module Agent
@@ -37,16 +38,6 @@ module FunCi
       end
 
       def out = @context.io.stdout
-    end
-
-    # One job as `jobs --json` gives it. Fields once published keep their names.
-    module JobJson
-      def self.document(report)
-        stage = report.stage
-        { name: report.name, cadence: report.cadence, state: report.state,
-          commit: stage && { sha: report.sha, branch: report.branch }, seconds: stage&.seconds,
-          started_at: report.started_at&.utc&.iso8601, due_at: report.due_at&.utc&.iso8601 }
-      end
     end
   end
 end

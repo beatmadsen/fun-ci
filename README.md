@@ -68,6 +68,8 @@ Commits start jobs. When the `post-commit` hook runs a pipeline, it also starts 
 
 A failed job keeps its evidence as a failed stage does; add entries under `evidence: jobs: <name>:` in `.fun-ci/config` to keep more. `fun-ci check` lists the jobs it found, and says which scripts it can't run.
 
+`fun-ci jobs` lists the jobs, each with how its last run went, on which commit, and when it is due again. `fun-ci why --job soak` prints everything kept about the job's last run (`--raw` for its whole output, `--json` for a document), and exits as `why` does for a stage. `fun-ci status` names the jobs whose last run tested the commit you ask about, and `fun-ci events` says when a job starts and finishes. None of them changes a commit's verdict.
+
 ## Watching: the console
 
 ```bash
@@ -244,6 +246,8 @@ fun-ci status [commit] [--trunk]                Where a commit's run stands; the
 fun-ci wait [commit]                            Wait until that verdict is decided, then exit with it
 fun-ci why [commit] [stage|trunk]               Everything kept about why a stage failed, or the conflict with the trunk
 fun-ci runs                                     This project's recent runs, newest first
+fun-ci jobs                                     This project's daily and weekly jobs and how each stands
+fun-ci why --job <name>                         Everything kept about a job's latest run
 fun-ci events [--follow]                        The runs' events as JSON lines
 fun-ci extract <stage> --output <file>          Try a stage's extractors on a saved output
 fun-ci trigger <commit> <branch>                Run the whole pipeline in the foreground

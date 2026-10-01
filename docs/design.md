@@ -209,6 +209,11 @@ status, no streak and no exit code; it has its own section in the console.
 - A failed job keeps its evidence the way a failed stage does, with
   `evidence: jobs: <name>:` in `.fun-ci/config` for what else to keep. Each
   job keeps its 10 newest runs.
+- An agent asks about jobs as about runs: `fun-ci jobs` lists them, `fun-ci
+  why --job NAME` prints what was kept about one's latest run, `status` names
+  the jobs whose latest run tested the commit, and `events` says when a job
+  starts and finishes. None of them waits for a job or changes a verdict: a
+  job can take a day, and `wait` is for the commit just made.
 
 ## A run's states
 

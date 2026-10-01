@@ -19,6 +19,9 @@ module FunCi
         the commit conflicts with the trunk, which has to be integrated first,
         as it prints.
         `fun-ci runs` lists recent runs, and `fun-ci status` says where one stands.
+        `fun-ci jobs` lists the daily and weekly jobs, which run beside the
+        pipeline and never hold up a verdict, and `fun-ci why --job NAME` says
+        why one failed.
       MD
 
       def self.file_for(names) = names.include?("CLAUDE.md") && !names.include?("AGENTS.md") ? "CLAUDE.md" : "AGENTS.md"

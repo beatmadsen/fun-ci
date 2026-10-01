@@ -5,7 +5,8 @@ require_relative "output"
 
 module FunCi
   module Agent
-    # `fun-ci status [REV] [--need LEVEL] [--json]` (acceptance-tests.md, AT-9.2).
+    # `fun-ci status [REV] [--need LEVEL] [--json]` (acceptance-tests.md,
+    # AT-9.2): the commit's run, and the jobs whose latest run tested it (AT-13.24).
     class StatusCommand
       include CommandSupport
 
@@ -28,7 +29,7 @@ module FunCi
       def answer(sha, report, output)
         return output.unknown(sha) unless report
 
-        output.report(report)
+        output.report(report, jobs: job_reports.on_commit(sha))
         ExitCode::FOR.fetch(report.verdict)
       end
     end

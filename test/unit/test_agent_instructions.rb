@@ -30,6 +30,14 @@ class TestAgentInstructions < Minitest::Test
     assert_nil INSTRUCTIONS.merged("# Rules\n\n#{INSTRUCTIONS::SECTION}")
   end
 
+  def test_should_tell_agents_how_to_see_the_daily_and_weekly_jobs
+    assert_includes INSTRUCTIONS::SECTION.tr("\n", " "), "`fun-ci jobs` lists the daily and weekly jobs"
+  end
+
+  def test_should_tell_agents_how_to_find_out_why_a_job_failed
+    assert_includes INSTRUCTIONS::SECTION.tr("\n", " "), "`fun-ci why --job NAME` says why one failed"
+  end
+
   def test_should_tell_agents_to_wait_in_the_background_after_each_commit
     assert_includes INSTRUCTIONS::SECTION.tr("\n", " "), "After each commit, run the `fun-ci wait` command it prints"
   end
