@@ -103,6 +103,16 @@ fn an_unknown_type_error_names_the_type() {
     assert_eq!(replies(&format!("{HELLO}{{\"t\":\"dance\"}}\n"))[1]["detail"], "dance");
 }
 
+// So that a newer fun-ci can add to a board (2.2's jobs) and an older renderer
+// still draws it (renderer-protocol.md: unknown fields are ignored).
+#[test]
+fn a_board_with_fields_it_does_not_know_is_answered_with_no_error() {
+    let run = r#"{"id":1,"sha":"0","branch":"main","project":"/p","status":"passed","updated_at":0,"stages":[],"comet":1}"#;
+    let board = format!(r#"{{"t":"board","now":0,"runs":[{run}],"jobs_of_the_future":[]}}"#);
+
+    assert_eq!(replies(&format!("{HELLO}{board}\n")).len(), 1);
+}
+
 #[test]
 fn the_session_carries_on_after_a_bad_line() {
     assert_eq!(replies(&format!("{HELLO}not json\n{{\"t\":\"dance\"}}\n")).len(), 3);
