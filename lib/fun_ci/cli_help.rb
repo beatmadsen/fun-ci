@@ -31,6 +31,7 @@ module FunCi
         wait           Wait for a commit's verdict, then exit with it as status does
         events         Print this project's runs' events as JSON lines
         why            Print everything kept about why a commit's stage failed, or its conflict with the trunk
+        jobs           List this project's daily and weekly jobs and how each stands
         extract        Try a stage's evidence extractors on a saved output
 
       Options:
@@ -46,6 +47,7 @@ module FunCi
         --follow-branch  (wait) Move on to the newer commit that superseded the run
         --trunk        (status, wait) Exit 6 when the run passed but conflicts with the trunk
         --raw          (why) Print the stage's whole output as it was kept
+        --job NAME     (why) Explain the daily or weekly job's latest run instead of a commit's stage
         -n N           (runs) How many runs to list (default 10)
         --branch NAME  (runs) Only runs on this branch
         --follow       (events) Keep printing events as they happen, until stopped

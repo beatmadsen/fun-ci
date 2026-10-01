@@ -12,11 +12,13 @@ require_relative "../support/fake_clock"
 require_relative "../support/fake_pipeline"
 require_relative "../support/trunk_kit"
 require_relative "../support/fake_trunk_now"
+require_relative "../support/job_recording"
 
 # Acceptance test client for the commands an agent runs in a project: tests
 # record runs as the pipeline would and read what the agent sees.
 class AgentClient
   include TrunkKit
+  include JobRecording
 
   Fakes = Data.define(:git, :clock, :pipeline, :trunk)
   Outcome = Data.define(:stdout, :exit_code)
@@ -43,6 +45,8 @@ class AgentClient
   def wait(*args) = agent("wait", args)
   def events(*args) = agent("events", args)
   def why(*args) = agent("why", args)
+  def jobs(*args) = agent("jobs", args)
+  def job_project = @workspace.project_dir
 
   # stages: { "lint" => "completed", "fast" => "running", ... }, in the order they started.
   def record_run(sha, branch: "main", project: @workspace.project_dir, stages: {})

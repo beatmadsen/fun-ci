@@ -3,13 +3,15 @@
 require_relative "command_support"
 require_relative "output"
 require_relative "trunk_why"
+require_relative "job_why"
 
 module FunCi
   module Agent
     # `fun-ci why [REV] [STAGE] [--need LEVEL] [--json] [--raw]`
     # (acceptance-tests.md, AT-10.1, AT-10.6): everything kept about the stage
     # named, or else about the stage that decided the verdict; with --raw, the
-    # raw output it kept, and nothing else.
+    # raw output it kept, and nothing else. With `--job NAME`, the same about
+    # a daily or weekly job's latest run (JobWhy).
     class WhyCommand
       include CommandSupport
 
@@ -20,7 +22,9 @@ module FunCi
       end
 
       def run(args)
-        options = Options.parse(args, takes: %i[need json stage raw])
+        options = Options.parse(args, takes: %i[need json stage raw job])
+        return JobWhy.new(@context, job_reports).answer(options) if options.job
+
         sha = resolve(options.rev)
         answer(sha, reports.for(sha, options.need), options)
       rescue Options::Invalid => e

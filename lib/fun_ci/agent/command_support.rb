@@ -4,6 +4,7 @@ require_relative "options"
 require_relative "reports"
 require_relative "exit_code"
 require_relative "trunk_verdict"
+require_relative "job_report"
 
 module FunCi
   module Agent
@@ -30,6 +31,7 @@ module FunCi
       def output(options) = Output.new(@context.io.stdout, json: options.json, trunk: options.trunk)
 
       def reports = @reports ||= Reports.new(@context.db, @context.git, @context.clock, @context.trunk)
+      def job_reports = JobReports.new(@context.db, @context.git.toplevel, @context.clock)
 
       def usage(message)
         @context.io.stderr.puts "fun-ci #{self.class::NAME}: #{message}"

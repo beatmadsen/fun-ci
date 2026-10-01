@@ -10,6 +10,7 @@ require_relative "runs_command"
 require_relative "wait_command"
 require_relative "events_command"
 require_relative "why_command"
+require_relative "jobs_command"
 require_relative "../trunk/local"
 
 module FunCi
@@ -18,7 +19,7 @@ module FunCi
     # database and the project's git.
     module Commands
       ALL = { "status" => StatusCommand, "runs" => RunsCommand, "wait" => WaitCommand,
-              "events" => EventsCommand, "why" => WhyCommand }.freeze
+              "events" => EventsCommand, "why" => WhyCommand, "jobs" => JobsCommand }.freeze
 
       def self.run(name, args, context)
         ALL.fetch(name).new(context).run(args)

@@ -1030,3 +1030,34 @@ short screen it goes to one line before any branch row is folded.
 
 ### 13.20 Jobs play no scene
 **Then** no event is sent for a job, and the streak and lamp follow runs alone.
+
+### 13.21 `why --job` prints everything kept about a job's latest run
+**Given** a weekly job `soak` whose latest run failed, printing `Survived: 3`
+**When** an agent runs `fun-ci why --job soak`
+**Then** it prints the job, its cadence, the branch and commit it tested,
+how it ended (`soak failed (exit 1) after 2.0s, budget 24h`), its evidence,
+and the command for its whole output (`fun-ci why --job soak --raw`); it
+exits as `why` does for a stage: 0 passed, 1 failed, 2 over budget, 3
+running, 5 for a job that never ran.
+**And** `--raw` prints the output kept, `--json` the same as one document,
+and a name that is no job of the project is a usage error naming the jobs.
+
+### 13.22 `fun-ci jobs` lists the project's jobs
+**Then** one line per job: its name, cadence, state, how long its latest run
+took, the branch and commit it tested and when, and when it is due again,
+or that it runs on the next commit; a `why --job` command after each that
+failed or ran over budget; `--json` gives the same as one document. A
+project without jobs says where to put them.
+
+### 13.23 `events` tells of jobs
+**Then** a job's run starting is `job_started` and ending `job_finished`,
+with its state and seconds; `--only failures` keeps the failed and over
+budget ones.
+
+### 13.24 `status` names the jobs that ran on the commit
+**Then** after the stages, each job whose latest run tested the commit, its
+state and the `why --job` command when it failed; `--json` carries them
+under `jobs`. The verdict and exit code are the pipeline's alone.
+
+### 13.25 `init` tells agents about the jobs commands
+**Then** the instructions it writes name `fun-ci jobs` and `fun-ci why --job`.

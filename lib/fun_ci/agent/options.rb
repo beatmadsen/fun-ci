@@ -12,12 +12,12 @@ module FunCi
       class Invalid < StandardError; end
 
       Parsed = Data.define(:rev, :stage, :need, :json, :within, :follow_branch, :limit, :branch, :follow, :only, :raw,
-                           :trunk)
+                           :trunk, :job)
       DEFAULTS = { need: "fast", json: false, within: nil, follow_branch: false, limit: 10, branch: nil,
-                   follow: false, only: nil, raw: false, trunk: false }.freeze
+                   follow: false, only: nil, raw: false, trunk: false, job: nil }.freeze
       SWITCHES = { need: ["--need LEVEL"], json: ["--json"], within: ["--within DURATION"], raw: ["--raw"],
                    follow_branch: ["--follow-branch"], limit: ["-n N", Integer], branch: ["--branch NAME"],
-                   follow: ["--follow"], only: ["--only KIND"], trunk: ["--trunk"] }.freeze
+                   follow: ["--follow"], only: ["--only KIND"], trunk: ["--trunk"], job: ["--job NAME"] }.freeze
       FILTERS = %w[failures].freeze
       MULTIPLIERS = { "" => 1, "s" => 1, "m" => 60 }.freeze
 

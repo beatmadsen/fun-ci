@@ -76,6 +76,8 @@ fun-ci wait [REV] [--need LEVEL] [--within 30s] [--follow-branch] [--trunk]  # B
 fun-ci runs [-n 10] [--branch NAME] [--json]          # The project's recent runs, newest first
 fun-ci events [--follow] [--only failures]            # The runs' events as JSON lines
 fun-ci why [REV] [STAGE|trunk] [--need LEVEL] [--json] [--raw]  # Everything kept about why a stage failed; --raw, its output; trunk, the conflict
+fun-ci why --job NAME [--json] [--raw]                # The same about a daily or weekly job's latest run
+fun-ci jobs [--json]                                  # The project's daily and weekly jobs and how each stands
 fun-ci extract STAGE --output FILE [--exit N | --timed-out] [--json]  # Try a stage's extractors on a saved output
 ```
 

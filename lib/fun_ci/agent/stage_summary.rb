@@ -21,10 +21,13 @@ module FunCi
       def self.took(stage)
         return "" unless stage.seconds
 
-        budget = stage.budget ? ", budget #{stage.budget}s" : ""
+        budget = stage.budget ? ", budget #{budget(stage.budget)}" : ""
         " after #{stage.seconds}s#{budget}"
       end
-      private_class_method :ending, :took
+
+      # In hours when it is whole hours, as a job's day is: `24h`; else in seconds, `10s`.
+      def self.budget(seconds) = seconds >= 3600 && (seconds % 3600).zero? ? "#{seconds / 3600}h" : "#{seconds}s"
+      private_class_method :ending, :took, :budget
     end
   end
 end
