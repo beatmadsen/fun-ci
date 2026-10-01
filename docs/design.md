@@ -384,7 +384,8 @@ each project's branches sit under the project's name, one row per branch:
   passed. When nothing in the section needs you or runs, it folds into one
   pale line, `4 passed · mutation due in 6h`; on a short screen it gives up
   its lines before any branch does, keeping one, `daily & weekly: 1 failed,
-  3 passed`. The cursor moves on from the last branch into the jobs, and `c`
+  3 passed`, until that one would cost a branch its place on the screen,
+  when the jobs give way to the branches. The cursor moves on from the last branch into the jobs, and `c`
   cancels a running job, asking first; on a job that needs you, the footer
   says `fun-ci why --job NAME`. Jobs play no scene and touch neither
   the streak nor the lamp: the header tells the story of the commits.

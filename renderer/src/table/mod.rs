@@ -92,17 +92,30 @@ pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
 /// The table fitted with the most of the job section it has room for while
 /// it keeps all its own lines: the section gives up its lines before any
 /// branch does. When even its last shape leaves the table too little, the
-/// table climbs down its own ladder.
+/// table climbs down its own ladder; and when that leaves a branch off the
+/// screen that the whole screen would show, the section goes, since the jobs
+/// come after the branches. Rows the cursor is on (the section's only shape
+/// then) stay.
 fn with_jobs<'a>((board, frame): (&Board, Frame), sections: &'a [Section<'a>], (lead, room): (Option<u64>, usize), shapes: Vec<Vec<Piece<'a>>>) -> (Fitted<'a>, Option<String>, Vec<Piece<'a>>) {
     let whole = fitted(board, sections, (lead, usize::MAX), frame).0.pieces;
     let apart = |shape: &[Piece]| usize::from(!shape.is_empty() && whole.last() != Some(&Piece::Blank));
-    let last = shapes.len() - 1;
+    let (last, yields) = (shapes.len() - 1, shapes.len() > 1);
     let chosen = shapes.iter().position(|shape| whole.len() + apart(shape) + shape.len() <= room).unwrap_or(last);
     let section = shapes.into_iter().nth(chosen).unwrap_or_default();
     let reserved = apart(&section);
-    let (fitted, note) = fitted(board, sections, (lead, room.saturating_sub(section.len() + reserved)), frame);
-    let blank = reserved == 1 && fitted.pieces.last() != Some(&Piece::Blank);
-    (fitted, note, blank.then_some(Piece::Blank).into_iter().chain(section).collect())
+    let (table, note) = fitted(board, sections, (lead, room.saturating_sub(section.len() + reserved)), frame);
+    let alone = fitted(board, sections, (lead, room), frame);
+    if yields && hidden(&table) > hidden(&alone.0) {
+        return (alone.0, alone.1, Vec::new());
+    }
+    let blank = reserved == 1 && table.pieces.last() != Some(&Piece::Blank);
+    (table, note, blank.then_some(Piece::Blank).into_iter().chain(section).collect())
+}
+
+/// How many branch rows the fitted table leaves off the screen: the passed
+/// rows it left out, and those it paged off.
+fn hidden(table: &Fitted) -> usize {
+    table.unshown + table.pieces.iter().map(|piece| if let Piece::More(rows, _) = piece { *rows } else { 0 }).sum::<usize>()
 }
 
 /// Whether the row in the block needs you, which makes the block wine.

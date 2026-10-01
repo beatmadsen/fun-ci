@@ -165,6 +165,38 @@ fn under_the_block_a_screen_with_a_line_to_spare_after_the_jobs_says_the_legend_
     assert_eq!(lines[2..4], ["daily: 1 failed, 1 passed".to_string(), "marks, left to right: lint · build · fast suite · slow suite".to_string()]);
 }
 
+// Jobs come after the branches: their last line goes before the table has
+// to page a branch, the cursor's included, off the screen.
+#[test]
+fn a_screen_too_short_for_the_branches_and_a_line_of_jobs_keeps_the_branches() {
+    let lines = said(&two_branches_and_two_jobs_at(20, Some(1)));
+
+    assert_eq!(lines[..2], ["feat".to_string(), "main".to_string()]);
+}
+
+#[test]
+fn a_screen_too_short_for_the_branches_and_a_line_of_jobs_shows_no_jobs() {
+    let lines = said(&two_branches_and_two_jobs_at(20, Some(1)));
+
+    assert!(!lines.iter().any(|line| line.starts_with("daily")), "{lines:?}");
+}
+
+// Nor do they cost a passed branch its row, left out and counted beside the keys.
+#[test]
+fn a_screen_too_short_for_both_branches_and_a_line_of_jobs_leaves_no_branch_out() {
+    let lines = said(&two_branches_and_two_jobs(21));
+
+    assert_eq!(lines[..2], ["feat".to_string(), "main".to_string()]);
+}
+
+// Unless the cursor is on a job: its rows stay, whatever that costs the branches.
+#[test]
+fn a_short_screen_keeps_the_rows_of_the_jobs_the_cursor_is_on() {
+    let lines = said(&two_branches_and_two_jobs_at(21, Some(2)));
+
+    assert!(lines.contains(&"soak".to_string()), "{lines:?}");
+}
+
 #[test]
 fn one_blank_line_parts_the_jobs_from_the_block_s_lower_edge() {
     let grid = two_branches_and_two_jobs_at(30, Some(1));

@@ -1026,7 +1026,8 @@ words and its age.
 
 ### 13.19 A quiet section folds, and a short screen keeps one line
 **Then** with nothing needing you or running it folds to one pale line; on a
-short screen it goes to one line before any branch row is folded.
+short screen it goes to one line before any branch row is folded, and off the
+screen before any branch row is left out or paged off.
 
 ### 13.20 Jobs play no scene
 **Then** no event is sent for a job, and the streak and lamp follow runs alone.

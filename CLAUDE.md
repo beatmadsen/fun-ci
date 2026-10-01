@@ -151,7 +151,7 @@ Seams tests use in place of the real thing:
 - The lanes that run the renderer binary run one built from `renderer/src`: `rust:fresh`, before them, cleans one a `cargo package` or `cargo publish` left built from its packaged copy: `test/unit/test_renderer_build.rb`.
 - A daily or weekly job runs once at a time and starts only when due (never run, its latest run cancelled, or a period after it started), claimed by the process holding its lock: `test/integration/test_job_run.rb`, `test/integration/test_job_runs.rb`, `test/unit/jobs/test_due.rb`, `test/integration/process/test_job_fork.rb`.
 - A job is no part of a run: a newer commit cancels none, a job's end sends the console no event, so it plays no scene and touches neither the streak nor the lamp, and no job changes a commit's verdict or exit code: `test/integration/test_stale_canceller_leaves_jobs.rb`, `test/unit/console/test_console_session_jobs.rb`, `test/acceptance/test_agent_status_jobs.rb`.
-- The console's job section gives up its lines before any branch row does, and keeps its rows while the cursor is on a job: `renderer/tests/suite/quiet_jobs.rs`.
+- The console's job section gives up its lines before any branch row does, its last one too before a branch row is left off the screen, and keeps its rows while the cursor is on a job: `renderer/tests/suite/quiet_jobs.rs`.
 - This file keeps Stack, Layout, Invariants and Gotchas, and every invariant names a test that exists: `test/policy/test_claude_md.rb`.
 
 ## Gotchas

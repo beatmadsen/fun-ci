@@ -2,7 +2,8 @@
 //! jobs): a section of their own under the last project, one row a job, the
 //! row under the cursor in the block. A quiet section, where nothing needs
 //! you or runs, folds into one line; on a short screen the section gives up
-//! its lines before any branch does, keeping one that counts the jobs.
+//! its lines before any branch does, keeping one that counts the jobs until
+//! that one would leave a branch off the screen.
 
 use super::stack::Piece;
 use crate::format::project_name;
