@@ -64,5 +64,5 @@ class TestConfinementGuard < Minitest::Test
 
   def outside_path = File.join(@outside, "probe.sqlite3")
 
-  def probe_output(body) = ProbeSuite.run(body, env: { "TMPDIR" => Dir.tmpdir }).first
+  def probe_output(body) = ProbeSuite.capture(body, env: { "TMPDIR" => Dir.tmpdir }).first
 end

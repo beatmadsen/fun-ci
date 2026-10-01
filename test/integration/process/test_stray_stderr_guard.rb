@@ -27,5 +27,5 @@ class TestStrayStderrGuard < Minitest::Test
 
   private
 
-  def run_suite(body, preamble: "") = ProbeSuite.run(body, preamble: preamble)
+  def run_suite(body, preamble: "") = ProbeSuite.capture(body, preamble: preamble)
 end

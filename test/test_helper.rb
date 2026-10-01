@@ -10,12 +10,14 @@ require_relative "support/sqlite_connection_guard"
 require_relative "support/stray_stderr_guard"
 require_relative "support/confinement_guard"
 require_relative "support/spawn_guard"
+require_relative "support/minitest_guards"
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 ConfinementGuard.install
 StrayStderrGuard.install
 SqliteConnectionGuard.install
 SpawnGuard.install
+MinitestGuards.install
 # Minitest shells out to `diff -u` to show long strings that differ, which the
 # spawn guard would turn into an error; plain Expected/Actual output instead.
 Minitest::Assertions.diff = nil

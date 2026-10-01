@@ -22,5 +22,5 @@ class TestSqliteConnectionGuard < Minitest::Test
 
   private
 
-  def run_suite(body) = ProbeSuite.run(body)
+  def run_suite(body) = ProbeSuite.capture(body)
 end

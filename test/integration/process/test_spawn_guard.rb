@@ -43,7 +43,7 @@ class TestSpawnGuard < Minitest::Test
       probe_dir = File.join(dir, subdir).tap { |path| FileUtils.mkdir_p(path) }
       File.write(File.join(probe_dir, "helper.rb"), HELPER)
       env = lanes(lanes || File.realpath(dir))
-      ProbeSuite.run(body, dir: probe_dir, preamble: 'require_relative "helper"', env: env).first
+      ProbeSuite.capture(body, dir: probe_dir, preamble: 'require_relative "helper"', env: env).first
     end
   end
 

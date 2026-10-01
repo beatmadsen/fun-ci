@@ -11,8 +11,8 @@ module ProbeSuite
 
   # Answers [output, status]. +dir+ defaults to a fresh temporary directory;
   # +preamble+ goes between test_helper and the test class.
-  def self.run(body, dir: nil, preamble: "", env: {})
-    return Dir.mktmpdir("probe") { |fresh| run(body, dir: fresh, preamble: preamble, env: env) } unless dir
+  def self.capture(body, dir: nil, preamble: "", env: {})
+    return Dir.mktmpdir("probe") { |fresh| capture(body, dir: fresh, preamble: preamble, env: env) } unless dir
 
     File.write(File.join(dir, "test_probe.rb"), source(body, preamble))
     Open3.capture2e(env, "ruby", "-I#{ROOT}/test", "-I#{ROOT}/lib", "test_probe.rb", chdir: dir)
