@@ -4,6 +4,7 @@ require "yaml"
 require_relative "catalog"
 require_relative "patterns"
 require_relative "settings_check"
+require_relative "../jobs/job"
 
 module FunCi
   module Evidence
@@ -14,8 +15,6 @@ module FunCi
     class Settings
       DEFAULTS = { "budget" => 2, "detect" => true, "skip" => [], "mask" => [], "masking" => true,
                    "stages" => {}, "jobs" => {} }.freeze
-      # How a daily or weekly job is named where a stage would be: its entries are under `jobs:`.
-      JOB = "jobs/"
 
       # The settings in the config file at `path`, or the defaults without one.
       def self.load(path)
@@ -41,7 +40,8 @@ module FunCi
       # The raw entries for `stage`: those for every stage, then its own; for
       # a job (`jobs/<name>`), those under `jobs:`.
       def entries(stage)
-        stage_list("all") + (stage.start_with?(JOB) ? list("jobs", stage.delete_prefix(JOB)) : stage_list(stage))
+        job = Jobs::Job.named_by(stage)
+        stage_list("all") + (job ? list("jobs", job) : stage_list(stage))
       end
 
       # The globs whose files are stamped when the stage starts, so what it

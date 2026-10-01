@@ -21,6 +21,14 @@ class TestJob < Minitest::Test
     assert_equal "jobs/soak", job("weekly").stage
   end
 
+  def test_should_read_the_job_a_stage_name_names
+    assert_equal "soak", FunCi::Jobs::Job.named_by(job("weekly").stage)
+  end
+
+  def test_should_read_no_job_from_a_pipeline_stage_s_name
+    assert_nil FunCi::Jobs::Job.named_by("lint")
+  end
+
   private
 
   def job(cadence) = FunCi::Jobs::Job.new(name: "soak", cadence: cadence, script: "/p/.fun-ci/#{cadence}/soak.sh")
