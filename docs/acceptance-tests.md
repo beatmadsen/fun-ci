@@ -1071,3 +1071,12 @@ under `jobs`. The verdict and exit code are the pipeline's alone.
 
 ### 13.25 `init` tells agents about the jobs commands
 **Then** the instructions it writes name `fun-ci jobs` and `fun-ci why --job`.
+
+### 13.26 `cancel --job` stops a job from the command line
+**Given** a job whose run is going
+**When** `fun-ci cancel --job NAME` runs
+**Then** the run's processes are stopped and it is recorded cancelled, as `c`
+on its row in the console does, so the job is due again on the next commit;
+it says so and exits 0.
+**And** a job that isn't running is said to have nothing to cancel (exit 0),
+and a name that is no job of the project, or none, is a usage error (64).

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `fun-ci cancel --job NAME` stops a daily or weekly job's run, as `c` on its
+  row does in the console, so an agent can too. The job runs again on the
+  next commit.
+
 ### Fixed
 - An agent that waited on each commit, as `fun-ci init` tells it to, kept
   every run it made from being cancelled by the next, so their slow suites

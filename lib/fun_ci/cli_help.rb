@@ -32,6 +32,7 @@ module FunCi
         events         Print this project's runs' events as JSON lines
         why            Print everything kept about why a commit's stage failed, or its conflict with the trunk
         jobs           List this project's daily and weekly jobs and how each stands
+        cancel         Cancel a daily or weekly job's run: cancel --job NAME
         extract        Try a stage's evidence extractors on a saved output
 
       Options:

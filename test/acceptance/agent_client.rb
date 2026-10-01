@@ -46,6 +46,7 @@ class AgentClient
   def events(*args) = agent("events", args)
   def why(*args) = agent("why", args)
   def jobs(*args) = agent("jobs", args)
+  def cancel(*args) = agent("cancel", args)
   def job_project = @workspace.project_dir
 
   # stages: { "lint" => "completed", "fast" => "running", ... }, in the order they started.

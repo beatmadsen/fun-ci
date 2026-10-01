@@ -6,10 +6,10 @@ require_relative "../setup/project_config"
 
 module FunCi
   module Agent
-    # The project's pipeline, as `wait` starts and watches it: a run starts
-    # the way the post-commit hook starts one, with `fun-ci trigger
-    # --background` in a process of its own, rather than as a fork of the
-    # waiting process and its open database connection.
+    # The project's pipeline, as `wait` starts and watches it and `cancel`
+    # stops a job of it: a run starts the way the post-commit hook starts one,
+    # with `fun-ci trigger --background` in a process of its own, rather than
+    # as a fork of the waiting process and its open database connection.
     class LivePipeline
       FUN_CI = File.expand_path("../../../exe/fun-ci", __dir__)
 
@@ -35,6 +35,9 @@ module FunCi
         canceller.record_dead(db)
         canceller.record_dead_jobs(db)
       end
+
+      # Stops a daily or weekly job's run and records it cancelled, as the console does.
+      def cancel_job(db, id) = Pipeline::RunCanceller.new.cancel_job(db, id)
     end
   end
 end
