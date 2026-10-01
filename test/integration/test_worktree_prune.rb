@@ -3,11 +3,13 @@
 require_relative "../test_helper"
 require "fun_ci/pipeline/worktree_pool"
 require "fun_ci/pipeline/worktree_prune"
+require "fun_ci/jobs/locks"
 
 # AT-1.11: pruning removes the pool's worktrees, against real lock files and a
 # stand-in for git.
 class TestWorktreePrune < Minitest::Test
   FakeWorktrees = Struct.new(:root, :pruned) do
+    def jobs_root = File.join(File.dirname(root), "jobs")
     def check_out(path, _sha) = FileUtils.mkdir_p(path)
     def prune = pruned << :pruned
   end
@@ -24,6 +26,21 @@ class TestWorktreePrune < Minitest::Test
     prune
 
     assert_empty Dir.glob(File.join(@worktrees.root, "slot-?"))
+  end
+
+  def test_should_remove_every_job_s_worktree_when_no_job_runs
+    FunCi::Jobs::Locks.new(@worktrees.jobs_root).take("soak").tap { |slot| FileUtils.mkdir_p(slot.path) }.release
+    prune
+
+    refute_path_exists File.join(@worktrees.jobs_root, "soak")
+  end
+
+  def test_should_refuse_while_a_job_runs
+    held = FunCi::Jobs::Locks.new(@worktrees.jobs_root).take("soak")
+
+    assert_raises(FunCi::Pipeline::WorktreePrune::Busy) { prune }
+  ensure
+    held.release
   end
 
   def test_should_have_git_forget_the_removed_worktrees

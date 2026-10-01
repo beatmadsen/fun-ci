@@ -5,8 +5,9 @@ require_relative "worktrees"
 
 module FunCi
   module Pipeline
-    # Removes every slot of a project's worktree pool, and git's entries for
-    # them, when no run holds one. It takes each slot's lock first, so a run
+    # Removes every slot of a project's worktree pool and every daily or
+    # weekly job's worktree, and git's entries for them, when no run or job
+    # holds one. It takes each slot's lock first, so a run
     # starting meanwhile waits until the slot is gone and then checks it out
     # afresh.
     class WorktreePrune
@@ -16,8 +17,8 @@ module FunCi
         @worktrees = worktrees
       end
 
-      # How many slots it removed. Raises Busy, removing nothing, while a run
-      # holds a slot.
+      # How many worktrees it removed. Raises Busy, removing nothing, while a
+      # run or a job holds one.
       def run
         locks = take_locks
         locks.each { |lock| FileUtils.rm_rf(lock.path.delete_suffix(".lock")) }
@@ -37,12 +38,13 @@ module FunCi
           next if locks.last.flock(File::LOCK_EX | File::LOCK_NB)
 
           locks.each(&:close)
-          raise Busy, "a pipeline is running in #{path}"
+          raise Busy, "fun-ci is running something in #{path}"
         end
       end
 
       def slot_paths
-        Dir.glob(File.join(@worktrees.root, "slot-*")).map { |path| path.delete_suffix(".lock") }.uniq
+        (Dir.glob(File.join(@worktrees.root, "slot-*")) + Dir.glob(File.join(@worktrees.jobs_root, "*")))
+          .map { |path| path.delete_suffix(".lock") }.uniq
       end
     end
   end
