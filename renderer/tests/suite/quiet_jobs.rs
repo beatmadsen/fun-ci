@@ -130,6 +130,75 @@ fn a_line_of_jobs_where_one_runs_has_a_stripe_in_the_running_colour() {
     assert_eq!(stripe.fg, Colour::Rgb(RUNNING[0], RUNNING[1], RUNNING[2]));
 }
 
+// Two branches and two jobs, one failed, take 29 lines with the section's
+// rows and the blank line above them; 30 with the cursor on the last
+// branch, whose block ends the table with no blank line of its own.
+fn two_branches_and_two_jobs(rows: u16) -> Grid {
+    two_branches_and_two_jobs_at(rows, None)
+}
+
+fn two_branches_and_two_jobs_at(rows: u16, cursor: Option<usize>) -> Grid {
+    let runs = [failed(2, "feat", "/src/app"), passed(1, "main", "/src/app")];
+    shown(&runs, &[job("soak", "daily", "failed"), job("mutation", "daily", "passed")], cursor, (120, rows))
+}
+
+#[test]
+fn under_the_block_a_screen_with_room_for_the_jobs_rows_and_a_blank_above_them_shows_the_rows() {
+    let lines = said(&two_branches_and_two_jobs_at(30, Some(1)));
+
+    assert_eq!(lines[lines.len() - 3..lines.len() - 1], ["soak".to_string(), "mutation".to_string()]);
+}
+
+#[test]
+fn under_the_block_a_screen_a_line_short_of_the_jobs_rows_counts_the_jobs_on_one_line() {
+    let lines = said(&two_branches_and_two_jobs_at(29, Some(1)));
+
+    assert_eq!(lines[lines.len() - 2], "daily: 1 failed, 1 passed");
+}
+
+// The table is fitted to what the section leaves it, its blank line
+// included, so a table that has a line to spare says its legend on it.
+#[test]
+fn under_the_block_a_screen_with_a_line_to_spare_after_the_jobs_says_the_legend_on_it() {
+    let lines = said(&two_branches_and_two_jobs_at(22, Some(1)));
+
+    assert_eq!(lines[2..4], ["daily: 1 failed, 1 passed".to_string(), "marks, left to right: lint · build · fast suite · slow suite".to_string()]);
+}
+
+#[test]
+fn one_blank_line_parts_the_jobs_from_the_block_s_lower_edge() {
+    let grid = two_branches_and_two_jobs_at(30, Some(1));
+    let label = row_index(&grid, "D A I L Y");
+    let text = grid.text();
+    let lines: Vec<&str> = text.lines().collect();
+
+    assert_eq!((lines[label - 1].trim(), lines[label - 2].trim().starts_with('▝')), ("", true));
+}
+
+#[test]
+fn a_screen_with_room_for_the_jobs_rows_and_the_blank_above_them_shows_the_rows() {
+    let lines = said(&two_branches_and_two_jobs(29));
+
+    assert_eq!(lines[lines.len() - 3..lines.len() - 1], ["soak".to_string(), "mutation".to_string()]);
+}
+
+#[test]
+fn a_screen_a_line_short_of_the_jobs_rows_counts_the_jobs_on_one_line() {
+    let lines = said(&two_branches_and_two_jobs(28));
+
+    assert_eq!(lines[lines.len() - 2], "daily: 1 failed, 1 passed");
+}
+
+#[test]
+fn one_blank_line_parts_the_jobs_from_the_branches() {
+    let grid = two_branches_and_two_jobs(29);
+    let label = row_index(&grid, "D A I L Y");
+    let text = grid.text();
+    let lines: Vec<&str> = text.lines().collect();
+
+    assert_eq!((lines[label - 1].trim(), unstriped(lines[label - 2]).starts_with("main")), ("", true));
+}
+
 #[test]
 fn with_more_than_one_project_a_job_names_its_project() {
     let runs = [failed(2, "feat", "/src/app"), passed(1, "main", "/src/tool")];
