@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   finish. The console shows them in a section of their own under the table,
   and `c` cancels a running one. `fun-ci check` lists them.
 - `fun-ci prune` removes the jobs' worktrees too.
+- Agents ask about jobs: `fun-ci jobs` lists them, `fun-ci why --job NAME`
+  prints what was kept about one's last run, `fun-ci status` names the jobs
+  that tested the commit and any failing on another, and `fun-ci events`
+  says when a job starts and finishes. The instructions `fun-ci init` writes
+  for agents mention them.
 
 ## [2.1.1] - 2026-09-30
 

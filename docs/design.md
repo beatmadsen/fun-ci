@@ -205,14 +205,18 @@ status, no streak and no exit code; it has its own section in the console.
 - Every job has 24 hours, the weekly ones too. One still running then is
   killed and has run out of time. A newer commit never cancels a job; you can,
   from the console, and a cancelled job is due again at the next commit. A
-  job whose process died is recorded failed when fun-ci next looks.
+  job holds its lock in its script as well as in the process running it, so
+  it reads as alive while any of it runs. A job whose process died is
+  recorded failed when fun-ci next looks, a commit included, with a fact that
+  says it has no result, and the console says it stopped without one.
 - A failed job keeps its evidence the way a failed stage does, with
   `evidence: jobs: <name>:` in `.fun-ci/config` for what else to keep. Each
   job keeps its 10 newest runs.
 - An agent asks about jobs as about runs: `fun-ci jobs` lists them, `fun-ci
   why --job NAME` prints what was kept about one's latest run, `status` names
-  the jobs whose latest run tested the commit, and `events` says when a job
-  starts and finishes. None of them waits for a job or changes a verdict: a
+  the jobs whose latest run tested the commit and those failing on another,
+  and `events` says when a job starts and finishes. A job's name is letters,
+  digits, `.`, `_` and `-`, so the commands that name it can be pasted. None of them waits for a job or changes a verdict: a
   job can take a day, and `wait` is for the commit just made.
 
 ## A run's states
@@ -381,7 +385,8 @@ each project's branches sit under the project's name, one row per branch:
   pale line, `4 passed · mutation due in 6h`; on a short screen it gives up
   its lines before any branch does, keeping one, `daily & weekly: 1 failed,
   3 passed`. The cursor moves on from the last branch into the jobs, and `c`
-  cancels a running job, asking first. Jobs play no scene and touch neither
+  cancels a running job, asking first; on a job that needs you, the footer
+  says `fun-ci why --job NAME`. Jobs play no scene and touch neither
   the streak nor the lamp: the header tells the story of the commits.
 - The streak counts consecutive passed runs; a running run neither breaks nor
   extends it. It sits at the top right of the header, `7 in a row!` in green,
