@@ -3,6 +3,7 @@
 require_relative "../test_helper"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
+require "fun_ci/persistence/job_recorder"
 require "fun_ci/jobs/job"
 
 # Claiming and reading a project's job runs (acceptance-tests.md, AT-13.4, AT-13.6).
@@ -102,5 +103,5 @@ class TestJobRuns < Minitest::Test
   private
 
   def claim(now) = @runs.claim(MUTATION, commit: COMMIT, lock_file: "/locks/mutation.lock", now: now)
-  def finish(id, status) = @runs.finished(id, status)
+  def finish(id, status) = FunCi::Persistence::JobRecorder.new(@db).end_stage(id, status)
 end

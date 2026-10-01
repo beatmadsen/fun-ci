@@ -10,7 +10,7 @@ module FunCi
     # and weekly jobs), apart from its pipeline runs.
     class JobRuns
       COLUMNS = %i[id project_path job cadence commit_hash branch status started_at completed_at lock_file pid
-                   group_pid exit_status signal].freeze
+                   group_pid exit_status signal output_tail evidence].freeze
       SELECT = "SELECT #{COLUMNS.join(", ")} FROM job_runs".freeze
       KEPT = 10
 
@@ -34,12 +34,6 @@ module FunCi
 
       # The job's newest run, or nil when it never ran.
       def latest(name) = query("WHERE project_path = ? AND job = ? ORDER BY id DESC LIMIT 1", @project, name).first
-
-      # Records how a run ended, unless it was cancelled meanwhile.
-      def finished(id, status)
-        @db.execute("UPDATE job_runs SET status = ?, completed_at = ? WHERE id = ? AND status = 'running'",
-                    [status, stamp(Time.now), id])
-      end
 
       def cancelled(id)
         @db.execute("UPDATE job_runs SET status = 'cancelled', completed_at = ? WHERE id = ? AND status = 'running'",

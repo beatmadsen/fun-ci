@@ -7,12 +7,16 @@ module FunCi
   module Pipeline
     # Runs a stage that has been started, in `dir`, with a stage directory of
     # its own, and records how it ended while it still holds both. The same
-    # for every stage, the slow suite in its forked child included.
+    # for every stage, the slow suite in its forked child included, and for
+    # a daily or weekly job.
     class StageExecution
-      def initialize(seams:, dir:, commit:)
+      # env: what the script is told about itself; by default, its stage's name
+      # in FUN_CI_STAGE (acceptance-tests.md, AT-10.7).
+      def initialize(seams:, dir:, commit:, env: nil)
         @seams = seams
         @dir = dir
         @commit = commit
+        @env = env
       end
 
       # Answers [the outcome recorded, what the stage printed].
@@ -36,10 +40,9 @@ module FunCi
         StageEnd::Finished.new(output: output, status: status, timed_out: timed_out, overrun: overrun)
       end
 
-      # The stage learns its name from FUN_CI_STAGE (acceptance-tests.md, AT-10.7).
       def execute(stage, command, stage_dir, before_kill, &)
         window = stage_dir.window
-        launch = ProcessRunner::Launch.new(env: { "FUN_CI_STAGE" => stage }, output: window,
+        launch = ProcessRunner::Launch.new(env: @env || { "FUN_CI_STAGE" => stage }, output: window,
                                            before_kill: before_kill)
         @seams.executor(@dir).call(command, @seams.budgets[stage], launch, &)
       ensure
