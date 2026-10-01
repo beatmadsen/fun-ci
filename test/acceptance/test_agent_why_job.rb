@@ -52,6 +52,12 @@ class TestAgentWhyJob < Minitest::Test
     assert_equal "Survived: 3\n", @agent.stdout
   end
 
+  def test_should_look_for_jobs_whose_process_died_before_explaining_one
+    @agent.why("--job", "soak")
+
+    assert_equal 1, @agent.pipeline.watched
+  end
+
   def test_should_exit_1_for_a_job_that_failed
     @agent.record_job_run("soak", SHA, FAILED)
 

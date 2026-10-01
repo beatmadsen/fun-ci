@@ -31,7 +31,12 @@ module FunCi
       def output(options) = Output.new(@context.io.stdout, json: options.json, trunk: options.trunk)
 
       def reports = @reports ||= Reports.new(@context.db, @context.git, @context.clock, @context.trunk)
-      def job_reports = JobReports.new(@context.db, @context.git.toplevel, @context.clock)
+
+      # After recording failed the jobs whose process died, which would otherwise read as running.
+      def job_reports
+        @context.pipeline.watch(@context.db)
+        JobReports.new(@context.db, @context.git.toplevel, @context.clock)
+      end
 
       def usage(message)
         @context.io.stderr.puts "fun-ci #{self.class::NAME}: #{message}"

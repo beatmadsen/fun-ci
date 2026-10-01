@@ -39,7 +39,32 @@ class TestDueJobs < Minitest::Test
     assert_equal %w[mutation soak], due.map(&:name)
   end
 
+  # Nothing else would notice: a running job isn't due, so no process starts to find it dead.
+  def test_should_list_a_job_left_running_by_a_process_that_died_a_period_ago
+    FunCi::Persistence::JobRuns.new(@db, @project).claim(soak, commit: { sha: "a", branch: "main" },
+                                                               lock_file: File.join(@dir, "gone.lock"),
+                                                               now: NOW - 604_800)
+
+    assert_equal %w[mutation soak], due.map(&:name)
+  end
+
+  def test_should_leave_out_a_job_whose_lock_is_held
+    FunCi::Persistence::JobRuns.new(@db, @project).claim(soak, commit: { sha: "a", branch: "main" },
+                                                               lock_file: held_lock, now: NOW - 604_800)
+
+    assert_equal %w[mutation], due.map(&:name)
+  ensure
+    @lock&.close
+  end
+
   private
+
+  def held_lock
+    path = File.join(@dir, "held.lock")
+    @lock = File.open(path, File::RDWR | File::CREAT)
+    @lock.flock(File::LOCK_EX)
+    path
+  end
 
   def due = FunCi::Jobs::DueJobs.new(@project, @db, now: NOW).list
   def soak = FunCi::Jobs::Folders.new(@project).jobs.last

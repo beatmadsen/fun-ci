@@ -81,6 +81,12 @@ class TestAgentJobs < Minitest::Test
     assert_equal (@agent.clock.now - 3600 + 604_800).utc.iso8601, soak["due_at"]
   end
 
+  def test_should_look_for_jobs_whose_process_died_before_listing_them
+    @agent.jobs
+
+    assert_equal 1, @agent.pipeline.watched
+  end
+
   def test_should_exit_zero
     assert_equal 0, @agent.jobs
   end
