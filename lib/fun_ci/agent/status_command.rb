@@ -29,7 +29,7 @@ module FunCi
       def answer(sha, report, output)
         return output.unknown(sha) unless report
 
-        output.report(report, jobs: job_reports.on_commit(sha))
+        output.report(report, jobs: job_reports.of_commit(sha))
         ExitCode::FOR.fetch(report.verdict)
       end
     end

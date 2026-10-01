@@ -4,6 +4,7 @@ require_relative "run_report"
 require_relative "verdict"
 require_relative "digest"
 require_relative "trunk_text"
+require_relative "job_report"
 
 module FunCi
   module Agent
@@ -13,17 +14,22 @@ module FunCi
       WORDS = { "failed" => "FAILED", "over_budget" => "OVER BUDGET" }.freeze
 
       # trunk: whether the agent asked about the trunk, which says so while its
-      # check is going; jobs: the JobReports of the jobs whose latest run tested
-      # the commit, which change nothing about the verdict.
-      def self.lines(report, trunk: false, jobs: [])
+      # check is going; jobs: the commit's CommitJobs, which change nothing
+      # about the verdict.
+      def self.lines(report, trunk: false, jobs: CommitJobs::NONE)
         needed = Verdict::LEVELS.fetch(report.need)
         [header(report), *report.stages.map { |stage| stage_line(stage, needed) }, *Digest.lines(report.stages, needed),
-         *jobs.map { |job| job_line(job) }, *trunk(report, trunk), *footer(report)]
+         *job_lines(jobs), *trunk(report, trunk), *footer(report)]
       end
 
-      # `  soak (weekly job) FAILED  fun-ci why --job soak`
-      def self.job_line(job)
-        said = "  #{job.name} (#{job.cadence} job) #{WORDS.fetch(job.state, job.state)}"
+      def self.job_lines(jobs)
+        jobs.on_commit.map { |job| job_line(job) } + jobs.failing.map { |job| job_line(job, " on #{job.sha[0, 7]}") }
+      end
+
+      # `  soak (weekly job) FAILED  fun-ci why --job soak`; `where` names the
+      # commit it tested when that is another.
+      def self.job_line(job, where = "")
+        said = "  #{job.name} (#{job.cadence} job) #{WORDS.fetch(job.state, job.state)}#{where}"
         WORDS.key?(job.state) ? "#{said}  fun-ci why --job #{job.name}" : said
       end
 
@@ -50,7 +56,7 @@ module FunCi
 
         ["Superseded by #{report.superseded_by[0, 7]}."]
       end
-      private_class_method :stage_line, :footer, :job_line
+      private_class_method :stage_line, :footer, :job_lines, :job_line
     end
   end
 end

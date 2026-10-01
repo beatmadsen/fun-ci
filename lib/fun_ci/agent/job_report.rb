@@ -16,9 +16,18 @@ module FunCi
     # job is due again.
     JobReport = Data.define(:job, :sha, :branch, :stage, :started_at, :due_at)
 
+    # The jobs `status` names for a commit: those whose latest run tested it,
+    # and those failing on another commit, which an agent would not hear of otherwise.
+    CommitJobs = Data.define(:on_commit, :failing)
+
+    class CommitJobs
+      NONE = new(on_commit: [], failing: [])
+    end
+
     class JobReport
       VERDICTS = { "passed" => :passed, "failed" => :failed, "over_budget" => :over_budget,
                    "running" => :undecided }.freeze
+      NEEDS_YOU = %w[failed over_budget].freeze
 
       def name = job.name
       def cadence = job.cadence
@@ -28,6 +37,8 @@ module FunCi
 
       # As `status` would exit for a stage in this state; a job that never ran, or was cancelled, has none.
       def verdict = VERDICTS.fetch(state, :unknown)
+
+      def needs_you? = NEEDS_YOU.include?(state)
 
       # Whether the next commit starts it.
       def due? = state != "running" && due_at.nil?
@@ -47,8 +58,12 @@ module FunCi
       # The job named, or nil when the project has no such job.
       def named(name) = all.find { |report| report.name == name }
 
-      # The jobs whose latest run tested `sha`.
-      def on_commit(sha) = all.select { |report| report.sha == sha }
+      # The jobs whose latest run tested `sha`, and those failing on another commit.
+      def of_commit(sha)
+        reports = all
+        CommitJobs.new(on_commit: reports.select { |report| report.sha == sha },
+                       failing: reports.select { |report| report.needs_you? && report.sha != sha })
+      end
 
       # What the job's latest run kept of its raw output, or nil.
       def raw_output(report) = report.stage && raw.read(report.stage.id)
