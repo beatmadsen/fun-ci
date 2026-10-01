@@ -105,6 +105,13 @@ class TestTriggerCommand < Minitest::Test
                  @stdout.string
   end
 
+  def test_should_say_why_the_jobs_did_not_start_where_the_commit_shows_errors
+    @forker = ->(**) { FORKED.with(jobs: "fun-ci: the daily and weekly jobs didn't start: database is locked") }
+    run_command(["--background", "3f9c2ab0c4d1e2f3", "main"])
+
+    assert_equal "fun-ci: the daily and weekly jobs didn't start: database is locked\n", @stderr.string
+  end
+
   def test_should_say_nothing_when_the_forker_started_no_run
     @forker = ->(**) { false }
     run_command(["--background", "3f9c2ab0c4d1e2f3", "main"])

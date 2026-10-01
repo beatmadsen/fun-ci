@@ -56,8 +56,14 @@ module FunCi
         return 0 unless forked
 
         say_how_to_wait(commit.sha[0, 7])
-        @io.stdout.puts(forked.notice) if forked.notice
+        say(forked)
         0
+      end
+
+      # The first fetch's notice, and on stderr, why the jobs didn't start.
+      def say(forked)
+        @io.stdout.puts(forked.notice) if forked.notice
+        @io.stderr.puts(forked.jobs) if forked.jobs
       end
 
       def say_how_to_wait(sha) = @io.stdout.puts("fun-ci: testing #{sha}. Verdict: fun-ci wait #{sha} --need all")

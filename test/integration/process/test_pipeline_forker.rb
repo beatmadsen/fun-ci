@@ -50,6 +50,21 @@ class TestPipelineForker < Minitest::Test
     assert_operator stage(sha, "fast")[:started_at], :<, stage(sha, "slow")[:completed_at]
   end
 
+  # A job is no part of a run: trouble starting the jobs never costs the commit its CI (AT-13.7).
+  def test_should_run_the_pipeline_when_the_jobs_cannot_start
+    sha = project_passing_every_stage
+    forked_to_the_end(sha, jobs: ->(*) { raise SQLite3::BusyException, "database is locked" })
+
+    assert_equal "completed", recorded_status(sha)
+  end
+
+  def test_should_say_why_the_jobs_did_not_start
+    sha = project_passing_every_stage
+    forked = forked_to_the_end(sha, jobs: ->(*) { raise SQLite3::BusyException, "database is locked" })
+
+    assert_equal "fun-ci: the daily and weekly jobs didn't start: database is locked", forked.jobs
+  end
+
   private
 
   def project_whose_slow_suite_waits_for_the_fast_suite
@@ -84,14 +99,17 @@ class TestPipelineForker < Minitest::Test
 
   # Every process the run forks inherits a pipe this holds, whose end comes
   # when the last of them, the slow suite's included, has exited.
-  def forked_to_the_end(sha)
+  def forked_to_the_end(sha, **)
     ended, held = IO.pipe
-    Dir.chdir(@project.dir) { forked(sha) }
+    forked = Dir.chdir(@project.dir) { forked(sha, **) }
     held.close
     within_deadline { ended.read }
+    forked
   end
 
-  def forked(sha) = FunCi::Pipeline::PipelineForker.fork_pipeline(commit_hash: sha, branch: "main", db_path: @db_path)
+  def forked(sha, **)
+    FunCi::Pipeline::PipelineForker.fork_pipeline(commit_hash: sha, branch: "main", db_path: @db_path, **)
+  end
 
   def recorded_status(sha)
     db = FunCi::Persistence::Database.connection(@db_path)
