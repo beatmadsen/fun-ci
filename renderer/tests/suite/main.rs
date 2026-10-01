@@ -59,6 +59,7 @@ mod table_firefly;
 mod table_fit;
 mod table_footer;
 mod table_job_words;
+mod table_jobs;
 mod table_ladder;
 mod table_leaders;
 mod table_line;

@@ -7,7 +7,7 @@
 
 use crate::support::quiet::{NOW, failed, in_the_block, passed, said, screen_with, unstriped};
 use fun_ci_renderer::grid::{Colour, Grid};
-use fun_ci_renderer::table::night::FAILED;
+use fun_ci_renderer::table::night::{FAILED, RUNNING};
 use serde_json::{Value, json};
 
 const SHA: &str = "9e0b1d4a3f7c01e9b2d4c6f8a1b3c5d7e9f0a2b4";
@@ -116,6 +116,18 @@ fn a_short_screen_keeps_one_line_of_jobs_before_folding_a_branch() {
     let lines = said(&shown(&runs, &jobs, None, (120, 30)));
 
     assert_eq!(lines[lines.len() - 3..lines.len() - 1], ["dev".to_string(), "daily & weekly: 1 failed, 3 passed".to_string()]);
+}
+
+#[test]
+fn a_line_of_jobs_where_one_runs_has_a_stripe_in_the_running_colour() {
+    let runs = [failed(3, "feat", "/src/app"), passed(2, "main", "/src/app"), passed(1, "dev", "/src/app")];
+    let jobs = [job("a", "daily", "passed"), job("b", "daily", "passed"), job("c", "daily", "passed"), job("soak", "weekly", "running")];
+    let grid = shown(&runs, &jobs, None, (120, 30));
+    let row = row_index(&grid, "daily & weekly: ");
+
+    let stripe = grid.cells[row].iter().find(|cell| cell.text == "▌").unwrap();
+
+    assert_eq!(stripe.fg, Colour::Rgb(RUNNING[0], RUNNING[1], RUNNING[2]));
 }
 
 #[test]

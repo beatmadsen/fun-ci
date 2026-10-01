@@ -4,7 +4,7 @@
 //! commit starts it (acceptance-tests.md, AT-13.18).
 
 use fun_ci_renderer::model::Job;
-use fun_ci_renderer::table::job_words::{said, said_briefly};
+use fun_ci_renderer::table::job_words::{said, said_briefly, span};
 use serde_json::{Value, json};
 
 const NOW: i64 = 1_790_000_000;
@@ -64,6 +64,16 @@ fn a_short_run_is_counted_in_seconds() {
 #[test]
 fn a_run_under_an_hour_is_counted_in_minutes() {
     assert_eq!(words(&ran("failed", 3_000, 0, Some(86_400))), "failed after 50m on wip/foo 9e0b1d4 · due in 1d");
+}
+
+#[test]
+fn a_run_of_whole_hours_is_counted_in_hours_alone() {
+    assert_eq!(span(7_200), "2h");
+}
+
+#[test]
+fn a_run_over_a_day_is_counted_in_days_and_hours() {
+    assert_eq!(span(93_600), "1d2h");
 }
 
 #[test]
