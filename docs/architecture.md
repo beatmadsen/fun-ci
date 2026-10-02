@@ -218,7 +218,10 @@ same problem if you switch branches while it runs.
   It has none of those caches, so its first lint and build measure fun-ci's
   doing, not the project. `Worktrees#check_out` says whether it made the
   worktree, and the pool hands that slot out as a `ColdSlot`; a budget still
-  applies, so a hang ends. *Rejected:* a warm-up command, a step people
+  applies, so a hang ends. Each stage row keeps the budget it ran to, and
+  `status` reads a budget above the stage's usual one as a new worktree's,
+  since nothing else raises it; were budgets ever set per project, that
+  would need a flag of its own. *Rejected:* a warm-up command, a step people
   forget; and no budget at all, which would let a hang hold the push.
 - `StalePipelineCanceller` also releases the slots of the runs it cancels.
   Slots whose lock names a dead pid are reclaimed.
@@ -240,9 +243,10 @@ commands that ask about commits (`lib/fun_ci/agent/`).
   commit, and `init` writes one instruction into `AGENTS.md` or `CLAUDE.md`:
   run it in the background. A harness that runs background commands and wakes
   the agent when one exits needs nothing more.
-- **Runs are keyed on the commit**, per project (`Persistence::ProjectRuns`
-  scopes every query by `project_path`, since all projects share one
-  database). A tree hash was considered and dropped: stage scripts receive the
+- **Runs are keyed on the commit's full SHA**, per project
+  (`Persistence::ProjectRuns` scopes every query by `project_path`, since all
+  projects share one database); `trigger` resolves whatever revision it is
+  given before it records the run. A tree hash was considered and dropped: stage scripts receive the
   commit hash, so a verdict can't safely pass between commits.
 - **The database lives in the user's state directory**
   (`$XDG_STATE_HOME/fun-ci`, or `~/.local/state/fun-ci`), not `$TMPDIR`,

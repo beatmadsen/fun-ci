@@ -14,10 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   together, spread evenly over the day: with four jobs, the first at once
   and each next one six hours later, and none sooner than that after a job
   still running or waiting. `job_spacing:` in `.fun-ci/config` sets the gap
-  instead (`30m`, `1h`; `0` starts them together). A
-  job waiting its turn says when it starts: `starts in 8m` in the console
-  and in `fun-ci jobs`, `starts_at` in its JSON, `scheduled, starts in 8m` in
-  `status`, `job_scheduled` in `events`. `c` in the console cancels it at
+  instead (`30m`, `1h`; `0` starts them together). A job waiting its turn
+  says when it starts: `starts in 6h` in the console and in `fun-ci jobs`,
+  `starts_at` in its JSON, `scheduled, starts in 6h` in `status`,
+  `job_scheduled` in `events`. `c` in the console cancels it at
   once, as does `fun-ci cancel --job`. `fun-ci check` names a spacing it
   can't read. The console needs renderer 2.3.0 to show a waiting job; an
   older one says it is in a state it doesn't know.
@@ -56,9 +56,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   every run it made from being cancelled by the next, so their slow suites
   ran side by side. `wait --follow-branch` no longer keeps its run going, and
   the command a commit prints, which agents are told to run, follows the
-  branch. The section `fun-ci init` wrote into AGENTS.md before still says
-  to act on `4 superseded`: delete it and run `fun-ci init` to write the new
-  one.
+  branch. Run `fun-ci init` again to bring the section it wrote into
+  AGENTS.md up to date; the old one tells agents to act on `4 superseded`.
 - `fun-ci status` said `trunk unknown, the check never finished` for a run
   whose lint, build or fast suite took longer than 25 seconds, while the
   check was only waiting for them to end before it was recorded.

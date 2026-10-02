@@ -51,7 +51,7 @@ After each commit, the `post-commit` hook starts the pipeline in the background 
 
 `install-hooks` leaves a hook another tool wrote alone, and `fun-ci check` warns that no commit is tested until that hook calls fun-ci. Git LFS's own hooks are the exception: fun-ci writes its hooks in their place, and they run git-lfs's after fun-ci's, so LFS objects still reach the remote. After that, `git lfs install` says the hooks exist and exits 2, since it accepts no hook but its own; there is nothing for it to do. `git lfs update --force` would put git-lfs's back, leaving fun-ci out, until you run `fun-ci install-hooks` again.
 
-Each run happens in a git worktree of its own under `.git/fun-ci/worktrees/`, checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. A worktree fun-ci has just made has none of them yet, so in its first run lint and build get the slow suite's five minutes rather than 30 seconds. Two runs can go at once; set `worktree_slots: 3` in `.fun-ci/config` for more, and `fun-ci prune` removes the worktrees when you want the space back. A newer commit on a branch cancels the older run that is still going, unless an agent is waiting on it without `--follow-branch`.
+Each run happens in a git worktree of its own under `.git/fun-ci/worktrees/`, checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. A worktree fun-ci has just made has none of them yet, so in its first run lint and build get the slow suite's five minutes rather than 30 seconds, and `fun-ci status` says so on their lines. Two runs can go at once; set `worktree_slots: 3` in `.fun-ci/config` for more, and `fun-ci prune` removes the worktrees when you want the space back. A newer commit on a branch cancels the older run that is still going, unless an agent is waiting on it without `--follow-branch`.
 
 Results are kept in SQLite under `$XDG_STATE_HOME/fun-ci/` (`~/.local/state/fun-ci/` by default), shared by every project on the machine.
 
@@ -118,7 +118,7 @@ A branch that conflicts with the trunk says so on the line under its name, `conf
 Keys:
 
 - `j` and `k`, or the arrow keys, move the cursor down and up
-- `c` cancels the run under the cursor: one waiting to start at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start. The cursor moves on past the last branch into the jobs, and `c` cancels a running job the same way; a cancelled job runs again on your next commit
+- `c` cancels the run under the cursor: one waiting to start at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start. The cursor moves on past the last branch into the jobs, and `c` cancels a job too: one waiting its turn at once, a running one the same way; a cancelled job runs again on your next commit
 - `q` quits
 
 The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above are the renderer's output replayed in a terminal emulator, set in Menlo; in your terminal the text is in your terminal's font.

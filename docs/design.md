@@ -46,8 +46,9 @@ in the code, so it looks different from a failure: yellow, not red.
 
 A worktree fun-ci has just made has none of the caches the lint and build
 budgets count on, so its first run is no such signal: there lint and build
-get the slow suite's budget (a run in the foreground says so; one that still
-runs over has that budget in `fun-ci why`).
+get the slow suite's budget (a run in the foreground says so, `fun-ci status`
+says `(new worktree, budget 300s)` on their lines, and one that still runs over
+has that budget in `fun-ci why`).
 
 **Simple.** One screen, three keys, no drill-down. A new user understands a row
 the first time they see one.
@@ -120,7 +121,8 @@ uncommitted files.
 - A commit's output ends with the command that gets its verdict:
   `fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all --follow-branch`.
   `fun-ci init` tells agents, in `AGENTS.md` or `CLAUDE.md`, to run it in the
-  background after each commit.
+  background after each commit, and run again it brings that section up to
+  date.
 - `fun-ci wait` returns once the level the agent needs is decided: `build`
   (lint and build), `fast` (the default) or `all` (the slow suite too). The
   first failure ends the wait. `--within 30s` gives up at the agent's deadline.
@@ -404,7 +406,7 @@ each project's branches sit under the project's name, one row per branch:
   it. With more than one project on the board, each row names its project
   first (`fun-ci · soak`), unless the screen is too narrow for both, when
   the job's own name tells it apart. The rows go failed, ran out of time,
-  running, waiting its turn (`starts in 8m on main 3a1f9c2`), due, passed. When nothing in the section needs you or runs, it
+  running, waiting its turn (`starts in 6h on main 3a1f9c2`), due, passed. When nothing in the section needs you or runs, it
   folds into one pale line, `4 passed · mutation due in 6h`; on a short
   screen it gives up its lines before any branch does, keeping one,
   `daily & weekly: 1 failed, 3 passed`, until that one would cost a branch
