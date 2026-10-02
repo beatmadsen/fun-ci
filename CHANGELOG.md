@@ -48,6 +48,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the next heading; before, it left any section it found as it was.
 
 ### Fixed
+- `fun-ci trigger` given a short SHA, or a revision such as `HEAD`, kept the
+  run under what it was given, so `fun-ci status`, `wait` and `why`, which
+  look runs up by the full SHA, never found it. Runs are kept under the full
+  SHA, and the daily and weekly jobs a run starts test that commit too.
 - An agent that waited on each commit, as `fun-ci init` tells it to, kept
   every run it made from being cancelled by the next, so their slow suites
   ran side by side. `wait --follow-branch` no longer keeps its run going, and

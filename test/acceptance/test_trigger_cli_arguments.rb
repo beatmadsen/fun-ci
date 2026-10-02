@@ -6,7 +6,8 @@ require_relative "trigger_cli_shared"
 # code a hook gets back.
 class TestTriggerCliArguments < Minitest::Test
   NULL_SHA = "0" * 40
-  REJECTING = ->(_sha) { false }
+  REJECTING = ->(_rev) {}
+  FULL_SHA = "02bfb89016974766c808b8fcea39e3931693b4be"
   FAST_SUITE_FAILS = lambda { |cmd|
     cmd.include?("fast.sh") ? ["test_foo FAILED", FakeStatus.new(false, 1)] : ["", FakeStatus.new(true, 0)]
   }
@@ -26,20 +27,27 @@ class TestTriggerCliArguments < Minitest::Test
   end
 
   def test_should_refuse_a_commit_the_repository_does_not_have
-    @client.trigger(commit_hash: "deadbeef000000", branch: "main", commit_validator: REJECTING)
+    @client.trigger(commit_hash: "deadbeef000000", branch: "main", commit_resolver: REJECTING)
 
     refute_equal 0, @client.exit_code
   end
 
   def test_should_say_the_commit_was_not_found
-    @client.trigger(commit_hash: "deadbeef000000", branch: "main", commit_validator: REJECTING)
+    @client.trigger(commit_hash: "deadbeef000000", branch: "main", commit_resolver: REJECTING)
 
     assert_includes @client.stderr, "commit deadbeef000000 not found"
   end
 
+  # Agents look a commit's run up by its full SHA (AT-9.2).
+  def test_should_record_a_run_started_with_a_short_sha_under_the_full_one
+    @client.trigger(commit_hash: "02bfb89", branch: "main", commit_resolver: ->(_rev) { FULL_SHA })
+
+    assert_equal 1, @client.pipeline_runs_for(commit_hash: FULL_SHA).size
+  end
+
   # A root commit's pre-commit hook has no HEAD yet and passes the null SHA.
   def test_should_run_the_pipeline_for_the_null_sha_without_looking_it_up
-    @client.trigger(commit_hash: NULL_SHA, branch: "main", commit_validator: REJECTING)
+    @client.trigger(commit_hash: NULL_SHA, branch: "main", commit_resolver: REJECTING)
 
     assert_equal 0, @client.exit_code
   end

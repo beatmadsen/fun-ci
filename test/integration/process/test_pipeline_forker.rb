@@ -70,6 +70,16 @@ class TestPipelineForker < Minitest::Test
     assert_equal "fun-ci: the daily and weekly jobs didn't start: database is locked", forked.jobs
   end
 
+  # The jobs test the commit as its run is kept, by its full SHA, whatever
+  # revision named it.
+  def test_should_start_the_jobs_on_the_full_sha_of_a_short_one
+    sha = project_passing_every_stage
+    given = []
+    forked_to_the_end(sha, named: sha[0, 7], jobs: ->(commit, _db_path) { given << commit.sha })
+
+    assert_equal [sha], given
+  end
+
   private
 
   def project_whose_slow_suite_waits_for_the_fast_suite
@@ -104,9 +114,10 @@ class TestPipelineForker < Minitest::Test
 
   # Every process the run forks inherits a pipe this holds, whose end comes
   # when the last of them, the slow suite's included, has exited.
-  def forked_to_the_end(sha, jobs: NO_JOBS)
+  # named: the revision the trigger is given for the commit.
+  def forked_to_the_end(sha, named: sha, jobs: NO_JOBS)
     ended, held = IO.pipe
-    forked = Dir.chdir(@project.dir) { forked(sha, jobs: jobs) }
+    forked = Dir.chdir(@project.dir) { forked(named, jobs: jobs) }
     held.close
     within_deadline { ended.read }
     forked

@@ -29,8 +29,11 @@ module FunCi
       def run
         config = Setup::ProjectConfig.new(@project)
         return handle_config_errors(config) if config.validate.any?
-        return unknown_commit unless known_commit?
 
+        full = full_sha
+        return unknown_commit unless full
+
+        @commit = @commit.with(sha: full)
         start_run(config)
         checking_the_trunk { run_in(workspace.acquire(@commit.sha)) }
       end
@@ -44,7 +47,8 @@ module FunCi
       private
 
       def recorder = @seams.recorder
-      def known_commit? = @commit.sha == NULL_SHA || @seams.commit_validator.call(@commit.sha)
+      # Runs are kept under the full SHA, whatever revision named the commit.
+      def full_sha = @commit.sha == NULL_SHA ? NULL_SHA : @seams.commit_resolver.call(@commit.sha)
 
       def workspace = @seams.workspace || Workspaces.for(@project, @commit.sha)
       def branch = Persistence::Branch.new(project: @project, name: @commit.branch)

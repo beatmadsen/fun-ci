@@ -25,13 +25,15 @@ module FunCi
       # fork. The project's due jobs start beside the run, each in a process
       # of its own (design.md, Daily and weekly jobs), once the run has
       # started, and trouble starting them never stops it. jobs: what starts
-      # them, given the commit and the database's path.
+      # them, given the commit (by its full SHA, as the run keeps it) and the
+      # database's path.
       def self.fork_pipeline(commit_hash:, branch:, db_path:, jobs: method(:start_due_jobs))
         return false unless Setup::ProjectConfig.new(Dir.pwd).validate.empty?
 
         notice = first_fetch(db_path)
-        Process.detach(fork { run_in_child(commit_hash: commit_hash, branch: branch, db_path: db_path) })
-        Forked.new(notice: notice, jobs: trouble { jobs.call(Commit.new(sha: commit_hash, branch: branch), db_path) })
+        commit = Commit.new(sha: Seams.full_sha(commit_hash) || commit_hash, branch: branch)
+        Process.detach(fork { run_in_child(commit_hash: commit.sha, branch: branch, db_path: db_path) })
+        Forked.new(notice: notice, jobs: trouble { jobs.call(commit, db_path) })
       end
 
       # What went wrong starting the jobs, or nil.

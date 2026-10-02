@@ -36,10 +36,10 @@ class TriggerCliClient
 
   # The action the user takes: commit (or push) on a branch. `files` may
   # give the stage scripts' bodies (scripts:) and .fun-ci/config (config:).
-  def trigger(commit_hash:, branch:, commit_validator: nil, **files)
+  def trigger(commit_hash:, branch:, commit_resolver: nil, **files)
     ScriptedProject.new(project_dir).write(files.fetch(:scripts, {}))
     File.write(File.join(project_dir, ".fun-ci", "config"), files[:config]) if files[:config]
-    run_trigger(project_dir, FunCi::Pipeline::Commit.new(sha: commit_hash, branch: branch), commit_validator)
+    run_trigger(project_dir, FunCi::Pipeline::Commit.new(sha: commit_hash, branch: branch), commit_resolver)
   end
 
   # Invoke the trigger CLI with missing or invalid arguments.
@@ -88,10 +88,10 @@ class TriggerCliClient
   end
 
   # A temp dir is no git repository, so commits are valid unless a test says otherwise.
-  def run_trigger(project_dir, commit, commit_validator = nil)
+  def run_trigger(project_dir, commit, commit_resolver = nil)
     io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new)
     seams = FunCi::Pipeline::Seams.new(**@seams, workspace: FunCi::Pipeline::InPlace.new(project_dir),
-                                                 commit_validator: commit_validator || ->(_sha) { true })
+                                                 commit_resolver: commit_resolver || ->(sha) { sha })
     capture(FunCi::Pipeline::Trigger.new(project: project_dir, commit: commit, io: io, seams: seams).run, io)
   end
 

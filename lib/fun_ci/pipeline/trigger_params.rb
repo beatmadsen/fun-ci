@@ -35,7 +35,7 @@ module FunCi
     # checks a commit against the trunk (#check(sha) answers a Trunk::Check,
     # or nil for no check), nil for the project's own; `priorities` what jobs
     # and the slow suite start under.
-    Seams = Data.define(:command_runner, :time_budgets, :commit_validator, :recorder, :background_launcher, :workspace,
+    Seams = Data.define(:command_runner, :time_budgets, :commit_resolver, :recorder, :background_launcher, :workspace,
                         :stage_dir, :environment, :clock, :extractor_runner, :process_table, :trunk, :priorities)
 
     # Reopened rather than given as a block to Data.define, so tools that read
@@ -49,13 +49,17 @@ module FunCi
 
       def self.defaults
         { command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new, background_launcher: nil,
-          workspace: nil, commit_validator: method(:commit_exists?), stage_dir: StageDir.method(:create),
+          workspace: nil, commit_resolver: method(:full_sha), stage_dir: StageDir.method(:create),
           environment: ENV.to_h, clock: MONOTONIC,
           extractor_runner: Evidence::CommandRunner.method(:new),
           process_table: Evidence::ProcessTable.method(:now), trunk: nil, priorities: Priorities.for(RUBY_PLATFORM) }
       end
 
-      def self.commit_exists?(sha) = Open3.capture2e(GitEnvironment::CLEAN, "git", "cat-file", "-t", sha).last.success?
+      # The full SHA of the commit `rev` names, or nil when the repository has none.
+      def self.full_sha(rev)
+        out, status = Open3.capture2(GitEnvironment::CLEAN, "git", "rev-parse", "--verify", "-q", "#{rev}^{commit}")
+        out.strip if status.success?
+      end
 
       def initialize(**given) = super(**self.class.defaults.merge(given))
       def budgets = DEFAULT_BUDGETS.merge(time_budgets)
