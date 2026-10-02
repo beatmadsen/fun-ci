@@ -50,15 +50,15 @@ module FunCi
         db&.close
       end
 
-      # Which jobs are due is read before any fork, which must not inherit the connection.
-      def self.start_due_jobs(commit, db_path)
-        fork = Jobs::JobFork.new(project: Dir.pwd, db_path: db_path)
-        due_jobs(db_path).each { |job| fork.start(job, commit) }
+      # Which jobs are due, and when each one's turn comes, is read before any
+      # fork, which must not inherit the connection. fork: what starts each.
+      def self.start_due_jobs(commit, db_path, fork: Jobs::JobFork.new(project: Dir.pwd, db_path: db_path))
+        due_jobs(db_path).each { |job, at| fork.start(job, commit, at: at) }
       end
 
       def self.due_jobs(db_path)
         db = Persistence::Database.connection(db_path)
-        Jobs::DueJobs.new(Dir.pwd, db, now: Time.now).list
+        Jobs::DueJobs.new(Dir.pwd, db, now: Time.now).starts
       ensure
         db&.close
       end
@@ -79,7 +79,7 @@ module FunCi
         Trigger.new(project: Dir.pwd, commit: Commit.new(sha: commit_hash, branch: branch),
                     io: Io.new(stdout: File.open(File::NULL, "w")), seams: Seams.new(recorder: recorder))
       end
-      private_class_method :trigger, :first_fetch, :start_due_jobs, :due_jobs, :trouble
+      private_class_method :trigger, :first_fetch, :due_jobs, :trouble
     end
   end
 end

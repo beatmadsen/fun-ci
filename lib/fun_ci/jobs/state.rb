@@ -4,12 +4,13 @@ module FunCi
   module Jobs
     # A job's state, read once from its latest run as job_runs keeps it
     # (design.md, Daily and weekly jobs): `due` while it never ran, then
-    # `running`, `passed`, `failed`, `over_budget`, `cancelled`, or `lost`
+    # `scheduled` while it waits its turn to start (Schedule), `running`,
+    # `passed`, `failed`, `over_budget`, `cancelled`, or `lost`
     # when its process died before it said how the run ended. Each surface
     # (the console, the agent commands) says these in its own words.
     module State
       OF_STATUS = { "completed" => "passed", "failed" => "failed", "timed_out" => "over_budget",
-                    "running" => "running", "cancelled" => "cancelled" }.freeze
+                    "running" => "running", "scheduled" => "scheduled", "cancelled" => "cancelled" }.freeze
       NEEDS_YOU = %w[failed over_budget lost].freeze
 
       # run: { status:, completed_at: }, or nil when the job never ran.

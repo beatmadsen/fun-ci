@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "time"
 require_relative "folders"
 require_relative "due"
 require_relative "state"
@@ -19,6 +20,9 @@ module FunCi
       def needs_you? = State.needs_you?(state)
       def due_now? = due.now?
       def due_at = due.at
+
+      # When a run waiting its turn (Schedule) is to start; nil for any other.
+      def starts_at = state == "scheduled" ? Time.parse(run[:started_at]) : nil
     end
 
     # Where each of a project's jobs stands at `now`, read once for the

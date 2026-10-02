@@ -33,6 +33,13 @@ module FunCi
         end
       end
 
+      # Records the claimed run `id` waiting its turn to start at `at` (Jobs::Schedule).
+      def wait_until(id, at) = update(id, "scheduled", at, "status = 'running'")
+
+      # Records the run `id` running from `now`, its turn come, and answers how
+      # many runs that was: none when it was cancelled while it waited.
+      def start_turn(id, now) = update(id, "running", now, "status = 'scheduled'")
+
       # The project's newest job runs, newest first.
       def recent(limit:) = query("WHERE project_path = ? ORDER BY id DESC LIMIT ?", @project, limit)
 
@@ -49,6 +56,11 @@ module FunCi
                     "lock_file) VALUES (?, ?, ?, ?, ?, 'running', ?, ?)",
                     [@project, job.name, job.cadence, commit[:sha], commit[:branch], stamp(now), lock_file])
         @db.last_insert_row_id
+      end
+
+      def update(id, status, at, was)
+        @db.execute("UPDATE job_runs SET status = ?, started_at = ? WHERE id = ? AND #{was}", [status, stamp(at), id])
+        @db.changes
       end
 
       def forget_beyond(name)

@@ -51,6 +51,7 @@ module FunCi
       def worktree_slots = settings.worktree_slots
       def trunk = settings.trunk
       def trunk_fetch = settings.trunk_fetch
+      def job_spacing = settings.job_spacing
 
       def script_path(stage)
         File.join(@fun_ci_dir, "#{stage}.sh")

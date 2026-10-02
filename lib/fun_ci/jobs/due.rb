@@ -6,8 +6,8 @@ module FunCi
   module Jobs
     # Whether a job is due, from its latest run alone ({ status:, started_at: },
     # or nil when it never ran): when it never ran, when that run was
-    # cancelled, or a period after that run started, unless it still runs
-    # (design.md, Daily and weekly jobs).
+    # cancelled, or a period after that run started, unless it still runs or
+    # waits to (design.md, Daily and weekly jobs).
     class Due
       def initialize(latest, period, now:)
         @latest = latest
@@ -26,7 +26,8 @@ module FunCi
 
       private
 
-      def running? = @latest[:status] == "running"
+      # A run waiting its turn (Schedule) counts as running: it is the job's run.
+      def running? = %w[running scheduled].include?(@latest[:status])
       def again = Time.parse(@latest[:started_at]) + @period
     end
   end

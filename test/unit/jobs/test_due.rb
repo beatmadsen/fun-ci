@@ -41,6 +41,15 @@ class TestJobDue < Minitest::Test
     refute_predicate due(latest("running", 2 * DAY), DAY), :now?
   end
 
+  # A run waiting its turn (Jobs::Schedule) is the job's run: no commit starts another.
+  def test_should_not_be_due_while_its_latest_run_waits_to_start
+    refute_predicate due(latest("scheduled", 2 * DAY), DAY), :now?
+  end
+
+  def test_should_say_nothing_of_when_it_is_due_while_it_waits_to_start
+    assert_nil due(latest("scheduled", 60), DAY).at
+  end
+
   def test_should_say_it_is_due_again_a_period_after_its_latest_run_started
     assert_equal NOW + 3600, due(latest("completed", DAY - 3600), DAY).at
   end

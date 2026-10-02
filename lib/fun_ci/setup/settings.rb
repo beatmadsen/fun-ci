@@ -11,6 +11,7 @@ module FunCi
     class Settings
       DEFAULTS = { "worktree_slots" => 2 }.freeze
       FETCH_EVERY = 300
+      JOB_SPACING = 600
       UNITS = { "" => 1, "s" => 1, "m" => 60, "h" => 3600 }.freeze
 
       # The settings in the file at `path`, which may not exist.
@@ -37,6 +38,10 @@ module FunCi
 
         seconds(given) || FETCH_EVERY
       end
+
+      # Seconds between the starts of the jobs a commit starts, 0 for all at
+      # once (Jobs::Schedule). Like the trunk's, it never stops a pipeline.
+      def job_spacing = seconds(setting("job_spacing")) || JOB_SPACING
 
       def errors
         setting_errors

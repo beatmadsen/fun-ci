@@ -37,8 +37,12 @@ module FunCi
       def job_state(run)
         JobEvents::JobState.new(id: run[:id], job: run[:job], cadence: run[:cadence], sha: run[:commit_hash],
                                 branch: run[:branch], state: Jobs::State.of(run),
-                                seconds: Persistence::StageJob.elapsed_duration(run)&.round(1))
+                                seconds: Persistence::StageJob.elapsed_duration(run)&.round(1),
+                                starts_at: starts_at(run))
       end
+
+      # When a run waiting its turn starts, as an ISO time; nil for any other.
+      def starts_at(run) = run[:status] == "scheduled" ? Time.parse(run[:started_at]).utc.iso8601 : nil
 
       def state_of(run)
         superseded_by = run[:status] == "cancelled" ? @runs.superseded_by(run) : nil

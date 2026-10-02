@@ -14,7 +14,7 @@ module FunCi
     # command of each job that failed or ran over budget.
     module JobsText
       WORDS = { "passed" => "ok", "failed" => "FAIL", "lost" => "LOST", "over_budget" => "OVER", "running" => "...",
-                "due" => "due", "cancelled" => "x" }.freeze
+                "due" => "due", "cancelled" => "x", "scheduled" => "wait" }.freeze
 
       # now: the time the ages and due times count from.
       def self.lines(reports, now)
@@ -34,13 +34,17 @@ module FunCi
         "#{head}  #{seconds(report.stage)}  #{tested(report, now)}  #{due(report, now)}"
       end
 
-      # `wip/foo 9e0b1d4  1h ago`
-      def self.tested(report, now) = "#{report.branch} #{report.sha[0, 7]}  #{Age.words(now - report.started_at)}"
+      # `wip/foo 9e0b1d4  1h ago`; a run waiting its turn has not started.
+      def self.tested(report, now)
+        commit = "#{report.branch} #{report.sha[0, 7]}"
+        report.started_at ? "#{commit}  #{Age.words(now - report.started_at)}" : commit
+      end
 
       def self.seconds(stage) = (stage.seconds ? Span.words(stage.seconds) : "").rjust(6)
 
       def self.due(report, now)
         return "running" if report.state == "running"
+        return "starts in #{DueIn.words(report.starts_in)}" if report.starts_in
 
         report.due_at ? "due in #{DueIn.words(report.due_at - now)}" : "runs on the next commit"
       end

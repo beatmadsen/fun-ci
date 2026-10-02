@@ -22,6 +22,10 @@ class TestJobState < Minitest::Test
     assert_equal "over_budget", state("timed_out")
   end
 
+  def test_should_say_a_run_waiting_its_turn_is_scheduled
+    assert_equal "scheduled", state("scheduled", ended: nil)
+  end
+
   def test_should_say_a_running_run_runs
     assert_equal "running", state("running", ended: nil)
   end

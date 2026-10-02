@@ -10,8 +10,9 @@ module FunCi
   module Agent
     # A daily or weekly job as an agent is told it: where it stands
     # (Jobs::Standing), and its latest run as a RunReport::Stage named after
-    # the job, nil while it never ran.
-    JobReport = Data.define(:standing, :stage)
+    # the job, nil while it never ran, and the seconds until a run waiting its
+    # turn starts (Jobs::Schedule), nil for any other.
+    JobReport = Data.define(:standing, :stage, :starts_in)
 
     # The jobs `status` names for a commit: those whose latest run tested it,
     # and those failing on another commit, which an agent would not hear of otherwise.
@@ -23,7 +24,7 @@ module FunCi
 
     class JobReport
       VERDICTS = { "passed" => :passed, "failed" => :failed, "lost" => :failed, "over_budget" => :over_budget,
-                   "running" => :undecided }.freeze
+                   "running" => :undecided, "scheduled" => :undecided }.freeze
 
       def name = standing.name
       def cadence = standing.cadence
@@ -34,10 +35,12 @@ module FunCi
       # Whether the next commit starts it.
       def due? = standing.due_now?
 
-      # The commit and branch its latest run tested, and when that started.
+      # The commit and branch its latest run tested, and when that started,
+      # or, while it waits its turn, when it is to.
       def sha = standing.run&.dig(:commit_hash)
       def branch = standing.run&.dig(:branch)
-      def started_at = standing.run && Time.parse(standing.run[:started_at])
+      def started_at = standing.run && !starts_at ? Time.parse(standing.run[:started_at]) : nil
+      def starts_at = standing.starts_at
 
       # As `status` would exit for a stage in this state; a job that never ran, or was cancelled, has none.
       def verdict = VERDICTS.fetch(state, :unknown)
@@ -73,7 +76,8 @@ module FunCi
 
       def report(standing)
         run = standing.run
-        JobReport.new(standing: standing, stage: run && stage(standing.name, run))
+        JobReport.new(standing: standing, stage: run && stage(standing.name, run),
+                      starts_in: standing.starts_at && (standing.starts_at - @clock.now))
       end
 
       def stage(name, run)

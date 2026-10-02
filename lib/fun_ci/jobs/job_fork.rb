@@ -19,15 +19,16 @@ module FunCi
         @priorities = priorities
       end
 
-      def start(job, commit) = Process.detach(fork { run_in_child(job, commit) })
+      # at: when the job's turn to start comes (Schedule); now when nil.
+      def start(job, commit, at: nil) = Process.detach(fork { run_in_child(job, commit, at) })
 
       private
 
-      def run_in_child(job, commit)
+      def run_in_child(job, commit, at)
         Process.setsid
         silence
         db = Persistence::Database.connection(@db_path)
-        JobRun.new(job, commit, site(db), Pipeline::Seams.new(priorities: @priorities)).start
+        JobRun.new(job, commit, site(db), Pipeline::Seams.new(priorities: @priorities)).start(at: at)
       ensure
         db&.close
       end

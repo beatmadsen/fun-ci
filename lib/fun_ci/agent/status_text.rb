@@ -5,6 +5,7 @@ require_relative "verdict"
 require_relative "digest"
 require_relative "trunk_text"
 require_relative "job_report"
+require_relative "due_in"
 
 module FunCi
   module Agent
@@ -29,9 +30,12 @@ module FunCi
       # `  soak (weekly job) FAILED  fun-ci why --job soak`; `where` names the
       # commit it tested when that is another.
       def self.job_line(job, where = "")
-        said = "  #{job.name} (#{job.cadence} job) #{WORDS.fetch(job.state, job.state)}#{where}"
+        said = "  #{job.name} (#{job.cadence} job) #{WORDS.fetch(job.state, job.state)}#{starts(job)}#{where}"
         job.needs_you? ? "#{said}  fun-ci why --job #{job.name}" : said
       end
+
+      # `, starts in 8m` for a job waiting its turn.
+      def self.starts(job) = job.starts_in ? ", starts in #{DueIn.words(job.starts_in)}" : ""
 
       # The trunk lines; nothing while the check is going, unless asked about
       # (right after a commit it would say nothing useful).
@@ -56,7 +60,7 @@ module FunCi
 
         ["Superseded by #{report.superseded_by[0, 7]}."]
       end
-      private_class_method :stage_line, :footer, :job_lines, :job_line
+      private_class_method :stage_line, :footer, :job_lines, :job_line, :starts
     end
   end
 end

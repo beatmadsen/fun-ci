@@ -14,8 +14,8 @@ module FunCi
     # One run of a job, in the process that runs it (design.md, Daily and
     # weekly jobs): with the job's lock held, a run left running is known to
     # be dead and is recorded failed, then the run is claimed if the job is
-    # due, and the job runs on the commit in its own worktree, recorded as a
-    # stage is.
+    # due, waits its turn if it has one (Schedule), and the job runs on the
+    # commit in its own worktree, recorded as a stage is.
     class JobRun
       def initialize(job, commit, site, seams)
         @job = job
@@ -25,9 +25,10 @@ module FunCi
       end
 
       # The run's id, or nil when another process runs the job or it isn't due.
-      def start
+      # at: when its turn to start comes (Schedule); now when nil.
+      def start(at: nil)
         slot = @site.locks.take(@job.name)
-        slot && holding(slot) { claimed(slot) }
+        slot && holding(slot) { claimed(slot, at || @site.clock.call) }
       end
 
       private
@@ -41,10 +42,27 @@ module FunCi
         slot.release
       end
 
-      def claimed(slot)
+      def claimed(slot, at)
         runs.died(@job.name)
         id = runs.claim(@job, commit: @commit.to_h, lock_file: slot.lock_file, now: @site.clock.call)
-        id && execute(slot, id)
+        id && (turn_came?(id, at) ? execute(slot, id) : id)
+      end
+
+      # Waits, scheduled, for the run's turn, the lock held; false when it was
+      # cancelled meanwhile.
+      def turn_came?(id, at)
+        seconds = at - @site.clock.call
+        return true unless seconds.positive?
+
+        scheduled(id, at)
+        @site.wait.call(seconds)
+        runs.start_turn(id, @site.clock.call).positive?
+      end
+
+      # This process is recorded, so a cancel stops it while it waits.
+      def scheduled(id, at)
+        recorder.started_by(id, Process.pid, budget: budget)
+        runs.wait_until(id, at)
       end
 
       def execute(slot, id)

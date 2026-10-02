@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require "time"
 require_relative "standings"
+require_relative "schedule"
 require_relative "../pipeline/run_canceller"
+require_relative "../setup/project_config"
 
 module FunCi
   module Jobs
@@ -11,15 +14,32 @@ module FunCi
     # recorded failed first, or it would never be due again, and no process
     # would start to find it dead.
     class DueJobs
+      BEGUN = %w[running scheduled].freeze
+
       def initialize(project, db, now:)
         @project = project
         @db = db
         @now = now
       end
 
-      def list
+      def list = standings.select(&:due_now?).map(&:job)
+
+      # [job, when its turn to start comes] for each due job (Schedule): the
+      # project's `job_spacing` apart, after its jobs still running or waiting to.
+      def starts
+        all = standings
+        Schedule.new(Setup::ProjectConfig.new(@project).job_spacing, begun(all), now: @now)
+                .starts(all.select(&:due_now?).map(&:job))
+      end
+
+      private
+
+      # When each of the project's jobs still running or waiting to began, or is to.
+      def begun(all) = all.select { |one| BEGUN.include?(one.state) }.map { |one| Time.parse(one.run[:started_at]) }
+
+      def standings
         Pipeline::RunCanceller.new.record_dead_jobs(@db)
-        Standings.new(@db, @project, now: @now).all.select(&:due_now?).map(&:job)
+        Standings.new(@db, @project, now: @now).all
       end
     end
   end
