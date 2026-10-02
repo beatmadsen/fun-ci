@@ -42,6 +42,8 @@ module FunCi
         setting_errors
       rescue Psych::SyntaxError => e
         [".fun-ci/config is not YAML: #{e.problem} (line #{e.line})"]
+      rescue Psych::DisallowedClass => e
+        [".fun-ci/config can't be read: #{e.message} (quote a value such as a date to read it as text)"]
       rescue Psych::Exception => e
         [".fun-ci/config can't be read: #{e.message}"]
       end

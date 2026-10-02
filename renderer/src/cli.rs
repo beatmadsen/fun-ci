@@ -7,6 +7,27 @@ use crate::art::output::Depth;
 /// Exit status for a command line the renderer cannot act on.
 pub const EXIT_USAGE: i32 = 64;
 
+const HELP: &str = "\
+Draws fun-ci's console. `fun-ci console` starts it and talks to it in JSON
+lines on its standard input and output; run that rather than this.
+
+Usage:
+  fun-ci-renderer [--colours 24bit|256] [--tty PATH]
+  fun-ci-renderer --headless --scenario FILE --out DIR [--cols N] [--rows N] [--colours 24bit|256]
+";
+
+/// What to print for a lone `--version` or `--help`, which a person who
+/// installed the crate may try; `None` for any other command line.
+#[must_use]
+pub fn about(args: &[String]) -> Option<String> {
+    let version = format!("fun-ci-renderer {}\n", env!("CARGO_PKG_VERSION"));
+    match args {
+        [only] if only == "--version" => Some(version),
+        [only] if only == "--help" => Some(format!("{version}{HELP}")),
+        _ => None,
+    }
+}
+
 /// What the command line asked for.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Options {

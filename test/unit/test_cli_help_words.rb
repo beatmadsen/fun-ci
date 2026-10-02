@@ -11,6 +11,10 @@ class TestCliHelpWords < Minitest::Test
     assert_match(/^\s+console\s+Watch your runs as they happen, in the terminal$/, help)
   end
 
+  def test_help_says_cancel_takes_the_job_option_too
+    assert_match(/^\s+--job NAME\s+\(why, cancel\) /, help)
+  end
+
   private
 
   def help

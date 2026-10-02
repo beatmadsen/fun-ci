@@ -18,7 +18,8 @@ class TestSettingsYaml < Minitest::Test
   end
 
   def test_should_name_a_config_whose_yaml_holds_a_value_settings_cannot_hold
-    assert_equal [".fun-ci/config can't be read: Tried to load unspecified class: Date"], settings(DATED).errors
+    assert_equal [".fun-ci/config can't be read: Tried to load unspecified class: Date " \
+                  "(quote a value such as a date to read it as text)"], settings(DATED).errors
   end
 
   def test_should_take_the_default_worktree_slots_when_the_yaml_cannot_be_read

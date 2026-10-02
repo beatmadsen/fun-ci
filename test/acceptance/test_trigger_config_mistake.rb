@@ -7,7 +7,8 @@ require_relative "trigger_cli_shared"
 # `wait` has a verdict for the push to wait on rather than no run.
 class TestTriggerConfigMistake < Minitest::Test
   UNREADABLE = "worktree_slots: 2\nsince: 2026-10-01\n"
-  NAMED = "fun-ci: .fun-ci/config can't be read: Tried to load unspecified class: Date\n"
+  NAMED = "fun-ci: .fun-ci/config can't be read: Tried to load unspecified class: Date " \
+          "(quote a value such as a date to read it as text)\n"
 
   def setup
     @client = TriggerCliClient.open(command_runner: INSTANT_SUCCESS_RUNNER)

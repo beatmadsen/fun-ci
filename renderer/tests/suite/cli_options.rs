@@ -103,3 +103,33 @@ fn should_exit_with_a_usage_error_when_the_binary_is_given_an_unknown_colour_dep
     let mut renderer = Renderer::start(binary().args(["--colours", "16"]));
     assert_eq!(renderer.wait().code(), Some(64));
 }
+
+#[test]
+fn should_say_its_version_when_asked_for_it_alone() {
+    assert_eq!(about(&["--version"]), Some(format!("fun-ci-renderer {}\n", env!("CARGO_PKG_VERSION"))));
+}
+
+#[test]
+fn should_say_that_fun_ci_console_runs_it_when_asked_for_help() {
+    assert!(about(&["--help"]).is_some_and(|text| text.contains("`fun-ci console` starts it")));
+}
+
+#[test]
+fn should_answer_nothing_but_a_lone_help_or_version() {
+    assert_eq!(about(&["--help", "--headless"]), None);
+}
+
+#[test]
+fn should_answer_nothing_for_a_lone_option_other_than_help_or_version() {
+    assert_eq!(about(&["--headless"]), None);
+}
+
+#[test]
+fn should_print_its_version_and_exit_zero_when_the_binary_is_asked_for_it() {
+    let mut renderer = Renderer::start(binary().arg("--version"));
+    assert_eq!((renderer.line(), renderer.wait().code()), (format!("fun-ci-renderer {}", env!("CARGO_PKG_VERSION")), Some(0)));
+}
+
+fn about(args: &[&str]) -> Option<String> {
+    fun_ci_renderer::cli::about(&args.iter().map(ToString::to_string).collect::<Vec<_>>())
+}

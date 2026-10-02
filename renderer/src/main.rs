@@ -21,7 +21,12 @@ use fun_ci_renderer::slow_draws::SlowDraws;
 use fun_ci_renderer::tty::restore_controlling_terminal;
 
 fn main() {
-    exit(run(env::args().skip(1)));
+    let args: Vec<String> = env::args().skip(1).collect();
+    if let Some(text) = fun_ci_renderer::cli::about(&args) {
+        print!("{text}");
+        exit(0);
+    }
+    exit(run(args.into_iter()));
 }
 
 fn run(args: impl Iterator<Item = String>) -> i32 {

@@ -48,7 +48,7 @@ module FunCi
         --follow-branch  (wait) Move on to the newer commit that superseded the run
         --trunk        (status, wait) Exit 6 when the run passed but conflicts with the trunk
         --raw          (why) Print the stage's whole output as it was kept
-        --job NAME     (why) Explain the daily or weekly job's latest run instead of a commit's stage
+        --job NAME     (why, cancel) The daily or weekly job to explain or cancel, instead of a commit
         -n N           (runs) How many runs to list (default 10)
         --branch NAME  (runs) Only runs on this branch
         --follow       (events) Keep printing events as they happen, until stopped
