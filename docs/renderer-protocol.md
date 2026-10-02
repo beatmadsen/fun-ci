@@ -1,5 +1,8 @@
 # Renderer protocol, version 1
 
+The reference for the messages between the `fun-ci` gem and
+`fun-ci-renderer`: what each side sends, and what each field means.
+
 Transport: JSON Lines. One JSON object per line, UTF-8, `\n`-terminated.
 Every message has a `"t"` (type). Unknown fields are ignored; unknown types are
 answered with an `error` message and otherwise ignored (forward compatibility).
@@ -122,8 +125,12 @@ The full state to show. Always complete — never a diff.
   its latest run was cancelled), `scheduled` (a commit started it and it waits
   its turn, until `starts_at`), `running`, `passed`, `failed`, `timeout`, or
   `lost` (its process died before it said how the run ended). A `scheduled`
-  job has no `started_at` or `updated_at`, since its run has not begun; a
-  renderer older than 2.3.0 shows it in a state it doesn't know.
+  job carries `starts_at`, when its turn comes (epoch seconds), in place of
+  `started_at` and `updated_at`, since its run has not begun:
+  `{"project": "/src/app", "name": "asan", "cadence": "daily",
+  "status": "scheduled", "run_id": 10, "sha": "3a1f9c2...", "branch": "main",
+  "starts_at": 1790000600}`. A renderer older than 2.3.0 shows it in a state
+  it doesn't know.
   The run's fields are those of the job's latest run, and are left out for a
   job that never ran; `updated_at` is when it ended, or started while it
   runs. `due_at` is when the job is due again, left out while it is due now

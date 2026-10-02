@@ -17,19 +17,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   job waiting its turn says when it starts: `starts in 8m` in the console
   and in `fun-ci jobs`, `starts_at` in its JSON, `scheduled, starts in 8m` in
   `status`, `job_scheduled` in `events`. `c` in the console cancels it at
-  once, as does `fun-ci cancel --job`. The console needs renderer 2.3.0 to
-  show it; an older one says it is in a state it doesn't know.
+  once, as does `fun-ci cancel --job`. `fun-ci check` names a spacing it
+  can't read. The console needs renderer 2.3.0 to show a waiting job; an
+  older one says it is in a state it doesn't know.
 - `fun-ci cancel --job NAME` stops a daily or weekly job's run, as `c` on its
   row does in the console, so an agent can too. The job runs again on the
   next commit.
 - `fun-ci-renderer --version` and `--help`, for anyone who installed the
   renderer with cargo. Before, each said it "needs a value".
+- `fun-ci check` warns when the post-commit or pre-push hook doesn't run
+  fun-ci, instead of saying all is well while no commit is tested.
 
 ### Changed
 - In a worktree fun-ci has just made, as for the first runs after install or
   `fun-ci prune`, lint and build get the slow suite's budget, since their
   caches are empty: a cold build over 30 seconds no longer blocks the first
-  push. The run says so.
+  push. A run in the foreground says so, and one that still runs over shows
+  the longer budget in `fun-ci why`.
 - Daily and weekly jobs run at a lower priority than the stages: on macOS
   under `taskpolicy -c utility`, elsewhere at `nice -n 19`. Before, four due
   jobs could leave a build a fraction of the cores and push it over its
@@ -50,13 +54,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - In a Git LFS repository, `fun-ci install-hooks` installed nothing, since
   git-lfs had written post-commit and pre-push already, and no commit was
   tested. It now writes hooks that run fun-ci's and then git-lfs's, giving
-  git-lfs the push's ref list as git sent it. `git lfs install` then says
-  the hooks exist and exits 2; they already run git-lfs's.
-- `fun-ci check` warns when the post-commit or pre-push hook doesn't run
-  fun-ci, instead of saying all is well while no commit is tested.
-- A mistake in `.fun-ci/config` no longer stops a commit's run, which let the
-  push through untested: the trigger names the mistake, the setting takes its
-  default, and the run goes ahead. `fun-ci check` still fails on it.
+  git-lfs the push's ref list as git sent it. In such a repository, run
+  `fun-ci install-hooks` again. `git lfs install` then says the hooks exist
+  and exits 2; they already run git-lfs's.
+- A mistake `fun-ci check` names in `.fun-ci/config` (a wrong
+  `worktree_slots` or `job_spacing`, or YAML it can't read) no longer stops a
+  commit's run, which let the push through untested: the trigger names it,
+  the setting takes its default, and the run goes ahead. `fun-ci check` still
+  fails on it.
 - YAML anchors and aliases in `.fun-ci/config` are read, so stages can share
   one list of evidence entries. Before, an alias made `fun-ci check` and
   `fun-ci trigger` die with a stack trace, and the evidence settings were

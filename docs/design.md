@@ -4,8 +4,8 @@ What fun-ci is for and what the developer sees: its two goals, the principles
 that follow from them, the pipeline, the states a run goes through, the console
 and its animations, and what happens when something goes wrong. This file
 describes intent. The technical decisions are in
-[`architecture.md`](architecture.md), the requirements not yet built are in
-[`acceptance-tests.md`](acceptance-tests.md), and the messages between the gem
+[`architecture.md`](architecture.md), the requirements, numbered in the order
+they are built, are in [`acceptance-tests.md`](acceptance-tests.md), and the messages between the gem
 and the renderer are in [`renderer-protocol.md`](renderer-protocol.md).
 
 ## Goals
@@ -46,7 +46,8 @@ in the code, so it looks different from a failure: yellow, not red.
 
 A worktree fun-ci has just made has none of the caches the lint and build
 budgets count on, so its first run is no such signal: there lint and build
-get the slow suite's budget, and fun-ci says so.
+get the slow suite's budget (a run in the foreground says so; one that still
+runs over has that budget in `fun-ci why`).
 
 **Simple.** One screen, three keys, no drill-down. A new user understands a row
 the first time they see one.
@@ -117,7 +118,7 @@ only event: fun-ci tests commits, speaks up after one, and never looks at
 uncommitted files.
 
 - A commit's output ends with the command that gets its verdict:
-  `fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all`.
+  `fun-ci: testing 3f9c2ab. Verdict: fun-ci wait 3f9c2ab --need all --follow-branch`.
   `fun-ci init` tells agents, in `AGENTS.md` or `CLAUDE.md`, to run it in the
   background after each commit.
 - `fun-ci wait` returns once the level the agent needs is decided: `build`
@@ -221,7 +222,8 @@ status, no streak and no exit code; it has its own section in the console.
   ignored caches stay from one run to the next as a pipeline's do.
 - Every job has 24 hours, the weekly ones too. One still running then is
   killed and has run out of time. A newer commit never cancels a job; you can,
-  from the console, and a cancelled job is due again at the next commit. A
+  from the console or with `fun-ci cancel --job NAME`, and a cancelled job is
+  due again at the next commit. A
   job holds its lock in its script as well as in the process running it, so
   it reads as alive while any of it runs. A job whose process died is
   recorded failed when fun-ci next looks, a commit included, with a fact that
@@ -232,7 +234,8 @@ status, no streak and no exit code; it has its own section in the console.
 - An agent asks about jobs as about runs: `fun-ci jobs` lists them, `fun-ci
   why --job NAME` prints what was kept about one's latest run, `status` names
   the jobs whose latest run tested the commit and those failing on another,
-  and `events` says when a job starts and finishes. A job's name is letters,
+  `events` says when a job is scheduled, starts and finishes, and `cancel
+  --job NAME` cancels one. A job's name is letters,
   digits, `.`, `_` and `-`, so the commands that name it can be pasted. None of them waits for a job or changes a verdict: a
   job can take a day, and `wait` is for the commit just made.
 
@@ -400,13 +403,13 @@ each project's branches sit under the project's name, one row per branch:
   it. With more than one project on the board, each row names its project
   first (`fun-ci · soak`), unless the screen is too narrow for both, when
   the job's own name tells it apart. The rows go failed, ran out of time,
-  running, due, passed. When nothing in the section needs you or runs, it
+  running, waiting its turn (`starts in 8m on main 3a1f9c2`), due, passed. When nothing in the section needs you or runs, it
   folds into one pale line, `4 passed · mutation due in 6h`; on a short
   screen it gives up its lines before any branch does, keeping one,
   `daily & weekly: 1 failed, 3 passed`, until that one would cost a branch
   its place on the screen, when the jobs give way to the branches. The
   cursor moves on from the last branch into the jobs, and `c` cancels a
-  running job, asking first; on a job that needs you, the footer says
+  running job, asking first, or a job waiting its turn at once; on a job that needs you, the footer says
   `fun-ci why --job NAME`, or the line above it does when the keys leave the
   command too little room to be read whole. Jobs play no scene and touch
   neither the streak nor the lamp: the header tells the story of the commits.
@@ -440,13 +443,13 @@ milestone, the header plays a scene for it (AT-7.3):
   pulsing hazard sign for a failure (AT-7.5).
 - Five minutes after that run finished (or at once, if no run has), the header
   goes quiet: it shows a quiet scene picked at random, the starry night, an
-  aurora, fireflies, a fire in a medieval stone hearth while a storm rages outside, or a moonlit island with a palm, and every five minutes another of them takes over, until a run starts. A small lamp in the lower left
+  aurora, fireflies, a fire in a medieval stone hearth while a storm rages outside, a moonlit island with a palm, or snow falling on a pine forest, and every five minutes another of them takes over, until a run starts. A small lamp in the lower left
   corner keeps the latest outcome in view: steady green after a pass, a slow
   red flicker after a failure, none before any run has finished (AT-7.7). The
   quiet state means "nothing has happened for a while"; the lamp answers "was
   the last one fine?".
 
-The pools today:
+The pools:
 
 | Milestone | Scenes |
 |---|---|
@@ -487,7 +490,7 @@ digging into internals: the cause obvious, the next step clear.
 | A stage overruns its budget | `Fast suite killed -- exceeded 10s time budget.` and advice on what to do | non-zero |
 | fun-ci isn't installed | The hook says so and how to install it; the commit or push goes ahead | 0 |
 | No `.fun-ci/`, or a script missing or not executable | `fun-ci: ...` naming the problem, then `Commit will proceed without CI.` | 0 |
-| A mistake in `.fun-ci/config`, or YAML it can't read | `fun-ci: .fun-ci/config ...` naming it; each setting it spoils takes its default and the run goes ahead | the pipeline's own |
+| A wrong `worktree_slots` or `job_spacing` in `.fun-ci/config`, or YAML it can't read | `fun-ci: .fun-ci/config ...` naming it; each setting it spoils takes its default and the run goes ahead | the pipeline's own |
 | The commit doesn't exist | `fun-ci: commit <sha> not found in this repository.` | non-zero |
 | The commit or branch is missing | `fun-ci: commit hash and branch name are required.` and the usage | non-zero |
 | A newer commit on the same branch | `Cancelled stale pipeline for <old>. Starting fresh for <new>.` | carries on |

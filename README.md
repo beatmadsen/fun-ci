@@ -66,11 +66,13 @@ Some checks take longer than the time between two commits: a mutation run, a soa
 
 The script's name is the job's name. Like a stage, it gets the commit's hash as its first argument and passes when it exits 0, and `FUN_CI_JOB` tells it which job it is. There is nothing else to configure.
 
-Commits start jobs. When the `post-commit` hook runs a pipeline, it also starts each of the project's jobs that is due, beside the pipeline, on the commit just made: the first at once and each next one ten minutes later, so their work is spread out rather than all at once (`job_spacing: 30m` in `.fun-ci/config` changes the gap, `0` starts them together). A job waiting its turn says when it starts, in the console and in `fun-ci jobs`, and `fun-ci cancel --job` cancels it. A job is due when it has never run, when its last run was cancelled, or a day (daily) or a week (weekly) after its last run started. A project nobody commits to runs no jobs. Each job runs once at a time, in a worktree of its own under `.git/fun-ci/jobs/`, so it never holds up a commit's run, and has 24 hours before it is stopped. A job runs at a lower priority than the stages (on macOS under `taskpolicy -c utility`, elsewhere at `nice -n 19`), so it takes only the cores they leave idle. A newer commit never cancels a job. A job's result changes no run, no streak and no exit code.
+Commits start jobs. When the `post-commit` hook runs a pipeline, it also starts the project's due jobs on the commit just made: a job is due when it has never run, when its last run was cancelled, or a day (daily) or a week (weekly) after its last run started, so a project nobody commits to runs none. The jobs take turns, the first at once and each next one ten minutes later; `job_spacing: 30m` in `.fun-ci/config` changes the gap, and `0` starts them together. A job waiting its turn says when it starts.
+
+Each job runs once at a time, in a worktree of its own under `.git/fun-ci/jobs/`, at a lower priority than the stages, so it takes only the cores they leave idle and never holds up a commit's run. It has 24 hours. A newer commit never cancels a job, and a job's result changes no run, no streak and no exit code. The [design](docs/design.md#daily-and-weekly-jobs) has the rest of the rules.
 
 A failed job keeps its evidence as a failed stage does; add entries under `evidence: jobs: <name>:` in `.fun-ci/config` to keep more. `fun-ci check` lists the jobs it found, and says which scripts it can't run.
 
-`fun-ci jobs` lists the jobs, each with how its last run went, on which commit, and when it is due again. `fun-ci why --job soak` prints everything kept about the job's last run (`--raw` for its whole output, `--json` for a document), and exits as `why` does for a stage. `fun-ci status` names the jobs whose last run tested the commit you ask about, and any job failing on another commit, and `fun-ci events` says when a job starts and finishes. `fun-ci cancel --job soak` stops the job's run, as `c` does in the console, so it runs again on the next commit. None of them changes a commit's verdict. A job's name is letters, digits, `.`, `_` and `-`, so those commands can be pasted as they are printed.
+`fun-ci jobs` lists the jobs, each with how its last run went, on which commit, and when it is due again. `fun-ci why --job soak` prints everything kept about the job's last run (`--raw` for its whole output, `--json` for a document), and exits as `why` does for a stage. `fun-ci status` names the jobs whose last run tested the commit you ask about, and any job failing on another commit, and `fun-ci events` says when a job is scheduled, starts and finishes. `fun-ci cancel --job soak` stops the job's run, as `c` does in the console, so it runs again on the next commit. None of them changes a commit's verdict. A job's name is letters, digits, `.`, `_` and `-`, so those commands can be pasted as they are printed.
 
 ## Watching: the console
 
@@ -233,6 +235,8 @@ evidence:
         on: overrun
 ```
 
+Beside the entries, `evidence:` takes a few settings: `budget: 5` gives the extractors five seconds rather than two, `detect: false` stops fun-ci choosing presets from what the output shows, `skip: [rspec]` leaves out the presets named, `mask:` adds patterns of your own to mask, and `masking: false` turns masking off.
+
 `fun-ci extract fast --output saved.log` runs a stage's extractors against a saved output (`fun-ci why --raw > saved.log`), so you can try an entry without making a commit. A mistake under `evidence:` never stops a pipeline: `fun-ci check` reports it and `fun-ci why` names it.
 
 Secrets in the stage's environment are masked before anything is kept: the value of any variable whose name holds TOKEN, SECRET, PASSWORD, PASSWD, API_KEY, PRIVATE_KEY or CREDENTIAL, and GitHub, AWS and Slack tokens, private keys and `Authorization:` headers wherever they appear. The state directory is readable by your user alone.
@@ -247,7 +251,7 @@ fun-ci install-hooks post-commit                Install a single hook type
 fun-ci check                                    Verify .fun-ci/ setup
 fun-ci console                                  Watch the runs
 fun-ci status [commit] [--trunk]                Where a commit's run stands; the verdict is the exit code
-fun-ci wait [commit]                            Wait until that verdict is decided, then exit with it
+fun-ci wait [commit] [--follow-branch]          Wait until that verdict is decided, then exit with it
 fun-ci why [commit] [stage|trunk]               Everything kept about why a stage failed, or the conflict with the trunk
 fun-ci runs                                     This project's recent runs, newest first
 fun-ci jobs                                     This project's daily and weekly jobs and how each stands

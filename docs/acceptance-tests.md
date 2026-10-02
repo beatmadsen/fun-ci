@@ -1094,11 +1094,7 @@ and a name that is no job of the project, or none, is a usage error (64).
 **Then** a job runs under `taskpolicy -c utility` on macOS and `nice -n 19`
 elsewhere, and the slow suite at `nice -n 10` except on macOS, where it
 runs as fun-ci does; lint, build and the fast suite run as fun-ci does.
-*Note:* measured on a 14-core Mac, a stage beside busy processes clamped to
-utility ran as fast as alone, while nice 10 or 19 on them changed nothing;
-a stage clamped to utility beside clamped processes ran about nine times
-slower. On Linux, nice 19 on the busy processes left a stage close to its
-time alone, and nice 10 on the stage still put it ahead of them.
+*Note:* why, with the measurements: architecture.md, Daily and weekly jobs.
 
 ### 13.28 A commit's due jobs take turns, and say when each starts
 **Given** a commit that starts several due jobs

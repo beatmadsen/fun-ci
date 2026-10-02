@@ -214,6 +214,12 @@ same problem if you switch branches while it runs.
   survive, which keeps the 30 s build budget realistic), runs the stages there,
   and releases the slot when the **last** stage — normally the background slow
   suite — finishes.
+- **A worktree just made gives lint and build the slow suite's budget once.**
+  It has none of those caches, so its first lint and build measure fun-ci's
+  doing, not the project. `Worktrees#check_out` says whether it made the
+  worktree, and the pool hands that slot out as a `ColdSlot`; a budget still
+  applies, so a hang ends. *Rejected:* a warm-up command, a step people
+  forget; and no budget at all, which would let a hang hold the push.
 - `StalePipelineCanceller` also releases the slots of the runs it cancels.
   Slots whose lock names a dead pid are reclaimed.
 - Pool size defaults to 2 and is configurable in `.fun-ci/config`.
@@ -433,6 +439,24 @@ weekly jobs).
   due jobs, so the hooks people already installed start them. A project nobody
   commits to runs none. *Revisit if* people want checks on projects they no
   longer touch.
+- **Due jobs take turns, and each job's own process waits for its turn.**
+  `Jobs::Schedule` gives each job a commit starts its start, `job_spacing`
+  apart and after the project's latest job still running or waiting. The
+  forked job process claims the run, records it `scheduled` from its start,
+  and waits there holding the job's lock, so no daemon is needed, the job is
+  neither due nor started twice, and a cancel or a death is found as for a
+  running job. *Rejected:* running them strictly one after another, whose
+  delays could not be shown in advance.
+- **Jobs, and the slow suite off macOS, run at a lower priority than the
+  stages** (`Pipeline::Priorities`): jobs under `taskpolicy -c utility` on
+  macOS and `nice -n 19` elsewhere, the slow suite at `nice -n 10` except on
+  macOS. The prefix goes on the command the gated shell execs, so the pid and
+  process group fun-ci records are still the script's. Measured on a 14-core
+  Mac, a stage beside busy processes clamped to utility ran as fast as alone,
+  while nice 10 or 19 on them changed nothing; a stage clamped to utility
+  beside clamped processes ran about nine times slower, which is why the slow
+  suite is not clamped. On Linux, nice 19 on the busy processes left a stage
+  close to its time alone, and nice 10 on the stage still put it ahead of them.
 - **Due is read from the latest run alone**: none, cancelled, or started a
   period (24 h, 7 days) ago. A cancelled run doesn't count as a run, so
   cancelling is how a developer asks for another.
@@ -508,7 +532,7 @@ PNGs and accepts on purpose.
 
 Planned in §6 of the acceptance tests. There is no loop runner: polishing is
 something one agent does in an ordinary session, following a guide that
-suggests how to work in passes. The guide is a project skill,
+suggests how to work in passes. The guide will be a project skill,
 `.claude/skills/polish-console/`, so it loads only when an agent is asked to
 polish, rather than into every session.
 

@@ -17,7 +17,8 @@ cargo install fun-ci-renderer
 It builds with Rust 1.88 or newer.
 
 `fun-ci console` looks for the renderer in `FUN_CI_RENDERER` first, then in
-the gem, then on your `PATH`.
+the gem, then on your `PATH`. `fun-ci-renderer --version` says which one you
+have.
 
 It speaks JSON Lines with the gem over stdin and stdout
 ([protocol](https://github.com/beatmadsen/fun-ci/blob/main/docs/renderer-protocol.md))
