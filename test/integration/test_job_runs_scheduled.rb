@@ -5,6 +5,7 @@ require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
 require "fun_ci/persistence/active_jobs"
 require "fun_ci/jobs/job"
+require "fun_ci/jobs/due"
 
 # A claimed run that waits its turn to start (Jobs::Schedule, AT-13.28) is
 # kept scheduled, from when it is to start, and is cancelled, found dead or
@@ -66,10 +67,18 @@ class TestJobRunsScheduled < Minitest::Test
     assert_equal [[@id, "/soak.lock"]], FunCi::Persistence::ActiveJobs.running(@db)
   end
 
-  def test_should_record_failed_a_scheduled_run_whose_process_died
+  # It never ran: like a cancelled run, it leaves the job due at the next
+  # commit, not a day after a start it never had (a machine restarted while it waited).
+  def test_should_record_cancelled_a_scheduled_run_whose_process_died
     @runs.died("soak")
 
-    assert_equal "failed", latest[:status]
+    assert_equal "cancelled", latest[:status]
+  end
+
+  def test_should_leave_the_job_due_once_a_scheduled_run_s_process_died
+    @runs.died("soak")
+
+    assert FunCi::Jobs::Due.new(latest, SOAK.period, now: NOW).now?
   end
 
   private

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "wall_clock_wait"
+
 module FunCi
   module Jobs
     # Where a project's jobs run and are recorded: the project's path, the
@@ -9,7 +11,7 @@ module FunCi
     Site = Data.define(:project, :db, :worktrees, :locks, :clock, :wait)
 
     class Site
-      def initialize(wait: Kernel.method(:sleep), **given) = super
+      def initialize(wait: WallClockWait.new, **given) = super
     end
   end
 end

@@ -7,8 +7,9 @@ require "fun_ci/jobs/due_jobs"
 require "tmpdir"
 
 # When each job a commit starts begins (Jobs::Schedule, AT-13.28), read
-# with the jobs that are due: the project's `job_spacing` apart, after any
-# of its jobs still running or waiting to.
+# with the jobs that are due: a day shared evenly among the project's jobs,
+# or the project's `job_spacing`, apart, after any of its jobs still running
+# or waiting to.
 class TestDueJobStarts < Minitest::Test
   include DatabaseTestSetup
 
@@ -22,8 +23,9 @@ class TestDueJobStarts < Minitest::Test
 
   def teardown = teardown_test_db
 
-  def test_should_start_the_due_jobs_ten_minutes_apart_when_nothing_says_otherwise
-    assert_equal [NOW, NOW + 600, NOW + 1200], starts.map(&:last)
+  # Three jobs share a day: eight hours each.
+  def test_should_spread_the_due_jobs_evenly_over_a_day_when_nothing_says_otherwise
+    assert_equal [NOW, NOW + 28_800, NOW + 57_600], starts.map(&:last)
   end
 
   def test_should_start_the_due_jobs_as_far_apart_as_the_config_says
@@ -38,7 +40,7 @@ class TestDueJobStarts < Minitest::Test
       FunCi::Persistence::JobRuns.new(@db, @project).claim(job("soak"), commit: { sha: "a", branch: "main" },
                                                                         lock_file: lock.path, now: NOW - 60)
 
-      assert_equal [NOW + 540, NOW + 1140], starts.map(&:last)
+      assert_equal [NOW - 60 + 28_800, NOW - 60 + 57_600], starts.map(&:last)
     end
   end
 

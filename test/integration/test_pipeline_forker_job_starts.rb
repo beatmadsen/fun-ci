@@ -24,6 +24,7 @@ class TestPipelineForkerJobStarts < Minitest::Test
 
   def teardown = teardown_test_db
 
+  # Two jobs share a day: twelve hours each.
   def test_should_hand_the_second_due_job_a_start_a_spacing_after_the_first
     starts = Starts.new([])
     Dir.chdir(@project) do
@@ -31,7 +32,7 @@ class TestPipelineForkerJobStarts < Minitest::Test
                                                      @db.filename("main"), fork: starts)
     end
 
-    assert_equal 600, starts.calls.last.last - starts.calls.first.last
+    assert_equal 43_200, starts.calls.last.last - starts.calls.first.last
   end
 
   private

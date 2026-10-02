@@ -33,11 +33,14 @@ module FunCi
                            "restarted, or something killed it), so this run has no result" }.freeze
       DIED = Evidence::Document.new(chosen: [], failures: [], excerpts: [], problems: [], facts: [DIED_FACT])
 
-      def self.cancelled(db, id) = ended(db, id, "cancelled")
+      def self.cancelled(db, id) = ended(db, id, "cancelled", ACTIVE)
 
-      # A run whose process is gone without recording how it ended: failed, with no end.
+      # A run whose process is gone without recording how it ended: failed,
+      # with no end; one that was still waiting its turn never ran, so it is
+      # cancelled, and the job is due at the next commit.
       def self.died(db, id)
-        db.execute("UPDATE job_runs SET status = 'failed', evidence = ? WHERE id = ? AND #{ACTIVE}",
+        ended(db, id, "cancelled", "status = 'scheduled'")
+        db.execute("UPDATE job_runs SET status = 'failed', evidence = ? WHERE id = ? AND status = 'running'",
                    [JSON.generate(DIED.to_h), id])
       end
 
@@ -47,8 +50,8 @@ module FunCi
                    [project, name]).flatten
       end
 
-      def self.ended(db, id, status)
-        db.execute("UPDATE job_runs SET status = ?, completed_at = ? WHERE id = ? AND #{ACTIVE}",
+      def self.ended(db, id, status, was)
+        db.execute("UPDATE job_runs SET status = ?, completed_at = ? WHERE id = ? AND #{was}",
                    [status, Time.now.utc.iso8601(3), id])
       end
       private_class_method :ended
