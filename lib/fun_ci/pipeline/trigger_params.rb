@@ -42,10 +42,16 @@ module FunCi
     # Reopened rather than given as a block to Data.define, so tools that read
     # the source (mutineer) see these as Seams' methods.
     class Seams
+      # Seconds, for the evidence budget. Kept out of `defaults`' hash: a block
+      # on a line the hash continues onto gives that line the block's count,
+      # and the mutation lane then runs the hash's later lines' mutants only
+      # against tests that call it (test/support/statement_coverage.rb).
+      MONOTONIC = -> { Process.clock_gettime(Process::CLOCK_MONOTONIC) }
+
       def self.defaults
         { command_runner: nil, time_budgets: {}, recorder: Persistence::NullRecorder.new, background_launcher: nil,
           workspace: nil, commit_validator: method(:commit_exists?), stage_dir: StageDir.method(:create),
-          environment: ENV.to_h, clock: -> { Process.clock_gettime(Process::CLOCK_MONOTONIC) },
+          environment: ENV.to_h, clock: MONOTONIC,
           extractor_runner: Evidence::CommandRunner.method(:new),
           process_table: Evidence::ProcessTable.method(:now), trunk: nil, priorities: Priorities.for(RUBY_PLATFORM) }
       end

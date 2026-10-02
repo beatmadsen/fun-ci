@@ -3,17 +3,17 @@
 require_relative "../../test_helper"
 require_relative "../../support/git_project"
 require "open3"
-require "stringio"
-require "fun_ci/cli"
 require "fun_ci/setup/lfs_hook"
 
-# In a Git LFS repository, real git runs the hooks `fun-ci install-hooks`
-# wrote over git-lfs's, and each runs fun-ci's and then git-lfs's (stand-ins
-# on PATH record what each was asked, and git-lfs what it read). A push sends
-# its ref list once, and git-lfs gets every byte of it after fun-ci (AT-1.13).
+# In a Git LFS repository, real git runs the hooks fun-ci writes in place of
+# git-lfs's, and each runs fun-ci's and then git-lfs's (stand-ins on PATH
+# record what each was asked, and git-lfs what it read). A push sends its
+# ref list once, and git-lfs gets every byte of it after fun-ci (AT-1.13).
+# That install-hooks writes them over git-lfs's is test_hook_writer_lfs.rb's;
+# writing them here keeps this slow file off HookWriter's mutants, whose
+# covering files must fit mutineer's 10 s cap together.
 class TestGitRunsLfsHooks < Minitest::Test
   SHIMS = %w[fun_ci_shim git_lfs_shim].map { |dir| File.expand_path("../../fixtures/#{dir}", __dir__) }
-  STOCK = %(#!/bin/sh\ncommand -v git-lfs >/dev/null 2>&1 || { echo >&2 "no git-lfs"; exit 2; }\ngit lfs %s "$@"\n)
 
   def setup
     @project = GitProject.create
@@ -21,8 +21,7 @@ class TestGitRunsLfsHooks < Minitest::Test
     @remote = File.join(@tmp, "remote.git")
     @project.git("init", "-q", "--bare", @remote)
     @project.git("remote", "add", "origin", @remote)
-    %w[post-commit pre-push].each { |type| @project.write(".git/hooks/#{type}", format(STOCK, type), mode: 0o755) }
-    install_hooks
+    %w[post-commit pre-push].each { |type| hook(type) }
   end
 
   def teardown
@@ -72,13 +71,9 @@ class TestGitRunsLfsHooks < Minitest::Test
 
   private
 
+  def hook(type) = @project.write(".git/hooks/#{type}", FunCi::Setup::LfsHook.script(type), mode: 0o755)
   def head = @project.git("rev-parse", "HEAD").strip
   def asked(tool) = File.readlines(File.join(@tmp, "#{tool}-asked"), chomp: true)
-
-  def install_hooks
-    io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new)
-    Dir.chdir(@project.dir) { FunCi::Cli.run(["install-hooks"], io: io) }
-  end
 
   def commit
     @project.write("change.txt", "a change\n")

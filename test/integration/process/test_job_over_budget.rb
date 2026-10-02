@@ -15,10 +15,18 @@ class TestJobOverBudget < Minitest::Test
   def test_should_kill_the_process_a_job_past_its_budget_started
     overrun
 
-    assert_raises(Errno::ESRCH) { Process.kill(0, File.read(pid_file).to_i) }
+    refute running?(File.read(pid_file).to_i)
   end
 
   private
+
+  # Gone, or killed and not yet torn down: a job's process runs at a low
+  # priority, and on a busy machine a killed one can still be exiting (the
+  # flag E on macOS, as in "?E"; the state X on Linux) or a zombie (Z).
+  def running?(pid)
+    state = `ps -o stat= -p #{pid}`.strip
+    !state.empty? && !state.match?(/\A[ZX]|E/)
+  end
 
   def pid_file = File.join(@dir, "child.pid")
 

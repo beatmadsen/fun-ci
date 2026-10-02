@@ -6,34 +6,30 @@
 # stopped it recording. Zombies name no path, so one already dead and not
 # yet reaped is never among them.
 module StrayProcesses
-  # Kills each live process naming one of `dirs` with its process group, and
-  # answers them, as "pid command" lines.
+  # Kills the process group of each live process naming one of `dirs`, all
+  # but this process's own, whose stray members are killed alone, and
+  # answers them, as "pid command" lines. A group goes whole: a member found
+  # before its leader, or whose leader names nothing, must not be killed
+  # alone while the rest of its group carries on.
   def self.stop(dirs)
     found = naming(dirs.map { |dir| "#{dir}/" })
-    found.each_key { |pid| kill(pid) }
-    found.map { |pid, command| "#{pid} #{command}" }
+    found.each { |pid, (group, _)| kill(pid, group) }
+    found.map { |pid, (_, command)| "#{pid} #{command}" }
   end
 
-  # pid => command line, of each live process naming one of `prefixes`.
+  # pid => [process group, command line], of each live process naming one of `prefixes`.
   def self.naming(prefixes)
-    listed = `ps -A -o pid= -o stat= -o command=`.lines.map { |line| line.strip.split(" ", 3) }
-    listed.select { |_, stat, command| live_in?(stat, command.to_s, prefixes) }
-          .to_h { |pid, _, command| [pid.to_i, command] }
+    listed = `ps -A -o pid= -o pgid= -o stat= -o command=`.lines.map { |line| line.strip.split(" ", 4) }
+    listed.select { |_, _, stat, command| live_in?(stat, command.to_s, prefixes) }
+          .to_h { |pid, group, _, command| [pid.to_i, [group.to_i, command]] }
   end
 
   def self.live_in?(stat, command, prefixes) = !stat.start_with?("Z") && prefixes.any? { |dir| command.include?(dir) }
 
-  # One that leads no group of its own is killed alone.
-  def self.kill(pid)
-    Process.kill("KILL", -pid)
-  rescue Errno::ESRCH, Errno::EPERM
-    kill_alone(pid)
-  end
-
-  def self.kill_alone(pid)
-    Process.kill("KILL", pid)
+  def self.kill(pid, group)
+    Process.kill("KILL", group == Process.getpgrp ? pid : -group)
   rescue Errno::ESRCH
     nil
   end
-  private_class_method :naming, :live_in?, :kill, :kill_alone
+  private_class_method :naming, :live_in?, :kill
 end
