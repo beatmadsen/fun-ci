@@ -140,3 +140,8 @@ fn a_job_whose_turn_has_come_says_it_starts_now() {
 fn a_job_waiting_its_turn_briefly_says_when_it_starts() {
     assert_eq!(said_briefly(&waiting(480), NOW * 1000), "starts in 8m");
 }
+
+#[test]
+fn a_job_at_the_moment_of_its_turn_says_it_starts_now() {
+    assert_eq!(said_briefly(&waiting(0), NOW * 1000), "starts now");
+}
