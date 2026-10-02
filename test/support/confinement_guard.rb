@@ -20,7 +20,7 @@ module ConfinementGuard
     attr_reader :root, :escapes
 
     def install
-      remove_roots_of_finished_runs
+      remove_roots_of_finished_runs unless ENV["MUTATION_TESTING"]
       @short = File.join(Dir.tmpdir, "fci-#{Process.pid}")
       Dir.mkdir(@short, 0o700)
       @root = File.realpath(@short)
@@ -31,6 +31,26 @@ module ConfinementGuard
 
     # The root as TMPDIR names it, and as its real path: a command line may hold either.
     def roots = [@short, @root].uniq
+
+    # A root outlives its run: the parallel executor's socket in it is only
+    # removed as the process exits, and a run that never reached its end
+    # (the mutation lane, one cut short) may have left processes running in
+    # it. The next run stops those and clears it; in the mutation lane, whose
+    # every test file and mutant is a process that installs this, the lane's
+    # boot does it once instead (test/mutation_boot.rb), since a ps forked from
+    # each of them doubled its time.
+    def remove_roots_of_finished_runs
+      Dir.glob(File.join(Dir.tmpdir, "fci-*")).reject { |root| alive?(root[/fci-(\d+)\z/, 1].to_i) }
+         .each { |root| remove_root(root) }
+    end
+
+    # Another run may be removing the same root, so its real path is taken
+    # from its parent, which stays.
+    def remove_root(root)
+      StrayProcesses.stop([root, File.join(File.realpath(File.dirname(root)), File.basename(root))].uniq)
+      FileUtils.rm_rf(root)
+    end
+    private :remove_root
 
     def installed? = !@root.nil? && ConfinementHooks.installed?
 
@@ -47,22 +67,6 @@ module ConfinementGuard
     end
 
     private
-
-    # A root outlives its run: the parallel executor's socket in it is only
-    # removed as the process exits, and a run that never reached its end
-    # (the mutation lane, one cut short) may have left processes running in
-    # it. The next run stops those and clears it.
-    def remove_roots_of_finished_runs
-      Dir.glob(File.join(Dir.tmpdir, "fci-*")).reject { |root| alive?(root[/fci-(\d+)\z/, 1].to_i) }
-         .each { |root| remove_root(root) }
-    end
-
-    # Another run may be removing the same root, so its real path is taken
-    # from its parent, which stays.
-    def remove_root(root)
-      StrayProcesses.stop([root, File.join(File.realpath(File.dirname(root)), File.basename(root))].uniq)
-      FileUtils.rm_rf(root)
-    end
 
     def alive?(pid)
       Process.kill(0, pid)

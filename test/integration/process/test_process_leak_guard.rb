@@ -43,14 +43,37 @@ class TestProcessLeakGuard < Minitest::Test
   # Its name is short, since the probe's own root goes in it, and the parallel
   # executor's socket in that, whose path is capped at 104 bytes.
   def test_a_run_stops_what_is_left_running_from_a_finished_run
-    parent = File.join(Dir.tmpdir, "r#{Process.pid}").tap { |dir| Dir.mkdir(dir) }
+    parent = short_dir
     left = started(File.join(finished_root(parent), @marker))
     ProbeSuite.capture("nil", env: { "TMPDIR" => parent })
 
     assert_equal "KILL", Signal.signame(within_deadline { Process.wait2(left) }.last.termsig.to_i)
   end
 
+  # Every test file and mutant of the mutation lane is a process of its own,
+  # and a sweep from each, a ps forked from a large process, doubled the
+  # lane's time; its boot sweeps once instead (the next test).
+  def test_a_mutation_lane_test_process_leaves_finished_runs_alone
+    parent = short_dir
+    root = finished_root(parent)
+    ProbeSuite.capture("nil", env: { "TMPDIR" => parent, "MUTATION_TESTING" => "1" })
+
+    assert_path_exists root
+  end
+
+  def test_the_mutation_lane_s_boot_stops_what_a_finished_run_left
+    parent = short_dir
+    left = started(File.join(finished_root(parent), @marker))
+    Open3.capture2e({ "TMPDIR" => parent, "MUTATION_TESTING" => "1" }, "ruby", "-I#{ProbeSuite::ROOT}/test",
+                    "-I#{ProbeSuite::ROOT}/lib", "-e", 'require "mutation_boot"')
+
+    assert_equal "KILL", Signal.signame(within_deadline { Process.wait2(left) }.last.termsig.to_i)
+  end
+
   private
+
+  # Short, for the socket path a probe's root holds.
+  def short_dir = File.join(Dir.tmpdir, "r#{SecureRandom.hex(3)}").tap { |dir| Dir.mkdir(dir) }
 
   # A temp root named for a process that is not running, as a finished run's
   # is. No pid is that high on Linux or macOS, so none can reuse it, as one
