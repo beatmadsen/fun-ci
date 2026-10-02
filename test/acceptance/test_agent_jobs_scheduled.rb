@@ -56,6 +56,22 @@ class TestAgentJobsScheduled < Minitest::Test
     assert_equal 3, @agent.why("--job", "soak")
   end
 
+  # Its time has come, and its process has yet to start it.
+  def test_should_say_a_waiting_job_whose_turn_has_come_starts_now
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "scheduled", ago: 30, seconds: nil))
+    @agent.jobs
+
+    assert_match(/  starts now\z/, @agent.stdout.lines.first.chomp)
+  end
+
+  def test_should_say_in_status_that_a_waiting_job_whose_turn_has_come_starts_now
+    @agent.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "scheduled", ago: 30, seconds: nil))
+    @agent.record_run(SHA, stages: PASSED)
+    @agent.status
+
+    assert_includes @agent.stdout, "  soak (weekly job) scheduled, starts now\n"
+  end
+
   private
 
   def job_json = JSON.parse(@agent.stdout)["jobs"].first

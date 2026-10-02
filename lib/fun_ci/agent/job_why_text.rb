@@ -3,7 +3,7 @@
 require_relative "stage_summary"
 require_relative "evidence_text"
 require_relative "span"
-require_relative "due_in"
+require_relative "starts_in"
 
 module FunCi
   module Agent
@@ -37,7 +37,7 @@ module FunCi
       end
 
       def self.waiting(report)
-        "It waits its turn, and starts in #{DueIn.words(report.starts_in)}; " \
+        "It waits its turn, and #{StartsIn.words(report.starts_in)}; " \
           "fun-ci cancel --job #{report.name} cancels it."
       end
 

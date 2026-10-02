@@ -5,7 +5,7 @@ require_relative "verdict"
 require_relative "digest"
 require_relative "trunk_text"
 require_relative "job_report"
-require_relative "due_in"
+require_relative "starts_in"
 
 module FunCi
   module Agent
@@ -35,7 +35,7 @@ module FunCi
       end
 
       # `, starts in 8m` for a job waiting its turn.
-      def self.starts(job) = job.starts_in ? ", starts in #{DueIn.words(job.starts_in)}" : ""
+      def self.starts(job) = job.starts_in ? ", #{StartsIn.words(job.starts_in)}" : ""
 
       # The trunk lines; nothing while the check is going, unless asked about
       # (right after a commit it would say nothing useful).

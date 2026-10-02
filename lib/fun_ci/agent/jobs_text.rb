@@ -2,6 +2,7 @@
 
 require_relative "age"
 require_relative "due_in"
+require_relative "starts_in"
 require_relative "span"
 
 module FunCi
@@ -44,7 +45,7 @@ module FunCi
 
       def self.due(report, now)
         return "running" if report.state == "running"
-        return "starts in #{DueIn.words(report.starts_in)}" if report.starts_in
+        return StartsIn.words(report.starts_in) if report.starts_in
 
         report.due_at ? "due in #{DueIn.words(report.due_at - now)}" : "runs on the next commit"
       end

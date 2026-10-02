@@ -1107,4 +1107,5 @@ console) or found dead as a running one is; cancelled, it never runs.
 **And** `fun-ci jobs` says `wait` and `starts in 8m`, its JSON gives
 `starts_at`, `status` says `scheduled, starts in 8m`, `why --job` says when it
 starts and exits 3, `events` says `job_scheduled` then `job_started`, and the
-console says `starts in 8m on main 3a1f9c2`.
+console says `starts in 8m on main 3a1f9c2`; once its start has come and its
+process has yet to start it, each says `starts now`.
