@@ -11,9 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - A commit's due daily and weekly jobs take turns instead of starting
-  together: the first at once, each next one ten minutes later, and none
-  sooner than that after a job still running or waiting. `job_spacing:` in
-  `.fun-ci/config` sets the gap (`30m`, `1h`; `0` starts them together). A
+  together, spread evenly over the day: with four jobs, the first at once
+  and each next one six hours later, and none sooner than that after a job
+  still running or waiting. `job_spacing:` in `.fun-ci/config` sets the gap
+  instead (`30m`, `1h`; `0` starts them together). A
   job waiting its turn says when it starts: `starts in 8m` in the console
   and in `fun-ci jobs`, `starts_at` in its JSON, `scheduled, starts in 8m` in
   `status`, `job_scheduled` in `events`. `c` in the console cancels it at

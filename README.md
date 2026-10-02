@@ -66,7 +66,7 @@ Some checks take longer than the time between two commits: a mutation run, a soa
 
 The script's name is the job's name. Like a stage, it gets the commit's hash as its first argument and passes when it exits 0, and `FUN_CI_JOB` tells it which job it is. There is nothing else to configure.
 
-Commits start jobs. When the `post-commit` hook runs a pipeline, it also starts the project's due jobs on the commit just made: a job is due when it has never run, when its last run was cancelled, or a day (daily) or a week (weekly) after its last run started, so a project nobody commits to runs none. The jobs take turns, the first at once and each next one ten minutes later; `job_spacing: 30m` in `.fun-ci/config` changes the gap, and `0` starts them together. A job waiting its turn says when it starts.
+Commits start jobs. When the `post-commit` hook runs a pipeline, it also starts the project's due jobs on the commit just made: a job is due when it has never run, when its last run was cancelled, or a day (daily) or a week (weekly) after its last run started, so a project nobody commits to runs none. The jobs take turns, spread evenly over the day: with four jobs, the first starts at once and each next one six hours later. `job_spacing: 30m` in `.fun-ci/config` sets the gap instead, and `0` starts them together. A job waiting its turn says when it starts.
 
 Each job runs once at a time, in a worktree of its own under `.git/fun-ci/jobs/`, at a lower priority than the stages, so it takes only the cores they leave idle and never holds up a commit's run. It has 24 hours. A newer commit never cancels a job, and a job's result changes no run, no streak and no exit code. The [design](docs/design.md#daily-and-weekly-jobs) has the rest of the rules.
 

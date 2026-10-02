@@ -440,13 +440,20 @@ weekly jobs).
   commits to runs none. *Revisit if* people want checks on projects they no
   longer touch.
 - **Due jobs take turns, and each job's own process waits for its turn.**
-  `Jobs::Schedule` gives each job a commit starts its start, `job_spacing`
-  apart and after the project's latest job still running or waiting. The
-  forked job process claims the run, records it `scheduled` from its start,
-  and waits there holding the job's lock, so no daemon is needed, the job is
-  neither due nor started twice, and a cancel or a death is found as for a
-  running job. *Rejected:* running them strictly one after another, whose
-  delays could not be shown in advance.
+  `Jobs::Schedule` gives each job a commit starts its start, a day shared
+  evenly among the project's jobs apart (or `job_spacing`), and after the
+  project's latest job still running or waiting. Each is due again a period
+  after its own start, so the spread holds from day to day. The forked job
+  process claims the run, records it `scheduled` from its start, and waits
+  there holding the job's lock, so no daemon is needed, the job is neither
+  due nor started twice, and a cancel is found as for a running job. It waits
+  by the wall clock, a minute at a time (`Jobs::WallClockWait`): `sleep`'s
+  count stops while a laptop sleeps, which over hours would start the job
+  late. A waiting job whose process died (a restart) is recorded cancelled,
+  not failed, so the next commit starts it instead of a day after a start it
+  never had. *Rejected:* running them strictly one after another, whose
+  delays could not be shown in advance; a fixed gap of minutes, which only
+  staggered the starts while the jobs' work still overlapped.
 - **Jobs, and the slow suite off macOS, run at a lower priority than the
   stages** (`Pipeline::Priorities`): jobs under `taskpolicy -c utility` on
   macOS and `nice -n 19` elsewhere, the slow suite at `nice -n 10` except on

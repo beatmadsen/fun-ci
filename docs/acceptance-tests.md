@@ -1098,12 +1098,14 @@ runs as fun-ci does; lint, build and the fast suite run as fun-ci does.
 
 ### 13.28 A commit's due jobs take turns, and say when each starts
 **Given** a commit that starts several due jobs
-**Then** the first starts at once and each next one `job_spacing` later (10
-minutes by default, 0 for all at once), and none sooner than that after the
-project's latest job still running or waiting its turn.
+**Then** the first starts at once and each next one a day shared evenly among
+the project's jobs later (or `job_spacing` later, 0 for all at once), and none
+sooner than that after the project's latest job still running or waiting its
+turn.
 **And** a job waiting its turn is `scheduled`: it holds the job's lock, is not
 due, and is cancelled (from `fun-ci cancel --job`, or at once by `c` in the
-console) or found dead as a running one is; cancelled, it never runs.
+console) as a running one is; cancelled, or its process found dead before its
+start, it never runs and the next commit starts it.
 **And** `fun-ci jobs` says `wait` and `starts in 8m`, its JSON gives
 `starts_at`, `status` says `scheduled, starts in 8m`, `why --job` says when it
 starts and exits 3, `events` says `job_scheduled` then `job_started`, and the
