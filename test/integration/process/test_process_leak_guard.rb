@@ -36,7 +36,8 @@ class TestProcessLeakGuard < Minitest::Test
   end
 
   # The mutation lane, and a run cut short, never reach the end of a run; the
-  # next run stops what is left in the temp root of one that has finished.
+  # next run stops what is left in the temp root of one that has finished. The
+  # probe is a run outside the mutation lane, even when this test is in it.
   # The roots are in a directory of this test's own: the probes of tests in
   # other workers clear finished roots in the run's temp root, and one that
   # cleared this one before its process started would leave nothing to find.
@@ -45,7 +46,7 @@ class TestProcessLeakGuard < Minitest::Test
   def test_a_run_stops_what_is_left_running_from_a_finished_run
     parent = short_dir
     left = started(File.join(finished_root(parent), @marker))
-    ProbeSuite.capture("nil", env: { "TMPDIR" => parent })
+    ProbeSuite.capture("nil", env: { "TMPDIR" => parent, "MUTATION_TESTING" => nil })
 
     assert_equal "KILL", Signal.signame(within_deadline { Process.wait2(left) }.last.termsig.to_i)
   end
