@@ -2,11 +2,26 @@
 
 require_relative "../test_helper"
 require_relative "../support/cli_project"
+require "fun_ci/setup/agent_instructions"
 
 # `fun-ci init` tells agents what to do after a commit (acceptance-tests.md,
 # AT-9.15), in the instructions file agents read.
 class TestInitTellsAgents < Minitest::Test
   include CliProject
+
+  SECTION = FunCi::Setup::AgentInstructions::SECTION
+
+  # The section fun-ci 2.0 wrote, before jobs and the trunk.
+  OUTDATED = <<~MD
+    ## fun-ci
+
+    <!-- fun-ci: agent instructions -->
+    This project runs fun-ci on every commit. After each commit, run the
+    `fun-ci wait` command it prints, in the background, and act on its exit
+    code: 0 passed, 1 failed, 2 over budget, 3 undecided, 4 superseded.
+    `fun-ci wait --need all` must exit 0 before the work is called done.
+    `fun-ci runs` lists recent runs, and `fun-ci status` says where one stands.
+  MD
 
   def test_should_create_agents_md_with_the_instruction_when_the_project_has_none
     init
@@ -49,6 +64,20 @@ class TestInitTellsAgents < Minitest::Test
     init
 
     assert_equal first, read("AGENTS.md")
+  end
+
+  def test_should_bring_an_outdated_section_up_to_date_and_keep_the_rest
+    File.write(path("AGENTS.md"), "# Our rules\n\n#{OUTDATED}\n## Testing\n\nRun it.\n")
+    init
+
+    assert_equal "# Our rules\n\n#{SECTION}\n## Testing\n\nRun it.\n", read("AGENTS.md")
+  end
+
+  def test_should_say_it_brought_an_outdated_section_up_to_date
+    File.write(path("AGENTS.md"), OUTDATED)
+    init
+
+    assert_includes @stdout.string, "Brought the fun-ci section of AGENTS.md up to date."
   end
 
   def test_should_say_where_it_told_agents

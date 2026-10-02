@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   jobs could leave a build a fraction of the cores and push it over its
   budget. The slow suite runs at `nice -n 10` beside the fast suite, except
   on macOS, where nice has no measurable effect.
+- `fun-ci init` brings the fun-ci section of `AGENTS.md` (or `CLAUDE.md`) up
+  to date, so agents in a project set up with an older fun-ci learn about
+  jobs and the trunk. It replaces the section from its `## fun-ci` heading to
+  the next heading; before, it left any section it found as it was.
 
 ### Fixed
 - An agent that waited on each commit, as `fun-ci init` tells it to, kept

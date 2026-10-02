@@ -553,6 +553,8 @@ it is pushing, and the push stops if any is not 0
 fun-ci section: after each commit, run the `fun-ci wait` command it prints, in
 the background; `AGENTS.md` is created when neither exists
 **And** running it again adds nothing.
+**And** a fun-ci section an older fun-ci wrote, from its `## fun-ci` heading to
+the next heading, is replaced with the current one, and init says so.
 
 ### 9.16 `fun-ci events` prints what happens as JSON lines
 **Given** runs of this project going

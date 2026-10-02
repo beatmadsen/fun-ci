@@ -4,7 +4,8 @@ module FunCi
   module Setup
     # What `fun-ci init` tells a coding agent working in the project, in the
     # instructions file agents read (acceptance-tests.md, AT-9.15): AGENTS.md,
-    # or CLAUDE.md when that is the only one. The marker keeps it to once.
+    # or CLAUDE.md when that is the only one. The marker keeps it to once, and
+    # finds a section an older fun-ci wrote, to bring it up to date.
     module AgentInstructions
       MARKER = "<!-- fun-ci: agent instructions -->"
       SECTION = <<~MD.freeze
@@ -25,14 +26,28 @@ module FunCi
         why one failed.
       MD
 
+      # A section in the text: from the heading over the marker, if it has
+      # one, to the next heading or the end.
+      WRITTEN = /^(?:## fun-ci\n\s*)?#{Regexp.escape(MARKER)}\n.*?(?=^#|\z)/m
+
       def self.file_for(names) = names.include?("CLAUDE.md") && !names.include?("AGENTS.md") ? "CLAUDE.md" : "AGENTS.md"
 
-      # The text with the section added, or nil when it has it already.
+      # The text with the section added, or brought up to date; nil when it
+      # has this one already.
       def self.merged(text)
-        return nil if text.include?(MARKER)
-
-        text.strip.empty? ? SECTION : "#{text.rstrip}\n\n#{SECTION}"
+        merged = text.include?(MARKER) ? replaced(text) : added(text)
+        merged unless merged == text
       end
+
+      def self.said(text, file)
+        return "Told agents what to do after a commit, in #{file}." unless text.include?(MARKER)
+
+        "Brought the fun-ci section of #{file} up to date."
+      end
+
+      def self.added(text) = text.strip.empty? ? SECTION : "#{text.rstrip}\n\n#{SECTION}"
+      def self.replaced(text) = text.sub(WRITTEN) { Regexp.last_match.post_match.empty? ? SECTION : "#{SECTION}\n" }
+      private_class_method :added, :replaced
     end
   end
 end

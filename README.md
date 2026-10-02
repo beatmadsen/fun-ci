@@ -21,7 +21,7 @@ cd your-project
 fun-ci init --everything
 ```
 
-This detects your project type, writes four stage scripts into `.fun-ci/`, installs a `post-commit` and a `pre-push` git hook, and checks the setup. It also adds a short section to your `AGENTS.md` (or `CLAUDE.md`, if that is the only one) telling coding agents what to do after a commit.
+This detects your project type, writes four stage scripts into `.fun-ci/`, installs a `post-commit` and a `pre-push` git hook, and checks the setup. It also adds a short section to your `AGENTS.md` (or `CLAUDE.md`, if that is the only one) telling coding agents what to do after a commit; run again after an upgrade, it brings that section up to date.
 
 `fun-ci init` has templates for Ruby, Gradle, Maven, Rust, Go, Elixir, Dart, Swift, PHP, .NET, Python, Deno, Bun, Node, Perl, and C or C++ built with CMake or make. [docs/stacks.md](docs/stacks.md) shows how it recognises each one and the commands it writes. Fun-CI works with any project: the stages are shell scripts, so edit them to run whatever your project uses.
 

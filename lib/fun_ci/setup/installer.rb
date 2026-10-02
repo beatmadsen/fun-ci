@@ -44,11 +44,12 @@ module FunCi
       def tell_agents
         file = AgentInstructions.file_for(Dir.children(@project_root))
         path = File.join(@project_root, file)
-        merged = AgentInstructions.merged(File.exist?(path) ? File.read(path) : "")
+        told = File.exist?(path) ? File.read(path) : ""
+        merged = AgentInstructions.merged(told)
         return unless merged
 
         File.write(path, merged)
-        @stdout.puts "Told agents what to do after a commit, in #{file}."
+        @stdout.puts AgentInstructions.said(told, file)
       end
 
       def initialised?
