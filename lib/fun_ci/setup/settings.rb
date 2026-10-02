@@ -22,7 +22,7 @@ module FunCi
         @text = text
       end
 
-      def worktree_slots = errors.empty? ? values.fetch("worktree_slots") : DEFAULTS.fetch("worktree_slots")
+      def worktree_slots = slots || DEFAULTS.fetch("worktree_slots")
 
       # The trunk's name, or nil when none is given or it is no name. A mistake
       # in the trunk settings never stops a pipeline, so none is among `errors`.
@@ -58,10 +58,26 @@ module FunCi
       def setting_errors
         return [".fun-ci/config must be a mapping such as `worktree_slots: 2`"] unless raw.is_a?(Hash)
 
-        slots = values["worktree_slots"]
-        return [] if slots.is_a?(Integer) && slots.positive?
+        [slots_error, spacing_error].compact
+      end
 
-        [".fun-ci/config: worktree_slots must be a whole number above 0, not #{slots.inspect}"]
+      # The slots the file asks for, when that is a whole number above 0.
+      def slots
+        given = setting("worktree_slots")
+        given if given.is_a?(Integer) && given.positive?
+      end
+
+      def slots_error
+        given = setting("worktree_slots")
+        ".fun-ci/config: worktree_slots must be a whole number above 0, not #{given.inspect}" unless given.nil? || slots
+      end
+
+      # Unlike the trunk's, since taking turns is the jobs' whole point (AT-13.28).
+      def spacing_error
+        given = setting("job_spacing")
+        return nil if given.nil? || seconds(given)
+
+        ".fun-ci/config: job_spacing must be seconds, or a number with s, m or h, not #{given.inspect}"
       end
 
       def setting(key)
@@ -76,7 +92,6 @@ module FunCi
       end
 
       def raw = (@text && YAML.safe_load(@text, aliases: true)) || {}
-      def values = DEFAULTS.merge(raw)
     end
   end
 end
