@@ -31,3 +31,12 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 - Workaround used in a downstream project (3d-experiments, `tools/ci/ensure-deps.sh`): both lint and build call
   a script that runs `npm ci` under `lockf` only when a hash of `package-lock.json` differs from a stamp file
   in `node_modules`.
+
+## This repo's own fast suite sits at its 10 s budget
+
+- **Seen** on 2026-10-02: `fun-ci runs` here shows fast OVER BUDGET on 704e31e (a docs-only commit, 10.1 s)
+  and twice on 02bfb89, with fast ok on neighbouring commits. Another project's pipeline was running on the
+  same machine around 704e31e; whether that contention is the cause is **unverified**.
+- `fun-ci why 704e31e fast` shows one `rake fast` process loading every acceptance, policy and unit test
+  file, still running at the kill.
+- Next step: time `rake fast` cold on an idle machine and under a parallel load, and find which files dominate.
