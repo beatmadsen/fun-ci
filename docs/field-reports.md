@@ -40,3 +40,25 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 - `fun-ci why 704e31e fast` shows one `rake fast` process loading every acceptance, policy and unit test
   file, still running at the kill.
 - Next step: time `rake fast` cold on an idle machine and under a parallel load, and find which files dominate.
+
+## A run started by the post-commit hook dies with the shell that committed, and is reported as a plain failure
+
+- **Seen and reproduced** with fun-ci 2.3.0 on 2026-10-02. In 3d-experiments, an agent's `git commit && fun-ci wait`
+  command was interrupted by the user; the slow stage of that commit showed `slow FAIL` with nothing kept
+  (`fun-ci why <sha> slow` printed only "slow failed after 12.7s"; `--raw` said no raw output is kept). The
+  `stage_jobs` row had `status=failed` with `exit_status`, `signal` and `output_tail` all NULL. Re-triggering the
+  same commit passed.
+- Repro (about 30 s):
+
+      R=$(mktemp -d) && cd $R && git init -q -b main && mkdir .fun-ci
+      for s in lint build fast; do printf '#!/bin/sh\nexit 0\n' > .fun-ci/$s.sh; done
+      printf '#!/bin/sh\nsleep 20\n' > .fun-ci/slow.sh && chmod +x .fun-ci/*.sh
+      fun-ci install-hooks && git add -A && git commit -q -m base
+      echo x >> f && git add f
+      perl -e 'setpgrp(0,0); exec @ARGV' sh -c 'git commit -q -m victim; sleep 60' & PID=$!
+      sleep 6; kill -TERM -- -$PID; sleep 2; fun-ci runs | head -1    # slow FAIL, no evidence
+
+- Two problems: (1) the pipeline the hook starts stays in the committer's process group, so Ctrl-C in a terminal
+  or an agent harness cancelling a command kills the CI run; detaching it (new session/process group) would
+  match the README's "starts the pipeline in the background and returns at once". (2) A stage whose runner died
+  is reported as a failure of the code, with no hint that it was interrupted; `why` could say so.
