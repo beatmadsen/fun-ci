@@ -20,7 +20,14 @@ class TestStatusJson < Minitest::Test
   end
 
   def test_should_give_each_stage_its_name_state_and_seconds
-    assert_equal({ name: "lint", state: "passed", seconds: 3.8 }, document[:stages].first)
+    assert_equal({ name: "lint", state: "passed", seconds: 3.8, budget: nil }, document[:stages].first)
+  end
+
+  def test_should_give_each_stage_the_budget_it_was_given
+    build = STAGE.new(name: "build", state: "passed", seconds: 41.2,
+                      exit: REPORT::Exit.new(exit_status: 0, signal: nil, budget: 300))
+
+    assert_equal 300, document(stages: [build])[:stages].first[:budget]
   end
 
   def test_should_name_the_commit_that_superseded_the_run

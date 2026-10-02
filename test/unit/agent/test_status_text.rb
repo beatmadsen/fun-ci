@@ -18,6 +18,14 @@ class TestStatusText < Minitest::Test
     assert_equal "  lint   passed         3.8s", lines[1]
   end
 
+  def test_should_say_a_stage_had_a_new_worktree_s_longer_budget
+    assert_equal "  build  passed        41.2s  (new worktree, budget 300s)", lines(build: budgeted(300))[2]
+  end
+
+  def test_should_say_nothing_of_the_budget_a_stage_usually_has
+    assert_equal "  build  passed        41.2s", lines(build: budgeted(30))[2]
+  end
+
   def test_should_shout_a_stage_that_failed
     assert_equal "  build  FAILED        12.0s", lines(build: stage("build", "failed", 12.0))[2]
   end
@@ -82,6 +90,11 @@ class TestStatusText < Minitest::Test
   end
 
   def stage(name, state, seconds = nil) = STAGE.new(name: name, state: state, seconds: seconds)
+
+  def budgeted(budget)
+    STAGE.new(name: "build", state: "passed", seconds: 41.2,
+              exit: REPORT::Exit.new(exit_status: 0, signal: nil, budget: budget))
+  end
 
   # fields: the report's superseded_by, deciding and trunk, each nil unless given.
   def lines(verdict: :undecided, build: stage("build", "passed", 11.2), **fields)

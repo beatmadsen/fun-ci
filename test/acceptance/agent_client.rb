@@ -81,13 +81,14 @@ class AgentClient
                                                                    sha: trunk_sha), checked_at: clock.now)
   end
 
-  # A stage of a recorded run finishing now, as the pipeline would record it.
-  def finish_stage(run_id, stage, state) = record_stage(run_id, stage, state)
+  # A stage of a recorded run finishing now, with the budget it was given,
+  # as the pipeline would record it.
+  def finish_stage(run_id, stage, state, budget: nil) = record_stage(run_id, stage, state, budget: budget)
 
   private
 
-  def record_stage(run_id, stage, state)
-    job_id = FunCi::Persistence::StageJob.create(db, pipeline_run_id: run_id, stage: stage)
+  def record_stage(run_id, stage, state, budget: nil)
+    job_id = FunCi::Persistence::StageJob.create(db, pipeline_run_id: run_id, stage: stage, budget: budget)
     FunCi::Persistence::StageJob.update_status(db, job_id, "running")
     FunCi::Persistence::StageJob.update_status(db, job_id, state) unless state == "running"
   end

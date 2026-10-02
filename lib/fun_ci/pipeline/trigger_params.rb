@@ -6,13 +6,12 @@ require_relative "command_executor"
 require_relative "stage_dir"
 require_relative "git_environment"
 require_relative "priorities"
+require_relative "budgets"
 require_relative "../evidence/command_runner"
 require_relative "../evidence/process_table"
 
 module FunCi
   module Pipeline
-    DEFAULT_BUDGETS = { "lint" => 30, "build" => 30, "fast" => 10, "slow" => 300 }.freeze
-
     Commit = Data.define(:sha, :branch)
 
     # On a detached HEAD git names no branch, and the hooks pass "": the run

@@ -6,6 +6,7 @@ require_relative "digest"
 require_relative "trunk_text"
 require_relative "job_report"
 require_relative "starts_in"
+require_relative "../pipeline/budgets"
 
 module FunCi
   module Agent
@@ -49,8 +50,15 @@ module FunCi
 
       def self.stage_line(stage, needed)
         seconds = stage.seconds ? format("%6.1fs", stage.seconds) : " " * 7
-        note = needed.include?(stage.name) ? "" : " (not needed)"
+        note = (needed.include?(stage.name) ? "" : " (not needed)") + longer(stage)
         "  #{stage.name.ljust(6)} #{WORDS.fetch(stage.state, stage.state).ljust(12)}#{seconds}#{note}".rstrip
+      end
+
+      # Only a worktree just made gives a stage more than its usual budget
+      # (AT-1.14), which a run in the background says nowhere else.
+      def self.longer(stage)
+        usual = Pipeline::DEFAULT_BUDGETS[stage.name]
+        stage.budget && usual && stage.budget > usual ? "  (new worktree, budget #{stage.budget}s)" : ""
       end
 
       def self.footer(report)
@@ -60,7 +68,7 @@ module FunCi
 
         ["Superseded by #{report.superseded_by[0, 7]}."]
       end
-      private_class_method :stage_line, :footer, :job_lines, :job_line, :starts
+      private_class_method :stage_line, :longer, :footer, :job_lines, :job_line, :starts
     end
   end
 end

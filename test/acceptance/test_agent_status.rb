@@ -35,6 +35,16 @@ class TestAgentStatus < Minitest::Test
     assert_equal 3, @client.status("--need", "all")
   end
 
+  # A run in a worktree just made gives lint and build longer (AT-1.14),
+  # which a run in the background says nowhere else.
+  def test_should_say_a_stage_had_a_new_worktree_s_longer_budget
+    run_id = @client.record_run(SHA, stages: { "lint" => "completed" })
+    @client.finish_stage(run_id, "build", "completed", budget: 300)
+    @client.status
+
+    assert_match(/^  build  passed .*\(new worktree, budget 300s\)$/, @client.stdout)
+  end
+
   def test_should_say_there_is_no_run_when_the_commit_has_none
     assert_equal [5, "fun-ci: no run for 3f9c2ab in this project.\n"], [@client.status, @client.stdout]
   end

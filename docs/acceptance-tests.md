@@ -168,6 +168,8 @@ whole pipeline recorded per run.
 **Then** lint and build get the slow suite's budget, the fast suite keeps its
 own, and the run says why; a run in a worktree made before has the usual
 budgets.
+**And** `fun-ci status` says so on lint's and build's lines, `(new worktree,
+budget 300s)`, since a run in the background prints nowhere.
 *Note:* a cold build of a mid-sized C++ project took 30 s on 14 idle cores,
 so the first commit after a slot was made could not be pushed.
 
@@ -450,7 +452,8 @@ this project's run.
 **Then** stdout is one JSON document: `schema` 1, `commit` (`sha`, `branch`,
 `subject`), `need`, `verdict` (`passed`, `failed`, `over_budget`,
 `undecided`, `superseded`, `unknown`), `stages` (each `name`, `state`,
-`seconds`, and `failures` when the stage reported some) and `superseded_by`
+`seconds`, `budget` in seconds or null, and `failures` when the stage
+reported some) and `superseded_by`
 (the newer commit's SHA, or null). The exit code is the same as without
 `--json`.
 

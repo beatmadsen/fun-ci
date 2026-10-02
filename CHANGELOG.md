@@ -33,8 +33,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - In a worktree fun-ci has just made, as for the first runs after install or
   `fun-ci prune`, lint and build get the slow suite's budget, since their
   caches are empty: a cold build over 30 seconds no longer blocks the first
-  push. A run in the foreground says so, and one that still runs over shows
-  the longer budget in `fun-ci why`.
+  push. A run in the foreground says so, `fun-ci status` says `(new
+  worktree, budget 300s)` on their lines, and one that still runs over shows
+  the longer budget in `fun-ci why`. `status --json` gives each stage's
+  `budget`.
 - Daily and weekly jobs run at a lower priority than the stages: on macOS
   under `taskpolicy -c utility`, elsewhere at `nice -n 19`. Before, four due
   jobs could leave a build a fraction of the cores and push it over its

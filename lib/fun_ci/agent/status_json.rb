@@ -19,7 +19,7 @@ module FunCi
       def self.unknown(sha) = { schema: SCHEMA, commit: { sha: sha }, verdict: "unknown" }
 
       def self.stage(stage)
-        facts = { name: stage.name, state: stage.state, seconds: stage.seconds }
+        facts = { name: stage.name, state: stage.state, seconds: stage.seconds, budget: stage.budget }
         stage.failures.any? ? facts.merge(failures: stage.failures) : facts
       end
       private_class_method :stage
