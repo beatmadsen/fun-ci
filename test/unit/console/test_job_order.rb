@@ -29,6 +29,15 @@ class TestJobOrder < Minitest::Test
     assert_equal %w[b a], names([row("a", "due"), row("b", "running")])
   end
 
+  # Under way, then about to be (Jobs::Schedule).
+  def test_should_put_a_running_job_before_one_waiting_its_turn
+    assert_equal %w[b a], names([row("a", "scheduled"), row("b", "running")])
+  end
+
+  def test_should_put_a_job_waiting_its_turn_before_a_due_one
+    assert_equal %w[b a], names([row("a", "due"), row("b", "scheduled")])
+  end
+
   def test_should_put_a_due_job_before_a_passed_one
     assert_equal %w[b a], names([row("a", "passed"), row("b", "due")])
   end

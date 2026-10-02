@@ -14,20 +14,26 @@ module FunCi
 
       def self.from(standing)
         { project: standing.project, name: standing.name, cadence: standing.cadence,
-          status: STATUS.fetch(standing.state, standing.state), **run(standing.run),
+          status: STATUS.fetch(standing.state, standing.state), **run(standing.run, standing.starts_at),
           due_at: standing.due_at&.to_i }.compact
       end
 
-      # What the latest run says: which, on what, and when.
-      def self.run(run)
+      # What the latest run says: which, on what, and when; a run waiting its
+      # turn (Jobs::Schedule) has not started, and says when it starts.
+      def self.run(run, starts_at)
         return {} unless run
 
-        { run_id: run[:id], sha: run[:commit_hash], branch: run[:branch], started_at: epoch(run[:started_at]),
-          updated_at: epoch(run[:completed_at] || run[:started_at]) }
+        { run_id: run[:id], sha: run[:commit_hash], branch: run[:branch], **times(run, starts_at) }
+      end
+
+      def self.times(run, starts_at)
+        return { starts_at: starts_at.to_i } if starts_at
+
+        { started_at: epoch(run[:started_at]), updated_at: epoch(run[:completed_at] || run[:started_at]) }
       end
 
       def self.epoch(iso) = Time.parse(iso).to_i
-      private_class_method :run, :epoch
+      private_class_method :run, :times, :epoch
     end
   end
 end

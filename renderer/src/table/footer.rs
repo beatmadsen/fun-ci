@@ -45,7 +45,7 @@ pub fn keys(board: &Board) -> Offer {
         return Offer { question: Some(question), keys: vec![("y", "yes"), ("n", "no")] };
     }
     let runs = board.runs.iter().any(|run| matches!(run.status(), "running" | "pending"));
-    let cancellable = runs || board.jobs.iter().any(|job| job.status == JobStatus::Running);
+    let cancellable = runs || board.jobs.iter().any(|job| matches!(job.status, JobStatus::Running | JobStatus::Scheduled));
     Offer { question: None, keys: if cancellable { vec![MOVE, CANCEL, QUIT] } else { vec![MOVE, QUIT] } }
 }
 

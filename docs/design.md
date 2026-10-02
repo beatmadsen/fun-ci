@@ -196,6 +196,12 @@ status, no streak and no exit code; it has its own section in the console.
 - Commits start jobs. When the post-commit hook runs a pipeline, it also
   starts each of that project's jobs that is due, each in a process of its
   own beside the pipeline, testing the commit just made, on whatever branch.
+  They take turns: the first starts at once and each next one `job_spacing`
+  later (10 minutes unless `.fun-ci/config` says otherwise; 0 starts them
+  together), and no sooner than that after the project's latest job still
+  running or waiting, so a day's jobs spread their work out. A job waiting
+  its turn is `scheduled`: the console and the agent commands say when it
+  starts, it is neither due nor started twice, and it can be cancelled.
   A job is due when it has never run, when its latest run was cancelled, or
   when its latest run started at least a day ago (daily) or a week ago
   (weekly). A project nobody commits to runs no jobs, which is the point: a

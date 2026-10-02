@@ -44,6 +44,14 @@ class TestKeyHandlerJobs < Minitest::Test
     refute_predicate @handler, :confirming?
   end
 
+  # As a run waiting its turn is: nothing of it has run (Jobs::Schedule, AT-13.28).
+  def test_should_cancel_a_job_waiting_its_turn_at_once
+    @board_data.job_rows = [ConsoleFakes.job_row("soak", status: "scheduled", id: 9)]
+    press("j", "j", "c")
+
+    assert_equal ["job 9"], @board_data.cancelled
+  end
+
   def test_should_reach_the_jobs_when_there_are_no_runs
     @board_data.runs = []
     press("j", "c")

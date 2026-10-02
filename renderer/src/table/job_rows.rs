@@ -53,7 +53,7 @@ pub fn accent(job: &Job) -> Option<[u8; 3]> {
         JobStatus::Failed | JobStatus::Lost => Some(FAILED),
         JobStatus::Timeout => Some(TIMED_OUT),
         JobStatus::Running => Some(RUNNING),
-        JobStatus::Due | JobStatus::Passed | JobStatus::Unknown => None,
+        JobStatus::Due | JobStatus::Scheduled | JobStatus::Passed | JobStatus::Unknown => None,
     }
 }
 
@@ -64,6 +64,7 @@ fn mark(job: &Job, spinner: char) -> (char, [u8; 3]) {
         JobStatus::Failed | JobStatus::Lost => ('◆', FAILED),
         JobStatus::Timeout => ('◇', TIMED_OUT),
         JobStatus::Running => (spinner, RUNNING),
+        JobStatus::Scheduled => ('◔', QUIET),
         JobStatus::Due | JobStatus::Unknown => ('◌', QUIET),
     }
 }
@@ -74,7 +75,7 @@ fn outcome(job: &Job) -> [u8; 3] {
         JobStatus::Failed | JobStatus::Lost => FAILED,
         JobStatus::Timeout => TIMED_OUT,
         JobStatus::Running => RUNNING,
-        JobStatus::Due | JobStatus::Unknown => QUIET,
+        JobStatus::Due | JobStatus::Scheduled | JobStatus::Unknown => QUIET,
     }
 }
 

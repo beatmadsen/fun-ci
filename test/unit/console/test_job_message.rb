@@ -6,7 +6,7 @@ require "fun_ci/console/job_message"
 # A job row as the protocol's `board` carries it, under `jobs` (renderer-protocol.md, `board`).
 class TestJobMessage < Minitest::Test
   # Where a job stands, as Jobs::Standing answers it.
-  Standing = Data.define(:project, :name, :cadence, :state, :run, :due_at)
+  Standing = Data.define(:project, :name, :cadence, :state, :run, :due_at, :starts_at)
 
   STARTED = Time.utc(2026, 10, 1, 9)
   RUN = { id: 7, commit_hash: "a" * 40, branch: "main", status: "completed",
@@ -77,6 +77,6 @@ class TestJobMessage < Minitest::Test
 
   def job_message(state: "passed", run: RUN, due_at: nil)
     FunCi::Console::JobMessage.from(Standing.new(project: "/p", name: "mutation", cadence: "daily", state: state,
-                                                 run: run, due_at: due_at))
+                                                 run: run, due_at: due_at, starts_at: nil))
   end
 end

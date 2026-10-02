@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.3.0] - 2026-10-02
 
 ### Added
+- A commit's due daily and weekly jobs take turns instead of starting
+  together: the first at once, each next one ten minutes later, and none
+  sooner than that after a job still running or waiting. `job_spacing:` in
+  `.fun-ci/config` sets the gap (`30m`, `1h`; `0` starts them together). A
+  job waiting its turn says when it starts: `starts in 8m` in the console
+  and in `fun-ci jobs`, `starts_at` in its JSON, `scheduled, starts in 8m` in
+  `status`, `job_scheduled` in `events`. `c` in the console cancels it at
+  once, as does `fun-ci cancel --job`. The console needs renderer 2.3.0 to
+  show it; an older one says it is in a state it doesn't know.
 - `fun-ci cancel --job NAME` stops a daily or weekly job's run, as `c` on its
   row does in the console, so an agent can too. The job runs again on the
   next commit.

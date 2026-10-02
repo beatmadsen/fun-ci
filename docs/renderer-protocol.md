@@ -119,8 +119,11 @@ The full state to show. Always complete — never a diff.
   "status": "failed", "run_id": 9, "sha": "9e0b1d4...", "branch": "wip/foo",
   "started_at": 1789988000, "updated_at": 1789999520, "due_at": 1790592800}`.
   `cadence` is `daily` or `weekly`. `status` is `due` (the job never ran, or
-  its latest run was cancelled), `running`, `passed`, `failed`, `timeout`, or
-  `lost` (its process died before it said how the run ended).
+  its latest run was cancelled), `scheduled` (a commit started it and it waits
+  its turn, until `starts_at`), `running`, `passed`, `failed`, `timeout`, or
+  `lost` (its process died before it said how the run ended). A `scheduled`
+  job has no `started_at` or `updated_at`, since its run has not begun; a
+  renderer older than 2.3.0 shows it in a state it doesn't know.
   The run's fields are those of the job's latest run, and are left out for a
   job that never ran; `updated_at` is when it ended, or started while it
   runs. `due_at` is when the job is due again, left out while it is due now

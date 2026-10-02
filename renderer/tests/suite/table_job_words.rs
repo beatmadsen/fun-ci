@@ -121,3 +121,22 @@ fn briefly_a_passed_job_says_when_it_is_due_again() {
 fn briefly_a_due_job_says_it_runs_on_the_next_commit() {
     assert_eq!(said_briefly(&job("due", &json!({})), NOW * 1000), "due · next commit");
 }
+
+fn waiting(starts_in: i64) -> Job {
+    job("scheduled", &json!({"run_id": 9, "sha": SHA, "branch": "main", "starts_at": NOW + starts_in}))
+}
+
+#[test]
+fn a_job_waiting_its_turn_says_when_it_starts_and_on_which_commit() {
+    assert_eq!(words(&waiting(480)), "starts in 8m on main 9e0b1d4");
+}
+
+#[test]
+fn a_job_whose_turn_has_come_says_it_starts_now() {
+    assert_eq!(words(&waiting(-5)), "starts now on main 9e0b1d4");
+}
+
+#[test]
+fn a_job_waiting_its_turn_briefly_says_when_it_starts() {
+    assert_eq!(said_briefly(&waiting(480), NOW * 1000), "starts in 8m");
+}

@@ -41,4 +41,16 @@ scenarios! {
     a_branch_conflicting_with_the_trunk_looks_as_reviewed: "trunk-conflict";
     a_busy_board_looks_as_reviewed: "busy-board";
     the_daily_and_weekly_jobs_look_as_reviewed: "jobs";
+    jobs_waiting_their_turn_look_as_reviewed: "jobs_scheduled";
+}
+
+/// A scenario added without a snapshot would be drawn by nobody: each has one, reviewed.
+#[test]
+fn every_scenario_has_a_reviewed_snapshot() {
+    let snapshots = std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/suite/snapshots");
+    let lacking: Vec<String> = std::fs::read_dir(contract_dir().join("scenarios")).unwrap()
+        .filter_map(|entry| entry.unwrap().path().file_stem().map(|stem| stem.to_string_lossy().into_owned()))
+        .filter(|name| !snapshots.join(format!("suite__snapshots__{name}.snap")).exists())
+        .collect();
+    assert_eq!(lacking, Vec::<String>::new());
 }

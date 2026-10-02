@@ -3,7 +3,8 @@
 //! 3a1f9c2 · 1h12m`, `stopped without a result on main 3a1f9c2 · due in 3d`
 //! (its process died before it said how the run ended), `passed on main 3a1f9c2 · due in 14h`, `due · runs on
 //! your next commit`. On a narrow screen the same, briefly: `failed · 3h12m`,
-//! `passed · due in 14h`, `due · next commit`.
+//! `passed · due in 14h`, `due · next commit`. One waiting its turn to start:
+//! `starts in 8m on main 3a1f9c2`, briefly `starts in 8m`.
 
 use crate::format::{seconds_since, short_sha};
 use crate::model::{Job, JobStatus};
@@ -16,6 +17,7 @@ const UNKNOWN: &str = "in a state this fun-ci doesn't know";
 pub fn said(job: &Job, now_ms: i64) -> String {
     match job.status {
         JobStatus::Due => "due · runs on your next commit".to_string(),
+        JobStatus::Scheduled => format!("{} on {}", starts(job, now_ms), commit(job)),
         JobStatus::Lost => format!("stopped without a result on {} · {}", commit(job), due(job, now_ms)),
         JobStatus::Running => format!("running on {} · {}", commit(job), span(seconds_since(job.started_at.unwrap_or(0), now_ms))),
         JobStatus::Passed => format!("passed on {} · {}", commit(job), due(job, now_ms)),
@@ -30,12 +32,21 @@ pub fn said(job: &Job, now_ms: i64) -> String {
 pub fn said_briefly(job: &Job, now_ms: i64) -> String {
     match job.status {
         JobStatus::Due => "due · next commit".to_string(),
+        JobStatus::Scheduled => starts(job, now_ms),
         JobStatus::Lost => "stopped · no result".to_string(),
         JobStatus::Running => format!("running · {}", span(seconds_since(job.started_at.unwrap_or(0), now_ms))),
         JobStatus::Passed => format!("passed · {}", due(job, now_ms)),
         JobStatus::Failed => format!("failed · {}", span(ran_for(job))),
         JobStatus::Timeout => format!("timed out · {}", span(ran_for(job))),
         JobStatus::Unknown => "state unknown".to_string(),
+    }
+}
+
+/// `starts in 8m`, or `starts now` once its turn has come.
+fn starts(job: &Job, now_ms: i64) -> String {
+    match job.starts_at.map(|at| -seconds_since(at, now_ms)) {
+        Some(left) if left > 0 => format!("starts in {}", roughly(left)),
+        _ => "starts now".to_string(),
     }
 }
 

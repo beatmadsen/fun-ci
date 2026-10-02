@@ -27,6 +27,7 @@ marks! {
     the_diamond_is_drawn: "◆";
     the_hollow_diamond_is_drawn: "◇";
     the_hollow_circle_is_drawn: "◌";
+    the_quarter_filled_circle_is_drawn: "◔";
     the_ellipsis_is_drawn: "…";
     the_dash_is_drawn: "–";
     the_dot_is_drawn: "·";

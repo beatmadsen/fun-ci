@@ -47,6 +47,8 @@ pub struct Board {
 pub enum JobStatus {
     /// It never ran, or its latest run was cancelled: the next commit starts it.
     Due,
+    /// A commit started it, and it waits its turn to start (`starts_at`).
+    Scheduled,
     Running,
     Passed,
     Failed,
@@ -82,6 +84,9 @@ pub struct Job {
     /// When it is due again; none while it is due now, or runs.
     #[serde(default)]
     pub due_at: Option<i64>,
+    /// When a job waiting its turn starts; none for any other.
+    #[serde(default)]
+    pub starts_at: Option<i64>,
 }
 
 /// A project whose trunk is stale: its last good fetch (epoch seconds), or none when its last fetch failed.

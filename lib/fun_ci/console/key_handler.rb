@@ -67,8 +67,10 @@ module FunCi
         @confirm_cancel = [:run, run] if run[:status] == "running"
       end
 
-      # A running job (a Jobs::Standing) once the user confirms.
+      # A job (a Jobs::Standing) waiting its turn is cancelled at once; a
+      # running one once the user confirms.
       def offer_job_cancel(job)
+        cancel(:job, job) if job.state == "scheduled"
         @confirm_cancel = [:job, job] if job.state == "running"
       end
 

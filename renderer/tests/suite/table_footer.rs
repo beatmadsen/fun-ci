@@ -27,6 +27,12 @@ fn the_keys_offer_cancel_while_a_run_waits_to_start() {
 }
 
 #[test]
+fn the_keys_offer_cancel_while_a_job_waits_its_turn_to_start() {
+    let jobs = json!({"jobs": [{"name": "soak", "cadence": "weekly", "status": "scheduled", "starts_at": NOW + 480}]});
+    assert!(keys(&board("passed", &jobs)).keys.contains(&("c", "cancel")));
+}
+
+#[test]
 fn the_keys_leave_cancel_out_when_nothing_can_be_cancelled() {
     assert_eq!(keys(&board("passed", &json!({}))).keys, [("j/k", "move"), ("q", "quit")]);
 }
