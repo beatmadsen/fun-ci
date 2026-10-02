@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2026-10-02
+
+### Added
+- `fun-ci cancel --job NAME` stops a daily or weekly job's run, as `c` on its
+  row does in the console, so an agent can too. The job runs again on the
+  next commit.
+- `fun-ci-renderer --version` and `--help`, for anyone who installed the
+  renderer with cargo. Before, each said it "needs a value".
+
 ### Changed
 - In a worktree fun-ci has just made, as for the first runs after install or
   `fun-ci prune`, lint and build get the slow suite's budget, since their
@@ -18,25 +27,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   budget. The slow suite runs at `nice -n 10` beside the fast suite, except
   on macOS, where nice has no measurable effect.
 
-### Added
-- `fun-ci cancel --job NAME` stops a daily or weekly job's run, as `c` on its
-  row does in the console, so an agent can too. The job runs again on the
-  next commit.
-
 ### Fixed
 - An agent that waited on each commit, as `fun-ci init` tells it to, kept
   every run it made from being cancelled by the next, so their slow suites
   ran side by side. `wait --follow-branch` no longer keeps its run going, and
   the command a commit prints, which agents are told to run, follows the
-  branch. The section `fun-ci init` wrote before says `4 superseded`; it can
-  be removed and written again with `fun-ci init`.
+  branch. The section `fun-ci init` wrote into AGENTS.md before still says
+  to act on `4 superseded`: delete it and run `fun-ci init` to write the new
+  one.
 - `fun-ci status` said `trunk unknown, the check never finished` for a run
   whose lint, build or fast suite took longer than 25 seconds, while the
   check was only waiting for them to end before it was recorded.
 - In a Git LFS repository, `fun-ci install-hooks` installed nothing, since
   git-lfs had written post-commit and pre-push already, and no commit was
   tested. It now writes hooks that run fun-ci's and then git-lfs's, giving
-  git-lfs the push's ref list as git sent it.
+  git-lfs the push's ref list as git sent it. `git lfs install` then says
+  the hooks exist and exits 2; they already run git-lfs's.
 - `fun-ci check` warns when the post-commit or pre-push hook doesn't run
   fun-ci, instead of saying all is well while no commit is tested.
 - A mistake in `.fun-ci/config` no longer stops a commit's run, which let the
