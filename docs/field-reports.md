@@ -40,6 +40,11 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 - `fun-ci why 704e31e fast` shows one `rake fast` process loading every acceptance, policy and unit test
   file, still running at the kill.
 - Next step: time `rake fast` cold on an idle machine and under a parallel load, and find which files dominate.
+- **Seen again** on 2026-10-05: fast OVER on 7b6d7ca, another docs-only commit. Timed by hand right after on the
+  same machine: `rake fast` took 6.24 s on the first run, then 2.86 s and 2.62 s, while the load average was 21 to 28
+  on 14 cores (Spotlight's corespotlightd at about 105% CPU, re-indexing after large downloads in another project).
+  So the suite fits its budget with room when warm; a cold start under heavy load is what reaches 10 s. Not yet
+  measured: the duration of the overrunning run itself, since nothing is kept beyond the kill.
 
 ## A run started by the post-commit hook dies with the shell that committed, and is reported as a plain failure
 
@@ -62,3 +67,24 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
   or an agent harness cancelling a command kills the CI run; detaching it (new session/process group) would
   match the README's "starts the pipeline in the background and returns at once". (2) A stage whose runner died
   is reported as a failure of the code, with no hint that it was interrupted; `why` could say so.
+
+## A cancelled slow stage leaves Playwright's web server running, and the next run fails on its port
+
+- **Seen** with fun-ci 2.3.0 on 2026-10-05 in 3d-experiments. Commit de7e59d's slow stage was cancelled after 13.9 s when
+  8d66efc superseded it. 8d66efc's slow stage then failed in 0.5 s: "http://localhost:4357 is already used, make sure
+  that nothing is running on the port/url or set reuseExistingServer:true in config.webServer". The listener was
+  `npm exec vite preview --port 4357 --strictPort` (PID 89839, PPID 1, process group 89839) with its child
+  `node .git/fun-ci/worktrees/slot-0/node_modules/.bin/vite preview`, left from the cancelled run. Killing that group
+  and running `fun-ci trigger 8d66efc… main` passed all four stages.
+- **Cause, seen in code** (no test yet): `RunCanceller#stop` sends only KILL to the run's processes and stage groups
+  (`run_canceller.rb`, `kill`); `ProcessRunner#kill_process_group` sends TERM then KILL with no pause between them
+  (`process_runner.rb`, `kill_process_group`). Playwright's `launchProcess` spawns the web server with
+  `detached: true` on non-Windows platforms, so the server leads its own process group, and only Playwright's own
+  teardown kills that group. A KILL to the stage's group never reaches the server's group and gives Playwright no
+  time to tear it down.
+- Repro sketch (inferred, not run): a `slow.sh` that starts a grandchild in its own group and waits, such as
+  `perl -e 'if (fork) { wait } else { setpgrp(0,0); exec "sleep", "300" }'`; commit twice in quick succession so
+  the first run is superseded; `pgrep -f "sleep 300"` still finds the grandchild afterwards.
+- Possible fixes: TERM, a short grace period, then KILL, so a stage's own cleanup runs; or kill every process group
+  in the stage's session. Not a fix: `reuseExistingServer: true`, which would let a later run test an earlier
+  commit's build.
