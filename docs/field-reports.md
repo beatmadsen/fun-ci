@@ -88,3 +88,18 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 - Possible fixes: TERM, a short grace period, then KILL, so a stage's own cleanup runs; or kill every process group
   in the stage's session. Not a fix: `reuseExistingServer: true`, which would let a later run test an earlier
   commit's build.
+
+## A run that lands in a cold second worktree fails a build budget a warm worktree meets
+
+- **Seen** with fun-ci 2.3.0 on 2026-10-06 in 3d-experiments. Commit 1e8ce32 was still in
+  its slow stage in `slot-0` when 6af6ee1 was committed, so 6af6ee1's run took `slot-1`. Its build stage ran over its
+  30 s budget (30.1 s): `.git/fun-ci/worktrees/slot-1/public/assets/.inputs` did not exist, so the project's asset
+  build, which skips Blender while that stamp matches its sources, rebuilt every asset (`blender/assets/hero.py` had
+  run 23 s at the kill). `slot-0` has the stamp and the same stage takes about 4 s there; the next commit, e75d4fd,
+  ran in `slot-0` and passed.
+- **Cause**: per-slot caches that a project keeps in its worktree (here a generated `public/assets` and its stamp)
+  are only as warm as the last run in that slot, and a slot used rarely (only when runs overlap) stays cold for
+  days. The budget is sized for the warm case.
+- **Possible fixes**: warm a new or stale slot before timing it (a project hook, or the first run in a slot exempt
+  from budgets); or share git-ignored build outputs between slots. Not a fix: raising the build budget, which would
+  hide a real slowdown in the warm case.
