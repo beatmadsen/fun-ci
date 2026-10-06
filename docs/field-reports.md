@@ -45,6 +45,10 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
   on 14 cores (Spotlight's corespotlightd at about 105% CPU, re-indexing after large downloads in another project).
   So the suite fits its budget with room when warm; a cold start under heavy load is what reaches 10 s. Not yet
   measured: the duration of the overrunning run itself, since nothing is kept beyond the kill.
+- **Measured** on 2026-10-06: fast went OVER (10.1 s) twice on 61c1810, a docs-only commit, with this repo's slow
+  stage alongside both times. Straight after, in the main checkout with slow still running, `rake fast` took 20.69 s
+  and then 2.58 s, 1734 runs both times. So the time goes to a cold first run, not to the tests; what the cold run
+  spends it on is not measured.
 
 ## A run started by the post-commit hook dies with the shell that committed, and is reported as a plain failure
 
@@ -88,6 +92,17 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 - Possible fixes: TERM, a short grace period, then KILL, so a stage's own cleanup runs; or kill every process group
   in the stage's session. Not a fix: `reuseExistingServer: true`, which would let a later run test an earlier
   commit's build.
+- **Seen again** with fun-ci 2.3.0 on 2026-10-06 in 3d-experiments: 4c25788's slow stage was cancelled after 28.1 s
+  when 995596a superseded it, and 995596a's slow stage failed after 9.3 s on the same port 4357. The orphan was
+  `npm exec vite preview --port 4357 --strictPort` (PPID 1, its own process group) and its `node` child. Killing
+  that group and `fun-ci trigger` passed all four stages.
+- Correction to the second possible fix: Node's `detached: true` makes the child the leader of a new session as well
+  as a new process group (measured: `os.getsid` of a detached `sleep` is its own pid), so killing every group in the
+  stage's session would still miss Playwright's web server. A grace period after TERM, or killing the stage's process
+  tree by parent id taken before the kill, would reach it.
+- 3d-experiments no longer shows it (0f53605): its preview now exits when its stdin, a pipe from Playwright, ends.
+  A scratch run that SIGKILLs an `npx playwright test` process group left the old preview listening 3 s later and
+  the new one gone. The cancel path itself is unchanged, so any other detached grandchild still outlives a cancel.
 
 ## A run that lands in a cold second worktree fails a build budget a warm worktree meets
 
