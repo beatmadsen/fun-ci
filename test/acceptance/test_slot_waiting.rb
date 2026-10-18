@@ -11,7 +11,7 @@ class TestSlotWaiting < Minitest::Test
   include FunCiTestProject
   include TriggerTestKit
 
-  Worktrees = Struct.new(:root) { def check_out(_path, _sha) = nil }
+  Worktrees = Struct.new(:root) { def check_out(_path, _sha, **) = nil }
   # What happened, what the second run had recorded while it waited, and the
   # first run's slow suite, held back.
   Scenario = Struct.new(:events, :second, :calls_while_waiting, :held_slow_suite)

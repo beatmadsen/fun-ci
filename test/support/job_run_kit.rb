@@ -26,7 +26,7 @@ module JobRunKit
 
     def fail_with(message, error: FunCi::Pipeline::Worktrees::GitError) = @error = error.new(message)
 
-    def check_out(path, sha)
+    def check_out(path, sha, **)
       raise @error if @error
 
       FileUtils.mkdir_p(path)

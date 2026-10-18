@@ -6,7 +6,7 @@ require "fun_ci/pipeline/worktree_pool"
 # AT-1.5: a run that dies holding its slot, without running any cleanup,
 # doesn't keep the slot from the next pipeline.
 class TestCrashedRunSlot < Minitest::Test
-  Worktrees = Struct.new(:root) { def check_out(_path, _sha) = nil }
+  Worktrees = Struct.new(:root) { def check_out(_path, _sha, **) = nil }
 
   def setup
     @root = Dir.mktmpdir("worktrees")

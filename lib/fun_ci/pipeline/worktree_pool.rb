@@ -14,16 +14,19 @@ module FunCi
 
       attr_reader :size
 
-      def initialize(worktrees, size: DEFAULT_SIZE, waiter: -> { sleep 0.25 })
+      # clean: the paths whose ignored files a slot loses when it moves off its
+      # line of history (Worktrees#check_out).
+      def initialize(worktrees, size: DEFAULT_SIZE, clean: [], waiter: -> { sleep 0.25 })
         @worktrees = worktrees
         @size = size
+        @clean = clean
         @waiter = waiter
       end
 
-      # A ColdSlot when the slot's worktree had to be made.
+      # A ColdSlot when the slot's worktree had to be made, or was cleaned.
       def acquire(sha)
         slot = wait_for_free_slot
-        @worktrees.check_out(slot.path, sha) ? slot.as_cold : slot
+        @worktrees.check_out(slot.path, sha, clean: @clean) ? slot.as_cold : slot
       rescue StandardError
         slot&.release
         raise

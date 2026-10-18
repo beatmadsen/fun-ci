@@ -225,6 +225,15 @@ same problem if you switch branches while it runs.
   since nothing else raises it; were budgets ever set per project, that
   would need a flag of its own. *Rejected:* a warm-up command, a step people
   forget; and no budget at all, which would let a hang hold the push.
+- **Outputs a project names under `clean:` go when a slot moves off its line
+  of history.** A slot's ignored files are only as right as its last run's
+  commit: a branch's build left outputs the trunk's next run then tested
+  against. When the commit isn't a descendant of the slot's last one,
+  `git clean -fdX -- <paths>` removes the ignored files under the named paths
+  only, and the slot counts as cold, as a new worktree does. *Rejected:*
+  cleaning every run (each build cold, over its budget), `-X` everywhere
+  (caches go too), and a slot per branch (more slots, each colder). fun-ci
+  can't tell an output from a cache, so the project names them.
 - `StalePipelineCanceller` also releases the slots of the runs it cancels.
   Slots whose lock names a dead pid are reclaimed.
 - Pool size defaults to 2 and is configurable in `.fun-ci/config`.

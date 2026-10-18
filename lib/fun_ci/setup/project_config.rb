@@ -49,6 +49,7 @@ module FunCi
       def job_errors = Jobs::Folders.new(@project_root).errors
 
       def worktree_slots = settings.worktree_slots
+      def clean = settings.clean
       def trunk = settings.trunk
       def trunk_fetch = settings.trunk_fetch
       def job_spacing = settings.job_spacing

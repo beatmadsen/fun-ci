@@ -15,7 +15,8 @@ module FunCi
       def self.for(project, sha)
         return InPlace.new(project) if sha == NULL_SHA
 
-        WorktreePool.new(Worktrees.new(project), size: Setup::ProjectConfig.new(project).worktree_slots)
+        config = Setup::ProjectConfig.new(project)
+        WorktreePool.new(Worktrees.new(project), size: config.worktree_slots, clean: config.clean)
       end
     end
   end

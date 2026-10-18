@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
+  git ignores and that must not carry over from another branch's run. When a
+  worktree moves to a commit that doesn't descend from the one it last
+  tested, fun-ci removes the ignored files under those paths first, and that
+  run's lint and build get the longer budget a new worktree gets. Other
+  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
+  it can't use.
 - `fun-ci COMMAND --help` (or `-h`) prints that command's usage and the
   options it takes. Before, `init`, `check` and `prune` ignored the flag and
   went ahead, and the agent commands called it an invalid option.
@@ -51,6 +58,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.3.0] - 2026-10-02
 
 ### Added
+- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
+  git ignores and that must not carry over from another branch's run. When a
+  worktree moves to a commit that doesn't descend from the one it last
+  tested, fun-ci removes the ignored files under those paths first, and that
+  run's lint and build get the longer budget a new worktree gets. Other
+  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
+  it can't use.
 - A commit's due daily and weekly jobs take turns instead of starting
   together, spread evenly over the day: with four jobs, the first at once
   and each next one six hours later, and none sooner than that after a job
@@ -122,6 +136,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.0] - 2026-10-01
 
 ### Added
+- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
+  git ignores and that must not carry over from another branch's run. When a
+  worktree moves to a commit that doesn't descend from the one it last
+  tested, fun-ci removes the ignored files under those paths first, and that
+  run's lint and build get the longer budget a new worktree gets. Other
+  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
+  it can't use.
 - Daily and weekly jobs, for checks too long for a stage's budget. A script
   in `.fun-ci/daily/` or `.fun-ci/weekly/` runs at most once a day or once a
   week, started by your commits, in a worktree of its own, with 24 hours to
@@ -161,6 +182,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - 2026-09-30
 
 ### Added
+- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
+  git ignores and that must not carry over from another branch's run. When a
+  worktree moves to a commit that doesn't descend from the one it last
+  tested, fun-ci removes the ignored files under those paths first, and that
+  run's lint and build get the longer budget a new worktree gets. Other
+  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
+  it can't use.
 - Each run checks whether its commit would merge cleanly with the trunk:
   `trunk:` in `.fun-ci/config`, or else the remote's default branch.
   `status` and `wait` print where the commit stands, with its age; for a
@@ -355,6 +383,13 @@ before it. See "Upgrading to 2.0" in the README.
 - A project's colour in the console stays the same from one start to the next.
 
 ### Added
+- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
+  git ignores and that must not carry over from another branch's run. When a
+  worktree moves to a commit that doesn't descend from the one it last
+  tested, fun-ci removes the ignored files under those paths first, and that
+  run's lint and build get the longer budget a new worktree gets. Other
+  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
+  it can't use.
 - `fun-ci status [REV]` says where a commit's run stands, stage by stage, and
   exits with a verdict an agent can branch on: 0 passed, 1 failed, 2 over
   budget, 3 undecided, 4 superseded, 5 no run, 64 usage error. `--need
@@ -538,6 +573,13 @@ before it. See "Upgrading to 2.0" in the README.
 ## [1.1.0] - 2026-02-22
 
 ### Added
+- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
+  git ignores and that must not carry over from another branch's run. When a
+  worktree moves to a commit that doesn't descend from the one it last
+  tested, fun-ci removes the ignored files under those paths first, and that
+  run's lint and build get the longer budget a new worktree gets. Other
+  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
+  it can't use.
 - Multi-line ASCII art header animations for pipeline events (explosion on failure, celebrations on success)
 - Looping idle starfield animation in the TUI header
 - Rocket animation while pipelines are running, with flickering exhaust and parallax starfield
@@ -553,6 +595,13 @@ before it. See "Upgrading to 2.0" in the README.
 ## [1.0.0] - 2026-02-21
 
 ### Added
+- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
+  git ignores and that must not carry over from another branch's run. When a
+  worktree moves to a commit that doesn't descend from the one it last
+  tested, fun-ci removes the ignored files under those paths first, and that
+  run's lint and build get the longer budget a new worktree gets. Other
+  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
+  it can't use.
 - Four-stage local CI pipeline (lint, build, fast, slow) with strict time budgets (30s/30s/10s/5min)
 - Unified CLI (`fun-ci`) with subcommands: trigger, console, init, install-hooks, check
 - Pre-commit hook (background fork, non-blocking) and pre-push hook (synchronous, blocking)

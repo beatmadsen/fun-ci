@@ -43,6 +43,11 @@ module FunCi
       # and the jobs share the day evenly (Jobs::DueJobs).
       def job_spacing = seconds(setting("job_spacing"))
 
+      # The paths, inside the project, whose git-ignored files a slot loses
+      # when it moves off its line of history (Pipeline::Worktrees); none
+      # when none are given, or what is given is no such list.
+      def clean = cleaned || []
+
       def errors
         setting_errors
       rescue Psych::SyntaxError => e
@@ -58,7 +63,7 @@ module FunCi
       def setting_errors
         return [".fun-ci/config must be a mapping such as `worktree_slots: 2`"] unless raw.is_a?(Hash)
 
-        [slots_error, spacing_error].compact
+        [slots_error, spacing_error, clean_error].compact
       end
 
       # The slots the file asks for, when that is a whole number above 0.
@@ -78,6 +83,21 @@ module FunCi
         return nil if given.nil? || seconds(given)
 
         ".fun-ci/config: job_spacing must be seconds, or a number with s, m or h, not #{given.inspect}"
+      end
+
+      def cleaned
+        given = setting("clean")
+        given if given.is_a?(Array) && given.all? { |path| inside?(path) }
+      end
+
+      def inside?(path) = path.is_a?(String) && !path.start_with?("/") && !path.split("/").include?("..")
+
+      def clean_error
+        given = setting("clean")
+        return nil if given.nil? || cleaned
+
+        ".fun-ci/config: clean must be a list of paths inside the project, such as [public/assets], " \
+          "not #{given.inspect}"
       end
 
       def setting(key)

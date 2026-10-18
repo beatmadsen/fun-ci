@@ -11,7 +11,7 @@ class TestWorktreePrune < Minitest::Test
   FakeWorktrees = Struct.new(:root, :pruned) do
     def jobs_root = File.join(File.dirname(root), "jobs")
     def legacy_dir = File.join(File.dirname(root, 2), "git", "fun-ci")
-    def check_out(path, _sha) = FileUtils.mkdir_p(path)
+    def check_out(path, _sha, **) = FileUtils.mkdir_p(path)
     def prune = pruned << :pruned
   end
 

@@ -29,14 +29,21 @@ module FunCi
       def legacy_dir = File.join(common_dir, "fun-ci")
 
       # Leaves +path+ as a clean detached checkout of +sha+. Ignored files stay,
-      # so caches such as vendor/bundle survive between runs in the same slot.
-      # Answers whether it made the worktree, which then has no caches.
-      def check_out(path, sha)
+      # so caches such as vendor/bundle survive between runs in the same slot,
+      # except under the +clean+ paths when +sha+ doesn't descend from the
+      # slot's last commit: those are outputs only as right as the commit that
+      # made them. Answers whether the slot is cold: a worktree it made, which
+      # has no caches, or one it cleaned.
+      def check_out(path, sha, clean: [])
         return add(path, sha).then { true } unless File.exist?(File.join(path, ".git"))
 
+        moved_off = clean.any? && !descends?(path, sha)
         git(path, "checkout", "--detach", "--force", sha)
         git(path, "clean", "-fd")
-        false
+        return false unless moved_off
+
+        git(path, "clean", "-fdX", "--", *clean)
+        true
       end
 
       # Has git forget the worktrees whose directories are gone.
@@ -53,6 +60,13 @@ module FunCi
 
       def common_dir
         File.realpath(File.expand_path(git(@project_root, "rev-parse", "--git-common-dir").strip, @project_root))
+      end
+
+      # Whether +sha+ descends from the commit checked out at +path+.
+      def descends?(path, sha)
+        last = git(path, "rev-parse", "HEAD").strip
+        _, status = Open3.capture2e(GitEnvironment::CLEAN, "git", "merge-base", "--is-ancestor", last, sha, chdir: path)
+        status.success?
       end
 
       def add(path, sha) = git(@project_root, "worktree", "add", "--detach", "--force", path, sha)
