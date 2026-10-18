@@ -41,8 +41,8 @@ module ConfinementGuard
     # each of them doubled its time.
     # ps is asked once for all of them: a mutation run leaves hundreds, and
     # once each took 21 s.
-    def remove_roots_of_finished_runs(stopper: StrayProcesses)
-      ended = Dir.glob(File.join(Dir.tmpdir, "fci-*")).reject { |root| alive?(root[/fci-(\d+)\z/, 1].to_i) }
+    def remove_roots_of_finished_runs(stopper: StrayProcesses, under: Dir.tmpdir)
+      ended = Dir.glob(File.join(under, "fci-*")).reject { |root| alive?(root[/fci-(\d+)\z/, 1].to_i) }
       return if ended.empty?
 
       stopper.stop(ended.flat_map { |root| both_paths(root) })

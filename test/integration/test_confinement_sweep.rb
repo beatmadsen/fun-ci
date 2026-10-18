@@ -22,21 +22,24 @@ class TestConfinementSweep < Minitest::Test
     end
   end
 
+  # Each test sweeps a directory of its own: the run's temp root is shared by
+  # the parallel workers, which would make and sweep the same roots at once.
   def setup
-    @roots = Array.new(3) { |i| File.join(Dir.tmpdir, "fci-#{NO_SUCH_PID - i}").tap { |root| Dir.mkdir(root) } }
+    @dir = Dir.mktmpdir("sweep")
+    @roots = Array.new(3) { |i| File.join(@dir, "fci-#{NO_SUCH_PID - i}").tap { |root| Dir.mkdir(root) } }
     @stopper = Stopper.new
   end
 
-  def teardown = FileUtils.rm_rf(@roots)
+  def teardown = FileUtils.rm_rf(@dir)
 
   def test_should_ask_for_the_processes_of_every_ended_run_s_root_at_once
-    ConfinementGuard.remove_roots_of_finished_runs(stopper: @stopper)
+    ConfinementGuard.remove_roots_of_finished_runs(stopper: @stopper, under: @dir)
 
     assert_equal 1, @stopper.calls.size
   end
 
   def test_should_remove_every_ended_run_s_root
-    ConfinementGuard.remove_roots_of_finished_runs(stopper: @stopper)
+    ConfinementGuard.remove_roots_of_finished_runs(stopper: @stopper, under: @dir)
 
     assert(@roots.none? { |root| File.exist?(root) })
   end
