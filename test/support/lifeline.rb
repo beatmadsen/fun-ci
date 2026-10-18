@@ -30,9 +30,9 @@ class Lifeline
     @kill = kill
   end
 
-  # The shell commands that take hold, and say so. The shell must lead a
-  # process group of its own.
-  def hold = "echo $$ > #{@group}; exec 3> #{@path}; echo held >&3"
+  # The shell commands that take hold, and say so, recording the shell's
+  # process group, which it need not lead.
+  def hold = "ps -o pgid= -p $$ > #{@group}; exec 3> #{@path}; echo held >&3"
 
   # Blocks until every holder has ended; wrap it in a deadline. False if
   # nothing ever took hold, which would otherwise look the same.
