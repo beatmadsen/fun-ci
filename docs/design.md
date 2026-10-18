@@ -344,7 +344,8 @@ each project's branches sit under the project's name, one row per branch:
   that most needs you comes first, and within a project a failure, then a
   timeout or a conflict with the trunk, then running, scheduled, passed and
   cancelled rows, newest first among equals. With one project there is no
-  label.
+  label. The board holds at most the twenty branches whose newest run
+  changed last, so old failures leave it instead of piling up.
 - One deep block, a card with rounded corners, holds the row the cursor is
   on, or, with no cursor, the first row that needs you: a failure, a timeout,
   a conflict. It is wine when its row needs you and indigo when the cursor

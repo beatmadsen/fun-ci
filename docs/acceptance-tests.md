@@ -956,6 +956,12 @@ for, its lines running down to the last project; and a screen with no room
 for the legend names the marks on one line above the keys
 (`renderer/tests/suite/quiet_table.rs`, `table_words.rs`, `table_leaders.rs`).
 
+### 12.9 The board holds the twenty branches that changed last
+**Given** more than twenty branches have runs
+**Then** the board holds the twenty whose newest run changed status most
+recently, in the order of 12.2, so a failure on a branch nobody has touched
+since leaves the board once twenty others have moved on.
+
 ## 13. Daily and weekly jobs
 
 Checks too long for a stage's budget run as jobs, at most once a day or once a

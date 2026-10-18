@@ -19,6 +19,9 @@ module FunCi
       # How many of a branch's runs are read to fold its cancelled ones and
       # find its standing against the trunk.
       BRANCH_WINDOW = 100
+      # How many branches the board holds at most: those whose newest run
+      # changed most recently, so old failures leave it in time.
+      RECENT_BRANCHES = 20
 
       # `clock` answers the time now, which decides which jobs are due.
       def initialize(db, page_size: 15, run_canceller: Pipeline::RunCanceller.new, clock: -> { Time.now })
@@ -34,7 +37,7 @@ module FunCi
       def resize(page_size) = @paging.resize(page_size)
 
       # Whether there are branches beyond those `runs` loads.
-      def more? = Persistence::PipelineRun.branch_heads(@db, limit: @paging.limit + 1).size > @paging.limit
+      def more? = heads(@paging.limit + 1).size > @paging.limit
 
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
@@ -55,7 +58,7 @@ module FunCi
       # and then those run most recently, in RowOrder: a run of cancelled
       # runs folded into one, with its stages and the branch's standing against the trunk.
       def runs
-        RowOrder.of(Persistence::PipelineRun.branch_heads(@db, limit: @paging.limit).map { |head| branch_row(head) })
+        RowOrder.of(heads(@paging.limit).map { |head| branch_row(head) })
       end
 
       # The projects among `runs` whose trunk is stale.
@@ -73,6 +76,8 @@ module FunCi
       end
 
       private
+
+      def heads(limit) = Persistence::PipelineRun.branch_heads(@db, limit: limit, among: RECENT_BRANCHES)
 
       def branch_row(head)
         branch_runs = Persistence::PipelineRun.of_branch(@db, head[:project_path], head[:branch], limit: BRANCH_WINDOW)

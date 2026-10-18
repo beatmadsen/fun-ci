@@ -19,6 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in place, since that stage tests nothing.
 
 ### Changed
+- The console holds at most the twenty branches whose newest run changed
+  last, before putting them in order, so a failure on a branch nobody has
+  touched since leaves the board once twenty others have moved on, instead
+  of staying at the top for good.
 - `fun-ci init` refuses an option it doesn't take (exit 64) instead of
   ignoring it, so a misspelt `--everything` no longer sets up only half.
 

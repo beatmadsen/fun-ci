@@ -56,9 +56,8 @@ module FunCi
         db.execute("UPDATE pipeline_runs SET trunk_started_at = ? WHERE id = ?", [at.utc.iso8601, id])
       end
 
-      def self.update_status(db, id, new_status)
-        now = Time.now.utc.iso8601
-        db.execute("UPDATE pipeline_runs SET status = ?, updated_at = ? WHERE id = ?", [new_status, now, id])
+      def self.update_status(db, id, new_status, at: Time.now)
+        db.execute("UPDATE pipeline_runs SET status = ?, updated_at = ? WHERE id = ?", [new_status, at.utc.iso8601, id])
       end
 
       def self.recent(db, limit: 20)
@@ -69,11 +68,15 @@ module FunCi
       NEEDING = "CASE status WHEN 'failed' THEN 0 WHEN 'timed_out' THEN 1 WHEN 'running' THEN 2 " \
                 "WHEN 'scheduled' THEN 3 WHEN 'completed' THEN 4 ELSE 5 END"
 
-      # The newest run of each of `limit` branches: those that most need you,
-      # then those run most recently, in that order.
-      def self.branch_heads(db, limit:)
-        query(db, "WHERE id IN (SELECT MAX(id) FROM pipeline_runs GROUP BY project_path, branch) " \
-                  "ORDER BY #{NEEDING}, id DESC LIMIT ?", limit)
+      # Each branch's newest run.
+      HEADS = "SELECT MAX(id) FROM pipeline_runs GROUP BY project_path, branch"
+
+      # The newest run of each of `limit` branches, of the `among` whose newest
+      # run changed most recently: those that most need you, then those run
+      # most recently, in that order.
+      def self.branch_heads(db, limit:, among:)
+        query(db, "WHERE id IN (SELECT id FROM pipeline_runs WHERE id IN (#{HEADS}) " \
+                  "ORDER BY updated_at DESC, id DESC LIMIT ?) ORDER BY #{NEEDING}, id DESC LIMIT ?", among, limit)
       end
 
       # A project's branch's runs, newest first.
