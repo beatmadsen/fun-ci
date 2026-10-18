@@ -80,7 +80,7 @@ A failed job keeps its evidence as a failed stage does; add entries under `evide
 fun-ci console
 ```
 
-The console shows where each branch stands, one row per branch under its project's name: a mark for each stage (lint, the build, the fast suite and the slow suite, named in a legend at the top of the table), what happened (`the fast suite failed after 1.4s`) and when. What needs you comes first, in one deep block; passed rows stay pale. Above them is a picture that tells you what is happening without reading a word.
+The console shows where each branch stands, one row per branch under its project's name: a mark for each stage (lint, the build, the fast suite and the slow suite, named in a legend at the top of the table), what happened (`the fast suite failed after 1.4s`) and when. What needs you comes first, in one deep block; passed rows stay pale. It holds the twenty branches whose newest run changed last, so a failure on a branch nobody touches any more leaves it in time. Above them is a picture that tells you what is happening without reading a word.
 
 ![The console's table on a busy board: a legend naming lint, the build, the fast suite and the slow suite over their columns of marks, three projects, a failed branch that conflicts with main in a deep red card, a timeout, a running branch and two pale passed ones](docs/screenshots/table.png)
 
@@ -265,7 +265,7 @@ fun-ci trigger --background <commit> <branch>   Start the pipeline in the backgr
 fun-ci prune                                    Remove fun-ci's worktrees when no pipeline is running
 ```
 
-`fun-ci --help` lists every option.
+`fun-ci --help` lists every option, and `fun-ci COMMAND --help` a command's own.
 
 ## Upgrading to 2.0
 

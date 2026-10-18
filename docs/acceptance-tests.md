@@ -141,6 +141,7 @@ All tests here are integration tests against a real temporary git repository.
 ### 1.11 Worktrees are cleaned up with `fun-ci prune`
 **When** `fun-ci prune` runs with no pipeline active
 **Then** all fun-ci worktrees and their admin entries (`git worktree prune`) are removed.
+**And** so are those a fun-ci before 2.4 kept under `.git/fun-ci/`.
 
 ### 1.12 Cancelling from the console stops the run
 **Given** a running pipeline, in its foreground stages or its background slow
@@ -175,6 +176,31 @@ budget 300s)`, since a run in the background prints nowhere.
 so the first commit after a slot was made could not be pushed.
 
 ---
+
+### 1.15 Worktrees live outside `.git/`
+**Then** a run's slot and a job's worktree are under fun-ci's state
+directory, `projects/<repository>-<digest of its git directory>/`, which
+every git worktree of the repository shares.
+*Note:* Vite's default `fs.deny` holds `**/.git/**`, so a Vitest suite in a
+browser-like environment failed in a slot under `.git/` and nowhere else.
+
+### 1.16 Outputs the project names go when a slot moves off its line of history
+**Given** `clean: [out]` in `.fun-ci/config`, and a slot whose last run left
+ignored files under `out/` and elsewhere
+**When** a run checks out a commit that doesn't descend from the slot's last
+**Then** the ignored files under `out/` are gone, the others stay, and the run
+counts as cold (1.14); a commit that does descend keeps them.
+
+### 1.17 A run the hook starts outlives the shell that committed
+**Given** `git commit` in a shell that is then interrupted or closed
+**Then** the run the post-commit hook started goes on to its end, since it
+leads a session of its own.
+
+### 1.18 Stopping a stage stops what it started in a group of its own
+**When** a run is cancelled, or a stage runs over its budget
+**Then** what the stage started that left its process group or session, as
+Node's detached children do, is stopped with it, and a child forked as the
+group was killed is killed too.
 
 ## 2. Protocol and golden corpus (still Ruby-only)
 
@@ -569,6 +595,20 @@ finished, run finished and run superseded: the project's last 10 runs' events,
 then, with `--follow`, each new one as it happens
 **And** `--only failures` prints only failed or over-budget stages and
 superseded runs.
+
+### 9.17 `fun-ci COMMAND --help` says how to use the command
+**When** any command is given `--help` or `-h`
+**Then** it prints its usage, what it is for and the options it takes, and
+exits 0 without doing anything else.
+
+### 9.18 `fun-ci init` takes a stack, and starts a project it doesn't recognise
+**When** `fun-ci init --stack NAME` runs
+**Then** it writes that stack's scripts, whatever it would detect; a name it
+doesn't know exits 64, naming the stacks, and writes nothing.
+**And** in a project whose stack it doesn't detect, it writes four
+placeholder scripts that pass, and `fun-ci check` warns of each one still in
+place.
+**And** an option or argument it doesn't take exits 64 and writes nothing.
 
 ## 10. Reading why a stage failed
 

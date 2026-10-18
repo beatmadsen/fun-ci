@@ -240,6 +240,18 @@ same problem if you switch branches while it runs.
   took 4 s. Each taker stamps the slot's lock, so the lock's mtime says when
   it was last taken. *Rejected:* sharing ignored files between slots (copying
   `node_modules` and the like, with links that point into one slot).
+- **Stopping a stage reaches what left its group.** A cancel and an overrun
+  kill each stage's process group, and Node's detached children (Playwright's
+  web server) lead a session of their own, so a superseded run left a server
+  holding its port. `ps` is read before the kill, since a killed parent's
+  children move to init, and each process descended from a stage's group
+  that left it is killed too, by its own group when it leads one
+  (`ProcessTree`). A child forked as the KILL arrives misses it, so
+  `GroupKill` kills the group again while a member lives, at most ten
+  times. *Rejected:* killing every group in the stage's session (a detached
+  child leads a new session), and a grace period after TERM alone (a
+  teardown may never come). Not reached: a daemon that forked twice and
+  moved to init before the kill.
 - `StalePipelineCanceller` also releases the slots of the runs it cancels.
   Slots whose lock names a dead pid are reclaimed.
 - Pool size defaults to 2 and is configurable in `.fun-ci/config`.
@@ -499,7 +511,7 @@ weekly jobs).
 - **A job is a process of its own, forked and detached from the trigger**,
   like the slow suite, since the trigger exits when its pipeline ends. It
   forks before the pipeline opens its recorder, and opens its own connection.
-- **A worktree per job**, under `fun-ci/jobs/`, never a pipeline slot: a job
+- **A worktree per job**, under `Worktrees#jobs_root`, never a pipeline slot: a job
   can take hours, and a pool of two would be one for hours.
 - **One budget, 24 hours, for daily and weekly jobs**, enforced by
   `ProcessRunner` like a stage's. A newer commit's run cancels pipelines only.

@@ -8,10 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- A failed stage's evidence names the stages of the project's other runs
-  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
-  `fun-ci why`, so a fast suite over its budget beside another commit's slow
-  suite says so.
+- `fun-ci COMMAND --help` (or `-h`) prints that command's usage and the
+  options it takes. Before, `init`, `check`, `prune` and `console` ignored
+  the flag and went ahead, `install-hooks` took it for a hook type, and the
+  agent commands called it an invalid option.
+- `fun-ci init --stack NAME` writes the scripts for the stack you name
+  (`go`, `node_npm`, ...) instead of the one it detects.
+- In a project whose stack `fun-ci init` doesn't recognise, such as a new
+  one with no code yet, it writes four placeholder scripts that pass, instead
+  of stopping with nothing written. `fun-ci check` warns about each one still
+  in place, since that stage tests nothing.
 - `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
   git ignores and that must not carry over from another branch's run. When a
   worktree moves to a commit that doesn't descend from the one it last
@@ -19,41 +25,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   run's lint and build get the longer budget a new worktree gets. Other
   ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
   it can't use.
-- `fun-ci COMMAND --help` (or `-h`) prints that command's usage and the
-  options it takes. Before, `init`, `check` and `prune` ignored the flag and
-  went ahead, and the agent commands called it an invalid option.
-- `fun-ci init --stack NAME` writes the scripts for the stack you name
-  (`go`, `node_npm`, ...) instead of the one it detects.
-- In a project whose stack `fun-ci init` doesn't recognise, such as a new
-  one with no code yet, it writes four placeholder scripts that pass, instead
-  of stopping with nothing written. `fun-ci check` warns about each one still
-  in place, since that stage tests nothing.
+- A failed stage's evidence names the stages of the project's other runs
+  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
+  `fun-ci why`, so a fast suite over its budget beside another commit's slow
+  suite says so.
 
 ### Changed
-- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
-  that checks the source's syntax without the packages (`node --check`, or
-  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
-  only when the project configures ESLint. ESLint in `lint.sh` ran beside
-  the install: in a new worktree it ran a registry ESLint and failed on a
-  plugin it couldn't find, and in a project without ESLint it always failed.
-- A worktree slot nobody took for a day counts as cold, as a new one does, so
-  lint and build get the longer budget there once. A second slot, used only
-  when runs overlap, kept caches days old and ran a build over its budget.
-  `fun-ci status` now says `(cold worktree, budget 300s)`, not `new worktree`.
 - fun-ci's worktrees, the runs' slots and the jobs', move out of `.git/` into
   fun-ci's state directory (`~/.local/state/fun-ci/projects/`). Under
   `.git/`, Vite's default `fs.deny` refused to serve test files, so a Vitest
   suite with a browser-like environment failed in fun-ci and nowhere else.
   The first run after upgrading makes new worktrees, with the longer budget
   a new worktree gets; `fun-ci prune` removes the old ones from `.git/fun-ci/`.
+- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
+  that checks the syntax of the source without the packages (`node --check`
+  on `.js`, `.mjs` and `.cjs` files; `bun build --no-bundle`, TypeScript
+  included, for Bun), and runs ESLint in `build.sh` after the install, when
+  the project configures ESLint. ESLint in `lint.sh` ran beside the install:
+  in a new worktree it ran a registry ESLint and failed on a plugin it
+  couldn't find, and in a project without ESLint it always failed. A
+  TypeScript project on Node gets no check of its `.ts` files in `lint.sh`;
+  ESLint or `tsc` in `build.sh` covers them.
+- A worktree slot nobody took for a day counts as cold, as a new one does, so
+  lint and build get the longer budget there once. A second slot, used only
+  when runs overlap, kept caches days old and ran a build over its budget.
+  `fun-ci status` now says `(cold worktree, budget 300s)`, not `new worktree`,
+  and a run in the foreground says `a cold worktree (new, just cleaned, or
+  unused for a day)`.
 - The console holds at most the twenty branches whose newest run changed
   last, before putting them in order, so a failure on a branch nobody has
   touched since leaves the board once twenty others have moved on, instead
   of staying at the top for good.
-- `fun-ci init` refuses an option it doesn't take (exit 64) instead of
-  ignoring it, so a misspelt `--everything` no longer sets up only half.
+- `fun-ci init` refuses an option or argument it doesn't take (exit 64)
+  instead of ignoring it, so a misspelt `--everything` no longer sets up
+  only half.
 
 ### Fixed
+- `fun-ci console` no longer dies with a `TypeError` while a project's first
+  fetch of its trunk is under way.
 - A run the post-commit hook starts leads a session of its own, so Ctrl-C in
   the terminal that committed, closing it, or an agent harness ending the
   `git commit` command no longer kills the run's slow suite.
@@ -62,27 +71,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   as it already did for a job.
 - Cancelling a run, or killing a stage over its budget, also stops what the
   stage started that moved to a process group or session of its own, as
-  Node's detached children do. A
-  superseded run left Playwright's web server holding its port, and the next
-  run failed on it.
-- `fun-ci console` no longer dies with `TypeError: can't convert NilClass
-  into an exact number` while a project's first fetch of its trunk is under
-  way.
+  Node's detached children do: a superseded run left Playwright's web server
+  holding its port, and the next run failed on it. A child forked just as
+  the group was killed is killed too.
 
 ## [2.3.0] - 2026-10-02
 
 ### Added
-- A failed stage's evidence names the stages of the project's other runs
-  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
-  `fun-ci why`, so a fast suite over its budget beside another commit's slow
-  suite says so.
-- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
-  git ignores and that must not carry over from another branch's run. When a
-  worktree moves to a commit that doesn't descend from the one it last
-  tested, fun-ci removes the ignored files under those paths first, and that
-  run's lint and build get the longer budget a new worktree gets. Other
-  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
-  it can't use.
 - A commit's due daily and weekly jobs take turns instead of starting
   together, spread evenly over the day: with four jobs, the first at once
   and each next one six hours later, and none sooner than that after a job
@@ -103,12 +98,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   fun-ci, instead of saying all is well while no commit is tested.
 
 ### Changed
-- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
-  that checks the source's syntax without the packages (`node --check`, or
-  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
-  only when the project configures ESLint. ESLint in `lint.sh` ran beside
-  the install: in a new worktree it ran a registry ESLint and failed on a
-  plugin it couldn't find, and in a project without ESLint it always failed.
 - In a worktree fun-ci has just made, as for the first runs after install or
   `fun-ci prune`, lint and build get the slow suite's budget, since their
   caches are empty: a cold build over 30 seconds no longer blocks the first
@@ -160,17 +149,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.0] - 2026-10-01
 
 ### Added
-- A failed stage's evidence names the stages of the project's other runs
-  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
-  `fun-ci why`, so a fast suite over its budget beside another commit's slow
-  suite says so.
-- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
-  git ignores and that must not carry over from another branch's run. When a
-  worktree moves to a commit that doesn't descend from the one it last
-  tested, fun-ci removes the ignored files under those paths first, and that
-  run's lint and build get the longer budget a new worktree gets. Other
-  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
-  it can't use.
 - Daily and weekly jobs, for checks too long for a stage's budget. A script
   in `.fun-ci/daily/` or `.fun-ci/weekly/` runs at most once a day or once a
   week, started by your commits, in a worktree of its own, with 24 hours to
@@ -203,12 +181,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   it is for: watching your runs as they happen, in the terminal.
 
 ### Changed
-- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
-  that checks the source's syntax without the packages (`node --check`, or
-  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
-  only when the project configures ESLint. ESLint in `lint.sh` ran beside
-  the install: in a new worktree it ran a registry ESLint and failed on a
-  plugin it couldn't find, and in a project without ESLint it always failed.
 - The README's pictures of the console are drawn in a real terminal, in a
   real font, 1500 pixels wide instead of 800, and its animation is an
   animated WebP.
@@ -216,17 +188,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - 2026-09-30
 
 ### Added
-- A failed stage's evidence names the stages of the project's other runs
-  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
-  `fun-ci why`, so a fast suite over its budget beside another commit's slow
-  suite says so.
-- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
-  git ignores and that must not carry over from another branch's run. When a
-  worktree moves to a commit that doesn't descend from the one it last
-  tested, fun-ci removes the ignored files under those paths first, and that
-  run's lint and build get the longer budget a new worktree gets. Other
-  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
-  it can't use.
 - Each run checks whether its commit would merge cleanly with the trunk:
   `trunk:` in `.fun-ci/config`, or else the remote's default branch.
   `status` and `wait` print where the commit stands, with its age; for a
@@ -246,12 +207,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `fun-ci --help` lists `--raw`, which it left out.
 
 ### Changed
-- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
-  that checks the source's syntax without the packages (`node --check`, or
-  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
-  only when the project configures ESLint. ESLint in `lint.sh` ran beside
-  the install: in a new worktree it ran a registry ESLint and failed on a
-  plugin it couldn't find, and in a project without ESLint it always failed.
 - The console's table is new. Each branch has one row, its newest run's,
   under its project's name, and reads as one phrase: the branch, a mark each
   for lint, the build, the fast suite and the slow suite, joined into a track
@@ -360,12 +315,6 @@ worktrees at the commit they test, started after the commit rather than
 before it. See "Upgrading to 2.0" in the README.
 
 ### Changed
-- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
-  that checks the source's syntax without the packages (`node --check`, or
-  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
-  only when the project configures ESLint. ESLint in `lint.sh` ran beside
-  the install: in a new worktree it ran a registry ESLint and failed on a
-  plugin it couldn't find, and in a project without ESLint it always failed.
 - The hook that runs a pipeline in the background is now `post-commit`, so it
   tests the commit you just made; the `pre-commit` hook tested the commit
   before it. `fun-ci install-hooks` writes `post-commit` and `pre-push`, and
@@ -433,17 +382,6 @@ before it. See "Upgrading to 2.0" in the README.
 - A project's colour in the console stays the same from one start to the next.
 
 ### Added
-- A failed stage's evidence names the stages of the project's other runs
-  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
-  `fun-ci why`, so a fast suite over its budget beside another commit's slow
-  suite says so.
-- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
-  git ignores and that must not carry over from another branch's run. When a
-  worktree moves to a commit that doesn't descend from the one it last
-  tested, fun-ci removes the ignored files under those paths first, and that
-  run's lint and build get the longer budget a new worktree gets. Other
-  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
-  it can't use.
 - `fun-ci status [REV]` says where a commit's run stands, stage by stage, and
   exits with a verdict an agent can branch on: 0 passed, 1 failed, 2 over
   budget, 3 undecided, 4 superseded, 5 no run, 64 usage error. `--need
@@ -592,12 +530,6 @@ before it. See "Upgrading to 2.0" in the README.
   so the constant was only ever resolvable by luck of load order.
 
 ### Changed
-- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
-  that checks the source's syntax without the packages (`node --check`, or
-  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
-  only when the project configures ESLint. ESLint in `lint.sh` ran beside
-  the install: in a new worktree it ran a registry ESLint and failed on a
-  plugin it couldn't find, and in a project without ESLint it always failed.
 - The gemspec reads the version from a new `lib/fun_ci/version.rb` instead of
   loading the whole library. Loading the library pulls in sqlite3, and Bundler
   reads the gemspec before it installs anything, so `bundle install` failed on
@@ -633,17 +565,6 @@ before it. See "Upgrading to 2.0" in the README.
 ## [1.1.0] - 2026-02-22
 
 ### Added
-- A failed stage's evidence names the stages of the project's other runs
-  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
-  `fun-ci why`, so a fast suite over its budget beside another commit's slow
-  suite says so.
-- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
-  git ignores and that must not carry over from another branch's run. When a
-  worktree moves to a commit that doesn't descend from the one it last
-  tested, fun-ci removes the ignored files under those paths first, and that
-  run's lint and build get the longer budget a new worktree gets. Other
-  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
-  it can't use.
 - Multi-line ASCII art header animations for pipeline events (explosion on failure, celebrations on success)
 - Looping idle starfield animation in the TUI header
 - Rocket animation while pipelines are running, with flickering exhaust and parallax starfield
@@ -659,17 +580,6 @@ before it. See "Upgrading to 2.0" in the README.
 ## [1.0.0] - 2026-02-21
 
 ### Added
-- A failed stage's evidence names the stages of the project's other runs
-  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
-  `fun-ci why`, so a fast suite over its budget beside another commit's slow
-  suite says so.
-- `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
-  git ignores and that must not carry over from another branch's run. When a
-  worktree moves to a commit that doesn't descend from the one it last
-  tested, fun-ci removes the ignored files under those paths first, and that
-  run's lint and build get the longer budget a new worktree gets. Other
-  ignored files, such as `node_modules`, stay. `fun-ci check` names a `clean`
-  it can't use.
 - Four-stage local CI pipeline (lint, build, fast, slow) with strict time budgets (30s/30s/10s/5min)
 - Unified CLI (`fun-ci`) with subcommands: trigger, console, init, install-hooks, check
 - Pre-commit hook (background fork, non-blocking) and pre-push hook (synchronous, blocking)
