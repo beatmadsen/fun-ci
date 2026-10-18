@@ -43,38 +43,6 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
   same hour: vitest unit 5.1 s, rules 1.2 s, the Python tools tests 0.2 s. So the stage fits its budget alone, with
   about 3 s to spare, and the overrun is the concurrent slow stage. The budget does not depend on the commit.
 
-## A cancelled slow stage leaves Playwright's web server running, and the next run fails on its port
-
-- **Seen** with fun-ci 2.3.0 on 2026-10-05 in 3d-experiments. Commit de7e59d's slow stage was cancelled after 13.9 s when
-  8d66efc superseded it. 8d66efc's slow stage then failed in 0.5 s: "http://localhost:4357 is already used, make sure
-  that nothing is running on the port/url or set reuseExistingServer:true in config.webServer". The listener was
-  `npm exec vite preview --port 4357 --strictPort` (PID 89839, PPID 1, process group 89839) with its child
-  `node .git/fun-ci/worktrees/slot-0/node_modules/.bin/vite preview`, left from the cancelled run. Killing that group
-  and running `fun-ci trigger 8d66efc… main` passed all four stages.
-- **Cause, seen in code** (no test yet): `RunCanceller#stop` sends only KILL to the run's processes and stage groups
-  (`run_canceller.rb`, `kill`); `ProcessRunner#kill_process_group` sends TERM then KILL with no pause between them
-  (`process_runner.rb`, `kill_process_group`). Playwright's `launchProcess` spawns the web server with
-  `detached: true` on non-Windows platforms, so the server leads its own process group, and only Playwright's own
-  teardown kills that group. A KILL to the stage's group never reaches the server's group and gives Playwright no
-  time to tear it down.
-- Repro sketch (inferred, not run): a `slow.sh` that starts a grandchild in its own group and waits, such as
-  `perl -e 'if (fork) { wait } else { setpgrp(0,0); exec "sleep", "300" }'`; commit twice in quick succession so
-  the first run is superseded; `pgrep -f "sleep 300"` still finds the grandchild afterwards.
-- Possible fixes: TERM, a short grace period, then KILL, so a stage's own cleanup runs; or kill every process group
-  in the stage's session. Not a fix: `reuseExistingServer: true`, which would let a later run test an earlier
-  commit's build.
-- **Seen again** with fun-ci 2.3.0 on 2026-10-06 in 3d-experiments: 4c25788's slow stage was cancelled after 28.1 s
-  when 995596a superseded it, and 995596a's slow stage failed after 9.3 s on the same port 4357. The orphan was
-  `npm exec vite preview --port 4357 --strictPort` (PPID 1, its own process group) and its `node` child. Killing
-  that group and `fun-ci trigger` passed all four stages.
-- Correction to the second possible fix: Node's `detached: true` makes the child the leader of a new session as well
-  as a new process group (measured: `os.getsid` of a detached `sleep` is its own pid), so killing every group in the
-  stage's session would still miss Playwright's web server. A grace period after TERM, or killing the stage's process
-  tree by parent id taken before the kill, would reach it.
-- 3d-experiments no longer shows it (0f53605): its preview now exits when its stdin, a pipe from Playwright, ends.
-  A scratch run that SIGKILLs an `npx playwright test` process group left the old preview listening 3 s later and
-  the new one gone. The cancel path itself is unchanged, so any other detached grandchild still outlives a cancel.
-
 ## A run that lands in a cold second worktree fails a build budget a warm worktree meets
 
 - **Seen** with fun-ci 2.3.0 on 2026-10-06 in 3d-experiments. Commit 1e8ce32 was still in

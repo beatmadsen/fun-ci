@@ -4,6 +4,7 @@ require_relative "../../test_helper"
 require "fun_ci/pipeline/process_runner"
 require_relative "../../support/process_deadline"
 require_relative "../../support/fifo"
+require_relative "../../support/lifeline"
 
 # A command over budget, stuck once it has printed: the budget runs out when
 # it writes to a FIFO, so no outcome depends on timing. What it printed is
@@ -19,6 +20,11 @@ class TestProcessRunnerOverBudget < Minitest::Test
   # Leaves the process group, waits to be let go through the FIFO it is
   # given, then prints `late`. Its stderr stays out of the output asserted on.
   ESCAPEE = "ruby -rtimeout -e 'Process.setsid; Timeout.timeout(5) { File.read(ARGV[0]) }; sleep 0.2; puts :late'"
+
+  # Leaves for a session of its own, then says so through the FIFO it is
+  # given, and sleeps. Run from the test's directory, its command line names
+  # it, so the stray-process guard stops it if the kill doesn't.
+  DETACHED = "use POSIX; POSIX::setsid(); open(my $f, '>', $ARGV[0]); close $f; sleep 300;\n"
 
   def setup = @dir = Dir.mktmpdir
   def teardown = FileUtils.remove_entry(@dir)
@@ -41,15 +47,28 @@ class TestProcessRunnerOverBudget < Minitest::Test
   end
 
   # Output can still come after the kill, from whatever still holds the
-  # stage's stdout: here a process that left the group, which prints a
-  # fifth of a second after the hook before the kill lets it, well within
-  # the drain, and ends. Reading only until the kill would miss it.
+  # stage's stdout: here a process that left the group and, forked twice,
+  # its parent's tree, so the kill can't reach it; it prints a fifth of a
+  # second after the hook before the kill lets it, well within the drain,
+  # and ends. Reading only until the kill would miss it.
   def test_a_command_over_budget_keeps_what_is_printed_while_its_output_drains
     stuck = fifo("stuck")
     release = fifo("release")
-    command = %(sh -c "#{ESCAPEE} #{release} 2>/dev/null & echo > #{stuck}; exec tail -f /dev/null")
+    command = %(sh -c "(#{ESCAPEE} #{release} 2>/dev/null &); echo > #{stuck}; exec tail -f /dev/null")
 
     assert_equal "late\n", over_budget(command, stuck, ->(_pid) { File.write(release, "go") })
+  end
+
+  # As Playwright's web server, which Node starts in a session of its own.
+  def test_a_command_over_budget_takes_what_it_started_in_a_session_of_its_own_with_it
+    stuck = fifo("stuck")
+    Lifeline.open(@dir) do |lifeline|
+      escapee = File.join(@dir, "escapee.pl").tap { |path| File.write(path, DETACHED) }
+      command = %(sh -c "#{lifeline.hold}; perl #{escapee} #{stuck} & wait")
+      over_budget(command, stuck)
+
+      assert(within_deadline { lifeline.all_ended? })
+    end
   end
 
   private

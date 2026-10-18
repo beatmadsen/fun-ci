@@ -3,6 +3,8 @@
 require_relative "gate"
 require_relative "git_environment"
 require_relative "output_window"
+require_relative "process_tree"
+require_relative "../evidence/process_table"
 
 module FunCi
   module Pipeline
@@ -112,8 +114,11 @@ module FunCi
         [output, status, false]
       end
 
+      # With the group go what it started that left it (ProcessTree), found
+      # before the kill orphans them.
       def kill_process_group(pid)
-        %w[TERM KILL].each { |signal| ignoring_errors { Process.kill(signal, -pid) } }
+        targets = [-pid] + ProcessTree.escaped([pid], Evidence::ProcessTable.now)
+        %w[TERM KILL].product(targets).each { |signal, target| ignoring_errors { Process.kill(signal, target) } }
         ignoring_errors { Process.waitpid(pid) }
       end
 
