@@ -44,10 +44,12 @@ module FunCi
 
       def stale_since(project, now)
         last = Persistence::TrunkFetches.new(@db, project).last
-        return nil unless last && (last.error || now - last.fetched_at > Trunk::Shown::FRESH_FOR)
+        return nil unless last && (last.error || old?(last.fetched_at, now))
 
         { project: project, since: last.fetched_at&.to_i }
       end
+
+      def old?(fetched_at, now) = !fetched_at.nil? && now - fetched_at > Trunk::Shown::FRESH_FOR
     end
   end
 end

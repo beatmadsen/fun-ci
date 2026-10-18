@@ -75,6 +75,13 @@ class TestTrunkMarks < Minitest::Test
     assert_empty marks.stale(runs, now: NOW)
   end
 
+  def test_should_not_name_a_project_whose_first_fetch_is_claimed_but_unfinished_stale
+    begin_run("aaa")
+    FunCi::Persistence::TrunkFetches.new(@db, "/project").claim(now: NOW, interval: 60)
+
+    assert_empty marks.stale(runs, now: NOW)
+  end
+
   private
 
   def marks = FunCi::Console::TrunkMarks.new(@db)
