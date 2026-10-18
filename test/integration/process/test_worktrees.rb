@@ -3,6 +3,7 @@
 require_relative "../../test_helper"
 require_relative "../../support/git_project"
 require "fun_ci/pipeline/worktrees"
+require "fun_ci/persistence/state_dir"
 
 # The git a worktree slot needs, against a real repository (AT-1.1 to 1.3):
 # a slot is a checkout of the commit asked for, not of HEAD or of the
@@ -19,12 +20,34 @@ class TestWorktrees < Minitest::Test
 
   def teardown = @project.remove
 
-  def test_should_keep_slots_under_the_repository_s_git_directory
-    assert_equal File.join(@project.dir, ".git", "fun-ci", "worktrees"), @worktrees.root
+  # Tools that treat .git/ as private, such as Vite's default fs.deny, refuse a checkout under it.
+  def test_should_keep_slots_outside_the_repository_s_git_directory
+    refute_includes @worktrees.root.split(File::SEPARATOR), ".git"
+  end
+
+  def test_should_keep_slots_in_fun_ci_s_state_directory
+    assert @worktrees.root.start_with?(FunCi::Persistence::StateDir.path(ENV))
   end
 
   def test_should_keep_the_jobs_worktrees_beside_the_slots
-    assert_equal File.join(@project.dir, ".git", "fun-ci", "jobs"), @worktrees.jobs_root
+    assert_equal File.dirname(@worktrees.root), File.dirname(@worktrees.jobs_root)
+  end
+
+  def test_should_give_every_git_worktree_of_a_repository_the_same_slots
+    other = File.join(Dir.mktmpdir("other"), "checkout")
+    @project.git("worktree", "add", "--detach", other, @first)
+
+    assert_equal @worktrees.root, FunCi::Pipeline::Worktrees.new(other).root
+  ensure
+    FileUtils.rm_rf(File.dirname(other))
+  end
+
+  def test_should_give_another_repository_slots_of_its_own
+    twin = GitProject.create
+
+    refute_equal @worktrees.root, FunCi::Pipeline::Worktrees.new(twin.dir).root
+  ensure
+    twin&.remove
   end
 
   def test_should_say_it_made_the_slot_s_worktree_the_first_time

@@ -49,7 +49,7 @@ class TestJobFork < Minitest::Test
   def test_should_run_the_job_in_its_own_worktree
     forked_to_the_end
 
-    assert_equal File.join(@project.common_dir, "fun-ci", "jobs", "mutation"), told[:worktree]
+    assert_equal File.realpath(File.join(jobs_root, "mutation")), told[:worktree]
   end
 
   # So that closing the terminal of the commit doesn't end a job that can run for hours.
@@ -86,6 +86,7 @@ class TestJobFork < Minitest::Test
   private
 
   def fifo = File.join(@dir, "lock-state")
+  def jobs_root = FunCi::Pipeline::Worktrees.new(@project.dir).jobs_root
 
   # What the job's script wrote down (TOLD), by name.
   def told = %i[worktree session group].zip(File.read(seen).split).to_h
@@ -94,7 +95,7 @@ class TestJobFork < Minitest::Test
   # (this process reaps it), then says whether the job's lock is still held.
   def job_that_kills_its_runner
     File.mkfifo(fifo)
-    lock = '"$(git rev-parse --git-common-dir)/fun-ci/jobs/mutation.lock"'
+    lock = %("#{File.join(jobs_root, "mutation.lock")}")
     look = "ruby -e 'print(File.open(ARGV[0]).flock(File::LOCK_EX | File::LOCK_NB) ? \"free\" : \"held\")'"
     gone = "while kill -0 $PPID 2>/dev/null; do sleep 0.01; done"
     @project.write(".fun-ci/daily/mutation.sh", "#!/bin/sh\nkill -9 $PPID\n#{gone}\n#{look} #{lock} > '#{fifo}'\n",

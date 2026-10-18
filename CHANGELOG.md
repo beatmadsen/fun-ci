@@ -19,6 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in place, since that stage tests nothing.
 
 ### Changed
+- fun-ci's worktrees, the runs' slots and the jobs', move out of `.git/` into
+  fun-ci's state directory (`~/.local/state/fun-ci/projects/`). Under
+  `.git/`, Vite's default `fs.deny` refused to serve test files, so a Vitest
+  suite with a browser-like environment failed in fun-ci and nowhere else.
+  The first run after upgrading makes new worktrees, with the longer budget
+  a new worktree gets; `fun-ci prune` removes the old ones from `.git/fun-ci/`.
 - The console holds at most the twenty branches whose newest run changed
   last, before putting them in order, so a failure on a branch nobody has
   touched since leaves the board once twenty others have moved on, instead

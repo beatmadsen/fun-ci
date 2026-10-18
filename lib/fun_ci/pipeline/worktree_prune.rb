@@ -6,8 +6,8 @@ require_relative "worktrees"
 module FunCi
   module Pipeline
     # Removes every slot of a project's worktree pool and every daily or
-    # weekly job's worktree, and git's entries for them, when no run or job
-    # holds one. It takes each slot's lock first, so a run
+    # weekly job's worktree, those an older fun-ci kept under the git
+    # directory too, and git's entries for them, when no run or job holds one. It takes each slot's lock first, so a run
     # starting meanwhile waits until the slot is gone and then checks it out
     # afresh.
     class WorktreePrune
@@ -43,8 +43,13 @@ module FunCi
       end
 
       def slot_paths
-        (Dir.glob(File.join(@worktrees.root, "slot-*")) + Dir.glob(File.join(@worktrees.jobs_root, "*")))
-          .map { |path| path.delete_suffix(".lock") }.uniq
+        patterns.flat_map { |pattern| Dir.glob(pattern) }.map { |path| path.delete_suffix(".lock") }.uniq
+      end
+
+      def patterns
+        legacy = @worktrees.legacy_dir
+        [File.join(@worktrees.root, "slot-*"), File.join(@worktrees.jobs_root, "*"),
+         File.join(legacy, "worktrees", "slot-*"), File.join(legacy, "jobs", "*")]
       end
     end
   end

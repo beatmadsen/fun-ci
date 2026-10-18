@@ -7,7 +7,7 @@ require_relative "worktrees"
 module FunCi
   module Pipeline
     # Hands each pipeline a worktree slot of its own under
-    # <git-common-dir>/fun-ci/worktrees, checked out at its commit, waiting
+    # Worktrees#root, checked out at its commit, waiting
     # while every slot is taken.
     class WorktreePool
       DEFAULT_SIZE = 2

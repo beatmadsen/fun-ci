@@ -6,7 +6,7 @@ require_relative "../pipeline/slot"
 module FunCi
   module Jobs
     # Each job's worktree and the lock beside it, under a project's
-    # <git-common-dir>/fun-ci/jobs: `<name>` and `<name>.lock`. Whoever holds
+    # Worktrees#jobs_root: `<name>` and `<name>.lock`. Whoever holds
     # a job's lock runs it, so it runs once at a time, and a lock dies with
     # the process that held it.
     class Locks

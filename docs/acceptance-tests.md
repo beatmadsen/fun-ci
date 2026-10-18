@@ -94,7 +94,7 @@ All tests here are integration tests against a real temporary git repository.
 ### 1.1 A pipeline runs in a worktree at the requested commit
 **Given** a repo with `.fun-ci/` scripts that write `$(pwd)` and `$(git rev-parse HEAD)` to a file outside the repo
 **When** `fun-ci trigger <sha> main` runs
-**Then** every stage ran in a directory under `<git-common-dir>/fun-ci/worktrees/`, at exactly `<sha>`, not in the main checkout.
+**Then** every stage ran in a directory under fun-ci's state directory (`projects/<repository>-<digest>/worktrees/`), outside `.git/`, at exactly `<sha>`, not in the main checkout.
 
 ### 1.2 Uncommitted changes don't leak into a run
 **Given** a committed file and an uncommitted edit to it in the main checkout
@@ -1010,7 +1010,7 @@ before; a weekly job likewise at 7 days.
 branch, and the pipeline runs as before.
 
 ### 13.8 A job runs in a worktree of its own at the commit (process)
-**Then** it runs in `<git-common-dir>/fun-ci/jobs/<name>`, checked out at the
+**Then** it runs in `projects/<repository>-<digest>/jobs/<name>` under fun-ci's state directory, checked out at the
 commit, with `FUN_CI_JOB` set, and records passed or failed with its exit
 status; no pipeline slot is taken.
 

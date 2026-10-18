@@ -58,19 +58,6 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
   from budgets); or share git-ignored build outputs between slots. Not a fix: raising the build budget, which would
   hide a real slowdown in the warm case.
 
-## Worktrees under .git/ trip Vite's default fs.deny for tests in a browser-like environment
-
-- **Seen** with fun-ci on 2026-10-07 in 3d-experiments. Commit 6e43fea's fast stage failed in
-  `.git/fun-ci/worktrees/slot-0`: the three Vitest unit files carrying `// @vitest-environment happy-dom` failed with
-  `Cannot find module '/test/unit/ui/world/log/log.test.js'` (0 tests), while the same command passed in the main
-  checkout. Re-running there with a config whose `server.fs.deny` was emptied passed (8 tests), so the cause is
-  Vite's default deny list, which contains `**/.git/**`: web-mode environments load test modules through the Vite
-  server's file check, and every path in a worktree under `.git/` matches. Node-environment tests are unaffected.
-- **Worked around** in 3d-experiments (afbf5f5): under `VITEST` its vite.config.js denies the other defaults but not
-  `.git`. Any other project with jsdom or happy-dom tests will hit the same failure in fun-ci and nowhere else.
-- **Possible fix**: keep slot worktrees outside `.git/` (for example under a cache directory beside the repository),
-  so tools that treat `.git/` as private do not refuse the checkout.
-
 ## Runs of other branches leave their git-ignored build outputs in the shared slot, failing the trunk's next run
 
 - **Seen** with fun-ci on 2026-10-15 in 3d-experiments, three times in one night of agents committing in git worktrees

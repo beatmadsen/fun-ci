@@ -208,7 +208,9 @@ same problem if you switch branches while it runs.
   list in a file so both read it. `check` warns of a post-commit or pre-push
   hook that doesn't run fun-ci.
 - Each pipeline runs in a **pooled worktree** under
-  `$(git rev-parse --git-common-dir)/fun-ci/worktrees/slot-N`. A run takes a
+  `<state dir>/projects/<repository>-<digest of its git directory>/worktrees/slot-N`,
+  one pool per repository, shared by its git worktrees, and outside `.git/`,
+  which tools such as Vite refuse to serve files from. A run takes a
   free slot (lock file), `git checkout --detach <sha>`, `git clean -fd`
   (**not** `-x`: ignored caches like `vendor/bundle`, `node_modules`, `target/`
   survive, which keeps the 30 s build budget realistic), runs the stages there,
@@ -472,7 +474,7 @@ weekly jobs).
   period (24 h, 7 days) ago. A cancelled run doesn't count as a run, so
   cancelling is how a developer asks for another.
 - **The lock decides who starts a job, the database records it.** Each job
-  has a lock file beside its worktree (`<git-common-dir>/fun-ci/jobs/<name>.lock`),
+  has a lock file beside its worktree (`<state dir>/projects/<repository>-<digest>/jobs/<name>.lock`),
   held for the whole run. A process starts a job only once it holds the lock
   (non-blocking; one that can't, leaves), and then claims the run with one
   `INSERT ... WHERE` that checks it is due. Holding the lock also proves a

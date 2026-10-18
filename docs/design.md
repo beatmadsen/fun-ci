@@ -220,7 +220,7 @@ status, no streak and no exit code; it has its own section in the console.
   jobs.
 - A job runs once at a time. It holds a lock while it runs, and is started
   only by the process that holds it, so two commits a moment apart start it
-  once. It runs in a worktree of its own (`.git/fun-ci/jobs/<name>`), never
+  once. It runs in a worktree of its own (in fun-ci's state directory, beside the run's slots), never
   in a pipeline's, so a long job doesn't hold up a commit's run, and its
   ignored caches stay from one run to the next as a pipeline's do.
 - Every job has 24 hours, the weekly ones too. One still running then is

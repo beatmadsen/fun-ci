@@ -10,6 +10,7 @@ require "fun_ci/jobs/locks"
 class TestWorktreePrune < Minitest::Test
   FakeWorktrees = Struct.new(:root, :pruned) do
     def jobs_root = File.join(File.dirname(root), "jobs")
+    def legacy_dir = File.join(File.dirname(root, 2), "git", "fun-ci")
     def check_out(path, _sha) = FileUtils.mkdir_p(path)
     def prune = pruned << :pruned
   end
@@ -41,6 +42,21 @@ class TestWorktreePrune < Minitest::Test
     assert_raises(FunCi::Pipeline::WorktreePrune::Busy) { prune }
   ensure
     held.release
+  end
+
+  # fun-ci before 2.4 kept them under the git directory.
+  def test_should_remove_the_slots_an_older_fun_ci_kept_under_the_git_directory
+    FileUtils.mkdir_p(File.join(@worktrees.legacy_dir, "worktrees", "slot-0"))
+    prune
+
+    refute_path_exists File.join(@worktrees.legacy_dir, "worktrees", "slot-0")
+  end
+
+  def test_should_remove_the_job_worktrees_an_older_fun_ci_kept_under_the_git_directory
+    FileUtils.mkdir_p(File.join(@worktrees.legacy_dir, "jobs", "soak"))
+    prune
+
+    refute_path_exists File.join(@worktrees.legacy_dir, "jobs", "soak")
   end
 
   def test_should_have_git_forget_the_removed_worktrees
