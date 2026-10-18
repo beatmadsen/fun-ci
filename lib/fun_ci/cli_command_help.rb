@@ -11,7 +11,7 @@ module FunCi
     USAGES = {
       "trigger" => "fun-ci trigger [--background] <commit-hash> <branch>",
       "console" => "fun-ci console",
-      "init" => "fun-ci init [--everything]",
+      "init" => "fun-ci init [--everything] [--stack NAME]",
       "install-hooks" => "fun-ci install-hooks [post-commit | pre-push]",
       "check" => "fun-ci check",
       "prune" => "fun-ci prune",

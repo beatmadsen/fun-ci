@@ -19,7 +19,7 @@ class TestCliCommandHelp < Minitest::Test
   end
 
   def test_should_print_the_command_s_usage
-    assert_match(/^Usage: fun-ci init \[--everything\]$/, help_of("init", "--help"))
+    assert_match(/^Usage: fun-ci init \[--everything\] \[--stack NAME\]$/, help_of("init", "--help"))
   end
 
   def test_should_take_the_short_flag_too

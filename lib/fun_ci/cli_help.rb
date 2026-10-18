@@ -42,6 +42,7 @@ module FunCi
       Command options:
         --background   (trigger) Run the pipeline in the background and return at once
         --everything   (init) Run init + install-hooks + check in one step
+        --stack NAME   (init) Write the scripts for this stack, such as go, instead of the one detected
         --need LEVEL   (status, wait, why) What must pass: build, fast (default) or all
         --within TIME  (wait) Give up undecided after 30, 30s or 5m
         --follow-branch  (wait) Move on to the newer commit that superseded the run
