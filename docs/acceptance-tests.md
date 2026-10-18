@@ -163,12 +163,13 @@ whole pipeline recorded per run.
 **Then** it warns that no commit is tested, or that no push waits for a verdict, and says how to fix it (the warning doesn't fail the check).
 **And** when the hooks are those `git lfs install` writes, `fun-ci install-hooks` writes fun-ci's in their place, which run fun-ci's and then git-lfs's; a push gives git-lfs every byte of the ref list git sent, and a push fun-ci stops sends no LFS objects.
 
-### 1.14 A worktree just made gives lint and build longer
-**Given** a run that had to make its slot's worktree
+### 1.14 A cold worktree gives lint and build longer
+**Given** a run that had to make its slot's worktree, cleaned it of the
+outputs `clean:` names, or took a slot nobody took for a day
 **Then** lint and build get the slow suite's budget, the fast suite keeps its
 own, and the run says why; a run in a worktree made before has the usual
 budgets.
-**And** `fun-ci status` says so on lint's and build's lines, `(new worktree,
+**And** `fun-ci status` says so on lint's and build's lines, `(cold worktree,
 budget 300s)`, since a run in the background prints nowhere.
 *Note:* a cold build of a mid-sized C++ project took 30 s on 14 idle cores,
 so the first commit after a slot was made could not be pushed.

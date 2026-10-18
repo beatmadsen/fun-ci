@@ -54,11 +54,11 @@ module FunCi
         "  #{stage.name.ljust(6)} #{WORDS.fetch(stage.state, stage.state).ljust(12)}#{seconds}#{note}".rstrip
       end
 
-      # Only a worktree just made gives a stage more than its usual budget
+      # Only a cold worktree (WorktreePool) gives a stage more than its usual budget
       # (AT-1.14), which a run in the background says nowhere else.
       def self.longer(stage)
         usual = Pipeline::DEFAULT_BUDGETS[stage.name]
-        stage.budget && usual && stage.budget > usual ? "  (new worktree, budget #{stage.budget}s)" : ""
+        stage.budget && usual && stage.budget > usual ? "  (cold worktree, budget #{stage.budget}s)" : ""
       end
 
       def self.footer(report)

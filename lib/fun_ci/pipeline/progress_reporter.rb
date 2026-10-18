@@ -18,7 +18,8 @@ module FunCi
       end
 
       def cold_slot(seconds)
-        @stdout.puts "fun-ci: a new worktree, whose caches are empty, so lint and build have #{seconds}s this once."
+        @stdout.puts "fun-ci: a cold worktree (new, just cleaned, or unused for a day), so lint and build have " \
+                     "#{seconds}s this once."
       end
 
       def slow_launched

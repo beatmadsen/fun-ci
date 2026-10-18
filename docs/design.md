@@ -44,10 +44,10 @@ and reported as timed out:
 A timeout is a design signal ("your fast suite has grown too heavy"), not a bug
 in the code, so it looks different from a failure: yellow, not red.
 
-A worktree fun-ci has just made has none of the caches the lint and build
+A worktree fun-ci has just made, or one nobody used for a day, has none of the caches the lint and build
 budgets count on, so its first run is no such signal: there lint and build
 get the slow suite's budget (a run in the foreground says so, `fun-ci status`
-says `(new worktree, budget 300s)` on their lines, and one that still runs over
+says `(cold worktree, budget 300s)` on their lines, and one that still runs over
 has that budget in `fun-ci why`).
 
 **Simple.** One screen, three keys, no drill-down. A new user understands a row

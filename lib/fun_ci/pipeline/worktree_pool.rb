@@ -11,6 +11,9 @@ module FunCi
     # while every slot is taken.
     class WorktreePool
       DEFAULT_SIZE = 2
+      # A slot nobody took for longer is cold: its caches are as warm as a
+      # run long ago left them, as a slot taken only when runs overlap is.
+      IDLE_SECONDS = 86_400
 
       attr_reader :size
 
@@ -23,7 +26,8 @@ module FunCi
         @waiter = waiter
       end
 
-      # A ColdSlot when the slot's worktree had to be made, or was cleaned.
+      # A ColdSlot when the slot's worktree had to be made, or was cleaned, or
+      # nobody took the slot for a day.
       def acquire(sha)
         slot = wait_for_free_slot
         @worktrees.check_out(slot.path, sha, clean: @clean) ? slot.as_cold : slot
@@ -52,10 +56,17 @@ module FunCi
       # The lock stays open for as long as the slot is held, so no block.
       def try_lock(path)
         lock = File.new("#{path}.lock", File::RDWR | File::CREAT, 0o644)
-        return Slot.new(path, stamped(lock), lock.path) if lock.flock(File::LOCK_EX | File::LOCK_NB)
+        return taken(path, lock) if lock.flock(File::LOCK_EX | File::LOCK_NB)
 
         lock.close
         nil
+      end
+
+      # Each taker stamps the lock, so its last change is when the slot was last taken.
+      def taken(path, lock)
+        idle = Time.now - lock.mtime > IDLE_SECONDS
+        slot = Slot.new(path, stamped(lock), lock.path)
+        idle ? slot.as_cold : slot
       end
 
       def stamped(lock)

@@ -221,7 +221,7 @@ same problem if you switch branches while it runs.
   doing, not the project. `Worktrees#check_out` says whether it made the
   worktree, and the pool hands that slot out as a `ColdSlot`; a budget still
   applies, so a hang ends. Each stage row keeps the budget it ran to, and
-  `status` reads a budget above the stage's usual one as a new worktree's,
+  `status` reads a budget above the stage's usual one as a cold worktree's,
   since nothing else raises it; were budgets ever set per project, that
   would need a flag of its own. *Rejected:* a warm-up command, a step people
   forget; and no budget at all, which would let a hang hold the push.
@@ -234,6 +234,12 @@ same problem if you switch branches while it runs.
   cleaning every run (each build cold, over its budget), `-X` everywhere
   (caches go too), and a slot per branch (more slots, each colder). fun-ci
   can't tell an output from a cache, so the project names them.
+- **A slot nobody took for a day is cold too.** Its caches are as warm as a
+  run long ago left them: a second slot, taken only when runs overlap, made
+  a build rebuild every asset and run over its budget while the first slot's
+  took 4 s. Each taker stamps the slot's lock, so the lock's mtime says when
+  it was last taken. *Rejected:* sharing ignored files between slots (copying
+  `node_modules` and the like, with links that point into one slot).
 - `StalePipelineCanceller` also releases the slots of the runs it cancels.
   Slots whose lock names a dead pid are reclaimed.
 - Pool size defaults to 2 and is configurable in `.fun-ci/config`.

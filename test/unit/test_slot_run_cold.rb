@@ -30,7 +30,8 @@ class TestSlotRunCold < Minitest::Test
     slot_run(cold_slot, io: io).run(config)
 
     assert_includes io.stdout.string,
-                    "fun-ci: a new worktree, whose caches are empty, so lint and build have 300s this once.\n"
+                    "fun-ci: a cold worktree (new, just cleaned, or unused for a day), " \
+                    "so lint and build have 300s this once.\n"
   end
 
   private

@@ -42,7 +42,7 @@ class TestAgentStatus < Minitest::Test
     @client.finish_stage(run_id, "build", "completed", budget: 300)
     @client.status
 
-    assert_match(/^  build  passed .*\(new worktree, budget 300s\)$/, @client.stdout)
+    assert_match(/^  build  passed .*\(cold worktree, budget 300s\)$/, @client.stdout)
   end
 
   def test_should_say_there_is_no_run_when_the_commit_has_none

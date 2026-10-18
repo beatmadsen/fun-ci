@@ -46,6 +46,14 @@ class TestWorktreePool < Minitest::Test
     assert_predicate hold(pool(size: 1, clean: ["out"]).acquire("def5678")), :cold?
   end
 
+  # A slot taken only when runs overlap stays as warm as its last run, days ago.
+  def test_hands_out_a_slot_nobody_took_for_over_a_day_as_cold
+    pool(size: 1).acquire("abc1234").release
+    File.utime(Time.now - 90_000, Time.now - 90_000, File.join(@base, "slot-0.lock"))
+
+    assert_predicate hold(pool(size: 1).acquire("def5678")), :cold?
+  end
+
   def test_hands_out_a_slot_whose_worktree_was_made_before_as_warm
     pool(size: 1).acquire("abc1234").release
 

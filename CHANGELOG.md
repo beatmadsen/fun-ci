@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in place, since that stage tests nothing.
 
 ### Changed
+- A worktree slot nobody took for a day counts as cold, as a new one does, so
+  lint and build get the longer budget there once. A second slot, used only
+  when runs overlap, kept caches days old and ran a build over its budget.
+  `fun-ci status` now says `(cold worktree, budget 300s)`, not `new worktree`.
 - fun-ci's worktrees, the runs' slots and the jobs', move out of `.git/` into
   fun-ci's state directory (`~/.local/state/fun-ci/projects/`). Under
   `.git/`, Vite's default `fs.deny` refused to serve test files, so a Vitest

@@ -19,7 +19,7 @@ class TestStatusText < Minitest::Test
   end
 
   def test_should_say_a_stage_had_a_new_worktree_s_longer_budget
-    assert_equal "  build  passed        41.2s  (new worktree, budget 300s)", lines(build: budgeted(300))[2]
+    assert_equal "  build  passed        41.2s  (cold worktree, budget 300s)", lines(build: budgeted(300))[2]
   end
 
   def test_should_say_nothing_of_the_budget_a_stage_usually_has
