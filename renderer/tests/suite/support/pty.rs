@@ -82,29 +82,27 @@ impl Pty {
     }
 }
 
-/// macOS's `openpty` and `ttyname_r` go through shared state, so concurrent
-/// tests take turns here.
+/// macOS's `openpty` goes through shared state, so concurrent tests take
+/// turns here. The slave's path is the one `openpty` gets from the pty
+/// driver: `ttyname_r` looks it up in /dev, which on macOS now and then
+/// fails with ERANGE for a pty that is there.
 fn allocate(cols: u16, rows: u16) -> (i32, i32, String) {
     let _turn = ALLOCATING.lock().unwrap_or_else(PoisonError::into_inner);
-    let (master, slave) = open_pair(cols, rows);
+    let (master, slave, path) = open_pair(cols, rows);
     close_on_exec(master);
     close_on_exec(slave);
-    (master, slave, device_path(slave))
+    (master, slave, path)
 }
 
-fn open_pair(cols: u16, rows: u16) -> (i32, i32) {
+fn open_pair(cols: u16, rows: u16) -> (i32, i32, String) {
     let (mut master, mut slave) = (0, 0);
+    let mut name = [0 as libc::c_char; libc::PATH_MAX as usize];
     let mut size = libc::winsize { ws_row: rows, ws_col: cols, ws_xpixel: 0, ws_ypixel: 0 };
-    let (name, modes) = (std::ptr::null_mut(), std::ptr::null_mut());
-    let opened = unsafe { libc::openpty(&raw mut master, &raw mut slave, name, modes, &raw mut size) };
+    let modes = std::ptr::null_mut();
+    let opened = unsafe { libc::openpty(&raw mut master, &raw mut slave, name.as_mut_ptr(), modes, &raw mut size) };
     assert_eq!(opened, 0, "openpty: {}", std::io::Error::last_os_error());
-    (master, slave)
-}
-
-fn device_path(fd: i32) -> String {
-    let mut name = [0 as libc::c_char; 256];
-    assert_eq!(unsafe { libc::ttyname_r(fd, name.as_mut_ptr(), name.len()) }, 0);
-    unsafe { CStr::from_ptr(name.as_ptr()) }.to_string_lossy().into_owned()
+    let path = unsafe { CStr::from_ptr(name.as_ptr()) }.to_string_lossy().into_owned();
+    (master, slave, path)
 }
 
 fn close_on_exec(fd: i32) {
