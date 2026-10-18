@@ -56,7 +56,8 @@ class TestTrunkFetch < Minitest::Test
   def test_should_stop_a_fetch_that_runs_past_its_deadline
     pid = hanging_fetch { |started, fetcher| fetcher.finish(started, deadline: 20, timer: ->(*) { false }) }
 
-    assert_raises(Errno::ESRCH) { Process.kill(0, -pid) }
+    # On macOS a group left with only zombies answers EPERM, not ESRCH.
+    assert_raises(Errno::ESRCH, Errno::EPERM) { Process.kill(0, -pid) }
   end
 
   private
