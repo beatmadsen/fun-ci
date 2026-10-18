@@ -70,6 +70,7 @@ class FakeRecorder
   def trunk_heads(**) = {}
   def trunk_fetches = FunCi::Persistence::TrunkRecording::NoFetches.new
   def alongside(_job_id) = @alongside
+  def alongside_elsewhere(_job_id) = []
   def kept_evidence = @calls.select { |call| call.first == :keep_evidence }.map(&:last)
   def keep_exit(job_id, exit_status, signal) = @calls << [:keep_exit, job_id, exit_status, signal]
   def report_trouble_to(_out) = nil

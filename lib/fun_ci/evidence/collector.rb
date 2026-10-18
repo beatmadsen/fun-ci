@@ -37,7 +37,7 @@ module FunCi
       def collect(output, outcome = FAILED)
         result = extracted(output, outcome)
         overrun = outcome.overrun || NOTHING
-        parts = [["fun-ci", own_facts(outcome.alongside)], *overrun.parts, *result.parts, ["output-tail", tail(output)]]
+        parts = [["fun-ci", own_facts(outcome)], *overrun.parts, *result.parts, ["output-tail", tail(output)]]
         Caps.new.apply(masking.document(assemble(parts, [overrun, result])))
       end
 
@@ -76,9 +76,12 @@ module FunCi
 
       def on_of(raw) = raw.is_a?(Hash) ? raw["on"] : nil
 
-      def own_facts(alongside)
-        Findings.new(facts: alongside.empty? ? [] : [{ name: "alongside", value: alongside.join(", ") }])
+      def own_facts(outcome)
+        named = { "alongside" => outcome.alongside, "other runs alongside" => outcome.elsewhere }
+        Findings.new(facts: named.reject { |_, stages| stages.empty? }.map { |name, stages| fact(name, stages) })
       end
+
+      def fact(name, stages) = { name: name, value: stages.join(", ") }
 
       def tail(output)
         text = Persistence::OutputTail.of(output, mask: masking.method(:mask))

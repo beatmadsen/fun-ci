@@ -35,6 +35,7 @@ module FunCi
 
       # No stage shares a job's worktree.
       def alongside(_id) = []
+      def alongside_elsewhere(_id) = []
 
       private
 

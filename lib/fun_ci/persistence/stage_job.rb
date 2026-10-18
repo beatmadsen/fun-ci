@@ -51,6 +51,18 @@ module FunCi
                    [id]).flatten
       end
 
+      # Stages of the project's other runs running at any moment between this
+      # stage's start and now, as "<short commit>'s <stage>".
+      def self.alongside_elsewhere(db, id)
+        db.execute("SELECT runs.commit_hash, others.stage FROM stage_jobs AS others " \
+                   "JOIN pipeline_runs AS runs ON runs.id = others.pipeline_run_id " \
+                   "JOIN stage_jobs AS me ON me.id = ? JOIN pipeline_runs AS mine ON mine.id = me.pipeline_run_id " \
+                   "WHERE runs.project_path IS mine.project_path AND runs.id != mine.id " \
+                   "AND others.started_at IS NOT NULL " \
+                   "AND (others.completed_at IS NULL OR others.completed_at > me.started_at) ORDER BY others.id",
+                   [id]).map { |sha, stage| "#{sha[0, 7]}'s #{stage}" }
+      end
+
       def self.ids(db) = db.execute("SELECT id FROM stage_jobs").flatten
 
       def self.find(db, id)

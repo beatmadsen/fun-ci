@@ -671,6 +671,9 @@ each pinned in the unit tests.
 failed
 **When** `fun-ci why` shows the fast suite
 **Then** its facts include `alongside: slow`.
+**And** when another commit's run of the project had a stage going at the
+same time, as a slow suite the hook started a moment before, its facts
+include `other runs alongside: 7ed514c's slow`.
 
 ### 10.13 `json-log` keeps structured log records at or above a level
 **Given** output mixing plain lines with JSON log lines at `debug`, `info`,

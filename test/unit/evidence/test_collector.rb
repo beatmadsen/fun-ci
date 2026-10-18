@@ -51,6 +51,14 @@ class TestCollector < Minitest::Test
                                    FunCi::Evidence::Outcome.new(state: "failed", alongside: %w[lint slow])).facts
   end
 
+  # So a stage over its budget beside another commit's run says so.
+  def test_should_name_other_runs_stages_that_shared_the_machine_as_a_fact_of_fun_ci_s
+    outcome = FunCi::Evidence::Outcome.new(state: "failed", elsewhere: ["7ed514c's slow"])
+
+    assert_equal [{ name: "other runs alongside", value: "7ed514c's slow", extractor: "fun-ci" }],
+                 collector.collect("boom\n", outcome).facts
+  end
+
   def test_should_say_nothing_of_stages_alongside_when_there_were_none
     assert_empty collector.collect("boom\n", FunCi::Evidence::Outcome.new(state: "failed")).facts
   end

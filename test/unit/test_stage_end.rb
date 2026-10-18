@@ -10,7 +10,7 @@ class TestStageEnd < Minitest::Test
   # Answers what it was given to collect from, so a test can see it was asked.
   class EchoCollector
     def collect(output, outcome)
-      "evidence of #{output} #{outcome.state}#{outcome.alongside.map { |s| " beside #{s}" }.join}"
+      "evidence of #{output} #{outcome.state}#{(outcome.alongside + outcome.elsewhere).map { |s| " beside #{s}" }.join}"
     end
 
     def masked(output) = "masked #{output}"
@@ -33,6 +33,19 @@ class TestStageEnd < Minitest::Test
     calls = recorded(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
 
     assert_includes calls, [:keep_raw, 1, "masked boom"]
+  end
+
+  # A recorder that says another commit's slow suite ran at the same time.
+  class BesideAnotherRun < FakeRecorder
+    def alongside_elsewhere(_job_id) = ["7ed514c's slow"]
+  end
+
+  def test_should_tell_the_collector_which_other_runs_stages_ran_at_the_same_time
+    recorder = BesideAnotherRun.new
+    FunCi::Pipeline::StageEnd.new(recorder, 1, EchoCollector.new)
+                             .record(Finished.new(output: "boom", status: FakeStatus.new(false, 1), timed_out: false))
+
+    assert_equal ["evidence of boom failed beside 7ed514c's slow"], recorder.kept_evidence
   end
 
   def test_should_tell_the_collector_which_stages_shared_the_slot

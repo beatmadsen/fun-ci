@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- A failed stage's evidence names the stages of the project's other runs
+  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
+  `fun-ci why`, so a fast suite over its budget beside another commit's slow
+  suite says so.
 - `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
   git ignores and that must not carry over from another branch's run. When a
   worktree moves to a commit that doesn't descend from the one it last
@@ -62,6 +66,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.3.0] - 2026-10-02
 
 ### Added
+- A failed stage's evidence names the stages of the project's other runs
+  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
+  `fun-ci why`, so a fast suite over its budget beside another commit's slow
+  suite says so.
 - `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
   git ignores and that must not carry over from another branch's run. When a
   worktree moves to a commit that doesn't descend from the one it last
@@ -140,6 +148,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.2.0] - 2026-10-01
 
 ### Added
+- A failed stage's evidence names the stages of the project's other runs
+  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
+  `fun-ci why`, so a fast suite over its budget beside another commit's slow
+  suite says so.
 - `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
   git ignores and that must not carry over from another branch's run. When a
   worktree moves to a commit that doesn't descend from the one it last
@@ -186,6 +198,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.1.0] - 2026-09-30
 
 ### Added
+- A failed stage's evidence names the stages of the project's other runs
+  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
+  `fun-ci why`, so a fast suite over its budget beside another commit's slow
+  suite says so.
 - `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
   git ignores and that must not carry over from another branch's run. When a
   worktree moves to a commit that doesn't descend from the one it last
@@ -387,6 +403,10 @@ before it. See "Upgrading to 2.0" in the README.
 - A project's colour in the console stays the same from one start to the next.
 
 ### Added
+- A failed stage's evidence names the stages of the project's other runs
+  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
+  `fun-ci why`, so a fast suite over its budget beside another commit's slow
+  suite says so.
 - `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
   git ignores and that must not carry over from another branch's run. When a
   worktree moves to a commit that doesn't descend from the one it last
@@ -577,6 +597,10 @@ before it. See "Upgrading to 2.0" in the README.
 ## [1.1.0] - 2026-02-22
 
 ### Added
+- A failed stage's evidence names the stages of the project's other runs
+  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
+  `fun-ci why`, so a fast suite over its budget beside another commit's slow
+  suite says so.
 - `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
   git ignores and that must not carry over from another branch's run. When a
   worktree moves to a commit that doesn't descend from the one it last
@@ -599,6 +623,10 @@ before it. See "Upgrading to 2.0" in the README.
 ## [1.0.0] - 2026-02-21
 
 ### Added
+- A failed stage's evidence names the stages of the project's other runs
+  that ran at the same time, as `other runs alongside: 7ed514c's slow` in
+  `fun-ci why`, so a fast suite over its budget beside another commit's slow
+  suite says so.
 - `clean: [public/assets, dist]` in `.fun-ci/config` names build outputs that
   git ignores and that must not carry over from another branch's run. When a
   worktree moves to a commit that doesn't descend from the one it last

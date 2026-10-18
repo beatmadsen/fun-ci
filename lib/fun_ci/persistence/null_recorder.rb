@@ -19,6 +19,7 @@ module FunCi
       def trunk_heads(**) = {}
       def trunk_fetches = TrunkRecording::NoFetches.new
       def alongside(_job_id) = []
+      def alongside_elsewhere(_job_id) = []
       def stage_process(_job_id, _pid); end
       def slot_taken(_lock_file); end
       def foreground_done; end

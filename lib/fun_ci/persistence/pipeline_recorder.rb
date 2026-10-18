@@ -97,6 +97,7 @@ module FunCi
 
       # The stages that shared the slot with this one (architecture.md, "Evidence of a failed stage").
       def alongside(job_id) = tolerating { StageJob.alongside(@db, job_id) } || []
+      def alongside_elsewhere(job_id) = tolerating { StageJob.alongside_elsewhere(@db, job_id) } || []
 
       def keep_exit(job_id, exit_status, signal)
         tolerating { StageJob.keep_exit(@db, job_id, exit_status, signal) }

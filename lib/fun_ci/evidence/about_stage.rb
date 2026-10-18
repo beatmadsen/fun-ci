@@ -10,7 +10,7 @@ module FunCi
     # command to read.
     module AboutStage
       def self.of(sources, outcome, output)
-        About.new(**outcome.to_h.except(:overrun), **started(sources), **where(sources, output),
+        About.new(**outcome.to_h.except(:overrun, :elsewhere), **started(sources), **where(sources, output),
                   stage: sources.stage, budget: sources.budget, commit: sources.commit)
       end
 

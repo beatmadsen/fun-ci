@@ -58,7 +58,8 @@ module FunCi
         status = finished.status
         Evidence::Outcome.new(state: STATES.fetch(outcome(finished)), exit_status: status&.exitstatus,
                               signal: status&.termsig && Signal.signame(status.termsig),
-                              alongside: @recorder.alongside(@job_id), overrun: finished.overrun)
+                              alongside: @recorder.alongside(@job_id),
+                              elsewhere: @recorder.alongside_elsewhere(@job_id), overrun: finished.overrun)
       end
 
       def keep_exit(status)
