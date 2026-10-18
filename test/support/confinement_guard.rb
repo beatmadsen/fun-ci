@@ -39,18 +39,20 @@ module ConfinementGuard
     # every test file and mutant is a process that installs this, the lane's
     # boot does it once instead (test/mutation_boot.rb), since a ps forked from
     # each of them doubled its time.
-    def remove_roots_of_finished_runs
-      Dir.glob(File.join(Dir.tmpdir, "fci-*")).reject { |root| alive?(root[/fci-(\d+)\z/, 1].to_i) }
-         .each { |root| remove_root(root) }
+    # ps is asked once for all of them: a mutation run leaves hundreds, and
+    # once each took 21 s.
+    def remove_roots_of_finished_runs(stopper: StrayProcesses)
+      ended = Dir.glob(File.join(Dir.tmpdir, "fci-*")).reject { |root| alive?(root[/fci-(\d+)\z/, 1].to_i) }
+      return if ended.empty?
+
+      stopper.stop(ended.flat_map { |root| both_paths(root) })
+      FileUtils.rm_rf(ended)
     end
 
     # Another run may be removing the same root, so its real path is taken
     # from its parent, which stays.
-    def remove_root(root)
-      StrayProcesses.stop([root, File.join(File.realpath(File.dirname(root)), File.basename(root))].uniq)
-      FileUtils.rm_rf(root)
-    end
-    private :remove_root
+    def both_paths(root) = [root, File.join(File.realpath(File.dirname(root)), File.basename(root))].uniq
+    private :both_paths
 
     def installed? = !@root.nil? && ConfinementHooks.installed?
 
