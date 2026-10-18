@@ -3,6 +3,7 @@
 require_relative "../../test_helper"
 require_relative "../../support/process_deadline"
 require_relative "../../support/body_script"
+require_relative "../../support/niceness"
 require "stringio"
 require "tmpdir"
 require "fun_ci/pipeline/slot_run"
@@ -17,6 +18,7 @@ require "fun_ci/pipeline/priorities"
 # and after is pinned in the acceptance lane.
 class TestSlotRunProcesses < Minitest::Test
   include ProcessDeadline
+  include Niceness
 
   SHA = "3f9c2ab0c4d1e2f3a4b5c6d7e8f901234567890a"
   STAGES = %w[lint build fast slow].freeze
@@ -62,7 +64,7 @@ class TestSlotRunProcesses < Minitest::Test
   def test_should_run_the_slow_suite_at_the_slow_priority
     run_stages(slow_priority: "nice -n 7 ") { |stage| %(echo $(ps -o nice= -p $$) > #{@record}/#{stage}) }
 
-    assert_equal "7", recorded.last
+    assert_equal niced_by(7), recorded.last
   end
 
   def test_should_run_the_fast_suite_at_the_priority_fun_ci_runs_at

@@ -4,6 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/job_run_kit"
 require_relative "../../support/body_script"
 require_relative "../../support/process_deadline"
+require_relative "../../support/niceness"
 require "fun_ci/pipeline/priorities"
 
 # A job's script runs at the priority it is given, by the real process
@@ -12,11 +13,12 @@ require "fun_ci/pipeline/priorities"
 class TestJobPriority < Minitest::Test
   include JobRunKit
   include ProcessDeadline
+  include Niceness
 
   def test_should_run_the_job_s_script_at_the_job_priority
     run_niced_job
 
-    assert_equal "7", File.read(niceness).strip
+    assert_equal niced_by(7), File.read(niceness).strip
   end
 
   private
