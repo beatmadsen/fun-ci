@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.4.0] - 2026-10-19
+
 ### Added
 - `fun-ci COMMAND --help` (or `-h`) prints that command's usage and the
   options it takes. Before, `init`, `check`, `prune` and `console` ignored
