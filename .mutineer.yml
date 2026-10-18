@@ -32,3 +32,6 @@ ignore:
   # Shown.unchecked: a check that never finished made with `commit: true`.
   # Nothing shows a Shown's commit.
   - 22440a16e06e
+  # ProcessTree.descendants: the return once a round finds no more children,
+  # removed. It only saves rounds; a round that finds nothing adds nothing.
+  - e279fe08ee07
