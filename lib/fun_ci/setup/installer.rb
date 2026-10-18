@@ -3,6 +3,7 @@
 require_relative "project_detector"
 require_relative "template_writer"
 require_relative "lint_detection"
+require_relative "eslint_detection"
 require_relative "stage_templates"
 require_relative "agent_instructions"
 
@@ -80,10 +81,20 @@ module FunCi
 
       def write_templates(detected)
         @stdout.puts "Detected: #{detected.to_s.tr("_", " ")}"
-        scripts = StageTemplates.scripts(detected, lint_override: LintDetection.command(detected, @project_root))
-        TemplateWriter.new(scripts, @project_root).write
+        TemplateWriter.new(scripts_for(detected), @project_root).write
         @stdout.puts "Created .fun-ci/ with template scripts.", *SIDE_BY_SIDE
         0
+      end
+
+      def scripts_for(detected)
+        StageTemplates.scripts(detected, lint_override: LintDetection.command(detected, @project_root),
+                                         build_override: EslintDetection.build(detected, Dir.children(@project_root),
+                                                                               package_json))
+      end
+
+      def package_json
+        path = File.join(@project_root, "package.json")
+        File.exist?(path) ? File.read(path) : "{}"
       end
 
       def report(message, exit_code)

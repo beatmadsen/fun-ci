@@ -30,10 +30,10 @@ Maven's slow suite calls failsafe's goals directly, so declare the failsafe plug
 | Python (Poetry) | `poetry.lock` | `poetry run ruff check .` | `poetry install` | `poetry run pytest -m "not slow"` | `poetry run pytest -m slow` |
 | Python (pip) | `pyproject.toml` or `setup.py` or `setup.cfg` or `requirements.txt` | `python3 -m ruff check .` | `python3 -m compileall -q .` | `python3 -m pytest -m "not slow"` | `python3 -m pytest -m slow` |
 | Deno | `deno.json` or `deno.jsonc` | `deno lint` | `deno check` | `deno test` | `deno task test:slow` |
-| Bun | `bun.lock` or `bun.lockb` or `bunfig.toml` | `bunx eslint .` | `bun install` | `bun test` | `bun run test:slow` |
-| Node (pnpm) | `pnpm-lock.yaml` | `pnpm exec eslint .` | `pnpm install` | `pnpm test` | `pnpm run test:slow` |
-| Node (Yarn) | `yarn.lock` | `yarn eslint .` | `yarn install` | `yarn test` | `yarn run test:slow` |
-| Node (npm) | `package.json` | `npx eslint .` | `npm install` | `npm test` | `npm run test:slow` |
+| Bun | `bun.lock` or `bun.lockb` or `bunfig.toml` | `find . -name node_modules -prune -o -name .git -prune -o -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.cjs' -o -name '*.ts' -o -name '*.tsx' \) -print \| while read -r file; do bun build --no-bundle "$file" > /dev/null \|\| exit 1; done` | `bun install` | `bun test` | `bun run test:slow` |
+| Node (pnpm) | `pnpm-lock.yaml` | `find . -name node_modules -prune -o -name .git -prune -o -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.cjs' \) -print \| while read -r file; do node --check "$file" \|\| exit 1; done` | `pnpm install` | `pnpm test` | `pnpm run test:slow` |
+| Node (Yarn) | `yarn.lock` | `find . -name node_modules -prune -o -name .git -prune -o -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.cjs' \) -print \| while read -r file; do node --check "$file" \|\| exit 1; done` | `yarn install` | `yarn test` | `yarn run test:slow` |
+| Node (npm) | `package.json` | `find . -name node_modules -prune -o -name .git -prune -o -type f \( -name '*.js' -o -name '*.mjs' -o -name '*.cjs' \) -print \| while read -r file; do node --check "$file" \|\| exit 1; done` | `npm install` | `npm test` | `npm run test:slow` |
 | Perl | `cpanfile` or `Makefile.PL` or `Build.PL` or `dist.ini` | `perlcritic lib` | `cpanm --installdeps --notest .` | `prove -lr t` | `prove -lr xt` |
 | C and C++ (CMake) | `CMakeLists.txt` | `git ls-files -z '*.c' '*.cc' '*.cpp' '*.h' '*.hpp' \| xargs -0 clang-format --dry-run --Werror` | `cmake -S . -B build && cmake --build build` | `ctest --test-dir build --output-on-failure --no-tests=error -LE slow` | `ctest --test-dir build --output-on-failure --no-tests=error -L slow` |
 | C and C++ (make) | `Makefile` or `makefile` or `GNUmakefile` | `make lint` | `make` | `make test` | `make test-slow` |

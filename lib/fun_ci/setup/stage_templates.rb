@@ -16,10 +16,11 @@ module FunCi
     module StageTemplates
       TEMPLATES = [MANAGED, NATIVE, SCRIPTING, JAVASCRIPT].reduce(:merge).freeze
 
-      # { "lint.sh" => script, ... }; +lint_override+ replaces the lint command.
-      def self.scripts(template_id, lint_override: nil)
-        scripts = TEMPLATES.fetch(template_id)
-        lint_override ? scripts.merge("lint.sh" => script("lint.sh", lint_override)) : scripts
+      # { "lint.sh" => script, ... }; +lint_override+ and +build_override+
+      # replace the lint and build commands.
+      def self.scripts(template_id, lint_override: nil, build_override: nil)
+        overrides = { "lint.sh" => lint_override, "build.sh" => build_override }.compact
+        TEMPLATES.fetch(template_id).merge(overrides.to_h { |name, command| [name, script(name, command)] })
       end
     end
   end

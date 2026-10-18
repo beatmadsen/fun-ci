@@ -30,6 +30,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   in place, since that stage tests nothing.
 
 ### Changed
+- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
+  that checks the source's syntax without the packages (`node --check`, or
+  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
+  only when the project configures ESLint. ESLint in `lint.sh` ran beside
+  the install: in a new worktree it ran a registry ESLint and failed on a
+  plugin it couldn't find, and in a project without ESLint it always failed.
 - A worktree slot nobody took for a day counts as cold, as a new one does, so
   lint and build get the longer budget there once. A second slot, used only
   when runs overlap, kept caches days old and ran a build over its budget.
@@ -97,6 +103,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   fun-ci, instead of saying all is well while no commit is tested.
 
 ### Changed
+- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
+  that checks the source's syntax without the packages (`node --check`, or
+  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
+  only when the project configures ESLint. ESLint in `lint.sh` ran beside
+  the install: in a new worktree it ran a registry ESLint and failed on a
+  plugin it couldn't find, and in a project without ESLint it always failed.
 - In a worktree fun-ci has just made, as for the first runs after install or
   `fun-ci prune`, lint and build get the slow suite's budget, since their
   caches are empty: a cold build over 30 seconds no longer blocks the first
@@ -191,6 +203,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   it is for: watching your runs as they happen, in the terminal.
 
 ### Changed
+- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
+  that checks the source's syntax without the packages (`node --check`, or
+  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
+  only when the project configures ESLint. ESLint in `lint.sh` ran beside
+  the install: in a new worktree it ran a registry ESLint and failed on a
+  plugin it couldn't find, and in a project without ESLint it always failed.
 - The README's pictures of the console are drawn in a real terminal, in a
   real font, 1500 pixels wide instead of 800, and its animation is an
   animated WebP.
@@ -228,6 +246,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `fun-ci --help` lists `--raw`, which it left out.
 
 ### Changed
+- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
+  that checks the source's syntax without the packages (`node --check`, or
+  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
+  only when the project configures ESLint. ESLint in `lint.sh` ran beside
+  the install: in a new worktree it ran a registry ESLint and failed on a
+  plugin it couldn't find, and in a project without ESLint it always failed.
 - The console's table is new. Each branch has one row, its newest run's,
   under its project's name, and reads as one phrase: the branch, a mark each
   for lint, the build, the fast suite and the slow suite, joined into a track
@@ -336,6 +360,12 @@ worktrees at the commit they test, started after the commit rather than
 before it. See "Upgrading to 2.0" in the README.
 
 ### Changed
+- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
+  that checks the source's syntax without the packages (`node --check`, or
+  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
+  only when the project configures ESLint. ESLint in `lint.sh` ran beside
+  the install: in a new worktree it ran a registry ESLint and failed on a
+  plugin it couldn't find, and in a project without ESLint it always failed.
 - The hook that runs a pipeline in the background is now `post-commit`, so it
   tests the commit you just made; the `pre-commit` hook tested the commit
   before it. `fun-ci install-hooks` writes `post-commit` and `pre-push`, and
@@ -562,6 +592,12 @@ before it. See "Upgrading to 2.0" in the README.
   so the constant was only ever resolvable by luck of load order.
 
 ### Changed
+- For Node, pnpm, Yarn and Bun projects, `fun-ci init` writes a `lint.sh`
+  that checks the source's syntax without the packages (`node --check`, or
+  `bun build --no-bundle`), and runs ESLint in `build.sh` after the install,
+  only when the project configures ESLint. ESLint in `lint.sh` ran beside
+  the install: in a new worktree it ran a registry ESLint and failed on a
+  plugin it couldn't find, and in a project without ESLint it always failed.
 - The gemspec reads the version from a new `lib/fun_ci/version.rb` instead of
   loading the whole library. Loading the library pulls in sqlite3, and Bundler
   reads the gemspec before it installs anything, so `bundle install` failed on

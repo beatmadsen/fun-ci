@@ -13,7 +13,7 @@ module PresetStacks
     "dart-test" => Placed.new(:dart, "fast.sh"),
     "deno-test" => Placed.new(:deno, "fast.sh"),
     "dotnet-test" => Placed.new(:dotnet, "fast.sh"),
-    "eslint" => Placed.new(:node_npm, "lint.sh"),
+    "eslint" => Placed.new(:node_npm, "build.sh"),
     "exunit" => Placed.new(:elixir_mix, "fast.sh"),
     "gcc" => Placed.new(:make, "build.sh"),
     "go-build" => Placed.new(:go, "build.sh"),
