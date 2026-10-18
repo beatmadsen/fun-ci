@@ -50,6 +50,12 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
   and then 2.58 s, 1734 runs both times. So the time goes to a cold first run, not to the tests; what the cold run
   spends it on is not measured.
 
+- **Seen** in 3d-experiments on 2026-10-10: fast OVER on 1505d1c (10.1 s) with `alongside: slow` in `fun-ci why`,
+  because the post-commit hook started the slow stage of 7ed514c at the same moment. Re-triggered alone
+  (`fun-ci trigger 1505d1c main`) it passed: fast ok 7.0 s, lint 5.0 s, build 12.5 s, slow 38.8 s. Timed by hand the
+  same hour: vitest unit 5.1 s, rules 1.2 s, the Python tools tests 0.2 s. So the stage fits its budget alone, with
+  about 3 s to spare, and the overrun is the concurrent slow stage. The budget does not depend on the commit.
+
 ## A run started by the post-commit hook dies with the shell that committed, and is reported as a plain failure
 
 - **Seen and reproduced** with fun-ci 2.3.0 on 2026-10-02. In 3d-experiments, an agent's `git commit && fun-ci wait`
@@ -118,3 +124,33 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 - **Possible fixes**: warm a new or stale slot before timing it (a project hook, or the first run in a slot exempt
   from budgets); or share git-ignored build outputs between slots. Not a fix: raising the build budget, which would
   hide a real slowdown in the warm case.
+
+## Worktrees under .git/ trip Vite's default fs.deny for tests in a browser-like environment
+
+- **Seen** with fun-ci on 2026-10-07 in 3d-experiments. Commit 6e43fea's fast stage failed in
+  `.git/fun-ci/worktrees/slot-0`: the three Vitest unit files carrying `// @vitest-environment happy-dom` failed with
+  `Cannot find module '/test/unit/ui/world/log/log.test.js'` (0 tests), while the same command passed in the main
+  checkout. Re-running there with a config whose `server.fs.deny` was emptied passed (8 tests), so the cause is
+  Vite's default deny list, which contains `**/.git/**`: web-mode environments load test modules through the Vite
+  server's file check, and every path in a worktree under `.git/` matches. Node-environment tests are unaffected.
+- **Worked around** in 3d-experiments (afbf5f5): under `VITEST` its vite.config.js denies the other defaults but not
+  `.git`. Any other project with jsdom or happy-dom tests will hit the same failure in fun-ci and nowhere else.
+- **Possible fix**: keep slot worktrees outside `.git/` (for example under a cache directory beside the repository),
+  so tools that treat `.git/` as private do not refuse the checkout.
+
+## Runs of other branches leave their git-ignored build outputs in the shared slot, failing the trunk's next run
+
+- **Seen** with fun-ci on 2026-10-15 in 3d-experiments, three times in one night of agents committing in git worktrees
+  (each commit's post-commit hook runs fun-ci in the one `slot-0`). The project's build stage writes git-ignored
+  outputs into the slot (`public/assets`: models, compressed in place by one branch's new step), and nothing removes
+  outputs a later commit does not make. So: a branch that added meshopt compression left compressed models that the
+  trunk's next run (without the decoder) failed on (hero-rig tests, 483f71a); a branch made before that compression
+  failed on them the other way (2e22e4a); and a branch that added five yard models left them in the slot, so the
+  trunk's `has limits for the slot of every delivered model` failed (f71f9dc). Each passed in its own checkout and
+  again once the branches met on the trunk.
+- **Cause**: a slot's git-ignored state is shared across branches and is only as right as the last run's commit;
+  per-commit determinism holds only for tracked files.
+- **Possible fixes**: a slot per branch (or per worktree that triggered the run); or clean git-ignored outputs a
+  project names (a `clean` list in `.fun-ci/config`) before each build; or stamp a slot with the commit whose outputs it
+  holds and rebuild from scratch when the new commit is not a descendant of it. Not a fix: making the project's
+  tests tolerate stray files.
