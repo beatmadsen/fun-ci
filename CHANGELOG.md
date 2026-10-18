@@ -29,6 +29,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A slow suite whose process died is no longer shown as a plain failure:
   `fun-ci why` says its process stopped before it said how the stage ended,
   as it already did for a job.
+- Cancelling a run also stops what its stages started that moved to a
+  process group or session of their own, as Node's detached children do. A
+  superseded run left Playwright's web server holding its port, and the next
+  run failed on it.
 - `fun-ci console` no longer dies with `TypeError: can't convert NilClass
   into an exact number` while a project's first fetch of its trunk is under
   way.

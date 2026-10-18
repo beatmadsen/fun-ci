@@ -106,7 +106,8 @@ class TestBoardDataJobs < Minitest::Test
   def status = @runs.latest("soak")[:status]
 
   def board(lock_held:, db: @db, killer: ->(signal, pid) { @signals << [signal, pid] })
-    canceller = FunCi::Pipeline::RunCanceller.new(killer: killer, slot_held: ->(_path) { lock_held })
+    canceller = FunCi::Pipeline::RunCanceller.new(killer: killer, slot_held: ->(_path) { lock_held },
+                                                  process_table: -> { [] })
     FunCi::Console::BoardData.new(db, run_canceller: canceller)
   end
 end

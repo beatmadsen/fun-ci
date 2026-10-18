@@ -2,6 +2,7 @@
 
 require_relative "../test_helper"
 require "fun_ci/pipeline/run_canceller"
+require "fun_ci/evidence/process_table"
 
 # Stopping every process of a run: its own Ruby processes first, so none of
 # them can record the run as failed once its stages die, then each stage's
@@ -29,19 +30,39 @@ class TestRunCanceller < Minitest::Test
                                                alive: ->(_lock) { false })
   end
 
+  # A stage's child that left the group, as Playwright's web server does, read before any kill.
+  def test_should_kill_last_what_a_stage_started_that_left_its_group
+    detached = [row(300, 1, 300), row(320, 300, 320)]
+
+    assert_equal [*ALL, ["KILL", -320]], signals_sent(RUN, table: -> { detached })
+  end
+
+  def test_should_read_the_process_table_before_it_kills_anything
+    order = []
+    canceller = FunCi::Pipeline::RunCanceller.new(killer: ->(*) { order << :kill }, slot_held: ->(_lock) { true },
+                                                  process_table: -> { (order << :read) && [] })
+    canceller.stop(RUN)
+
+    assert_equal :read, order.first
+  end
+
   def test_should_never_signal_its_own_process
     assert_equal [["KILL", 200]], signals_sent(RUN.with(processes: [Process.pid, 200], stage_groups: []))
   end
 
   private
 
-  def signals_sent(run, gone: [], alive: ->(_lock) { true })
+  def signals_sent(run, gone: [], alive: ->(_lock) { true }, table: -> { [] })
     sent = []
     killer = lambda do |signal, pid|
       sent << [signal, pid]
       raise Errno::ESRCH if gone.include?(pid)
     end
-    FunCi::Pipeline::RunCanceller.new(killer: killer, slot_held: alive).stop(run)
+    FunCi::Pipeline::RunCanceller.new(killer: killer, slot_held: alive, process_table: table).stop(run)
     sent
+  end
+
+  def row(pid, ppid, pgid)
+    FunCi::Evidence::ProcessTable::Row.new(pid: pid, ppid: ppid, pgid: pgid, seconds: 1, command: "x")
   end
 end

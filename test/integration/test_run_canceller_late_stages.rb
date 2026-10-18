@@ -66,6 +66,6 @@ class TestRunCancellerLateStages < Minitest::Test
       @sent << [signal, pid]
       JOB.store_pid(@db, @slow, started_as_the_slow_suite_dies) if pid == SLOW_SUITE && started_as_the_slow_suite_dies
     end
-    FunCi::Pipeline::RunCanceller.new(killer: killer, slot_held: ->(_lock) { true })
+    FunCi::Pipeline::RunCanceller.new(killer: killer, slot_held: ->(_lock) { true }, process_table: -> { [] })
   end
 end

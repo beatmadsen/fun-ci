@@ -5,18 +5,24 @@ require_relative "../persistence/active_jobs"
 require_relative "../persistence/run_status"
 require_relative "../persistence/write_trouble"
 require_relative "slot_lock"
+require_relative "process_tree"
+require_relative "../evidence/process_table"
 
 module FunCi
   module Pipeline
     # Stops every process of a run. The run's own processes go first, so none
     # of them records the run as failed once its stages die; then each stage's
-    # process group. A run whose slot nobody holds any more has died already,
+    # process group, and last what a stage started that left its group
+    # (ProcessTree). A run whose slot nobody holds any more has died already,
     # and the pids it recorded may belong to other processes now, so it is
     # left alone; so is this process.
     class RunCanceller
-      def initialize(killer: Process.method(:kill), slot_held: SlotLock.method(:held?))
+      # process_table: what ps lists now, as Evidence::ProcessTable rows.
+      def initialize(killer: Process.method(:kill), slot_held: SlotLock.method(:held?),
+                     process_table: Evidence::ProcessTable.method(:now))
         @killer = killer
         @slot_held = slot_held
+        @process_table = process_table
       end
 
       # Stops the run and records it, and its unfinished stages, cancelled.
@@ -60,10 +66,16 @@ module FunCi
       def stop(run)
         return unless alive?(run)
 
-        (run.processes - [Process.pid] + run.stage_groups.map(&:-@)).each { |pid| kill(pid) }
+        (run.processes - [Process.pid] + run.stage_groups.map(&:-@) + escaped(run)).each { |pid| kill(pid) }
       end
 
       private
+
+      def escaped(run)
+        return [] if run.stage_groups.empty?
+
+        ProcessTree.escaped(run.stage_groups, @process_table.call)
+      end
 
       # A stage its process started after `run` was read. A run's process
       # records a stage's group before it lets the stage start, so once those
