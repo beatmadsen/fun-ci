@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- `fun-ci COMMAND --help` (or `-h`) prints that command's usage and the
+  options it takes. Before, `init`, `check` and `prune` ignored the flag and
+  went ahead, and the agent commands called it an invalid option.
+
+### Fixed
+- `fun-ci console` no longer dies with `TypeError: can't convert NilClass
+  into an exact number` while a project's first fetch of its trunk is under
+  way.
+
 ## [2.3.0] - 2026-10-02
 
 ### Added

@@ -2,6 +2,7 @@
 
 require_relative "../fun_ci"
 require_relative "cli_help"
+require_relative "cli_command_help"
 require_relative "pipeline/trigger_params"
 require_relative "persistence/state_dir"
 require_relative "setup/commands"
@@ -37,6 +38,7 @@ module FunCi
       return CliHelp.version(@io.stdout) if subcommand == "--version"
 
       return unknown_command(subcommand) unless ROUTES.key?(subcommand) || AGENT_COMMANDS.include?(subcommand)
+      return CliCommandHelp.help(@io.stdout, subcommand) if CliCommandHelp.asked?(args.drop(1))
 
       dispatch(subcommand, args.drop(1))
     end

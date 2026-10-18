@@ -6,12 +6,6 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 
 ---
 
-## `fun-ci init --help` runs init instead of printing help
-
-- **Seen** with fun-ci 2.3.0 in an empty project (two markdown files, no code).
-- Repro: `mkdir /tmp/x && cd /tmp/x && git init && fun-ci init --help`
-- Got: `Could not detect project type. Create .fun-ci/ manually.` (exit 1). Expected: init's usage and options.
-
 ## No route for a project whose stack is not detected yet
 
 - **Seen** with fun-ci 2.3.0: in a brand-new repo with no code yet, `fun-ci init` stops with

@@ -36,13 +36,12 @@ module FunCi
         extract        Try a stage's evidence extractors on a saved output
 
       Options:
-        -h, --help     Show this help message
+        -h, --help     Show this help message; after a command, that command's usage
         --version      Show version
 
-      Trigger options:
-        --background   Run the pipeline in the background and return at once
-
-      Agent options:
+      Command options:
+        --background   (trigger) Run the pipeline in the background and return at once
+        --everything   (init) Run init + install-hooks + check in one step
         --need LEVEL   (status, wait, why) What must pass: build, fast (default) or all
         --within TIME  (wait) Give up undecided after 30, 30s or 5m
         --follow-branch  (wait) Move on to the newer commit that superseded the run
@@ -53,12 +52,12 @@ module FunCi
         --branch NAME  (runs) Only runs on this branch
         --follow       (events) Keep printing events as they happen, until stopped
         --only failures  (events) Print only failed stages, superseded runs and failed jobs
-        --json         Print JSON instead of text (events always print JSON lines)
+        --output FILE  (extract) The saved output of the stage to read
+        --exit N       (extract) The exit status the stage ended with (default 1)
+        --timed-out    (extract) The stage ran out of time instead of exiting
+        --json         (status, wait, runs, why, jobs, extract) Print JSON instead of text; events always print JSON lines
         Exit codes: 0 passed, 1 failed, 2 over budget, 3 undecided,
         4 superseded, 5 no run, 6 conflicts with the trunk (--trunk), 64 usage error
-
-      Init options:
-        --everything   Run init + install-hooks + check in one step
 
       Examples:
         fun-ci init --everything
