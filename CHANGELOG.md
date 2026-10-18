@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ignoring it, so a misspelt `--everything` no longer sets up only half.
 
 ### Fixed
+- A run the post-commit hook starts leads a session of its own, so Ctrl-C in
+  the terminal that committed, closing it, or an agent harness ending the
+  `git commit` command no longer kills the run's slow suite.
+- A slow suite whose process died is no longer shown as a plain failure:
+  `fun-ci why` says its process stopped before it said how the stage ended,
+  as it already did for a job.
 - `fun-ci console` no longer dies with `TypeError: can't convert NilClass
   into an exact number` while a project's first fetch of its trunk is under
   way.

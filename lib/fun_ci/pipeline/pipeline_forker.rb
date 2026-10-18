@@ -66,8 +66,10 @@ module FunCi
       end
 
       # Trigger requires this file, through TriggerCommand, so it is loaded
-      # here, where it is used, rather than above.
+      # here, where it is used, rather than above. The run leads a session of
+      # its own, so that ending the shell that committed doesn't end it.
       def self.run_in_child(commit_hash:, branch:, db_path:)
+        Process.setsid
         require_relative "trigger"
         recorder = Persistence::DbRecorder.new(Persistence::Database.connection(db_path))
         trigger = trigger(commit_hash, branch, recorder)

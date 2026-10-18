@@ -13,6 +13,8 @@ class TestDeadSlowSuite < Minitest::Test
   include PipelineTestHelpers
 
   SLOW_SUITE_PID = 4242
+  STOPPED = "its process stopped before it said how the stage ended (the machine slept or restarted, or " \
+            "something killed it), so this stage has no result"
   DEAD = ->(_signal, _pid) { raise Errno::ESRCH }
 
   # The test's database, refusing every write with `error`: locked past its busy timeout, a full disk.
@@ -45,6 +47,13 @@ class TestDeadSlowSuite < Minitest::Test
     poll(answering: Errno::ESRCH)
 
     assert_equal "failed", FunCi::Persistence::StageJob.find(@db, @slow)[:status]
+  end
+
+  # So that `fun-ci why` tells an interrupted stage from one the code failed.
+  def test_should_keep_that_the_slow_stage_s_process_stopped_before_it_ended
+    poll(answering: Errno::ESRCH)
+
+    assert_equal [{ "name" => "ended", "extractor" => "fun-ci", "value" => STOPPED }], evidence_of(@slow)["facts"]
   end
 
   def test_should_show_the_run_failed_when_its_slow_suite_died
@@ -121,4 +130,6 @@ class TestDeadSlowSuite < Minitest::Test
   end
 
   def canceller(killer) = FunCi::Pipeline::RunCanceller.new(killer: killer)
+
+  def evidence_of(job_id) = JSON.parse(FunCi::Persistence::StageJob.find(@db, job_id)[:evidence].to_s)
 end

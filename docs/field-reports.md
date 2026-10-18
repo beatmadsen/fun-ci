@@ -43,28 +43,6 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
   same hour: vitest unit 5.1 s, rules 1.2 s, the Python tools tests 0.2 s. So the stage fits its budget alone, with
   about 3 s to spare, and the overrun is the concurrent slow stage. The budget does not depend on the commit.
 
-## A run started by the post-commit hook dies with the shell that committed, and is reported as a plain failure
-
-- **Seen and reproduced** with fun-ci 2.3.0 on 2026-10-02. In 3d-experiments, an agent's `git commit && fun-ci wait`
-  command was interrupted by the user; the slow stage of that commit showed `slow FAIL` with nothing kept
-  (`fun-ci why <sha> slow` printed only "slow failed after 12.7s"; `--raw` said no raw output is kept). The
-  `stage_jobs` row had `status=failed` with `exit_status`, `signal` and `output_tail` all NULL. Re-triggering the
-  same commit passed.
-- Repro (about 30 s):
-
-      R=$(mktemp -d) && cd $R && git init -q -b main && mkdir .fun-ci
-      for s in lint build fast; do printf '#!/bin/sh\nexit 0\n' > .fun-ci/$s.sh; done
-      printf '#!/bin/sh\nsleep 20\n' > .fun-ci/slow.sh && chmod +x .fun-ci/*.sh
-      fun-ci install-hooks && git add -A && git commit -q -m base
-      echo x >> f && git add f
-      perl -e 'setpgrp(0,0); exec @ARGV' sh -c 'git commit -q -m victim; sleep 60' & PID=$!
-      sleep 6; kill -TERM -- -$PID; sleep 2; fun-ci runs | head -1    # slow FAIL, no evidence
-
-- Two problems: (1) the pipeline the hook starts stays in the committer's process group, so Ctrl-C in a terminal
-  or an agent harness cancelling a command kills the CI run; detaching it (new session/process group) would
-  match the README's "starts the pipeline in the background and returns at once". (2) A stage whose runner died
-  is reported as a failure of the code, with no hint that it was interrupted; `why` could say so.
-
 ## A cancelled slow stage leaves Playwright's web server running, and the next run fails on its port
 
 - **Seen** with fun-ci 2.3.0 on 2026-10-05 in 3d-experiments. Commit de7e59d's slow stage was cancelled after 13.9 s when
