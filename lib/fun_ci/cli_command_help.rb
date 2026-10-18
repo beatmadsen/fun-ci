@@ -38,7 +38,7 @@ module FunCi
     def self.purpose(command) = CliHelp::TEXT[/^  #{Regexp.escape(command)} +(.+)$/, 1]
 
     def self.options_of(command)
-      lines = CliHelp::TEXT.lines(chomp: true).select { |line| takes?(line, command) }
+      lines = CliHelp::TEXT.lines.select { |line| takes?(line, command) }
       lines.map { |line| line.sub(/\([^)]+\) /, "") }
     end
 

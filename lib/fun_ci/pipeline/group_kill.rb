@@ -30,7 +30,7 @@ module FunCi
       def self.send_to(signal, name, target)
         signal.call(name, target)
       rescue Errno::ESRCH, Errno::EPERM
-        nil
+        # Gone already.
       end
       private_class_method :lives?, :send_to
     end
