@@ -11,8 +11,10 @@ module StrayProcesses
   # answers them, as "pid command" lines. A group goes whole: a member found
   # before its leader, or whose leader names nothing, must not be killed
   # alone while the rest of its group carries on.
-  def self.stop(dirs)
-    found = naming(dirs.map { |dir| "#{dir}/" })
+  def self.stop(dirs) = kill_all(naming(dirs.map { |dir| "#{dir}/" }))
+
+  # Kills each of `found` (pid => [process group, command line]) as stop does.
+  def self.kill_all(found)
     found.each { |pid, (group, _)| kill(pid, group) }
     found.map { |pid, (_, command)| "#{pid} #{command}" }
   end
@@ -26,9 +28,11 @@ module StrayProcesses
 
   def self.live_in?(stat, command, prefixes) = !stat.start_with?("Z") && prefixes.any? { |dir| command.include?(dir) }
 
+  # Gone: ESRCH, or on macOS EPERM for a group left with only zombies. The
+  # processes found name a test temp root, private to this user.
   def self.kill(pid, group)
     Process.kill("KILL", group == Process.getpgrp ? pid : -group)
-  rescue Errno::ESRCH
+  rescue Errno::ESRCH, Errno::EPERM
     nil
   end
   private_class_method :naming, :live_in?, :kill

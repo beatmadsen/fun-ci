@@ -42,3 +42,25 @@ class TestStrayProcesses < Minitest::Test
                                                                                 pgroup: true).tap { input.close }
   end
 end
+
+# A process found by ps may die before its group is killed. On macOS a group
+# left with only zombies refuses the signal (EPERM) instead of being gone
+# (ESRCH), which aborted a run's sweep of a cancelled run's temp root.
+class TestStrayProcessesGoneBeforeTheKill < Minitest::Test
+  include ProcessDeadline
+
+  def setup
+    @pid = Process.spawn("true", pgroup: true)
+    within_deadline { nil until zombie?(@pid) }
+  end
+
+  def teardown = Process.wait(@pid)
+
+  def test_should_pass_over_a_group_whose_members_died_after_they_were_found
+    assert_equal ["#{@pid} true"], StrayProcesses.kill_all({ @pid => [@pid, "true"] })
+  end
+
+  private
+
+  def zombie?(pid) = `ps -o stat= -p #{pid}`.start_with?("Z")
+end
