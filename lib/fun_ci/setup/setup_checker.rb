@@ -4,19 +4,21 @@ require_relative "project_config"
 require_relative "legacy_hooks"
 require_relative "installed_hooks"
 require_relative "trunk_report"
+require_relative "placeholders"
 
 module FunCi
   module Setup
     class SetupChecker
-      # The hooks it warns of: fun-ci 1.x's, and any in `hooks_dir` that
-      # doesn't run fun-ci.
+      # What it warns of: fun-ci 1.x's hooks, any in `hooks_dir` that doesn't
+      # run fun-ci, and stage scripts still init's placeholders.
       Hooks = Data.define(:sources) do
         def warnings = sources.flat_map(&:warnings)
       end
 
       # hooks_dir: where git runs the project's hooks from; nil outside a git repository.
       def self.run(project_root:, stdout: $stdout, hooks_dir: nil)
-        hooks = Hooks.new([LegacyHooks.new(project_root), InstalledHooks.new(hooks_dir)])
+        sources = [LegacyHooks.new(project_root), InstalledHooks.new(hooks_dir), Placeholders.new(project_root)]
+        hooks = Hooks.new(sources)
         new(config: ProjectConfig.new(project_root), hooks: hooks, stdout: stdout,
             trunk: TrunkReport.new(project_root)).run
       end

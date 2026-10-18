@@ -3,6 +3,7 @@
 require_relative "project_detector"
 require_relative "template_writer"
 require_relative "lint_detection"
+require_relative "stage_templates"
 require_relative "agent_instructions"
 
 module FunCi
@@ -14,13 +15,18 @@ module FunCi
                       "Then fast.sh runs beside slow.sh, both on what build.sh built: have build.sh " \
                       "compile everything they need, test code included."].freeze
 
-      def self.run(project_root:, stdout: $stdout)
-        new(project_root: project_root, stdout: stdout).run
+      PLACEHOLDERS = "Could not detect the project type, so .fun-ci/ has placeholder scripts that pass and " \
+                     "test nothing: put the project's own commands in them, or start again with --stack NAME."
+
+      # stack: a name of ProjectDetector::STACKS to write in place of the one detected.
+      def self.run(project_root:, stdout: $stdout, stack: nil)
+        new(project_root: project_root, stdout: stdout, stack: stack).run
       end
 
-      def initialize(project_root:, stdout:)
+      def initialize(project_root:, stdout:, stack:)
         @project_root = project_root
         @stdout = stdout
+        @stack = stack
       end
 
       # A project set up for fun-ci, new or not, also tells agents what to do.
@@ -35,10 +41,26 @@ module FunCi
       def set_up
         return report(".fun-ci/ already exists, so init left it as it is.", 0) if initialised?
 
-        detected = ProjectDetector.new(Dir.children(@project_root)).detect
-        return report("Could not detect project type. Create .fun-ci/ manually.", 1) if detected == :unknown
+        stack = chosen_stack
+        return unknown_stack if stack.nil?
+        return write_placeholders if stack == :unknown
 
-        write_templates(detected)
+        write_templates(stack)
+      end
+
+      def chosen_stack
+        return ProjectDetector.new(Dir.children(@project_root)).detect if @stack.nil?
+
+        ProjectDetector::STACKS.keys.find { |stack| stack.to_s == @stack }
+      end
+
+      def unknown_stack
+        report("fun-ci init: no stack named #{@stack}; the stacks are #{ProjectDetector::STACKS.keys.join(", ")}", 64)
+      end
+
+      def write_placeholders
+        TemplateWriter.new(StageTemplates::PLACEHOLDERS, @project_root).write
+        report(PLACEHOLDERS, 0)
       end
 
       def tell_agents
@@ -58,7 +80,8 @@ module FunCi
 
       def write_templates(detected)
         @stdout.puts "Detected: #{detected.to_s.tr("_", " ")}"
-        TemplateWriter.new(detected, @project_root, lint_override: LintDetection.command(detected, @project_root)).write
+        scripts = StageTemplates.scripts(detected, lint_override: LintDetection.command(detected, @project_root))
+        TemplateWriter.new(scripts, @project_root).write
         @stdout.puts "Created .fun-ci/ with template scripts.", *SIDE_BY_SIDE
         0
       end

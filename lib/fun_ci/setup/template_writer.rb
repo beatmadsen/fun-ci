@@ -1,13 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "stage_templates"
-
 module FunCi
   module Setup
-    # Writes a project's .fun-ci/ stage scripts, executable.
+    # Writes a project's .fun-ci/ stage scripts, executable: scripts is { "lint.sh" => script, ... }.
     class TemplateWriter
-      def initialize(template_id, target_dir, lint_override: nil)
-        @scripts = StageTemplates.scripts(template_id, lint_override: lint_override)
+      def initialize(scripts, target_dir)
+        @scripts = scripts
         @target_dir = target_dir
       end
 

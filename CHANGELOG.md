@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `fun-ci COMMAND --help` (or `-h`) prints that command's usage and the
   options it takes. Before, `init`, `check` and `prune` ignored the flag and
   went ahead, and the agent commands called it an invalid option.
+- `fun-ci init --stack NAME` writes the scripts for the stack you name
+  (`go`, `node_npm`, ...) instead of the one it detects.
+- In a project whose stack `fun-ci init` doesn't recognise, such as a new
+  one with no code yet, it writes four placeholder scripts that pass, instead
+  of stopping with nothing written. `fun-ci check` warns about each one still
+  in place, since that stage tests nothing.
+
+### Changed
+- `fun-ci init` refuses an option it doesn't take (exit 64) instead of
+  ignoring it, so a misspelt `--everything` no longer sets up only half.
 
 ### Fixed
 - `fun-ci console` no longer dies with `TypeError: can't convert NilClass

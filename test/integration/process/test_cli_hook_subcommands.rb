@@ -98,11 +98,11 @@ class TestCliInitEverything < Minitest::Test
   end
 
   def test_everything_fails_when_init_fails
-    assert_equal 1, run_cli("init", "--everything")
+    assert_equal 64, run_cli("init", "--everything", "--stack", "cobol")
   end
 
   def test_everything_installs_no_hooks_when_init_fails
-    run_cli("init", "--everything")
+    run_cli("init", "--everything", "--stack", "cobol")
 
     refute hook_exists?("post-commit")
   end

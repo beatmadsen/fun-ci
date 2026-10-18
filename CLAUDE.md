@@ -68,6 +68,7 @@ fun-ci trigger --background <commit-hash> <branch>   # Fork pipeline to backgrou
 fun-ci console                                       # Launch the TUI dashboard
 fun-ci init                                           # Scaffold .fun-ci/ for detected project type
 fun-ci init --everything                              # init + install-hooks + check in one step
+fun-ci init --stack NAME                              # Scaffold for a named stack; undetected, init writes passing placeholders that check warns of
 fun-ci install-hooks                                  # Install post-commit and pre-push git hooks
 fun-ci install-hooks post-commit                      # Install a single hook type
 fun-ci check                                          # Verify .fun-ci/ setup is valid

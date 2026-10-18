@@ -76,17 +76,47 @@ class TestInstaller < Minitest::Test
     assert_equal "./gradlew spotlessCheck", lint_script.lines.last.chomp
   end
 
-  def test_should_fail_for_a_project_it_does_not_recognise
+  def test_should_succeed_for_a_project_it_does_not_recognise
     write_file("README.md", "# Hello\n")
 
-    assert_equal 1, install
+    assert_equal 0, install
   end
 
-  def test_should_say_it_could_not_tell_what_kind_of_project_it_is
+  def test_should_write_placeholders_for_a_project_it_does_not_recognise
     write_file("README.md", "# Hello\n")
     install
 
-    assert_includes @stdout.string, "Could not detect project type"
+    assert_equal FunCi::Setup::StageTemplates::PLACEHOLDERS["lint.sh"], lint_script
+  end
+
+  def test_should_say_the_scripts_it_wrote_for_an_unrecognised_project_are_placeholders
+    write_file("README.md", "# Hello\n")
+    install
+
+    assert_includes @stdout.string, "Could not detect the project type, so .fun-ci/ has placeholder scripts"
+  end
+
+  def test_should_write_the_stack_it_is_told_over_the_one_it_detects
+    write_file("Gemfile", GEMFILE)
+    install(stack: "go")
+
+    assert_equal FunCi::Setup::StageTemplates.scripts(:go)["lint.sh"], lint_script
+  end
+
+  def test_should_refuse_a_stack_it_does_not_know
+    assert_equal 64, install(stack: "cobol")
+  end
+
+  def test_should_name_the_stacks_it_knows_when_told_one_it_does_not
+    install(stack: "cobol")
+
+    assert_match(/no stack named cobol; the stacks are ruby_rspec, ruby_bundler, .*, make$/, @stdout.string.chomp)
+  end
+
+  def test_should_write_nothing_when_told_a_stack_it_does_not_know
+    install(stack: "cobol")
+
+    refute Dir.exist?(File.join(@dir, ".fun-ci"))
   end
 
   def test_should_succeed_without_writing_when_fun_ci_already_exists
@@ -115,5 +145,5 @@ class TestInstaller < Minitest::Test
   def write_file(name, content) = File.write(File.join(@dir, name), content)
   def lint_script = File.read(File.join(@dir, ".fun-ci", "lint.sh"))
 
-  def install = FunCi::Setup::Installer.run(project_root: @dir, stdout: @stdout)
+  def install(stack: nil) = FunCi::Setup::Installer.run(project_root: @dir, stdout: @stdout, stack: stack)
 end

@@ -6,13 +6,6 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 
 ---
 
-## No route for a project whose stack is not detected yet
-
-- **Seen** with fun-ci 2.3.0: in a brand-new repo with no code yet, `fun-ci init` stops with
-  `Could not detect project type. Create .fun-ci/ manually.` and writes nothing, so the user has to know the
-  four script names and their contract to start.
-- Idea: write four placeholder scripts that pass (and say so in `fun-ci check`), or accept `--stack NAME`.
-
 ## Node template: lint and build race over `node_modules` in a fresh worktree
 
 - **Inferred, not reproduced.** The `node_npm` template is lint `npx eslint .`, build `npm install`. The

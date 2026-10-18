@@ -73,10 +73,9 @@ end
 class TestInitCliUnknownProject < Minitest::Test
   include InitCliProject
 
-  def test_should_refuse_when_project_type_is_unknown
-    exit_code = init_project_with("README.md", "# Hello\n")
-    assert_equal 1, exit_code, "Should return failure for unknown project type"
-    assert_match(/could not detect|unknown/i, @stdout.string, "Should explain the failure")
+  def test_should_write_executable_placeholders_when_project_type_is_unknown
+    assert_equal 0, init_project_with("README.md", "# Hello\n")
+    assert_all_scripts_executable
   end
 end
 

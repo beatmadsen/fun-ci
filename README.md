@@ -23,7 +23,7 @@ fun-ci init --everything
 
 This detects your project type, writes four stage scripts into `.fun-ci/`, installs a `post-commit` and a `pre-push` git hook, and checks the setup. It also adds a short section to your `AGENTS.md` (or `CLAUDE.md`, if that is the only one) telling coding agents what to do after a commit; run again after an upgrade, it brings that section up to date.
 
-`fun-ci init` has templates for Ruby, Gradle, Maven, Rust, Go, Elixir, Dart, Swift, PHP, .NET, Python, Deno, Bun, Node, Perl, and C or C++ built with CMake or make. [docs/stacks.md](docs/stacks.md) shows how it recognises each one and the commands it writes. Fun-CI works with any project: the stages are shell scripts, so edit them to run whatever your project uses.
+`fun-ci init` has templates for Ruby, Gradle, Maven, Rust, Go, Elixir, Dart, Swift, PHP, .NET, Python, Deno, Bun, Node, Perl, and C or C++ built with CMake or make. [docs/stacks.md](docs/stacks.md) shows how it recognises each one and the commands it writes; `--stack go` picks one by name. In a project it doesn't recognise, such as a new one with no code yet, it writes placeholder scripts that pass, and `fun-ci check` warns about each one until you replace it. Fun-CI works with any project: the stages are shell scripts, so edit them to run whatever your project uses.
 
 - `lint.sh`: linter and static analysis
 - `build.sh`: compile or build
@@ -246,6 +246,7 @@ Secrets in the stage's environment are masked before anything is kept: the value
 ```
 fun-ci init                                     Scaffold .fun-ci/ for the detected project type
 fun-ci init --everything                        init + install-hooks + check in one step
+fun-ci init --stack NAME                        Scaffold .fun-ci/ for the stack named, such as go
 fun-ci install-hooks                            Install post-commit and pre-push hooks
 fun-ci install-hooks post-commit                Install a single hook type
 fun-ci check                                    Verify .fun-ci/ setup

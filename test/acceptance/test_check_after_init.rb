@@ -30,6 +30,22 @@ class TestCheckAfterInit < Minitest::Test
     assert_match(/fast\.sh/, @check_stdout.string, "Should report missing fast.sh")
   end
 
+  def test_should_warn_of_each_placeholder_init_left_in_place
+    File.delete(File.join(@dir, "Gemfile"))
+    init
+    check
+
+    assert_includes @check_stdout.string, "Warning: .fun-ci/fast.sh is init's placeholder, " \
+                                          "so the fast stage tests nothing: put the project's own in it"
+  end
+
+  def test_should_pass_with_placeholders_in_place
+    File.delete(File.join(@dir, "Gemfile"))
+    init
+
+    assert_equal 0, check
+  end
+
   private
 
   def init

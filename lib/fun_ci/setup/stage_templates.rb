@@ -4,6 +4,7 @@ require_relative "stage_templates/managed"
 require_relative "stage_templates/native"
 require_relative "stage_templates/scripting"
 require_relative "stage_templates/javascript"
+require_relative "stage_templates/placeholders"
 
 module FunCi
   module Setup

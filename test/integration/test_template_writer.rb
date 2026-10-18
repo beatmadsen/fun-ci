@@ -6,9 +6,11 @@ require "tmpdir"
 
 # Writing a project's stage scripts. Which scripts they are is StageTemplates'.
 class TestTemplateWriter < Minitest::Test
+  SCRIPTS = { "lint.sh" => "#!/bin/sh\nlint\n", "fast.sh" => "#!/bin/sh\nfast\n" }.freeze
+
   def setup
     @dir = Dir.mktmpdir("fun-ci-writer-test")
-    FunCi::Setup::TemplateWriter.new(:jvm_maven, @dir, lint_override: "mvn detekt:check").write
+    FunCi::Setup::TemplateWriter.new(SCRIPTS, @dir).write
   end
 
   def teardown
@@ -18,7 +20,7 @@ class TestTemplateWriter < Minitest::Test
   def test_should_write_each_stage_script_into_fun_ci
     written = Dir.children(fun_ci_dir).to_h { |name| [name, File.read(File.join(fun_ci_dir, name))] }
 
-    assert_equal FunCi::Setup::StageTemplates.scripts(:jvm_maven, lint_override: "mvn detekt:check"), written
+    assert_equal SCRIPTS, written
   end
 
   def test_should_make_every_stage_script_executable
