@@ -17,6 +17,9 @@ module FunCi
 
       attr_reader :size
 
+      # Whether a slot last taken at `last_taken` has gone untaken too long.
+      def self.idle?(last_taken, now:) = now - last_taken > IDLE_SECONDS
+
       # clean: the paths whose ignored files a slot loses when it moves off its
       # line of history (Worktrees#check_out).
       def initialize(worktrees, size: DEFAULT_SIZE, clean: [], waiter: -> { sleep 0.25 })
@@ -64,7 +67,7 @@ module FunCi
 
       # Each taker stamps the lock, so its last change is when the slot was last taken.
       def taken(path, lock)
-        idle = Time.now - lock.mtime > IDLE_SECONDS
+        idle = WorktreePool.idle?(lock.mtime, now: Time.now)
         slot = Slot.new(path, stamped(lock), lock.path)
         idle ? slot.as_cold : slot
       end
