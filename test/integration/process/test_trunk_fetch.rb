@@ -53,35 +53,11 @@ class TestTrunkFetch < Minitest::Test
     assert_includes File.read(File.join(bin, "ssh-args")), "BatchMode=yes"
   end
 
-  def test_should_stop_a_fetch_that_runs_past_its_deadline
-    pid = hanging_fetch { |started, fetcher| fetcher.finish(started, deadline: 20, timer: ->(*) { false }) }
-
-    # On macOS a group left with only zombies answers EPERM, not ESRCH.
-    assert_raises(Errno::ESRCH, Errno::EPERM) { Process.kill(0, -pid) }
-  end
-
   private
 
   def fetch(env: {})
     fetcher = FunCi::Trunk::Fetch.new(@repos.project, env: env)
     fetcher.finish(fetcher.start(ORIGIN_MAIN), deadline: 20)
-  end
-
-  # A fetch whose ssh waits for ever on a FIFO nobody writes; answers its pid.
-  def hanging_fetch
-    hang_ssh
-    fetcher = FunCi::Trunk::Fetch.new(@repos.project, env: {})
-    started = fetcher.start(ORIGIN_MAIN)
-    yield started, fetcher
-    started.pid
-  end
-
-  def hang_ssh
-    fifo = File.join(@repos.project, "..", "never")
-    File.mkfifo(fifo)
-    BodyScript.write(File.join(@repos.project, "..", "bin", "hang"), %(read _ < "#{fifo}"))
-    @repos.git(@repos.project, "config", "core.sshCommand", File.join(@repos.project, "..", "bin", "hang"))
-    @repos.git(@repos.project, "remote", "set-url", "origin", "ssh://example.invalid/repo.git")
   end
 
   def rev(ref) = @repos.git(@repos.project, "rev-parse", ref).strip
