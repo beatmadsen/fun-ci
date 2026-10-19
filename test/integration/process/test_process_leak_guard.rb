@@ -31,6 +31,22 @@ class TestProcessLeakGuard < Minitest::Test
     assert_empty `ps -A -o command=`.lines.grep(/#{@marker}/)
   end
 
+  # As a test's shell left with a file of the run's open, here its stdout,
+  # held the output of a pipeline's stage open until its budget ran out.
+  def test_a_run_that_leaves_a_process_holding_a_file_in_its_temp_root_fails
+    refute_predicate holding_run.last, :success?
+  end
+
+  def test_a_run_that_leaves_a_process_holding_a_file_in_its_temp_root_names_it
+    assert_match(/#{@marker}/, holding_run.first)
+  end
+
+  def test_a_run_that_leaves_a_process_holding_a_file_in_its_temp_root_kills_it
+    holding_run
+
+    assert_empty `ps -A -o command=`.lines.grep(/#{@marker}/)
+  end
+
   def test_a_run_that_waits_for_its_processes_passes
     assert_predicate ProbeSuite.capture("Process.wait(#{spawn_naming_the_root})").last, :success?
   end
@@ -96,6 +112,16 @@ class TestProcessLeakGuard < Minitest::Test
 
   # A shell named by a path in the run's temp root, which sleeps on alone.
   def leaking_run = ProbeSuite.capture("Process.detach(#{spawn_naming_the_root(seconds: 20)})")
+
+  # A shell named by no path, which sleeps on alone with its stdout a file in the run's temp root.
+  def holding_run
+    ProbeSuite.capture("Process.detach(#{spawn_holding_a_file})")
+  end
+
+  def spawn_holding_a_file
+    "IO.pipe.then { |r, w| Process.spawn('sh', '-c', 'echo started >&2; sleep 20; :', '#{@marker}', " \
+      "out: File.join(Dir.tmpdir, 'held'), err: w, pgroup: true).tap { w.close; r.gets } }"
+  end
 
   # The probe's code for such a shell, answering its pid once it has said it started.
   def spawn_naming_the_root(seconds: 0)

@@ -10,8 +10,9 @@ module StrayProcesses
   # but this process's own, whose stray members are killed alone, and
   # answers them, as "pid command" lines. A group goes whole: a member found
   # before its leader, or whose leader names nothing, must not be killed
-  # alone while the rest of its group carries on.
-  def self.stop(dirs) = kill_all(naming(dirs.map { |dir| "#{dir}/" }))
+  # alone while the rest of its group carries on. `holders`: pids found
+  # otherwise (OpenFiles), stopped likewise.
+  def self.stop(dirs, holders: []) = kill_all(naming(dirs.map { |dir| "#{dir}/" }, holders))
 
   # Kills each of `found` (pid => [process group, command line]) as stop does.
   def self.kill_all(found)
@@ -19,14 +20,18 @@ module StrayProcesses
     found.map { |pid, (_, command)| "#{pid} #{command}" }
   end
 
-  # pid => [process group, command line], of each live process naming one of `prefixes`.
-  def self.naming(prefixes)
+  # pid => [process group, command line], of each live process naming one of `prefixes`, or among `holders`.
+  def self.naming(prefixes, holders)
     listed = `ps -A -o pid= -o pgid= -o stat= -o command=`.lines.map { |line| line.strip.split(" ", 4) }
-    listed.select { |_, _, stat, command| live_in?(stat, command.to_s, prefixes) }
+    listed.select { |pid, _, stat, command| live?(stat) && found?(pid.to_i, command.to_s, prefixes, holders) }
           .to_h { |pid, group, _, command| [pid.to_i, [group.to_i, command]] }
   end
 
-  def self.live_in?(stat, command, prefixes) = !stat.start_with?("Z") && prefixes.any? { |dir| command.include?(dir) }
+  def self.live?(stat) = !stat.start_with?("Z")
+
+  def self.found?(pid, command, prefixes, holders)
+    holders.include?(pid) || prefixes.any? { |dir| command.include?(dir) }
+  end
 
   # Gone: ESRCH, or on macOS EPERM for a group left with only zombies. The
   # processes found name a test temp root, private to this user.
@@ -35,5 +40,5 @@ module StrayProcesses
   rescue Errno::ESRCH, Errno::EPERM
     nil
   end
-  private_class_method :naming, :live_in?, :kill
+  private_class_method :naming, :live?, :found?, :kill
 end
