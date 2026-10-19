@@ -26,7 +26,7 @@ class TestLifelineGroup < Minitest::Test
   # The leader waits on a member that holds the lifeline; answers the leader's pid.
   def held_by_a_member(lifeline)
     ready = File.join(@dir, "ready").tap { |path| File.mkfifo(path) }
-    member = Shellwords.escape("#{lifeline.hold}; echo > #{ready}; sleep 300")
+    member = Shellwords.escape("#{lifeline.hold}; echo > #{ready}; exec sleep 300")
     leader = Process.spawn("sh -c #{member} & wait", pgroup: true)
     Fifo.read(ready)
     leader
