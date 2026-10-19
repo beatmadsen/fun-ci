@@ -29,13 +29,14 @@ module FunCi
       # fun-ci's own, the window what it prints is written to, what to do
       # with its pid when it runs over budget, before it is killed, the
       # open files it holds as long as it runs, such as a lock, and what it
-      # is run under (a Priorities prefix, "" for fun-ci's own priority).
-      Launch = Data.define(:chdir, :env, :output, :before_kill, :held, :priority)
+      # is run under (a Priorities prefix, "" for fun-ci's own priority), and
+      # how long its output may drain once it is killed.
+      Launch = Data.define(:chdir, :env, :output, :before_kill, :held, :priority, :drain)
 
       class Launch
         def initialize(**given)
           super(chdir: Dir.pwd, env: {}, output: OutputWindow.in_memory, before_kill: nil, held: [], priority: "",
-                **given)
+                drain: DRAIN_SECONDS, **given)
         end
       end
 
@@ -100,12 +101,12 @@ module FunCi
       def over_budget(pid, reading, launch)
         launch.before_kill&.call(pid)
         kill_process_group(pid)
-        [drained(reading, launch.output), nil, true]
+        [drained(reading, launch), nil, true]
       end
 
-      def drained(reading, printed)
-        reading.join(DRAIN_SECONDS)
-        text(printed)
+      def drained(reading, launch)
+        reading.join(launch.drain)
+        text(launch.output)
       end
 
       def text(window) = window.text.force_encoding(Encoding.default_external)

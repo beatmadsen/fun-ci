@@ -18,8 +18,10 @@ class TestProcessRunnerOverBudget < Minitest::Test
   end
 
   # Leaves the process group, waits to be let go through the FIFO it is
-  # given, then prints `late`. Its stderr stays out of the output asserted on.
-  ESCAPEE = "ruby -rtimeout -e 'Process.setsid; Timeout.timeout(5) { File.read(ARGV[0]) }; sleep 0.2; puts :late'"
+  # given, then for the stage, the pid it is given, to be killed and reaped,
+  # and prints `late`. Its stderr stays out of the output asserted on.
+  ESCAPEE = "ruby -rtimeout -e 'Process.setsid; Timeout.timeout(5) { File.read(ARGV[0]) }; " \
+            "Timeout.timeout(5) { sleep 0.01 while (Process.kill(0, ARGV[1].to_i) rescue nil) }; puts :late'"
 
   # Leaves for a session of its own, then says so through the FIFO it is
   # given, and sleeps. Run from the test's directory, its command line names
@@ -48,15 +50,17 @@ class TestProcessRunnerOverBudget < Minitest::Test
 
   # Output can still come after the kill, from whatever still holds the
   # stage's stdout: here a process that left the group and, forked twice,
-  # its parent's tree, so the kill can't reach it; it prints a fifth of a
-  # second after the hook before the kill lets it, well within the drain,
-  # and ends. Reading only until the kill would miss it.
+  # its parent's tree, so the kill can't reach it; let go by the hook before
+  # the kill, it prints once the stage is gone, and ends. The drain is as
+  # long as the test's deadline, so it ends as the output does, not on a
+  # clock. Reading only until the kill would miss it.
   def test_a_command_over_budget_keeps_what_is_printed_while_its_output_drains
     stuck = fifo("stuck")
     release = fifo("release")
-    command = %(sh -c "(#{ESCAPEE} #{release} 2>/dev/null &); echo > #{stuck}; exec tail -f /dev/null")
+    command = %(sh -c "(#{ESCAPEE} #{release} $$ 2>/dev/null &); echo > #{stuck}; exec tail -f /dev/null")
+    hook = ->(_pid) { File.write(release, "go") }
 
-    assert_equal "late\n", over_budget(command, stuck, ->(_pid) { File.write(release, "go") })
+    assert_equal "late\n", over_budget(command, stuck, hook, drain: ProcessDeadline::SECONDS)
   end
 
   # As Playwright's web server, which Node starts in a session of its own.
@@ -76,8 +80,8 @@ class TestProcessRunnerOverBudget < Minitest::Test
   def fifo(name) = File.join(@dir, name).tap { |path| File.mkfifo(path) }
 
   # What the command printed, once it wrote to `stuck` and `hook` ran before the kill.
-  def over_budget(command, stuck, hook = nil)
-    launch = FunCi::Pipeline::ProcessRunner::Launch.new(before_kill: hook)
+  def over_budget(command, stuck, hook = nil, drain: FunCi::Pipeline::ProcessRunner::DRAIN_SECONDS)
+    launch = FunCi::Pipeline::ProcessRunner::Launch.new(before_kill: hook, drain: drain)
     within_deadline do
       Host.new.run_process_with_timeout(command, 30, launch: launch, timer: ->(*) { Fifo.read(stuck) && nil }).first
     end
