@@ -17,12 +17,22 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 
 **Reproduce:** a project whose slow stage takes about 4 minutes; commit to one branch every 1 to 2 minutes; wait on the first commit with `fun-ci wait --need all --follow-branch`. The wait does not return until the commits stop for one slow run's length.
 
-**What helps today (seen in the README, line 54):** a run an agent waits on without `--follow-branch` is not cancelled. project-studio now has its agents wait that way.
+**What helps today (README, line 54):** a run an agent waits on without `--follow-branch` is not cancelled, once the wait has polled it; see the next entry for the gap before that. project-studio has its agents wait that way, start the wait straight after the commit, and trigger the commit again on exit 4.
 
 **For fun-ci to consider (inferred, not tried):**
 - Let a slow stage that is already running finish, and when it does, run only the newest of the commits that arrived meanwhile, instead of cancelling on every commit.
 - Or decide the verdict for a superseded commit when a later run on a descendant passes, so `--follow-branch` waits end as soon as any run finishes.
 - The post-commit hook prints `--follow-branch`, and the `AGENTS.md` section `fun-ci init` writes says "A newer commit on the branch cancels the run and the wait moves on". Both steer a project with several agents straight into this mode, while the README's way out sits in a long paragraph about worktrees.
+
+## A wait without `--follow-branch` protects its run only after its first poll, and then answers "superseded" for good
+
+**Seen** in project-studio on 2026-10-21/22: commit 678764c had two runs, both `superseded` (by 4fe3f07 and 030c00d, `fun-ci runs --json`), while the agent that made it waited on it with `fun-ci wait 678764c --need all`, no `--follow-branch`.
+
+**Read in the code:** `StalePipelineCanceller` skips a run only when its `waited_at` is within `WAITED_ON_SECONDS` (10 s), and `WaitCommand#poll` sets `waited_at` on each poll. A newer commit that lands between the commit and the wait's first poll (the agent recording its intent, running a local lane) cancels the run. The wait then reports `superseded`, exit 4, and since it does not follow the branch, the commit the agent asked about never gets a verdict unless someone runs `fun-ci trigger` by hand.
+
+**Inferred, not tried:** the README's sentence reads as a guarantee ("unless an agent is waiting on it"), so an agent that waits a little late trusts a run that is already gone. Either say "once its wait has polled it", or have a wait without `--follow-branch` whose run was superseded start the commit's run again and keep waiting, since the agent asked for that commit and no other.
+
+**Reproduce:** commit A; commit B before running `fun-ci wait A --need all`; the wait exits 4.
 
 ## `fun-ci status` says "(not needed)" for the slow stage a `--need all` wait is waiting on
 
