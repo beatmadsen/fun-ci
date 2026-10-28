@@ -40,11 +40,13 @@ module FunCi
                    "AND pipeline_runs.pid IS NOT NULL")
       end
 
-      # Records the slow stage failed, and that its process died, unless its
-      # result was recorded meanwhile.
+      # Records the slow stage failed, numbered after every other stage of its
+      # run that finished, and that its process died, unless its result was
+      # recorded meanwhile.
       def self.slow_suite_died(db, job_id)
-        db.execute("UPDATE stage_jobs SET status = 'failed', completed_at = ?, evidence = ? " \
-                   "WHERE id = ? AND status = 'running'", [Time.now.utc.iso8601(3), Died.evidence("stage"), job_id])
+        db.execute("UPDATE stage_jobs SET status = 'failed', completed_at = ?, " \
+                   "finished_order = #{StageJob::NEXT_IN_RUN}, evidence = ? WHERE id = ? AND status = 'running'",
+                   [Time.now.utc.iso8601(3), Died.evidence("stage"), job_id])
       end
 
       def self.cancelled(db, run)

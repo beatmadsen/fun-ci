@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- `fun-ci runs` no longer dies with "comparison of Integer with nil failed"
+  when it lists a run where the slow suite's process died and another stage
+  failed or ran over its budget. The died stage is now numbered in the order
+  the run's stages finished, and stages that 2.4.0 and earlier kept without
+  that number get one the next time fun-ci opens its database.
+
 ## [2.4.0] - 2026-10-19
 
 ### Added

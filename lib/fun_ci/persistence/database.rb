@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "sqlite3"
+require_relative "stage_job"
 
 module FunCi
   module Persistence
@@ -82,11 +83,26 @@ module FunCi
           TABLES.each { |table| db.execute(table) }
           ADDED_COLUMNS.each { |table, column, type| add_column_if_missing(db, table, column, type) }
           db.execute(NAME_DETACHED)
+          number_failures_kept_unnumbered(db)
         end
       end
 
       # Runs started on a detached HEAD before 2.0.1 were kept with no branch name.
       NAME_DETACHED = "UPDATE pipeline_runs SET branch = 'detached' WHERE branch = ''"
+
+      # In 2.4.0 and earlier, a slow stage whose process died was kept failed
+      # with no finish order, which a verdict needs to tell which failure came
+      # first.
+      FAILURES_KEPT_UNNUMBERED = "SELECT id FROM stage_jobs WHERE finished_order IS NULL " \
+                                 "AND status IN ('failed', 'timed_out') ORDER BY completed_at, id"
+
+      # Numbers each after the rest of its run, in the order they ended.
+      def self.number_failures_kept_unnumbered(db)
+        db.execute(FAILURES_KEPT_UNNUMBERED).each do |(id)|
+          db.execute("UPDATE stage_jobs SET finished_order = #{StageJob::NEXT_IN_RUN} WHERE id = ?", [id])
+        end
+      end
+      private_class_method :number_failures_kept_unnumbered
 
       def self.with_setup_lock(db_path)
         File.open("#{db_path}.setup-lock", File::RDWR | File::CREAT, 0o644) do |lock|

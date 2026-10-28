@@ -56,6 +56,13 @@ class TestDeadSlowSuite < Minitest::Test
     assert_equal [{ "name" => "ended", "extractor" => "fun-ci", "value" => STOPPED }], evidence_of(@slow)["facts"]
   end
 
+  # So that a verdict can tell which of the run's failures came first.
+  def test_should_number_the_dead_slow_stage_after_the_stages_that_finished_before_it
+    poll(answering: Errno::ESRCH)
+
+    assert_equal 4, FunCi::Persistence::StageJob.find(@db, @slow)[:finished_order]
+  end
+
   def test_should_show_the_run_failed_when_its_slow_suite_died
     assert_equal "failed", poll(answering: Errno::ESRCH).first[:status]
   end
