@@ -40,19 +40,19 @@ class TestKeyHandlerHiddenJobs < Minitest::Test
   end
 
   def test_should_bring_a_hidden_job_back_at_once_on_h
-    press("j", "j", "h", "s", "a", "h")
+    press("j", "j", "h", "s", "a", "k", "h")
 
     assert_empty @board_data.hidden
   end
 
   def test_should_ask_nothing_before_bringing_a_hidden_job_back
-    press("j", "j", "h", "s", "a", "h")
+    press("j", "j", "h", "s", "a", "k", "h")
 
     assert_nil @handler.asking
   end
 
   def test_should_stop_showing_hidden_jobs_once_none_is_hidden
-    press("j", "j", "h", "s", "a", "h", "h", "i")
+    press("j", "j", "h", "s", "a", "k", "h", "h", "i")
 
     assert_equal %w[mutation], in_view
   end

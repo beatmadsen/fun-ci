@@ -23,6 +23,12 @@ module FunCi
         def ended_by?(key) = ENDS.include?(key)
 
         def carry_out = @kind == :job ? @board_data.cancel_job(@row.run[:id]) : @board_data.cancel_run(@row[:id])
+
+        # Whether `place`, [kind, row] under the cursor now, is still the run asked about, running.
+        def about?(place) = place.first == @kind && Cancel.target(*place) == Cancel.target(@kind, @row)
+
+        # A run's id and status, or a job's latest run's id and its state.
+        def self.target(kind, row) = kind == :job ? [row.run&.dig(:id), row.state] : row.values_at(:id, :status)
       end
 
       # How to hide a job: `s` snoozes it, until it runs again; `i` ignores it, for good.
@@ -39,6 +45,9 @@ module FunCi
 
         def take(key) = KINDS.key?(key) && @board_data.hide_job(@job, KINDS[key])
         def ended_by?(key) = ENDS.include?(key)
+
+        # Whether `place`, [kind, row] under the cursor now, is still the job asked about.
+        def about?(place) = place.first == :job && place.last.project == @job.project && place.last.name == @job.name
       end
     end
   end

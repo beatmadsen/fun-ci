@@ -386,7 +386,9 @@ each project's branches sit under the project's name, one row per branch:
   waits to start; `q` quits. The footer shows each key on a cap with what it
   does beside it. Cancelling a scheduled run happens at once; a running one
   asks first, naming it (`Cancel feat/search (d4e5f67)?` with `y yes` and
-  `n no`), because a process gets killed.
+  `n no`), because a process gets killed. The cursor stays on its row as
+  the rows reorder, and a question ends once the row it names leaves the view
+  or, for a cancel, stops running, so an answer never acts on another row.
 - The board is always live, so there is no refresh key. With no runs yet it
   says `No runs yet.`
 - Daily and weekly jobs have a section of their own below the last project,

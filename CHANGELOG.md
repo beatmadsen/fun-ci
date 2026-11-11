@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   --need all` was waiting on that very stage.
 
 ### Fixed
+- In the console, the cursor stays on its branch or job when the rows
+  reorder. Before, it kept its place on screen, so a row that moved left it on
+  another one, and an answer to `Cancel ...?` could cancel a run other than the
+  one the footer had named. A question now ends once its row leaves the view or
+  its run stops running.
 - A job given a later turn to start is recorded as waiting from the moment a
   commit starts it. Before, it was recorded as running for an instant first,
   and anything reading the database just then, the console or `fun-ci

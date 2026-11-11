@@ -33,6 +33,7 @@ module FunCi
       # `more`: whether the store holds runs beyond `runs`. `jobs`: the job
       # section's rows in view, below the page, which the cursor reaches after the runs.
       def page(runs, more:, jobs: [])
+        @key_handler.follow(runs, jobs)
         size = jobs.empty? ? @page_size : [@page_size - JOB_LINES, 0].max
         first = first_shown(runs.size, size)
         { cursor: cursor_on_page(first, size), confirming: @key_handler.confirming?, **hiding,

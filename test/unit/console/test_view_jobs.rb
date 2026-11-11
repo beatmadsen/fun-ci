@@ -45,6 +45,13 @@ class TestViewJobs < Minitest::Test
     refute page[:has_more]
   end
 
+  # The jobs reorder as one finishes: the cursor stays on mutation, now the first job.
+  def test_should_keep_the_cursor_on_its_job_when_the_jobs_reorder
+    press(8)
+
+    assert_equal 4, page(jobs: [JOBS[1], JOBS[0], JOBS[2]])[:cursor]
+  end
+
   private
 
   def page(jobs: JOBS) = @view.page(RUNS, more: false, jobs: jobs)

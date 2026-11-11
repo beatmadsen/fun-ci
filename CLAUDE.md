@@ -166,6 +166,7 @@ Seams tests use in place of the real thing:
 - The console's job section gives up its lines before any branch row does, its last one too before a branch row is left off the screen, and keeps its rows while the cursor is on a job: `renderer/tests/suite/quiet_jobs.rs`.
 - A job hidden in the console is no row of a board until the user asks to see the hidden ones: an ignored job until it is brought back, a snoozed one until a run of it begins after the snooze (running, or ended other than cancelled), and from then on whatever its later runs do. A hidden job shown never needs you, and hiding changes nothing an agent command says: `test/integration/test_job_visibility.rb`, `test/unit/console/test_console_session_hiding.rb`, `test/unit/console/test_key_handler_hiding.rb`, `test/unit/console/test_key_handler_hidden_jobs.rb`, `renderer/tests/suite/hidden_jobs.rs`, `test/acceptance/test_agent_jobs_hidden.rb`.
 - A job run that waits its turn is scheduled from the moment another connection can read it, never running first: `test/integration/test_job_run_scheduled.rb`.
+- The console's cursor stays on its branch or job as the rows reorder, and an answer to the footer's question acts on the row it named, or on nothing: `test/unit/console/test_key_handler_follows.rb`, `test/unit/console/test_view_jobs.rb`.
 - This file keeps Stack, Layout, Invariants and Gotchas, and every invariant names a test that exists: `test/policy/test_claude_md.rb`.
 
 ## Gotchas

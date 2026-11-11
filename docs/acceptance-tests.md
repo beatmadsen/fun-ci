@@ -1208,3 +1208,13 @@ says `a hides hidden jobs`.
 again, or the last hidden job brought back, puts them out of view.
 **And** a contract fixture holds the conversation on both sides, and a
 scenario's snapshot what is drawn.
+
+### 13.32 The cursor stays on its row, and a question on the row it names
+**Given** the cursor on a job or a branch, or the footer asking to hide or
+cancel the row under it
+**When** the rows reorder (a job finishes, a branch's run fails)
+**Then** the cursor is on the same job or branch, and the question still
+names it.
+**When** the job asked about leaves the view, or the run asked about stops
+running or is replaced by a newer run of its branch
+**Then** the footer stops asking, and `s`, `i` or `y` acts on nothing.
