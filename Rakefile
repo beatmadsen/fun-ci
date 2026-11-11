@@ -14,8 +14,9 @@ TEST_LANES = {
   "integration" => "test/integration/**/test_*.rb",
   "acceptance" => "test/acceptance/**/test_*.rb",
   "policy" => "test/policy/**/test_*.rb",
-  # The three that start no process, in one process: fun-ci's fast stage here.
-  "fast" => "test/{unit,acceptance,policy}/**/test_*.rb"
+  # The two that start no process and check what fun-ci does, in one process:
+  # fun-ci's fast stage here. The policy checks run in its slow stage.
+  "fast" => "test/{unit,acceptance}/**/test_*.rb"
 }.freeze
 
 TEST_LANES.each do |lane, pattern|

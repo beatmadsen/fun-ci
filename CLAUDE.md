@@ -28,7 +28,7 @@ rake unit                                                  # test/unit only
 rake acceptance                                            # test/acceptance only
 rake integration                                           # test/integration only (process/ included)
 rake policy                                                # test/policy only
-rake fast                                                  # unit, acceptance and policy in one process (fun-ci's fast stage)
+rake fast                                                  # unit and acceptance in one process (fun-ci's fast stage; its slow stage runs policy)
 ruby -Itest -Ilib test/unit/test_stage_runner.rb                # One test file
 ruby -Itest -Ilib test/unit/test_stage_runner.rb -n test_method # One test method
 ```
