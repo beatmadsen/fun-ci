@@ -81,7 +81,33 @@ class TestBoardDataHiding < Minitest::Test
     assert_equal 15, branches_hidden.count(nil)
   end
 
+  # The page is decided on the branches in view, not on those read: main, run first, is too old to be read.
+  def test_should_hold_no_more_branches_in_view_than_a_page_when_a_hidden_one_is_not_among_those_read
+    twenty_more_branches
+    FunCi::Persistence::BranchVisibility.new(@db).hide(@project, "main", "ignored", at: Time.now)
+
+    assert_equal 15, board.runs.size
+  end
+
+  def test_should_say_there_are_no_more_branches_when_the_only_one_beyond_the_page_is_hidden
+    two_more_branches
+    small = board(page_size: 2)
+    small.hide_run(small.runs.first, "ignored")
+
+    refute small.branch_page.more
+  end
+
+  def test_should_say_there_are_more_branches_when_one_beyond_the_page_is_in_view
+    two_more_branches
+
+    assert board(page_size: 2).branch_page.more
+  end
+
   private
+
+  def two_more_branches
+    %w[b1 b2].each { |name| FunCi::Persistence::PipelineRun.create(@db, commit_hash: name, branch: name, project_path: @project) }
+  end
 
   def hide_branches(count) = board.runs.first(count).each { |run| board.hide_run(run, "ignored") }
 
@@ -89,7 +115,10 @@ class TestBoardDataHiding < Minitest::Test
     (1..20).each { |n| FunCi::Persistence::PipelineRun.create(@db, commit_hash: "c#{n}", branch: "b#{n}", project_path: @project) }
   end
 
-  def board(clock: -> { Time.now }) = FunCi::Console::BoardData.new(@db, clock: clock)
+  def board(clock: -> { Time.now }, page_size: 15)
+    FunCi::Console::BoardData.new(@db, clock: clock, page_size: page_size)
+  end
+
   def job_row = board.jobs(board.runs).first
   def branches_hidden = board.runs.map { |run| run[:hidden] }
 

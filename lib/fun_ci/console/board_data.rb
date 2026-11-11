@@ -9,6 +9,7 @@ require_relative "streak_counter"
 require_relative "trunk_marks"
 require_relative "cancelled_folding"
 require_relative "row_order"
+require_relative "branch_page"
 require_relative "paging"
 require_relative "job_rows"
 require_relative "../persistence/active_jobs"
@@ -36,9 +37,6 @@ module FunCi
 
       # Pages by `page_size` from now on, loading at least one such page.
       def resize(page_size) = @paging.resize(page_size)
-
-      # Whether there are branches beyond those `runs` loads.
-      def more? = heads(@paging.limit + 1).size > @paging.limit
 
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
@@ -75,10 +73,16 @@ module FunCi
       # runs folded into one, with its stages, the branch's standing against
       # the trunk, and how the user hid the branch (`hidden`, nil while in view).
       # A hidden branch leaves its place to the next one: as many more are read, and the page keeps as many in view.
-      def runs
+      def runs = branch_page.runs
+
+      # The rows `runs` says, and whether there are branches in view beyond
+      # them, from one read: the hidden branches among those read, and a page
+      # of the others, the first.
+      def branch_page
         hidden = Persistence::BranchVisibility.new(@db).hidden
-        rows = heads(@paging.limit + hidden.size, more_among: hidden.size).map { |head| branch_row(head, hidden) }
-        RowOrder.of(in_view_within_the_page(rows))
+        in_view, out_of_view = heads_read(hidden)
+        rows = (out_of_view + in_view.first(@paging.limit)).map { |head| branch_row(head, hidden) }
+        BranchPage.new(runs: RowOrder.of(rows), more: in_view.size > @paging.limit)
       end
 
       # The projects among `runs` whose trunk is stale.
@@ -101,17 +105,19 @@ module FunCi
         Persistence::PipelineRun.branch_heads(@db, limit: limit, among: RECENT_BRANCHES + more_among)
       end
 
-      # The hidden branches' rows, and as many of the others as a page holds, the first.
-      def in_view_within_the_page(rows)
-        in_view = rows.reject { |row| row[:hidden] }.first(@paging.limit)
-        rows.select { |row| row[:hidden] || in_view.include?(row) }
+      # The heads in view and those hidden, of a page and one more in view.
+      def heads_read(hidden)
+        read = heads(@paging.limit + hidden.size + 1, more_among: hidden.size)
+        read.partition { |head| !hidden.key?(branch_of(head)) }
       end
+
+      def branch_of(head) = head.values_at(:project_path, :branch)
 
       def branch_row(head, hidden)
         branch_runs = Persistence::PipelineRun.leading_to(@db, head, limit: BRANCH_WINDOW)
         row = CancelledFolding.fold(branch_runs).first
         trunk = TrunkMarks.new(@db).mark(branch_runs).first[:trunk]
-        enrich_with_stages(row.merge(trunk: trunk, hidden: hidden[[head[:project_path], head[:branch]]]))
+        enrich_with_stages(row.merge(trunk: trunk, hidden: hidden[branch_of(head)]))
       end
 
       def enrich_with_stages(run)

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "fun_ci/console/branch_page"
 require "json"
 require "fun_ci/console/console_session"
 require "fun_ci/console/streak_counter"
@@ -35,7 +36,7 @@ class FixtureReplay
     def streak = FunCi::Console::StreakCounter.count(@runs)
     def load_more = nil
     def resize(_page_size) = nil
-    def more? = false
+    def branch_page = FunCi::Console::BranchPage.new(runs: runs, more: false)
     def record_dead_slow_suites = nil
     def record_dead_jobs = nil
     def cancel_run(_id) = nil

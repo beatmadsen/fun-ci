@@ -70,11 +70,11 @@ class TestBoardDataPagination < Minitest::Test
   end
 
   def test_should_report_more_when_the_store_holds_branches_beyond_those_loaded
-    assert_predicate board_over(4, page_size: 3), :more?
+    assert board_over(4, page_size: 3).branch_page.more
   end
 
   def test_should_report_no_more_when_every_branch_is_loaded
-    refute_predicate board_over(3, page_size: 3), :more?
+    refute board_over(3, page_size: 3).branch_page.more
   end
 
   private

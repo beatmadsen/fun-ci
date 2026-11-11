@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "fun_ci/console/branch_page"
 require "json"
 require "fun_ci/jobs/standings"
 require "fun_ci/console/job_row"
@@ -33,7 +34,7 @@ module ConsoleFakes
     def streak = 3
     def load_more = @loads += 1
     def resize(_page_size) = nil
-    def more? = false
+    def branch_page = FunCi::Console::BranchPage.new(runs: runs, more: false)
     def record_dead_slow_suites = @dead_checks << :slow_suites
     def record_dead_jobs = @dead_checks << :jobs
     def cancel_run(id) = @cancelled << id

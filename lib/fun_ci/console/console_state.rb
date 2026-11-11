@@ -30,15 +30,17 @@ module FunCi
       def updates
         @board_data.record_dead_slow_suites
         @board_data.record_dead_jobs
-        runs = @board_data.runs
-        [*@events.since_last(runs.reject { |run| run[:hidden] }), board(runs, @board_data.jobs(runs))]
+        branches = @board_data.branch_page
+        runs = branches.runs
+        [*@events.since_last(runs.reject { |run| run[:hidden] }), board(branches, @board_data.jobs(runs))]
       end
 
       private
 
-      def board(runs, job_rows)
+      def board(branches, job_rows)
+        runs = branches.runs
         shown = @view.shown(job_rows)
-        page = @view.page(@view.shown_runs(runs), more: @board_data.more?, jobs: shown)
+        page = @view.page(@view.shown_runs(runs), more: branches.more, jobs: shown)
         { t: "board", now: @clock.call.to_i, streak: @board_data.streak, **page,
           runs: page[:runs].map { |run| RunMessage.from(run) }, **job_section(shown),
           **hidden_rows(runs, job_rows), **stale_trunks(runs) }
