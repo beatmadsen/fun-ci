@@ -49,8 +49,9 @@ module MinitestGuards
     end
   end
 
-  # This repository, whose tests the guards are for.
+  # This repository, and the directories of its test code, which the guards are for.
   ROOT = File.expand_path("../..", __dir__)
+  TEST_CODE = %w[test contract].map { |dir| File.join(ROOT, dir, "") }.freeze
 
   def self.install
     Minitest::Test.prepend(Reentry)
@@ -65,12 +66,13 @@ module MinitestGuards
                  "name it something else"
   end
 
-  # Whether a file of this repository defines `method`. A library's own test
-  # class may override Minitest's methods, as ActiveSupport::TestCase does
-  # run_order, and is none of the guards' business.
+  # Whether this repository's test code defines `method`. A library's own
+  # test class may override Minitest's methods, as ActiveSupport::TestCase
+  # does run_order, and is none of the guards' business, installed inside the
+  # repository (vendor/bundle, as CI bundles it) or not.
   def self.ours?(method)
     file = method.source_location.to_a.first
-    !file.nil? && File.expand_path(file).start_with?(ROOT)
+    !file.nil? && File.expand_path(file).start_with?(*TEST_CODE)
   end
 
   def self.instance_names

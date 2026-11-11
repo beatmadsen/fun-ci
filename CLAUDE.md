@@ -45,7 +45,7 @@ rake release            # Push the five platform gems the Gems workflow built fo
 DRY_RUN=1 rake release:platform_gems   # List the platform gems `rake release` would push, pushing none
 DRY_RUN=1 rake release:crate   # Say whether `rake release` would publish the renderer crate, and which version
 script/smoke-platform-gem.sh pkg/<gem> [none]   # Install a gem into an empty GEM_HOME and run it; `none` for the plain gem
-script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile) on every Ruby in ci.yml, in Docker; or name versions
+script/ci-matrix.sh     # The gate as CI runs it (frozen lockfile, gems in vendor/bundle) on every Ruby in ci.yml, in Docker; or name versions
 rake mutation:rust      # cargo-mutants on renderer/; fails under 90% of viable mutants caught. Not in the gate: over an hour on one machine
 rake "mutation:rust:shard[k,n]"   # Shard k of n of those mutants, unjudged; CI runs six side by side, nightly
 rake "mutation:rust:score[n]"     # Judge the n shards' outcomes together; fails if any shard's outcomes are missing

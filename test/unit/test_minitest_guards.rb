@@ -6,6 +6,8 @@ require_relative "../test_helper"
 # down: a test calling Minitest's own `run` from inside itself starts itself
 # over without end, opening a database each time, in every worker at once.
 class TestMinitestGuards < Minitest::Test
+  BUNDLED = "vendor/bundle/ruby/4.0.0/gems/activesupport-8.1.4.1/lib/active_support/test_case.rb"
+
   def test_should_fail_a_test_that_calls_minitest_s_run_from_inside_itself
     result = scratch_test_class { define_method(:test_calls_run) { run } }.new(:test_calls_run).run
 
@@ -46,10 +48,17 @@ class TestMinitestGuards < Minitest::Test
     assert library_test_class("def name = 'theirs'")
   end
 
+  # CI's bundler-cache installs the gems in vendor/bundle, inside the checkout.
+  def test_should_let_a_library_installed_inside_the_repository_define_a_method_of_minitest_s
+    assert library_test_class("def self.run_order = :alpha", at: File.join(MinitestGuards::ROOT, BUNDLED))
+  end
+
   private
 
-  # A test class whose methods a file outside this repository defines.
-  def library_test_class(source) = scratch_test_class { class_eval(source, "/gems/a-library/lib/test_case.rb", 1) }
+  # A test class whose methods a file outside this repository's tests defines.
+  def library_test_class(source, at: "/gems/a-library/lib/test_case.rb")
+    scratch_test_class { class_eval(source, at, 1) }
+  end
 
   def class_defining(name) = scratch_test_class { define_method(name) { nil } }
   def class_defining_class_method(name) = scratch_test_class { define_singleton_method(name) { [] } }

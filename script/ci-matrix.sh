@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Runs the gate as CI does (frozen lockfile, the lockfile's Bundler, the Rust
+# Runs the gate as CI does (frozen lockfile, the lockfile's Bundler, the gems in
+# vendor/bundle, the Rust
 # rust-toolchain.toml pins) on each Ruby in .github/workflows/ci.yml, in a
 # clean Linux container per Ruby. The toolchain is cached in the Docker volume
 # fun-ci-rust; the renderer is built afresh in each container.
@@ -21,6 +22,8 @@ rustup toolchain install >/dev/null
 git init -q . && git add -A >/dev/null && git -c user.name=ci -c user.email=ci@example.invalid commit -qm snapshot
 gem install bundler -v "$(tail -1 Gemfile.lock | tr -d ' ')" --no-document >/dev/null
 bundle config set frozen true >/dev/null
+# As ruby/setup-ruby's bundler-cache does in CI: the gems inside the checkout.
+bundle config set path vendor/bundle >/dev/null
 bundle install --quiet
 bundle exec rake
 SH
