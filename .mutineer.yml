@@ -4,6 +4,11 @@ boot: test/mutation_boot.rb
 framework: minitest
 threshold: 90
 jobs: 4
+# How long the unmutated tests may take, checked together before scoring: the
+# slow stage's budget, the one time limit here. Mutineer's 120 s default is a
+# guard against a hung capture, and a loaded machine took this check past it,
+# so a slow check read as failing tests (test_mutation_capture_timeout.rb).
+capture_timeout: 300
 # Mutants that can't change what any test or user sees, by mutineer's id
 # (a change to the code around one gives it a new id, and it is run again):
 ignore:
