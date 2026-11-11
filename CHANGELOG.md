@@ -25,11 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - A newer commit no longer cancels a run whose slow suite has started. The
   slow suite finishes, and the newer run's slow suite waits for it, shown as
-  `waiting`; a newer commit still cancels one that is waiting. On a branch
-  that takes commits faster than its slow suite runs, slow suites were
-  cancelled nearly every time, and a `wait --need all --follow-branch` could
-  wait until the commits stopped. Now a slow verdict comes within about two
-  slow suites' time.
+  `waiting`; a newer commit still cancels one that is waiting, and when
+  several wait, the newest commit's goes next. A waiting slow suite keeps no
+  other branch's run from getting a worktree. On a branch that takes commits
+  faster than its slow suite runs, slow suites were cancelled nearly every
+  time, and a `wait --need all --follow-branch` could wait until the commits
+  stopped. Now the newest commit's slow suite waits at most for the one
+  already running.
 - A `fun-ci wait` without `--follow-branch` whose run a newer commit cancelled
   runs the commit again, once, and waits on that run. Before, a commit landing
   before the wait first looked at the run left the agent with exit 4 and no

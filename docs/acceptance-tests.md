@@ -632,8 +632,8 @@ the pool's slots, so a run on another branch gets a slot meanwhile.
 *Note:* cancelling every older run starved the slow suite on a branch that
 takes commits faster than the slow suite takes to run: in one project,
 seven in ten slow suites were cancelled, and `wait --follow-branch` waited
-until the commits stopped. Now a slow verdict comes within about two slow
-suites' time. The turn is an flock per branch (Pipeline::SlowTurns), so it
+until the commits stopped. Now the newest commit's slow suite waits at most
+for the one already running, then runs. The turn is an flock per branch (Pipeline::SlowTurns), so it
 ends with the process that held it. Of the slow suites still waiting (an
 agent waits on each, or one is an older commit run again), the one whose
 commit arrived last goes next, as AT-9.20 places them: each holds a ticket
