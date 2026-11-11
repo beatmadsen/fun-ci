@@ -150,8 +150,8 @@ The full state to show. Always complete — never a diff.
 - `hiding` (optional) is true while the footer asks how to hide the branch or
   job under the cursor, as `confirming` is while it asks whether to cancel. The
   renderer then shows `Hide <name>?` and the keys that answer, `s`, `i` and
-  `n`. Ruby leaves it out otherwise. A renderer from before these three
-  fields ignores them, so its footer neither asks nor says that jobs are
+  `n`. Ruby leaves it out otherwise. A renderer older than 2.5.0 ignores
+  these three fields, so its footer neither asks nor says that rows are
   hidden.
 - `runs` holds one run per branch, the branch's newest, in the order the rows
   are shown, which is the order the cursor moves in: a project's branches
