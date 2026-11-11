@@ -24,8 +24,6 @@ jobs:
           - { platform: x86_64-darwin, target: x86_64-apple-darwin, runner: macos-15-intel, smoke: true }
     steps:
       - uses: actions/checkout@v7
-      - run: sudo apt-get install -y musl-tools
-        if: matrix.target == 'x86_64-unknown-linux-musl'
       - run: rustup toolchain install && rustup target add ${{ matrix.target }}
       - run: cargo build --release --locked --manifest-path renderer/Cargo.toml --target ${{ matrix.target }}
       - uses: ruby/setup-ruby@v1
