@@ -377,3 +377,12 @@ fn a_job_row_says_less_of_what_happened_rather_than_give_up_its_project() {
 
     assert!(!lines.contains(&"deps-audit".to_string()), "{lines:?}");
 }
+
+#[test]
+fn a_screen_too_short_for_every_job_keeps_the_one_under_the_cursor() {
+    let runs = [passed(2, "main", "/src/app")];
+    let jobs = [job("soak", "daily", "failed"), job("mutation", "daily", "failed"), job("audit", "daily", "failed")];
+    let grid = shown(&runs, &jobs, Some(3), (100, 18));
+
+    assert!(said(&grid).contains(&"audit".to_string()), "{}", grid.text());
+}

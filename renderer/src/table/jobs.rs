@@ -22,7 +22,7 @@ pub fn title(jobs: &[Job]) -> &'static str {
 
 /// The ways the section can be drawn, most room first: its rows, or folded
 /// when it is quiet; then, last, one line counting its jobs. The job under
-/// the cursor, `lead` (its index), keeps the rows. None when there are no
+/// the cursor, `lead` (its index), keeps the rows (`led`). None when there are no
 /// jobs (one shape, empty). The blank line above the section is the table's to give.
 #[must_use]
 pub fn shapes(board: &Board, lead: Option<usize>, named: bool) -> Vec<Vec<Piece<'_>>> {
@@ -30,17 +30,29 @@ pub fn shapes(board: &Board, lead: Option<usize>, named: bool) -> Vec<Vec<Piece<
     if jobs.is_empty() {
         return vec![Vec::new()];
     }
-    let label = [Piece::JobsLabel(title(jobs))];
-    if lead.is_some() {
-        return vec![label.into_iter().chain(rows(jobs, lead, named)).collect()];
+    let label = Piece::JobsLabel(title(jobs));
+    if let Some(lead) = lead {
+        return led(jobs, lead, named, &label);
     }
-    let first = if quiet(jobs) { label.into_iter().chain([Piece::JobsFolded(jobs)]).collect() } else { label.into_iter().chain(rows(jobs, None, named)).collect() };
+    let first = if quiet(jobs) { vec![label, Piece::JobsFolded(jobs)] } else { std::iter::once(label).chain(rows(jobs, 0..jobs.len(), None, named)).collect() };
     vec![first, vec![Piece::JobsCounted(jobs, title(jobs))]]
 }
 
-/// Each job's row, the lead's between the block's edges.
-fn rows(jobs: &[Job], lead: Option<usize>, named: bool) -> Vec<Piece<'_>> {
-    jobs.iter().enumerate().flat_map(|(i, job)| {
+/// The section with the cursor on job `lead`, most room first: every row,
+/// then fewer, those furthest from the lead's given up first, then the
+/// lead's alone, then without the label, so the cursor's row stays on the
+/// screen however short it is.
+fn led<'a>(jobs: &'a [Job], lead: usize, named: bool, label: &Piece<'a>) -> Vec<Vec<Piece<'a>>> {
+    let window = |keep: usize| {
+        let start = lead.saturating_sub(keep / 2).min(jobs.len() - keep);
+        std::iter::once(label.clone()).chain(rows(jobs, start..start + keep, Some(lead), named)).collect()
+    };
+    (1..=jobs.len()).rev().map(window).chain([rows(jobs, lead..=lead, Some(lead), named)]).collect()
+}
+
+/// The rows of the jobs at `at`, the lead's between the block's edges.
+fn rows(jobs: &[Job], at: impl std::ops::RangeBounds<usize>, lead: Option<usize>, named: bool) -> Vec<Piece<'_>> {
+    jobs.iter().enumerate().filter(|(i, _)| at.contains(i)).flat_map(|(i, job)| {
         let leads = lead == Some(i);
         let row = Piece::Job(job, name(job, named), leads);
         if leads { vec![Piece::Edge(true), row, Piece::Edge(false)] } else { vec![row] }

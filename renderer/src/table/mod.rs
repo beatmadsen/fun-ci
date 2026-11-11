@@ -96,13 +96,16 @@ pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
 /// branch does. When even its last shape leaves the table too little, the
 /// table climbs down its own ladder; and when that leaves a branch off the
 /// screen that the whole screen would show, the section goes, since the jobs
-/// come after the branches. Rows the cursor is on (the section's only shape
-/// then) stay.
+/// come after the branches. With the cursor on a job, the section keeps as
+/// many rows about it as fit beside the table at its least, the cursor's
+/// always, whatever that costs the branches.
 fn with_jobs<'a>((board, frame): (&Board, Frame), sections: &'a [Section<'a>], (lead, room): (Option<u64>, usize), shapes: Vec<Vec<Piece<'a>>>) -> (Fitted<'a>, Option<String>, Vec<Piece<'a>>) {
     let whole = fitted(board, sections, (lead, usize::MAX), frame).0.pieces;
     let apart = |shape: &[Piece]| usize::from(!shape.is_empty() && whole.last() != Some(&Piece::Blank));
-    let (last, yields) = (shapes.len() - 1, shapes.len() > 1);
-    let chosen = shapes.iter().position(|shape| whole.len() + apart(shape) + shape.len() <= room).unwrap_or(last);
+    let on_a_job = jobs::lead(board).is_some();
+    let (last, yields) = (shapes.len() - 1, shapes.len() > 1 && !on_a_job);
+    let beside = if on_a_job { least(board, sections, lead, frame) } else { whole.len() };
+    let chosen = shapes.iter().position(|shape| beside + apart(shape) + shape.len() <= room).unwrap_or(last);
     let section = shapes.into_iter().nth(chosen).unwrap_or_default();
     let reserved = apart(&section);
     let (table, note) = fitted(board, sections, (lead, room.saturating_sub(section.len() + reserved)), frame);
@@ -112,6 +115,11 @@ fn with_jobs<'a>((board, frame): (&Board, Frame), sections: &'a [Section<'a>], (
     }
     let blank = reserved == 1 && table.pieces.last() != Some(&Piece::Blank);
     (table, note, blank.then_some(Piece::Blank).into_iter().chain(section).collect())
+}
+
+/// The fewest lines the table takes: what it keeps when the cursor's job leaves it none.
+fn least(board: &Board, sections: &[Section], lead: Option<u64>, frame: Frame) -> usize {
+    fitted(board, sections, (lead, 0), frame).0.pieces.len()
 }
 
 /// How many branch rows the fitted table leaves off the screen: the passed

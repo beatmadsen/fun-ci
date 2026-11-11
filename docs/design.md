@@ -417,7 +417,9 @@ each project's branches sit under the project's name, one row per branch:
   folds into one pale line, `4 passed · mutation due in 6h`; on a short
   screen it gives up its lines before any branch does, keeping one,
   `daily & weekly: 1 failed, 3 passed`, until that one would cost a branch
-  its place on the screen, when the jobs give way to the branches. The
+  its place on the screen, when the jobs give way to the branches. With
+  the cursor on a job the branches give way instead, and on a screen too
+  short even then the rows furthest from the cursor's go, never its own. The
   cursor moves on from the last branch into the jobs, and `c` cancels a
   running job, asking first, or a job waiting its turn at once; on a job that needs you, the footer says
   `fun-ci why --job NAME`, or the line above it does when the keys leave the
