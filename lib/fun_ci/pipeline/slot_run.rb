@@ -5,6 +5,7 @@ require_relative "background_fork"
 require_relative "stage_runner"
 require_relative "stage_execution"
 require_relative "progress_reporter"
+require_relative "turn_queue"
 
 module FunCi
   module Pipeline
@@ -98,7 +99,8 @@ module FunCi
       end
 
       def take_turn(waiting, recorder, job_id)
-        @seams.slow_turns.take(@commit.branch) do
+        ticket = TurnTicket.new(place: recorder.arrival_place, id: job_id.to_i)
+        @seams.slow_turns.take(@commit.branch, ticket) do
           waiting.close
           yield if recorder.started_in_turn?(job_id)
         end

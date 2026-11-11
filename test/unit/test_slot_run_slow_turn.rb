@@ -24,7 +24,7 @@ class TestSlotRunSlowTurn < Minitest::Test
       @slot = slot
     end
 
-    def take(branch, &)
+    def take(branch, ticket, &)
       @marked_while_waiting = !@slot.mark.closed?
       super
     end
@@ -45,6 +45,11 @@ class TestSlotRunSlowTurn < Minitest::Test
     end
   end
 
+  # A recorder whose run's commit arrived seventh.
+  class PlacedRecorder < FakeRecorder
+    def arrival_place = 7
+  end
+
   # A recorder whose slow suite's run was recorded cancelled while it waited.
   class RefusedTurnRecorder < FakeRecorder
     def started_in_turn?(_job_id) = false
@@ -55,6 +60,22 @@ class TestSlotRunSlowTurn < Minitest::Test
     run_slow(turns)
 
     assert_equal ["main"], turns.asked
+  end
+
+  # Of the branch's waiting slow suites, the newest commit's goes next (SlowTurns).
+  def test_should_queue_for_its_turn_where_its_commit_arrived
+    turns = FakeSlowTurns.new
+    run_slow(turns, recorder: PlacedRecorder.new)
+
+    assert_equal [7], turns.tickets.map(&:place)
+  end
+
+  # Lint and build start first, so the slow suite's stage is the third.
+  def test_should_queue_for_its_turn_as_its_own_stage
+    turns = FakeSlowTurns.new
+    run_slow(turns)
+
+    assert_equal [3], turns.tickets.map(&:id)
   end
 
   def test_should_not_run_the_slow_suite_before_its_turn

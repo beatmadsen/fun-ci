@@ -57,6 +57,11 @@ module FunCi
         db.execute("UPDATE pipeline_runs SET trunk_started_at = ? WHERE id = ?", [at.utc.iso8601, id])
       end
 
+      # The id of the first run of this run's commit on its branch: where the commit arrived.
+      def self.arrival_place(db, id)
+        db.get_first_value("SELECT #{Arrival::FIRST_RUN} FROM pipeline_runs WHERE id = ?", [id])
+      end
+
       def self.update_status(db, id, new_status, at: Time.now)
         db.execute("UPDATE pipeline_runs SET status = ?, updated_at = ? WHERE id = ?", [new_status, at.utc.iso8601, id])
       end

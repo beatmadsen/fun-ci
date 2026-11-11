@@ -10,6 +10,7 @@ module FunCi
       def start_stage(_stage, **); end
       def schedule_stage(_stage, **); end
       def started_in_turn?(_job_id) = true
+      def arrival_place = 0
       def end_stage(_job_id, _status); end
       def keep_exit(_job_id, _exit_status, _signal); end
       def keep_evidence(_job_id, _document); end

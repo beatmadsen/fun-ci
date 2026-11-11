@@ -85,8 +85,16 @@ module FunCi
       end
 
       # Records a slow suite started once its turn comes; false when its run
-      # was cancelled while it waited. A refused write lets it start.
-      def started_in_turn?(job_id) = tolerating { StageJob.started_in_turn?(@db, job_id) } != false
+      # was cancelled while it waited. One whose stage could not be recorded,
+      # or whose start the database refused, starts.
+      def started_in_turn?(job_id)
+        return true unless job_id
+
+        tolerating { StageJob.started_in_turn?(@db, job_id) } != false
+      end
+
+      # Where this run's commit arrived on its branch (Persistence::Arrival); 0 when not known.
+      def arrival_place = (@pipeline_run_id && tolerating { PipelineRun.arrival_place(@db, @pipeline_run_id) }) || 0
 
       # Keeps a failed stage's evidence, and the output's tail where an older
       # fun-ci sharing the database reads it.

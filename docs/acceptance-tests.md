@@ -634,7 +634,11 @@ takes commits faster than the slow suite takes to run: in one project,
 seven in ten slow suites were cancelled, and `wait --follow-branch` waited
 until the commits stopped. Now a slow verdict comes within about two slow
 suites' time. The turn is an flock per branch (Pipeline::SlowTurns), so it
-ends with the process that held it.
+ends with the process that held it. Of the slow suites still waiting (an
+agent waits on each, or one is an older commit run again), the one whose
+commit arrived last goes next, as AT-9.20 places them: each holds a ticket
+named for that place while it waits and runs (Pipeline::TurnQueue), since an
+flock alone hands the turn to whichever waiter the kernel wakes.
 
 ### 9.20 A commit run again keeps the place it arrived in
 **Given** a branch's commits, each arriving with its first run there
