@@ -13,7 +13,13 @@ module FunCi
     # runs, so both end with the process that held them, a slow suite cancelled
     # while it waits included.
     class SlowTurns
-      # wait: blocks until the suite holding the ticket at a path is done.
+      # The most passes taking a turn makes. Each but the last lets a newer
+      # suite run to its end, so this covers more than a branch queues; it
+      # stops a pass that never ends, as a mutant's, all the same.
+      ROUNDS = 100
+
+      # wait: called once each pass with the paths of the newer suites'
+      # tickets to let go first, none on the last; blocks until those are done.
       def initialize(root, wait: TurnQueue::WAIT)
         @root = root
         @wait = wait
@@ -42,16 +48,24 @@ module FunCi
       # held is no live suite's, and the passes end with the tickets seen.
       def in_order(queue, ticket, lock)
         waited = []
-        loop do
+        ROUNDS.times do
           waited.concat(let_go(queue.newer_than(ticket) - waited))
-          lock.flock(File::LOCK_EX)
-          return if (queue.newer_than(ticket) - waited).empty?
-
-          lock.flock(File::LOCK_UN)
+          return if turn_taken?(queue, ticket, lock, waited)
         end
+        lock.flock(File::LOCK_EX)
       end
 
-      def let_go(tickets) = tickets.each { |path| @wait.call(path) }
+      # Takes the turn, and whether no suite newer than those `waited` for
+      # came meanwhile; lets the turn go again if one did.
+      def turn_taken?(queue, ticket, lock, waited)
+        lock.flock(File::LOCK_EX)
+        return true if (queue.newer_than(ticket) - waited).empty?
+
+        lock.flock(File::LOCK_UN)
+        false
+      end
+
+      def let_go(tickets) = tickets.tap { @wait.call(tickets) }
 
       def queue_dir(branch) = File.join(@root, digest(branch))
       def digest(branch) = Digest::SHA256.hexdigest(branch)[0, 16]

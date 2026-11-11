@@ -17,8 +17,10 @@ module FunCi
     # appears already held (locked under a name of its own, then renamed), so
     # one nobody holds was left by a suite that died, and goes.
     class TurnQueue
-      # Blocks until the suite holding the ticket at `path` is done.
-      WAIT = lambda do |path|
+      # Blocks until the suite holding the ticket at each of `paths` is done.
+      WAIT = ->(paths) { paths.each { |path| TurnQueue.wait_on(path) } }
+
+      def self.wait_on(path)
         File.open(path) { |file| file.flock(File::LOCK_SH) }
       rescue Errno::ENOENT
         nil
