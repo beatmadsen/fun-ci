@@ -30,7 +30,7 @@ impl Resting {
     }
 }
 
-/// What to rest on, given `runs` (newest first) as of `now_ms`.
+/// What to rest on, given the board's `runs` (in any order) as of `now_ms`.
 #[must_use]
 pub fn resting(runs: &[Run], now_ms: i64) -> Resting {
     let Some((outcome, ended_at)) = latest_outcome(runs) else { return Resting::Quiet(None) };
@@ -43,9 +43,13 @@ pub fn resting(runs: &[Run], now_ms: i64) -> Resting {
     }
 }
 
-/// How the newest run that passed or failed ended, and when, in epoch seconds.
+/// How the run that passed or failed last ended, and when, in epoch seconds:
+/// the board puts what needs you first, not what ended last, and a row the
+/// user hid and then asked to see tells nothing of how things stand. Of two
+/// that ended in the same second, the one shown first, which needs you more.
 fn latest_outcome(runs: &[Run]) -> Option<(Outcome, i64)> {
-    let run = runs.iter().find(|run| matches!(run.status(), "passed" | "failed" | "timeout"))?;
+    let finished = runs.iter().rev().filter(|run| run.hidden.is_none() && matches!(run.status(), "passed" | "failed" | "timeout"));
+    let run = finished.max_by_key(|run| run.state.updated_at)?;
     let outcome = if run.status() == "passed" { Outcome::Passed } else { Outcome::Failed };
     Some((outcome, run.state.updated_at))
 }

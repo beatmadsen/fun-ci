@@ -1,7 +1,7 @@
 //! AT-7.5, AT-7.7: what the header rests on, from the runs and the clock.
 
 use fun_ci_renderer::animator::{Outcome, Resting, resting};
-use fun_ci_renderer::model::Run;
+use fun_ci_renderer::model::{Hidden, Run};
 use serde_json::Value;
 
 use crate::support::boards::run;
@@ -43,4 +43,22 @@ fn should_go_quiet_without_a_lamp_when_no_run_has_passed_or_failed() {
 #[test]
 fn should_count_a_run_that_timed_out_as_failed() {
     assert_eq!(resting(&[ended("timeout", 10)], NOW_MS), Resting::Warning);
+}
+
+#[test]
+fn should_rest_on_the_run_that_finished_last_when_the_board_shows_an_older_failure_first() {
+    let board_order = [ended("failed", 260_000), ended("passed", 10)];
+    assert_eq!(resting(&board_order, NOW_MS), Resting::Calm);
+}
+
+#[test]
+fn should_leave_a_hidden_run_out_of_the_latest_outcome() {
+    let mut ignored = ended("failed", 10);
+    ignored.hidden = Some(Hidden::Ignored);
+    assert_eq!(resting(&[ignored, ended("passed", 600)], NOW_MS), Resting::Quiet(Some(Outcome::Passed)));
+}
+
+#[test]
+fn should_rest_on_the_row_shown_first_when_two_runs_ended_in_the_same_second() {
+    assert_eq!(resting(&[ended("failed", 10), ended("passed", 10)], NOW_MS), Resting::Warning);
 }

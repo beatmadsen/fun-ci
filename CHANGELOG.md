@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   --need all` was waiting on that very stage.
 
 ### Fixed
+- The console's header rests on the run that finished last, and its lamp
+  shows how that run went. Before, it took the first row on the board, which
+  is the one that most needs you, so a branch that failed days ago kept the
+  hazard sign and a red lamp up after every later pass. A hidden row shown
+  with `a` no longer counts either.
 - The console opens with the cursor on the first row. Before, it had none
   until `j` or `k`, so the keys that act on a row were missing at first
   although the block sat on a row.

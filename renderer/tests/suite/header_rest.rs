@@ -32,9 +32,9 @@ fn finished(id: u64, status: &str) -> Value {
     run(id, status, &[])
 }
 
-/// A run that ended with `status` `ago` seconds before the board's clock.
-fn finished_ago(status: &str, ago: i64) -> Value {
-    let mut ended = finished(1, status);
+/// Run `id`, which ended with `status` `ago` seconds before the board's clock.
+fn finished_ago(id: u64, status: &str, ago: i64) -> Value {
+    let mut ended = finished(id, status);
     ended["updated_at"] = Value::from(1_790_000_000 - ago);
     ended
 }
@@ -51,17 +51,17 @@ fn should_rest_on_the_warning_scene_after_a_run_failed() {
 
 #[test]
 fn should_rest_on_the_latest_finished_run() {
-    assert_eq!(resting_on(&[finished(3, "failed"), finished(2, "passed")]), "warning");
+    assert_eq!(resting_on(&[finished_ago(2, "passed", 60), finished_ago(3, "failed", 10)]), "warning");
 }
 
 #[test]
 fn should_rest_calm_when_the_latest_finished_run_passed_after_an_older_one_failed() {
-    assert_eq!(resting_on(&[finished(3, "passed"), finished(2, "failed")]), "calm");
+    assert_eq!(resting_on(&[finished_ago(2, "failed", 60), finished_ago(3, "passed", 10)]), "calm");
 }
 
 #[test]
 fn should_rest_on_a_quiet_scene_five_minutes_after_the_latest_run_ended() {
-    let scene = resting_on(&[finished_ago("passed", 300)]);
+    let scene = resting_on(&[finished_ago(1, "passed", 300)]);
     assert!(QUIET.contains(&scene.as_str()), "{scene}");
 }
 
