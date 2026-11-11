@@ -7,7 +7,8 @@ require "fun_ci/pipeline/slot_lock"
 # Of a branch's slow suites waiting their turn, the one whose commit arrived
 # last goes next (acceptance-tests.md, AT-9.19, AT-9.20). Each holds a ticket
 # while it waits and runs; `wait` stands in for blocking until a newer
-# ticket's suite is done, and is the test's say in when that happens.
+# ticket's suite is done, and is the test's say in when that happens. Which
+# ticket is newer is the ticket's own (test/unit/test_turn_ticket.rb).
 class TestSlowTurnOrder < Minitest::Test
   include SlowTurnKit
 
@@ -33,15 +34,6 @@ class TestSlowTurnOrder < Minitest::Test
     ran = turns.take("main", TICKET.new(place: 5, id: 9)) { :ran }
 
     assert_equal :ran, ran
-  end
-
-  def test_should_count_a_later_run_of_the_same_commit_as_newer
-    newer = hold_ticket(TICKET.new(place: 3, id: 9))
-    turns(wait: finishing(newer)).take("main", TICKET.new(place: 3, id: 8)) do
-      @log << :older_ran
-    end
-
-    assert_equal %i[newer_done older_ran], @log
   end
 
   def test_should_not_wait_for_a_newer_suite_of_another_branch
