@@ -49,7 +49,7 @@ module FunCi
 
       private
 
-      # Only while the footer asks how to hide a job, as the protocol lets a board leave it out.
+      # Only while the footer asks how to hide a branch or a job, as the protocol lets a board leave it out.
       def hiding = @key_handler.asking == :hide ? { hiding: true } : {}
 
       # The last page of runs while the cursor is on a job.

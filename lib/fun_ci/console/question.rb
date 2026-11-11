@@ -8,21 +8,28 @@ module FunCi
     # on it (design.md, The console). Each says what it `asks`, does what a
     # key it is given answers (`take`), and says whether that key ends it.
     module Question
-      # Whether to cancel a running run or job, whose processes get killed: `y` does.
-      class Cancel
-        ENDS = ["y", "n", :escape].freeze
-
-        # kind: :run or :job; row: the run, or the job's row.
+      # What each question holds, the board it acts on and the row it asks
+      # about, and which keys end it: its class's ENDS.
+      module Asked
+        # kind: :run or :job; row: the branch's run, or the job's row.
         def initialize(board_data, kind, row)
           @board_data = board_data
           @kind = kind
           @row = row
         end
 
+        def ended_by?(key) = self.class::ENDS.include?(key)
+      end
+
+      # Whether to cancel a running run or job, whose processes get killed: `y` does.
+      class Cancel
+        include Asked
+
+        ENDS = ["y", "n", :escape].freeze
+
         def asks = :cancel
 
         def take(key) = key == "y" && carry_out
-        def ended_by?(key) = ENDS.include?(key)
 
         def carry_out = @kind == :job ? @board_data.cancel_job(@row.run[:id]) : @board_data.cancel_run(@row[:id])
 
@@ -35,20 +42,14 @@ module FunCi
 
       # How to hide a branch or a job: `s` snoozes it, until its next run; `i` ignores it, until shown again.
       class Hide
+        include Asked
+
         KINDS = { "s" => "snoozed", "i" => "ignored" }.freeze
         ENDS = [*KINDS.keys, "n", :escape].freeze
-
-        # kind: :run or :job; row: the branch's run, or the job's row.
-        def initialize(board_data, kind, row)
-          @board_data = board_data
-          @kind = kind
-          @row = row
-        end
 
         def asks = :hide
 
         def take(key) = KINDS.key?(key) && hide(KINDS[key])
-        def ended_by?(key) = ENDS.include?(key)
 
         # Whether `place`, [kind, row] under the cursor now, is still the branch or job asked about.
         def about?(place) = place.first == @kind && CursorRows.key(*place) == CursorRows.key(@kind, @row)

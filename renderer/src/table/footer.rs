@@ -37,9 +37,10 @@ pub struct Offer {
 }
 
 /// The keys, `c cancel` among them only while a run is running or waits to
-/// start, or a job runs, and `h` only while the cursor is on a job; or the
-/// question naming the run or job the cursor would cancel, `y` and `n`; or
-/// the one asking how to hide the job under the cursor (`hiding`).
+/// start, or a job runs, and `h` while the cursor is on a row, to hide it or,
+/// once hidden, show it (`hiding::key`); or the question naming the run or
+/// job the cursor would cancel, `y` and `n`; or the one asking how to hide
+/// the branch or job under the cursor (`hiding`).
 #[must_use]
 pub fn keys(board: &Board) -> Offer {
     if let Some((name, sha)) = confirming(board) {
