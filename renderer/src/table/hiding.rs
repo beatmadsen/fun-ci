@@ -27,17 +27,23 @@ pub fn asked(board: &Board) -> Option<Offer> {
 
 /// `a shows 2 hidden jobs`; once they are shown, `a hides hidden jobs`;
 /// nothing when none is hidden, or while the footer asks a question, when
-/// `a` does nothing. The key comes first, so a footer with little room
-/// cuts the count, not the key.
+/// `a` does nothing.
 #[must_use]
 pub fn aside(board: &Board) -> String {
+    asides(board)[0].clone()
+}
+
+/// What `aside` says, then in fewer words and fewer again, for a footer
+/// with little room: `a shows 2 hidden`, `2 hidden`.
+#[must_use]
+pub fn asides(board: &Board) -> [String; 3] {
     let shown = board.jobs.iter().any(|job| job.hidden.is_some());
     match board.hidden_jobs {
-        0 => String::new(),
-        _ if board.view.hiding || board.view.confirming => String::new(),
-        _ if shown => "a hides hidden jobs".to_string(),
-        1 => "a shows 1 hidden job".to_string(),
-        many => format!("a shows {many} hidden jobs"),
+        0 => Default::default(),
+        _ if board.view.hiding || board.view.confirming => Default::default(),
+        _ if shown => ["a hides hidden jobs", "a hides hidden", "a hides"].map(str::to_string),
+        1 => ["a shows 1 hidden job", "a shows 1 hidden", "1 hidden"].map(str::to_string),
+        many => [format!("a shows {many} hidden jobs"), format!("a shows {many} hidden"), format!("{many} hidden")],
     }
 }
 

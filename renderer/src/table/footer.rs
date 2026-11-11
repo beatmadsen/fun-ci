@@ -81,7 +81,12 @@ pub fn offered(offer: &Offer, at: usize) -> (Vec<Part>, usize) {
 /// `2 passed not shown`, or nothing when nothing was left out.
 #[must_use]
 pub fn aside(unshown: usize) -> String {
-    if unshown == 0 { String::new() } else { format!("{unshown} passed not shown") }
+    unshown_said(unshown)[0].clone()
+}
+
+/// What `aside` says, then in fewer words and fewer again: `2 not shown`, `+2`.
+fn unshown_said(unshown: usize) -> [String; 3] {
+    if unshown == 0 { Default::default() } else { [format!("{unshown} passed not shown"), format!("{unshown} not shown"), format!("+{unshown}")] }
 }
 
 /// Each stale trunk with its project: `agent-tome: trunk last fetched 2h ago`.
@@ -108,34 +113,48 @@ pub fn why_job(board: &Board) -> Option<String> {
 }
 
 /// That command, when it fits whole beside the footer's keys on a screen
-/// `width` wide laid out in `layout`. A command cut short is one that can't
-/// be typed, so one that doesn't fit goes above the footer instead.
+/// `width` wide laid out in `layout`, with all it says of the `unshown`
+/// passed rows and the hidden jobs after it. A command cut short is one that
+/// can't be typed, so one that doesn't fit goes above the footer instead.
 #[must_use]
-pub fn why_job_beside(board: &Board, layout: Columns, width: usize) -> Option<String> {
+pub fn why_job_beside(board: &Board, layout: Columns, width: usize, unshown: usize) -> Option<String> {
     let (_, end) = offered(&keys(board), layout.label);
-    why_job(board).filter(|command| end + APART + columns(command) + layout.margin <= width)
+    let [said, ..] = asides(board, unshown);
+    why_job(board).map(|command| joined([command, said])).filter(|beside| end + APART + columns(beside) + layout.margin <= width)
 }
 
-/// What the footer says beside its keys: how many passed rows the screen
-/// was too short for, then how many jobs are hidden.
-fn asides(board: &Board, unshown: usize) -> String {
-    let said = [aside(unshown), hiding::aside(board)];
+/// What the footer says beside its keys, in fewer words at each step: how
+/// many passed rows the screen was too short for, then how many jobs are hidden.
+fn asides(board: &Board, unshown: usize) -> [String; 3] {
+    let (passed, hidden) = (unshown_said(unshown), hiding::asides(board));
+    [0, 1, 2].map(|at| joined([passed[at].clone(), hidden[at].clone()]))
+}
+
+/// What is said, the empty left out, one after the other.
+fn joined(said: [String; 2]) -> String {
     said.into_iter().filter(|said| !said.is_empty()).collect::<Vec<_>>().join(" · ")
 }
 
 /// The footer: the keys where the labels start, and beside them, quieter,
-/// the command that says why the job under the cursor failed if it fits, or
-/// how many passed rows the screen was too short for and how many jobs are
-/// hidden, cut if it must be.
+/// the command that says why the job under the cursor failed if it fits,
+/// and how many passed rows the screen was too short for and how many jobs
+/// are hidden, in as many words as fit, cut only when the fewest don't.
 #[must_use]
 pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line<'static> {
     let width = usize::from(frame.width);
     let offer = fitted(keys(board), drawn.columns.label, width.saturating_sub(drawn.columns.margin));
     let (mut parts, end) = offered(&offer, drawn.columns.label);
     let keys_end = end + APART;
-    let said = why_job_beside(board, drawn.columns, width).unwrap_or_else(|| asides(board, drawn.unshown));
-    let aside = cut(&said, width.saturating_sub(keys_end + drawn.columns.margin));
+    let room = width.saturating_sub(keys_end + drawn.columns.margin);
+    let said = why_job_beside(board, drawn.columns, width, drawn.unshown).unwrap_or_else(|| briefest_fitting(asides(board, drawn.unshown), room));
+    let aside = cut(&said, room);
     let aside_at = width.saturating_sub(drawn.columns.margin + columns(&aside)).max(keys_end);
     parts.push((aside_at, aside, ink(NOTE).italic()));
     placed(parts)
+}
+
+/// The longest of `said` that fits in `room`, or the briefest.
+fn briefest_fitting(said: [String; 3], room: usize) -> String {
+    let [longest, fewer, fewest] = said;
+    [longest, fewer].into_iter().find(|said| columns(said) <= room).unwrap_or(fewest)
 }

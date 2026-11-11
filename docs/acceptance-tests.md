@@ -1198,7 +1198,10 @@ and the next one opened on this machine.
 ### 13.31 `a` shows the hidden jobs, where `h` brings one back
 **Given** jobs hidden by 13.29 or 13.30
 **Then** `board` carries how many (`hidden_jobs`), and the footer says
-`a shows 2 hidden jobs` beside its keys, except while it asks a question.
+`a shows 2 hidden jobs` beside its keys, except while it asks a question:
+beside a failed job's `fun-ci why --job` command when both fit, the command
+otherwise taking the line above, and in fewer words on a narrow screen
+(`a shows 2 hidden`, `2 hidden`), cut only where even those don't fit.
 **When** `a` is pressed
 **Then** the hidden jobs come last in the section, each pale, without a
 stripe, saying `snoozed until it runs again` or `ignored`; none makes the

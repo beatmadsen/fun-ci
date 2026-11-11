@@ -376,7 +376,8 @@ each project's branches sit under the project's name, one row per branch:
   up.
 - On a short screen the table gives up, in this order: the passed rows fold
   into one line per project; the folded lines go, counted beside the keys
-  (`2 passed not shown`), and with them the label of a project left with no
+  (`2 passed not shown`, or `2 not shown` and then `+2` where the screen is
+  narrow), and with them the label of a project left with no
   row; the blank lines between rows close up; the labels
   go, each row then naming its project first (`strings-kata  a-life…`), and a
   stale trunk takes a line of its own above the keys. The cursor's row always
@@ -419,7 +420,8 @@ each project's branches sit under the project's name, one row per branch:
   cursor moves on from the last branch into the jobs, and `c` cancels a
   running job, asking first, or a job waiting its turn at once; on a job that needs you, the footer says
   `fun-ci why --job NAME`, or the line above it does when the keys leave the
-  command too little room to be read whole. Jobs play no scene and touch
+  command too little room to be read whole beside what the footer says of
+  rows not shown and jobs hidden. Jobs play no scene and touch
   neither the streak nor the lamp: the header tells the story of the commits.
 - A job whose line tells you nothing can be put out of view. `h` on a job
   asks how, naming it (`Hide soak?` with `s snooze`, `i ignore` and `n no`):
@@ -429,7 +431,9 @@ each project's branches sit under the project's name, one row per branch:
   it sits beside `j`, and a job ignored by a slip of the finger would fail
   unseen. A hidden job is no row, takes no line, and counts in none of the
   section's lines; a section with every job hidden is not drawn. Beside the
-  keys the footer says `a shows 2 hidden jobs`. `a` puts the hidden jobs
+  keys the footer says `a shows 2 hidden jobs`, in fewer words where the
+  screen is narrow (`a shows 2 hidden`, then `2 hidden`), and cut only where
+  even those don't fit. `a` puts the hidden jobs
   last in the section, pale and without a stripe, each saying `snoozed until
   it runs again` or `ignored` in place of what happened, and the footer then
   says `a hides hidden jobs`. `h` on one of them brings it back at once.

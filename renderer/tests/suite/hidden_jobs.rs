@@ -149,3 +149,36 @@ fn the_footer_shows_no_command_while_it_asks_how_to_hide_a_failed_job() {
 
     assert!(!grid.text().contains("fun-ci why"), "{}", grid.text());
 }
+
+#[test]
+fn the_footer_says_jobs_are_hidden_beside_the_command_for_a_failed_job() {
+    let grid = shown(&[job("soak", "failed", None)], &json!({"cursor": 1, "hidden_jobs": 1}), (160, 40));
+
+    assert!(footer(&grid).ends_with("fun-ci why --job soak · a shows 1 hidden job"), "{}", grid.text());
+}
+
+// The command can't be cut and the count can't be left out, so the command takes the line above.
+#[test]
+fn the_command_for_a_failed_job_goes_above_the_footer_when_the_hidden_jobs_leave_it_no_room() {
+    let grid = shown(&[job("soak", "failed", None)], &json!({"cursor": 1, "hidden_jobs": 1}), (80, 40));
+    let text = grid.text();
+    let above = text.lines().any(|line| line.trim() == "fun-ci why --job soak");
+
+    assert_eq!((above, footer(&grid).ends_with("a shows 1 hidden job")), (true, true), "{text}");
+}
+
+#[test]
+fn a_narrow_footer_says_how_many_jobs_are_hidden_in_fewer_words_rather_than_cut() {
+    let grid = shown(&[job("mutation", "passed", None)], &json!({"cursor": 1, "hidden_jobs": 1}), (60, 30));
+
+    assert!(footer(&grid).ends_with(" 1 hidden"), "{}", grid.text());
+}
+
+#[test]
+fn a_narrow_footer_says_what_a_short_screen_left_out_in_fewer_words_rather_than_cut() {
+    let runs = [failed(3, "feat", "/src/app"), passed(2, "main", "/src/app"), passed(1, "old", "/src/app")];
+    let board = json!({"t": "board", "now": NOW, "cursor": null, "runs": runs, "hidden_jobs": 1});
+    let grid = screen_with(&board, (60, 19));
+
+    assert!(!footer(&grid).contains('…'), "{}", grid.text());
+}

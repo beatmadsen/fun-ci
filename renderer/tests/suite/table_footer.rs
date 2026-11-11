@@ -125,7 +125,7 @@ fn what_was_left_out_ends_at_the_right_margin() {
 fn what_was_left_out_keeps_five_columns_from_the_keys() {
     let text = footer_text(60, 2);
 
-    assert_eq!(text.find("2 passed"), Some(12 + " j/k  move    ".len() + " q  quit".len() + 5));
+    assert_eq!(text.find("2 not shown"), Some(12 + " j/k  move    ".len() + " q  quit".len() + 5));
 }
 
 #[test]
