@@ -411,8 +411,8 @@ each project's branches sit under the project's name, one row per branch:
   that is due says it runs on your next commit, since only a commit starts
   it. With more than one project on the board, each row names its project
   first (`fun-ci · soak`), cut where the column is too narrow for both
-  (`fun-c… · soak`), saying what happened in fewer words to leave it room,
-  and only where not even that fits the job's own name alone; the questions that hide or cancel a job name it the same way. The rows go failed, ran out of time,
+  (`fun-c… · soak`), and only where not even that fits the job's own name
+  alone; the questions that hide or cancel a job name it the same way. The rows go failed, ran out of time,
   running, waiting its turn (`starts in 6h on main 3a1f9c2`), due, passed. When nothing in the section needs you or runs, it
   folds into one pale line, `4 passed · mutation due in 6h`; on a short
   screen it gives up its lines before any branch does, keeping one,

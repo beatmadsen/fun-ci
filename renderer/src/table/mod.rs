@@ -82,7 +82,7 @@ pub fn draw(board: &Board, frame: Frame, room: usize) -> Drawn {
     let (fitted, note, section) = with_jobs((board, frame), &sections, (lead, room), jobs::shapes(board, job_lead, named));
     let pieces: Vec<Piece> = fitted.pieces.iter().cloned().chain(section).collect();
     let tags = (fitted.flat && sections.len() > 1).then(|| widest_project(&sections));
-    let (columns, brief) = laid_out((board, frame), longest_name(board, named) + tags.map_or(0, |tag| tag + 2), job_rows::least_named(board, named));
+    let (columns, brief) = laid_out(board, frame, longest_name(board, named) + tags.map_or(0, |tag| tag + 2));
     let note = above_footer(board, (columns, fitted.unshown), frame).or(note);
     let paint_with = Paint { columns, frame, lead, stale: &board.stale_trunks, tags, brief };
     let lines = pieces.iter().map(|piece| paint(piece, &paint_with)).collect();
@@ -195,12 +195,10 @@ fn longest_name(board: &Board, named: bool) -> usize {
 }
 
 /// The columns for names `names` wide, and whether the words must be brief
-/// to leave the names their room: the branches' names cut no shorter than a
-/// name should be, and every job's row with some of its project's name
-/// (`least_named`).
-fn laid_out((board, frame): (&Board, Frame), names: usize, least_named: usize) -> (Columns, bool) {
+/// to leave the names their room.
+fn laid_out(board: &Board, frame: Frame, names: usize) -> (Columns, bool) {
     let full = Columns::fit(frame.width, names, longest_words(board, frame, false));
-    if !full.cramped(names) && full.name >= least_named {
+    if !full.cramped(names) {
         return (full, false);
     }
     (Columns::fit(frame.width, names, longest_words(board, frame, true)), true)

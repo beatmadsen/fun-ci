@@ -359,25 +359,6 @@ fn a_job_whose_project_s_name_fits_is_named_with_it_beside_one_whose_project_s_i
 
     assert!(lines.contains(&"tool · deps-audit".to_string()), "{lines:?}");
 }
-
-// Two projects' failed jobs, whose long words leave the names little room at 100 columns.
-fn two_projects_failing() -> Grid {
-    let runs = [passed(2, "main", "/src/alpha")];
-    let jobs: Vec<Value> = [("/src/alpha", "deps-audit"), ("/src/alpha", "mutation"), ("/src/beta", "deps-audit")].iter().map(|(project, name)| {
-        let mut failing = job(name, "daily", "failed");
-        failing["project"] = json!(project);
-        failing
-    }).collect();
-    shown(&runs, &jobs, None, (100, 40))
-}
-
-#[test]
-fn a_job_row_says_less_of_what_happened_rather_than_give_up_its_project() {
-    let lines = said(&two_projects_failing());
-
-    assert!(!lines.contains(&"deps-audit".to_string()), "{lines:?}");
-}
-
 #[test]
 fn a_screen_too_short_for_every_job_keeps_the_one_under_the_cursor() {
     let runs = [passed(2, "main", "/src/app")];
@@ -413,4 +394,18 @@ fn a_wide_screen_names_two_projects_jobs_and_says_in_full_what_happened() {
     let grid = shown(&runs, &[job("deps-audit", "daily", "failed")], None, (160, 40));
 
     assert!(grid.text().contains("failed after 3h12m on main 9e0b1d4"), "{}", grid.text());
+}
+
+// Names are cut before a branch's row says less: at 100 columns two projects'
+// jobs leave the stages' words whole.
+#[test]
+fn a_100_column_screen_with_two_projects_jobs_says_in_full_what_each_branch_did() {
+    let runs = [passed(2, "main", "/src/alpha"), passed(1, "main", "/src/beta")];
+    let mut soak = job("soak", "weekly", "failed");
+    soak["project"] = json!("/src/alpha");
+    let mut audit = job("nightly-dependency-licence-audit", "daily", "passed");
+    audit["project"] = json!("/src/beta");
+    let grid = shown(&runs, &[soak, audit], None, (100, 40));
+
+    assert!(grid.text().contains("all four stages passed"), "{}", grid.text());
 }
