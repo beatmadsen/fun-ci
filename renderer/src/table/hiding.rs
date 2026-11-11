@@ -12,6 +12,10 @@ const HIDE: Key = ("h", "hide");
 const SNOOZE: Key = ("s", "snooze until its next run");
 const IGNORE: Key = ("i", "ignore until shown again");
 
+/// What the jobs' label, or the line counting them, says of the key that
+/// hides a job while the cursor isn't on one.
+pub const HINT: &str = "h on a job hides it";
+
 /// The answers' words where the footer has too little room to say how long a job stays hidden.
 pub const BRIEFLY: [(Key, Key); 2] = [(SNOOZE, ("s", "snooze")), (IGNORE, ("i", "ignore"))];
 const SHOW: Key = ("h", "show");

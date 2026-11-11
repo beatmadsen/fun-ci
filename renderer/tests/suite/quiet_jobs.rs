@@ -438,3 +438,12 @@ fn the_jobs_label_says_nothing_of_hiding_while_the_cursor_is_on_a_job() {
 
     assert!(!line_of(&grid, "D A I L Y").contains("hides"), "{}", grid.text());
 }
+
+// A busy board counts its jobs on one line, with no label to say it on.
+#[test]
+fn the_line_counting_the_jobs_says_how_to_hide_one() {
+    let grid = two_branches_and_two_jobs_at(29, Some(1));
+    let counted = grid.text().lines().find(|line| line.contains("daily: 1 failed")).unwrap_or_default().to_string();
+
+    assert!(counted.contains("h on a job hides it"), "{}", grid.text());
+}

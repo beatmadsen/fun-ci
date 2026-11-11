@@ -1176,7 +1176,8 @@ process has yet to start it, each says `starts now`.
 
 ### 13.29 `h` on a job asks how to hide it, and `s` snoozes it until it runs again
 **Given** jobs on the board with their label, the cursor not on one
-**Then** the label says `h on a job hides it` where it fits.
+**Then** the label, or the line counting the jobs, says `h on a job hides
+it` where it fits.
 **Given** the cursor on a job in the console
 **When** `h` is pressed
 **Then** the footer asks `Hide <name>?` with `s snooze until its next run`,

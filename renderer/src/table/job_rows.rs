@@ -6,6 +6,7 @@
 use ratatui::style::Style;
 
 use super::job_words::{due_in, said, said_briefly};
+use super::hiding;
 use super::jobs::needs_you;
 use super::night::{BRANCH, CURSOR, FAILED, LABEL, NOTE, PASSED, QUIET, RUNNING, TIMED_OUT, ink, pale};
 use super::paint::{Paint, Part};
@@ -114,15 +115,23 @@ pub fn folded(jobs: &[Job], paint: &Paint) -> Vec<Part> {
     vec![(paint.columns.branch, "✓".to_string(), ink(pale(PASSED))), (paint.columns.branch + 2, text, ink(pale(PASSED)))]
 }
 
-/// The section on one line, `daily & weekly: 1 failed, 3 passed`, its
+/// The section on one line, `daily & weekly: 1 failed, 3 passed`, and how
+/// to hide a job where that fits too; its
 /// stripe in the colour of the job that most needs you.
 #[must_use]
 pub fn counted(jobs: &[Job], title: &str, paint: &Paint) -> Vec<Part> {
-    let mut parts = vec![(paint.columns.label, format!("{title}: {}", counts(jobs)), ink(NOTE).italic())];
+    let said = format!("{title}: {}", counts(jobs));
+    let hint_at = paint.columns.label + width_of(&said) + HINT_APART;
+    let hinted = hint_at + width_of(hiding::HINT) <= paint.columns.age_end;
+    let mut parts = vec![(paint.columns.label, said, ink(NOTE).italic())];
+    parts.extend(hinted.then(|| (hint_at, hiding::HINT.to_string(), ink(QUIET).italic())));
     let most = jobs.iter().find(|job| needs_you(job)).or_else(|| jobs.iter().find(|job| job.status == JobStatus::Running));
     parts.extend(most.and_then(accent).map(|colour| (paint.columns.margin, "▌".to_string(), ink(colour))));
     parts
 }
+
+/// The space between the jobs' counts and the hint after them.
+const HINT_APART: usize = 6;
 
 /// How many jobs are in each state, most urgent first, and how many of
 /// those shown are hidden ones: `1 failed, 3 passed, 1 hidden`.
