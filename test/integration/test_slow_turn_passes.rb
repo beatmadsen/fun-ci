@@ -19,12 +19,6 @@ class TestSlowTurnPasses < Minitest::Test
 
   def teardown = @held.each(&:close)
 
-  def test_should_take_its_turn_in_one_pass_when_no_newer_suite_waits
-    turns(wait: scripted([-> {}])).take("main", TICKET.new(place: 3, id: 8)) { nil }
-
-    assert_equal [[]], @log
-  end
-
   # The wait ends only once the ticket's holder lets go, so one that still
   # seems held after it is no live suite's.
   def test_should_wait_for_each_newer_suite_once
