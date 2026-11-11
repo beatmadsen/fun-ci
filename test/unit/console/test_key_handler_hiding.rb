@@ -81,6 +81,13 @@ class TestKeyHandlerHiding < Minitest::Test
     assert_equal :hide, @handler.asking
   end
 
+  # Ctrl-C comes as `q`, and quits whatever is asked.
+  def test_should_quit_at_q_while_it_asks
+    press("j", "j", "h")
+
+    assert_equal :quit, @handler.handle_key("q")
+  end
+
   def test_should_leave_a_hidden_job_out_of_the_rows_in_view
     press("j", "j", "h", "s")
 

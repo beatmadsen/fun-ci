@@ -383,7 +383,7 @@ each project's branches sit under the project's name, one row per branch:
   stays on screen, the rows it pushed off counted (`… 4 more below`).
 - `j` and `k` (or the arrows) move the cursor, which takes the block; `c`
   cancels the run under it, and is offered only while a run is running or
-  waits to start; `q` quits. The footer shows each key on a cap with what it
+  waits to start; `q` (or Ctrl-C) quits, even while the footer asks. The footer shows each key on a cap with what it
   does beside it. Cancelling a scheduled run happens at once; a running one
   asks first, naming it (`Cancel feat/search (d4e5f67)?` with `y yes` and
   `n no`), because a process gets killed. The cursor stays on its row as

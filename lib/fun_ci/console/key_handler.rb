@@ -25,10 +25,11 @@ module FunCi
 
       # :quit when the key ends the session.
       def handle_key(key)
+        return :quit if key == "q"
+
         rows = self.rows
         follow(rows.runs, rows.jobs)
         return answer(key) if @question
-        return :quit if key == "q"
 
         act(key, rows)
       end

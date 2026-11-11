@@ -63,11 +63,12 @@ class TestKeyHandler < Minitest::Test
     assert_equal [[], true], [@board_data.cancelled, handler.confirming?]
   end
 
-  def test_should_not_quit_on_q_while_confirming
+  # Ctrl-C comes as `q` (renderer-protocol.md, `key`).
+  def test_should_quit_on_q_while_confirming
     handler = handler_over("running")
     press(handler, "j", "c")
 
-    assert_nil handler.handle_key("q")
+    assert_equal :quit, handler.handle_key("q")
   end
 
   def test_should_keep_the_cursor_on_the_first_run_on_k

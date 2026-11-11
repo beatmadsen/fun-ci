@@ -26,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   --need all` was waiting on that very stage.
 
 ### Fixed
+- `q` and Ctrl-C quit the console while the footer asks a question too.
+  Before, they were taken as no answer and did nothing.
 - In the console, the cursor stays on its branch or job when the rows
   reorder. Before, it kept its place on screen, so a row that moved left it on
   another one, and an answer to `Cancel ...?` could cancel a run other than the

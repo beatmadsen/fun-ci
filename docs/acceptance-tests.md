@@ -1179,7 +1179,7 @@ process has yet to start it, each says `starts now`.
 **When** `h` is pressed
 **Then** the footer asks `Hide <name>?` with `s snooze`, `i ignore` and `n no`,
 the name cut where the screen is too narrow for the keys; `n` and `Esc` hide
-nothing, and any other key is no answer.
+nothing, `q` quits, and any other key is no answer.
 **When** `s` answers
 **Then** the job is no row of the board, the section's lines count it no
 more, a page holds as many branches as fit beside the jobs still in view, and
