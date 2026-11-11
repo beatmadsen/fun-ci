@@ -56,7 +56,7 @@ class FakeRecorder
 
   def start_stage(stage, budget: nil) = new_stage(:start_stage, stage, budget)
   def schedule_stage(stage, budget: nil) = new_stage(:schedule_stage, stage, budget)
-  def stage_started(job_id) = @calls << [:stage_started, stages[job_id - 1]]
+  def started_in_turn?(job_id) = !(@calls << [:stage_started, stages[job_id - 1]]).nil?
 
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
   def keep_evidence(job_id, document) = @calls << [:keep_evidence, job_id, document]

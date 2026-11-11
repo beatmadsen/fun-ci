@@ -22,6 +22,19 @@ module FunCi
         db.last_insert_row_id
       end
 
+      # Records a slow suite waiting its branch's turn running, unless it or its
+      # run was recorded cancelled meanwhile; whether it was. One statement, so
+      # a cancel recorded before it refuses it and one after finds it running
+      # (acceptance-tests.md, AT-9.19).
+      def self.started_in_turn?(db, id)
+        db.execute("UPDATE stage_jobs SET status = 'running', started_at = ? WHERE id = ? AND status = 'scheduled' " \
+                   "AND NOT EXISTS (#{RUN_CANCELLED})", [Time.now.utc.iso8601(3), id])
+        db.changes == 1
+      end
+
+      RUN_CANCELLED = "SELECT 1 FROM pipeline_runs WHERE pipeline_runs.id = stage_jobs.pipeline_run_id " \
+                      "AND pipeline_runs.status = 'cancelled'"
+
       # The stage script's process, which leads a process group of its own.
       def self.store_pid(db, id, pid)
         db.execute("UPDATE stage_jobs SET pid = ? WHERE id = ?", [pid, id])

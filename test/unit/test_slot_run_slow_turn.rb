@@ -8,6 +8,11 @@ require_relative "../support/slot_run_kit"
 class TestSlotRunSlowTurn < Minitest::Test
   include SlotRunKit
 
+  # A recorder whose slow suite's run was recorded cancelled while it waited.
+  class RefusedTurnRecorder < FakeRecorder
+    def started_in_turn?(_job_id) = false
+  end
+
   def test_should_wait_for_its_branch_s_turn
     turns = FakeSlowTurns.new
     run_slow(turns)
@@ -27,6 +32,15 @@ class TestSlotRunSlowTurn < Minitest::Test
     run_slow(FakeSlowTurns.new, command_runner: runner)
 
     assert runner.ran?("slow.sh")
+  end
+
+  # A newer commit cancelled its run while it waited (StageJob.started_in_turn?).
+  def test_should_not_run_the_slow_suite_when_its_turn_is_refused
+    runner = scripted_runner
+    recorder = RefusedTurnRecorder.new
+    run_slow(FakeSlowTurns.new, recorder: recorder, command_runner: runner)
+
+    refute runner.ran?("slow.sh")
   end
 
   def test_should_record_the_slow_suite_waiting_while_it_has_no_turn

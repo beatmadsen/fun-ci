@@ -88,6 +88,15 @@ class TestStalePipelineCanceller < Minitest::Test
     assert_empty @signals
   end
 
+  # Recorded first, so a slow suite whose turn comes between the two never starts (StageJob.started_in_turn?).
+  def test_should_record_a_run_cancelled_before_signalling_any_of_its_processes
+    run_id = active_run("abc1234")
+    status_when_signalled = nil
+    cancel(killer: ->(_signal, _pid) { status_when_signalled ||= RUN.find(@db, run_id)[:status] })
+
+    assert_equal "cancelled", status_when_signalled
+  end
+
   def test_should_stop_a_run_whose_slow_suite_waits_its_turn
     STAGE.create(@db, pipeline_run_id: active_run("abc1234"), stage: "slow")
     cancel
@@ -113,8 +122,8 @@ class TestStalePipelineCanceller < Minitest::Test
     end
   end
 
-  def cancel
-    canceller = FunCi::Pipeline::RunCanceller.new(killer: ->(signal, pid) { @signals << [signal, pid] })
+  def cancel(killer: ->(signal, pid) { @signals << [signal, pid] })
+    canceller = FunCi::Pipeline::RunCanceller.new(killer: killer)
     main = FunCi::Persistence::Branch.new(project: "/project", name: "main")
     FunCi::Pipeline::StalePipelineCanceller.new(db: @db, branch: main, stdout: @stdout, run_canceller: canceller)
                                            .cancel(new_commit_hash: "def5678")

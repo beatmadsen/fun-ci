@@ -21,14 +21,19 @@ module FunCi
     module ActiveRuns
       ACTIVE = "status IN ('scheduled', 'running')"
 
-      # The runs on the branch a new commit's run may cancel: those of commits
-      # that arrived before it (acceptance-tests.md, AT-9.20), except one an
-      # agent has waited on since `waited_before` (an ISO 8601 UTC time;
-      # AT-9.12) and one whose slow suite is running (AT-9.19).
-      def self.cancellable(db, branch, new_commit:, waited_before:)
-        where(db, "project_path = ? AND branch = ? AND #{ARRIVED_BEFORE} AND (waited_at IS NULL OR waited_at < ?) " \
-                  "AND NOT EXISTS (#{SLOW_RUNNING})",
-              branch.project, branch.name, branch.project, branch.name, new_commit, waited_before)
+      # Records cancelled, and returns, the runs on the branch a new commit's
+      # run cancels: those of commits that arrived before it (acceptance-tests.md,
+      # AT-9.20), except one an agent has waited on since `waited_before` (an
+      # ISO 8601 UTC time; AT-9.12) and one whose slow suite is running (AT-9.19).
+      # Picked and recorded in one statement, before their processes are
+      # stopped, so a slow suite whose turn comes meanwhile never starts
+      # (StageJob.started_in_turn?).
+      def self.cancel_stale(db, branch, new_commit:, waited_before:)
+        values = [Time.now.utc.iso8601, branch.project, branch.name, branch.project, branch.name, new_commit,
+                  waited_before]
+        rows = db.execute("UPDATE pipeline_runs SET status = 'cancelled', updated_at = ? WHERE #{STALE} " \
+                          "RETURNING #{RUN_COLUMNS}", values)
+        rows.sort_by(&:first).map { |row| active_run(db, row) }
       end
 
       # A commit arrives on its branch with its first run; a commit with none yet arrives last.
@@ -36,6 +41,9 @@ module FunCi
                        "WHERE project_path = ? AND branch = ? AND commit_hash = ?), #{Arrival::NOT_YET})".freeze
       SLOW_RUNNING = "SELECT 1 FROM stage_jobs WHERE pipeline_run_id = pipeline_runs.id " \
                      "AND stage = 'slow' AND status = 'running'"
+      STALE = "project_path = ? AND branch = ? AND #{ARRIVED_BEFORE} AND (waited_at IS NULL OR waited_at < ?) " \
+              "AND NOT EXISTS (#{SLOW_RUNNING}) AND #{ACTIVE}".freeze
+      RUN_COLUMNS = "id, commit_hash, trigger_pid, pid, slot_lock, fetch_pgid"
 
       # The run with this id, when it has not finished; none otherwise.
       def self.with_id(db, id) = where(db, "id = ?", id)
@@ -64,20 +72,31 @@ module FunCi
         PipelineRun.update_status(db, run.id, "cancelled")
       end
 
+      # The process groups of the run's stages still going, and its trunk
+      # fetch's, whatever the run's own status says.
+      def self.groups(db, id)
+        fetch = db.execute("SELECT fetch_pgid FROM pipeline_runs WHERE id = ?", [id]).flatten.compact
+        [*stage_groups(db, id), *fetch]
+      end
+
       def self.where(db, clause, *values)
-        db.execute("SELECT id, commit_hash, trigger_pid, pid, slot_lock, fetch_pgid FROM pipeline_runs " \
+        db.execute("SELECT #{RUN_COLUMNS} FROM pipeline_runs " \
                    "WHERE #{clause} AND #{ACTIVE} ORDER BY id", values).map { |row| active_run(db, row) }
       end
       private_class_method :where
 
       # The groups are each running stage's, and the trunk fetch's (architecture.md, Checking against the trunk).
       def self.active_run(db, (id, commit_hash, trigger_pid, pid, slot_lock, fetch_pgid))
-        groups = db.execute("SELECT pid FROM stage_jobs WHERE pipeline_run_id = ? AND #{ACTIVE} AND pid IS NOT NULL",
-                            [id]).flatten
         ActiveRun.new(id: id, commit_hash: commit_hash, processes: [trigger_pid, pid].compact,
-                      stage_groups: [*groups, *fetch_pgid], slot_lock: slot_lock)
+                      stage_groups: [*stage_groups(db, id), *fetch_pgid], slot_lock: slot_lock)
       end
       private_class_method :active_run
+
+      def self.stage_groups(db, id)
+        db.execute("SELECT pid FROM stage_jobs WHERE pipeline_run_id = ? AND #{ACTIVE} AND pid IS NOT NULL",
+                   [id]).flatten
+      end
+      private_class_method :stage_groups
     end
   end
 end

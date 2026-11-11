@@ -87,6 +87,19 @@ class TestActiveRuns < Minitest::Test
     assert_equal %w[completed cancelled], job_statuses(run_id)
   end
 
+  def test_should_record_cancelled_the_runs_it_picks_to_cancel
+    run_id = running_run
+    cancellable
+
+    assert_equal "cancelled", RUN.find(@db, run_id)[:status]
+  end
+
+  def test_should_leave_out_a_run_whose_slow_suite_is_running
+    stage(running_run, "slow", 400, "running")
+
+    assert_empty cancellable
+  end
+
   def test_should_leave_the_new_commit_s_own_run_out_of_those_to_cancel
     running_run
 
@@ -109,7 +122,7 @@ class TestActiveRuns < Minitest::Test
 
   def cancellable(branch: BRANCH.new(project: PROJECT, name: "main"), new_commit: "fff0000",
                   waited_before: "2026-09-27T12:00:00Z")
-    FunCi::Persistence::ActiveRuns.cancellable(@db, branch, new_commit: new_commit, waited_before: waited_before)
+    FunCi::Persistence::ActiveRuns.cancel_stale(@db, branch, new_commit: new_commit, waited_before: waited_before)
   end
 
   def active = cancellable

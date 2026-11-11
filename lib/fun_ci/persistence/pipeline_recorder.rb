@@ -84,9 +84,9 @@ module FunCi
         end
       end
 
-      def stage_started(job_id)
-        tolerating { StageJob.update_status(@db, job_id, "running") }
-      end
+      # Records a slow suite started once its turn comes; false when its run
+      # was cancelled while it waited. A refused write lets it start.
+      def started_in_turn?(job_id) = tolerating { StageJob.started_in_turn?(@db, job_id) } != false
 
       # Keeps a failed stage's evidence, and the output's tail where an older
       # fun-ci sharing the database reads it.
@@ -119,6 +119,10 @@ module FunCi
       end
 
       private
+
+      def stage_started(job_id)
+        tolerating { StageJob.update_status(@db, job_id, "running") }
+      end
 
       def ensure_running
         run = PipelineRun.find(@db, @pipeline_run_id)

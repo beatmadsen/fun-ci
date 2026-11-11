@@ -81,9 +81,7 @@ module FunCi
       # records a stage's group before it lets the stage start, so once those
       # processes are dead, looking again finds every stage they started.
       def stop_late_stages(db, run)
-        Persistence::ActiveRuns.with_id(db, run.id).each do |now|
-          (now.stage_groups - run.stage_groups).each { |group| kill(-group) }
-        end
+        (Persistence::ActiveRuns.groups(db, run.id) - run.stage_groups).each { |group| kill(-group) }
       end
 
       # The groups recorded since `before` was read.

@@ -21,7 +21,7 @@ module FunCi
 
       def cancel(new_commit_hash:)
         waited_before = (Time.now - WAITED_ON_SECONDS).utc.iso8601
-        Persistence::ActiveRuns.cancellable(@db, @branch, new_commit: new_commit_hash, waited_before: waited_before)
+        Persistence::ActiveRuns.cancel_stale(@db, @branch, new_commit: new_commit_hash, waited_before: waited_before)
                                .each { |run| cancel_run(run, new_commit_hash) }
       end
 

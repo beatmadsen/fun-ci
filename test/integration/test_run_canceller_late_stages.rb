@@ -36,6 +36,15 @@ class TestRunCancellerLateStages < Minitest::Test
     assert_includes @sent, ["KILL", -500]
   end
 
+  # A newer commit records the run cancelled before it kills (StalePipelineCanceller).
+  def test_should_stop_a_late_stage_of_a_run_recorded_cancelled_before_the_kill
+    looked = FunCi::Persistence::ActiveRuns.with_id(@db, @run_id).first
+    RUN.update_status(@db, @run_id, "cancelled")
+    canceller(started_as_the_slow_suite_dies: 500).cancel(@db, looked)
+
+    assert_includes @sent, ["KILL", -500]
+  end
+
   def test_should_signal_each_stage_group_once
     JOB.store_pid(@db, @slow, 500)
     looked = FunCi::Persistence::ActiveRuns.with_id(@db, @run_id).first
