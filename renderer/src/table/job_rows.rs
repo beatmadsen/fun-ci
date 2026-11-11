@@ -35,19 +35,22 @@ pub fn row(job: &Job, name: &str, leads: bool, paint: &Paint) -> Vec<Part> {
     parts
 }
 
-/// The least of a project's name worth showing cut: two letters and `…`.
-const PROJECT_AT_LEAST: usize = 3;
-
 /// `name` (its project's, then its own) when it fits in `room`; else with
-/// its project's name cut, since its own is the one that must stay whole;
-/// its own alone when not even `PROJECT_AT_LEAST` of its project's fits.
+/// its project's name cut, since its own is the one that must stay whole,
+/// to its first letter where that is all that fits; its own alone when not
+/// even that fits.
 fn fitted(job: &Job, name: &str, room: usize) -> String {
     let left = room.saturating_sub(width_of(&job.name) + width_of(" · "));
     match job.project.as_deref() {
         _ if width_of(name) <= room => name.to_string(),
-        Some(project) if name != job.name && left >= PROJECT_AT_LEAST => format!("{} · {}", cut(&project_name(project), left), job.name),
+        Some(project) if name != job.name && left > 0 => format!("{} · {}", shortened(&project_name(project), left), job.name),
         _ => job.name.clone(),
     }
+}
+
+/// `project` cut to `room`, or its first letter alone when `room` has no space for `…` beside one.
+fn shortened(project: &str, room: usize) -> String {
+    if room == 1 { project.chars().take(1).collect() } else { cut(project, room) }
 }
 
 /// Where a job's mark sits after the start of the marks' column: past `weekly`.

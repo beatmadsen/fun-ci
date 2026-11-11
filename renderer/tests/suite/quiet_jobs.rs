@@ -409,3 +409,17 @@ fn a_100_column_screen_with_two_projects_jobs_says_in_full_what_each_branch_did(
 
     assert!(grid.text().contains("all four stages passed"), "{}", grid.text());
 }
+
+#[test]
+fn a_70_column_screen_with_the_cursor_on_a_job_tells_two_projects_jobs_of_the_same_name_apart() {
+    let runs = [passed(2, "main", "/src/alpha"), passed(1, "main", "/src/beta")];
+    let jobs: Vec<Value> = [("/src/alpha", "deps-audit", "daily"), ("/src/alpha", "mutation", "daily"), ("/src/beta", "deps-audit", "daily"),
+                            ("/src/beta", "mutation", "daily"), ("/src/beta", "soak", "weekly")].iter().map(|(project, name, cadence)| {
+        let mut passed_job = job(name, cadence, "passed");
+        passed_job["project"] = json!(project);
+        passed_job
+    }).collect();
+    let lines = said(&shown(&runs, &jobs, Some(6), (70, 40)));
+
+    assert!(!lines.contains(&"deps-audit".to_string()), "{lines:?}");
+}
