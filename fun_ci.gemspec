@@ -15,15 +15,17 @@ Gem::Specification.new do |spec|
                      "The pre-push hook stops a push whose lint, build or fast suite failed. " \
                      "There are two ways in. People watch fun-ci console, a terminal dashboard drawn in " \
                      "24-bit colour by a Rust renderer (included in the Linux and macOS gems), where each " \
-                     "milestone of a run plays its own scene: a rocket while it runs, fireworks when it " \
-                     "passes, an explosion when it fails, and a quiet night scene when nothing has run " \
-                     "for a while. Coding agents and scripts ask with commands that answer in exit codes: " \
+                     "milestone of a run plays a scene of its own: a rocket while it runs, gears when the " \
+                     "build passes, fireworks or a sunrise when the whole run does, an explosion when it " \
+                     "fails, and a quiet night scene when nothing has run for a while. Coding agents and " \
+                     "scripts ask with commands that answer in exit codes: " \
                      "fun-ci wait blocks until a commit's verdict is in, and fun-ci why prints what was " \
                      "kept about a failure (the failures a test runner reported, excerpts picked out by " \
                      "presets for 34 tools, log lines, the end of the output, with secrets masked), so " \
                      "nobody has to run a suite again to see what broke. Results are kept in SQLite. " \
                      "Any language works, since the stages are shell scripts; fun-ci init writes them " \
-                     "for Ruby, Gradle and Maven projects."
+                     "for Ruby, Gradle, Maven, Rust, Go, Elixir, Dart, Swift, PHP, .NET, Python, Deno, " \
+                     "Bun, Node, Perl, and C and C++ built with CMake or make."
   spec.homepage = "https://github.com/beatmadsen/fun-ci"
   spec.license = "MIT"
 
