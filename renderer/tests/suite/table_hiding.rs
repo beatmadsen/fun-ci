@@ -51,8 +51,10 @@ fn hiding_a_job_asks_about_it_by_name() {
 }
 
 #[test]
-fn hiding_a_job_is_answered_with_snooze_ignore_or_no() {
-    assert_eq!(keys(&board(&[job("soak", &json!({}))], 1, &json!({"hiding": true}))).keys, [("s", "snooze"), ("i", "ignore"), ("n", "no")]);
+fn hiding_a_job_is_answered_with_snooze_ignore_or_no_each_saying_for_how_long() {
+    let answers = [("s", "snooze until its next run"), ("i", "ignore until shown again"), ("n", "no")];
+
+    assert_eq!(keys(&board(&[job("soak", &json!({}))], 1, &json!({"hiding": true}))).keys, answers);
 }
 
 #[test]

@@ -14,7 +14,7 @@ pub fn kind(piece: &Piece) -> String {
         Piece::Folded(runs) => format!("folded {}", runs.len()),
         Piece::Legend(n) => format!("legend {n}"),
         Piece::More(count, below) => format!("{count} more {}", if *below { "below" } else { "above" }),
-        Piece::JobsLabel(title) => format!("jobs {title}"),
+        Piece::JobsLabel(title, _) => format!("jobs {title}"),
         Piece::Job(_, name, _) => format!("job {name}"),
         Piece::JobsFolded(jobs) => format!("jobs folded {}", jobs.len()),
         Piece::JobsCounted(jobs, _) => format!("jobs counted {}", jobs.len()),

@@ -9,6 +9,11 @@ use super::jobs;
 use crate::model::{Board, Hidden, Job};
 
 const HIDE: Key = ("h", "hide");
+const SNOOZE: Key = ("s", "snooze until its next run");
+const IGNORE: Key = ("i", "ignore until shown again");
+
+/// The answers' words where the footer has too little room to say how long a job stays hidden.
+pub const BRIEFLY: [(Key, Key); 2] = [(SNOOZE, ("s", "snooze")), (IGNORE, ("i", "ignore"))];
 const SHOW: Key = ("h", "show");
 
 /// The key for the job under the cursor: `h hide`, or `h show` on a hidden one; none off a job.
@@ -24,7 +29,7 @@ pub fn key(board: &Board) -> Option<Key> {
 pub fn asked(board: &Board) -> Option<Offer> {
     let job = under_cursor(board).filter(|_| board.view.hiding)?;
     let name = jobs::name(job, jobs::many_projects(board));
-    Some(Offer { question: Some(format!("Hide {name}?")), keys: vec![("s", "snooze"), ("i", "ignore"), ("n", "no")] })
+    Some(Offer { question: Some(format!("Hide {name}?")), keys: vec![SNOOZE, IGNORE, ("n", "no")] })
 }
 
 /// `a shows 2 hidden jobs`; once they are shown, `a hides hidden jobs`;

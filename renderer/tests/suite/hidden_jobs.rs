@@ -37,7 +37,7 @@ fn snoozed_and_passed() -> Vec<Value> {
 fn the_footer_asks_how_to_hide_the_job_under_the_cursor() {
     let grid = shown(&[job("soak", "failed", None)], &json!({"cursor": 1, "hiding": true}), (120, 40));
 
-    assert!(footer(&grid).contains("Hide soak?   s  snooze     i  ignore     n  no"), "{}", grid.text());
+    assert!(footer(&grid).contains("Hide soak?   s  snooze until its next run"), "{}", grid.text());
 }
 
 // A name too long for the screen is cut, so the keys that answer are whole.
@@ -196,4 +196,11 @@ fn a_narrow_footer_says_what_a_short_screen_left_out_in_fewer_words_rather_than_
     let grid = screen_with(&board, (60, 19));
 
     assert!(!footer(&grid).contains('…'), "{}", grid.text());
+}
+
+#[test]
+fn the_question_says_how_long_a_job_stays_hidden_where_there_is_room() {
+    let grid = shown(&[job("soak", "failed", None)], &json!({"cursor": 1, "hiding": true}), (120, 40));
+
+    assert!(footer(&grid).contains("i  ignore until shown again     n  no"), "{}", grid.text());
 }

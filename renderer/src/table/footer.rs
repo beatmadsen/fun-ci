@@ -56,13 +56,21 @@ fn acting(board: &Board) -> Vec<Key> {
     [Some(MOVE), cancellable.then_some(CANCEL), hiding::key(board), Some(QUIT)].into_iter().flatten().collect()
 }
 
-/// `offer` in the `room` it has from column `at`: a question too long for
-/// its keys to fit after it is cut, since a key cut short answers nothing.
+/// `offer` in the `room` it has from column `at`: its keys in fewer words
+/// when they don't fit, then a question too long for its keys to fit after
+/// it cut, since a key cut short answers nothing.
 #[must_use]
 pub fn fitted(offer: Offer, at: usize, room: usize) -> Offer {
+    let offer = if offered(&offer, at).1 > room { briefly(offer) } else { offer };
     let over = offered(&offer, at).1.saturating_sub(room);
     let question = offer.question.map(|question| cut(&question, columns(&question).saturating_sub(over)));
     Offer { question, ..offer }
+}
+
+/// `offer` with each key that has fewer words for a narrow footer saying them.
+fn briefly(offer: Offer) -> Offer {
+    let brief = |key: Key| hiding::BRIEFLY.iter().find(|(long, _)| *long == key).map_or(key, |(_, short)| *short);
+    Offer { keys: offer.keys.into_iter().map(brief).collect(), ..offer }
 }
 
 /// `offer` from column `at`: the question, then each key on its cap with
@@ -156,8 +164,8 @@ pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line<'static> 
     placed(parts)
 }
 
-/// The longest of `said` that fits in `room`, or the briefest.
+/// The longest of `said` that fits in `room`; nothing when none does, as
+/// a note cut down to its `…` says nothing.
 fn briefest_fitting(said: [String; 3], room: usize) -> String {
-    let [longest, fewer, fewest] = said;
-    [longest, fewer].into_iter().find(|said| columns(said) <= room).unwrap_or(fewest)
+    said.into_iter().find(|said| columns(said) <= room).unwrap_or_default()
 }

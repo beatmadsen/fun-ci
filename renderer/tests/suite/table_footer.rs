@@ -132,3 +132,9 @@ fn what_was_left_out_keeps_five_columns_from_the_keys() {
 fn what_was_left_out_is_cut_rather_than_run_past_the_margin() {
     assert!(footer_text(60, 2).trim_end().chars().count() <= 60 - 10);
 }
+
+// Two columns are left beside the keys, too few for `+14`: a note cut to `+…` says nothing.
+#[test]
+fn what_was_left_out_is_said_not_at_all_rather_than_cut_to_nothing() {
+    assert!(!footer_text(51, 14).contains('…'), "{}", footer_text(51, 14));
+}

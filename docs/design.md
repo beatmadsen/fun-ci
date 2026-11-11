@@ -427,7 +427,10 @@ each project's branches sit under the project's name, one row per branch:
   rows not shown and jobs hidden. Jobs play no scene and touch
   neither the streak nor the lamp: the header tells the story of the commits.
 - A job whose line tells you nothing can be put out of view. `h` on a job
-  asks how, naming it (`Hide soak?` with `s snooze`, `i ignore` and `n no`):
+  asks how, naming it (`Hide soak?` with `s snooze until its next run`,
+  `i ignore until shown again` and `n no`, the shorter `s snooze` and
+  `i ignore` on a narrow screen), and while the cursor is elsewhere the
+  section's label says `h on a job hides it`:
   snoozed, it is gone until it runs again, which is when a run of it begins
   after that, so a run waiting its turn or one cancelled before its turn
   doesn't bring it back, and once back it stays; ignored, it is gone until you bring it back. `h` asks first because

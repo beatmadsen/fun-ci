@@ -1175,10 +1175,13 @@ console says `starts in 8m on main 3a1f9c2`; once its start has come and its
 process has yet to start it, each says `starts now`.
 
 ### 13.29 `h` on a job asks how to hide it, and `s` snoozes it until it runs again
+**Given** jobs on the board with their label, the cursor not on one
+**Then** the label says `h on a job hides it` where it fits.
 **Given** the cursor on a job in the console
 **When** `h` is pressed
-**Then** the footer asks `Hide <name>?` with `s snooze`, `i ignore` and `n no`,
-the name cut where the screen is too narrow for the keys; `n` and `Esc` hide
+**Then** the footer asks `Hide <name>?` with `s snooze until its next run`,
+`i ignore until shown again` and `n no`, in fewer words (`s snooze`, `i
+ignore`) and then with the name cut where the screen is too narrow for them; `n` and `Esc` hide
 nothing, `q` quits, and any other key is no answer.
 **When** `s` answers
 **Then** the job is no row of the board, the section's lines count it no
