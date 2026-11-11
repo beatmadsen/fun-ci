@@ -74,9 +74,11 @@ module FunCi
       # and then those run most recently, in RowOrder: a run of cancelled
       # runs folded into one, with its stages, the branch's standing against
       # the trunk, and how the user hid the branch (`hidden`, nil while in view).
+      # A hidden branch leaves its place to the next one: as many more are read, and the page keeps as many in view.
       def runs
         hidden = Persistence::BranchVisibility.new(@db).hidden
-        RowOrder.of(heads(@paging.limit).map { |head| branch_row(head, hidden) })
+        rows = heads(@paging.limit + hidden.size, more_among: hidden.size).map { |head| branch_row(head, hidden) }
+        RowOrder.of(in_view_within_the_page(rows))
       end
 
       # The projects among `runs` whose trunk is stale.
@@ -95,7 +97,15 @@ module FunCi
 
       private
 
-      def heads(limit) = Persistence::PipelineRun.branch_heads(@db, limit: limit, among: RECENT_BRANCHES)
+      def heads(limit, more_among: 0)
+        Persistence::PipelineRun.branch_heads(@db, limit: limit, among: RECENT_BRANCHES + more_among)
+      end
+
+      # The hidden branches' rows, and as many of the others as a page holds, the first.
+      def in_view_within_the_page(rows)
+        in_view = rows.reject { |row| row[:hidden] }.first(@paging.limit)
+        rows.select { |row| row[:hidden] || in_view.include?(row) }
+      end
 
       def branch_row(head, hidden)
         branch_runs = Persistence::PipelineRun.of_branch(@db, head[:project_path], head[:branch], limit: BRANCH_WINDOW)

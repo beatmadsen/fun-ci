@@ -65,7 +65,19 @@ class TestBoardDataHiding < Minitest::Test
     assert_equal [nil], branches_hidden
   end
 
+  # A hidden branch leaves its place on the page, 15 branches by default, to the next one.
+  def test_should_hold_a_page_of_branches_in_view_beside_a_hidden_one
+    twenty_more_branches
+    board.hide_run(board.runs.first, "ignored")
+
+    assert_equal 15, branches_hidden.count(nil)
+  end
+
   private
+
+  def twenty_more_branches
+    (1..20).each { |n| FunCi::Persistence::PipelineRun.create(@db, commit_hash: "c#{n}", branch: "b#{n}", project_path: @project) }
+  end
 
   def board(clock: -> { Time.now }) = FunCi::Console::BoardData.new(@db, clock: clock)
   def job_row = board.jobs(board.runs).first
