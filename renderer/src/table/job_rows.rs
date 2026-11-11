@@ -10,7 +10,7 @@ use super::jobs::needs_you;
 use super::night::{BRANCH, CURSOR, FAILED, LABEL, NOTE, PASSED, QUIET, RUNNING, TIMED_OUT, ink, pale};
 use super::paint::{Paint, Part};
 use crate::format::{age, columns as width_of, cut, project_name};
-use crate::model::{Job, JobStatus};
+use crate::model::{Board, Job, JobStatus};
 
 /// The row of `job`, named `name`, bold in the cursor's colour when it
 /// `leads`, its project's name cut to fit the column (`fitted`).
@@ -46,6 +46,14 @@ fn fitted(job: &Job, name: &str, room: usize) -> String {
         Some(project) if name != job.name && left >= PROJECT_AT_LEAST => format!("{} · {}", cut(&project_name(project), left), job.name),
         _ => job.name.clone(),
     }
+}
+
+/// The narrowest name column in which every job's row keeps some of its
+/// project's name, when rows are `named` after their projects; none otherwise.
+#[must_use]
+pub fn least_named(board: &Board, named: bool) -> usize {
+    let least = board.jobs.iter().map(|job| width_of(&job.name) + width_of(" · ") + PROJECT_AT_LEAST).max();
+    least.filter(|_| named).unwrap_or(0)
 }
 
 /// Where a job's mark sits after the start of the marks' column: past `weekly`.

@@ -359,3 +359,21 @@ fn a_job_whose_project_s_name_fits_is_named_with_it_beside_one_whose_project_s_i
 
     assert!(lines.contains(&"tool · deps-audit".to_string()), "{lines:?}");
 }
+
+// Two projects' failed jobs, whose long words leave the names little room at 100 columns.
+fn two_projects_failing() -> Grid {
+    let runs = [passed(2, "main", "/src/alpha")];
+    let jobs: Vec<Value> = [("/src/alpha", "deps-audit"), ("/src/alpha", "mutation"), ("/src/beta", "deps-audit")].iter().map(|(project, name)| {
+        let mut failing = job(name, "daily", "failed");
+        failing["project"] = json!(project);
+        failing
+    }).collect();
+    shown(&runs, &jobs, None, (100, 40))
+}
+
+#[test]
+fn a_job_row_says_less_of_what_happened_rather_than_give_up_its_project() {
+    let lines = said(&two_projects_failing());
+
+    assert!(!lines.contains(&"deps-audit".to_string()), "{lines:?}");
+}
