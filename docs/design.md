@@ -435,7 +435,7 @@ each project's branches sit under the project's name, one row per branch:
   screen is narrow (`a shows 2 hidden`, then `2 hidden`), and cut only where
   even those don't fit. `a` puts the hidden jobs
   last in the section, pale and without a stripe, each saying `snoozed until
-  it runs again` or `ignored` in place of what happened, and the footer then
+  its next run` or `ignored` in place of what happened, and the footer then
   says `a hides hidden jobs`. `h` on one of them brings it back at once.
   Hiding is about what this console shows on this machine, and nothing else:
   the job runs as before, and `fun-ci jobs`, `status` and `why --job` say

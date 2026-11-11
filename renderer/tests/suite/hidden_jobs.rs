@@ -68,7 +68,7 @@ fn the_footer_says_what_a_short_screen_left_out_before_the_hidden_jobs() {
 fn a_hidden_job_s_row_says_how_it_was_hidden() {
     let grid = shown(&snoozed_and_passed(), &json!({"hidden_jobs": 1}), (120, 40));
 
-    assert!(line_of(&grid, "soak").contains("snoozed until it runs again"), "{}", grid.text());
+    assert!(line_of(&grid, "soak").contains("snoozed until its next run"), "{}", grid.text());
 }
 
 #[test]

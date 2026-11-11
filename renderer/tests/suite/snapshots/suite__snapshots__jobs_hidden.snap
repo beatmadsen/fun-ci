@@ -165,7 +165,7 @@ frame 0005 at 100x32
   |        ▌   mutation          daily  ⠴      running on main 3a1f9c2 · 1h12m               1h
   |            deps-audit        daily  ✓      passed on main 3a1f9c2 · due in 14h          10h
   |        ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |            soak              weekly ◆      snoozed until it runs again                   2d
+  |            soak              weekly ◆      snoozed until its next run                    2d
   |        ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
   |            lint-deep         daily  ◌      ignored
   |            fuzz              weekly ✓      ignored                                       1d
@@ -183,7 +183,7 @@ frame 0005 at 100x32
   :ssssssssπsssYYYYYYYYssssssssssρρρρρssπssssssπππππππsππsππππsπππππππsπsπππππsssssssssssssss33ssssssss
   :BBBBBBBBBBBBDDDDDDDDDDBBBBBBBBSSSSSBBEBBBBBBEEEEEEBEEBEEEEBEEEEEEEBEBEEEBEEBEEEBBBBBBBBBBGGGBBBBBBBB
   :BBBBBBBBσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσBBBBBB
-  :BBBBBBBBττττυυυυττττττττττττττφφφφφφτχττττττψψψψψψψτψψψψψτψψτψψψψτψψψψψτττττττττττττττττττωωττBBBBBB
+  :BBBBBBBBττττυυυυττττττττττττττφφφφφφτχττττττψψψψψψψτψψψψψτψψψτψψψψτψψψττττττττττττττττττττωωττBBBBBB
   :BBBBBBBBσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσBBBBBB
   :BBBBBBBBBBBBDDDDDDDDDBBBBBBBBBSSSSSBBGBBBBBBÀÀÀÀÀÀÀBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBDDDDBBBBBBBBBBBBBBSSSSSSBEBBBBBBÀÀÀÀÀÀÀBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGBBBBBBBB
@@ -203,7 +203,7 @@ frame 0006 at 100x32
   |        ▌   mutation          daily  ⠦      running on main 3a1f9c2 · 1h12m               1h
   |            deps-audit        daily  ✓      passed on main 3a1f9c2 · due in 14h          10h
   |        ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
-  |            soak              weekly ◆      snoozed until it runs again                   2d
+  |            soak              weekly ◆      snoozed until its next run                    2d
   |        ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
   |            lint-deep         daily  ◌      ignored
   |            fuzz              weekly ✓      ignored                                       1d
@@ -221,7 +221,7 @@ frame 0006 at 100x32
   :ssssssssπsssYYYYYYYYssssssssssρρρρρssπssssssπππππππsππsππππsπππππππsπsπππππsssssssssssssss33ssssssss
   :BBBBBBBBBBBBDDDDDDDDDDBBBBBBBBSSSSSBBEBBBBBBEEEEEEBEEBEEEEBEEEEEEEBEBEEEBEEBEEEBBBBBBBBBBGGGBBBBBBBB
   :BBBBBBBBÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁBBBBBB
-  :BBBBBBBBÂÂÂÂÃÃÃÃÂÂÂÂÂÂÂÂÂÂÂÂÂÂÄÄÄÄÄÄÂÅÂÂÂÂÂÂÆÆÆÆÆÆÆÂÆÆÆÆÆÂÆÆÂÆÆÆÆÂÆÆÆÆÆÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÇÇÂÂBBBBBB
+  :BBBBBBBBÂÂÂÂÃÃÃÃÂÂÂÂÂÂÂÂÂÂÂÂÂÂÄÄÄÄÄÄÂÅÂÂÂÂÂÂÆÆÆÆÆÆÆÂÆÆÆÆÆÂÆÆÆÂÆÆÆÆÂÆÆÆÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÇÇÂÂBBBBBB
   :BBBBBBBBÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁBBBBBB
   :BBBBBBBBBBBBDDDDDDDDDBBBBBBBBBSSSSSBBGBBBBBBÀÀÀÀÀÀÀBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBDDDDBBBBBBBBBBBBBBSSSSSSBEBBBBBBÀÀÀÀÀÀÀBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGBBBBBBBB

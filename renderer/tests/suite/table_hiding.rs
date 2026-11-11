@@ -88,7 +88,7 @@ fn hidden_jobs_on_the_board_say_which_key_hides_them_again() {
 
 #[test]
 fn a_snoozed_job_says_until_when() {
-    assert_eq!(said(&hidden("snoozed"), NOW * 1000), "snoozed until it runs again");
+    assert_eq!(said(&hidden("snoozed"), NOW * 1000), "snoozed until its next run");
 }
 
 #[test]

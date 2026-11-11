@@ -1204,7 +1204,7 @@ otherwise taking the line above, and in fewer words on a narrow screen
 (`a shows 2 hidden`, `2 hidden`), cut only where even those don't fit.
 **When** `a` is pressed
 **Then** the hidden jobs come last in the section, each pale, without a
-stripe, saying `snoozed until it runs again` or `ignored`; none makes the
+stripe, saying `snoozed until its next run` or `ignored`; none makes the
 block wine, shows the `why --job` command or counts as failed, and the footer
 says `a hides hidden jobs`.
 **And** `h` on one of them brings it back at once, with no question; `a`

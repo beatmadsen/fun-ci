@@ -1,6 +1,6 @@
 //! Hiding a daily or weekly job (design.md, The console): the key that
 //! hides the job under the cursor or shows a hidden one again, the question
-//! that asks how (snoozed, until it runs again, or ignored, for good), what
+//! that asks how (snoozed, until its next run, or ignored, for good), what
 //! the footer says of the jobs hidden, and what a hidden job's row says once
 //! the user asks to see them.
 
@@ -52,7 +52,7 @@ pub fn asides(board: &Board) -> [String; 3] {
 pub fn said(how: Hidden, brief: bool) -> &'static str {
     match how {
         Hidden::Snoozed if brief => "snoozed",
-        Hidden::Snoozed => "snoozed until it runs again",
+        Hidden::Snoozed => "snoozed until its next run",
         Hidden::Ignored => "ignored",
         Hidden::Otherwise => "hidden",
     }
