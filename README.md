@@ -119,12 +119,20 @@ Keys:
 
 - `j` and `k`, or the arrow keys, move the cursor down and up
 - `c` cancels the run under the cursor: one waiting to start at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start. The cursor moves on past the last branch into the jobs, and `c` cancels a job too: one waiting its turn at once, a running one the same way; a cancelled job runs again on your next commit
-- `h` hides the branch or job under the cursor, once you say how: `s` snoozes it, so it is gone until its next run, and `i` ignores it, so it is gone until you bring it back (`n` or `Esc` leaves it). The footer says how many rows are hidden, `a` shows them, and `h` on one of them brings it back. A hidden branch or job still runs, and `fun-ci jobs` and `fun-ci status` still report it.
+- `h` hides the branch or job under the cursor, once you answer `s` (snooze) or `i` (ignore); `n` or `Esc` leaves it. `a` shows the hidden rows, and `h` on one of them brings it back (see [Hiding a branch or a job](#hiding-a-branch-or-a-job))
 - `q` quits
 
 The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above are the renderer's output replayed in a terminal emulator, set in Menlo; in your terminal the text is in your terminal's font.
 
 The drawing is done by a separate program, `fun-ci-renderer`, written in Rust. The gem for Linux (x86_64, aarch64, musl) and macOS (arm64, x86_64) includes it. On other Unix-like systems you get the plain gem, where every command except `console` works; install the renderer with `cargo install fun-ci-renderer` (Rust 1.88 or newer), or point `FUN_CI_RENDERER` at a copy you built. Windows is not supported, because fun-ci forks its background pipeline, but WSL runs the Linux gem. When something goes wrong between the two, the details are in `.fun-ci/console.log`.
+
+### Hiding a branch or a job
+
+A branch you gave up on, or a job you already know is failing, can keep the top of the table red for days. Press `h` on its row and say how long it should stay out of view: `s` snoozes it until its next run, so it comes back when there is something new to see, and `i` ignores it until you bring it back. The footer counts the hidden rows. `a` shows them, pale, each saying how it was hidden, and `h` on one brings it back.
+
+![Hiding rows in the console: h on spike/old-cache, a branch that failed three days ago, asks whether to snooze it until its next run or ignore it until shown again; ignored, it leaves the table. h on the failing soak job snoozes it. a then shows both again, pale: spike/old-cache ignored, soak snoozed until its next run](docs/screenshots/hiding.webp)
+
+Hiding changes only what your console shows. The branch and the job still run, and `fun-ci jobs`, `status` and `why` report them as before, so an agent waiting on a commit sees everything.
 
 ## Asking: commands for agents and scripts
 

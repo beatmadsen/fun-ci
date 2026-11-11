@@ -46,6 +46,7 @@ module Screenshots
 
   # A scenario the contract already records (contract/scenarios/), replayed
   # on a screen of its own size.
+  # A board with no cursor is given the first row's, as the console opens.
   class Replayed
     def initialize(name, cols:, rows:)
       @path = File.expand_path("../../contract/scenarios/#{name}.jsonl", __dir__)
@@ -55,10 +56,14 @@ module Screenshots
     attr_reader :size
 
     def to_s
-      resize = JSON.generate({ t: "resize", cols: @size.first, rows: @size.last })
-      kept = File.readlines(@path).reject { |line| JSON.parse(line)["t"] == "resize" }
-      "#{resize}\n#{kept.join}"
+      lines = [{ "t" => "resize", "cols" => @size.first, "rows" => @size.last }]
+      File.readlines(@path).map { |line| JSON.parse(line) }.each { |line| lines << line unless line["t"] == "resize" }
+      lines.map { |line| JSON.generate(opened(line)) }.join("\n") << "\n"
     end
+
+    private
+
+    def opened(line) = line["t"] == "board" && line["cursor"].nil? ? line.merge("cursor" => 0) : line
   end
 
   # A scenario for fun-ci-renderer's headless mode (docs/renderer-protocol.md,
@@ -73,9 +78,13 @@ module Screenshots
 
     def size = @lines.first.values_at(:cols, :rows)
 
-    def board(runs, streak:)
-      @lines << { t: "board", now:, project: "/src/shop", streak:, cursor: 0, confirming: false,
-                  has_more: false, runs: runs.map { |run| run.to_h(now) } }
+    # `view` overrides the cursor and question fields (cursor, hiding,
+    # hidden_rows); runs and jobs are anything with `to_h(now)`.
+    def board(runs, streak:, jobs: [], **view)
+      line = { t: "board", now:, project: "/src/shop", streak:, cursor: 0, confirming: false,
+               has_more: false, **view, runs: runs.map { |run| run.to_h(now) } }
+      line[:jobs] = jobs.map { |job| job.to_h(now) } unless jobs.empty?
+      @lines << line
       self
     end
 

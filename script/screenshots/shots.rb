@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "scenario"
+require_relative "hiding"
 
 module Screenshots
   # A picture for the README: the frames of a scenario to keep, one for a
@@ -50,13 +51,19 @@ module Screenshots
 
     def self.all
       stills = STILLS.map { |name, spec| still(name, spec) }
-      [console, table, jobs, failure, *stills, *QUIET.map { |name, spec| quiet(name, spec) }]
+      [console, table, jobs, hiding, failure, *stills, *QUIET.map { |name, spec| quiet(name, spec) }]
     end
 
     # The daily and weekly jobs under the table: one failed, one running, the
     # rest passed or due, before the cursor reaches them.
     def self.jobs
       Shot.new("jobs", Replayed.new("jobs", cols: 100, rows: 32), [2])
+    end
+
+    # Hiding an old failure and a failing job, then showing them again.
+    def self.hiding
+      scenario = Hiding.scenario
+      Shot.new("hiding", scenario, (1..scenario.frames).step(2).to_a)
     end
 
     # The table on a busy board, tall enough for the legend over every
