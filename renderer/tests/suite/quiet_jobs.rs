@@ -386,3 +386,31 @@ fn a_screen_too_short_for_every_job_keeps_the_one_under_the_cursor() {
 
     assert!(said(&grid).contains(&"audit".to_string()), "{}", grid.text());
 }
+
+#[test]
+fn a_screen_with_room_for_every_job_keeps_them_all_with_the_cursor_on_the_last() {
+    let runs = [passed(2, "main", "/src/app")];
+    let jobs = [job("soak", "daily", "failed"), job("mutation", "daily", "failed"), job("audit", "daily", "failed")];
+    let grid = shown(&runs, &jobs, Some(3), (100, 40));
+
+    assert!(said(&grid).contains(&"soak".to_string()), "{}", grid.text());
+}
+
+// The table keeps lines of its own however short the screen, so the jobs' rows
+// are fitted beside those.
+#[test]
+fn a_short_screen_keeps_the_job_under_the_cursor_beside_the_lines_the_table_keeps() {
+    let runs = [failed(3, "feat", "/src/app"), failed(2, "fix", "/src/tool"), failed(1, "wip", "/src/web")];
+    let jobs = [job("soak", "daily", "failed"), job("mutation", "daily", "failed"), job("audit", "daily", "failed")];
+    let grid = shown(&runs, &jobs, Some(5), (100, 21));
+
+    assert!(said(&grid).iter().any(|line| line.ends_with("audit")), "{}", grid.text());
+}
+
+#[test]
+fn a_wide_screen_names_two_projects_jobs_and_says_in_full_what_happened() {
+    let runs = [passed(2, "main", "/src/app"), passed(1, "main", "/src/tool")];
+    let grid = shown(&runs, &[job("deps-audit", "daily", "failed")], None, (160, 40));
+
+    assert!(grid.text().contains("failed after 3h12m on main 9e0b1d4"), "{}", grid.text());
+}
