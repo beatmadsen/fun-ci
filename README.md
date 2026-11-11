@@ -119,6 +119,7 @@ Keys:
 
 - `j` and `k`, or the arrow keys, move the cursor down and up
 - `c` cancels the run under the cursor: one waiting to start at once, a running one once you answer `y` (`n` or `Esc` keeps it running); the footer offers it only while a run is running or waits to start. The cursor moves on past the last branch into the jobs, and `c` cancels a job too: one waiting its turn at once, a running one the same way; a cancelled job runs again on your next commit
+- `h` hides the job under the cursor, once you say how: `s` snoozes it, so it is gone until it runs again, and `i` ignores it, so it is gone until you bring it back (`n` or `Esc` leaves it). The footer says how many jobs are hidden, `a` shows them, and `h` on one of them brings it back. A hidden job still runs, and `fun-ci jobs` and `fun-ci status` still report it
 - `q` quits
 
 The console is drawn in 24-bit colour when `COLORTERM` says the terminal has it (`truecolor` or `24bit`), and in 256 colours otherwise. The pictures above are the renderer's output replayed in a terminal emulator, set in Menlo; in your terminal the text is in your terminal's font.

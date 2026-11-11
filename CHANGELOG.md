@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- The console can put a daily or weekly job out of view. `h` on a job asks
+  how: `s` snoozes it until it runs again, `i` ignores it until you bring it
+  back. The footer says how many jobs are hidden, `a` shows them, and `h` on a
+  hidden one brings it back. This changes only what the console shows on your
+  machine: the job runs as before, and `fun-ci jobs`, `status` and `why --job`
+  report it as before.
+
 ### Fixed
+- A job given a later turn to start is recorded as waiting from the moment a
+  commit starts it. Before, it was recorded as running for an instant first,
+  and anything reading the database just then, the console or `fun-ci
+  events`, took it for a job that had started.
 - `fun-ci runs` no longer dies with "comparison of Integer with nil failed"
   when it lists a run where the slow suite's process died and another stage
   failed or ran over its budget. The died stage is now numbered in the order

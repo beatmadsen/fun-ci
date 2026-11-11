@@ -1,26 +1,12 @@
 //! The `board` message: everything Ruby says is true (renderer-protocol.md).
 
+mod job;
+mod stage;
+
 use serde::Deserialize;
 
-/// The pipeline's stages in the order they run, whatever order a run lists them in.
-pub const STAGES: [&str; 4] = ["lint", "build", "fast", "slow"];
-
-/// A stage as someone who has never seen fun-ci would read it: `lint`,
-/// `build`, `fast suite`, `slow suite`.
-#[must_use]
-pub fn stage_name(stage: &str) -> &str {
-    match stage {
-        "fast" => "fast suite",
-        "slow" => "slow suite",
-        other => other,
-    }
-}
-
-/// A stage in a sentence: `lint`, `the build`, `the fast suite`, `the slow suite`.
-#[must_use]
-pub fn stage_noun(stage: &str) -> String {
-    if stage == "lint" { stage.to_string() } else { format!("the {}", stage_name(stage)) }
-}
+pub use job::{Hidden, Job, JobStatus};
+pub use stage::{STAGES, stage_name, stage_noun};
 
 /// The full state to show.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Deserialize)]
@@ -39,54 +25,9 @@ pub struct Board {
     /// The daily and weekly jobs, below the table, in the order shown (design.md, Daily and weekly jobs).
     #[serde(default)]
     pub jobs: Vec<Job>,
-}
-
-/// How a daily or weekly job stands (renderer-protocol.md, `board`).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
-#[serde(rename_all = "snake_case")]
-pub enum JobStatus {
-    /// It never ran, or its latest run was cancelled: the next commit starts it.
-    Due,
-    /// A commit started it, and it waits its turn to start (`starts_at`).
-    Scheduled,
-    Running,
-    Passed,
-    Failed,
-    /// It ran out of time.
-    Timeout,
-    /// Its process died before it said how the run ended.
-    Lost,
-    /// A state a newer fun-ci, sharing the database, sent.
-    #[serde(other)]
-    Unknown,
-}
-
-/// A daily or weekly job: how often it runs, and its latest run, or that it
-/// is due (renderer-protocol.md, `board`). Times are epoch seconds.
-#[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
-pub struct Job {
+    /// How many jobs the user hid, whether `jobs` holds them or not.
     #[serde(default)]
-    pub project: Option<String>,
-    pub name: String,
-    pub cadence: String,
-    pub status: JobStatus,
-    #[serde(default)]
-    pub run_id: Option<u64>,
-    #[serde(default)]
-    pub sha: Option<String>,
-    #[serde(default)]
-    pub branch: Option<String>,
-    #[serde(default)]
-    pub started_at: Option<i64>,
-    /// When its latest run ended, or started while it runs.
-    #[serde(default)]
-    pub updated_at: Option<i64>,
-    /// When it is due again; none while it is due now, or runs.
-    #[serde(default)]
-    pub due_at: Option<i64>,
-    /// When a job waiting its turn starts; none for any other.
-    #[serde(default)]
-    pub starts_at: Option<i64>,
+    pub hidden_jobs: usize,
 }
 
 /// A project whose trunk is stale: its last good fetch (epoch seconds), or none when its last fetch failed.
@@ -97,7 +38,8 @@ pub struct StaleTrunk {
     pub since: Option<i64>,
 }
 
-/// What the user is doing: where the cursor is, whether a cancel is being confirmed.
+/// What the user is doing: where the cursor is, whether a cancel is being
+/// confirmed, and whether the footer asks how to hide the job under the cursor.
 #[derive(Debug, Clone, Default, PartialEq, Eq, Deserialize)]
 pub struct View {
     #[serde(default)]
@@ -106,6 +48,8 @@ pub struct View {
     pub confirming: bool,
     #[serde(default)]
     pub has_more: bool,
+    #[serde(default)]
+    pub hiding: bool,
 }
 
 /// One pipeline run.

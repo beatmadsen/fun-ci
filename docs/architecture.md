@@ -523,6 +523,23 @@ weekly jobs).
 - **Ruby decides the job section, the renderer draws it.** `board` carries
   `jobs` in the order shown, each with its words' facts (status, commit,
   branch, times, when due); the cursor indexes runs, then jobs.
+- **Which jobs the console hides is kept in the database, per machine**
+  (`hidden_jobs`, read by `Persistence::JobVisibility`): one row a job, with
+  how it was hidden and when. It is what one person finds noisy on one
+  machine, so it is not in `.fun-ci/config`, which the repository tracks and
+  the console never writes. Nothing but the console reads it: a hidden job
+  runs, and the agent commands report it, as before. **A snooze is over when
+  a run of the job began after it**, one that is running or ended other than
+  cancelled, which is the rule `Due` has for what counts as a run. That is
+  asked of `job_runs` in the query that lists the hidden jobs, not noted when
+  the console sees the run, so it holds when no console was open while the
+  job ran, and a snooze that is over stays over whatever the job's later runs
+  do. A row whose snooze is over is left where it is and replaced the next
+  time the job is hidden. *Rejected:* two keys, one to snooze and one to
+  ignore, with no question: `i` is beside `j` and `k`, the footer has no room
+  for two more keys at 60 columns, and the question is where the two are told
+  apart. *Rejected:* showing the hidden jobs whenever the cursor is among the
+  jobs, which left them on screen until the cursor moved away.
 
 ## Quality standards (from intent-record)
 

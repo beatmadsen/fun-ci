@@ -138,6 +138,20 @@ The full state to show. Always complete — never a diff.
   the last run into the jobs: `cursor` equal to `runs`' length is the first
   job. `runs` is then two shorter than a page, leaving the job section its
   blank line and one line.
+- `hidden_jobs` (optional) is how many jobs of the board's projects the user
+  hid in the console (`design.md`, The console), whether `jobs` holds them or
+  not. Ruby leaves it out when none is hidden. `jobs` holds only the jobs in
+  view, until the user asks to see the hidden ones (`a`): then they come last
+  in `jobs`, each with `hidden`, `snoozed` (until the job runs again) or
+  `ignored`. The renderer draws such a job pale, without a stripe, saying how
+  it was hidden in place of what happened, and counts none of them as
+  needing you. A way of hiding it doesn't know, it calls `hidden`.
+- `hiding` (optional) is true while the footer asks how to hide the job under
+  the cursor, as `confirming` is while it asks whether to cancel. The
+  renderer then shows `Hide <name>?` and the keys that answer, `s`, `i` and
+  `n`. Ruby leaves it out otherwise. A renderer from before these three
+  fields ignores them, so its footer neither asks nor says that jobs are
+  hidden.
 - `runs` holds one run per branch, the branch's newest, in the order the rows
   are shown, which is the order the cursor moves in: a project's branches
   together, the project that most needs you first, and within a project a

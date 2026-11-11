@@ -42,6 +42,7 @@ scenarios! {
     a_busy_board_looks_as_reviewed: "busy-board";
     the_daily_and_weekly_jobs_look_as_reviewed: "jobs";
     jobs_waiting_their_turn_look_as_reviewed: "jobs_scheduled";
+    hiding_a_job_and_the_hidden_jobs_look_as_reviewed: "jobs_hidden";
 }
 
 /// A scenario added without a snapshot would be drawn by nobody: each has one, reviewed.

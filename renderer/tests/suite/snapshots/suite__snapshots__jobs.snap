@@ -97,7 +97,7 @@ frame 0003 at 100x32
   |
   |          marks, left to right: lint · build · fast suite · slow suite
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbWbbbXXXXXXXXXXXbbYZY0W12bbWWWbWWWWbWWWWWbWWWWWWbWWWWWbWWWWbbbbbbbbbbbbbbbbbbbbbbbb22bbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -115,7 +115,7 @@ frame 0003 at 100x32
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBοοοοοοBοοοοBοοBοοοοοοBοοοοBοBοοοοοBοBοοοοBοοοοοBοBοοοοBοοοοοBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBUVVVUBQQQQBBBBUVUBQQQQQQBBBBUVUBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBUVVVUBQQQQBBBBUVUBQQQQQQBBBBUVUBQQQQBBBBUVUBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0004 at 100x32
   header 99a96584
   |
@@ -135,7 +135,7 @@ frame 0004 at 100x32
   |
   |          marks, left to right: lint · build · fast suite · slow suite
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbWbbbXXXXXXXXXXXbbYZY0W12bbWWWbWWWWbWWWWWbWWWWWWbWWWWWbWWWWbbbbbbbbbbbbbbbbbbbbbbbb22bbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -153,7 +153,7 @@ frame 0004 at 100x32
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBοοοοοοBοοοοBοοBοοοοοοBοοοοBοBοοοοοBοBοοοοBοοοοοBοBοοοοBοοοοοBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBUVVVUBQQQQBBBBUVUBQQQQQQBBBBUVUBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBUVVVUBQQQQBBBBUVUBQQQQQQBBBBUVUBQQQQBBBBUVUBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0005 at 100x32
   header 528d5f7f
   |

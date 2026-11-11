@@ -1,0 +1,409 @@
+---
+source: tests/suite/snapshots.rs
+expression: "render(& frames(\"jobs_hidden\"))"
+---
+frame 0001 at 100x32
+  header 261196f5
+  |
+  |                         lint · checks the code without running it
+  |                         │ build · compiles the code and its tests
+  |                         │ │ fast suite · quick tests, after lint and the build
+  |                         │ │ │ slow suite · long tests, run in the background
+  |        ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |        ▌   feat/search  ✓─✓─◆┄·  the fast suite failed after 1.4s                        6m
+  |        ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |            main         ✓─✓─✓─✓  all four stages passed                                  1h
+  |
+  |          D A I L Y   &   W E E K L Y   ──────────────────────────────────────────────────────
+  |        ▌   soak         weekly ◆ failed after 3h12m on wip/foo 9e0b1d4 · due in 5d       2d
+  |        ▌   mutation     daily  ⠙ running on main 3a1f9c2 · 1h12m                         1h
+  |            deps-audit   daily  ✓ passed on main 3a1f9c2 · due in 14h                    10h
+  |
+  |
+  |
+  |           j/k  move     c  cancel     q  quit                         a shows 2 hidden jobs
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :eeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :iiiiiiiiiiiiiiiiiiiiiiiiijijikkkkikkkkkililllllillllllilllllillllilllilllillllliiiiiiiiiiiiiiiiiiiii
+  :mmmmmmmmmmmmmmmmmmmmmmmmmnmnmnmoooomooooompmppppmppppppmpppmppmpppmppppppppppmmmmmmmmmmmmmmmmmmmmmmm
+  :qqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqq
+  :sssssssstuuuvvvvvvvvvvvuuwxwytzAuutttuttttutttttuttttttutttttuttttuuuuuuuuuuuuuuuuuuuuuuuuAAuussssss
+  :BBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBB
+  :BBBBBBBBBBBBDDDDBBBBBBBBBEFEFEFEBBEEEBEEEEBEEEEEEBEEEEEEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBHBHBHBHBHBBBHBBBHBHBHBHBHBHBBBIIIIIIIIIJJJJJJJJJKKKKKKKKKLLLLLLLLLMMMMMMMMMNNNNNNNNNBBBBBB
+  :BBBBBBBBOBBBPPPPBBBBBBBBBHHHHHHBOBOOOOOOBOOOOOBOOOOOBOOBOOOOOOOBOOOOOOOBOBOOOBOOBOOBBBBBBBQQBBBBBBBB
+  :BBBBBBBBRBBBPPPPPPPPBBBBBHHHHHBBRBRRRRRRRBRRBRRRRBRRRRRRRBRBRRRRRBBBBBBBBBBBBBBBBBBBBBBBBBQQBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDDDDDBBBSSSSSBBEBEEEEEEBEEBEEEEBEEEEEEEBEBEEEBEEBEEEBBBBBBBBBBBBBBBBBBBBGGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBVBVVVVVBVBVVVVVVBVVVVBBBBBBBB
+frame 0002 at 100x32
+  header 187ba493
+  |
+  |                         lint · checks the code without running it
+  |                         │ build · compiles the code and its tests
+  |                         │ │ fast suite · quick tests, after lint and the build
+  |                         │ │ │ slow suite · long tests, run in the background
+  |        ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |        ▌   feat/search  ✓─✓─◆┄·  the fast suite failed after 1.4s                        6m
+  |        ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |            main         ✓─✓─✓─✓  all four stages passed                                  1h
+  |
+  |          D A I L Y   &   W E E K L Y   ──────────────────────────────────────────────────────
+  |        ▌   soak         weekly ◆ failed after 3h12m on wip/foo 9e0b1d4 · due in 5d       2d
+  |        ▌   mutation     daily  ⠹ running on main 3a1f9c2 · 1h12m                         1h
+  |            deps-audit   daily  ✓ passed on main 3a1f9c2 · due in 14h                    10h
+  |
+  |
+  |
+  |           j/k  move     c  cancel     q  quit                         a shows 2 hidden jobs
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :eeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :iiiiiiiiiiiiiiiiiiiiiiiiijijikkkkikkkkkililllllillllllilllllillllilllilllillllliiiiiiiiiiiiiiiiiiiii
+  :mmmmmmmmmmmmmmmmmmmmmmmmmnmnmnmoooomooooompmppppmppppppmpppmppmpppmppppppppppmmmmmmmmmmmmmmmmmmmmmmm
+  :qqqqqqqqrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrqqqqqq
+  :sssssssstuuuvvvvvvvvvvvuuwxwytzAuutttuttttutttttuttttttutttttuttttuuuuuuuuuuuuuuuuuuuuuuuuAAuussssss
+  :BBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBB
+  :BBBBBBBBBBBBDDDDBBBBBBBBBEFEFEFEBBEEEBEEEEBEEEEEEBEEEEEEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBHBHBHBHBHBBBHBBBHBHBHBHBHBHBBBIIIIIIIIIJJJJJJJJJKKKKKKKKKLLLLLLLLLMMMMMMMMMNNNNNNNNNBBBBBB
+  :BBBBBBBBOBBBPPPPBBBBBBBBBHHHHHHBOBOOOOOOBOOOOOBOOOOOBOOBOOOOOOOBOOOOOOOBOBOOOBOOBOOBBBBBBBQQBBBBBBBB
+  :BBBBBBBBRBBBPPPPPPPPBBBBBHHHHHBBRBRRRRRRRBRRBRRRRBRRRRRRRBRBRRRRRBBBBBBBBBBBBBBBBBBBBBBBBBQQBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDDDDDBBBSSSSSBBEBEEEEEEBEEBEEEEBEEEEEEEBEBEEEBEEBEEEBBBBBBBBBBBBBBBBBBBBGGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBVBVVVVVBVBVVVVVVBVVVVBBBBBBBB
+frame 0003 at 100x32
+  header a4155e22
+  |
+  |                         lint · checks the code without running it
+  |                         │ build · compiles the code and its tests
+  |                         │ │ fast suite · quick tests, after lint and the build
+  |                         │ │ │ slow suite · long tests, run in the background
+  |                         │ │ │ │
+  |        ▌   feat/search  ✓─✓─◆┄·  the fast suite failed after 1.4s                        6m
+  |                         │ │ │ │
+  |            main         ✓─✓─✓─✓  all four stages passed                                  1h
+  |
+  |          D A I L Y   &   W E E K L Y   ──────────────────────────────────────────────────────
+  |        ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |        ▌   soak         weekly ◆ failed after 3h12m on wip/foo 9e0b1d4 · due in 5d       2d
+  |        ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |        ▌   mutation     daily  ⠸ running on main 3a1f9c2 · 1h12m                         1h
+  |            deps-audit   daily  ✓ passed on main 3a1f9c2 · due in 14h                    10h
+  |
+  |          Hide soak?   s  snooze     i  ignore     n  no
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :eeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :iiiiiiiiiiiiiiiiiiiiiiiiijijikkkkikkkkkililllllillllllilllllillllilllilllillllliiiiiiiiiiiiiiiiiiiii
+  :mmmmmmmmmmmmmmmmmmmmmmmmmnmnmnmoooomooooompmppppmppppppmpppmppmpppmppppppppppmmmmmmmmmmmmmmmmmmmmmmm
+  :qqqqqqqqqqqqqqqqqqqqqqqqqWqWqWqWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  :ssssssssXsssYYYYYYYYYYYssZ0Z1X23ssXXXsXXXXsXXXXXsXXXXXXsXXXXXsXXXXssssssssssssssssssssssss33ssssssss
+  :BBBBBBBBBBBBBBBBBBBBBBBBB4B4B4B4BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDBBBBBBBBBEFEFEFEBBEEEBEEEEBEEEEEEBEEEEEEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBHBHBHBHBHBBBHBBBHBHBHBHBHBHBBBIIIIIIIIIJJJJJJJJJKKKKKKKKKLLLLLLLLLMMMMMMMMMNNNNNNNNNBBBBBB
+  :BBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBB
+  :BBBBBBBBtuuuvvvvuuuuuuuuu555555ututtttttutttttutttttuttutttttttutttttttututttuttuttuuuuuuuAAuuBBBBBB
+  :BBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBB
+  :BBBBBBBBRBBBPPPPPPPPBBBBBHHHHHBBRBRRRRRRRBRRBRRRRBRRRRRRRBRBRRRRRBBBBBBBBBBBBBBBBBBBBBBBBBQQBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDDDDDBBBSSSSSBBEBEEEEEEBEEBEEEEBEEEEEEEBEBEEEBEEBEEEBBBBBBBBBBBBBBBBBBBBGGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBB6666B66666BBTUTBQQQQQQBBBBTUTBQQQQQQBBBBTUTBQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+frame 0004 at 100x32
+  header 99a96584
+  |
+  |                         lint · checks the code without running it
+  |                         │ build · compiles the code and its tests
+  |                         │ │ fast suite · quick tests, after lint and the build
+  |                         │ │ │ slow suite · long tests, run in the background
+  |                         │ │ │ │
+  |        ▌   feat/search  ✓─✓─◆┄·  the fast suite failed after 1.4s                        6m
+  |                         │ │ │ │
+  |            main         ✓─✓─✓─✓  all four stages passed                                  1h
+  |
+  |          D A I L Y   &   W E E K L Y   ──────────────────────────────────────────────────────
+  |        ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |        ▌   soak         weekly ◆ failed after 3h12m on wip/foo 9e0b1d4 · due in 5d       2d
+  |        ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |        ▌   mutation     daily  ⠼ running on main 3a1f9c2 · 1h12m                         1h
+  |            deps-audit   daily  ✓ passed on main 3a1f9c2 · due in 14h                    10h
+  |
+  |          Hide soak?   s  snooze     i  ignore     n  no
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :eeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :iiiiiiiiiiiiiiiiiiiiiiiiijijikkkkikkkkkililllllillllllilllllillllilllilllillllliiiiiiiiiiiiiiiiiiiii
+  :mmmmmmmmmmmmmmmmmmmmmmmmmnmnmnmoooomooooompmppppmppppppmpppmppmpppmppppppppppmmmmmmmmmmmmmmmmmmmmmmm
+  :qqqqqqqqqqqqqqqqqqqqqqqqqWqWqWqWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  :ssssssssXsssYYYYYYYYYYYssZ0Z1X23ssXXXsXXXXsXXXXXsXXXXXXsXXXXXsXXXXssssssssssssssssssssssss33ssssssss
+  :BBBBBBBBBBBBBBBBBBBBBBBBB4B4B4B4BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDBBBBBBBBBEFEFEFEBBEEEBEEEEBEEEEEEBEEEEEEBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBHBHBHBHBHBBBHBBBHBHBHBHBHBHBBBIIIIIIIIIJJJJJJJJJKKKKKKKKKLLLLLLLLLMMMMMMMMMNNNNNNNNNBBBBBB
+  :BBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBB
+  :BBBBBBBBtuuuvvvvuuuuuuuuu555555ututtttttutttttutttttuttutttttttutttttttututttuttuttuuuuuuuAAuuBBBBBB
+  :BBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCBBBBBB
+  :BBBBBBBBRBBBPPPPPPPPBBBBBHHHHHBBRBRRRRRRRBRRBRRRRBRRRRRRRBRBRRRRRBBBBBBBBBBBBBBBBBBBBBBBBBQQBBBBBBBB
+  :BBBBBBBBBBBBDDDDDDDDDDBBBSSSSSBBEBEEEEEEBEEBEEEEBEEEEEEEBEBEEEBEEBEEEBBBBBBBBBBBBBBBBBBBBGGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBB6666B66666BBTUTBQQQQQQBBBBTUTBQQQQQQBBBBTUTBQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+frame 0005 at 100x32
+  header 9edd7907
+  |
+  |        ▌   feat/search       ✓─✓─◆┄·       the fast suite failed after 1.4s              6m
+  |
+  |            main              ✓─✓─✓─✓       all four stages passed                        1h
+  |
+  |          D A I L Y   &   W E E K L Y   ──────────────────────────────────────────────────────
+  |        ▌   mutation          daily  ⠴      running on main 3a1f9c2 · 1h12m               1h
+  |            deps-audit        daily  ✓      passed on main 3a1f9c2 · due in 14h          10h
+  |        ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |            soak              weekly ◆      snoozed until it runs again                   2d
+  |        ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |            lint-deep         daily  ◌      ignored
+  |            fuzz              weekly ✓      ignored                                       1d
+  |
+  |
+  |          marks, left to right: lint · build · fast suite · slow suite
+  |
+  |           j/k  move     c  cancel     h  show     q  quit               a hides hidden jobs
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbb7bbb88888888888bbbbbbb9α9β7γδbbbbbbb777b7777b77777b777777b77777b7777bbbbbbbbbbbbbbδδbbbbbbbb
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :iiiiiiiiiiiiεεεεiiiiiiiiiiiiiiζηζηζηζiiiiiiiζζζiζζζζiζζζζζζiζζζζζζiiiiiiiiiiiiiiiiiiiiiiiiθθiiiiiiii
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :qqqqqqqqqqιqιqιqιqιqqqιqqqιqιqιqιqιqιqqqκκκκκκκκκλλλλλλλλλμμμμμμμμμνννννννννξξξξξξξξξοοοοοοοοοqqqqqq
+  :ssssssssπsssYYYYYYYYssssssssssρρρρρssπssssssπππππππsππsππππsπππππππsπsπππππsssssssssssssss33ssssssss
+  :BBBBBBBBBBBBDDDDDDDDDDBBBBBBBBSSSSSBBEBBBBBBEEEEEEBEEBEEEEBEEEEEEEBEBEEEBEEBEEEBBBBBBBBBBGGGBBBBBBBB
+  :BBBBBBBBσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσBBBBBB
+  :BBBBBBBBττττυυυυττττττττττττττφφφφφφτχττττττψψψψψψψτψψψψψτψψτψψψψτψψψψψτττττττττττττττττττωωττBBBBBB
+  :BBBBBBBBσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσσBBBBBB
+  :BBBBBBBBBBBBDDDDDDDDDBBBBBBBBBSSSSSBBGBBBBBBÀÀÀÀÀÀÀBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDBBBBBBBBBBBBBBSSSSSSBEBBBBBBÀÀÀÀÀÀÀBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBVVVVVVBVVVVBVVBVVVVVVBVVVVBVBVVVVVBVBVVVVBVVVVVBVBVVVVBVVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQQQBBBBTUTBQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBVBVVVVVBVVVVVVBVVVVBBBBBBBB
+frame 0006 at 100x32
+  header 9bd92296
+  |
+  |        ▌   feat/search       ✓─✓─◆┄·       the fast suite failed after 1.4s              6m
+  |
+  |            main              ✓─✓─✓─✓       all four stages passed                        1h
+  |
+  |          D A I L Y   &   W E E K L Y   ──────────────────────────────────────────────────────
+  |        ▌   mutation          daily  ⠦      running on main 3a1f9c2 · 1h12m               1h
+  |            deps-audit        daily  ✓      passed on main 3a1f9c2 · due in 14h          10h
+  |        ▗▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▖
+  |            soak              weekly ◆      snoozed until it runs again                   2d
+  |        ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
+  |            lint-deep         daily  ◌      ignored
+  |            fuzz              weekly ✓      ignored                                       1d
+  |
+  |
+  |          marks, left to right: lint · build · fast suite · slow suite
+  |
+  |           j/k  move     c  cancel     h  show     q  quit               a hides hidden jobs
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbb7bbb88888888888bbbbbbb9α9β7γδbbbbbbb777b7777b77777b777777b77777b7777bbbbbbbbbbbbbbδδbbbbbbbb
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :iiiiiiiiiiiiεεεεiiiiiiiiiiiiiiζηζηζηζiiiiiiiζζζiζζζζiζζζζζζiζζζζζζiiiiiiiiiiiiiiiiiiiiiiiiθθiiiiiiii
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+  :qqqqqqqqqqιqιqιqιqιqqqιqqqιqιqιqιqιqιqqqκκκκκκκκκλλλλλλλλλμμμμμμμμμνννννννννξξξξξξξξξοοοοοοοοοqqqqqq
+  :ssssssssπsssYYYYYYYYssssssssssρρρρρssπssssssπππππππsππsππππsπππππππsπsπππππsssssssssssssss33ssssssss
+  :BBBBBBBBBBBBDDDDDDDDDDBBBBBBBBSSSSSBBEBBBBBBEEEEEEBEEBEEEEBEEEEEEEBEBEEEBEEBEEEBBBBBBBBBBGGGBBBBBBBB
+  :BBBBBBBBÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁBBBBBB
+  :BBBBBBBBÂÂÂÂÃÃÃÃÂÂÂÂÂÂÂÂÂÂÂÂÂÂÄÄÄÄÄÄÂÅÂÂÂÂÂÂÆÆÆÆÆÆÆÂÆÆÆÆÆÂÆÆÂÆÆÆÆÂÆÆÆÆÆÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÂÇÇÂÂBBBBBB
+  :BBBBBBBBÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁÁBBBBBB
+  :BBBBBBBBBBBBDDDDDDDDDBBBBBBBBBSSSSSBBGBBBBBBÀÀÀÀÀÀÀBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBDDDDBBBBBBBBBBBBBBSSSSSSBEBBBBBBÀÀÀÀÀÀÀBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGGBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBVVVVVVBVVVVBVVBVVVVVVBVVVVBVBVVVVVBVBVVVVBVVVVVBVBVVVVBVVVVVBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQQQBBBBTUTBQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBVBVVVVVBVVVVVVBVVVVBBBBBBBB
+frame 0007 at 100x32
+  header 3ee21a59
+  |
+  |                               lint · checks the code without running it
+  |                               │ build · compiles the code and its tests
+  |                               │ │ fast suite · quick tests, after lint and the build
+  |                               │ │ │ slow suite · long tests, run in the background
+  |                               │ │ │ │
+  |               main            ✓─✓─✓─✓            all four stages passed              1h
+  |
+  |
+  |
+  |
+  |
+  |                                                               •
+  |
+  |
+  |
+  |
+  |              j/k  move     q  quit                                 a shows 5 hidden jobs
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijijikkkkikkkkkililllllillllllilllllillllilllilllillllliiiiiiiiiiiiiii
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmnmnmnmoooomooooompmppppmppppppmpppmppmpppmppppppppppmmmmmmmmmmmmmmmmm
+  :qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqWqWqWqWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  :sssssssssssssssÈÈÈÈssssssssssssÉÊÉÊÉÊÉssssssssssssÉÉÉsÉÉÉÉsÉÉÉÉÉÉsÉÉÉÉÉÉssssssssssssssËËssssssssssss
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBÌBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBVBVVVVVBVBVVVVVVBVVVVBBBBBBBBBBB
+frame 0008 at 100x32
+  header fbef421c
+  |
+  |                               lint · checks the code without running it
+  |                               │ build · compiles the code and its tests
+  |                               │ │ fast suite · quick tests, after lint and the build
+  |                               │ │ │ slow suite · long tests, run in the background
+  |                               │ │ │ │
+  |               main            ✓─✓─✓─✓            all four stages passed              1h
+  |
+  |
+  |
+  |
+  |
+  |                                                                •
+  |
+  |
+  |
+  |
+  |              j/k  move     q  quit                                 a shows 5 hidden jobs
+  :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+  :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeee
+  :iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiijijikkkkikkkkkililllllillllllilllllillllilllilllillllliiiiiiiiiiiiiii
+  :mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmnmnmnmoooomooooompmppppmppppppmpppmppmpppmppppppppppmmmmmmmmmmmmmmmmm
+  :qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqWqWqWqWqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq
+  :sssssssssssssssÈÈÈÈssssssssssssÉÊÉÊÉÊÉssssssssssssÉÉÉsÉÉÉÉsÉÉÉÉÉÉsÉÉÉÉÉÉssssssssssssssËËssssssssssss
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBÍBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBVBVVVVVBVBVVVVVVBVVVVBBBBBBBBBBB
+legend
+a = fg Default, bg Rgb(31, 21, 44), []
+b = fg Default, bg Rgb(27, 18, 38), []
+c = fg Rgb(127, 122, 150), bg Rgb(27, 18, 38), ["bold"]
+d = fg Rgb(146, 140, 170), bg Rgb(27, 18, 38), ["italic"]
+e = fg Default, bg Rgb(23, 16, 33), []
+f = fg Rgb(81, 77, 98), bg Rgb(23, 16, 33), []
+g = fg Rgb(127, 122, 150), bg Rgb(23, 16, 33), ["bold"]
+h = fg Rgb(146, 140, 170), bg Rgb(23, 16, 33), ["italic"]
+i = fg Default, bg Rgb(19, 14, 29), []
+j = fg Rgb(81, 77, 98), bg Rgb(19, 14, 29), []
+k = fg Rgb(127, 122, 150), bg Rgb(19, 14, 29), ["bold"]
+l = fg Rgb(146, 140, 170), bg Rgb(19, 14, 29), ["italic"]
+m = fg Default, bg Rgb(17, 13, 25), []
+n = fg Rgb(81, 77, 98), bg Rgb(17, 13, 25), []
+o = fg Rgb(127, 122, 150), bg Rgb(17, 13, 25), ["bold"]
+p = fg Rgb(146, 140, 170), bg Rgb(17, 13, 25), ["italic"]
+q = fg Default, bg Rgb(15, 12, 23), []
+r = fg Rgb(46, 20, 26), bg Rgb(15, 12, 23), []
+s = fg Default, bg Rgb(13, 11, 21), []
+t = fg Rgb(220, 132, 118), bg Rgb(46, 20, 26), []
+u = fg Default, bg Rgb(46, 20, 26), []
+v = fg Rgb(242, 239, 250), bg Rgb(46, 20, 26), ["bold"]
+w = fg Rgb(111, 184, 170), bg Rgb(46, 20, 26), []
+x = fg Rgb(62, 97, 95), bg Rgb(46, 20, 26), []
+y = fg Rgb(116, 71, 69), bg Rgb(46, 20, 26), []
+z = fg Rgb(49, 46, 62), bg Rgb(46, 20, 26), []
+A = fg Rgb(85, 82, 104), bg Rgb(46, 20, 26), []
+B = fg Default, bg Rgb(12, 10, 19), []
+C = fg Rgb(46, 20, 26), bg Rgb(12, 10, 19), []
+D = fg Rgb(82, 80, 88), bg Rgb(12, 10, 19), []
+E = fg Rgb(42, 69, 64), bg Rgb(12, 10, 19), []
+F = fg Rgb(23, 36, 36), bg Rgb(12, 10, 19), []
+G = fg Rgb(32, 31, 39), bg Rgb(12, 10, 19), []
+H = fg Rgb(127, 122, 150), bg Rgb(12, 10, 19), []
+I = fg Rgb(64, 60, 78), bg Rgb(12, 10, 19), []
+J = fg Rgb(55, 52, 68), bg Rgb(12, 10, 19), []
+K = fg Rgb(47, 44, 58), bg Rgb(12, 10, 19), []
+L = fg Rgb(38, 35, 48), bg Rgb(12, 10, 19), []
+M = fg Rgb(29, 27, 39), bg Rgb(12, 10, 19), []
+N = fg Rgb(21, 18, 29), bg Rgb(12, 10, 19), []
+O = fg Rgb(220, 132, 118), bg Rgb(12, 10, 19), []
+P = fg Rgb(216, 212, 232), bg Rgb(12, 10, 19), []
+Q = fg Rgb(85, 82, 104), bg Rgb(12, 10, 19), []
+R = fg Rgb(143, 184, 222), bg Rgb(12, 10, 19), []
+S = fg Rgb(48, 46, 57), bg Rgb(12, 10, 19), []
+T = fg Default, bg Rgb(38, 33, 56), []
+U = fg Rgb(207, 200, 232), bg Rgb(38, 33, 56), []
+V = fg Rgb(146, 140, 170), bg Rgb(12, 10, 19), ["italic"]
+W = fg Rgb(81, 77, 98), bg Rgb(15, 12, 23), []
+X = fg Rgb(220, 132, 118), bg Rgb(13, 11, 21), []
+Y = fg Rgb(216, 212, 232), bg Rgb(13, 11, 21), []
+Z = fg Rgb(111, 184, 170), bg Rgb(13, 11, 21), []
+0 = fg Rgb(62, 97, 95), bg Rgb(13, 11, 21), []
+1 = fg Rgb(116, 71, 69), bg Rgb(13, 11, 21), []
+2 = fg Rgb(49, 46, 62), bg Rgb(13, 11, 21), []
+3 = fg Rgb(85, 82, 104), bg Rgb(13, 11, 21), []
+4 = fg Rgb(81, 77, 98), bg Rgb(12, 10, 19), []
+5 = fg Rgb(127, 122, 150), bg Rgb(46, 20, 26), []
+6 = fg Rgb(207, 200, 232), bg Rgb(12, 10, 19), []
+7 = fg Rgb(220, 132, 118), bg Rgb(27, 18, 38), []
+8 = fg Rgb(216, 212, 232), bg Rgb(27, 18, 38), []
+9 = fg Rgb(111, 184, 170), bg Rgb(27, 18, 38), []
+α = fg Rgb(62, 97, 95), bg Rgb(27, 18, 38), []
+β = fg Rgb(116, 71, 69), bg Rgb(27, 18, 38), []
+γ = fg Rgb(49, 46, 62), bg Rgb(27, 18, 38), []
+δ = fg Rgb(85, 82, 104), bg Rgb(27, 18, 38), []
+ε = fg Rgb(82, 80, 88), bg Rgb(19, 14, 29), []
+ζ = fg Rgb(42, 69, 64), bg Rgb(19, 14, 29), []
+η = fg Rgb(23, 36, 36), bg Rgb(19, 14, 29), []
+θ = fg Rgb(32, 31, 39), bg Rgb(19, 14, 29), []
+ι = fg Rgb(127, 122, 150), bg Rgb(15, 12, 23), []
+κ = fg Rgb(64, 60, 78), bg Rgb(15, 12, 23), []
+λ = fg Rgb(55, 52, 68), bg Rgb(15, 12, 23), []
+μ = fg Rgb(47, 44, 58), bg Rgb(15, 12, 23), []
+ν = fg Rgb(38, 35, 48), bg Rgb(15, 12, 23), []
+ξ = fg Rgb(29, 27, 39), bg Rgb(15, 12, 23), []
+ο = fg Rgb(21, 18, 29), bg Rgb(15, 12, 23), []
+π = fg Rgb(143, 184, 222), bg Rgb(13, 11, 21), []
+ρ = fg Rgb(127, 122, 150), bg Rgb(13, 11, 21), []
+σ = fg Rgb(29, 27, 54), bg Rgb(12, 10, 19), []
+τ = fg Default, bg Rgb(29, 27, 54), []
+υ = fg Rgb(242, 239, 250), bg Rgb(29, 27, 54), ["bold"]
+φ = fg Rgb(127, 122, 150), bg Rgb(29, 27, 54), []
+χ = fg Rgb(220, 132, 118), bg Rgb(29, 27, 54), []
+ψ = fg Rgb(85, 82, 104), bg Rgb(29, 27, 54), ["italic"]
+ω = fg Rgb(85, 82, 104), bg Rgb(29, 27, 54), []
+À = fg Rgb(85, 82, 104), bg Rgb(12, 10, 19), ["italic"]
+Á = fg Rgb(32, 30, 59), bg Rgb(12, 10, 19), []
+Â = fg Default, bg Rgb(32, 30, 59), []
+Ã = fg Rgb(242, 239, 250), bg Rgb(32, 30, 59), ["bold"]
+Ä = fg Rgb(127, 122, 150), bg Rgb(32, 30, 59), []
+Å = fg Rgb(220, 132, 118), bg Rgb(32, 30, 59), []
+Æ = fg Rgb(85, 82, 104), bg Rgb(32, 30, 59), ["italic"]
+Ç = fg Rgb(85, 82, 104), bg Rgb(32, 30, 59), []
+È = fg Rgb(82, 80, 88), bg Rgb(13, 11, 21), []
+É = fg Rgb(42, 69, 64), bg Rgb(13, 11, 21), []
+Ê = fg Rgb(23, 36, 36), bg Rgb(13, 11, 21), []
+Ë = fg Rgb(32, 31, 39), bg Rgb(13, 11, 21), []
+Ì = fg Rgb(44, 75, 68), bg Rgb(12, 10, 19), []
+Í = fg Rgb(45, 77, 70), bg Rgb(12, 10, 19), []

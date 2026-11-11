@@ -419,6 +419,21 @@ each project's branches sit under the project's name, one row per branch:
   `fun-ci why --job NAME`, or the line above it does when the keys leave the
   command too little room to be read whole. Jobs play no scene and touch
   neither the streak nor the lamp: the header tells the story of the commits.
+- A job whose line tells you nothing can be put out of view. `h` on a job
+  asks how, naming it (`Hide soak?` with `s snooze`, `i ignore` and `n no`):
+  snoozed, it is gone until it runs again, which is when a run of it begins
+  after that, so a run waiting its turn or a cancelled one doesn't bring it
+  back; ignored, it is gone until you bring it back. `h` asks first because
+  it sits beside `j`, and a job ignored by a slip of the finger would fail
+  unseen. A hidden job is no row, takes no line, and counts in none of the
+  section's lines; a section with every job hidden is not drawn. Beside the
+  keys the footer says `a shows 2 hidden jobs`. `a` puts the hidden jobs
+  last in the section, pale and without a stripe, each saying `snoozed until
+  it runs again` or `ignored` in place of what happened, and the footer then
+  says `a hides hidden jobs`. `h` on one of them brings it back at once.
+  Hiding is about what this console shows on this machine, and nothing else:
+  the job runs as before, and `fun-ci jobs`, `status` and `why --job` say
+  what they said.
 - The streak counts consecutive passed runs; a running run neither breaks nor
   extends it. It sits at the top right of the header, `7 in a row!` in green,
   or `streak broken` in plain white after a failure, since the header shouldn't

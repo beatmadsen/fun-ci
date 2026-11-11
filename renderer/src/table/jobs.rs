@@ -56,16 +56,18 @@ pub fn name(job: &Job, named: bool) -> String {
     }
 }
 
-/// Whether a job needs you: its latest run failed, ran out of time, or stopped without a result.
+/// Whether a job needs you: its latest run failed, ran out of time, or
+/// stopped without a result, and the user has not hidden it.
 #[must_use]
 pub fn needs_you(job: &Job) -> bool {
-    matches!(job.status, JobStatus::Failed | JobStatus::Timeout | JobStatus::Lost)
+    job.hidden.is_none() && matches!(job.status, JobStatus::Failed | JobStatus::Timeout | JobStatus::Lost)
 }
 
-/// Whether nothing in the section needs you or runs.
+/// Whether nothing in the section needs you or runs, and it shows no hidden
+/// job: those the user asked to see, each on its row.
 #[must_use]
 pub fn quiet(jobs: &[Job]) -> bool {
-    jobs.iter().all(|job| matches!(job.status, JobStatus::Passed | JobStatus::Due))
+    jobs.iter().all(|job| job.hidden.is_none() && matches!(job.status, JobStatus::Passed | JobStatus::Due))
 }
 
 /// The index of the job under the cursor: past the last run.

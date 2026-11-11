@@ -6,15 +6,20 @@
 //! `passed · due in 14h`, `due · next commit`. One waiting its turn to start:
 //! `starts in 8m on main 3a1f9c2`, briefly `starts in 8m`.
 
+use super::hiding;
 use crate::format::{seconds_since, short_sha};
 use crate::model::{Job, JobStatus};
 
 /// What a job says whose state this fun-ci doesn't know.
 const UNKNOWN: &str = "in a state this fun-ci doesn't know";
 
-/// What `job` says, at the clock `now_ms`.
+/// What `job` says, at the clock `now_ms`: how it was hidden, for a hidden job.
 #[must_use]
 pub fn said(job: &Job, now_ms: i64) -> String {
+    job.hidden.map_or_else(|| happened(job, now_ms), |how| hiding::said(how, false).to_string())
+}
+
+fn happened(job: &Job, now_ms: i64) -> String {
     match job.status {
         JobStatus::Due => "due · runs on your next commit".to_string(),
         JobStatus::Scheduled => format!("{} on {}", starts(job, now_ms), commit(job)),
@@ -30,6 +35,10 @@ pub fn said(job: &Job, now_ms: i64) -> String {
 /// What `job` says, briefly, for a narrow screen.
 #[must_use]
 pub fn said_briefly(job: &Job, now_ms: i64) -> String {
+    job.hidden.map_or_else(|| happened_briefly(job, now_ms), |how| hiding::said(how, true).to_string())
+}
+
+fn happened_briefly(job: &Job, now_ms: i64) -> String {
     match job.status {
         JobStatus::Due => "due · next commit".to_string(),
         JobStatus::Scheduled => starts(job, now_ms),

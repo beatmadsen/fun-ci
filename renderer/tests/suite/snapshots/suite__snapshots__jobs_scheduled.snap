@@ -97,7 +97,7 @@ frame 0003 at 100x32
   |
   |          marks, left to right: lint · build · fast suite · slow suite
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbVbbbWWWWWWWWWWWbbbbbbbXYXZV01bbbbbbbVVVbVVVVbVVVVVbVVVVVVbVVVVVbVVVVbbbbbbbbbbbbbb11bbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -115,7 +115,7 @@ frame 0003 at 100x32
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBννννννBννννBννBννννννBννννBνBνννννBνBννννBνννννBνBννννBνννννBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQQQBBBBTUTBQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0004 at 100x32
   header 99a96584
   |
@@ -135,7 +135,7 @@ frame 0004 at 100x32
   |
   |          marks, left to right: lint · build · fast suite · slow suite
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbVbbbWWWWWWWWWWWbbbbbbbXYXZV01bbbbbbbVVVbVVVVbVVVVVbVVVVVVbVVVVVbVVVVbbbbbbbbbbbbbb11bbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -153,7 +153,7 @@ frame 0004 at 100x32
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBννννννBννννBννBννννννBννννBνBνννννBνBννννBνννννBνBννννBνννννBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBTUUUTBQQQQBBBBTUTBQQQQQQBBBBTUTBQQQQBBBBTUTBQQQQBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 legend
 a = fg Default, bg Rgb(31, 21, 44), []
 b = fg Default, bg Rgb(27, 18, 38), []

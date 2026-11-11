@@ -276,7 +276,7 @@ fn a_job_whose_name_with_its_project_just_fits_keeps_its_project() {
 }
 
 // A failed job under the cursor, with a run going so the footer has all
-// three keys: its command fits beside them from 76 columns.
+// four keys: its command fits beside them from 82 columns.
 fn failed_job_under_the_cursor(cols: u16) -> String {
     let jobs = [job("soak", "weekly", "failed"), job("mutation", "daily", "running")];
     shown(&[failed(2, "feat", "/src/app")], &jobs, Some(1), (cols, 40)).text()
@@ -284,12 +284,12 @@ fn failed_job_under_the_cursor(cols: u16) -> String {
 
 #[test]
 fn the_command_for_a_failed_job_goes_beside_the_keys_where_it_fits() {
-    assert!(failed_job_under_the_cursor(76).lines().last().unwrap().contains("fun-ci why --job soak"));
+    assert!(failed_job_under_the_cursor(82).lines().last().unwrap().contains("fun-ci why --job soak"));
 }
 
 #[test]
 fn the_command_for_a_failed_job_goes_above_the_footer_a_column_short_of_that() {
-    let text = failed_job_under_the_cursor(75);
+    let text = failed_job_under_the_cursor(81);
     let lines: Vec<&str> = text.lines().collect();
 
     assert_eq!(lines.iter().position(|line| line.contains("fun-ci why --job soak")), Some(lines.len() - 3), "{text}");

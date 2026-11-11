@@ -7,6 +7,7 @@
 pub mod columns;
 pub mod firefly;
 pub mod footer;
+pub mod hiding;
 pub mod job_rows;
 pub mod job_words;
 pub mod jobs;

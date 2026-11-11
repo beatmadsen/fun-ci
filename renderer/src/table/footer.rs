@@ -1,14 +1,15 @@
 //! The footer's words (design.md, The console): the keys that do something
-//! now, each on a cap, or the question confirming a cancel and the keys that
-//! answer it; what a short screen left out; and in the flat layout, where no
-//! label can say it, which trunks are stale.
+//! now, each on a cap, or a question (confirming a cancel, or how to hide a
+//! job: `hiding`) and the keys that answer it; what a short screen left out
+//! and how many jobs are hidden; and in the flat layout, where no label can
+//! say it, which trunks are stale.
 
 use ratatui::text::Line;
 
 use super::line::placed;
 use super::line::Part;
 use super::night::{CAP, KEY, NOTE, QUIET, ink};
-use super::jobs;
+use super::{hiding, jobs};
 use super::columns::Columns;
 use super::paint::fetched;
 use super::{Drawn, Frame};
@@ -36,17 +37,32 @@ pub struct Offer {
 }
 
 /// The keys, `c cancel` among them only while a run is running or waits to
-/// start, or a job runs; or the question naming the run or job the cursor
-/// would cancel, `y` and `n`.
+/// start, or a job runs, and `h` only while the cursor is on a job; or the
+/// question naming the run or job the cursor would cancel, `y` and `n`; or
+/// the one asking how to hide the job under the cursor (`hiding`).
 #[must_use]
 pub fn keys(board: &Board) -> Offer {
     if let Some((name, sha)) = confirming(board) {
         let question = format!("Cancel {name} ({})?", short_sha(sha));
         return Offer { question: Some(question), keys: vec![("y", "yes"), ("n", "no")] };
     }
+    hiding::asked(board).unwrap_or_else(|| Offer { question: None, keys: acting(board) })
+}
+
+/// The keys that do something now.
+fn acting(board: &Board) -> Vec<Key> {
     let runs = board.runs.iter().any(|run| matches!(run.status(), "running" | "pending"));
     let cancellable = runs || board.jobs.iter().any(|job| matches!(job.status, JobStatus::Running | JobStatus::Scheduled));
-    Offer { question: None, keys: if cancellable { vec![MOVE, CANCEL, QUIT] } else { vec![MOVE, QUIT] } }
+    [Some(MOVE), cancellable.then_some(CANCEL), hiding::key(board), Some(QUIT)].into_iter().flatten().collect()
+}
+
+/// `offer` in the `room` it has from column `at`: a question too long for
+/// its keys to fit after it is cut, since a key cut short answers nothing.
+#[must_use]
+pub fn fitted(offer: Offer, at: usize, room: usize) -> Offer {
+    let over = offered(&offer, at).1.saturating_sub(room);
+    let question = offer.question.map(|question| cut(&question, columns(&question).saturating_sub(over)));
+    Offer { question, ..offer }
 }
 
 /// `offer` from column `at`: the question, then each key on its cap with
@@ -82,10 +98,12 @@ fn confirming(board: &Board) -> Option<(&str, &str)> {
     run.or_else(|| jobs::lead(board).and_then(|at| board.jobs.get(at)).map(|job| (job.name.as_str(), job.sha.as_deref().unwrap_or_default())))
 }
 
-/// The command that says why the job under the cursor failed, when it needs you.
+/// The command that says why the job under the cursor failed, when it needs
+/// you; not while the footer asks how to hide that job.
 #[must_use]
 pub fn why_job(board: &Board) -> Option<String> {
-    let job = jobs::lead(board).and_then(|index| board.jobs.get(index)).filter(|job| jobs::needs_you(job))?;
+    let lead = jobs::lead(board).filter(|_| !board.view.hiding);
+    let job = lead.and_then(|index| board.jobs.get(index)).filter(|job| jobs::needs_you(job))?;
     Some(format!("fun-ci why --job {}", job.name))
 }
 
@@ -98,15 +116,24 @@ pub fn why_job_beside(board: &Board, layout: Columns, width: usize) -> Option<St
     why_job(board).filter(|command| end + APART + columns(command) + layout.margin <= width)
 }
 
+/// What the footer says beside its keys: how many passed rows the screen
+/// was too short for, then how many jobs are hidden.
+fn asides(board: &Board, unshown: usize) -> String {
+    let said = [aside(unshown), hiding::aside(board)];
+    said.into_iter().filter(|said| !said.is_empty()).collect::<Vec<_>>().join(" · ")
+}
+
 /// The footer: the keys where the labels start, and beside them, quieter,
 /// the command that says why the job under the cursor failed if it fits, or
-/// how many passed rows the screen was too short for, cut if it must be.
+/// how many passed rows the screen was too short for and how many jobs are
+/// hidden, cut if it must be.
 #[must_use]
 pub fn footer_line(board: &Board, drawn: &Drawn, frame: Frame) -> Line<'static> {
     let width = usize::from(frame.width);
-    let (mut parts, end) = offered(&keys(board), drawn.columns.label);
+    let offer = fitted(keys(board), drawn.columns.label, width.saturating_sub(drawn.columns.margin));
+    let (mut parts, end) = offered(&offer, drawn.columns.label);
     let keys_end = end + APART;
-    let said = why_job_beside(board, drawn.columns, width).unwrap_or_else(|| aside(drawn.unshown));
+    let said = why_job_beside(board, drawn.columns, width).unwrap_or_else(|| asides(board, drawn.unshown));
     let aside = cut(&said, width.saturating_sub(keys_end + drawn.columns.margin));
     let aside_at = width.saturating_sub(drawn.columns.margin + columns(&aside)).max(keys_end);
     parts.push((aside_at, aside, ink(NOTE).italic()));

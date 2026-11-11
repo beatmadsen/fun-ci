@@ -19,7 +19,8 @@ use crate::model::{Job, JobStatus};
 pub fn row(job: &Job, name: &str, leads: bool, paint: &Paint) -> Vec<Part> {
     let columns = paint.columns;
     let name = if width_of(name) > columns.name { job.name.as_str() } else { name };
-    let tone = |colour: [u8; 3]| if job.status == JobStatus::Passed && !leads { pale(colour) } else { colour };
+    let quiet = job.status == JobStatus::Passed || job.hidden.is_some();
+    let tone = |colour: [u8; 3]| if quiet && !leads { pale(colour) } else { colour };
     let style = if leads { ink(CURSOR).bold() } else { ink(tone(BRANCH)) };
     let (mark, colour) = mark(job, paint.frame.spinner);
     let mut parts = vec![
@@ -43,12 +44,17 @@ pub fn words(job: &Job, paint: &Paint) -> String {
 }
 
 fn words_style(job: &Job, tone: &dyn Fn([u8; 3]) -> [u8; 3]) -> Style {
-    if job.status == JobStatus::Due { ink(QUIET).italic() } else { ink(tone(outcome(job))) }
+    if job.status == JobStatus::Due || job.hidden.is_some() { ink(QUIET).italic() } else { ink(tone(outcome(job))) }
 }
 
-/// The stripe down the left of a job that needs you or is running, in the colour of why.
+/// The stripe down the left of a job that needs you or is running, in the
+/// colour of why; none for a job the user hid.
 #[must_use]
 pub fn accent(job: &Job) -> Option<[u8; 3]> {
+    job.hidden.is_none().then(|| stripe(job)).flatten()
+}
+
+fn stripe(job: &Job) -> Option<[u8; 3]> {
     match job.status {
         JobStatus::Failed | JobStatus::Lost => Some(FAILED),
         JobStatus::Timeout => Some(TIMED_OUT),
@@ -99,7 +105,8 @@ pub fn counted(jobs: &[Job], title: &str, paint: &Paint) -> Vec<Part> {
     parts
 }
 
-/// How many jobs are in each state, most urgent first: `1 failed, 3 passed`.
+/// How many jobs are in each state, most urgent first, and how many of
+/// those shown are hidden ones: `1 failed, 3 passed, 1 hidden`.
 fn counts(jobs: &[Job]) -> String {
     let states = [
         (JobStatus::Failed, "failed"),
@@ -110,7 +117,8 @@ fn counts(jobs: &[Job]) -> String {
         (JobStatus::Passed, "passed"),
         (JobStatus::Unknown, "unknown"),
     ];
-    let count = |status: &JobStatus| jobs.iter().filter(|job| job.status == *status).count();
-    let said: Vec<String> = states.iter().filter(|(status, _)| count(status) > 0).map(|(status, word)| format!("{} {word}", count(status))).collect();
-    said.join(", ")
+    let count = |status: &JobStatus| jobs.iter().filter(|job| job.status == *status && job.hidden.is_none()).count();
+    let hidden = jobs.iter().filter(|job| job.hidden.is_some()).count();
+    let counted = states.iter().map(|(status, word)| (count(status), *word)).chain([(hidden, "hidden")]);
+    counted.filter(|(count, _)| *count > 0).map(|(count, word)| format!("{count} {word}")).collect::<Vec<_>>().join(", ")
 }

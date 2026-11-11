@@ -1166,3 +1166,38 @@ start, it never runs and the next commit starts it.
 starts and exits 3, `events` says `job_scheduled` then `job_started`, and the
 console says `starts in 8m on main 3a1f9c2`; once its start has come and its
 process has yet to start it, each says `starts now`.
+
+### 13.29 `h` on a job asks how to hide it, and `s` snoozes it until it runs again
+**Given** the cursor on a job in the console
+**When** `h` is pressed
+**Then** the footer asks `Hide <name>?` with `s snooze`, `i ignore` and `n no`,
+the name cut where the screen is too narrow for the keys; `n` and `Esc` hide
+nothing, and any other key is no answer.
+**When** `s` answers
+**Then** the job is no row of the board, the section's lines count it no
+more, a page holds as many branches as fit beside the jobs still in view, and
+the cursor is on a row.
+**And** it is back once a run of it begins after the snooze, and stays: not
+for the run going when it was snoozed, nor for one that waits its turn or was
+cancelled.
+
+### 13.30 `i` ignores a job until it is brought back
+**When** `i` answers the question of 13.29
+**Then** the job is no row of the board whatever its runs do, in this console
+and the next one opened on this machine.
+**And** the job runs as before, and `fun-ci jobs`, `status`, `why --job` and
+`events` say of it what they said.
+
+### 13.31 `a` shows the hidden jobs, where `h` brings one back
+**Given** jobs hidden by 13.29 or 13.30
+**Then** `board` carries how many (`hidden_jobs`), and the footer says
+`a shows 2 hidden jobs` beside its keys, except while it asks a question.
+**When** `a` is pressed
+**Then** the hidden jobs come last in the section, each pale, without a
+stripe, saying `snoozed until it runs again` or `ignored`; none makes the
+block wine, shows the `why --job` command or counts as failed, and the footer
+says `a hides hidden jobs`.
+**And** `h` on one of them brings it back at once, with no question; `a`
+again, or the last hidden job brought back, puts them out of view.
+**And** a contract fixture holds the conversation on both sides, and a
+scenario's snapshot what is drawn.
