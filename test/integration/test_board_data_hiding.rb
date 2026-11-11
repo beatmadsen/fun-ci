@@ -73,7 +73,17 @@ class TestBoardDataHiding < Minitest::Test
     assert_equal 15, branches_hidden.count(nil)
   end
 
+  # The 20 branches run most recently widen by those hidden, or hidden ones would leave the page short.
+  def test_should_hold_a_page_of_branches_in_view_beside_six_hidden_ones
+    twenty_more_branches
+    hide_branches(6)
+
+    assert_equal 15, branches_hidden.count(nil)
+  end
+
   private
+
+  def hide_branches(count) = board.runs.first(count).each { |run| board.hide_run(run, "ignored") }
 
   def twenty_more_branches
     (1..20).each { |n| FunCi::Persistence::PipelineRun.create(@db, commit_hash: "c#{n}", branch: "b#{n}", project_path: @project) }
