@@ -110,7 +110,7 @@ fn taking_the_bytes_empties_the_backend() {
     backend.clear_region(ClearType::All).unwrap();
     let _ = backend.take();
 
-    assert!(backend.take().is_empty());
+    assert_eq!(backend.take(), [] as [u8; 0]);
 }
 
 #[test]

@@ -31,7 +31,7 @@ fn the_row_under_the_cursor_takes_the_block() {
 fn a_board_where_nothing_needs_you_has_no_block() {
     let runs = [run(2, ("feat", "/src/app"), "running", &[stage("lint", "passed", 300)]), passed(1, "main", "/src/app")];
 
-    assert!(in_the_block(&screen(&runs, (120, 40))).is_empty());
+    assert_eq!(in_the_block(&screen(&runs, (120, 40))), [] as [String; 0]);
 }
 
 #[test]
@@ -103,7 +103,7 @@ fn a_narrow_screen_says_the_legend_briefly_on_one_line() {
 
 #[test]
 fn a_screen_too_short_for_the_legend_and_the_rows_gives_the_legend_up() {
-    assert!(legend_lines(&screen(&two_crowded_projects(), (80, 22))).is_empty());
+    assert_eq!(legend_lines(&screen(&two_crowded_projects(), (80, 22))), [] as [String; 0]);
 }
 
 #[test]

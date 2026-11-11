@@ -60,7 +60,7 @@ fn the_board_is_drawn_at_the_size_reported_in_ready() {
 
 #[test]
 fn nothing_is_drawn_before_the_first_board() {
-    assert!(live(vec![]).frames.is_empty());
+    assert_eq!(live(vec![]).frames, [] as [Vec<u8>; 0]);
 }
 
 #[test]
@@ -126,7 +126,7 @@ fn a_new_terminal_size_is_sent_to_ruby() {
 
 #[test]
 fn a_resize_to_the_same_size_is_not_sent() {
-    assert!(replies_after_ready(vec![Input::Resize { cols: 80, rows: 24 }]).is_empty());
+    assert_eq!(replies_after_ready(vec![Input::Resize { cols: 80, rows: 24 }]), [] as [serde_json::Value; 0]);
 }
 
 #[test]
@@ -138,7 +138,7 @@ fn a_resize_redraws_at_the_new_size_at_once() {
 
 #[test]
 fn a_resize_before_the_first_board_draws_nothing() {
-    assert!(live(vec![Input::Resize { cols: 100, rows: 30 }]).frames.is_empty());
+    assert_eq!(live(vec![Input::Resize { cols: 100, rows: 30 }]).frames, [] as [Vec<u8>; 0]);
 }
 
 #[test]

@@ -36,7 +36,7 @@ fn an_italic_part_is_drawn_in_italics() {
 
 #[test]
 fn a_plain_part_after_an_italic_one_is_upright() {
-    assert!(drawn(vec![(0, "note".into(), ink(GREY).italic()), part(5, "word")], 20).cells[0][5].attrs.is_empty());
+    assert_eq!(drawn(vec![(0, "note".into(), ink(GREY).italic()), part(5, "word")], 20).cells[0][5].attrs, [] as [&str; 0]);
 }
 
 #[test]

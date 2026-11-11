@@ -43,7 +43,7 @@ fn the_firefly_on_screen_is_no_brighter_than_the_passed_names_beside_it() {
 fn a_board_with_a_run_still_running_has_no_firefly() {
     let runs = [run(2, ("feat", "/src/app"), "running", &[stage("lint", "passed", 300)]), passed(1, "main", "/src/app")];
 
-    assert!(fireflies(&screen(&runs, (120, 40))).is_empty());
+    assert_eq!(fireflies(&screen(&runs, (120, 40))), [] as [Colour; 0]);
 }
 
 #[test]

@@ -2,6 +2,6 @@
 # which stable happened to be installed. Raise it on purpose, in its own
 # commit, with the gate green on the new release.
 [toolchain]
-channel = "1.98.1"
+channel = "1.99.1"
 profile = "minimal"
 components = ["clippy"]

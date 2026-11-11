@@ -60,7 +60,7 @@ fn an_unsupported_version_exits_with_status_two() {
 fn an_unsupported_version_leaves_the_terminal_untouched() {
     let mut terminal = FakeTerminal::sized(80, 24);
     converse("{\"t\":\"hello\",\"v\":2}\n", &mut terminal);
-    assert!(terminal.calls.is_empty());
+    assert_eq!(terminal.calls, [] as [&str; 0]);
 }
 
 #[test]
