@@ -3,6 +3,7 @@
 require_relative "../../test_helper"
 require_relative "../../support/job_run_kit"
 require_relative "../../support/body_script"
+require_relative "../../support/fifo"
 require_relative "../../support/process_deadline"
 
 # A job past its budget is killed with its process group, its script run by
@@ -12,29 +13,27 @@ class TestJobOverBudget < Minitest::Test
   include JobRunKit
   include ProcessDeadline
 
+  # The child holds the only write end of a FIFO, which closes when it dies
+  # and not before, so reading to the end waits for its death itself. Its
+  # state in ps would say less: killed at a job's low priority on a busy
+  # machine, a process stays runnable until it is scheduled to exit.
   def test_should_kill_the_process_a_job_past_its_budget_started
+    File.mkfifo(fifo)
+    death = Thread.new { Fifo.read(fifo) }.tap { |thread| thread.report_on_exception = false }
     overrun
 
-    refute running?(File.read(pid_file).to_i)
+    assert_equal("", within_deadline { death.value })
   end
 
   private
 
-  # Gone, or killed and not yet torn down: a job's process runs at a low
-  # priority, and on a busy machine a killed one can still be exiting (the
-  # flag E on macOS, as in "?E"; the state X on Linux) or a zombie (Z).
-  def running?(pid)
-    state = `ps -o stat= -p #{pid}`.strip
-    !state.empty? && !state.match?(/\A[ZX]|E/)
-  end
+  def fifo = File.join(@dir, "child")
 
-  def pid_file = File.join(@dir, "child.pid")
-
-  # A job whose script starts a child in its group, then waits longer than its budget of a second.
+  # A job whose script starts a child in its group, then waits longer than its
+  # budget of a second; the child outlives any deadline unless it is killed.
   def overrun
     File.delete(File.join(project, ".fun-ci", "daily", "mutation.sh"))
-    BodyScript.write(File.join(project, ".fun-ci", "daily", "mutation.sh"),
-                     "sleep 30 &\necho $! > '#{pid_file}'\nwait")
+    BodyScript.write(File.join(project, ".fun-ci", "daily", "mutation.sh"), "sleep 300 3>'#{fifo}' &\nwait")
     seams = FunCi::Pipeline::Seams.new(stage_dir: -> { FakeStageDir.new }, time_budgets: { "jobs/mutation" => 1 })
     commit = FunCi::Pipeline::Commit.new(sha: SHA, branch: "main")
     within_deadline { FunCi::Jobs::JobRun.new(job, commit, site, seams).start }
