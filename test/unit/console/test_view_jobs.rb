@@ -45,6 +45,13 @@ class TestViewJobs < Minitest::Test
     refute page[:has_more]
   end
 
+  # The renderer fits what it can of it; a page of none would read as no runs at all.
+  def test_should_keep_one_run_on_a_page_the_job_section_leaves_no_room_on
+    @view.resize(20)
+
+    assert_equal [1], ids
+  end
+
   # The jobs reorder as one finishes: the cursor stays on mutation, now the first job.
   def test_should_keep_the_cursor_on_its_job_when_the_jobs_reorder
     press(8)

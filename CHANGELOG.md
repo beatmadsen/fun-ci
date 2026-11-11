@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   --need all` was waiting on that very stage.
 
 ### Fixed
+- A terminal 20 rows high or less, or one whose job section left no room for
+  a branch, showed `No runs yet.` although there were runs. The console now
+  always sends the renderer at least one run, which fits what it can of it.
 - `q` and Ctrl-C quit the console while the footer asks a question too.
   Before, they were taken as no answer and did nothing.
 - In the console, the cursor stays on its branch or job when the rows

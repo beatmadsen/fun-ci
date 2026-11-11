@@ -19,9 +19,13 @@ module FunCi
         @page_size = 0
       end
 
+      # The least a page holds: the renderer fits what it can of a run, and
+      # a page of none would read as no runs at all.
+      LEAST = 1
+
       # The number of runs a terminal of `rows` fits.
       def resize(rows)
-        @page_size = [rows - CHROME_ROWS, 0].max
+        @page_size = [rows - CHROME_ROWS, LEAST].max
       end
 
       # :quit when the key ends the session.
@@ -34,7 +38,7 @@ module FunCi
       # section's rows in view, below the page, which the cursor reaches after the runs.
       def page(runs, more:, jobs: [])
         @key_handler.follow(runs, jobs)
-        size = jobs.empty? ? @page_size : [@page_size - JOB_LINES, 0].max
+        size = jobs.empty? ? @page_size : [@page_size - JOB_LINES, LEAST].max
         first = first_shown(runs.size, size)
         { cursor: cursor_on_page(first, size), confirming: @key_handler.confirming?, **hiding,
           has_more: more || first + size < runs.size, runs: runs[first, size] || [] }

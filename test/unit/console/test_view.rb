@@ -23,8 +23,9 @@ class TestView < Minitest::Test
     assert_equal 6, @view.resize(24)
   end
 
-  def test_should_fit_no_run_on_a_terminal_shorter_than_the_header_and_footer
-    assert_equal 0, @view.resize(10)
+  # The renderer fits what it can of it; a page of none would read as no runs at all.
+  def test_should_keep_one_run_on_a_terminal_shorter_than_the_header_and_footer
+    assert_equal 1, @view.resize(10)
   end
 
   def test_should_show_the_first_page_while_no_run_is_under_the_cursor
@@ -53,11 +54,11 @@ class TestView < Minitest::Test
     assert_nil page[:cursor]
   end
 
-  def test_should_show_no_run_and_no_cursor_when_none_fit
+  def test_should_keep_the_run_under_the_cursor_on_the_page_when_none_would_fit
     @view.resize(10)
     press(2)
 
-    assert_equal({ cursor: nil, runs: [] }, page.slice(:cursor, :runs))
+    assert_equal [0, [2]], [page[:cursor], ids]
   end
 
   def test_should_say_there_are_more_when_loaded_runs_go_past_the_page
