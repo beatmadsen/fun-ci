@@ -38,7 +38,7 @@ module FunCi
 
       # A commit arrives on its branch with its first run; a commit with none yet arrives last.
       ARRIVED_BEFORE = "#{Arrival::FIRST_RUN} < COALESCE((SELECT MIN(id) FROM pipeline_runs " \
-                       "WHERE project_path = ? AND branch = ? AND commit_hash = ?), #{Arrival::NOT_YET})".freeze
+                       "WHERE project_path IS ? AND branch = ? AND commit_hash = ?), #{Arrival::NOT_YET})".freeze
       SLOW_RUNNING = "SELECT 1 FROM stage_jobs WHERE pipeline_run_id = pipeline_runs.id " \
                      "AND stage = 'slow' AND status = 'running'"
       STALE = "project_path = ? AND branch = ? AND #{ARRIVED_BEFORE} AND (waited_at IS NULL OR waited_at < ?) " \
