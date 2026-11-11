@@ -17,12 +17,14 @@ pub fn key(board: &Board) -> Option<Key> {
     under_cursor(board).map(|job| if job.hidden.is_some() { SHOW } else { HIDE })
 }
 
-/// The question naming the job the cursor would hide, and the keys that
+/// The question naming the job the cursor would hide (after its project,
+/// as its row does, when the board holds more than one), and the keys that
 /// answer it, while the footer asks.
 #[must_use]
 pub fn asked(board: &Board) -> Option<Offer> {
     let job = under_cursor(board).filter(|_| board.view.hiding)?;
-    Some(Offer { question: Some(format!("Hide {}?", job.name)), keys: vec![("s", "snooze"), ("i", "ignore"), ("n", "no")] })
+    let name = jobs::name(job, jobs::many_projects(board));
+    Some(Offer { question: Some(format!("Hide {name}?")), keys: vec![("s", "snooze"), ("i", "ignore"), ("n", "no")] })
 }
 
 /// `a shows 2 hidden jobs`; once they are shown, `a hides hidden jobs`;

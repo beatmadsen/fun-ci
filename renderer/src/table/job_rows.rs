@@ -9,22 +9,21 @@ use super::job_words::{due_in, said, said_briefly};
 use super::jobs::needs_you;
 use super::night::{BRANCH, CURSOR, FAILED, LABEL, NOTE, PASSED, QUIET, RUNNING, TIMED_OUT, ink, pale};
 use super::paint::{Paint, Part};
-use crate::format::{age, columns as width_of, cut};
+use crate::format::{age, columns as width_of, cut, project_name};
 use crate::model::{Job, JobStatus};
 
 /// The row of `job`, named `name`, bold in the cursor's colour when it
-/// `leads`; by its own name alone when `name` (its project's, then its own)
-/// is too long for the column, since its own is the one that tells it apart.
+/// `leads`, its project's name cut to fit the column (`fitted`).
 #[must_use]
 pub fn row(job: &Job, name: &str, leads: bool, paint: &Paint) -> Vec<Part> {
     let columns = paint.columns;
-    let name = if width_of(name) > columns.name { job.name.as_str() } else { name };
+    let name = fitted(job, name, columns.name);
     let quiet = job.status == JobStatus::Passed || job.hidden.is_some();
     let tone = |colour: [u8; 3]| if quiet && !leads { pale(colour) } else { colour };
     let style = if leads { ink(CURSOR).bold() } else { ink(tone(BRANCH)) };
     let (mark, colour) = mark(job, paint.frame.spinner);
     let mut parts = vec![
-        (columns.branch, cut(name, columns.name), style),
+        (columns.branch, cut(&name, columns.name), style),
         (columns.strip, job.cadence.clone(), ink(tone(LABEL))),
         (columns.strip + MARK_AT, mark.to_string(), ink(tone(colour))),
         (columns.words, words(job, paint), words_style(job, &tone)),
@@ -32,6 +31,21 @@ pub fn row(job: &Job, name: &str, leads: bool, paint: &Paint) -> Vec<Part> {
     ];
     parts.extend(accent(job).map(|colour| (columns.margin, "▌".to_string(), ink(colour))));
     parts
+}
+
+/// The least of a project's name worth showing cut: two letters and `…`.
+const PROJECT_AT_LEAST: usize = 3;
+
+/// `name` (its project's, then its own) when it fits in `room`; else with
+/// its project's name cut, since its own is the one that must stay whole;
+/// its own alone when not even `PROJECT_AT_LEAST` of its project's fits.
+fn fitted(job: &Job, name: &str, room: usize) -> String {
+    let left = room.saturating_sub(width_of(&job.name) + width_of(" · "));
+    match job.project.as_deref() {
+        _ if width_of(name) <= room => name.to_string(),
+        Some(project) if name != job.name && left >= PROJECT_AT_LEAST => format!("{} · {}", cut(&project_name(project), left), job.name),
+        _ => job.name.clone(),
+    }
 }
 
 /// Where a job's mark sits after the start of the marks' column: past `weekly`.

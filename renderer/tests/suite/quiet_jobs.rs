@@ -333,3 +333,29 @@ fn a_running_job_offers_the_cancel_key() {
 
     assert!(shown(&[passed(1, "main", "/src/app")], &jobs, None, (120, 40)).text().contains(" c  cancel"));
 }
+
+// Two projects with a job of the same name, one project's name long enough
+// that its rows can't name it whole beside the words.
+fn same_names_in_two_projects() -> Grid {
+    let runs = [passed(2, "main", "/src/a-service-with-a-long-name"), passed(1, "main", "/src/tool")];
+    let jobs: Vec<Value> = ["/src/a-service-with-a-long-name", "/src/tool"].iter().map(|project| {
+        let mut audit = job("deps-audit", "daily", "failed");
+        audit["project"] = json!(project);
+        audit
+    }).collect();
+    shown(&runs, &jobs, None, (80, 40))
+}
+
+#[test]
+fn a_job_whose_project_s_name_is_too_long_to_go_whole_is_named_with_it_cut() {
+    let lines = said(&same_names_in_two_projects());
+
+    assert!(lines.iter().any(|line| line.starts_with("a-serv") && line.ends_with("… · deps-audit")), "{lines:?}");
+}
+
+#[test]
+fn a_job_whose_project_s_name_fits_is_named_with_it_beside_one_whose_project_s_is_cut() {
+    let lines = said(&same_names_in_two_projects());
+
+    assert!(lines.contains(&"tool · deps-audit".to_string()), "{lines:?}");
+}

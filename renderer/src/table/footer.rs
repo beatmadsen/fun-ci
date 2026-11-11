@@ -14,7 +14,7 @@ use super::columns::Columns;
 use super::paint::fetched;
 use super::{Drawn, Frame};
 use crate::format::{columns, cut, project_name, short_sha};
-use crate::model::{Board, JobStatus, Run};
+use crate::model::{Board, Job, JobStatus, Run};
 
 /// The least space between the keys and what the footer says beside them.
 const APART: usize = 5;
@@ -96,11 +96,14 @@ pub fn stale(board: &Board, now_ms: i64) -> String {
     named.collect::<Vec<_>>().join(" · ")
 }
 
-/// The name and commit of the run or job the cursor would cancel, while a cancel is being confirmed.
-fn confirming(board: &Board) -> Option<(&str, &str)> {
+/// The name and commit of the run or job the cursor would cancel, while a
+/// cancel is being confirmed: a job's after its project's, as its row
+/// names it, when the board holds more than one.
+fn confirming(board: &Board) -> Option<(String, &str)> {
     let index = board.view.cursor.filter(|_| board.view.confirming)?;
-    let run = board.runs.get(index).map(|run: &Run| (run.commit.branch.as_str(), run.commit.sha.as_str()));
-    run.or_else(|| jobs::lead(board).and_then(|at| board.jobs.get(at)).map(|job| (job.name.as_str(), job.sha.as_deref().unwrap_or_default())))
+    let run = board.runs.get(index).map(|run: &Run| (run.commit.branch.clone(), run.commit.sha.as_str()));
+    let named = |job: &Job| jobs::name(job, jobs::many_projects(board));
+    run.or_else(|| jobs::lead(board).and_then(|at| board.jobs.get(at)).map(|job| (named(job), job.sha.as_deref().unwrap_or_default())))
 }
 
 /// The command that says why the job under the cursor failed, when it needs

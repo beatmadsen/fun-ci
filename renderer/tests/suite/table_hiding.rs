@@ -110,3 +110,17 @@ fn on_a_narrow_screen_a_snoozed_job_says_so_briefly() {
 fn on_a_narrow_screen_an_ignored_job_says_so() {
     assert_eq!(said_briefly(&hidden("ignored"), NOW * 1000), "ignored");
 }
+
+#[test]
+fn hiding_a_job_names_its_project_too_when_the_board_holds_more_than_one() {
+    let board = board(&[job("soak", &json!({"project": "/src/tool"}))], 1, &json!({"hiding": true}));
+
+    assert_eq!(keys(&board).question.as_deref(), Some("Hide tool · soak?"));
+}
+
+#[test]
+fn cancelling_a_job_names_its_project_too_when_the_board_holds_more_than_one() {
+    let board = board(&[job("soak", &json!({"project": "/src/tool", "status": "running"}))], 1, &json!({"confirming": true}));
+
+    assert_eq!(keys(&board).question.as_deref(), Some("Cancel tool · soak (9e0b1d4)?"));
+}
