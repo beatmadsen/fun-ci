@@ -4,7 +4,7 @@
 use crate::support::pieces::kind;
 use fun_ci_renderer::model::Run;
 use fun_ci_renderer::table::sections::sections;
-use fun_ci_renderer::table::stack::{Fold, Rung, stack, with_legend};
+use fun_ci_renderer::table::stack::{EVERY, Fold, Rung, stack, with_legend};
 use serde_json::json;
 
 fn run(id: u64, project: &str, status: &str) -> Run {
@@ -28,7 +28,7 @@ fn conflicting(id: u64) -> Run {
     run
 }
 
-const SPACED: Rung = Rung { gap: true, labels: true, fold: Fold::Never, passed: true };
+const SPACED: Rung = Rung { gap: true, labels: true, fold: Fold::Never, passed: EVERY };
 const TIGHT: Rung = Rung { gap: false, ..SPACED };
 const FOLDED: Rung = Rung { fold: Fold::All, ..SPACED };
 const FLAT: Rung = Rung { labels: false, ..SPACED };
@@ -104,7 +104,7 @@ fn resting_folds_only_a_project_with_two_passed_rows_or_more() {
 fn without_passed_lines_the_folded_line_is_left_out() {
     let runs = [run(1, "/a", "failed"), run(2, "/a", "passed")];
 
-    assert_eq!(kinds(&runs, Rung { passed: false, ..FOLDED }), ["blank", "row 1", "blank"]);
+    assert_eq!(kinds(&runs, Rung { passed: 0, ..FOLDED }), ["blank", "row 1", "blank"]);
 }
 
 #[test]

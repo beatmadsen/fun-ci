@@ -41,14 +41,18 @@ pub enum Fold {
 }
 
 /// How much the table keeps: a blank line after each row, the projects'
-/// labels, which passed rows fold, and the folded lines themselves.
+/// labels, which passed rows fold, and the folded lines themselves: those
+/// of the first `passed` sections (`EVERY`, or none).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Rung {
     pub gap: bool,
     pub labels: bool,
     pub fold: Fold,
-    pub passed: bool,
+    pub passed: usize,
 }
+
+/// A rung's `passed` that keeps every section's folded line.
+pub const EVERY: usize = usize::MAX;
 
 /// How many lines the legend takes: one a stage.
 pub const LEGEND_LINES: usize = 4;
@@ -60,7 +64,7 @@ pub const LEGEND_LINES: usize = 4;
 pub fn stack<'a>(sections: &'a [Section<'a>], lead: Option<u64>, rung: Rung) -> Vec<Piece<'a>> {
     let labelled = rung.labels && sections.len() > 1;
     let mut out = Vec::new();
-    for section in sections.iter().filter(|section| shows(section, lead, rung)) {
+    for (at, section) in sections.iter().enumerate().filter(|(at, section)| shows(section, *at, lead, rung)) {
         if rung.labels {
             out.push(Piece::Blank);
         }
@@ -68,7 +72,7 @@ pub fn stack<'a>(sections: &'a [Section<'a>], lead: Option<u64>, rung: Rung) -> 
             out.push(Piece::Label(section));
             gap(&mut out, rung);
         }
-        rows(&mut out, section, lead, rung);
+        rows(&mut out, section, lead, (rung, at < rung.passed));
     }
     out
 }
@@ -84,17 +88,18 @@ pub fn with_legend(pieces: Vec<Piece<'_>>) -> Vec<Piece<'_>> {
     std::iter::once(Piece::Blank).chain((0..LEGEND_LINES).map(Piece::Legend)).chain(pieces).collect()
 }
 
-/// Whether `rung` shows anything of `section`: a row, or its folded line.
-fn shows(section: &Section, lead: Option<u64>, rung: Rung) -> bool {
-    rung.passed || folded(section, lead, rung.fold).len() < section.runs.len()
+/// Whether `rung` shows anything of `section`, the one `at` that place: a row, or its folded line.
+fn shows(section: &Section, at: usize, lead: Option<u64>, rung: Rung) -> bool {
+    at < rung.passed || folded(section, lead, rung.fold).len() < section.runs.len()
 }
 
-fn rows<'a>(out: &mut Vec<Piece<'a>>, section: &'a Section<'a>, lead: Option<u64>, rung: Rung) {
+/// The section's rows, and its folded line when it `keeps` it.
+fn rows<'a>(out: &mut Vec<Piece<'a>>, section: &'a Section<'a>, lead: Option<u64>, (rung, keeps): (Rung, bool)) {
     let folded = folded(section, lead, rung.fold);
     for run in section.runs.iter().copied().filter(|run| !folded.contains(run)) {
         row(out, run, lead == Some(run.id), rung);
     }
-    if !folded.is_empty() && rung.passed {
+    if !folded.is_empty() && keeps {
         out.push(Piece::Folded(folded));
         gap(out, rung);
     }
@@ -122,7 +127,8 @@ fn gap(out: &mut Vec<Piece>, rung: Rung) {
 }
 
 /// The section's passed rows that fold: not the lead's, not one that conflicts.
-fn folded<'a>(section: &Section<'a>, lead: Option<u64>, fold: Fold) -> Vec<&'a Run> {
+#[must_use]
+pub fn folded<'a>(section: &Section<'a>, lead: Option<u64>, fold: Fold) -> Vec<&'a Run> {
     let quiet = |run: &&&Run| run.status() == "passed" && !conflicts(run) && lead != Some(run.id);
     let passed: Vec<&Run> = section.runs.iter().filter(quiet).copied().collect();
     match fold {

@@ -375,7 +375,8 @@ each project's branches sit under the project's name, one row per branch:
   and only then is a branch name cut with `…`. It works from 60 columns wide
   up.
 - On a short screen the table gives up, in this order: the passed rows fold
-  into one line per project; the folded lines go, counted beside the keys
+  into one line per project; the folded lines go, the last project's first,
+  counted beside the keys
   (`2 passed not shown`, or `2 not shown` and then `+2` where the screen is
   narrow), and with them the label of a project left with no
   row; the blank lines between rows close up; the labels

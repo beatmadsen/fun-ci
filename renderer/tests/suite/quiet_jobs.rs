@@ -447,3 +447,15 @@ fn the_line_counting_the_jobs_says_how_to_hide_one() {
 
     assert!(counted.contains("h on a job hides it"), "{}", grid.text());
 }
+
+// Six projects that each failed and nine that passed: a tall screen has room
+// for most of the passed projects' folded lines, not for all.
+#[test]
+fn a_screen_with_room_for_some_folded_lines_keeps_those_it_has_room_for() {
+    let mut runs: Vec<Value> = ["simplify", "tmp1", "tmp2", "agent1", "agent2", "agent3"].iter().enumerate()
+        .map(|(at, project)| failed(100 + at as u64, "main", &format!("/src/{project}"))).collect();
+    runs.extend((0..9u64).map(|at| passed(at + 1, "main", &format!("/src/passed{at}"))));
+    let grid = shown(&runs, &[], Some(0), (118, 64));
+
+    assert!(grid.text().lines().last().unwrap_or_default().trim_end().ends_with("6 passed not shown"), "{}", grid.text());
+}

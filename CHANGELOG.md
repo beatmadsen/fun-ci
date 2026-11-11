@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   --need all` was waiting on that very stage.
 
 ### Fixed
+- A tall console with many projects left out every passed project, counted
+  beside the keys, when only some would not fit, and left the rest of the
+  screen empty. It now keeps as many of their lines as fit.
 - On a terminal too short for every job, the job under the cursor stays on
   screen; the rows furthest from it go first. Before, the rows below the
   screen were cut, the cursor's among them.

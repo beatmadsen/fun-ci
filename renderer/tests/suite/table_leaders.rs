@@ -7,7 +7,7 @@
 use fun_ci_renderer::model::Run;
 use fun_ci_renderer::table::leaders::Leaders;
 use fun_ci_renderer::table::sections::sections;
-use fun_ci_renderer::table::stack::{Fold, Rung, stack, with_legend};
+use fun_ci_renderer::table::stack::{EVERY, Fold, Rung, stack, with_legend};
 use serde_json::json;
 
 fn run(id: u64, project: &str, status: &str) -> Run {
@@ -16,7 +16,7 @@ fn run(id: u64, project: &str, status: &str) -> Run {
     .unwrap()
 }
 
-const SPACED: Rung = Rung { gap: true, labels: true, fold: Fold::Never, passed: true };
+const SPACED: Rung = Rung { gap: true, labels: true, fold: Fold::Never, passed: EVERY };
 
 fn leaders(runs: &[Run], lead: Option<u64>) -> Leaders {
     let sections = sections(runs);
