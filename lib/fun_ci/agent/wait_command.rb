@@ -3,6 +3,7 @@
 require_relative "command_support"
 require_relative "output"
 require_relative "waiting"
+require_relative "onward"
 
 module FunCi
   module Agent
@@ -40,28 +41,30 @@ module FunCi
 
       def wait_for(sha, options, deadline, output)
         report = Waiting.new(@context.clock, deadline: deadline) { poll(sha, options) }.until_decided
-        onward = onward(sha, report, options, output)
+        step = Onward.decide(report, follow_branch: options.follow_branch, ran_again: !@again.nil?)
+        onward = carry_out(step, sha, report, output)
         onward ? wait_for(onward, options, deadline, output) : report
       end
 
-      # The commit to wait on next, once a newer one superseded the run: that
-      # one when following the branch; otherwise this one, run again once; nil for none.
-      def onward(sha, report, options, output)
-        return unless report&.superseded_by
-
-        if options.follow_branch
-          output.following(sha, report)
-          return report.superseded_by
+      # The commit to wait on next, having done what `step` says (Onward).
+      def carry_out(step, sha, report, output)
+        case step
+        in :follow then follow(sha, report, output)
+        in :run_again then run_again(sha, report, output)
+        in :stop then nil
         end
-        sha if report.verdict == :superseded && run_again(sha, report, output)
       end
 
-      def run_again(sha, report, output)
-        return false if @again
+      def follow(sha, report, output)
+        output.following(sha, report)
+        report.superseded_by
+      end
 
+      # The commit, once its pipeline is started again; nil when it can't be.
+      def run_again(sha, report, output)
         @again = Again.new(report: report, run_id: reports.latest_id(sha), since: @context.clock.now)
         output.running_again(sha, report)
-        @context.pipeline.start(sha, report.branch)
+        sha if @context.pipeline.start(sha, report.branch)
       end
 
       def answer(sha, report, output)
