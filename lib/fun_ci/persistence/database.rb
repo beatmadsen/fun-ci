@@ -83,7 +83,7 @@ module FunCi
                        %w[stage_jobs signal TEXT], %w[stage_jobs budget INTEGER], %w[stage_jobs pruned INTEGER],
                        %w[stage_jobs evidence TEXT], %w[pipeline_runs fetch_pgid INTEGER],
                        %w[pipeline_runs trunk_started_at TEXT], %w[job_runs budget INTEGER],
-                       %w[job_runs claimed_at TEXT]].freeze
+                       %w[job_runs claimed_at TEXT], %w[job_runs began_at TEXT]].freeze
 
       TABLES = [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE, TRUNK_FETCHES_TABLE, JOB_RUNS_TABLE,
                 HIDDEN_JOBS_TABLE].freeze

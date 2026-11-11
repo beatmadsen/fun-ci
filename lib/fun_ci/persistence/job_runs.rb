@@ -55,8 +55,8 @@ module FunCi
 
       def insert(job, commit, lock_file, now)
         @db.execute("INSERT INTO job_runs (project_path, job, cadence, commit_hash, branch, status, started_at, " \
-                    "claimed_at, lock_file) VALUES (?, ?, ?, ?, ?, 'running', ?, ?, ?)",
-                    [@project, job.name, job.cadence, commit[:sha], commit[:branch], stamp(now), stamp(now), lock_file])
+                    "claimed_at, began_at, lock_file) VALUES (?, ?, ?, ?, ?, 'running', ?, ?, ?, ?)",
+                    [@project, job.name, job.cadence, commit[:sha], commit[:branch], *[stamp(now)] * 3, lock_file])
         @db.last_insert_row_id
       end
 
@@ -65,8 +65,11 @@ module FunCi
         then_record&.call(id)
       end
 
+      # A run began once it runs: began_at says when, and is none while it waits its turn.
       def update(id, status, at, was)
-        @db.execute("UPDATE job_runs SET status = ?, started_at = ? WHERE id = ? AND #{was}", [status, stamp(at), id])
+        began = stamp(at) if status == "running"
+        @db.execute("UPDATE job_runs SET status = ?, started_at = ?, began_at = ? WHERE id = ? AND #{was}",
+                    [status, stamp(at), began, id])
         @db.changes
       end
 

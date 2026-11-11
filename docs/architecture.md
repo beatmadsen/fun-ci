@@ -533,8 +533,13 @@ weekly jobs).
   machine, so it is not in `.fun-ci/config`, which the repository tracks and
   the console never writes. Nothing but the console reads it: a hidden job
   runs, and the agent commands report it, as before. **A snooze is over when
-  a run of the job began after it**, one that is running or ended other than
-  cancelled, which is the rule `Due` has for what counts as a run. That is
+  a run of the job began after it**: `job_runs.began_at`, set when a run
+  starts running and none while it waits its turn, so a run cancelled before
+  its turn never began. A run cancelled once running did begin, unlike `Due`'s
+  rule, where a cancelled run doesn't count: the job came back into view
+  running, and putting it out of view again when that run is cancelled made it
+  come and go. Runs fun-ci 2.4.0 and earlier kept have no `began_at`; those
+  that ran or are running began when they started. That is
   asked of `job_runs` in the query that lists the hidden jobs, not noted when
   the console sees the run, so it holds when no console was open while the
   job ran, and a snooze that is over stays over whatever the job's later runs

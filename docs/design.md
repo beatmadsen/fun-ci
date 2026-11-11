@@ -424,8 +424,8 @@ each project's branches sit under the project's name, one row per branch:
 - A job whose line tells you nothing can be put out of view. `h` on a job
   asks how, naming it (`Hide soak?` with `s snooze`, `i ignore` and `n no`):
   snoozed, it is gone until it runs again, which is when a run of it begins
-  after that, so a run waiting its turn or a cancelled one doesn't bring it
-  back; ignored, it is gone until you bring it back. `h` asks first because
+  after that, so a run waiting its turn or one cancelled before its turn
+  doesn't bring it back, and once back it stays; ignored, it is gone until you bring it back. `h` asks first because
   it sits beside `j`, and a job ignored by a slip of the finger would fail
   unseen. A hidden job is no row, takes no line, and counts in none of the
   section's lines; a section with every job hidden is not drawn. Beside the

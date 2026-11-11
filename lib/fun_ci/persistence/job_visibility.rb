@@ -9,13 +9,16 @@ module FunCi
     # `snoozed`, until the job runs again. It says nothing of whether a job
     # runs, and the agent commands don't read it.
     class JobVisibility
-      # A run that counts as the job running again: one that began, and was
-      # not cancelled (design.md, Daily and weekly jobs).
-      RAN = "status IN ('running', 'completed', 'failed', 'timed_out')"
+      # When a run began, if it did: not while it waits its turn, nor when
+      # cancelled before it (design.md, Daily and weekly jobs), and once it
+      # did, whatever became of it. fun-ci 2.4.0 and earlier kept no
+      # `began_at`, so of their runs those that ran or are running began when they started.
+      BEGAN = "COALESCE(run.began_at, CASE WHEN run.status IN ('running', 'completed', 'failed', 'timed_out') " \
+              "THEN run.started_at END)"
       HIDDEN = <<~SQL.freeze
         SELECT job, kind FROM hidden_jobs AS hidden WHERE project_path = ? AND (kind = 'ignored' OR NOT EXISTS (
           SELECT 1 FROM job_runs AS run WHERE run.project_path = hidden.project_path AND run.job = hidden.job
-            AND run.started_at > hidden.hidden_at AND run.#{RAN}))
+            AND #{BEGAN} > hidden.hidden_at))
       SQL
 
       def initialize(db)

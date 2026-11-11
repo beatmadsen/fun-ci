@@ -1184,9 +1184,9 @@ nothing, `q` quits, and any other key is no answer.
 **Then** the job is no row of the board, the section's lines count it no
 more, a page holds as many branches as fit beside the jobs still in view, and
 the cursor is on a row.
-**And** it is back once a run of it begins after the snooze, and stays: not
-for the run going when it was snoozed, nor for one that waits its turn or was
-cancelled.
+**And** it is back once a run of it begins after the snooze, and stays, even
+if that run is cancelled: not for the run going when it was snoozed, nor for
+one that waits its turn or was cancelled before its turn.
 
 ### 13.30 `i` ignores a job until it is brought back
 **When** `i` answers the question of 13.29
