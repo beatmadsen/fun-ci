@@ -13,7 +13,9 @@ use crate::format::{age, columns as width_of, cut, project_name};
 use crate::model::{Board, Job, JobStatus};
 
 /// The row of `job`, named `name`, bold in the cursor's colour when it
-/// `leads`, its project's name cut to fit the column (`fitted`).
+/// `leads`, its project's name cut to fit the column (`fitted`); pale once
+/// it passed or while hidden, unless it leads, when a hidden job's mark is
+/// as quiet as its words, so the mark alone doesn't say it needs you.
 #[must_use]
 pub fn row(job: &Job, name: &str, leads: bool, paint: &Paint) -> Vec<Part> {
     let columns = paint.columns;
@@ -25,7 +27,7 @@ pub fn row(job: &Job, name: &str, leads: bool, paint: &Paint) -> Vec<Part> {
     let mut parts = vec![
         (columns.branch, cut(&name, columns.name), style),
         (columns.strip, job.cadence.clone(), ink(tone(LABEL))),
-        (columns.strip + MARK_AT, mark.to_string(), ink(tone(colour))),
+        (columns.strip + MARK_AT, mark.to_string(), ink(if leads && job.hidden.is_some() { QUIET } else { tone(colour) })),
         (columns.words, words(job, paint), words_style(job, &tone)),
         (columns.age_end - 4, format!("{:>4}", job.updated_at.map(|at| age(at, paint.frame.now_ms)).unwrap_or_default()), ink(tone(QUIET))),
     ];

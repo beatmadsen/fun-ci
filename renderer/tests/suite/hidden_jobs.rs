@@ -108,6 +108,21 @@ fn a_hidden_job_s_name_is_as_pale_as_a_passed_job_s() {
     assert_eq!(name_colour(&grid, "soak"), name_colour(&grid, "mutation"));
 }
 
+// Under the cursor too, or its mark alone would say it needs you.
+#[test]
+fn a_hidden_job_that_failed_under_the_cursor_has_a_mark_as_quiet_as_its_words() {
+    let grid = shown(&snoozed_and_passed(), &json!({"hidden_jobs": 1, "cursor": 2}), (120, 40));
+
+    assert_eq!(mark_colour(&grid, "soak"), Colour::Rgb(QUIET[0], QUIET[1], QUIET[2]));
+}
+
+/// The colour of the mark on the row that starts with `name`.
+fn mark_colour(grid: &Grid, name: &str) -> Colour {
+    let text = grid.text();
+    let (row, line) = text.lines().enumerate().find(|(_, line)| unstriped(line).starts_with(name)).unwrap();
+    grid.cells[row][line.chars().position(|c| c == '◆').unwrap()].fg
+}
+
 /// The colour of the first letter of the row that starts with `name`.
 fn name_colour(grid: &Grid, name: &str) -> Colour {
     let text = grid.text();
