@@ -26,6 +26,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   --need all` was waiting on that very stage.
 
 ### Fixed
+- On a terminal too short for every job, the job under the cursor stays on
+  screen; the rows furthest from it go first. Before, the rows below the
+  screen were cut, the cursor's among them.
+- With more than one project on the board, a job's row cuts its project's
+  name to fit instead of dropping it, and says what happened in fewer words
+  first, so two projects' jobs of the same name can be told apart. The
+  question to cancel a job names its project too.
 - A terminal 20 rows high or less, or one whose job section left no room for
   a branch, showed `No runs yet.` although there were runs. The console now
   always sends the renderer at least one run, which fits what it can of it.
