@@ -25,6 +25,11 @@ module ConsoleFakes
     def hide_job(job, kind) = self.job_rows = jobs(runs).map { |row| row == job ? row.with(hidden: kind) : row }
     def show_job(job) = hide_job(job, nil)
 
+    # [id, how] of each run row hidden.
+    def hidden_runs = runs.select { |run| run[:hidden] }.map { |run| [run[:id], run[:hidden]] }
+    def hide_run(row, kind) = self.runs = runs.map { |run| run[:id] == row[:id] ? run.merge(hidden: kind) : run }
+    def show_run(row) = hide_run(row, nil)
+
     def streak = 3
     def load_more = @loads += 1
     def resize(_page_size) = nil

@@ -8,12 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- The console can put a daily or weekly job out of view. `h` on a job asks
-  how: `s` snoozes it until it runs again, `i` ignores it until you bring it
-  back. The footer says how many jobs are hidden, `a` shows them, and `h` on a
-  hidden one brings it back. This changes only what the console shows on your
-  machine: the job runs as before, and `fun-ci jobs`, `status` and `why --job`
-  report it as before.
+- The console can put a branch or a daily or weekly job out of view. `h` on
+  a row asks how: `s` snoozes it until its next run, `i` ignores it until you
+  bring it back. The footer says how many rows are hidden, `a` shows them,
+  and `h` on a hidden one brings it back. This changes only what the console
+  shows on your machine: the branch and the job run as before, and `fun-ci
+  jobs`, `status` and `why` report them as before.
 - Every line of `fun-ci events` has `at`, the time it happened in UTC: when a
   run started, a stage finished, a run finished or was superseded, a check
   against the trunk was made, and when a job was scheduled, started and

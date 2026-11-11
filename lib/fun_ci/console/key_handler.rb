@@ -9,8 +9,8 @@ module FunCi
     # What a key means for the runs BoardData loads, and the daily and weekly
     # jobs after them: moving the cursor through both, quitting, cancelling
     # the run or job under the cursor (a running one after the user confirms
-    # with `y`), hiding the job under it (`h`, then `s` to snooze it or `i` to
-    # ignore it), and showing the hidden jobs (`a`), where `h` brings one back.
+    # with `y`), hiding the branch or job under it (`h`, then `s` to snooze it
+    # or `i` to ignore it), and showing the hidden ones (`a`), where `h` brings one back.
     # The cursor stays on its row as the rows move, and a question ends when
     # the row it asks about is no longer under the cursor as it was.
     class KeyHandler
@@ -49,6 +49,9 @@ module FunCi
       # The job rows in view: not the hidden ones, unless `a` asked for them.
       def shown(job_rows) = @revealed ? job_rows : job_rows.reject(&:hidden)
 
+      # The branches' runs in view: not those of the hidden branches, unless `a` asked for them.
+      def shown_runs(runs) = @revealed ? runs : runs.reject { |run| run[:hidden] }
+
       private
 
       def act(key, rows)
@@ -74,13 +77,13 @@ module FunCi
       def settle(revealed: @revealed)
         runs = @board_data.runs
         jobs = @board_data.jobs(runs)
-        @revealed = revealed && jobs.any?(&:hidden)
-        follow(runs, shown(jobs))
+        @revealed = revealed && (jobs.any?(&:hidden) || runs.any? { |run| run[:hidden] })
+        follow(shown_runs(runs), shown(jobs))
       end
 
       def rows
         runs = @board_data.runs
-        CursorRows.new(runs, shown(@board_data.jobs(runs)))
+        CursorRows.new(shown_runs(runs), shown(@board_data.jobs(runs)))
       end
 
       # Onto the last run loaded, which loads the next page, then into the jobs.
@@ -111,15 +114,17 @@ module FunCi
         @question = cancel if status == "running"
       end
 
-      # Asks how to hide the job under the cursor; one already hidden comes back at once.
+      # Asks how to hide the branch or job under the cursor; one already hidden comes back at once.
       def hide_or_show(rows)
-        kind, job = rows.at(cursor_index)
-        return unless kind == :job && job
-        return @question = Question::Hide.new(@board_data, job) unless job.hidden
+        kind, row = rows.at(cursor_index)
+        return unless row
+        return @question = Question::Hide.new(@board_data, kind, row) unless hidden?(kind, row)
 
-        @board_data.show_job(job)
+        kind == :job ? @board_data.show_job(row) : @board_data.show_run(row)
         settle
       end
+
+      def hidden?(kind, row) = kind == :job ? row.hidden : row[:hidden]
     end
   end
 end

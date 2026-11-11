@@ -30,7 +30,7 @@ pub fn shapes(board: &Board, lead: Option<usize>, named: bool) -> Vec<Vec<Piece<
     if jobs.is_empty() {
         return vec![Vec::new()];
     }
-    let label = Piece::JobsLabel(title(jobs), lead.is_none());
+    let label = Piece::JobsLabel(title(jobs));
     if let Some(lead) = lead {
         return led(jobs, lead, named, &label);
     }

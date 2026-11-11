@@ -25,9 +25,9 @@ pub struct Board {
     /// The daily and weekly jobs, below the table, in the order shown (design.md, Daily and weekly jobs).
     #[serde(default)]
     pub jobs: Vec<Job>,
-    /// How many jobs the user hid, whether `jobs` holds them or not.
+    /// How many branches and jobs the user hid, whether `runs` and `jobs` hold them or not.
     #[serde(default)]
-    pub hidden_jobs: usize,
+    pub hidden_rows: usize,
 }
 
 /// A project whose trunk is stale: its last good fetch (epoch seconds), or none when its last fetch failed.
@@ -68,6 +68,9 @@ pub struct Run {
     /// How many cancelled runs of its branch, one after another, this one stands for.
     #[serde(default)]
     pub folded: Option<u32>,
+    /// How the user hid its branch, sent only once they asked to see the hidden rows.
+    #[serde(default)]
+    pub hidden: Option<Hidden>,
 }
 
 /// A branch's standing against the trunk (architecture.md, Checking against the trunk): Ruby

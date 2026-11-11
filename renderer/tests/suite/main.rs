@@ -25,6 +25,7 @@ mod fireplace;
 mod format;
 mod grid_difference;
 mod handshake;
+mod hidden_branches;
 mod hidden_jobs;
 mod painting;
 mod pictures;

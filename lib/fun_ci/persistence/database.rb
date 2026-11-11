@@ -2,6 +2,7 @@
 
 require "sqlite3"
 require_relative "stage_job"
+require_relative "hidden_row_tables"
 
 module FunCi
   module Persistence
@@ -58,12 +59,6 @@ module FunCi
       SQL
 
       # The jobs the console keeps out of view (design.md, The console): `kind` is `snoozed` or `ignored`.
-      HIDDEN_JOBS_TABLE = <<~SQL
-        CREATE TABLE IF NOT EXISTS hidden_jobs (
-          project_path TEXT, job TEXT, kind TEXT, hidden_at TEXT,
-          PRIMARY KEY (project_path, job)
-        )
-      SQL
 
       # Opening and migrating hold an exclusive lock on a file beside the
       # database, so fun-ci processes starting at once set it up one at a time.
@@ -86,7 +81,7 @@ module FunCi
                        %w[job_runs claimed_at TEXT], %w[job_runs began_at TEXT]].freeze
 
       TABLES = [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE, TRUNK_FETCHES_TABLE, JOB_RUNS_TABLE,
-                HIDDEN_JOBS_TABLE].freeze
+                *HiddenRowTables::ALL].freeze
 
       def self.migrate!(db)
         with_setup_lock(db.filename("main")) do

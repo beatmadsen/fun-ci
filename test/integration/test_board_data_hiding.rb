@@ -6,8 +6,8 @@ require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_runs"
 require "fun_ci/jobs/job"
 
-# What the console does to keep a job out of view, and to show it again
-# (acceptance-tests.md, AT-13.29 to AT-13.31). When a snooze ends is
+# What the console does to keep a job or a branch out of view, and to show it
+# again (acceptance-tests.md, AT-13.29 to AT-13.31, AT-13.33). When a snooze ends is
 # Persistence::JobVisibility's (test_job_visibility.rb).
 class TestBoardDataHiding < Minitest::Test
   include DatabaseTestSetup
@@ -47,10 +47,29 @@ class TestBoardDataHiding < Minitest::Test
     assert_equal [nil], board.jobs(board.runs).map(&:hidden)
   end
 
+  def test_should_hide_a_branch_the_way_it_is_told_to
+    board.hide_run(board.runs.first, "ignored")
+
+    assert_equal ["ignored"], branches_hidden
+  end
+
+  def test_should_leave_a_branch_no_one_hid_unmarked
+    assert_equal [nil], branches_hidden
+  end
+
+  def test_should_show_a_hidden_branch_again
+    board.hide_run(board.runs.first, "ignored")
+
+    board.show_run(board.runs.first)
+
+    assert_equal [nil], branches_hidden
+  end
+
   private
 
   def board(clock: -> { Time.now }) = FunCi::Console::BoardData.new(@db, clock: clock)
   def job_row = board.jobs(board.runs).first
+  def branches_hidden = board.runs.map { |run| run[:hidden] }
 
   def write_job(path)
     FileUtils.mkdir_p(File.dirname(path))

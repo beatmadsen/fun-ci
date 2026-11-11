@@ -171,7 +171,7 @@ fn lead(board: &Board) -> Option<u64> {
 /// Whether a run needs you: it failed or timed out, or its branch conflicts with the trunk.
 #[must_use]
 pub fn needs_you(run: &Run) -> bool {
-    matches!(run.status(), "failed" | "timeout") || conflicts(run)
+    run.hidden.is_none() && (matches!(run.status(), "failed" | "timeout") || conflicts(run))
 }
 
 /// The block's colour at `play_ms`: deep wine when its row needs you, else

@@ -20,12 +20,6 @@ class TestKeyHandlerHiding < Minitest::Test
     assert_equal :hide, @handler.asking
   end
 
-  def test_should_ask_nothing_on_h_over_a_branch
-    press("j", "h")
-
-    assert_nil @handler.asking
-  end
-
   def test_should_ask_nothing_on_h_without_a_cursor
     press("h")
 

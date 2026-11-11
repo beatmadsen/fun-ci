@@ -36,8 +36,13 @@ fn the_keys_offer_to_hide_the_job_under_the_cursor() {
 }
 
 #[test]
-fn the_keys_offer_to_hide_nothing_while_the_cursor_is_on_a_branch() {
-    assert_eq!(keys(&board(&[job("soak", &json!({}))], 0, &json!({}))).keys, [("j/k", "move"), ("q", "quit")]);
+fn the_keys_offer_to_hide_the_branch_under_the_cursor() {
+    assert_eq!(keys(&board(&[job("soak", &json!({}))], 0, &json!({}))).keys, [("j/k", "move"), ("h", "hide"), ("q", "quit")]);
+}
+
+#[test]
+fn the_keys_offer_to_hide_nothing_without_a_cursor() {
+    assert_eq!(keys(&board(&[job("soak", &json!({}))], 0, &json!({"cursor": null}))).keys, [("j/k", "move"), ("q", "quit")]);
 }
 
 #[test]
@@ -59,12 +64,12 @@ fn hiding_a_job_is_answered_with_snooze_ignore_or_no_each_saying_for_how_long() 
 
 #[test]
 fn the_footer_says_how_many_jobs_are_hidden_and_which_key_shows_them() {
-    assert_eq!(aside(&board(&[], 0, &json!({"hidden_jobs": 2}))), "a shows 2 hidden jobs");
+    assert_eq!(aside(&board(&[], 0, &json!({"hidden_rows": 2}))), "a shows 2 hidden rows");
 }
 
 #[test]
 fn one_hidden_job_is_said_in_the_singular() {
-    assert_eq!(aside(&board(&[], 0, &json!({"hidden_jobs": 1}))), "a shows 1 hidden job");
+    assert_eq!(aside(&board(&[], 0, &json!({"hidden_rows": 1}))), "a shows 1 hidden row");
 }
 
 #[test]
@@ -75,17 +80,17 @@ fn no_hidden_job_says_nothing() {
 // A question takes every key but its answers.
 #[test]
 fn the_footer_names_no_key_for_hidden_jobs_while_it_asks_how_to_hide_one() {
-    assert_eq!(aside(&board(&[job("soak", &json!({}))], 1, &json!({"hidden_jobs": 2, "hiding": true}))), "");
+    assert_eq!(aside(&board(&[job("soak", &json!({}))], 1, &json!({"hidden_rows": 2, "hiding": true}))), "");
 }
 
 #[test]
 fn the_footer_names_no_key_for_hidden_jobs_while_it_confirms_a_cancel() {
-    assert_eq!(aside(&board(&[job("soak", &json!({}))], 1, &json!({"hidden_jobs": 2, "confirming": true}))), "");
+    assert_eq!(aside(&board(&[job("soak", &json!({}))], 1, &json!({"hidden_rows": 2, "confirming": true}))), "");
 }
 
 #[test]
 fn hidden_jobs_on_the_board_say_which_key_hides_them_again() {
-    assert_eq!(aside(&board(&[job("soak", &json!({"hidden": "ignored"}))], 0, &json!({"hidden_jobs": 1}))), "a hides hidden jobs");
+    assert_eq!(aside(&board(&[job("soak", &json!({"hidden": "ignored"}))], 0, &json!({"hidden_rows": 1}))), "a hides hidden rows");
 }
 
 #[test]

@@ -20,7 +20,10 @@ module FunCi
       # `index`, or the last row's when it is past it; nil when there is no row.
       def within(index) = index && !last.negative? ? [index, last].min : nil
 
-      # Which row is at `index`: a branch of a project, or a job of one.
+      # Which row `row` is, of `kind` (:run or :job): a branch of a project, or a job of one.
+      def self.key(kind, row) = kind == :run ? [:run, row[:project_path], row[:branch]] : [:job, row.project, row.name]
+
+      # Which row is at `index`.
       def key_at(index) = keys[index]
 
       # The index of the row `key` names; nil when it is none of these.
@@ -28,9 +31,7 @@ module FunCi
 
       private
 
-      def keys
-        runs.map { |run| [:run, run[:project_path], run[:branch]] } + jobs.map { |job| [:job, job.project, job.name] }
-      end
+      def keys = runs.map { |run| CursorRows.key(:run, run) } + jobs.map { |job| CursorRows.key(:job, job) }
     end
   end
 end

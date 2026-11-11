@@ -19,7 +19,7 @@ frame 0001 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -35,7 +35,7 @@ frame 0001 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0002 at 100x30
   header 3f4a665f
   |
@@ -53,7 +53,7 @@ frame 0002 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -69,7 +69,7 @@ frame 0002 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0003 at 100x30
   header fcd78ce1
   |
@@ -87,7 +87,7 @@ frame 0003 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -103,7 +103,7 @@ frame 0003 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0004 at 100x30
   header 486e2d79
   |
@@ -121,7 +121,7 @@ frame 0004 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -137,7 +137,7 @@ frame 0004 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0005 at 100x30
   header ecfdc782
   |
@@ -155,7 +155,7 @@ frame 0005 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -171,7 +171,7 @@ frame 0005 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0006 at 100x30
   header bba31fd9
   |
@@ -189,7 +189,7 @@ frame 0006 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -205,7 +205,7 @@ frame 0006 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0007 at 100x30
   header bac099e9
   |
@@ -223,7 +223,7 @@ frame 0007 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -239,7 +239,7 @@ frame 0007 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0008 at 100x30
   header e875a77b
   |
@@ -257,7 +257,7 @@ frame 0008 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -273,7 +273,7 @@ frame 0008 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0009 at 100x30
   header 9f68f9d9
   |
@@ -291,7 +291,7 @@ frame 0009 at 100x30
   |
   |
   |
-  |            j/k  move     c  cancel     q  quit
+  |            j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -307,7 +307,7 @@ frame 0009 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0010 at 100x30
   header db414add
   |
@@ -325,7 +325,7 @@ frame 0010 at 100x30
   |
   |
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -341,7 +341,7 @@ frame 0010 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0011 at 100x30
   header f06ae1f0
   |
@@ -359,7 +359,7 @@ frame 0011 at 100x30
   |
   |
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -375,7 +375,7 @@ frame 0011 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0012 at 100x30
   header 232de003
   |
@@ -393,7 +393,7 @@ frame 0012 at 100x30
   |
   |
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -409,7 +409,7 @@ frame 0012 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0013 at 100x30
   header a2596201
   |
@@ -427,7 +427,7 @@ frame 0013 at 100x30
   |
   |
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -443,7 +443,7 @@ frame 0013 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0014 at 100x30
   header 31dc50ed
   |
@@ -461,7 +461,7 @@ frame 0014 at 100x30
   |
   |
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -477,7 +477,7 @@ frame 0014 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 frame 0015 at 100x30
   header ce42181c
   |
@@ -495,7 +495,7 @@ frame 0015 at 100x30
   |
   |
   |
-  |           j/k  move     c  cancel     q  quit
+  |           j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -511,7 +511,7 @@ frame 0015 at 100x30
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
   :BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+  :BBBBBBBBBBDEEEDBFFFFBBBBDEDBFFFFFFBBBBDEDBFFFFBBBBDEDBFFFFBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 legend
 a = fg Default, bg Rgb(31, 21, 44), []
 b = fg Default, bg Rgb(27, 18, 38), []

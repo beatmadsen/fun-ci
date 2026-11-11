@@ -31,5 +31,5 @@ fn without_a_run_under_the_cursor_there_is_nothing_to_confirm() {
 
 #[test]
 fn a_board_that_is_not_confirming_shows_the_key_bindings() {
-    assert_eq!(footer("0", false), "j/k  move     c  cancel     q  quit");
+    assert_eq!(footer("0", false), "j/k  move     c  cancel     h  hide     q  quit");
 }

@@ -19,7 +19,7 @@ frame 0001 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -35,7 +35,7 @@ frame 0001 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0002 at 100x30
   header 284fcd97
   |
@@ -53,7 +53,7 @@ frame 0002 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -69,7 +69,7 @@ frame 0002 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0003 at 100x30
   header d56fef2a
   |
@@ -87,7 +87,7 @@ frame 0003 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -103,7 +103,7 @@ frame 0003 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0004 at 100x30
   header 809c5684
   |
@@ -121,7 +121,7 @@ frame 0004 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -137,7 +137,7 @@ frame 0004 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0005 at 100x30
   header 8ec9e5a8
   |
@@ -155,7 +155,7 @@ frame 0005 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -171,7 +171,7 @@ frame 0005 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0006 at 100x30
   header 8e518d52
   |
@@ -189,7 +189,7 @@ frame 0006 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -205,7 +205,7 @@ frame 0006 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0007 at 100x30
   header 35d8edfd
   |
@@ -223,7 +223,7 @@ frame 0007 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -239,7 +239,7 @@ frame 0007 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0008 at 100x30
   header bfb79b60
   |
@@ -257,7 +257,7 @@ frame 0008 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -273,7 +273,7 @@ frame 0008 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0009 at 100x30
   header 330127c8
   |
@@ -291,7 +291,7 @@ frame 0009 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -307,7 +307,7 @@ frame 0009 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0010 at 100x30
   header 709fd095
   |
@@ -325,7 +325,7 @@ frame 0010 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -341,7 +341,7 @@ frame 0010 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0011 at 100x30
   header c9eb9e7e
   |
@@ -359,7 +359,7 @@ frame 0011 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -375,7 +375,7 @@ frame 0011 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0012 at 100x30
   header f181ade8
   |
@@ -393,7 +393,7 @@ frame 0012 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -409,7 +409,7 @@ frame 0012 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0013 at 100x30
   header c59310a2
   |
@@ -427,7 +427,7 @@ frame 0013 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -443,7 +443,7 @@ frame 0013 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0014 at 100x30
   header 6f7c519a
   |
@@ -461,7 +461,7 @@ frame 0014 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -477,7 +477,7 @@ frame 0014 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0015 at 100x30
   header f78e0238
   |
@@ -495,7 +495,7 @@ frame 0015 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -511,7 +511,7 @@ frame 0015 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0016 at 100x30
   header fd690681
   |
@@ -529,7 +529,7 @@ frame 0016 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -545,7 +545,7 @@ frame 0016 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0017 at 100x30
   header 5b743e20
   |
@@ -563,7 +563,7 @@ frame 0017 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -579,7 +579,7 @@ frame 0017 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0018 at 100x30
   header 6b103d43
   |
@@ -597,7 +597,7 @@ frame 0018 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -613,7 +613,7 @@ frame 0018 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0019 at 100x30
   header cc302be6
   |
@@ -631,7 +631,7 @@ frame 0019 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -647,7 +647,7 @@ frame 0019 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0020 at 100x30
   header cc302be6
   |
@@ -665,7 +665,7 @@ frame 0020 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -681,7 +681,7 @@ frame 0020 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0021 at 100x30
   header cc302be6
   |
@@ -699,7 +699,7 @@ frame 0021 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -715,7 +715,7 @@ frame 0021 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0022 at 100x30
   header cc302be6
   |
@@ -733,7 +733,7 @@ frame 0022 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -749,7 +749,7 @@ frame 0022 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0023 at 100x30
   header 9acd65a4
   |
@@ -767,7 +767,7 @@ frame 0023 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -783,7 +783,7 @@ frame 0023 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0024 at 100x30
   header 6cba746e
   |
@@ -801,7 +801,7 @@ frame 0024 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -817,7 +817,7 @@ frame 0024 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0025 at 100x30
   header d77a85ad
   |
@@ -835,7 +835,7 @@ frame 0025 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -851,7 +851,7 @@ frame 0025 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0026 at 100x30
   header 5e0ea437
   |
@@ -869,7 +869,7 @@ frame 0026 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -885,7 +885,7 @@ frame 0026 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0027 at 100x30
   header 3672707b
   |
@@ -903,7 +903,7 @@ frame 0027 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -919,7 +919,7 @@ frame 0027 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0028 at 100x30
   header a1c397a0
   |
@@ -937,7 +937,7 @@ frame 0028 at 100x30
   |
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -953,7 +953,7 @@ frame 0028 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0029 at 100x30
   header b9c656bd
   |
@@ -971,7 +971,7 @@ frame 0029 at 100x30
   |                                                                    •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -987,7 +987,7 @@ frame 0029 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzυzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0030 at 100x30
   header 3666ab81
   |
@@ -1005,7 +1005,7 @@ frame 0030 at 100x30
   |                                                                    •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1021,7 +1021,7 @@ frame 0030 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÃzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0031 at 100x30
   header bde86856
   |
@@ -1039,7 +1039,7 @@ frame 0031 at 100x30
   |                                                                    •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1055,7 +1055,7 @@ frame 0031 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÄzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0032 at 100x30
   header cb4a0dd5
   |
@@ -1073,7 +1073,7 @@ frame 0032 at 100x30
   |                                                                    •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1089,7 +1089,7 @@ frame 0032 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÅzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0033 at 100x30
   header 19a4958a
   |
@@ -1107,7 +1107,7 @@ frame 0033 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1123,7 +1123,7 @@ frame 0033 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÍzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0034 at 100x30
   header ab442fe2
   |
@@ -1141,7 +1141,7 @@ frame 0034 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1157,7 +1157,7 @@ frame 0034 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÎzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0035 at 100x30
   header 081eca82
   |
@@ -1175,7 +1175,7 @@ frame 0035 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1191,7 +1191,7 @@ frame 0035 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÏzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0036 at 100x30
   header b391854f
   |
@@ -1209,7 +1209,7 @@ frame 0036 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1225,7 +1225,7 @@ frame 0036 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÐzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0037 at 100x30
   header f04426e3
   |
@@ -1243,7 +1243,7 @@ frame 0037 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1259,7 +1259,7 @@ frame 0037 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÙzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0038 at 100x30
   header 20aafa60
   |
@@ -1277,7 +1277,7 @@ frame 0038 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1293,7 +1293,7 @@ frame 0038 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÚzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0039 at 100x30
   header 147f3128
   |
@@ -1311,7 +1311,7 @@ frame 0039 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1327,7 +1327,7 @@ frame 0039 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÛzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0040 at 100x30
   header 147f3128
   |
@@ -1345,7 +1345,7 @@ frame 0040 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1361,7 +1361,7 @@ frame 0040 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÜzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0041 at 100x30
   header 4aa4e1a4
   |
@@ -1379,7 +1379,7 @@ frame 0041 at 100x30
   |                                                                     •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1395,7 +1395,7 @@ frame 0041 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÝzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0042 at 100x30
   header e991d036
   |
@@ -1413,7 +1413,7 @@ frame 0042 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1429,7 +1429,7 @@ frame 0042 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzÞzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0043 at 100x30
   header 141b53ac
   |
@@ -1447,7 +1447,7 @@ frame 0043 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1463,7 +1463,7 @@ frame 0043 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzßzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0044 at 100x30
   header c48c6cd2
   |
@@ -1481,7 +1481,7 @@ frame 0044 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1497,7 +1497,7 @@ frame 0044 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzàzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0045 at 100x30
   header 061455c3
   |
@@ -1515,7 +1515,7 @@ frame 0045 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1531,7 +1531,7 @@ frame 0045 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzázzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0046 at 100x30
   header 1f8dcef4
   |
@@ -1549,7 +1549,7 @@ frame 0046 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1565,7 +1565,7 @@ frame 0046 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzâzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0047 at 100x30
   header 3974fb4f
   |
@@ -1583,7 +1583,7 @@ frame 0047 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1599,7 +1599,7 @@ frame 0047 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzãzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0048 at 100x30
   header 4f7e38e1
   |
@@ -1617,7 +1617,7 @@ frame 0048 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1633,7 +1633,7 @@ frame 0048 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzäzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0049 at 100x30
   header afb7a646
   |
@@ -1651,7 +1651,7 @@ frame 0049 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1667,7 +1667,7 @@ frame 0049 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzåzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0050 at 100x30
   header e724a78e
   |
@@ -1685,7 +1685,7 @@ frame 0050 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1701,7 +1701,7 @@ frame 0050 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzæzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0051 at 100x30
   header 25b78d49
   |
@@ -1719,7 +1719,7 @@ frame 0051 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1735,7 +1735,7 @@ frame 0051 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzçzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0052 at 100x30
   header f53b1f70
   |
@@ -1753,7 +1753,7 @@ frame 0052 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1769,7 +1769,7 @@ frame 0052 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzèzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0053 at 100x30
   header f127b8e1
   |
@@ -1787,7 +1787,7 @@ frame 0053 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1803,7 +1803,7 @@ frame 0053 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzèzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 frame 0054 at 100x30
   header d858246b
   |
@@ -1821,7 +1821,7 @@ frame 0054 at 100x30
   |                                                                      •
   |
   |
-  |           j/k  move     q  quit
+  |           j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccbdbddddddbdddbddddbdddddddbdddddddbddbbbbbbbbbbbbbbbbbbbbbbbb
   :eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeefegggggehehhhhhhhhehhhehhhhehhhehhhehhhhheeeeeeeeeeeeeeeeeeeeeeee
@@ -1837,7 +1837,7 @@ frame 0054 at 100x30
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzèzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
   :zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
+  :zzzzzzzzzzGHHHGzIIIIzzzzGHGzIIIIzzzzGHGzIIIIzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
 legend
 a = fg Default, bg Rgb(31, 21, 44), []
 b = fg Default, bg Rgb(27, 18, 38), []

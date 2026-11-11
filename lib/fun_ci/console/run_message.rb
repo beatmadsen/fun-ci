@@ -16,9 +16,9 @@ module FunCi
           stages: run[:stages].map { |stage| stage(stage) }, **marks(run) }.compact
       end
 
-      # What the row marks beyond the run itself: a conflict with the trunk, and
-      # how many cancelled runs it stands for.
-      def self.marks(run) = { trunk: conflict(run[:trunk]), folded: run[:folded] }
+      # What the row marks beyond the run itself: a conflict with the trunk,
+      # how many cancelled runs it stands for, and how the user hid its branch.
+      def self.marks(run) = { trunk: conflict(run[:trunk]), folded: run[:folded], hidden: run[:hidden] }
 
       # The branch's standing against the trunk, sent only where the row shows it: a conflict.
       def self.conflict(trunk) = trunk && trunk[:branch_state] == "conflicts" ? trunk : nil

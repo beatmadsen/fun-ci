@@ -1175,9 +1175,6 @@ console says `starts in 8m on main 3a1f9c2`; once its start has come and its
 process has yet to start it, each says `starts now`.
 
 ### 13.29 `h` on a job asks how to hide it, and `s` snoozes it until it runs again
-**Given** jobs on the board with their label, the cursor not on one
-**Then** the label, or the line counting the jobs, says `h on a job hides
-it` where it fits.
 **Given** the cursor on a job in the console
 **When** `h` is pressed
 **Then** the footer asks `Hide <name>?` with `s snooze until its next run`,
@@ -1201,8 +1198,8 @@ and the next one opened on this machine.
 
 ### 13.31 `a` shows the hidden jobs, where `h` brings one back
 **Given** jobs hidden by 13.29 or 13.30
-**Then** `board` carries how many (`hidden_jobs`), and the footer says
-`a shows 2 hidden jobs` beside its keys, except while it asks a question:
+**Then** `board` carries how many rows are hidden, branches and jobs
+(`hidden_rows`), and the footer says `a shows 2 hidden rows` beside its keys, except while it asks a question:
 beside a failed job's `fun-ci why --job` command when both fit, the command
 otherwise taking the line above, and in fewer words on a narrow screen
 (`a shows 2 hidden`, `2 hidden`), cut only where even those don't fit.
@@ -1210,7 +1207,7 @@ otherwise taking the line above, and in fewer words on a narrow screen
 **Then** the hidden jobs come last in the section, each pale, without a
 stripe, saying `snoozed until its next run` or `ignored`; none makes the
 block wine, shows the `why --job` command or counts as failed, and the footer
-says `a hides hidden jobs`.
+says `a hides hidden rows`.
 **And** `h` on one of them brings it back at once, with no question; `a`
 again, or the last hidden job brought back, puts them out of view.
 **And** a contract fixture holds the conversation on both sides, and a
@@ -1225,3 +1222,16 @@ names it.
 **When** the job asked about leaves the view, or the run asked about stops
 running or is replaced by a newer run of its branch
 **Then** the footer stops asking, and `s`, `i` or `y` acts on nothing.
+
+### 13.33 `h` on a branch hides it as it does a job
+**Given** the cursor on a branch's row
+**Then** the footer offers `h  hide`.
+**When** `h` is pressed, and `s` or `i` answers `Hide <branch>?`
+**Then** the branch is no row of the board and plays no scene: snoozed until
+a run of it starts after the snooze, ignored until it is brought back, in
+this console and the next one opened on this machine.
+**When** `a` is pressed
+**Then** the hidden branch's row is back where it was, pale, without a
+stripe, saying `snoozed until its next run` or `ignored`, needing you no
+more; `h` on it brings it back at once.
+**And** the agent commands say of the branch what they said.

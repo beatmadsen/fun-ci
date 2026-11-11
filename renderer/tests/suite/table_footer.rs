@@ -18,7 +18,7 @@ fn board(status: &str, extra: &Value) -> Board {
 
 #[test]
 fn the_keys_offer_cancel_while_a_run_is_running() {
-    assert_eq!(keys(&board("running", &json!({}))).keys, [("j/k", "move"), ("c", "cancel"), ("q", "quit")]);
+    assert_eq!(keys(&board("running", &json!({}))).keys, [("j/k", "move"), ("c", "cancel"), ("h", "hide"), ("q", "quit")]);
 }
 
 #[test]
@@ -34,7 +34,7 @@ fn the_keys_offer_cancel_while_a_job_waits_its_turn_to_start() {
 
 #[test]
 fn the_keys_leave_cancel_out_when_nothing_can_be_cancelled() {
-    assert_eq!(keys(&board("passed", &json!({}))).keys, [("j/k", "move"), ("q", "quit")]);
+    assert_eq!(keys(&board("passed", &json!({}))).keys, [("j/k", "move"), ("h", "hide"), ("q", "quit")]);
 }
 
 #[test]
@@ -110,7 +110,7 @@ fn footer_text(width: u16, unshown: usize) -> String {
     use ratatui::widgets::Widget;
     let drawn = fun_ci_renderer::table::Drawn { lines: Vec::new(), rows: Vec::new(), columns: crate::support::paint::COLUMNS, unshown, note: None, paper: None, leaders: None };
     let frame = fun_ci_renderer::table::Frame { width, ..crate::support::paint::frame() };
-    let line = fun_ci_renderer::table::footer::footer_line(&board("passed", &json!({})), &drawn, frame);
+    let line = fun_ci_renderer::table::footer::footer_line(&board("passed", &json!({"cursor": null})), &drawn, frame);
     let mut buffer = crate::support::shown::blank(width, 1);
     line.render(buffer.area, &mut buffer);
     crate::support::shown::shown(&buffer).text()

@@ -40,11 +40,11 @@ class TestConsoleSessionHiding < Minitest::Test
   def test_should_say_how_many_jobs_are_hidden
     hide_the_job
 
-    assert_equal 1, board["hidden_jobs"]
+    assert_equal 1, board["hidden_rows"]
   end
 
   def test_should_not_count_hidden_jobs_while_none_is
-    refute board.key?("hidden_jobs")
+    refute board.key?("hidden_rows")
   end
 
   # The job section takes no line while it holds no job in view (AT-13.16).

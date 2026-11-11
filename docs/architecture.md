@@ -528,7 +528,8 @@ weekly jobs).
   `jobs` in the order shown, each with its words' facts (status, commit,
   branch, times, when due); the cursor indexes runs, then jobs.
 - **Which jobs the console hides is kept in the database, per machine**
-  (`hidden_jobs`, read by `Persistence::JobVisibility`): one row a job, with
+  (`hidden_jobs`, read by `Persistence::JobVisibility`, and `hidden_branches`,
+  read by `Persistence::BranchVisibility`): one row a job or a branch, with
   how it was hidden and when. It is what one person finds noisy on one
   machine, so it is not in `.fun-ci/config`, which the repository tracks and
   the console never writes. Nothing but the console reads it: a hidden job

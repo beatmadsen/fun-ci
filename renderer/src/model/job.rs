@@ -53,7 +53,7 @@ pub struct Job {
     pub hidden: Option<Hidden>,
 }
 
-/// How the user hid a job (design.md, The console).
+/// How the user hid a branch or a job (design.md, The console).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
 #[serde(rename_all = "snake_case")]
 pub enum Hidden {

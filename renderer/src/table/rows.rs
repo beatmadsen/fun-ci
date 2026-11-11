@@ -3,6 +3,7 @@
 
 use ratatui::style::Style;
 
+use super::hiding;
 use super::marks::{links, marks};
 use super::night::{BRANCH, CONFLICT, CURSOR, FAILED, LABEL, PASSED, QUIET, RUNNING, TIMED_OUT, ink, pale};
 use super::stack::conflicts;
@@ -17,20 +18,32 @@ const MORE: usize = 12;
 const TICK: usize = 2;
 
 /// The row of `run`: its name, bold in the cursor's colour when it leads,
-/// its marks unless it was cancelled, what happened, and its age.
+/// its marks unless it was cancelled, what happened, and its age; pale once
+/// it passed, and while its branch is hidden, when it says how in place of
+/// what happened.
 #[must_use]
 pub fn row(run: &Run, paint: &Paint) -> Vec<Part> {
     let (columns, leads) = (paint.columns, paint.lead == Some(run.id));
-    let tone = |colour: [u8; 3]| if run.status() == "passed" && !leads { pale(colour) } else { colour };
+    let quiet = (run.status() == "passed" || run.hidden.is_some()) && !leads;
+    let tone = |colour: [u8; 3]| if quiet { pale(colour) } else { colour };
     let mut parts = named(run, paint, name_style(run, leads, &tone));
     parts.extend(accent(run).map(|colour| (columns.margin, "▌".to_string(), ink(colour))));
     if run.status() != "cancelled" {
         parts.extend(strip(run, paint, &tone));
     }
-    let words = if run.status() == "cancelled" { ink(QUIET).italic() } else { ink(tone(outcome(run))) };
-    parts.push((columns.words, phrase(run, paint.frame.now_ms, paint.brief), words));
+    parts.push(words(run, paint, &tone));
     parts.push((columns.age_end - 4, format!("{:>4}", when(run, paint)), ink(tone(QUIET))));
     parts
+}
+
+/// What happened, or how the user hid the branch, quietly as a cancelled run says it.
+fn words(run: &Run, paint: &Paint, tone: &dyn Fn([u8; 3]) -> [u8; 3]) -> Part {
+    let quiet = ink(QUIET).italic();
+    match run.hidden {
+        Some(how) => (paint.columns.words, hiding::said(how, paint.brief).to_string(), quiet),
+        None if run.status() == "cancelled" => (paint.columns.words, phrase(run, paint.frame.now_ms, paint.brief), quiet),
+        None => (paint.columns.words, phrase(run, paint.frame.now_ms, paint.brief), ink(tone(outcome(run)))),
+    }
 }
 
 /// A row's name: bold in the cursor's colour when it leads, quiet once cancelled, else in the row's tone.
@@ -42,10 +55,12 @@ fn name_style(run: &Run, leads: bool, tone: &dyn Fn([u8; 3]) -> [u8; 3]) -> Styl
     }
 }
 
-/// The stripe down the left of a row that needs you or is running, in the colour of why.
+/// The stripe down the left of a row that needs you or is running, in the
+/// colour of why; none while its branch is hidden.
 #[must_use]
 pub fn accent(run: &Run) -> Option<[u8; 3]> {
     match run.status() {
+        _ if run.hidden.is_some() => None,
         "failed" => Some(FAILED),
         "timeout" => Some(TIMED_OUT),
         _ if conflicts(run) => Some(CONFLICT),

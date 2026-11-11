@@ -430,24 +430,29 @@ each project's branches sit under the project's name, one row per branch:
 - A job whose line tells you nothing can be put out of view. `h` on a job
   asks how, naming it (`Hide soak?` with `s snooze until its next run`,
   `i ignore until shown again` and `n no`, the shorter `s snooze` and
-  `i ignore` on a narrow screen), and while the cursor is elsewhere the
-  section's label, or its one line counting the jobs, says `h on a job
-  hides it`:
+  `i ignore` on a narrow screen):
   snoozed, it is gone until it runs again, which is when a run of it begins
   after that, so a run waiting its turn or one cancelled before its turn
   doesn't bring it back, and once back it stays; ignored, it is gone until you bring it back. `h` asks first because
   it sits beside `j`, and a job ignored by a slip of the finger would fail
   unseen. A hidden job is no row, takes no line, and counts in none of the
   section's lines; a section with every job hidden is not drawn. Beside the
-  keys the footer says `a shows 2 hidden jobs`, in fewer words where the
+  keys the footer says `a shows 2 hidden rows`, in fewer words where the
   screen is narrow (`a shows 2 hidden`, then `2 hidden`), and cut only where
   even those don't fit. `a` puts the hidden jobs
   last in the section, pale and without a stripe, each saying `snoozed until
   its next run` or `ignored` in place of what happened, and the footer then
-  says `a hides hidden jobs`. `h` on one of them brings it back at once.
+  says `a hides hidden rows`. `h` on one of them brings it back at once.
   Hiding is about what this console shows on this machine, and nothing else:
   the job runs as before, and `fun-ci jobs`, `status` and `why --job` say
   what they said.
+- A branch's row hides the same way, since a line that tells you nothing is
+  as often a branch nobody works on any more: `h` on it asks `Hide
+  feat/search?`; snoozed, it is gone until a run of it starts after the
+  snooze (its next commit), ignored until you bring it back. A hidden
+  branch plays no scene, and among the rows `a` shows it is pale and
+  unstriped, saying how it was hidden; it needs you no more. The footer's
+  count is of hidden branches and jobs together.
 - The streak counts consecutive passed runs; a running run neither breaks nor
   extends it. It sits at the top right of the header, `7 in a row!` in green,
   or `streak broken` in plain white after a failure, since the header shouldn't

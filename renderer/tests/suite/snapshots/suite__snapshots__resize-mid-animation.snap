@@ -19,7 +19,7 @@ frame 0001 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -35,7 +35,7 @@ frame 0001 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0002 at 80x30
   header 22c2bcd3
   |
@@ -53,7 +53,7 @@ frame 0002 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -69,7 +69,7 @@ frame 0002 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0003 at 80x30
   header 41d01361
   |
@@ -87,7 +87,7 @@ frame 0003 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -103,7 +103,7 @@ frame 0003 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0004 at 80x30
   header 68f0b53a
   |
@@ -121,7 +121,7 @@ frame 0004 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -137,7 +137,7 @@ frame 0004 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0005 at 80x30
   header ff78980d
   |
@@ -155,7 +155,7 @@ frame 0005 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -171,7 +171,7 @@ frame 0005 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0006 at 80x30
   header a8409bdf
   |
@@ -189,7 +189,7 @@ frame 0006 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -205,7 +205,7 @@ frame 0006 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0007 at 80x30
   header 8da57afc
   |
@@ -223,7 +223,7 @@ frame 0007 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -239,7 +239,7 @@ frame 0007 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0008 at 80x30
   header 6fce30ba
   |
@@ -257,7 +257,7 @@ frame 0008 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -273,7 +273,7 @@ frame 0008 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0009 at 80x30
   header 18151ed7
   |
@@ -291,7 +291,7 @@ frame 0009 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -307,7 +307,7 @@ frame 0009 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0010 at 80x30
   header 969ff515
   |
@@ -325,7 +325,7 @@ frame 0010 at 80x30
   |
   |
   |
-  |         j/k  move     c  cancel     q  quit
+  |         j/k  move     c  cancel     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbccccbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddedfffffdddddddddddddddddddddddddddddddddddddddddddddddddddd
@@ -341,7 +341,7 @@ frame 0010 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0011 at 80x30
   header 2ec02849
   |
@@ -359,7 +359,7 @@ frame 0011 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -375,7 +375,7 @@ frame 0011 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0012 at 80x30
   header c611ede0
   |
@@ -393,7 +393,7 @@ frame 0012 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -409,7 +409,7 @@ frame 0012 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0013 at 80x30
   header 5e33690a
   |
@@ -427,7 +427,7 @@ frame 0013 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -443,7 +443,7 @@ frame 0013 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0014 at 80x30
   header 799e0407
   |
@@ -461,7 +461,7 @@ frame 0014 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -477,7 +477,7 @@ frame 0014 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0015 at 80x30
   header 08291148
   |
@@ -495,7 +495,7 @@ frame 0015 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -511,7 +511,7 @@ frame 0015 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0016 at 80x30
   header 2a2dc076
   |
@@ -529,7 +529,7 @@ frame 0016 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -545,7 +545,7 @@ frame 0016 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0017 at 80x30
   header e277ce16
   |
@@ -563,7 +563,7 @@ frame 0017 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -579,7 +579,7 @@ frame 0017 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0018 at 80x30
   header 2bc858ac
   |
@@ -597,7 +597,7 @@ frame 0018 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -613,7 +613,7 @@ frame 0018 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0019 at 80x30
   header 215b5b13
   |
@@ -631,7 +631,7 @@ frame 0019 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -647,7 +647,7 @@ frame 0019 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0020 at 80x30
   header e2c67a83
   |
@@ -665,7 +665,7 @@ frame 0020 at 80x30
   |
   |
   |
-  |         j/k  move     q  quit
+  |         j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbb
   :ddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777ddddddddddddddddddd
@@ -681,7 +681,7 @@ frame 0020 at 80x30
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0021 at 120x40
   header a5e591d9
   |
@@ -709,7 +709,7 @@ frame 0021 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -735,7 +735,7 @@ frame 0021 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0022 at 120x40
   header 935eb46d
   |
@@ -763,7 +763,7 @@ frame 0022 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -789,7 +789,7 @@ frame 0022 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0023 at 120x40
   header 69c2c268
   |
@@ -817,7 +817,7 @@ frame 0023 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -843,7 +843,7 @@ frame 0023 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0024 at 120x40
   header 9aa31054
   |
@@ -871,7 +871,7 @@ frame 0024 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -897,7 +897,7 @@ frame 0024 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0025 at 120x40
   header 6113f981
   |
@@ -925,7 +925,7 @@ frame 0025 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -951,7 +951,7 @@ frame 0025 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0026 at 120x40
   header 7ca3a131
   |
@@ -979,7 +979,7 @@ frame 0026 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1005,7 +1005,7 @@ frame 0026 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0027 at 120x40
   header c27db5fa
   |
@@ -1033,7 +1033,7 @@ frame 0027 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1059,7 +1059,7 @@ frame 0027 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0028 at 120x40
   header 4c6b4f30
   |
@@ -1087,7 +1087,7 @@ frame 0028 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1113,7 +1113,7 @@ frame 0028 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0029 at 120x40
   header 1989126e
   |
@@ -1141,7 +1141,7 @@ frame 0029 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1167,7 +1167,7 @@ frame 0029 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0030 at 120x40
   header e0aa2c67
   |
@@ -1195,7 +1195,7 @@ frame 0030 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1221,7 +1221,7 @@ frame 0030 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0031 at 120x40
   header 36d73f07
   |
@@ -1249,7 +1249,7 @@ frame 0031 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1275,7 +1275,7 @@ frame 0031 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0032 at 120x40
   header 6443d1b3
   |
@@ -1303,7 +1303,7 @@ frame 0032 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1329,7 +1329,7 @@ frame 0032 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0033 at 120x40
   header 62edcc89
   |
@@ -1357,7 +1357,7 @@ frame 0033 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1383,7 +1383,7 @@ frame 0033 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0034 at 120x40
   header 2d4dc7e2
   |
@@ -1411,7 +1411,7 @@ frame 0034 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1437,7 +1437,7 @@ frame 0034 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0035 at 120x40
   header 94dad9c1
   |
@@ -1465,7 +1465,7 @@ frame 0035 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1491,7 +1491,7 @@ frame 0035 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0036 at 120x40
   header 068a43d6
   |
@@ -1519,7 +1519,7 @@ frame 0036 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1545,7 +1545,7 @@ frame 0036 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0037 at 120x40
   header dad4d315
   |
@@ -1573,7 +1573,7 @@ frame 0037 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1599,7 +1599,7 @@ frame 0037 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0038 at 120x40
   header 804de100
   |
@@ -1627,7 +1627,7 @@ frame 0038 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1653,7 +1653,7 @@ frame 0038 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0039 at 120x40
   header fcf420f5
   |
@@ -1681,7 +1681,7 @@ frame 0039 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1707,7 +1707,7 @@ frame 0039 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0040 at 120x40
   header 037983ea
   |
@@ -1735,7 +1735,7 @@ frame 0040 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1761,7 +1761,7 @@ frame 0040 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0041 at 120x40
   header 1e424ce6
   |
@@ -1789,7 +1789,7 @@ frame 0041 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1815,7 +1815,7 @@ frame 0041 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0042 at 120x40
   header ae445de9
   |
@@ -1843,7 +1843,7 @@ frame 0042 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1869,7 +1869,7 @@ frame 0042 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0043 at 120x40
   header 6da70144
   |
@@ -1897,7 +1897,7 @@ frame 0043 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1923,7 +1923,7 @@ frame 0043 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0044 at 120x40
   header b8ab329c
   |
@@ -1951,7 +1951,7 @@ frame 0044 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -1977,7 +1977,7 @@ frame 0044 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0045 at 120x40
   header 0625826b
   |
@@ -2005,7 +2005,7 @@ frame 0045 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2031,7 +2031,7 @@ frame 0045 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0046 at 120x40
   header a434e418
   |
@@ -2059,7 +2059,7 @@ frame 0046 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2085,7 +2085,7 @@ frame 0046 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0047 at 120x40
   header 0625826b
   |
@@ -2113,7 +2113,7 @@ frame 0047 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2139,7 +2139,7 @@ frame 0047 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0048 at 120x40
   header b8ab329c
   |
@@ -2167,7 +2167,7 @@ frame 0048 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2193,7 +2193,7 @@ frame 0048 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0049 at 120x40
   header 6da70144
   |
@@ -2221,7 +2221,7 @@ frame 0049 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2247,7 +2247,7 @@ frame 0049 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0050 at 120x40
   header f4f1ff76
   |
@@ -2275,7 +2275,7 @@ frame 0050 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2301,7 +2301,7 @@ frame 0050 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0051 at 120x40
   header 2b354bc4
   |
@@ -2329,7 +2329,7 @@ frame 0051 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2355,7 +2355,7 @@ frame 0051 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0052 at 120x40
   header 3f702d37
   |
@@ -2383,7 +2383,7 @@ frame 0052 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2409,7 +2409,7 @@ frame 0052 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0053 at 120x40
   header 8c89a079
   |
@@ -2437,7 +2437,7 @@ frame 0053 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2463,7 +2463,7 @@ frame 0053 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0054 at 120x40
   header 3011c4c2
   |
@@ -2491,7 +2491,7 @@ frame 0054 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2517,7 +2517,7 @@ frame 0054 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 frame 0055 at 120x40
   header 91f4f396
   |
@@ -2545,7 +2545,7 @@ frame 0055 at 120x40
   |
   |
   |
-  |                    j/k  move     q  quit
+  |                    j/k  move     h  hide     q  quit
   :aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
   :bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbccccb6b666666b666b6666b6666666b6666666b66bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
   :dddddddddddddddddddddddddddddddddddddedfffffd7d77777777d777d7777d777d777d77777dddddddddddddddddddddddddddddddddddddddddd
@@ -2571,7 +2571,7 @@ frame 0055 at 120x40
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   :xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  :xxxxxxxxxxxxxxxxxxxzAAAzxBBBBxxxxzAzxBBBBxxxxzAzxBBBBxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 legend
 a = fg Default, bg Rgb(31, 21, 44), []
 b = fg Default, bg Rgb(27, 18, 38), []

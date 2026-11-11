@@ -8,7 +8,6 @@ use ratatui::text::Line;
 use super::Frame;
 use super::columns::Columns;
 pub use super::line::Part;
-use super::hiding;
 use super::job_rows;
 use super::legend::legend;
 use super::line::placed;
@@ -44,7 +43,7 @@ pub fn paint(piece: &Piece, paint: &Paint) -> Line<'static> {
         Piece::Folded(runs) => folded(runs, paint),
         Piece::More(count, below) => vec![more(*count, *below, paint.columns)],
         Piece::Legend(n) => legend(*n, paint),
-        Piece::JobsLabel(title, hint) => titled(title, *hint, paint),
+        Piece::JobsLabel(title) => titled(title, paint),
         Piece::Job(job, name, leads) => job_rows::row(job, name, *leads, paint),
         Piece::JobsFolded(jobs) => job_rows::folded(jobs, paint),
         Piece::JobsCounted(jobs, title) => job_rows::counted(jobs, title, paint),
@@ -67,18 +66,11 @@ fn label(section: &Section, paint: &Paint) -> Vec<Part> {
 }
 
 /// The job section's label, `D A I L Y   &   W E E K L Y`, and its rule.
-fn titled(title: &str, hint: bool, paint: &Paint) -> Vec<Part> {
+fn titled(title: &str, paint: &Paint) -> Vec<Part> {
     let name = spaced(title);
-    let mut end = paint.columns.label + columns(&name);
-    let room = (paint.columns.age_end + 2).saturating_sub(end + 6 + RULE_GAP);
-    let note = (hint && columns(hiding::HINT) <= room).then(|| (end + 6, hiding::HINT.to_string(), ink(NOTE).italic()));
-    end = note.as_ref().map_or(end, |(at, text, _)| at + columns(text));
-    let mut parts = vec![(paint.columns.label, name, ink(LABEL))];
-    parts.extend(note);
-    parts.extend(rule(end + RULE_GAP, paint.columns.age_end + 2));
-    parts
+    let end = paint.columns.label + columns(&name);
+    std::iter::once((paint.columns.label, name, ink(LABEL))).chain(rule(end + RULE_GAP, paint.columns.age_end + 2)).collect()
 }
-
 
 /// The space between a label and its rule, how bright the rule starts, and
 /// in how many steps it fades.

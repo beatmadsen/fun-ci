@@ -424,29 +424,8 @@ fn a_70_column_screen_with_the_cursor_on_a_job_tells_two_projects_jobs_of_the_sa
     assert!(!lines.contains(&"deps-audit".to_string()), "{lines:?}");
 }
 
-#[test]
-fn the_jobs_label_says_how_to_hide_a_job_while_the_cursor_is_not_on_one() {
-    let grid = shown(&[failed(2, "feat", "/src/app")], &needing(), Some(0), (120, 40));
 
-    assert!(line_of(&grid, "D A I L Y").contains("h on a job hides it"), "{}", grid.text());
-}
 
-// The footer says it then, on the key's cap.
-#[test]
-fn the_jobs_label_says_nothing_of_hiding_while_the_cursor_is_on_a_job() {
-    let grid = shown(&[failed(2, "feat", "/src/app")], &needing(), Some(1), (120, 40));
-
-    assert!(!line_of(&grid, "D A I L Y").contains("hides"), "{}", grid.text());
-}
-
-// A busy board counts its jobs on one line, with no label to say it on.
-#[test]
-fn the_line_counting_the_jobs_says_how_to_hide_one() {
-    let grid = two_branches_and_two_jobs_at(29, Some(1));
-    let counted = grid.text().lines().find(|line| line.contains("daily: 1 failed")).unwrap_or_default().to_string();
-
-    assert!(counted.contains("h on a job hides it"), "{}", grid.text());
-}
 
 // Six projects that each failed and nine that passed: a tall screen has room
 // for most of the passed projects' folded lines, not for all.

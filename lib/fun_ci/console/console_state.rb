@@ -26,21 +26,22 @@ module FunCi
       # Pages for a terminal of `rows`.
       def resize(rows) = @board_data.resize(@view.resize(rows))
 
+      # The events of the branches in view, hidden or not shown, so `a` plays no scene; then the board.
       def updates
         @board_data.record_dead_slow_suites
         @board_data.record_dead_jobs
         runs = @board_data.runs
-        [*@events.since_last(runs), board(runs, @board_data.jobs(runs))]
+        [*@events.since_last(runs.reject { |run| run[:hidden] }), board(runs, @board_data.jobs(runs))]
       end
 
       private
 
       def board(runs, job_rows)
         shown = @view.shown(job_rows)
-        page = @view.page(runs, more: @board_data.more?, jobs: shown)
+        page = @view.page(@view.shown_runs(runs), more: @board_data.more?, jobs: shown)
         { t: "board", now: @clock.call.to_i, streak: @board_data.streak, **page,
-          runs: page[:runs].map { |run| RunMessage.from(run) }, **job_section(shown), **hidden_jobs(job_rows),
-          **stale_trunks(runs) }
+          runs: page[:runs].map { |run| RunMessage.from(run) }, **job_section(shown),
+          **hidden_rows(runs, job_rows), **stale_trunks(runs) }
       end
 
       # Only when there are jobs in view, as the protocol lets a board leave them out.
@@ -48,10 +49,11 @@ module FunCi
         rows.empty? ? {} : { jobs: rows.map { |row| JobMessage.from(row.standing, hidden: row.hidden) } }
       end
 
-      # How many jobs the user hid, in view or not; only when some are, as the protocol lets a board leave it out.
-      def hidden_jobs(rows)
-        count = rows.count(&:hidden)
-        count.zero? ? {} : { hidden_jobs: count }
+      # How many branches and jobs the user hid, in view or not; only when some
+      # are, as the protocol lets a board leave it out.
+      def hidden_rows(runs, job_rows)
+        count = runs.count { |run| run[:hidden] } + job_rows.count(&:hidden)
+        count.zero? ? {} : { hidden_rows: count }
       end
 
       # Only when a trunk is stale, as the protocol lets a board leave it out.

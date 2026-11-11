@@ -22,7 +22,7 @@ pub enum Piece<'a> {
     /// Line `n` of the legend that names each stage over its mark.
     Legend(usize),
     /// The label over the daily and weekly jobs, `daily & weekly`, `daily` or `weekly`.
-    JobsLabel(&'static str, bool),
+    JobsLabel(&'static str),
     /// A job's row: the job, its name as shown, and whether it leads.
     Job(&'a Job, String, bool),
     /// The jobs on one pale line, when none needs you or runs.

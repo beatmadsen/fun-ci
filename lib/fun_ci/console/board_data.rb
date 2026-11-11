@@ -12,6 +12,7 @@ require_relative "row_order"
 require_relative "paging"
 require_relative "job_rows"
 require_relative "../persistence/active_jobs"
+require_relative "../persistence/branch_visibility"
 
 module FunCi
   module Console
@@ -55,6 +56,13 @@ module FunCi
 
       def show_job(row) = Persistence::JobVisibility.new(@db).show(row.project, row.name)
 
+      # Keeps the branch of the run `row` out of view from now: `snoozed`, until its next run, or `ignored`.
+      def hide_run(row, kind)
+        Persistence::BranchVisibility.new(@db).hide(row[:project_path], row[:branch], kind, at: @clock.call)
+      end
+
+      def show_run(row) = Persistence::BranchVisibility.new(@db).show(row[:project_path], row[:branch])
+
       # Records failed each job whose process died (acceptance-tests.md, AT-13.6).
       def record_dead_jobs = @run_canceller.record_dead_jobs(@db)
 
@@ -64,9 +72,11 @@ module FunCi
 
       # One row per branch, its newest run, for the branches that most need you
       # and then those run most recently, in RowOrder: a run of cancelled
-      # runs folded into one, with its stages and the branch's standing against the trunk.
+      # runs folded into one, with its stages, the branch's standing against
+      # the trunk, and how the user hid the branch (`hidden`, nil while in view).
       def runs
-        RowOrder.of(heads(@paging.limit).map { |head| branch_row(head) })
+        hidden = Persistence::BranchVisibility.new(@db).hidden
+        RowOrder.of(heads(@paging.limit).map { |head| branch_row(head, hidden) })
       end
 
       # The projects among `runs` whose trunk is stale.
@@ -87,10 +97,11 @@ module FunCi
 
       def heads(limit) = Persistence::PipelineRun.branch_heads(@db, limit: limit, among: RECENT_BRANCHES)
 
-      def branch_row(head)
+      def branch_row(head, hidden)
         branch_runs = Persistence::PipelineRun.of_branch(@db, head[:project_path], head[:branch], limit: BRANCH_WINDOW)
         row = CancelledFolding.fold(branch_runs).first
-        enrich_with_stages(row.merge(trunk: TrunkMarks.new(@db).mark(branch_runs).first[:trunk]))
+        trunk = TrunkMarks.new(@db).mark(branch_runs).first[:trunk]
+        enrich_with_stages(row.merge(trunk: trunk, hidden: hidden[[head[:project_path], head[:branch]]]))
       end
 
       def enrich_with_stages(run)

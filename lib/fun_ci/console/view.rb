@@ -34,6 +34,9 @@ module FunCi
       # The job rows in view: not the hidden ones, unless the user asked for them.
       def shown(job_rows) = @key_handler.shown(job_rows)
 
+      # The branches' runs in view: not those of hidden branches, unless the user asked for them.
+      def shown_runs(runs) = @key_handler.shown_runs(runs)
+
       # `more`: whether the store holds runs beyond `runs`. `jobs`: the job
       # section's rows in view, below the page, which the cursor reaches after the runs.
       def page(runs, more:, jobs: [])

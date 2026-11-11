@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "cursor_rows"
+
 module FunCi
   module Console
     # What the footer asks about the row under the cursor before a key acts
@@ -31,23 +33,29 @@ module FunCi
         def self.target(kind, row) = kind == :job ? [row.run&.dig(:id), row.state] : row.values_at(:id, :status)
       end
 
-      # How to hide a job: `s` snoozes it, until it runs again; `i` ignores it, for good.
+      # How to hide a branch or a job: `s` snoozes it, until its next run; `i` ignores it, until shown again.
       class Hide
         KINDS = { "s" => "snoozed", "i" => "ignored" }.freeze
         ENDS = [*KINDS.keys, "n", :escape].freeze
 
-        def initialize(board_data, job)
+        # kind: :run or :job; row: the branch's run, or the job's row.
+        def initialize(board_data, kind, row)
           @board_data = board_data
-          @job = job
+          @kind = kind
+          @row = row
         end
 
         def asks = :hide
 
-        def take(key) = KINDS.key?(key) && @board_data.hide_job(@job, KINDS[key])
+        def take(key) = KINDS.key?(key) && hide(KINDS[key])
         def ended_by?(key) = ENDS.include?(key)
 
-        # Whether `place`, [kind, row] under the cursor now, is still the job asked about.
-        def about?(place) = place.first == :job && place.last.project == @job.project && place.last.name == @job.name
+        # Whether `place`, [kind, row] under the cursor now, is still the branch or job asked about.
+        def about?(place) = place.first == @kind && CursorRows.key(*place) == CursorRows.key(@kind, @row)
+
+        private
+
+        def hide(how) = @kind == :job ? @board_data.hide_job(@row, how) : @board_data.hide_run(@row, how)
       end
     end
   end
