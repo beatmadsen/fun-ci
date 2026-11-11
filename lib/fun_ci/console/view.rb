@@ -2,8 +2,8 @@
 
 module FunCi
   module Console
-    # What the user sees of the rows and does with them: KeyHandler's cursor
-    # and cancel confirmation, and one page of rows, one per branch, as many as
+    # What the user sees of the rows and does with them: KeyHandler's cursor,
+    # what it asks and which job rows it keeps in view, and one page of rows, one per branch, as many as
     # the terminal fits, scrolled so the row under the cursor is on it
     # (renderer-protocol.md, `board`).
     class View
@@ -27,16 +27,22 @@ module FunCi
       # :quit when the key ends the session.
       def press(key) = @key_handler.handle_key(key)
 
+      # The job rows in view: not the hidden ones, unless the user asked for them.
+      def shown(job_rows) = @key_handler.shown(job_rows)
+
       # `more`: whether the store holds runs beyond `runs`. `jobs`: the job
-      # section's rows, below the page, which the cursor reaches after the runs.
+      # section's rows in view, below the page, which the cursor reaches after the runs.
       def page(runs, more:, jobs: [])
         size = jobs.empty? ? @page_size : [@page_size - JOB_LINES, 0].max
         first = first_shown(runs.size, size)
-        { cursor: cursor_on_page(first, size), confirming: @key_handler.confirming?,
+        { cursor: cursor_on_page(first, size), confirming: @key_handler.confirming?, **hiding,
           has_more: more || first + size < runs.size, runs: runs[first, size] || [] }
       end
 
       private
+
+      # Only while the footer asks how to hide a job, as the protocol lets a board leave it out.
+      def hiding = @key_handler.asking == :hide ? { hiding: true } : {}
 
       # The last page of runs while the cursor is on a job.
       def first_shown(count, size)

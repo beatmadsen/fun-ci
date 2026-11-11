@@ -5,9 +5,10 @@ require "fun_ci/console/job_order"
 
 # The order of the job section's rows (design.md, The console): failed, ran
 # out of time, running, due, passed; the board's projects in its order among
-# equals, then by name (acceptance-tests.md, AT-13.14).
+# equals, then by name (acceptance-tests.md, AT-13.14); a hidden job, shown
+# because the user asked, after every job in view (AT-13.31).
 class TestJobOrder < Minitest::Test
-  Row = Data.define(:name, :state, :project)
+  Row = Data.define(:name, :state, :project, :hidden)
 
   def test_should_put_a_lost_job_with_the_failed_ones
     assert_equal %w[b a], names([row("a", "over_budget"), row("b", "lost")])
@@ -54,8 +55,12 @@ class TestJobOrder < Minitest::Test
     assert_equal %w[b a], names([row("a", "paused"), row("b", "passed")])
   end
 
+  def test_should_put_a_hidden_job_after_every_job_in_view
+    assert_equal %w[b a], names([row("a", "failed").with(hidden: "snoozed"), row("b", "passed")])
+  end
+
   private
 
   def names(rows) = FunCi::Console::JobOrder.of(rows, projects: %w[/first /second]).map(&:name)
-  def row(name, state, project = "/first") = Row.new(name: name, state: state, project: project)
+  def row(name, state, project = "/first") = Row.new(name: name, state: state, project: project, hidden: nil)
 end

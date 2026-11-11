@@ -7,7 +7,7 @@ require_relative "job_message"
 module FunCi
   module Console
     # What the console shows: the page of runs BoardData reads that the View
-    # puts on screen, the daily and weekly jobs below it, and the clock's
+    # puts on screen, the daily and weekly jobs in view below it, and the clock's
     # time, as a protocol `board` message, after the `event`s for what changed
     # since the last one.
     class ConsoleState
@@ -35,14 +35,24 @@ module FunCi
 
       private
 
-      def board(runs, jobs)
-        page = @view.page(runs, more: @board_data.more?, jobs: jobs)
+      def board(runs, job_rows)
+        shown = @view.shown(job_rows)
+        page = @view.page(runs, more: @board_data.more?, jobs: shown)
         { t: "board", now: @clock.call.to_i, streak: @board_data.streak, **page,
-          runs: page[:runs].map { |run| RunMessage.from(run) }, **job_section(jobs), **stale_trunks(runs) }
+          runs: page[:runs].map { |run| RunMessage.from(run) }, **job_section(shown), **hidden_jobs(job_rows),
+          **stale_trunks(runs) }
       end
 
-      # Only when there are jobs, as the protocol lets a board leave them out.
-      def job_section(jobs) = jobs.empty? ? {} : { jobs: jobs.map { |job| JobMessage.from(job) } }
+      # Only when there are jobs in view, as the protocol lets a board leave them out.
+      def job_section(rows)
+        rows.empty? ? {} : { jobs: rows.map { |row| JobMessage.from(row.standing, hidden: row.hidden) } }
+      end
+
+      # How many jobs the user hid, in view or not; only when some are, as the protocol lets a board leave it out.
+      def hidden_jobs(rows)
+        count = rows.count(&:hidden)
+        count.zero? ? {} : { hidden_jobs: count }
+      end
 
       # Only when a trunk is stale, as the protocol lets a board leave it out.
       def stale_trunks(runs)

@@ -4,10 +4,13 @@ require_relative "../test_helper"
 require "fun_ci/console/job_rows"
 require "fun_ci/persistence/database"
 require "fun_ci/persistence/job_recorder"
+require "fun_ci/persistence/job_visibility"
 
 # The job section's rows: where each job of the board's projects stands, in
-# JobOrder (acceptance-tests.md, AT-13.14). What a standing says is
-# Jobs::Standings' (test_job_standings.rb).
+# JobOrder (acceptance-tests.md, AT-13.14), and how the user hid it
+# (AT-13.29, AT-13.30). What a standing says is Jobs::Standings'
+# (test_job_standings.rb); which jobs are hidden, Persistence::JobVisibility's
+# (test_job_visibility.rb).
 class TestJobRows < Minitest::Test
   include DatabaseTestSetup
 
@@ -37,6 +40,19 @@ class TestJobRows < Minitest::Test
     write_job(File.join(@dir, "other"), "daily/lint-deep.sh")
 
     assert_equal %w[mutation soak lint-deep], rows([@project, File.join(@dir, "other")]).map(&:name)
+  end
+
+  def test_should_say_how_a_job_was_hidden
+    FunCi::Persistence::JobVisibility.new(@db).hide(@project, "soak", "ignored", at: NOW)
+
+    assert_equal [nil, "ignored"], rows([@project]).map(&:hidden)
+  end
+
+  def test_should_say_a_job_is_hidden_in_its_own_project_alone
+    write_job(File.join(@dir, "other"), "weekly/soak.sh")
+    FunCi::Persistence::JobVisibility.new(@db).hide(File.join(@dir, "other"), "soak", "snoozed", at: NOW)
+
+    assert_equal [nil, nil, "snoozed"], rows([@project, File.join(@dir, "other")]).map(&:hidden)
   end
 
   private

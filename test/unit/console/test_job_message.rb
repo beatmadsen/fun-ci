@@ -73,10 +73,17 @@ class TestJobMessage < Minitest::Test
     assert_equal %i[cadence name project status], job_message(state: "due", run: nil).keys.sort
   end
 
+  # A hidden job is on a board only while the user asked to see those (AT-13.31).
+  def test_should_say_how_a_hidden_job_was_hidden
+    assert_equal "snoozed", FunCi::Console::JobMessage.from(standing, hidden: "snoozed")[:hidden]
+  end
+
   private
 
-  def job_message(state: "passed", run: RUN, due_at: nil)
-    FunCi::Console::JobMessage.from(Standing.new(project: "/p", name: "mutation", cadence: "daily", state: state,
-                                                 run: run, due_at: due_at, starts_at: nil))
+  def job_message(...) = FunCi::Console::JobMessage.from(standing(...))
+
+  def standing(state: "passed", run: RUN, due_at: nil)
+    Standing.new(project: "/p", name: "mutation", cadence: "daily", state: state, run: run, due_at: due_at,
+                 starts_at: nil)
   end
 end

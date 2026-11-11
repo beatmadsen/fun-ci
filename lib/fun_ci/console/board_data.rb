@@ -42,10 +42,18 @@ module FunCi
       # Records failed each slow suite whose process died (acceptance-tests.md, AT-8.3).
       def record_dead_slow_suites = @run_canceller.record_dead(@db)
 
-      # The job section's rows (JobRows): the jobs of the projects among `runs`.
+      # The job section's rows (JobRows): the jobs of the projects among
+      # `runs`, those the user hid among them, marked.
       def jobs(runs)
         JobRows.new(@db).of(runs.map { |run| run[:project_path] }.uniq.compact, now: @clock.call)
       end
+
+      # Keeps the job of `row` (a JobRow) out of view from now: `snoozed`, until it runs again, or `ignored`.
+      def hide_job(row, kind)
+        Persistence::JobVisibility.new(@db).hide(row.project, row.name, kind, at: @clock.call)
+      end
+
+      def show_job(row) = Persistence::JobVisibility.new(@db).show(row.project, row.name)
 
       # Records failed each job whose process died (acceptance-tests.md, AT-13.6).
       def record_dead_jobs = @run_canceller.record_dead_jobs(@db)

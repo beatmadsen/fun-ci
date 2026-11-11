@@ -5,6 +5,7 @@ require "fun_ci/console/console_session"
 require "fun_ci/console/streak_counter"
 require "fun_ci/console/cancelled_folding"
 require "fun_ci/console/row_order"
+require "fun_ci/console/job_row"
 require_relative "console_fakes"
 require "fun_ci/jobs/standings"
 
@@ -15,7 +16,8 @@ require "fun_ci/jobs/standings"
 class FixtureReplay
   # BoardData over the fixture's runs, the database's runs newest first, all
   # of them loaded: one row per branch, as BoardData makes them; and where
-  # its jobs stand, as JobRows makes them.
+  # its jobs stand, as JobRows makes them, hidden and shown as it is told
+  # until the next `state`.
   class Store
     attr_writer :runs
     attr_accessor :now, :stale, :job_rows
@@ -39,6 +41,8 @@ class FixtureReplay
     def cancel_run(_id) = nil
     def cancel_job(_id) = nil
     def jobs(_runs) = job_rows || []
+    def hide_job(job, kind) = self.job_rows = job_rows.map { |row| row == job ? row.with(hidden: kind) : row }
+    def show_job(job) = hide_job(job, nil)
     def stale_trunks(_runs, now:) = now && (stale || [])
   end
 
@@ -74,19 +78,20 @@ class FixtureReplay
     session.receive(JSON.generate(line["renderer"]))
   end
 
-  # A job of the fixture's state ({ project, name, cadence, run }) where it stands at `now`.
-  def standing(job, now)
+  # A job of the fixture's state ({ project, name, cadence, run, hidden }) where it stands at `now`.
+  def job_row(job, now)
     run = job["run"] && JSON.parse(JSON.generate(job["run"]), symbolize_names: true)
     found = FunCi::Jobs::Job.new(name: job["name"], cadence: job["cadence"], script: "")
-    FunCi::Jobs::Standing.new(project: job["project"], job: found, run: run,
-                              due: FunCi::Jobs::Due.new(run, found.period, now: Time.at(now)))
+    due = FunCi::Jobs::Due.new(run, found.period, now: Time.at(now))
+    standing = FunCi::Jobs::Standing.new(project: job["project"], job: found, run: run, due: due)
+    FunCi::Console::JobRow.new(standing: standing, hidden: job["hidden"])
   end
 
   def state(session, state, index)
     @store.runs = state["runs"].map { |run| JSON.parse(JSON.generate(run), symbolize_names: true) }
     @store.now = state["now"]
     @store.stale = state.fetch("stale_trunks", []).map { |stale| stale.transform_keys(&:to_sym) }
-    @store.job_rows = state.fetch("jobs", []).map { |job| standing(job, state["now"]) }
+    @store.job_rows = state.fetch("jobs", []).map { |job| job_row(job, state["now"]) }
     index.zero? ? session.start : session.refresh
   end
 end

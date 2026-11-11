@@ -5,17 +5,18 @@ require "time"
 module FunCi
   module Console
     # Where a job stands (Jobs::Standing) as the protocol's `board` carries it
-    # under `jobs`: protocol status names and epoch seconds. Formatting them
-    # is the renderer's job.
+    # under `jobs`: protocol status names and epoch seconds, and how the user
+    # hid it, for a hidden job the board shows. Formatting them is the
+    # renderer's job.
     module JobMessage
       # The protocol's word for a Jobs::State, where it has one of its own:
       # a cancelled job is due again, and one it can't read is shown due.
       STATUS = { "over_budget" => "timeout", "cancelled" => "due", "unknown" => "due" }.freeze
 
-      def self.from(standing)
+      def self.from(standing, hidden: nil)
         { project: standing.project, name: standing.name, cadence: standing.cadence,
           status: STATUS.fetch(standing.state, standing.state), **run(standing.run, standing.starts_at),
-          due_at: standing.due_at&.to_i }.compact
+          due_at: standing.due_at&.to_i, hidden: hidden }.compact
       end
 
       # What the latest run says: which, on what, and when; a run waiting its
