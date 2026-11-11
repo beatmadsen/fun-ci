@@ -8,6 +8,8 @@
 # Minitest's methods replaces it, and the executor fails the whole file with
 # "result not reported". The first fails its test at once; the second fails
 # the file as it loads, in any lane, a single file run on its own included.
+# Both are about this repository's test code: a library's test class is left
+# alone.
 module MinitestGuards
   class Clash < StandardError; end
 
@@ -31,30 +33,44 @@ module MinitestGuards
   # one a module it includes brings.
   module Names
     def include(*modules)
-      modules.flat_map { |mod| mod.instance_methods(false) }.each { |name| method_added(name) }
+      brought = modules.flat_map { |mod| mod.instance_methods(false).map { |name| mod.instance_method(name) } }
+      brought.each { |method| MinitestGuards.refuse(self, method, MinitestGuards.instance_names) }
       super
     end
 
     def method_added(name)
       super
-      MinitestGuards.refuse(self, name, MinitestGuards.instance_names)
+      MinitestGuards.refuse(self, instance_method(name), MinitestGuards.instance_names)
     end
 
     def singleton_method_added(name)
       super
-      MinitestGuards.refuse(self, name, MinitestGuards.class_names)
+      MinitestGuards.refuse(self, method(name), MinitestGuards.class_names)
     end
   end
+
+  # This repository, whose tests the guards are for.
+  ROOT = File.expand_path("../..", __dir__)
 
   def self.install
     Minitest::Test.prepend(Reentry)
     Minitest::Test.singleton_class.prepend(Names)
   end
 
-  def self.refuse(klass, name, taken)
-    return unless klass < Minitest::Test && taken.include?(name)
+  # `method`: the method `klass` defines or is brought.
+  def self.refuse(klass, method, taken)
+    return unless klass < Minitest::Test && taken.include?(method.name) && ours?(method)
 
-    raise Clash, "#{klass.name || "a test class"} defines #{name}, which is Minitest's own: name it something else"
+    raise Clash, "#{klass.name || "a test class"} defines #{method.name}, which is Minitest's own: " \
+                 "name it something else"
+  end
+
+  # Whether a file of this repository defines `method`. A library's own test
+  # class may override Minitest's methods, as ActiveSupport::TestCase does
+  # run_order, and is none of the guards' business.
+  def self.ours?(method)
+    file = method.source_location.to_a.first
+    !file.nil? && File.expand_path(file).start_with?(ROOT)
   end
 
   def self.instance_names

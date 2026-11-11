@@ -36,7 +36,20 @@ class TestMinitestGuards < Minitest::Test
     assert class_defining(:job_run)
   end
 
+  # ActiveSupport's own test class overrides Minitest's run_order (from 8.1.4.1, on Minitest 6):
+  # the guards are for this repository's tests.
+  def test_should_let_a_library_s_test_class_define_a_class_method_of_minitest_s
+    assert library_test_class("def self.run_order = :alpha")
+  end
+
+  def test_should_let_a_library_s_test_class_define_an_instance_method_of_minitest_s
+    assert library_test_class("def name = 'theirs'")
+  end
+
   private
+
+  # A test class whose methods a file outside this repository defines.
+  def library_test_class(source) = scratch_test_class { class_eval(source, "/gems/a-library/lib/test_case.rb", 1) }
 
   def class_defining(name) = scratch_test_class { define_method(name) { nil } }
   def class_defining_class_method(name) = scratch_test_class { define_singleton_method(name) { [] } }
