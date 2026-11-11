@@ -58,8 +58,6 @@ module FunCi
         )
       SQL
 
-      # The jobs the console keeps out of view (design.md, The console): `kind` is `snoozed` or `ignored`.
-
       # Opening and migrating hold an exclusive lock on a file beside the
       # database, so fun-ci processes starting at once set it up one at a time.
       # SQLite's busy timeout doesn't cover the switch to WAL, and a column can
@@ -83,10 +81,17 @@ module FunCi
       TABLES = [PIPELINE_RUNS_TABLE, STAGE_JOBS_TABLE, TRUNK_CHECKS_TABLE, TRUNK_FETCHES_TABLE, JOB_RUNS_TABLE,
                 *HiddenRowTables::ALL].freeze
 
+      # Where a commit arrived on its branch, which the board and the canceller
+      # look up for every run they read (Persistence::Arrival); runs are never
+      # deleted, so without it each lookup scans them all.
+      ARRIVAL_INDEX = "CREATE INDEX IF NOT EXISTS pipeline_runs_arrival " \
+                      "ON pipeline_runs (project_path, branch, commit_hash)"
+
       def self.migrate!(db)
         with_setup_lock(db.filename("main")) do
           TABLES.each { |table| db.execute(table) }
           ADDED_COLUMNS.each { |table, column, type| add_column_if_missing(db, table, column, type) }
+          db.execute(ARRIVAL_INDEX)
           db.execute(NAME_DETACHED)
           number_failures_kept_unnumbered(db)
         end
