@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "waiting_slots"
+
 module FunCi
   module Pipeline
     # A worktree a pipeline has to itself, held through an flock on its lock
@@ -25,6 +27,14 @@ module FunCi
         @holders -= 1
         @lock.close if @holders.zero? && !@lock.closed?
       end
+
+      # Marks the slot as held only by a slow suite waiting its turn, until
+      # the mark is closed (WaitingSlots). A slot with nothing to lock has
+      # nothing to mark.
+      def waiting = lock_file ? WaitingSlots.mark(path) : Unmarked.new(true)
+
+      # The mark of a slot with nothing to lock.
+      Unmarked = Struct.new(:closed?) { def close = nil }
 
       # Whether its worktree was just made, so has no caches yet.
       def cold? = false

@@ -255,6 +255,18 @@ same problem if you switch branches while it runs.
 - `StalePipelineCanceller` also releases the slots of the runs it cancels.
   Slots whose lock names a dead pid are reclaimed.
 - Pool size defaults to 2 and is configurable in `.fun-ci/config`.
+- **A slow suite waiting its branch's turn keeps its slot but takes no place
+  in the pool.** It runs in its slot's checkout, against what its build
+  left there, so it can't let the slot go while it waits; but with two
+  slots, one branch's running slow suite and its queued one held both, and
+  every other branch's lint and build waited minutes for a slot. A waiting
+  suite holds an flock on its slot's mark under `worktrees/waiting/`, and
+  the pool tries one more slot for each mark held (`WaitingSlots`), so the
+  slots doing work stay at the pool's size until the queued suite's turn
+  comes. *Rejected:* letting the slot go and taking any free one at the turn
+  (the build's outputs stay behind in the old one), and taking the turn
+  before the slot (the turn would wait on lint, build and fast, and order
+  the suites by when their phase one ended).
 
 *Revisit if* per-slot caches turn out to go stale in ways `build.sh` can't fix.
 

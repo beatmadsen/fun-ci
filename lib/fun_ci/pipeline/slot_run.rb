@@ -87,14 +87,21 @@ module FunCi
       end
 
       # Holding the slot until the slow suite is recorded, whether or not its
-      # turn came; a run cancelled while it waited never starts it.
-      def in_turn(slot, recorder, job_id)
-        @seams.slow_turns.take(@commit.branch) do
-          started = recorder.started_in_turn?(job_id)
-          yield if started
-        end
+      # turn came, marked waiting until it does (WaitingSlots); a run
+      # cancelled while it waited never starts it.
+      def in_turn(slot, recorder, job_id, &)
+        waiting = slot.waiting
+        take_turn(waiting, recorder, job_id, &)
       ensure
+        waiting&.close
         slot.release
+      end
+
+      def take_turn(waiting, recorder, job_id)
+        @seams.slow_turns.take(@commit.branch) do
+          waiting.close
+          yield if recorder.started_in_turn?(job_id)
+        end
       end
 
       def launch(**)

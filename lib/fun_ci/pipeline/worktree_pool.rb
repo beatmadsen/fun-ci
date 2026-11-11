@@ -3,12 +3,14 @@
 require "fileutils"
 require_relative "slot"
 require_relative "worktrees"
+require_relative "waiting_slots"
 
 module FunCi
   module Pipeline
     # Hands each pipeline a worktree slot of its own under
     # Worktrees#root, checked out at its commit, waiting
-    # while every slot is taken.
+    # while every slot is taken. A slot held only by a slow suite waiting its
+    # turn takes no place among `size` (WaitingSlots).
     class WorktreePool
       DEFAULT_SIZE = 2
       # A slot nobody took for longer is cold: its caches are as warm as a
@@ -53,7 +55,8 @@ module FunCi
       def free_slot
         root = @worktrees.root
         FileUtils.mkdir_p(root)
-        @size.times.lazy.filter_map { |index| try_lock(File.join(root, "slot-#{index}")) }.first
+        working = @size + WaitingSlots.count(root)
+        working.times.lazy.filter_map { |index| try_lock(File.join(root, "slot-#{index}")) }.first
       end
 
       # The lock stays open for as long as the slot is held, so no block.

@@ -626,7 +626,9 @@ then starts and counts its budget
 is, so when the running one finishes, the newest commit that arrived meanwhile
 runs its slow suite and those between are skipped
 **And** a waiting slow suite whose process died is recorded failed, as a
-running one is (AT-8.3).
+running one is (AT-8.3)
+**And** a waiting slow suite keeps its worktree slot but takes no place among
+the pool's slots, so a run on another branch gets a slot meanwhile.
 *Note:* cancelling every older run starved the slow suite on a branch that
 takes commits faster than the slow suite takes to run: in one project,
 seven in ten slow suites were cancelled, and `wait --follow-branch` waited
