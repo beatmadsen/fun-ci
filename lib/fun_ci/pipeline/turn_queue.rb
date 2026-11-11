@@ -40,9 +40,9 @@ module FunCi
         file&.close
       end
 
-      # The tickets held of suites newer than `ticket`'s.
+      # The tickets held of suites newer than `ticket`'s, as a Set of paths.
       def newer_than(ticket)
-        Dir.glob(File.join(@dir, "*.lock")).select { |path| live?(path) && File.basename(path) > ticket.name }
+        Dir.glob(File.join(@dir, "*.lock")).select { |path| live?(path) && File.basename(path) > ticket.name }.to_set
       end
 
       private

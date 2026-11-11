@@ -47,9 +47,9 @@ module FunCi
       # holder let go, so each ticket is waited for once: one that still seems
       # held is no live suite's, and the passes end with the tickets seen.
       def in_order(queue, ticket, lock)
-        waited = []
+        waited = Set.new
         ROUNDS.times do
-          waited.concat(let_go(queue.newer_than(ticket) - waited))
+          waited.merge(let_go(queue.newer_than(ticket) - waited))
           return if turn_taken?(queue, ticket, lock, waited)
         end
         lock.flock(File::LOCK_EX)
