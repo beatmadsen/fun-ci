@@ -10,6 +10,7 @@ class TestPipelineRunBranches < Minitest::Test
   include DatabaseTestSetup
 
   T0 = Time.utc(2026, 10, 19, 9)
+  RUN = FunCi::Persistence::PipelineRun
 
   def setup
     setup_test_db
@@ -66,19 +67,46 @@ class TestPipelineRunBranches < Minitest::Test
     assert_equal %w[f1 two], shas(FunCi::Persistence::PipelineRun.branch_heads(@db, limit: 10, among: 2))
   end
 
-  def test_should_give_a_branch_s_runs_newest_first
+  # A commit run again keeps the place it arrived in (acceptance-tests.md, AT-9.20).
+  def test_should_give_the_run_of_a_branch_s_newest_commit_over_an_older_commit_run_again
+    create("a1", "main")
+    create("a2", "main")
+    create("a1", "main")
+
+    assert_equal %w[a2], shas(FunCi::Persistence::PipelineRun.branch_heads(@db, limit: 10, among: 10))
+  end
+
+  def test_should_give_the_newest_run_of_a_branch_s_newest_commit
+    create("a1", "main")
+    create("a2", "main")
+    again = create("a2", "main")
+
+    heads = FunCi::Persistence::PipelineRun.branch_heads(@db, limit: 10, among: 10).map { |run| run[:id] }
+
+    assert_equal [again], heads
+  end
+
+  def test_should_give_a_branch_s_runs_up_to_its_head_newest_first
     create("a1", "main", "/src/one")
     create("b1", "main", "/src/two")
-    create("a2", "main", "/src/one")
+    head = create("a2", "main", "/src/one")
 
-    assert_equal %w[a2 a1], shas(FunCi::Persistence::PipelineRun.of_branch(@db, "/src/one", "main", limit: 10))
+    assert_equal %w[a2 a1], shas(leading_to(head))
+  end
+
+  def test_should_leave_out_a_run_after_the_head
+    create("a1", "main")
+    head = create("a2", "main")
+    create("a1", "main")
+
+    assert_equal %w[a2 a1], shas(leading_to(head))
   end
 
   def test_should_give_the_runs_of_a_branch_with_no_project
-    create("a1", "main")
+    head = create("a1", "main")
     create("b1", "main", "/src/two")
 
-    assert_equal %w[a1], shas(FunCi::Persistence::PipelineRun.of_branch(@db, nil, "main", limit: 10))
+    assert_equal %w[a1], shas(leading_to(head))
   end
 
   private
@@ -88,4 +116,5 @@ class TestPipelineRunBranches < Minitest::Test
   end
 
   def shas(runs) = runs.map { |run| run[:commit_hash] }
+  def leading_to(id) = RUN.leading_to(@db, RUN.find(@db, id), limit: 10)
 end

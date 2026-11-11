@@ -23,6 +23,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   process died, and the scheduling of a job run kept by an earlier version.
 
 ### Changed
+- A newer commit no longer cancels a run whose slow suite has started. The
+  slow suite finishes, and the newer run's slow suite waits for it, shown as
+  `waiting`; a newer commit still cancels one that is waiting. On a branch
+  that takes commits faster than its slow suite runs, slow suites were
+  cancelled nearly every time, and a `wait --need all --follow-branch` could
+  wait until the commits stopped. Now a slow verdict comes within about two
+  slow suites' time.
+- A `fun-ci wait` without `--follow-branch` whose run a newer commit cancelled
+  runs the commit again, once, and waits on that run. Before, a commit landing
+  before the wait first looked at the run left the agent with exit 4 and no
+  verdict for the commit it asked about. A commit run again, by `wait` or by
+  `fun-ci trigger`, cancels no newer commit's run, and the console's row for
+  the branch stays with the newest commit.
 - `fun-ci status` says which level a stage is not needed for, as in `(not
   needed for --need fast)`. Plain `(not needed)` read as wrong while a `wait
   --need all` was waiting on that very stage.

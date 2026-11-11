@@ -108,7 +108,7 @@ module FunCi
       end
 
       def branch_row(head, hidden)
-        branch_runs = Persistence::PipelineRun.of_branch(@db, head[:project_path], head[:branch], limit: BRANCH_WINDOW)
+        branch_runs = Persistence::PipelineRun.leading_to(@db, head, limit: BRANCH_WINDOW)
         row = CancelledFolding.fold(branch_runs).first
         trunk = TrunkMarks.new(@db).mark(branch_runs).first[:trunk]
         enrich_with_stages(row.merge(trunk: trunk, hidden: hidden[[head[:project_path], head[:branch]]]))

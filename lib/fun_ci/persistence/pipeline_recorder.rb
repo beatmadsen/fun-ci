@@ -71,14 +71,21 @@ module FunCi
       end
 
       def start_stage(stage, budget: nil)
+        schedule_stage(stage, budget: budget).tap { |job_id| stage_started(job_id) if job_id }
+      end
+
+      # A stage that waits before it starts, as a slow suite does for its turn.
+      def schedule_stage(stage, budget: nil)
         return nil unless @pipeline_run_id
 
         tolerating do
           ensure_running
-          job_id = StageJob.create(@db, pipeline_run_id: @pipeline_run_id, stage: stage, budget: budget)
-          StageJob.update_status(@db, job_id, "running")
-          job_id
+          StageJob.create(@db, pipeline_run_id: @pipeline_run_id, stage: stage, budget: budget)
         end
+      end
+
+      def stage_started(job_id)
+        tolerating { StageJob.update_status(@db, job_id, "running") }
       end
 
       # Keeps a failed stage's evidence, and the output's tail where an older

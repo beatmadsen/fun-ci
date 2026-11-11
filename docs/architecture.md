@@ -292,7 +292,25 @@ commands that ask about commits (`lib/fun_ci/agent/`).
   needs no liveness check, so the canceller sends no extra signals. A waiter
   that follows the branch sets none: it asked to move on to a newer commit,
   and agents, told to wait after every commit, follow it, so their runs don't
-  keep each other going.
+  keep each other going. A waiter that doesn't follow the branch and finds
+  its run cancelled by a newer commit anyway (it lands before the first poll)
+  starts the commit again, once, the way it starts a commit with no run.
+- **A slow suite that started finishes, and the branch's slow suites take
+  turns.** The stale canceller skips a run whose slow stage is `running`. A
+  newer run's slow stage is recorded `scheduled` and its forked process blocks
+  on an flock per branch (`Pipeline::SlowTurns`, under
+  `<state dir>/projects/<repo>-<digest>/slow/`) before it marks the stage
+  `running` and starts the script, so the budget counts from its turn. A
+  waiting slow suite is still cancellable, and a cancel kills the process
+  blocked on the lock, so the next turn goes to the newest commit. An flock
+  ends with its holder, so a turn never outlives a dead slow suite, and the
+  dead-suite check covers a `scheduled` slow stage as it does a `running` one.
+- **A commit's place on its branch is its first run there**
+  (`Persistence::Arrival`). A run cancels only runs of commits that arrived
+  before its own, and a branch's head, its row on the board and the commit a
+  new trunk tip is checked against, is the newest run of the commit that
+  arrived last. So a commit run again, by a waiter or by hand, cancels no
+  newer commit's run and takes no branch's row from it.
 - **Evidence is kept only for failures**: the last 200 lines (64 KB) of a
   failed or over-budget stage's output, and what the extractors picked out,
   pruned to a project's 50 newest runs. How much more is kept, and how, is the

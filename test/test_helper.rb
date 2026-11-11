@@ -54,11 +54,9 @@ class FakeRecorder
 
   def create_run(commit_hash:, branch:, project_path: nil) = @calls << [:create_run, commit_hash, branch, project_path]
 
-  def start_stage(stage, budget: nil)
-    @calls << [:start_stage, stage]
-    @budgets[stage] = budget
-    @next_job_id += 1
-  end
+  def start_stage(stage, budget: nil) = new_stage(:start_stage, stage, budget)
+  def schedule_stage(stage, budget: nil) = new_stage(:schedule_stage, stage, budget)
+  def stage_started(job_id) = @calls << [:stage_started, stages[job_id - 1]]
 
   def end_stage(job_id, status) = @calls << [:end_stage, job_id, status]
   def keep_evidence(job_id, document) = @calls << [:keep_evidence, job_id, document]
@@ -82,6 +80,17 @@ class FakeRecorder
   def db = nil
   def db_path = nil
   def pipeline_run_id = nil
+
+  private
+
+  # Each stage started or scheduled, in the order of their job ids.
+  def stages = @calls.select { |call| %i[start_stage schedule_stage].include?(call.first) }.map(&:last)
+
+  def new_stage(call, stage, budget)
+    @calls << [call, stage]
+    @budgets[stage] = budget
+    @next_job_id += 1
+  end
 end
 
 module FunCiTestProject

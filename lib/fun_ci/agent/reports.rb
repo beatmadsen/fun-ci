@@ -26,6 +26,9 @@ module FunCi
         run && of(run, need)
       end
 
+      # The id of the commit's newest run, or nil.
+      def latest_id(sha) = @runs.latest_of_commit(sha)&.fetch(:id)
+
       # Checks the commit against where the trunk is now, and keeps the check.
       def recheck_trunk(sha) = @details.recheck_trunk(sha)
 

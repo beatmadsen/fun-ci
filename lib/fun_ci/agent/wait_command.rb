@@ -7,7 +7,7 @@ require_relative "waiting"
 module FunCi
   module Agent
     # `fun-ci wait [REV] [--need LEVEL] [--within DURATION] [--follow-branch] [--json]`
-    # (acceptance-tests.md, AT-9.9 to AT-9.12).
+    # (acceptance-tests.md, AT-9.9 to AT-9.12, AT-9.21).
     class WaitCommand
       include CommandSupport
 
@@ -16,7 +16,10 @@ module FunCi
       # post-commit hook's run for a commit just made turns up well within it.
       GRACE_SECONDS = 5
       # The answer when no run turned up and the project can't start one.
-      NOT_SET_UP = Data.define(:verdict).new(verdict: :unknown)
+      NOT_SET_UP = Data.define(:verdict, :superseded_by).new(verdict: :unknown, superseded_by: nil)
+      # A superseded commit started again: the report on its superseded run,
+      # that run's id, and when it was started again.
+      Again = Data.define(:report, :run_id, :since)
 
       def initialize(context)
         @context = context
@@ -35,13 +38,30 @@ module FunCi
 
       def deadline(options) = options.within && (@context.clock.now + options.within)
 
-      # Follows a superseded run on to the commit that superseded it, when asked to.
       def wait_for(sha, options, deadline, output)
         report = Waiting.new(@context.clock, deadline: deadline) { poll(sha, options) }.until_decided
-        return report unless options.follow_branch && report&.superseded_by
+        onward = onward(sha, report, options, output)
+        onward ? wait_for(onward, options, deadline, output) : report
+      end
 
-        output.following(sha, report)
-        wait_for(report.superseded_by, options, deadline, output)
+      # The commit to wait on next, once a newer one superseded the run: that
+      # one when following the branch; otherwise this one, run again once; nil for none.
+      def onward(sha, report, options, output)
+        return unless report&.superseded_by
+
+        if options.follow_branch
+          output.following(sha, report)
+          return report.superseded_by
+        end
+        sha if report.verdict == :superseded && run_again(sha, report, output)
+      end
+
+      def run_again(sha, report, output)
+        return false if @again
+
+        @again = Again.new(report: report, run_id: reports.latest_id(sha), since: @context.clock.now)
+        output.running_again(sha, report)
+        @context.pipeline.start(sha, report.branch)
       end
 
       def answer(sha, report, output)
@@ -56,7 +76,16 @@ module FunCi
       def poll(sha, options)
         @context.pipeline.watch(@context.db)
         reports.mark_waited(sha, @context.clock.now) unless options.follow_branch
+        return run_again_report(sha, options) if @again
+
         report_for(sha, options) || start_after_grace(sha)
+      end
+
+      # The commit's new run once it turns up; the superseded run's report once it hasn't in time.
+      def run_again_report(sha, options)
+        return report_for(sha, options) if reports.latest_id(sha) != @again.run_id
+
+        @again.report if @context.clock.now - @again.since >= GRACE_SECONDS
       end
 
       # Nil while waiting for a run; NOT_SET_UP once one can't be started.

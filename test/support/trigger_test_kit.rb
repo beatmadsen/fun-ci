@@ -5,6 +5,7 @@ require "tmpdir"
 require "timeout"
 require "fun_ci/pipeline/trigger"
 require_relative "fake_trunk"
+require_relative "fake_slow_turns"
 
 # Builds a Trigger the way tests need one: every commit is valid, the slow
 # suite is not launched, and output goes to StringIOs, unless a test says
@@ -51,7 +52,7 @@ module TriggerTestKit
 
   def build_trigger(dir, sha: "abc1234", io: quiet_io, **seams)
     defaults = { commit_resolver: ->(sha) { sha }, background_launcher: noop_launcher,
-                 workspace: FunCi::Pipeline::InPlace.new(dir), trunk: FakeTrunk::NONE }
+                 workspace: FunCi::Pipeline::InPlace.new(dir), trunk: FakeTrunk::NONE, slow_turns: FakeSlowTurns.new }
     FunCi::Pipeline::Trigger.new(project: dir, commit: FunCi::Pipeline::Commit.new(sha: sha, branch: "main"),
                                  io: io, seams: FunCi::Pipeline::Seams.new(**defaults, **seams))
   end

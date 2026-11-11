@@ -81,8 +81,13 @@ finished goes through at once.
 Each run happens in a git worktree of its own, checked out at the commit it
 tests, so the developer keeps editing while it runs. A newer commit on the same
 branch cancels the older run if it hasn't finished, unless an agent is waiting
-on it without following the branch: the latest commit wins. A run is never cancelled by another run of its
-own commit.
+on it without following the branch, or its slow suite has started: the latest
+commit wins, but a slow suite that started finishes, and the newer one waits
+for it, so a branch that takes commits faster than its slow suite runs still
+gets slow verdicts. A run is never cancelled by another run of its own
+commit, nor by a run of an older commit run again. An agent waiting on a run
+that was cancelled anyway, without following the branch, has the commit run
+again, since it asked about that commit.
 
 ## Stages side by side
 

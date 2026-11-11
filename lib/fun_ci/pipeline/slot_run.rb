@@ -71,22 +71,27 @@ module FunCi
       end
 
       def launch_slow_suite(config)
-        job_id = recorder.start_stage("slow", budget: @seams.budgets["slow"])
+        job_id = recorder.schedule_stage("slow", budget: @seams.budgets["slow"])
         launch(db_path: recorder.db_path, pipeline_run_id: recorder.pipeline_run_id, job_id: job_id,
                executor: slow_suite(config, @slot.share))
       end
 
       # Called with the recorder and job to record the slow suite with, in
-      # whichever process runs it; the slot is let go once it is recorded.
+      # whichever process runs it, once no older slow suite of the branch runs
+      # (acceptance-tests.md, AT-9.19); the slot is let go once it is recorded.
       def slow_suite(config, slot)
         execution = StageExecution.new(seams: @seams, dir: slot.path, commit: @commit,
                                        launching: { priority: @seams.priorities.slow })
         command = config.stage_command("slow", @commit.sha)
-        ->(recorder, job_id) { holding(slot) { execution.run("slow", command, recorder, job_id) } }
+        ->(recorder, job_id) { in_turn(slot, recorder, job_id) { execution.run("slow", command, recorder, job_id) } }
       end
 
-      def holding(slot)
-        yield
+      # Holding the slot until the slow suite is recorded, whether or not its turn came.
+      def in_turn(slot, recorder, job_id)
+        @seams.slow_turns.take(@commit.branch) do
+          recorder.stage_started(job_id)
+          yield
+        end
       ensure
         slot.release
       end

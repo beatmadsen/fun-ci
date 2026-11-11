@@ -11,7 +11,7 @@ class TestAgentWhyAlongside < Minitest::Test
 
   def setup
     @pipeline = TriggerCliClient.open(command_runner: script_simulating_runner(failures: { "fast.sh" => {} }),
-                                      background_launcher: ->(**) {})
+                                      background_launcher: slow_suite_still_running)
     @agent = AgentClient.new(@pipeline.workspace)
     @agent.git.commit(SHA, "Add retry to fetch")
     @pipeline.trigger(commit_hash: SHA, branch: "main")
@@ -23,5 +23,12 @@ class TestAgentWhyAlongside < Minitest::Test
     @agent.why("HEAD", "fast")
 
     assert_includes @agent.stdout, "Facts:\n  alongside: slow\n"
+  end
+
+  private
+
+  # Its turn came, and it has not finished.
+  def slow_suite_still_running
+    ->(job_id:, **) { FunCi::Persistence::StageJob.update_status(@pipeline.workspace.db, job_id, "running") }
   end
 end

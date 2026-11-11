@@ -81,6 +81,16 @@ class TestTrunkChecks < Minitest::Test
     assert_empty @checks.branch_heads(except: "zzz")
   end
 
+  # A commit run again keeps its place (acceptance-tests.md, AT-9.20).
+  def test_should_leave_out_an_older_commit_run_again
+    record_run("bbb", "feat/x")
+    @checks.record(trunk_check("bbb", CONFLICTS, seen_at: SEEN, sha: "fff"), checked_at: SEEN)
+    record_run("ccc", "feat/x")
+    record_run("bbb", "feat/x")
+
+    assert_empty @checks.branch_heads(except: "zzz")
+  end
+
   def test_should_leave_out_the_commit_the_run_checks_itself
     record_run("bbb", "feat/x")
     @checks.record(trunk_check("bbb", CONFLICTS, seen_at: SEEN, sha: "fff"), checked_at: SEEN)

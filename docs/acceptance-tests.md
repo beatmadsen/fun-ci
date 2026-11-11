@@ -554,9 +554,10 @@ deadline, `wait` says so and exits 3.
 **Given** an unfinished run
 **When** a pipeline starts for a newer commit on the same branch
 **Then** the run is cancelled unless an agent is waiting on it without
-`--follow-branch`, and a run for the same commit is never cancelled
-**And** `wait` on a cancelled run returns 4 and names the newer commit, and
-`wait --follow-branch` moves on to the newest run on the branch and says so.
+`--follow-branch`, or its slow suite is running (AT-9.19), and a run for the
+same commit is never cancelled
+**And** `wait --follow-branch` on a cancelled run moves on to the newest run
+on the branch and says so; a plain `wait` runs the commit again (AT-9.21).
 *Note:* a waiter marks the run each time it polls; a run marked in the last
 10 seconds counts as waited on. One that follows the branch marks nothing:
 it asked to move on, and an agent told to wait after every commit would
@@ -612,6 +613,50 @@ doesn't know exits 64, naming the stacks, and writes nothing.
 placeholder scripts that pass, and `fun-ci check` warns of each one still in
 place.
 **And** an option or argument it doesn't take exits 64 and writes nothing.
+
+### 9.19 A running slow suite finishes, and a newer one waits its turn
+**Given** a run whose slow suite is running
+**When** a pipeline starts for a newer commit on the same branch
+**Then** the older run is left to finish, and the newer run's lint, build and
+fast suite run as usual
+**And** the newer run's slow suite waits, `waiting` to `status` and pending
+in the console, until the branch's running slow suite has finished, and only
+then starts and counts its budget
+**And** a slow suite still waiting is cancelled by a newer commit as any run
+is, so when the running one finishes, the newest commit that arrived meanwhile
+runs its slow suite and those between are skipped
+**And** a waiting slow suite whose process died is recorded failed, as a
+running one is (AT-8.3).
+*Note:* cancelling every older run starved the slow suite on a branch that
+takes commits faster than the slow suite takes to run: in one project,
+seven in ten slow suites were cancelled, and `wait --follow-branch` waited
+until the commits stopped. Now a slow verdict comes within about two slow
+suites' time. The turn is an flock per branch (Pipeline::SlowTurns), so it
+ends with the process that held it.
+
+### 9.20 A commit run again keeps the place it arrived in
+**Given** a branch's commits, each arriving with its first run there
+**When** an older commit runs again (`wait` starts it, AT-9.21, or
+`fun-ci trigger` by hand)
+**Then** its run cancels no run of a commit that arrived after it
+**And** the branch's row in the console stays the newest run of the commit
+that arrived last, as do the branch heads a new trunk tip is checked against
+(AT-11).
+
+### 9.21 A plain `wait` runs a superseded commit again
+**Given** `fun-ci wait REV` without `--follow-branch`
+**When** REV's run is cancelled and a newer commit has a run on the branch
+**Then** the wait says so (`fun-ci: aaa1111 was superseded by bbb2222;
+running it again.`), starts REV's pipeline again as AT-9.11 starts one, and
+waits on that run
+**And** it does so once: if the run again is cancelled too, or doesn't turn up
+within 5 seconds, or the project can't start one, it exits 4 and names the
+newer commit
+**And** a run cancelled with no newer commit on the branch, as `c` in the
+console or `cancel` does it, is not run again.
+*Note:* the agent asked about that commit and no other. A wait protects its
+run only once it has polled it, so a commit landing between the commit and
+the wait's first poll superseded the run, and the agent got 4 and no verdict.
 
 ## 10. Reading why a stage failed
 

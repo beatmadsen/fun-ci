@@ -83,6 +83,13 @@ module FunCi
         @stdout.puts "fun-ci: #{sha[0, 7]} was superseded; following #{report.branch} to #{report.superseded_by[0, 7]}."
       end
 
+      # Says the wait starts the commit `sha` again, which a newer one superseded; JSON has only the answer.
+      def running_again(sha, report)
+        return if @json
+
+        @stdout.puts "fun-ci: #{sha[0, 7]} was superseded by #{report.superseded_by[0, 7]}; running it again."
+      end
+
       # entries: [[report, age in words], ...], newest first.
       def runs(entries)
         return print_json(entries.map { |report, _| StatusJson.document(report) }) if @json

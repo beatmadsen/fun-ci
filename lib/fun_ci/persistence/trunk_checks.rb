@@ -3,6 +3,7 @@
 require "json"
 require "time"
 require_relative "../trunk/check"
+require_relative "pipeline_run"
 
 module FunCi
   module Persistence
@@ -39,11 +40,11 @@ module FunCi
                                   merge: merge(found[1 + TIP.size, MERGE.size]), checked_at: Time.parse(found.last))
       end
 
-      # { commit => trunk SHA } for each branch's newest run, other than `except`,
-      # whose commit has been checked against a trunk tip.
+      # { commit => trunk SHA } for each branch's head (PipelineRun::HEADS), other
+      # than `except`, whose commit has been checked against a trunk tip.
       def branch_heads(except:)
-        heads = @db.execute("SELECT commit_hash FROM pipeline_runs WHERE id IN (SELECT MAX(id) FROM pipeline_runs " \
-                            "WHERE project_path = ? GROUP BY branch) AND commit_hash != ?", [@project, except]).flatten
+        heads = @db.execute("SELECT commit_hash FROM pipeline_runs WHERE id IN (#{PipelineRun::HEADS}) " \
+                            "AND project_path = ? AND commit_hash != ?", [@project, except]).flatten
         heads.to_h { |sha| [sha, latest(sha)&.tip&.sha] }.compact
       end
 

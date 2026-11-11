@@ -4,6 +4,7 @@ require "time"
 require_relative "pipeline_run"
 require_relative "stage_job"
 require_relative "died"
+require_relative "arrival"
 
 module FunCi
   module Persistence
@@ -20,23 +21,31 @@ module FunCi
     module ActiveRuns
       ACTIVE = "status IN ('scheduled', 'running')"
 
-      # The runs on the branch a new commit's run may cancel: not the new
-      # commit's own, nor one an agent has waited on since `waited_before`
-      # (an ISO 8601 UTC time; acceptance-tests.md, AT-9.12).
+      # The runs on the branch a new commit's run may cancel: those of commits
+      # that arrived before it (acceptance-tests.md, AT-9.20), except one an
+      # agent has waited on since `waited_before` (an ISO 8601 UTC time;
+      # AT-9.12) and one whose slow suite is running (AT-9.19).
       def self.cancellable(db, branch, new_commit:, waited_before:)
-        where(db, "project_path = ? AND branch = ? AND commit_hash != ? AND (waited_at IS NULL OR waited_at < ?)",
-              branch.project, branch.name, new_commit, waited_before)
+        where(db, "project_path = ? AND branch = ? AND #{ARRIVED_BEFORE} AND (waited_at IS NULL OR waited_at < ?) " \
+                  "AND NOT EXISTS (#{SLOW_RUNNING})",
+              branch.project, branch.name, branch.project, branch.name, new_commit, waited_before)
       end
+
+      # A commit arrives on its branch with its first run; a commit with none yet arrives last.
+      ARRIVED_BEFORE = "#{Arrival::FIRST_RUN} < COALESCE((SELECT MIN(id) FROM pipeline_runs " \
+                       "WHERE project_path = ? AND branch = ? AND commit_hash = ?), #{Arrival::NOT_YET})".freeze
+      SLOW_RUNNING = "SELECT 1 FROM stage_jobs WHERE pipeline_run_id = pipeline_runs.id " \
+                     "AND stage = 'slow' AND status = 'running'"
 
       # The run with this id, when it has not finished; none otherwise.
       def self.with_id(db, id) = where(db, "id = ?", id)
 
-      # [job id, run id, pid] for each slow stage still running, pid being the
-      # forked process that runs it.
+      # [job id, run id, pid] for each slow stage still running or waiting its
+      # turn (AT-9.19), pid being the forked process that runs it.
       def self.slow_suites(db)
         db.execute("SELECT stage_jobs.id, pipeline_runs.id, pipeline_runs.pid FROM stage_jobs " \
                    "JOIN pipeline_runs ON pipeline_runs.id = stage_jobs.pipeline_run_id " \
-                   "WHERE stage_jobs.stage = 'slow' AND stage_jobs.status = 'running' " \
+                   "WHERE stage_jobs.stage = 'slow' AND stage_jobs.#{ACTIVE} " \
                    "AND pipeline_runs.pid IS NOT NULL")
       end
 
@@ -45,7 +54,7 @@ module FunCi
       # recorded meanwhile.
       def self.slow_suite_died(db, job_id)
         db.execute("UPDATE stage_jobs SET status = 'failed', completed_at = ?, " \
-                   "finished_order = #{StageJob::NEXT_IN_RUN}, evidence = ? WHERE id = ? AND status = 'running'",
+                   "finished_order = #{StageJob::NEXT_IN_RUN}, evidence = ? WHERE id = ? AND #{ACTIVE}",
                    [Time.now.utc.iso8601(3), Died.evidence("stage"), job_id])
       end
 

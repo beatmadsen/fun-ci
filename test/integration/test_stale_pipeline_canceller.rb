@@ -4,6 +4,7 @@ require_relative "../test_helper"
 require "stringio"
 require "fun_ci/pipeline/stale_pipeline_canceller"
 require "fun_ci/persistence/database"
+require "fun_ci/persistence/stage_job"
 
 # A new commit on a branch cancels the runs still going for older ones. How
 # a run's processes are stopped is RunCanceller's.
@@ -11,6 +12,7 @@ class TestStalePipelineCanceller < Minitest::Test
   include DatabaseTestSetup
 
   RUN = FunCi::Persistence::PipelineRun
+  STAGE = FunCi::Persistence::StageJob
 
   def setup
     setup_test_db
@@ -72,6 +74,31 @@ class TestStalePipelineCanceller < Minitest::Test
 
   def test_should_leave_alone_a_run_of_the_new_commit
     active_run("def5678")
+    cancel
+
+    assert_empty @signals
+  end
+
+  # Its slow suite finishes, and the newer commit's waits its turn (acceptance-tests.md, AT-9.19).
+  def test_should_leave_alone_a_run_whose_slow_suite_is_running
+    run_id = active_run("abc1234")
+    STAGE.update_status(@db, STAGE.create(@db, pipeline_run_id: run_id, stage: "slow"), "running")
+    cancel
+
+    assert_empty @signals
+  end
+
+  def test_should_stop_a_run_whose_slow_suite_waits_its_turn
+    STAGE.create(@db, pipeline_run_id: active_run("abc1234"), stage: "slow")
+    cancel
+
+    assert_equal [["KILL", 100]], @signals
+  end
+
+  # The new commit is one run again: a commit that arrived after it is not older (AT-9.20).
+  def test_should_leave_alone_a_run_of_a_commit_that_arrived_after_the_one_run_again
+    RUN.update_status(@db, active_run("def5678"), "cancelled")
+    active_run("abc1234")
     cancel
 
     assert_empty @signals

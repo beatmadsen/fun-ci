@@ -8,6 +8,8 @@ module FunCi
     class NullRecorder
       def create_run(**); end
       def start_stage(_stage, **); end
+      def schedule_stage(_stage, **); end
+      def stage_started(_job_id); end
       def end_stage(_job_id, _status); end
       def keep_exit(_job_id, _exit_status, _signal); end
       def keep_evidence(_job_id, _document); end

@@ -5,6 +5,8 @@ require_relative "../persistence/pipeline_recorder"
 require_relative "trigger_params"
 require_relative "trigger_command"
 require_relative "slot_run"
+require_relative "slow_turns"
+require_relative "worktrees"
 require_relative "stale_pipeline_canceller"
 require_relative "workspaces"
 require_relative "trunk_run"
@@ -96,8 +98,14 @@ module FunCi
 
       # After forking the slow suite the run holds a recorder of its own.
       def run_in(slot)
-        slot_run = SlotRun.new(commit: @commit, io: @io, seams: @seams, slot: slot)
+        slot_run = SlotRun.new(commit: @commit, io: @io, seams: with_slow_turns, slot: slot)
         slot_run.run(config_for(slot)).tap { @seams = slot_run.seams }
+      end
+
+      def with_slow_turns
+        return @seams if @seams.slow_turns
+
+        @seams.with(slow_turns: SlowTurns.new(Worktrees.new(@project).slow_turns_root))
       end
 
       def cancel_stale_pipelines

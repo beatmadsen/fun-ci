@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "time"
+require_relative "arrival"
 
 module FunCi
   module Persistence
@@ -69,7 +70,10 @@ module FunCi
                 "WHEN 'scheduled' THEN 3 WHEN 'completed' THEN 4 ELSE 5 END"
 
       # Each branch's newest run.
-      HEADS = "SELECT MAX(id) FROM pipeline_runs GROUP BY project_path, branch"
+      # Each branch's head: the newest run of the commit that arrived on it last (Arrival).
+      HEADS = "SELECT MAX(id) FROM pipeline_runs WHERE #{Arrival::FIRST_RUN} IN " \
+              "(SELECT MAX(#{Arrival::FIRST_RUN}) FROM pipeline_runs GROUP BY project_path, branch) " \
+              "GROUP BY project_path, branch".freeze
 
       # The newest run of each of `limit` branches, of the `among` whose newest
       # run changed most recently: those that most need you, then those run
@@ -79,9 +83,11 @@ module FunCi
                   "ORDER BY updated_at DESC, id DESC LIMIT ?) ORDER BY #{NEEDING}, id DESC LIMIT ?", among, limit)
       end
 
-      # A project's branch's runs, newest first.
-      def self.of_branch(db, project_path, branch, limit:)
-        query(db, "WHERE project_path IS ? AND branch = ? ORDER BY id DESC LIMIT ?", project_path, branch, limit)
+      # The runs of `head`'s branch up to it, newest first: not a run of an
+      # older commit run again since.
+      def self.leading_to(db, head, limit:)
+        query(db, "WHERE project_path IS ? AND branch = ? AND id <= ? ORDER BY id DESC LIMIT ?",
+              head[:project_path], head[:branch], head[:id], limit)
       end
 
       def self.query(db, clause, *params)

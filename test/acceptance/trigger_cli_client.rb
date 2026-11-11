@@ -90,8 +90,9 @@ class TriggerCliClient
   # A temp dir is no git repository, so commits are valid unless a test says otherwise.
   def run_trigger(project_dir, commit, commit_resolver = nil)
     io = FunCi::Pipeline::Io.new(stdout: StringIO.new, stderr: StringIO.new)
-    seams = FunCi::Pipeline::Seams.new(**@seams, workspace: FunCi::Pipeline::InPlace.new(project_dir),
-                                                 commit_resolver: commit_resolver || ->(sha) { sha })
+    given = { slow_turns: FakeSlowTurns.new, **@seams, workspace: FunCi::Pipeline::InPlace.new(project_dir),
+              commit_resolver: commit_resolver || ->(sha) { sha } }
+    seams = FunCi::Pipeline::Seams.new(**given)
     capture(FunCi::Pipeline::Trigger.new(project: project_dir, commit: commit, io: io, seams: seams).run, io)
   end
 

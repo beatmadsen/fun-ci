@@ -10,6 +10,11 @@ class TestSeams < Minitest::Test
     assert_nil FunCi::Pipeline::Seams.new.trunk
   end
 
+  # nil is the project's own SlowTurns, which Trigger finds (test_trigger_fork_integration.rb).
+  def test_should_leave_the_slow_suite_s_turns_to_the_project_s_own_when_none_are_given
+    assert_nil FunCi::Pipeline::Seams.new.slow_turns
+  end
+
   def test_should_start_jobs_and_the_slow_suite_as_this_platform_s_priorities_say
     assert_equal FunCi::Pipeline::Priorities.for(RUBY_PLATFORM), FunCi::Pipeline::Seams.new.priorities
   end

@@ -5,7 +5,8 @@ require_relative "agent_client"
 require "json"
 
 # A run is only superseded by a newer commit nobody is waiting past, unless
-# they follow the branch to it (acceptance-tests.md, AT-9.12).
+# they follow the branch to it (acceptance-tests.md, AT-9.12). A wait that
+# doesn't follow it runs the commit again: test_agent_wait_runs_again.rb.
 class TestAgentWaitSuperseded < Minitest::Test
   OLD = "aaa1111aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
   NEW = "bbb2222bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
@@ -49,12 +50,6 @@ class TestAgentWaitSuperseded < Minitest::Test
     assert_equal "running", FunCi::Persistence::PipelineRun.find(@agent.db, @old_run)[:status]
   end
 
-  def test_should_exit_superseded_naming_the_newer_commit
-    @pipeline.trigger(commit_hash: NEW, branch: "main")
-
-    assert_equal [4, "Superseded by bbb2222."], [@agent.wait(OLD), @agent.stdout.lines.last.chomp]
-  end
-
   def test_should_follow_the_branch_to_the_newer_commit_s_run
     @pipeline.trigger(commit_hash: NEW, branch: "main")
 
@@ -66,6 +61,13 @@ class TestAgentWaitSuperseded < Minitest::Test
     @agent.wait(OLD, "--follow-branch", "--json")
 
     assert_equal NEW, JSON.parse(@agent.stdout).dig("commit", "sha")
+  end
+
+  def test_should_not_run_the_commit_again_when_following_the_branch
+    @pipeline.trigger(commit_hash: NEW, branch: "main")
+    @agent.wait(OLD, "--follow-branch")
+
+    assert_empty @agent.pipeline.started
   end
 
   def test_should_say_it_followed_the_branch

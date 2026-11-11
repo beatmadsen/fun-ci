@@ -112,7 +112,7 @@ class TestTriggerForkIntegration < Minitest::Test
     lock, trunk = given.values_at(:lock, :trunk)
     workspace = lock ? LockedWorkspace.new(dir, lock) : FunCi::Pipeline::InPlace.new(dir)
     seams = FunCi::Pipeline::Seams.new(command_runner: runner, recorder: recorder, commit_resolver: ->(sha) { sha },
-                                       workspace: workspace, trunk: trunk)
+                                       workspace: workspace, trunk: trunk, slow_turns: FakeSlowTurns.new)
     FunCi::Pipeline::Trigger.new(project: dir, commit: FunCi::Pipeline::Commit.new(sha: "abc1234", branch: "main"),
                                  io: quiet_io, seams: seams)
   end

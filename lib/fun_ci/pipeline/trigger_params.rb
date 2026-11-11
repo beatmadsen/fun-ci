@@ -34,9 +34,12 @@ module FunCi
     # `process_table` answers what ps lists, for a stage over budget; `trunk`
     # checks a commit against the trunk (#check(sha) answers a Trunk::Check,
     # or nil for no check), nil for the project's own; `priorities` what jobs
-    # and the slow suite start under.
+    # and the slow suite start under; `slow_turns` what a slow suite waits on
+    # while an older one of its branch runs (#take(branch) yields once it is
+    # its turn), nil for the project's own SlowTurns.
     Seams = Data.define(:command_runner, :time_budgets, :commit_resolver, :recorder, :background_launcher, :workspace,
-                        :stage_dir, :environment, :clock, :extractor_runner, :process_table, :trunk, :priorities)
+                        :stage_dir, :environment, :clock, :extractor_runner, :process_table, :trunk, :priorities,
+                        :slow_turns)
 
     # Reopened rather than given as a block to Data.define, so tools that read
     # the source (mutineer) see these as Seams' methods.
@@ -52,7 +55,8 @@ module FunCi
           workspace: nil, commit_resolver: method(:full_sha), stage_dir: StageDir.method(:create),
           environment: ENV.to_h, clock: MONOTONIC,
           extractor_runner: Evidence::CommandRunner.method(:new),
-          process_table: Evidence::ProcessTable.method(:now), trunk: nil, priorities: Priorities.for(RUBY_PLATFORM) }
+          process_table: Evidence::ProcessTable.method(:now), trunk: nil, priorities: Priorities.for(RUBY_PLATFORM),
+          slow_turns: nil }
       end
 
       # The full SHA of the commit `rev` names, or nil when the repository has none.

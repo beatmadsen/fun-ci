@@ -4,6 +4,7 @@ require_relative "../../test_helper"
 require_relative "../../support/process_deadline"
 require_relative "../../support/body_script"
 require_relative "../../support/niceness"
+require "fun_ci/pipeline/slow_turns"
 require "stringio"
 require "tmpdir"
 require "fun_ci/pipeline/slot_run"
@@ -88,7 +89,8 @@ class TestSlotRunProcesses < Minitest::Test
   def slot_run(slow_priority)
     launcher = ->(job_id:, executor:, **) { executor.call(FakeRecorder.new, job_id) }
     seams = FunCi::Pipeline::Seams.new(recorder: FakeRecorder.new, background_launcher: launcher,
-                                       priorities: FunCi::Pipeline::Priorities.new(job: "", slow: slow_priority))
+                                       priorities: FunCi::Pipeline::Priorities.new(job: "", slow: slow_priority),
+                                       slow_turns: FunCi::Pipeline::SlowTurns.new(File.join(@record, "turns")))
     FunCi::Pipeline::SlotRun.new(commit: FunCi::Pipeline::Commit.new(sha: SHA, branch: "main"),
                                  io: FunCi::Pipeline::Io.new(stdout: @stdout, stderr: @stdout), seams: seams,
                                  slot: FunCi::Pipeline::Slot.new(@slot, Lock.new(false)))

@@ -25,6 +25,9 @@ module FunCi
       # Where each daily and weekly job has a worktree of its own (Jobs::Locks).
       def jobs_root = File.join(fun_ci_dir, "jobs")
 
+      # Where each branch's slow suites take turns (SlowTurns).
+      def slow_turns_root = File.join(fun_ci_dir, "slow")
+
       # Where fun-ci before 2.4 kept the worktrees: under the git directory.
       def legacy_dir = File.join(common_dir, "fun-ci")
 
