@@ -31,10 +31,12 @@ module FunCi
       # Marks the slot as held only by a slow suite waiting its turn, until
       # the mark is closed (WaitingSlots). A slot with nothing to lock has
       # nothing to mark.
-      def waiting = lock_file ? WaitingSlots.mark(path) : Unmarked.new(true)
+      def waiting = lock_file ? WaitingSlots.mark(path) : Unmarked.new
 
-      # The mark of a slot with nothing to lock.
-      Unmarked = Struct.new(:closed?) { def close = nil }
+      # The mark of a slot with nothing to lock: closing it does nothing.
+      class Unmarked
+        def close; end
+      end
 
       # Whether its worktree was just made, so has no caches yet.
       def cold? = false

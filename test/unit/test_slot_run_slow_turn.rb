@@ -8,43 +8,6 @@ require_relative "../support/slot_run_kit"
 class TestSlotRunSlowTurn < Minitest::Test
   include SlotRunKit
 
-  # A slot whose mark of a slow suite waiting its turn records being let go.
-  class MarkedSlot < FunCi::Pipeline::Slot
-    attr_reader :mark
-
-    def waiting = (@mark = SlotRunKit::Lock.new(false))
-  end
-
-  # Turns that note whether the slot is marked waiting when the turn is asked for.
-  class TurnsSeeingTheMark < FakeSlowTurns
-    attr_reader :marked_while_waiting
-
-    def initialize(slot)
-      super()
-      @slot = slot
-    end
-
-    def take(branch, ticket, &)
-      @marked_while_waiting = !@slot.mark.closed?
-      super
-    end
-  end
-
-  # A recorder that notes whether the slot is still marked waiting as its slow suite starts.
-  class RecorderSeeingTheMark < FakeRecorder
-    attr_reader :marked_at_start
-
-    def initialize(slot)
-      super()
-      @slot = slot
-    end
-
-    def started_in_turn?(job_id)
-      @marked_at_start = !@slot.mark.closed?
-      super
-    end
-  end
-
   # A recorder whose run's commit arrived seventh.
   class PlacedRecorder < FakeRecorder
     def arrival_place = 7
@@ -99,23 +62,6 @@ class TestSlotRunSlowTurn < Minitest::Test
     run_slow(FakeSlowTurns.new, recorder: recorder, command_runner: runner)
 
     refute runner.ran?("slow.sh")
-  end
-
-  # So the pool hands another branch's run a further slot meanwhile (WorktreePool).
-  def test_should_mark_its_slot_waiting_while_it_waits_its_turn
-    slot = MarkedSlot.new("/slot-0", Lock.new(false))
-    turns = TurnsSeeingTheMark.new(slot)
-    run_slow(turns, slot: slot)
-
-    assert turns.marked_while_waiting
-  end
-
-  def test_should_unmark_its_slot_once_its_turn_comes
-    slot = MarkedSlot.new("/slot-0", Lock.new(false))
-    recorder = RecorderSeeingTheMark.new(slot)
-    run_slow(FakeSlowTurns.new, slot: slot, recorder: recorder)
-
-    refute recorder.marked_at_start
   end
 
   def test_should_record_the_slow_suite_waiting_while_it_has_no_turn

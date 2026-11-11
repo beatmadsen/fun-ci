@@ -32,7 +32,7 @@ class TestSlowTurnOrder < Minitest::Test
   # seems held after it is no live suite's.
   def test_should_wait_for_each_newer_suite_once
     hold_ticket(TICKET.new(place: 5, id: 9))
-    turns(wait: ->(path) { @log << File.basename(path) }).take("main", TICKET.new(place: 3, id: 8)) { nil }
+    turns(wait: never_freeing).take("main", TICKET.new(place: 3, id: 8)) { nil }
 
     assert_equal [TICKET.new(place: 5, id: 9).name], @log
   end
@@ -93,6 +93,10 @@ class TestSlowTurnOrder < Minitest::Test
   def turns(wait: ->(_path) { flunk "waited with no newer suite" })
     FunCi::Pipeline::SlowTurns.new(@root, wait: wait)
   end
+
+  # A wait that leaves the ticket held, and fails the test when asked again,
+  # so a loop that waits on without end stops at once.
+  def never_freeing = ->(path) { @log.empty? ? @log << File.basename(path) : flunk("waited again on #{path}") }
 
   # A wait that ends as the newer suite finishes.
   def finishing(newer) = ->(_path) { finish(newer) }
