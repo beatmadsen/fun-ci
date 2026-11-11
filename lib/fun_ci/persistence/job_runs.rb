@@ -24,12 +24,14 @@ module FunCi
       # and answers its id, when the job is due at `now`; nil otherwise. The
       # job's latest run is read and the new one written in one transaction,
       # so of two claims at once only one starts it. A claim forgets the
-      # job's runs beyond its newest 10.
-      def claim(job, commit:, lock_file:, now:)
+      # job's runs beyond its newest 10. A block is given the id inside that
+      # transaction, so what it records of the run (that it waits its turn)
+      # is there the moment anyone else can read the run.
+      def claim(job, commit:, lock_file:, now:, &then_record)
         @db.transaction(:immediate) do
           next nil unless Jobs::Due.new(latest(job.name), job.period, now: now).now?
 
-          insert(job, commit, lock_file, now).tap { forget_beyond(job.name) }
+          insert(job, commit, lock_file, now).tap { |id| claimed(job.name, id, then_record) }
         end
       end
 
@@ -56,6 +58,11 @@ module FunCi
                     "lock_file) VALUES (?, ?, ?, ?, ?, 'running', ?, ?)",
                     [@project, job.name, job.cadence, commit[:sha], commit[:branch], stamp(now), lock_file])
         @db.last_insert_row_id
+      end
+
+      def claimed(name, id, then_record)
+        forget_beyond(name)
+        then_record&.call(id)
       end
 
       def update(id, status, at, was)

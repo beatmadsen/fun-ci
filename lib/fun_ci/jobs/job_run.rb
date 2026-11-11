@@ -44,22 +44,23 @@ module FunCi
 
       def claimed(slot, at)
         runs.died(@job.name)
-        id = runs.claim(@job, commit: @commit.to_h, lock_file: slot.lock_file, now: @site.clock.call)
-        id && (turn_came?(id, at) ? execute(slot, id) : id)
+        now = @site.clock.call
+        waits = at > now
+        id = runs.claim(@job, commit: @commit.to_h, lock_file: slot.lock_file, now: now) do |run|
+          scheduled(run, at) if waits
+        end
+        id && (!waits || turn_came?(id, at - now) ? execute(slot, id) : id)
       end
 
-      # Waits, scheduled, for the run's turn, the lock held; false when it was
+      # Waits `seconds` for the run's turn, the lock held; false when it was
       # cancelled meanwhile.
-      def turn_came?(id, at)
-        seconds = at - @site.clock.call
-        return true unless seconds.positive?
-
-        scheduled(id, at)
+      def turn_came?(id, seconds)
         @site.wait.call(seconds)
         runs.start_turn(id, @site.clock.call).positive?
       end
 
-      # This process is recorded, so a cancel stops it while it waits.
+      # Scheduled from the moment it is claimed, and this process recorded, so
+      # a cancel stops it while it waits.
       def scheduled(id, at)
         recorder.started_by(id, Process.pid, budget: budget)
         runs.wait_until(id, at)

@@ -69,9 +69,9 @@ module JobRunKit
   def latest = runs.latest("mutation")
   def status_of(id) = @db.execute("SELECT status FROM job_runs WHERE id = ?", [id]).first.first
 
-  # wait: what waits for a run's turn; by default, nothing.
-  def site(wait: ->(_seconds) {})
-    FunCi::Jobs::Site.new(project: project, db: @db, worktrees: @worktrees,
+  # wait: what waits for a run's turn; by default, nothing. db: the connection the run records through.
+  def site(wait: ->(_seconds) {}, db: @db)
+    FunCi::Jobs::Site.new(project: project, db: db, worktrees: @worktrees,
                           locks: FunCi::Jobs::Locks.new(locks_root), clock: -> { NOW }, wait: wait)
   end
 

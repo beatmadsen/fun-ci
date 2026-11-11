@@ -3,6 +3,7 @@
 require_relative "../test_helper"
 require_relative "../support/job_run_kit"
 require "fun_ci/persistence/active_jobs"
+require "delegate"
 
 # A job run given a later start (Jobs::Schedule, AT-13.28) holds the job's
 # lock and waits its turn, kept scheduled, then runs as any run does; one
@@ -11,6 +12,16 @@ class TestJobRunScheduled < Minitest::Test
   include JobRunKit
 
   LATER = NOW + 600
+
+  # The run's connection, telling `after_each` once each statement it executes is done.
+  class Watched < SimpleDelegator
+    def initialize(db, after_each)
+      super(db)
+      @after_each = after_each
+    end
+
+    def execute(...) = super.tap { @after_each.call }
+  end
 
   def test_should_wait_until_its_turn
     waits = []
@@ -31,6 +42,12 @@ class TestJobRunScheduled < Minitest::Test
     run_at(LATER, ->(_) { seen << latest[:status] })
 
     assert_equal ["scheduled"], seen
+  end
+
+  # The console and `fun-ci events` read between a run's statements: a run
+  # they saw running before it waited would have started, then be scheduled.
+  def test_should_never_be_running_to_another_connection_when_it_never_gets_its_turn
+    refute_includes statuses_seen_elsewhere, "running"
   end
 
   # So that a cancel finds the process that waits, and stops it.
@@ -57,9 +74,23 @@ class TestJobRunScheduled < Minitest::Test
 
   private
 
-  def run_at(at, wait, runner: ->(_cmd) { PASSED })
+  def run_at(at, wait, runner: ->(_cmd) { PASSED }, db: @db)
     seams = FunCi::Pipeline::Seams.new(command_runner: runner, stage_dir: -> { FakeStageDir.new }, environment: {})
-    FunCi::Jobs::JobRun.new(job, FunCi::Pipeline::Commit.new(sha: SHA, branch: "main"), site(wait: wait), seams)
-                       .start(at: at)
+    FunCi::Jobs::JobRun.new(job, FunCi::Pipeline::Commit.new(sha: SHA, branch: "main"), site(wait: wait, db: db),
+                            seams).start(at: at)
   end
+
+  # The status of a run cancelled while it waited, as a second connection
+  # reads it once each statement of the run is done.
+  def statuses_seen_elsewhere
+    elsewhere = FunCi::Persistence::Database.connection(File.join(@dir, "db.sqlite3"))
+    seen = []
+    cancel = ->(_) { FunCi::Persistence::ActiveJobs.cancelled(@db, latest[:id]) }
+    run_at(LATER, cancel, db: Watched.new(@db, -> { seen << status_through(elsewhere) }))
+    seen
+  ensure
+    elsewhere.close
+  end
+
+  def status_through(db) = FunCi::Persistence::JobRuns.new(db, project).latest("mutation")&.fetch(:status)
 end
