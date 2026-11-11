@@ -12,7 +12,7 @@ module FunCi
       TIP = %i[trunk_remote trunk_branch trunk_sha trunk_seen_at].freeze
       MERGE = %i[outcome ahead behind files reason].freeze
       COLUMNS = [:commit_hash, *TIP, *MERGE].freeze
-      SELECT = "SELECT #{COLUMNS.join(", ")} FROM trunk_checks".freeze
+      SELECT = "SELECT #{COLUMNS.join(", ")}, checked_at FROM trunk_checks".freeze
 
       def initialize(db, project)
         @db = db
@@ -36,7 +36,7 @@ module FunCi
         found = @db.execute("#{SELECT} WHERE project_path = ? AND commit_hash = ? " \
                             "ORDER BY COALESCE(trunk_seen_at, checked_at) DESC, id DESC LIMIT 1", [@project, sha]).first
         found && Trunk::Check.new(commit: found.first, tip: tip(found[1, TIP.size]),
-                                  merge: merge(found.last(MERGE.size)))
+                                  merge: merge(found[1 + TIP.size, MERGE.size]), checked_at: Time.parse(found.last))
       end
 
       # { commit => trunk SHA } for each branch's newest run, other than `except`,

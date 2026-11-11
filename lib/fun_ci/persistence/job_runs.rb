@@ -11,7 +11,7 @@ module FunCi
     # and weekly jobs), apart from its pipeline runs.
     class JobRuns
       COLUMNS = %i[id project_path job cadence commit_hash branch status started_at completed_at lock_file pid
-                   group_pid exit_status signal output_tail evidence budget].freeze
+                   group_pid exit_status signal output_tail evidence budget claimed_at].freeze
       SELECT = "SELECT #{COLUMNS.join(", ")} FROM job_runs".freeze
       KEPT = 10
 
@@ -55,8 +55,8 @@ module FunCi
 
       def insert(job, commit, lock_file, now)
         @db.execute("INSERT INTO job_runs (project_path, job, cadence, commit_hash, branch, status, started_at, " \
-                    "lock_file) VALUES (?, ?, ?, ?, ?, 'running', ?, ?)",
-                    [@project, job.name, job.cadence, commit[:sha], commit[:branch], stamp(now), lock_file])
+                    "claimed_at, lock_file) VALUES (?, ?, ?, ?, ?, 'running', ?, ?, ?)",
+                    [@project, job.name, job.cadence, commit[:sha], commit[:branch], stamp(now), stamp(now), lock_file])
         @db.last_insert_row_id
       end
 

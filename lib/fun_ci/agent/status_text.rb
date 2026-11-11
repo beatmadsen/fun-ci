@@ -20,7 +20,8 @@ module FunCi
       # about the verdict.
       def self.lines(report, trunk: false, jobs: CommitJobs::NONE)
         needed = Verdict::LEVELS.fetch(report.need)
-        [header(report), *report.stages.map { |stage| stage_line(stage, needed) }, *Digest.lines(report.stages, needed),
+        [header(report), *report.stages.map { |stage| stage_line(stage, report.need) },
+         *Digest.lines(report.stages, needed),
          *job_lines(jobs), *trunk(report, trunk), *footer(report)]
       end
 
@@ -48,9 +49,12 @@ module FunCi
 
       def self.header(report) = %(fun-ci: #{report.sha[0, 7]} "#{report.subject}" on #{report.branch})
 
-      def self.stage_line(stage, needed)
+      # need: the level the verdict is decided at. A stage past it says for
+      # which level it is not needed, since a wait may be at another.
+      def self.stage_line(stage, need)
         seconds = stage.seconds ? format("%6.1fs", stage.seconds) : " " * 7
-        note = (needed.include?(stage.name) ? "" : " (not needed)") + longer(stage)
+        beyond = Verdict::LEVELS.fetch(need).include?(stage.name) ? "" : " (not needed for --need #{need})"
+        note = beyond + longer(stage)
         "  #{stage.name.ljust(6)} #{WORDS.fetch(stage.state, stage.state).ljust(12)}#{seconds}#{note}".rstrip
       end
 

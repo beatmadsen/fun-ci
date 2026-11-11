@@ -87,6 +87,6 @@ class TestDbRecorderTrunk < Minitest::Test
     unknown = FunCi::Trunk::Check.new(commit: "abc1234", tip: nil, merge: FunCi::Trunk::Merge.unknown("no trunk"))
     FunCi::Persistence::DbRecorder.new(@db, pipeline_run_id: run_id).trunk_checked(unknown)
 
-    assert_equal unknown, FunCi::Persistence::TrunkChecks.new(@db, "/project").latest("abc1234")
+    assert_equal unknown, FunCi::Persistence::TrunkChecks.new(@db, "/project").latest("abc1234").with(checked_at: nil)
   end
 end

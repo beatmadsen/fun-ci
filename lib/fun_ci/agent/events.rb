@@ -6,11 +6,17 @@ module FunCi
     # (acceptance-tests.md, AT-9.16), oldest run first: a run started, each
     # stage that finished in the order it finished, a run that passed or
     # failed, a run a newer commit superseded, a check of its commit against
-    # the trunk recorded or made again. The first look is at nothing.
+    # the trunk recorded or made again. The first look is at nothing. Each
+    # event says when it happened (`at`), as the database kept it.
     module Events
-      # finished: [{ stage:, state:, seconds: }, ...] in the order they finished;
+      # When a run started, when its status last changed, and when the latest
+      # check of its commit against the trunk was made (nil without one):
+      # ISO 8601 times.
+      RunTimes = Data.define(:started, :changed, :checked)
+
+      # finished: [{ stage:, state:, seconds:, at: }, ...] in the order they finished;
       # trunk: the latest check of its commit, as status --json gives it, or nil.
-      RunState = Data.define(:id, :sha, :branch, :status, :finished, :superseded_by, :trunk)
+      RunState = Data.define(:id, :sha, :branch, :status, :finished, :superseded_by, :trunk, :times)
 
       class RunState
         def initialize(trunk: nil, **) = super
@@ -31,7 +37,7 @@ module FunCi
 
       def self.of(run, was)
         about = { commit: run.sha, branch: run.branch }
-        [*(was ? [] : [{ event: "run_started", **about }]),
+        [*(was ? [] : [{ event: "run_started", **about, at: run.times.started }]),
          *newly_finished(run, was).map { |stage| { event: "stage_finished", **about, **stage } },
          *checked(run, was, about), *ended(run, was, about)]
       end
@@ -46,14 +52,16 @@ module FunCi
         trunk = run.trunk
         return [] if trunk.nil? || trunk.values_at(:state, :sha) == was&.trunk&.values_at(:state, :sha)
 
-        [{ event: "trunk_checked", **about, trunk: trunk }]
+        [{ event: "trunk_checked", **about, trunk: trunk, at: run.times.checked }]
       end
 
       def self.ended(run, was, about)
         return [] if was&.status == run.status
-        return [{ event: "run_superseded", **about, by_commit: run.superseded_by }] if run.status == "cancelled"
 
-        OUTCOMES.key?(run.status) ? [{ event: "run_finished", **about, state: OUTCOMES.fetch(run.status) }] : []
+        at = run.times.changed
+        return [{ event: "run_superseded", **about, by_commit: run.superseded_by, at: at }] if run.status == "cancelled"
+
+        OUTCOMES.key?(run.status) ? [{ event: "run_finished", **about, state: OUTCOMES.fetch(run.status), at: at }] : []
       end
       private_class_method :of, :newly_finished, :checked, :ended
     end

@@ -28,7 +28,13 @@ class TestTrunkChecks < Minitest::Test
   def test_should_give_back_the_recorded_check_as_the_commit_s_latest
     @checks.record(trunk_check("abc1234", CONFLICTS, seen_at: SEEN), checked_at: SEEN)
 
-    assert_equal trunk_check("abc1234", CONFLICTS, seen_at: SEEN), @checks.latest("abc1234")
+    assert_equal trunk_check("abc1234", CONFLICTS, seen_at: SEEN).with(checked_at: SEEN), @checks.latest("abc1234")
+  end
+
+  def test_should_say_when_the_latest_check_was_recorded
+    @checks.record(trunk_check("abc1234", CONFLICTS, seen_at: SEEN), checked_at: SEEN + 30)
+
+    assert_equal SEEN + 30, @checks.latest("abc1234").checked_at
   end
 
   def test_should_take_the_check_against_the_trunk_seen_last_as_the_latest

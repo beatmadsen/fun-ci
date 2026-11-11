@@ -593,6 +593,9 @@ the next heading, is replaced with the current one, and init says so.
 and `stage`, `state`, `seconds` for a stage) for each run started, stage
 finished, run finished and run superseded: the project's last 10 runs' events,
 then, with `--follow`, each new one as it happens
+**And** each line says when it happened (`at`, ISO 8601 in UTC, to the
+second): when the run was recorded, the stage ended, or the run's status last
+changed.
 **And** `--only failures` prints only failed or over-budget stages and
 superseded runs.
 
@@ -935,6 +938,7 @@ runs; `wait --trunk` returns once it has finished.
 merged again on demand; `--json` the same, capped as a stage's evidence.
 
 ### 11.39 `events` prints `trunk_checked`, and `--only failures` leaves it out
+**And** its `at` is when the check was recorded.
 
 ### 11.40 `init` tells agents to run `wait --need all --trunk` before calling work done
 
@@ -1126,6 +1130,9 @@ project without jobs says where to put them.
 **Then** a job's run starting is `job_started` and ending `job_finished`,
 with its state and seconds; `--only failures` keeps the failed and over
 budget ones.
+**And** each says when (`at`): when the run started, when it ended (null for
+a run whose process died), and for `job_scheduled` (13.28) when a commit
+started the job, null for a run kept before fun-ci recorded that.
 
 ### 13.24 `status` names the jobs that ran on the commit
 **Then** after the stages, each job whose latest run tested the commit, its

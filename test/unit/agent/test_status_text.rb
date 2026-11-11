@@ -34,8 +34,13 @@ class TestStatusText < Minitest::Test
     assert_includes lines(build: stage("build", "over_budget", 30.0))[2], "OVER BUDGET"
   end
 
-  def test_should_mark_a_stage_the_level_does_not_need
-    assert_equal "  slow   running             (not needed)", lines[4]
+  # Naming the level: a wait may need a stage this status, at its own level, doesn't.
+  def test_should_say_which_level_does_not_need_a_stage
+    assert_equal "  slow   running             (not needed for --need fast)", lines[4]
+  end
+
+  def test_should_say_so_of_each_stage_past_the_level_asked_for
+    assert_equal "  fast   running             (not needed for --need build)", lines(need: "build")[3]
   end
 
   def test_should_name_the_commit_that_superseded_the_run
@@ -96,11 +101,11 @@ class TestStatusText < Minitest::Test
               exit: REPORT::Exit.new(exit_status: 0, signal: nil, budget: budget))
   end
 
-  # fields: the report's superseded_by, deciding and trunk, each nil unless given.
-  def lines(verdict: :undecided, build: stage("build", "passed", 11.2), **fields)
+  # need: the level asked for; fields: the report's superseded_by, deciding and trunk, each nil unless given.
+  def lines(verdict: :undecided, build: stage("build", "passed", 11.2), need: "fast", **fields)
     stages = [stage("lint", "passed", 3.8), build,
               stage("fast", "running"), stage("slow", "running")]
-    report = REPORT.new(sha: "3f9c2ab0c4d1", subject: "Add retry", branch: "main", need: "fast", stages: stages,
+    report = REPORT.new(sha: "3f9c2ab0c4d1", subject: "Add retry", branch: "main", need: need, stages: stages,
                         verdict: verdict, superseded_by: nil, **fields)
     FunCi::Agent::StatusText.lines(report)
   end

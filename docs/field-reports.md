@@ -30,18 +30,6 @@ An agent picking one up fixes it under the repo's usual discipline (failing test
 
 **Read in the code:** `StalePipelineCanceller` skips a run only when its `waited_at` is within `WAITED_ON_SECONDS` (10 s), and `WaitCommand#poll` sets `waited_at` on each poll. A newer commit that lands between the commit and the wait's first poll (the agent recording its intent, running a local lane) cancels the run. The wait then reports `superseded`, exit 4, and since it does not follow the branch, the commit the agent asked about never gets a verdict unless someone runs `fun-ci trigger` by hand.
 
-**Inferred, not tried:** the README's sentence reads as a guarantee ("unless an agent is waiting on it"), so an agent that waits a little late trusts a run that is already gone. Either say "once its wait has polled it", or have a wait without `--follow-branch` whose run was superseded start the commit's run again and keep waiting, since the agent asked for that commit and no other.
+**Inferred, not tried:** have a wait without `--follow-branch` whose run was superseded start the commit's run again and keep waiting, since the agent asked for that commit and no other. (The README's sentence read as a guarantee, "unless an agent is waiting on it"; it now says the wait has to be watching the run already, and that a late one exits 4.)
 
 **Reproduce:** commit A; commit B before running `fun-ci wait A --need all`; the wait exits 4.
-
-## `fun-ci status` says "(not needed)" for the slow stage a `--need all` wait is waiting on
-
-**Seen:** at 23:00:55 on 2026-10-21, `fun-ci status 66c2911` printed `slow   running             (not needed)` while `fun-ci wait 66c2911 --need all --follow-branch` was blocked on that same slow stage. The run's own `need` in `fun-ci runs --json` is `all`.
-
-**Inferred cause:** `status` with no `--need` judges against `fast`, and labels slow "not needed" for that level. Reading it while an agent waits on `--need all`, it says the opposite of what is happening. Consider naming the level in the label ("not needed for --need fast"), or defaulting `status` to the level the run was triggered with.
-
-## `fun-ci events` lines carry no time
-
-**Seen:** every line of `fun-ci events` (`run_started`, `stage_finished`, `run_superseded`, `run_finished`, `trunk_checked`) has no timestamp, so "how long did that run wait" or "how far apart were the completed runs" can't be answered from events. The entry above had to pair `fun-ci runs` with `git log` commit times instead, which gives commit times, not run times.
-
-**Reproduce:** `fun-ci events | head`.

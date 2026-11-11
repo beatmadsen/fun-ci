@@ -51,7 +51,7 @@ After each commit, the `post-commit` hook starts the pipeline in the background 
 
 `install-hooks` leaves a hook another tool wrote alone, and `fun-ci check` warns that no commit is tested until that hook calls fun-ci. Git LFS's own hooks are the exception: fun-ci writes its hooks in their place, and they run git-lfs's after fun-ci's, so LFS objects still reach the remote. After that, `git lfs install` says the hooks exist and exits 2, since it accepts no hook but its own; there is nothing for it to do. `git lfs update --force` would put git-lfs's back, leaving fun-ci out, until you run `fun-ci install-hooks` again.
 
-Each run happens in a git worktree of its own in fun-ci's state directory (`~/.local/state/fun-ci/projects/`, outside `.git/`, which tools such as Vite won't serve files from), checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. A worktree fun-ci has just made has none of them yet, and one nobody used for a day has them as they were then, so in such a run lint and build get the slow suite's five minutes rather than 30 seconds, and `fun-ci status` says so on their lines. A run's build outputs that git ignores stay too, and are only as right as the commit that made them, so a worktree that last tested another branch can hand a run outputs its commit wouldn't make. List those outputs in `.fun-ci/config`, such as `clean: [public/assets, dist]`, and fun-ci removes their ignored files when a worktree moves to a commit that doesn't descend from the one it last tested; that run's lint and build get the longer budget too. Two runs can go at once; set `worktree_slots: 3` in `.fun-ci/config` for more, and `fun-ci prune` removes the worktrees when you want the space back. A newer commit on a branch cancels the older run that is still going, unless an agent is waiting on it without `--follow-branch`.
+Each run happens in a git worktree of its own in fun-ci's state directory (`~/.local/state/fun-ci/projects/`, outside `.git/`, which tools such as Vite won't serve files from), checked out at the commit it tests, so you can keep editing while it runs. Ignored files such as `vendor/bundle` or `node_modules` stay in a worktree from one run to the next, which keeps builds quick. A worktree fun-ci has just made has none of them yet, and one nobody used for a day has them as they were then, so in such a run lint and build get the slow suite's five minutes rather than 30 seconds, and `fun-ci status` says so on their lines. A run's build outputs that git ignores stay too, and are only as right as the commit that made them, so a worktree that last tested another branch can hand a run outputs its commit wouldn't make. List those outputs in `.fun-ci/config`, such as `clean: [public/assets, dist]`, and fun-ci removes their ignored files when a worktree moves to a commit that doesn't descend from the one it last tested; that run's lint and build get the longer budget too. Two runs can go at once; set `worktree_slots: 3` in `.fun-ci/config` for more, and `fun-ci prune` removes the worktrees when you want the space back. A newer commit on a branch cancels the older run that is still going, unless a `fun-ci wait` without `--follow-branch` is already watching that run. A wait started only after the newer commit landed finds the run cancelled and exits 4, so start the wait straight after the commit.
 
 Results are kept in SQLite under `$XDG_STATE_HOME/fun-ci/` (`~/.local/state/fun-ci/` by default), shared by every project on the machine.
 
@@ -157,7 +157,7 @@ fun-ci: 2330979 "Add shipping to the cart total" on main
   lint   passed         0.6s
   build  passed         0.3s
   fast   FAILED         0.3s
-  slow   passed         0.5s (not needed)
+  slow   passed         0.5s (not needed for --need fast)
 fast failed:
     1) Failure:
   CartTest#test_total_includes_shipping [test/cart_test.rb:16]:
@@ -190,7 +190,7 @@ The output's last lines, from output-tail:
 The whole output: fun-ci why 2330979 fast --raw
 ```
 
-`fun-ci runs` lists recent runs one line each, and `fun-ci events --follow` prints each run's events as JSON lines as they happen, for a supervising agent or a status bar.
+`fun-ci runs` lists recent runs one line each, and `fun-ci events --follow` prints each run's events as JSON lines as they happen, for a supervising agent or a status bar. Each line has `at`, the time it happened, so the gap between two events can be read off the lines.
 
 ### Where your commit stands against the trunk
 
@@ -202,7 +202,7 @@ fun-ci: f473fdb "Add shipping to the cart total" on feat/cart
   lint   passed         0.2s
   build  passed         0.3s
   fast   passed         0.1s
-  slow   passed         0.2s (not needed)
+  slow   passed         0.2s (not needed for --need fast)
   trunk  conflicts    origin/main 0e15acf, fetched just now, 1 ahead, 1 behind
     lib/cart.rb
 Conflicts with origin/main in 1 file. When the task is done, integrate: git pull origin main (or git pull --rebase origin main if the branch isn't shared)

@@ -23,7 +23,16 @@ class TestAgentEventsJobsScheduled < Minitest::Test
     @client.events
 
     assert_equal({ "schema" => 1, "event" => "job_scheduled", "job" => "soak", "cadence" => "weekly", "commit" => SHA,
-                   "branch" => "main", "starts_at" => (@client.clock.now + 480).utc.iso8601 }, events.first)
+                   "branch" => "main", "starts_at" => (@client.clock.now + 480).utc.iso8601 },
+                 events.first.except("at"))
+  end
+
+  # When a commit started it, which is not when it starts.
+  def test_should_say_when_a_job_was_scheduled
+    @client.db.execute("UPDATE job_runs SET claimed_at = '2026-10-21T15:00:00.000Z'")
+    @client.events
+
+    assert_equal "2026-10-21T15:00:00Z", events.first["at"]
   end
 
   def test_should_not_say_a_job_waiting_its_turn_started

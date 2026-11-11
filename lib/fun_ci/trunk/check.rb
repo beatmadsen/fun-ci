@@ -50,7 +50,12 @@ module FunCi
     end
 
     # One check of a commit against one trunk tip (architecture.md, Checking against the trunk);
-    # the tip is nil when there was none to check against.
-    Check = Data.define(:commit, :tip, :merge)
+    # the tip is nil when there was none to check against. checked_at: when
+    # it was recorded, for a check read back; nil for one just made.
+    Check = Data.define(:commit, :tip, :merge, :checked_at)
+
+    class Check
+      def initialize(checked_at: nil, **) = super
+    end
   end
 end

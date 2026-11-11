@@ -22,7 +22,23 @@ class TestAgentEventsJobs < Minitest::Test
     @client.events
 
     assert_equal({ "schema" => 1, "event" => "job_started", "job" => "soak", "cadence" => "weekly", "commit" => SHA,
-                   "branch" => "wip/foo" }, events.first)
+                   "branch" => "wip/foo" }, events.first.except("at"))
+  end
+
+  def test_should_say_when_a_job_started
+    @client.record_job_run("soak", SHA, RUNNING)
+    @client.db.execute("UPDATE job_runs SET started_at = '2026-10-21T15:00:00.250Z'")
+    @client.events
+
+    assert_equal "2026-10-21T15:00:00Z", events.first["at"]
+  end
+
+  def test_should_say_when_a_job_finished
+    @client.record_job_run("soak", SHA, JobRecording::JobRunFacts.new(status: "failed"))
+    @client.db.execute("UPDATE job_runs SET completed_at = '2026-10-21T18:12:00.000Z'")
+    @client.events
+
+    assert_equal %w[job_finished 2026-10-21T18:12:00Z], events.last.values_at("event", "at")
   end
 
   def test_should_say_a_job_finished_with_its_state_and_seconds

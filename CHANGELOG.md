@@ -14,6 +14,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   hidden one brings it back. This changes only what the console shows on your
   machine: the job runs as before, and `fun-ci jobs`, `status` and `why --job`
   report it as before.
+- Every line of `fun-ci events` has `at`, the time it happened in UTC: when a
+  run started, a stage finished, a run finished or was superseded, a check
+  against the trunk was made, and when a job was scheduled, started and
+  finished. It is `null` where fun-ci doesn't know: the end of a job whose
+  process died, and the scheduling of a job run kept by an earlier version.
+
+### Changed
+- `fun-ci status` says which level a stage is not needed for, as in `(not
+  needed for --need fast)`. Plain `(not needed)` read as wrong while a `wait
+  --need all` was waiting on that very stage.
 
 ### Fixed
 - A job given a later turn to start is recorded as waiting from the moment a

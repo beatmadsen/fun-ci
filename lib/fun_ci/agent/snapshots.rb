@@ -38,7 +38,12 @@ module FunCi
         JobEvents::JobState.new(id: run[:id], job: run[:job], cadence: run[:cadence], sha: run[:commit_hash],
                                 branch: run[:branch], state: Jobs::State.of(run),
                                 seconds: Persistence::StageJob.elapsed_duration(run)&.round(1),
-                                starts_at: starts_at(run))
+                                starts_at: starts_at(run), times: job_times(run))
+      end
+
+      def job_times(run)
+        JobEvents::JobTimes.new(claimed: stamp(run[:claimed_at]), started: stamp(run[:started_at]),
+                                ended: stamp(run[:completed_at]))
       end
 
       # When a run waiting its turn starts, as an ISO time; nil for any other.
@@ -46,23 +51,36 @@ module FunCi
 
       def state_of(run)
         superseded_by = run[:status] == "cancelled" ? @runs.superseded_by(run) : nil
+        shown = recorded_check(run)
         Events::RunState.new(id: run[:id], sha: run[:commit_hash], branch: run[:branch], status: run[:status],
-                             finished: finished(run), superseded_by: superseded_by, trunk: trunk(run))
+                             finished: finished(run), superseded_by: superseded_by,
+                             trunk: shown && TrunkJson.document(shown), times: times(run, shown))
       end
 
-      # The latest check recorded; a check still going has none yet.
-      def trunk(run)
+      # The latest check recorded, as shown; nil for a check still going, which has none yet.
+      def recorded_check(run)
         shown = @trunk.for(run)
-        shown&.check ? TrunkJson.document(shown) : nil
+        shown&.check ? shown : nil
       end
+
+      def times(run, shown)
+        checked = shown&.check&.checked_at
+        Events::RunTimes.new(started: stamp(run[:created_at]), changed: stamp(run[:updated_at]),
+                             checked: checked&.utc&.iso8601)
+      end
+
+      # A time the database kept, as events say it: ISO 8601, UTC, to the second.
+      def stamp(kept) = kept && Time.parse(kept).utc.iso8601
 
       def finished(run)
         jobs = Persistence::StageJob.for_run(@db, run[:id]).select { |job| job[:finished_order] }
         stages = RunReport.stages(jobs).to_h { |stage| [stage.name, stage] }
-        jobs.sort_by { |job| job[:finished_order] }.map { |job| facts(stages.fetch(job[:stage])) }
+        jobs.sort_by { |job| job[:finished_order] }.map { |job| facts(stages.fetch(job[:stage]), job) }
       end
 
-      def facts(stage) = { stage: stage.name, state: stage.state, seconds: stage.seconds }
+      def facts(stage, job)
+        { stage: stage.name, state: stage.state, seconds: stage.seconds, at: stamp(job[:completed_at]) }
+      end
     end
   end
 end

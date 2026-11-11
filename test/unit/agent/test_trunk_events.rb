@@ -8,8 +8,11 @@ class TestTrunkEvents < Minitest::Test
   EVENTS = FunCi::Agent::Events
   CONFLICTS = { state: "conflicts", sha: "fff" }.freeze
 
-  def test_should_report_a_check_recorded_since
-    assert_equal [{ event: "trunk_checked", commit: "abc1234", branch: "main", trunk: CONFLICTS }],
+  CHECKED = "2026-10-21T15:00:30Z"
+  TIMES = EVENTS::RunTimes.new(started: "2026-10-21T15:00:00Z", changed: "2026-10-21T15:00:00Z", checked: CHECKED)
+
+  def test_should_report_a_check_recorded_since_with_when_it_was_made
+    assert_equal [{ event: "trunk_checked", commit: "abc1234", branch: "main", trunk: CONFLICTS, at: CHECKED }],
                  EVENTS.between(snapshot(run_state), snapshot(run_state(trunk: CONFLICTS)))
   end
 
@@ -31,8 +34,8 @@ class TestTrunkEvents < Minitest::Test
   private
 
   def run_state(**changes)
-    EVENTS::RunState.new(id: 1, sha: "abc1234", branch: "main", status: "running", finished: [], superseded_by: nil)
-                    .with(**changes)
+    EVENTS::RunState.new(id: 1, sha: "abc1234", branch: "main", status: "running", finished: [], superseded_by: nil,
+                         times: TIMES).with(**changes)
   end
 
   def snapshot(state) = { state.id => state }

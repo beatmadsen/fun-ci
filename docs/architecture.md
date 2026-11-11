@@ -299,6 +299,10 @@ commands that ask about commits (`lib/fun_ci/agent/`).
   next section.
 - **`events` is the difference between two looks at the runs**, so it needs no
   events table: every event follows from the stage rows and their finish order.
+  Each event's time (`at`) is the row's own: when the run was recorded, the
+  stage ended, the run's status last changed, the check was recorded. A job
+  run's `started_at` is replaced by its later start while it waits its turn,
+  so the time a commit claimed it is kept apart, in `claimed_at`.
 
 ## Evidence of a failed stage
 

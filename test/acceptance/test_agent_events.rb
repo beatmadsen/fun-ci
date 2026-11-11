@@ -32,7 +32,8 @@ class TestAgentEvents < Minitest::Test
 
     @client.events
 
-    assert_equal({ "schema" => 1, "event" => "run_started", "commit" => OLD, "branch" => "main" }, events.first)
+    assert_equal({ "schema" => 1, "event" => "run_started", "commit" => OLD, "branch" => "main" },
+                 events.first.except("at"))
   end
 
   def test_should_print_each_new_event_as_it_happens_when_following
@@ -49,8 +50,9 @@ class TestAgentEvents < Minitest::Test
     @client.clock.then_do { raise Interrupt }
     @client.events("--follow")
 
-    assert_includes events, { "schema" => 1, "event" => "run_superseded", "commit" => OLD, "branch" => "main",
-                              "by_commit" => NEW }
+    assert_includes events.map { |event| event.except("at") },
+                    { "schema" => 1, "event" => "run_superseded", "commit" => OLD, "branch" => "main",
+                      "by_commit" => NEW }
   end
 
   def test_should_say_when_a_run_finishes
@@ -60,6 +62,33 @@ class TestAgentEvents < Minitest::Test
     @client.events("--follow")
 
     assert_equal %w[run_finished passed], summary.last
+  end
+
+  def test_should_say_when_a_run_started
+    @client.record_run(OLD)
+    @client.db.execute("UPDATE pipeline_runs SET created_at = '2026-10-21T15:00:00Z'")
+
+    @client.events
+
+    assert_equal "2026-10-21T15:00:00Z", events.first["at"]
+  end
+
+  def test_should_say_when_a_stage_finished
+    @client.record_run(OLD, stages: { "lint" => "completed" })
+    @client.db.execute("UPDATE stage_jobs SET completed_at = '2026-10-21T15:00:09.500Z'")
+
+    @client.events
+
+    assert_equal "2026-10-21T15:00:09Z", events.last["at"]
+  end
+
+  def test_should_say_when_a_run_finished
+    FunCi::Persistence::PipelineRun.update_status(@client.db, @client.record_run(OLD), "completed")
+    @client.db.execute("UPDATE pipeline_runs SET updated_at = '2026-10-21T15:04:10Z'")
+
+    @client.events
+
+    assert_equal %w[run_finished 2026-10-21T15:04:10Z], events.last.values_at("event", "at")
   end
 
   def test_should_print_only_failures_when_asked

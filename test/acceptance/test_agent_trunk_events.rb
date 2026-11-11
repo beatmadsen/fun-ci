@@ -38,6 +38,14 @@ class TestAgentTrunkEvents < Minitest::Test
     assert_equal %w[conflicts clean], trunk_states
   end
 
+  def test_should_say_when_a_check_was_made
+    @client.record_trunk_check(SHA, CONFLICTS, seen: @client.clock.now)
+    @client.db.execute("UPDATE trunk_checks SET checked_at = '2026-10-21T15:00:30Z'")
+    @client.events
+
+    assert_equal %w[trunk_checked 2026-10-21T15:00:30Z], events.last.values_at("event", "at")
+  end
+
   def test_should_leave_checks_out_of_the_failures
     @client.record_trunk_check(SHA, CONFLICTS, seen: @client.clock.now)
     @client.events("--only", "failures")

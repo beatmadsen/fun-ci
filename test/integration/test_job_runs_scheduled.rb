@@ -34,6 +34,11 @@ class TestJobRunsScheduled < Minitest::Test
     assert_equal LATER, Time.parse(latest[:started_at])
   end
 
+  # When it starts replaces when it was claimed as its start, so the claim's time is kept apart.
+  def test_should_keep_when_a_run_that_waits_was_claimed
+    assert_equal NOW, Time.parse(latest[:claimed_at])
+  end
+
   def test_should_record_a_scheduled_run_running_once_it_begins
     @runs.start_turn(@id, LATER + 3)
 
