@@ -48,10 +48,19 @@ class TestView < Minitest::Test
     assert_equal 3, page[:cursor]
   end
 
-  def test_should_have_no_cursor_before_the_first_move
+  # The block is on a row from the first board, so the keys that act on one are offered.
+  def test_should_put_the_cursor_on_the_first_row_of_the_first_board
     @view.resize(22)
 
-    assert_nil page[:cursor]
+    assert_equal 0, page[:cursor]
+  end
+
+  def test_should_move_the_cursor_from_the_first_row_to_the_second_at_j
+    @view.resize(22)
+    page
+    press(1)
+
+    assert_equal 1, page[:cursor]
   end
 
   def test_should_keep_the_run_under_the_cursor_on_the_page_when_none_would_fit

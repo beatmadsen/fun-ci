@@ -353,6 +353,8 @@ each project's branches sit under the project's name, one row per branch:
   a conflict. It is wine when its row needs you and indigo when the cursor
   only rests on a calm row, so the card never looks like trouble without
   cause. When nothing needs you and there is no cursor there is no block.
+  The console opens with the cursor on the first row, so the keys that act
+  on a row (`h`, and `c` on a running one) are offered from the start.
   The block breathes, lightening and easing once every four seconds.
 - Along a running row a soft band of light travels, over and over, so a run
   in progress reads from the corner of the eye; it leaves the marks alone,

@@ -52,5 +52,5 @@ class TestConsoleSessionHidingBranches < Minitest::Test
 
   def board = @port.sent.last
   def press(*keys) = keys.each { |key| @session.receive(JSON.generate(t: "key", key: key)) }
-  def hide_the_first_branch = press("j", "h", "i")
+  def hide_the_first_branch = press("h", "i")
 end

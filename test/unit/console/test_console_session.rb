@@ -49,50 +49,50 @@ class TestConsoleSession < Minitest::Test
     assert_equal 3, last["streak"]
   end
 
-  def test_should_start_with_no_run_under_the_cursor
+  def test_should_start_with_the_cursor_on_the_first_row
     ready
 
-    assert_nil last["cursor"]
+    assert_equal 0, last["cursor"]
   end
 
   def test_should_send_a_board_with_the_cursor_moved_on_j
     ready
     press("j")
 
-    assert_equal 0, last["cursor"]
+    assert_equal 1, last["cursor"]
   end
 
   def test_should_move_the_cursor_down_on_the_down_key
     ready
-    press("j", "down")
+    press("down")
 
     assert_equal 1, last["cursor"]
   end
 
   def test_should_move_the_cursor_up_on_the_up_key
     ready
-    press("j", "j", "up")
+    press("j", "up")
 
     assert_equal 0, last["cursor"]
   end
 
   def test_should_ask_to_confirm_cancelling_a_running_run
     ready
-    press("j", "c")
+    press("c")
 
     assert last["confirming"]
   end
 
   def test_should_drop_the_confirmation_on_esc
     ready
-    press("j", "c", "esc")
+    press("c", "esc")
 
     refute last["confirming"]
   end
 
   def test_should_cancel_the_run_once_confirmed
     ready
-    press("j", "c", "y")
+    press("c", "y")
 
     assert_equal [2], @board_data.cancelled
   end

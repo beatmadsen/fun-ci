@@ -34,10 +34,11 @@ module FunCi
         act(key, rows)
       end
 
-      # Puts the cursor back on its row among `runs` and the job rows in view, `jobs`.
-      def follow(runs, jobs)
+      # Puts the cursor back on its row among `runs` and the job rows in view,
+      # `jobs`; on the first of them, `from_the_first`, while it is on none.
+      def follow(runs, jobs, from_the_first: false)
         rows = CursorRows.new(runs, jobs)
-        @cursor = @cursor&.within(rows)
+        @cursor = @cursor ? @cursor.within(rows) : (Cursor.at(rows, 0) if from_the_first)
         @question = nil unless @question&.about?(rows.at(cursor_index))
       end
 

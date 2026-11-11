@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   --need all` was waiting on that very stage.
 
 ### Fixed
+- The console opens with the cursor on the first row. Before, it had none
+  until `j` or `k`, so the keys that act on a row were missing at first
+  although the block sat on a row.
 - A tall console with many projects left out every passed project, counted
   beside the keys, when only some would not fit, and left the rest of the
   screen empty. It now keeps as many of their lines as fit.
