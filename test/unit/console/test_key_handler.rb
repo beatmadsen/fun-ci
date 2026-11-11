@@ -35,6 +35,14 @@ class TestKeyHandler < Minitest::Test
     assert_equal 1, @board_data.loads
   end
 
+  # The fake loads no more runs, so the cursor is still on the last.
+  def test_should_load_no_more_runs_at_j_while_the_cursor_stays_on_the_last_loaded
+    handler = handler_over("completed", "completed", "completed")
+    press(handler, "j", "j", "j", "j")
+
+    assert_equal 1, @board_data.loads
+  end
+
   def test_should_not_load_more_before_the_cursor_reaches_the_last_loaded
     handler = handler_over("completed", "completed", "completed")
     press(handler, "j", "j")
