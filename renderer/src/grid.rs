@@ -1,6 +1,8 @@
 //! What a terminal shows after a stream of bytes, as a grid of cells, read
 //! through the `vt100` emulator.
 
+use std::num::NonZeroU16;
+
 use serde::Serialize;
 
 /// A cell colour.
@@ -79,14 +81,15 @@ impl Emulator {
     /// An emulator of `size` (cols, rows).
     #[must_use]
     pub fn new((cols, rows): (u16, u16)) -> Self {
-        Self { parser: vt100::Parser::new(rows, cols, 0) }
+        Self { parser: vt100::Parser::new(at_least_one(rows), at_least_one(cols), 0) }
     }
 
     /// Resizes to `size` (cols, rows) when it changed, then processes one
     /// frame's bytes.
     pub fn feed(&mut self, (cols, rows): (u16, u16), bytes: &[u8]) {
-        if self.parser.screen().size() != (rows, cols) {
-            self.parser.screen_mut().set_size(rows, cols);
+        let size = (at_least_one(rows), at_least_one(cols));
+        if self.parser.screen().size() != size {
+            self.parser.screen_mut().set_size(size.0, size.1);
         }
         self.parser.process(bytes);
     }
@@ -95,10 +98,15 @@ impl Emulator {
     #[must_use]
     pub fn grid(&self) -> Grid {
         let screen = self.parser.screen();
-        let (rows, cols) = screen.size();
+        let (rows, cols) = (screen.size().0.get(), screen.size().1.get());
         let row = |r| (0..cols).map(|c| screen.cell(r, c).map_or_else(blank, Cell::from)).collect();
         Grid { cols, rows, cells: (0..rows).map(row).collect() }
     }
+}
+
+/// The emulator's screen is never empty: a size of 0 is taken as 1.
+fn at_least_one(n: u16) -> NonZeroU16 {
+    NonZeroU16::new(n).unwrap_or(NonZeroU16::MIN)
 }
 
 fn blank() -> Cell {

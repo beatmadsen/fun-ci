@@ -35,7 +35,7 @@ signal-hook = "0.4.4"
 unicode-width = "0.2.2"
 # Without std: its own maths everywhere, since std would route powf to the platform library.
 tachyonfx = { version = "0.25", default-features = false }
-vt100 = "0.16.2"
+vt100 = "0.18.1"
 
 [lints.clippy]
 pedantic = { level = "warn", priority = -1 }
