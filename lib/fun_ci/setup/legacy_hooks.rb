@@ -13,6 +13,8 @@ module FunCi
                 "take fun-ci out of it and run `fun-ci install-hooks`"
       NOT_UPGRADED = "fun-ci 1.x's pre-commit hook is still installed, so each run tests the commit before yours " \
                      "and yours gets none: run `fun-ci install-hooks`"
+      # fun-ci run as a command; not a path such as .fun-ci/pre-commit.sh, where projects keep their stage scripts.
+      CALLS_FUN_CI = %r{(?<![\w./-])fun-ci(?![\w./-])}
 
       def initialize(project_root)
         @hook = File.join(project_root, ".git", "hooks", "pre-commit")
@@ -31,7 +33,7 @@ module FunCi
         script = File.read(@hook)
         return [NOT_UPGRADED] if HookScript.managed?(script)
 
-        script.include?("fun-ci") ? [WARNING] : []
+        script.match?(CALLS_FUN_CI) ? [WARNING] : []
       end
     end
   end

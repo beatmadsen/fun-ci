@@ -13,6 +13,7 @@ class TestLegacyHooks < Minitest::Test
   FUN_CI_1X = "#!/bin/sh\n# fun-ci-managed-hook\nfun-ci trigger --no-validate \"$COMMIT\" \"$BRANCH\"\n"
   HAND_WRITTEN = "#!/bin/sh\nnpx lint-staged\nfun-ci trigger --no-validate $(git rev-parse HEAD) main\n"
   UNRELATED = "#!/bin/sh\nnpx lint-staged\n"
+  RUNS_A_SCRIPT_IN_DOT_FUN_CI = "#!/bin/sh\nexec sh \"$(git rev-parse --show-toplevel)/.fun-ci/pre-commit.sh\"\n"
 
   def setup
     @dir = Dir.mktmpdir("legacy-hooks")
@@ -59,6 +60,12 @@ class TestLegacyHooks < Minitest::Test
 
   def test_should_not_warn_about_a_pre_commit_hook_that_has_nothing_to_do_with_fun_ci
     pre_commit(UNRELATED)
+
+    assert_empty legacy.warnings
+  end
+
+  def test_should_not_warn_about_a_pre_commit_hook_that_runs_a_script_kept_in_dot_fun_ci
+    pre_commit(RUNS_A_SCRIPT_IN_DOT_FUN_CI)
 
     assert_empty legacy.warnings
   end
