@@ -51,8 +51,10 @@ jobs:
           bundler-cache: true
       - run: bundle exec rake mutation
 
-  # Over 5000 mutants take hours in one job, so six jobs take a shard each and
-  # mutation-rust-score judges them together.
+  # Over 6000 mutants take hours in one job, so twelve jobs take a shard each and
+  # mutation-rust-score judges them together. Six shards took 4.5 of GitHub's 6
+  # hours per job in October and ran out of time from November; twelve take about
+  # half of it.
   mutation-rust:
     needs: changes
     if: needs.changes.outputs.rust == 'true'
@@ -60,7 +62,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3, 4, 5]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
     steps:
       - uses: actions/checkout@v7
       - run: rustup toolchain install
@@ -71,7 +73,7 @@ jobs:
         with:
           ruby-version: "3.4"
           bundler-cache: true
-      - run: bundle exec rake "mutation:rust:shard[${{ matrix.shard }},6]"
+      - run: bundle exec rake "mutation:rust:shard[${{ matrix.shard }},12]"
       - uses: actions/upload-artifact@v7
         with:
           name: mutants-shard-${{ matrix.shard }}
@@ -91,4 +93,4 @@ jobs:
         with:
           pattern: mutants-shard-*
           path: renderer/mutants-shards
-      - run: bundle exec rake "mutation:rust:score[6]"
+      - run: bundle exec rake "mutation:rust:score[12]"
